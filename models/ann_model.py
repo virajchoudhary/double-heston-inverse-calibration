@@ -7,7 +7,7 @@ from collections.abc import Sequence
 import torch
 from torch import nn
 
-from ann_inverse_calibration.src.constants import PARAMETER_COUNT
+from src.constants import PARAMETER_COUNT
 
 
 class ANNInverseCalibrator(nn.Module):

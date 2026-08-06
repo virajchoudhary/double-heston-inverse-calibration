@@ -8,7 +8,7 @@ flowchart LR
     B --> C["108 spot-normalized price inputs"]
     C --> D["Ordinary PyTorch MLP"]
     D --> E["Ten Double Heston outputs"]
-    E -. "blocked until validated source arrives" .-> F["Future validated Double Heston repricer"]
+    E --> F["Independent canonical Double Heston repricer"]
 ```
 
 ## Fixed surface contract
@@ -41,4 +41,4 @@ These outputs represent eight structural parameters and two surface-specific ini
 
 ## Research boundary
 
-`src/pricing_interface.py` exposes the future adapter seam. Research generation raises `MissingPricingEngineError` while the validated engine is absent and never falls back to the development-only dummy mapping.
+`src/pricing_interface.py` routes research generation and repricing to `src/double_heston.py`. The development dummy remains available only through the explicitly labelled smoke-test path and is never an implicit fallback. Full ANN research training has not started.

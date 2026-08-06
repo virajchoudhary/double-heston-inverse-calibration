@@ -9,7 +9,8 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
-from .pricing_interface import MissingPricingEngineError, price_double_heston_surface
+from .constants import PARAMETER_NAMES
+from .pricing_interface import price_double_heston_surface
 from .utils import write_json
 
 
@@ -35,7 +36,10 @@ def evaluate_repricing(
                 group["option_type"].astype(str).tolist(),
                 parameters,
             )
-            target = group["generated_price"].to_numpy(dtype=float)
+            target_column = (
+                "generated_price" if "generated_price" in group else "observed_price"
+            )
+            target = group[target_column].to_numpy(dtype=float)
             for row_index, (actual, predicted) in enumerate(
                 zip(target, repriced, strict=True)
             ):
@@ -57,16 +61,13 @@ def evaluate_repricing(
                     "error_message": str(error),
                 }
             )
-            if isinstance(error, MissingPricingEngineError):
-                break
     record_frame = pd.DataFrame(records)
     failure_frame = pd.DataFrame(failures)
     record_frame.to_csv(output_path / "repricing_rows.csv", index=False)
     failure_frame.to_csv(output_path / "repricing_failures.csv", index=False)
     if record_frame.empty:
         summary = {
-            "status": "blocked_missing_pricing_engine",
-            "missing_dependency": "frozen teammate double_heston.py with callable adapter contract",
+            "status": "failed_no_successful_repricing_rows",
             "successful_rows": 0,
             "failure_rows": len(failure_frame),
         }
@@ -91,14 +92,43 @@ def main() -> int:
     parser.add_argument("output_directory", type=Path, nargs="?", default=Path("outputs/metrics/repricing"))
     args = parser.parse_args()
     if args.surfaces_csv is None or args.predictions_csv is None:
-        print(
-            "Repricing unavailable: missing frozen teammate double_heston.py and "
-            "its callable pricing adapter contract."
+        validation_directory = Path("outputs/double_heston_validation")
+        surfaces_path = validation_directory / "clean_surface.csv"
+        starts_path = validation_directory / "clean_recovery_starts.csv"
+        if not surfaces_path.exists() or not starts_path.exists():
+            print(
+                "Canonical pricing engine is available. Run "
+                "python -m src.run_double_heston_validation before the default "
+                "controlled repricing check, or provide explicit CSV paths."
+            )
+            return 0
+        surfaces = pd.read_csv(surfaces_path)
+        starts = pd.read_csv(starts_path)
+        best = starts.loc[starts["loss"].idxmin()]
+        surface_id = str(surfaces["surface_id"].iloc[0])
+        predicted = {
+            surface_id: np.asarray(
+                [best[f"predicted_{name}"] for name in PARAMETER_NAMES],
+                dtype=np.float64,
+            )
+        }
+        summary = evaluate_repricing(
+            surfaces,
+            predicted,
+            validation_directory / "repricing_self_check",
         )
+        summary["evaluation_scope"] = (
+            "controlled canonical calibration output; not an ANN research result"
+        )
+        write_json(
+            validation_directory / "repricing_self_check/repricing_summary.json",
+            summary,
+        )
+        print(summary)
         return 0
     surfaces = pd.read_csv(args.surfaces_csv)
     predictions = pd.read_csv(args.predictions_csv).set_index("surface_id")
-    parameter_columns = [column for column in predictions.columns if column.startswith("predicted_")]
+    parameter_columns = [f"predicted_{name}" for name in PARAMETER_NAMES]
     predicted = {
         str(index): row[parameter_columns].to_numpy(dtype=float)
         for index, row in predictions.iterrows()

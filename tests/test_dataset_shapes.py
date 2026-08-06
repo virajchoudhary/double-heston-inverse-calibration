@@ -5,14 +5,14 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from ann_inverse_calibration.src.constants import NOT_RESEARCH_DATA
-from ann_inverse_calibration.src.dataset import SurfaceParameterDataset
-from ann_inverse_calibration.src.surface_grid import (
+from src.constants import NOT_RESEARCH_DATA
+from src.dataset import SurfaceParameterDataset
+from src.surface_grid import (
     build_surface_grid,
     expected_input_size,
     flatten_surface_prices,
 )
-from ann_inverse_calibration.src.synthetic_dataset import generate_smoke_test_dataset
+from src.synthetic_dataset import generate_smoke_test_dataset
 
 
 def test_surface_grid_and_flattening_are_deterministic() -> None:

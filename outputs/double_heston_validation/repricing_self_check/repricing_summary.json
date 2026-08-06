@@ -1,0 +1,9 @@
+{
+  "evaluation_scope": "controlled canonical calibration output; not an ANN research result",
+  "failure_rows": 0,
+  "mae": 1.2486308283617595e-13,
+  "mean_relative_error": 2.7557498068622503e-14,
+  "rmse": 1.6335740412917834e-13,
+  "status": "completed",
+  "successful_rows": 18
+}

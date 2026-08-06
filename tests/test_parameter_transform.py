@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 import torch
 
-from ann_inverse_calibration.models.parameter_transform import (
+from models.parameter_transform import (
     BoundedParameterTransform,
     TargetStandardizer,
 )

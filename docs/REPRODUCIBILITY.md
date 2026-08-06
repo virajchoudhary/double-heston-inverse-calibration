@@ -15,12 +15,14 @@ python -m pip install -r requirements.txt
 
 ## Validation commands
 
-The current package layout is run from the parent directory of `ann_inverse_calibration`:
+Run from the repository root:
 
 ```powershell
-python -m compileall ann_inverse_calibration
-python -m pytest ann_inverse_calibration/tests -q
-python -m ann_inverse_calibration.src.run_smoke_test
+python -m compileall .
+python -m pytest tests -q
+python -m src.run_double_heston_validation
+python -m src.run_smoke_test
+python -m src.evaluate_repricing
 ```
 
 Expected lightweight evidence is written beneath `outputs/metrics/smoke_test/`. The generated checkpoint, dummy surfaces, predictions, and row-level errors are reproducible and intentionally excluded from Git.
@@ -31,15 +33,15 @@ Python, NumPy, and PyTorch receive the same non-negative seed. PyTorch determini
 
 ## Research-mode isolation
 
-Research generation requires both a validated Double Heston pricing adapter and fully confirmed bounds marked `TEAMMATE_CONFIRMED`. It must fail clearly when either is absent. It must never fall back to `dummy_surface_generator_for_smoke_test`.
+Research pricing routes to the independent canonical engine and never falls back to `dummy_surface_generator_for_smoke_test`. Full generation should use reviewed bounds. Provisional bounds require an explicit opt-in and are currently limited to controlled pilot generation of at most 100 surfaces.
 
-## Adding the real pricing engine
+## Reviewing the canonical pricing engine
 
-1. Verify the received source and helper checksums.
-2. Run the teammate's original pricing and controlled-recovery tests unchanged.
-3. Document its callable input/output shapes, numerical settings, tolerances, and failure behavior.
-4. Add only a thin adapter in `src/pricing_interface.py`; do not alter the validated mathematics silently.
-5. Re-run compilation, all local tests, controlled recovery, genuine generation, and repricing checks.
+1. Review the documented equations and repository-specific correlation convention.
+2. Benchmark representative prices using an independent implementation or adaptive quadrature.
+3. Re-run compilation, all tests, controlled recovery, pilot generation, smoke flow, and repricing.
+4. Preserve every start, failure, boundary diagnostic, seed, and configuration.
+5. Do not treat the implementation's own fixture as independent proof of correctness.
 
 ## Hash preservation
 

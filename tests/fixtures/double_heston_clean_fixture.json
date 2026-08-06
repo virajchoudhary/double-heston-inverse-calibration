@@ -1,0 +1,57 @@
+{
+  "fixture_type": "CANONICAL_REIMPLEMENTATION_FIXTURE",
+  "spot": 100.0,
+  "rate": 0.05,
+  "dividend_yield": 0.01,
+  "strikes": [
+    80.0, 90.0, 100.0, 110.0, 120.0,
+    80.0, 90.0, 100.0, 110.0, 120.0,
+    80.0, 90.0, 100.0, 110.0, 120.0,
+    90.0, 100.0, 110.0
+  ],
+  "maturities": [
+    0.25, 0.25, 0.25, 0.25, 0.25,
+    0.75, 0.75, 0.75, 0.75, 0.75,
+    1.5, 1.5, 1.5, 1.5, 1.5,
+    2.0, 2.0, 2.0
+  ],
+  "option_types": [
+    "call", "put", "call", "put", "call",
+    "call", "put", "call", "put", "call",
+    "call", "put", "call", "put", "call",
+    "call", "put", "call"
+  ],
+  "parameters": [
+    0.8, 0.04, 0.2, -0.45, 0.05,
+    3.0, 0.02, 0.25, -0.25, 0.025
+  ],
+  "pricing_node_count": 64,
+  "expected_prices": [
+    21.015408971297774,
+    1.4627024154293622,
+    5.8152114721691746,
+    10.994220647205054,
+    0.5854157490937162,
+    23.74512583225595,
+    3.7152515154976555,
+    10.34589143483717,
+    12.77926150253289,
+    3.317867329664587,
+    27.27585491608486,
+    5.547506009026179,
+    14.977243493790404,
+    14.097206290454281,
+    7.220523697133018,
+    22.9085512853191,
+    9.960637770748903,
+    13.074624834019168
+  ],
+  "expected_generation_metadata": {
+    "generator": "src.double_heston.price_double_heston_surface",
+    "implementation_status": "independent_canonical_reimplementation",
+    "generated_after_mathematical_tests": "34 engine tests passed",
+    "generated_utc_date": "2026-08-06",
+    "equivalent_to_unavailable_teammate_source": false,
+    "ground_truth_scope": "regression fixture for this implementation only"
+  }
+}

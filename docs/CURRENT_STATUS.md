@@ -8,29 +8,27 @@ Physics-Informed Inverse Calibration of the Canonical Double Heston Model for St
 
 ## Current completed milestone
 
-Ordinary ANN inverse-calibration infrastructure.
+Independent canonical Double Heston pricing, controlled synthetic validation, and ANN adapter integration.
 
-## Current status table
+The unavailable teammate engine is being replaced by an independently implemented canonical Double Heston engine. Equivalence to the unavailable source is not claimed.
 
 | Component | Status |
 |---|---|
 | ANN project structure | Complete |
-| Parameter contract | Complete |
-| Ten-output ANN architecture | Complete |
-| Constraint diagnostics | Complete |
-| Deterministic surface grid | Complete |
-| Dataset pipeline | Complete |
-| Training loop | Complete |
-| Evaluation pipeline | Complete |
-| Test suite | Passing |
-| Smoke test | Passing |
-| Real Double Heston integration | Blocked |
-| Genuine synthetic training | Blocked |
+| Fixed ten-parameter contract | Complete |
+| Canonical pricing engine | Complete for controlled milestone |
+| Engine-focused tests | 36 passed |
+| Full automated suite | 54 passed |
+| ANN research pricing adapter | Integrated |
+| Clean controlled recovery | Completed; one exact best result, start sensitivity retained |
+| One-percent noise recovery | Completed; parameter instability and boundaries observed |
+| Genuine-engine pilot | 12 surfaces / 1,296 quotes |
+| Provisional bounds | Documented, pilot-only, not externally confirmed |
+| Development smoke test | Passing; remains `NOT_RESEARCH_DATA` |
+| Full ANN research training | Not started |
 | NIFTY validation | Not started |
-| PINN development | Not started |
+| PINN development/comparison | Not started |
 
 ## Honest research boundary
 
-> **The current smoke test validates software flow only. It is `NOT_RESEARCH_DATA` and does not establish Double Heston parameter-recovery accuracy, pricing performance, or market generalization.**
-
-Historical power-sector calibrations remain a frozen prototype with disclosed limitations. They are not supervised ANN labels. Genuine ANN labels must be known synthetic parameter vectors priced by the validated canonical Double Heston engine.
+The canonical validation establishes internal mathematical and numerical consistency for controlled fixtures. It does not establish equivalence to the missing implementation, unique parameter recovery, externally valid bounds, ANN performance, or market generalization. Historical power-sector calibrations remain reproducibility artifacts and are not ANN truth labels.

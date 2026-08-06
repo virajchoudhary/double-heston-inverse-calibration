@@ -1,0 +1,54 @@
+{
+  "clean_recovery": {
+    "best_start_strategy": "neutral_transform_midpoint",
+    "loss": 1.1096408482162216e-27,
+    "max_relative_parameter_error": 3.269520071347287e-11,
+    "optimizer_success": true,
+    "parameter_rmse": 2.2178553561322553e-11,
+    "price_rmse": 1.6125487393436679e-13
+  },
+  "equivalent_to_unavailable_teammate_source": false,
+  "fixture_max_abs_regression_error": 1.4210854715202004e-14,
+  "no_arbitrage": {
+    "all_bounds_pass": true,
+    "minimum_lower_bound_margin": 0.27132077106226404,
+    "minimum_upper_bound_margin": 71.2353390442214
+  },
+  "noise_1pct_recovery": {
+    "best_start_strategy": "disclosed_target_perturbation",
+    "loss": 7.935315640803738e-05,
+    "max_relative_parameter_error": 2.7263524509056496,
+    "optimizer_success": false,
+    "parameter_rmse_vs_known_parameters": 0.43113598206350984,
+    "price_rmse_vs_noisy_observations": 0.17631291031892615,
+    "realized_noise_rms_fraction": 0.010574835822177494
+  },
+  "pilot_surfaces": {
+    "data_status": "GENUINE_CANONICAL_DOUBLE_HESTON_SYNTHETIC_DATA",
+    "full_ann_training_started": false,
+    "row_count": 1296,
+    "surface_count": 12
+  },
+  "proves_real_nifty_performance": false,
+  "put_call_parity_max_abs_error": 1.4210854715202004e-14,
+  "quadrature_64_vs_96": {
+    "max_abs_error": 4.291678123991005e-12,
+    "rmse": 3.668193360898033e-12
+  },
+  "repeated_starts": {
+    "boundary_near_count": 3,
+    "clean_price_rmse_range": [
+      1.6125487393436679e-13,
+      0.0007613018409270122
+    ],
+    "failed_or_stopped_count": 5,
+    "interpretation": "Different locally adequate parameter vectors are evidence of practical non-identifiability; optimizer success is not proof of unique recovery.",
+    "noise_price_rmse_range": [
+      0.17380446031955443,
+      0.17631291031892615
+    ],
+    "starts_per_experiment": 3,
+    "total_optimizer_success_count": 1
+  },
+  "validation_status": "CANONICAL_REIMPLEMENTATION_VALIDATION"
+}
