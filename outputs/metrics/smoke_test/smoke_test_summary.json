@@ -1,0 +1,17 @@
+{
+  "checkpoint_created": true,
+  "data_status": "NOT_RESEARCH_DATA",
+  "input_size": 108,
+  "loss_computed": true,
+  "pde_loss": false,
+  "prediction_shape": [
+    8,
+    10
+  ],
+  "status": "passed",
+  "surface_count": 48,
+  "test_surfaces": 8,
+  "train_surfaces": 33,
+  "validation_surfaces": 7,
+  "warning": "Dummy mapping only; no ANN research result is claimed."
+}
