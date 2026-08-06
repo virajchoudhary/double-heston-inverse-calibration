@@ -6,7 +6,7 @@ Status date: 06 August 2026
 
 | Check | Fresh result |
 |---|---|
-| Full automated suite | 54 passed |
+| Full automated suite | 69 passed |
 | Engine-focused tests | 36 passed |
 | Canonical fixture | 18 quotes; deterministic and reproducible |
 | No-arbitrage bounds | Passed |
@@ -23,7 +23,25 @@ Status date: 06 August 2026
 | ANN adapter | Calls the independent canonical engine |
 | Full ANN research training | Not started |
 
-The detailed metrics, failed/stopped starts, and limitations are in [Double Heston validation results](DOUBLE_HESTON_VALIDATION_RESULTS.md).
+## Independent benchmark and bounds audit
+
+| Check | Fresh result |
+|---|---:|
+| Frozen benchmark cases | 36: 18 calls + 18 paired puts |
+| 64-node RMSE / MAE | `5.458369984817452e-13` / `5.18369298103178e-13` |
+| 96-node RMSE / MAE | `4.2228670813888515e-12` / `4.0641980521745795e-12` |
+| Maximum absolute difference | `8.100187187665142e-13` (64); `5.6985527407960035e-12` (96) |
+| Reference warnings / unreliable integrations | 0 / 0 |
+| Benchmark no-arbitrage / parity failures | 0 / 0 |
+| Raw audit candidates | 5,000 |
+| Accepted / rejected | 2,776 (`55.52%`) / 2,224 (`44.48%`) |
+| Accepted boundary-near / Feller-near | `32.6729%` / `7.0605%` |
+| Priced audit surfaces | 250; 21,000 finite prices |
+| Surface validity failures | 0 bounds, monotonicity, or convexity failures |
+| Similar-surface/separated-parameter pairs | 17 |
+| Freeze decision | `NEEDS_BOUNDS_REVIEW` |
+
+The detailed benchmark, bounds, controlled-calibration, and freeze evidence are in [Independent pricing benchmark](INDEPENDENT_PRICING_BENCHMARK.md), [Parameter-bounds audit](PARAMETER_BOUNDS_AUDIT.md), [Double Heston validation results](DOUBLE_HESTON_VALIDATION_RESULTS.md), and [Engine freeze](ENGINE_FREEZE.md).
 
 ## Interpretation
 
@@ -33,7 +51,7 @@ The clean controlled surface can be recovered to numerical precision from one de
 
 - ANN parameter-recovery results trained on the genuine canonical surfaces
 - Broad 0%, 0.5%, 1%, and 2% multi-seed robustness results
-- Confirmed empirical sampling bounds
+- Financially approved empirical sampling bounds
 - Chronological NIFTY EOD validation
 - ANN versus PINN versus numerical calibration versus Standard Heston results
 

@@ -1,0 +1,4 @@
+maturity_bucket,case_count,reference_reliable,max_abs_difference_64,max_abs_difference_96,all_pass_64,all_pass_96
+long,12,True,8.100187187665142e-13,5.6985527407960035e-12,True,True
+medium,12,True,6.892264536872972e-13,5.172751116333529e-12,True,True
+short,12,True,4.998224056862455e-13,4.378442053365461e-12,True,True

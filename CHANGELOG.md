@@ -2,6 +2,29 @@
 
 All notable project changes are recorded here. This private academic repository does not grant an open-source licence or imply permission for external reuse.
 
+## 0.3.0 - 2026-08-06
+
+### Added
+
+- Independent adaptive-quadrature Double Heston reference pricer with retained integration diagnostics
+- Frozen 36-case production-versus-reference benchmark and grouped error/runtime evidence
+- Deterministic 5,000-candidate provisional-bounds audit with a 250-surface priced subset
+- Reviewed sampling configuration separating hard limits, training ranges, margins, challenges, noise tests, and OOD tests
+- Lightweight engine manifest, checksums, summaries, commands, and decision-gate evidence
+- Reference/benchmark/audit-integrity tests, bringing the full suite to 69 passing tests
+
+### Changed
+
+- Expanded benchmark acceptance so 64-node, 96-node, reference reliability, no-arbitrage, and parity all participate in the case-level gate
+- Classified the freeze as `NEEDS_BOUNDS_REVIEW` after material rejection, boundary concentration, and similar-surface parameter-pair findings
+- Updated project status and reproducibility guidance for the pre-ANN decision gate
+
+### Limitations
+
+- Pricing agreement does not prove universal correctness or equivalence with unavailable teammate code
+- Sampling ranges remain provisional pending financial/domain review
+- No large synthetic research dataset, ANN/PINN training, or real NIFTY validation was performed
+
 ## 0.2.0 - 2026-08-06
 
 ### Added

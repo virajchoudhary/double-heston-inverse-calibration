@@ -1,0 +1,6 @@
+metric,count,proportion,denominator,population,raw_candidate_count,accepted_candidate_count,rejected_candidate_count,rejection_rate
+accepted_near_either_feller,196,0.07060518731988473,2776,accepted_valid_candidates,5000,2776,2224,0.4448
+accepted_near_correlation_disk,0,0.0,2776,accepted_valid_candidates,5000,2776,2224,0.4448
+accepted_near_hard_bound,748,0.26945244956772335,2776,accepted_valid_candidates,5000,2776,2224,0.4448
+accepted_near_any_boundary,907,0.32672910662824206,2776,accepted_valid_candidates,5000,2776,2224,0.4448
+accepted_weak_slow_fast_separation,258,0.09293948126801153,2776,accepted_valid_candidates,5000,2776,2224,0.4448

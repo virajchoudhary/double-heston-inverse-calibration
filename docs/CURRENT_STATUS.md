@@ -8,7 +8,7 @@ Physics-Informed Inverse Calibration of the Canonical Double Heston Model for St
 
 ## Current completed milestone
 
-Independent canonical Double Heston pricing, controlled synthetic validation, and ANN adapter integration.
+Independent canonical Double Heston pricing, adaptive-quadrature benchmarking, provisional-bounds audit, controlled synthetic validation, and ANN adapter integration.
 
 The unavailable teammate engine is being replaced by an independently implemented canonical Double Heston engine. Equivalence to the unavailable source is not claimed.
 
@@ -16,14 +16,19 @@ The unavailable teammate engine is being replaced by an independently implemente
 |---|---|
 | ANN project structure | Complete |
 | Fixed ten-parameter contract | Complete |
-| Canonical pricing engine | Complete for controlled milestone |
+| Canonical pricing engine | 36-case independent benchmark passed; freeze evidence created |
 | Engine-focused tests | 36 passed |
-| Full automated suite | 54 passed |
+| Full automated suite | 69 passed |
+| Independent reference integrations | 36 / 36 reliable; zero warnings or failures |
+| Production/reference agreement | All 64-node and 96-node cases passed |
 | ANN research pricing adapter | Integrated |
 | Clean controlled recovery | Completed; one exact best result, start sensitivity retained |
 | One-percent noise recovery | Completed; parameter instability and boundaries observed |
 | Genuine-engine pilot | 12 surfaces / 1,296 quotes |
-| Provisional bounds | Documented, pilot-only, not externally confirmed |
+| Provisional-bounds audit | 5,000 raw / 2,776 accepted / 2,224 rejected |
+| Priced audit subset | 250 surfaces / 21,000 prices; all validity checks passed |
+| Sampling configuration | Reviewed structure created; numerical ranges still provisional |
+| Freeze decision | `NEEDS_BOUNDS_REVIEW` |
 | Development smoke test | Passing; remains `NOT_RESEARCH_DATA` |
 | Full ANN research training | Not started |
 | NIFTY validation | Not started |
@@ -31,4 +36,4 @@ The unavailable teammate engine is being replaced by an independently implemente
 
 ## Honest research boundary
 
-The canonical validation establishes internal mathematical and numerical consistency for controlled fixtures. It does not establish equivalence to the missing implementation, unique parameter recovery, externally valid bounds, ANN performance, or market generalization. Historical power-sector calibrations remain reproducibility artifacts and are not ANN truth labels.
+The independent benchmark materially strengthens the pricing evidence, but agreement between two implementations is not proof of universal correctness. The audit does not approve the current sampling design: 44.48% of raw candidates were rejected, and among the 2,776 accepted vectors 32.6729% were near at least one declared boundary and 7.0605% were near a Feller boundary. Rejected vectors are reported separately and are not counted as boundary-near. The work does not establish equivalence to the missing implementation, unique parameter recovery, externally valid bounds, ANN performance, or market generalization. Historical power-sector calibrations remain reproducibility artifacts and are not ANN truth labels.

@@ -1,0 +1,7 @@
+option_type,moneyness_bucket,case_count,reference_reliable,max_abs_difference_64,max_abs_difference_96,all_pass_64,all_pass_96,definition
+call,ATM,6,True,5.755396159656812e-13,4.405364961712621e-12,True,True,strike/forward with option-direction-aware ITM/ATM/OTM definitions in benchmark_case_results.csv
+call,ITM,6,True,8.100187187665142e-13,5.6132876125047915e-12,True,True,strike/forward with option-direction-aware ITM/ATM/OTM definitions in benchmark_case_results.csv
+call,OTM,6,True,7.744915819785092e-13,5.6985527407960035e-12,True,True,strike/forward with option-direction-aware ITM/ATM/OTM definitions in benchmark_case_results.csv
+put,ATM,6,True,5.684341886080801e-13,4.405364961712621e-12,True,True,strike/forward with option-direction-aware ITM/ATM/OTM definitions in benchmark_case_results.csv
+put,ITM,6,True,7.815970093361102e-13,5.6985527407960035e-12,True,True,strike/forward with option-direction-aware ITM/ATM/OTM definitions in benchmark_case_results.csv
+put,OTM,6,True,8.100187187665142e-13,5.6132876125047915e-12,True,True,strike/forward with option-direction-aware ITM/ATM/OTM definitions in benchmark_case_results.csv

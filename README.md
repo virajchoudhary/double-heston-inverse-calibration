@@ -1,18 +1,20 @@
 # Physics-Informed Inverse Calibration of the Canonical Double Heston Model
 
-This private B.Tech capstone repository now contains an ordinary ANN inverse-calibration baseline and an independently implemented canonical Double Heston European-option pricing engine. The unavailable teammate engine is being replaced by this reimplementation. Equivalence to the unavailable source is not claimed.
+This private B.Tech capstone repository now contains an ordinary ANN inverse-calibration baseline and an independently implemented canonical Double Heston European-option pricing engine. The production engine has been benchmarked against a separately coded adaptive-quadrature reference. The unavailable teammate engine is being replaced by this reimplementation; equivalence to the unavailable source is not claimed.
 
-> The completed validation is controlled synthetic engineering evidence. It is not an ANN research result and does not establish performance on real NIFTY data.
+> The pricing benchmark passed, but the current freeze decision is `NEEDS_BOUNDS_REVIEW`. This controlled synthetic engineering evidence is not an ANN research result and does not establish performance on real NIFTY data.
 
 | Component | Status |
 |---|---|
 | ANN infrastructure | Complete |
-| Canonical Double Heston engine | Complete for controlled milestone |
-| Engine and integration tests | 54 passing, including 36 engine-focused tests |
+| Canonical Double Heston engine | Independently benchmarked and frozen for review |
+| Independent pricing benchmark | 36 / 36 cases passed at 64 and 96 nodes |
+| Engine and integration tests | 69 passing |
 | Synthetic pricing/calibration validation | Complete for one clean and one 1% noise fixture |
 | ANN pricing adapter | Integrated with the real canonical engine |
 | Genuine-engine pilot data | 12 surfaces / 1,296 quotes generated |
-| Provisional parameter ranges | Created; not externally confirmed |
+| Parameter-bounds audit | 5,000 candidates; `NEEDS_BOUNDS_REVIEW` |
+| Reviewed sampling configuration | Created; ranges remain provisional pending financial review |
 | Full ANN research training | Not started |
 | NIFTY validation | Not started |
 | PINN comparison | Not started |
@@ -20,6 +22,9 @@ This private B.Tech capstone repository now contains an ordinary ANN inverse-cal
 ## Documentation
 
 - [Canonical engine](docs/DOUBLE_HESTON_ENGINE.md)
+- [Independent pricing benchmark](docs/INDEPENDENT_PRICING_BENCHMARK.md)
+- [Parameter-bounds audit](docs/PARAMETER_BOUNDS_AUDIT.md)
+- [Engine freeze](docs/ENGINE_FREEZE.md)
 - [Validation results](docs/DOUBLE_HESTON_VALIDATION_RESULTS.md)
 - [Current status](docs/CURRENT_STATUS.md)
 - [Results to date](docs/RESULTS_TO_DATE.md)
@@ -57,7 +62,7 @@ The canonical regression fixture at `tests/fixtures/double_heston_clean_fixture.
 
 The deterministic ANN grid has nine log-moneyness values, six maturities, and separate call and put blocks: `9 * 6 * 2 = 108` normalized price inputs. The ANN produces the ten parameters in the fixed order above. Complete surfaces stay within one train, validation, or test split.
 
-`configs/parameter_bounds_PROVISIONAL.yaml` separates hard numerical-safety bounds from narrower pilot sampling ranges and gives a rationale for every parameter. These ranges were newly selected for engineering validation. They were not recovered from unavailable source and must not be treated as externally confirmed original bounds or as NIFTY-calibrated ranges.
+`configs/parameter_bounds_PROVISIONAL.yaml` remains unchanged. The deterministic audit accepted 2,776 of 5,000 raw candidates and found material boundary concentration. `configs/parameter_sampling_REVIEWED.yaml` now separates hard validity limits, ANN training ranges, constraint margins, boundary challenges, noise tests, and out-of-distribution tests, while retaining insufficiently supported values as provisional. These ranges were not recovered from unavailable source and must not be treated as externally confirmed or NIFTY-calibrated.
 
 ## Install and validate
 
@@ -67,12 +72,14 @@ Run from the repository root:
 python -m pip install -r requirements.txt
 python -m compileall .
 python -m pytest tests -q
+python -m src.run_independent_pricing_benchmark
+python -m src.audit_parameter_bounds
 python -m src.run_double_heston_validation
 python -m src.run_smoke_test
 python -m src.evaluate_repricing
 ```
 
-The controlled validation writes its audit tables under `outputs/double_heston_validation/`. The default repricing command evaluates the best clean controlled calibration output; it is explicitly not an ANN research result.
+The independent benchmark, bounds audit, and freeze evidence are written under `outputs/double_heston_benchmark/`, `outputs/parameter_bounds_audit/`, and `outputs/engine_freeze/`. The controlled calibration validation remains under `outputs/double_heston_validation/`. The default repricing command evaluates the best clean controlled calibration output; it is explicitly not an ANN research result.
 
 To regenerate a small genuine-engine pilot without starting full training:
 
@@ -88,5 +95,6 @@ The pilot command rejects counts above 100 and labels its rows `GENUINE_CANONICA
 - The repository’s correlation-disk convention is preserved, but its provenance differs from the separable four-shock literature model; see the engine document.
 - Controlled clean recovery does not prove global or unique identification.
 - The 1% noise experiment shows substantial parameter instability and boundary-near solutions.
-- Provisional ranges need independent review before larger synthetic generation.
+- The pricing benchmark passed, but the provisional sampling design needs financial/domain review before larger synthetic generation.
+- Uniform raw sampling is not approved: the audit found 44.48% rejection and 32.6729% of accepted vectors near at least one declared boundary.
 - Full ANN/PINN research training, broader seed/noise studies, and chronological NIFTY validation remain outstanding.

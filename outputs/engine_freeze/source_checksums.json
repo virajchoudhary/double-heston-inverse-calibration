@@ -1,0 +1,9 @@
+{
+  "configs/parameter_bounds_PROVISIONAL.yaml": "3e30429a3b69a98c6ddafdd3276e4e0a3edebd113cdacfffee9d7a2c032c274c",
+  "configs/parameter_sampling_REVIEWED.yaml": "09421f3cf7d2ba69d8f652ab3bcad9e21ce8b3f4d6d4e2c0e49eda1c1416fcc5",
+  "src/audit_parameter_bounds.py": "edaf7abb9a2ff4500a25845c1676c2ca38a2e96ae8659a3851856522c8ad4a0c",
+  "src/double_heston.py": "154d53fba17caddcb4d5a8d72001a43aa3cbb90cb1d6d9177c07ddefc5414b0a",
+  "src/double_heston_reference.py": "467cab8eac4ddc9249833f3db064d5f58979d9b0dd15e22448bafa7ef9c12350",
+  "src/run_independent_pricing_benchmark.py": "36d0fcb6ec92b5e360214ad83b3d375cd3605bbcc52a229b13da7bdb7478b141",
+  "tests/fixtures/double_heston_benchmark_cases.json": "5ee9f07d4250f9661164e7b370f5572e043670bc3e20f0a6fc065f0f75c8688b"
+}

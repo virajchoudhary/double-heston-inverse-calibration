@@ -8,9 +8,33 @@ These are controlled results for the independent canonical reimplementation. The
 
 ## Automated tests
 
-- Full suite: **54 passed**.
+- Full suite: **69 passed**.
 - Engine-focused file: **36 passed**.
 - Covered invariants include `phi(0)=1`, finite outputs, call and put bounds, parity, strike monotonicity, non-negativity, shapes, determinism, invalid-input rejection, factor-swap symmetry before label ordering, declared-order rejection, 64/96-node convergence, a near-one-factor limit, scalar/surface agreement, state propagation, and fixture reproducibility.
+- The added reference/benchmark tests cover adaptive integration diagnostics, all-case fixture constraints and coverage, production/reference module independence, case-level tolerance semantics, no-arbitrage/parity gate participation, zero silent failures across all 36 cases, and deterministic non-runtime benchmark outputs.
+
+## Independent pricing benchmark
+
+The slow reference independently implements the characteristic function and uses adaptive SciPy quadrature. It does not import or call production pricing functions.
+
+| Check | Result |
+|---|---:|
+| Cases | 36: 18 calls + 18 paired puts |
+| 64-node RMSE / MAE | `5.458369984817452e-13` / `5.18369298103178e-13` |
+| 96-node RMSE / MAE | `4.2228670813888515e-12` / `4.0641980521745795e-12` |
+| Maximum absolute difference | `8.100187187665142e-13` (64); `5.6985527407960035e-12` (96) |
+| Maximum relative difference, non-negligible prices | `1.064640411670892e-9` |
+| Integration failures / warnings | 0 / 0 |
+| Reference / 64 / 96 no-arbitrage failures | 0 / 0 / 0 |
+| Reference / 64 / 96 parity failures | 0 / 0 / 0 |
+
+The reference took about `3.232` seconds in total on the final primary run, versus `0.0430` seconds for production 64 nodes and `0.0449` seconds for 96 nodes. No outlier was excluded. Agreement is necessary evidence, not proof that both implementations are correct.
+
+## Parameter-bounds audit and freeze decision
+
+The deterministic Latin-hypercube audit generated 5,000 raw candidates, accepted 2,776, rejected 2,224, and priced 250 accepted surfaces. All 21,000 prices were finite, with zero no-arbitrage, strike-monotonicity, or convexity failures. Among accepted vectors, 32.6729% were near at least one declared boundary, 7.0605% were Feller-near, 26.9452% were hard-bound-near, and 9.2939% had weak slow-fast separation. Rejected invalid vectors were kept separate from proximity statistics. Seventeen surface-similar pairs remained materially separated in parameter space.
+
+The final gate is `NEEDS_BOUNDS_REVIEW`. Pricing is benchmarked, but the current sampling design is not approved for large synthetic generation.
 
 ## Pricing checks
 
@@ -94,6 +118,6 @@ These results illustrate practical non-identifiability: similar surface fit does
 
 ## What is and is not validated
 
-Validated here: implementation invariants, deterministic controlled pricing, discounted bounds, parity, quadrature refinement, self-consistency recovery, one deterministic 1% noise experiment, repeated starts, adapter routing, smoke-path separation, and small genuine-engine pilot generation.
+Validated here: implementation invariants, independent adaptive-quadrature agreement on 36 controlled cases, deterministic controlled pricing, discounted bounds, parity, quadrature refinement, self-consistency recovery, one deterministic 1% noise experiment, repeated starts, adapter routing, smoke-path separation, and small genuine-engine pilot generation.
 
-Not validated here: equivalence to unavailable source, externally confirmed original bounds, exhaustive extreme-parameter stability, uniqueness, broad multi-seed robustness, ANN research training, real-market calibration, chronological NIFTY generalization, or ANN/PINN/model superiority.
+Not validated here: equivalence to unavailable source, financially approved sampling bounds, exhaustive extreme-parameter stability, uniqueness, broad multi-seed robustness, ANN research training, real-market calibration, chronological NIFTY generalization, or ANN/PINN/model superiority.

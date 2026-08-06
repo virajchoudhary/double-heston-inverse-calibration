@@ -1,0 +1,80 @@
+{
+  "acceptance_rate": 0.5552,
+  "accepted_count": 2776,
+  "audit_pass": true,
+  "boundary_proximity": {
+    "accepted_candidate_count": 2776,
+    "denominator": 2776,
+    "metrics": {
+      "accepted_near_any_boundary": {
+        "count": 907,
+        "denominator": 2776,
+        "population": "accepted_valid_candidates",
+        "proportion": 0.32672910662824206
+      },
+      "accepted_near_correlation_disk": {
+        "count": 0,
+        "denominator": 2776,
+        "population": "accepted_valid_candidates",
+        "proportion": 0.0
+      },
+      "accepted_near_either_feller": {
+        "count": 196,
+        "denominator": 2776,
+        "population": "accepted_valid_candidates",
+        "proportion": 0.07060518731988473
+      },
+      "accepted_near_hard_bound": {
+        "count": 748,
+        "denominator": 2776,
+        "population": "accepted_valid_candidates",
+        "proportion": 0.26945244956772335
+      },
+      "accepted_weak_slow_fast_separation": {
+        "count": 258,
+        "denominator": 2776,
+        "population": "accepted_valid_candidates",
+        "proportion": 0.09293948126801153
+      }
+    },
+    "population": "accepted_valid_candidates",
+    "raw_candidate_count": 5000,
+    "rejected_candidate_count": 2224,
+    "rejection_rate": 0.4448
+  },
+  "does_not_claim_statistical_identifiability": true,
+  "identifiability_exposure_is_sampling_diagnostic_only": true,
+  "material_sampling_design_findings": true,
+  "method": "scipy.stats.qmc.LatinHypercube",
+  "priced_surface": {
+    "calendar_monotonicity_not_imposed": true,
+    "call_monotonicity_failures": 0,
+    "convexity_failures": 0,
+    "finite_price_count": 21000,
+    "finite_price_failure_count": 0,
+    "finite_price_rate": 1.0,
+    "finite_price_rate_min_per_surface": 1.0,
+    "implied_volatility": "unavailable/skipped: no validated inversion exists",
+    "maximum_atm_normalized_call": 0.3609447008938868,
+    "maximum_normalized_price": 0.507713948497342,
+    "minimum_atm_normalized_call": 0.017258319766710953,
+    "minimum_normalized_price": 3.2116531656356525e-14,
+    "near_parameter_pairs_similar_surface_count": 17,
+    "no_arbitrage_failures": 0,
+    "put_monotonicity_failures": 0,
+    "quote_count": 21000,
+    "runtime_median_seconds": 0.07902410000133386,
+    "runtime_p95_seconds": 0.09097384500073527,
+    "runtime_total_seconds": 20.1247615000284,
+    "term_structure_feature_variety_max": 6,
+    "term_structure_feature_variety_min": 6
+  },
+  "priced_surface_count": 250,
+  "raw_candidate_count": 5000,
+  "rejected_count": 2224,
+  "rejection_rate": 0.4448,
+  "schema_version": "1.0",
+  "seed": 20260806,
+  "selection": "all accepted if <=250; otherwise ten equal-count rank strata by minimum normalized constraint distance with 25 seed-20260806 draws per stratum",
+  "uniform_raw_bound_sampling_appropriate": false
+}
