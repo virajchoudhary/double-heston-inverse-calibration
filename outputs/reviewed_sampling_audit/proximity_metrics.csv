@@ -1,0 +1,5 @@
+distribution,denominator,accepted_count,any_boundary_rate,hard_bound_rate,feller_rate,weak_separation_rate,disk_rate
+interior_train,accepted candidates,8116,0.0,0.0,0.0,0.0,0.0
+wide_valid_train,accepted candidates,3371,0.0,0.0,0.0,0.0,0.0
+boundary_challenge,accepted candidates,2000,1.0,0.53,0.25,0.358,0.25
+ood_test,accepted candidates,2000,0.478,0.478,0.0,0.0,0.0

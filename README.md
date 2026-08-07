@@ -2,19 +2,20 @@
 
 This private B.Tech capstone repository now contains an ordinary ANN inverse-calibration baseline and an independently implemented canonical Double Heston European-option pricing engine. The production engine has been benchmarked against a separately coded adaptive-quadrature reference. The unavailable teammate engine is being replaced by this reimplementation; equivalence to the unavailable source is not claimed.
 
-> The pricing benchmark passed, but the current freeze decision is `NEEDS_BOUNDS_REVIEW`. This controlled synthetic engineering evidence is not an ANN research result and does not establish performance on real NIFTY data.
+> The pricing benchmark passed, but the reviewed-sampling freeze decision is `NEEDS_SAMPLER_CORRECTION`. This controlled synthetic engineering evidence is not an ANN research result and does not establish performance on real NIFTY data.
 
 | Component | Status |
 |---|---|
 | ANN infrastructure | Complete |
 | Canonical Double Heston engine | Independently benchmarked and frozen for review |
 | Independent pricing benchmark | 36 / 36 cases passed at 64 and 96 nodes |
-| Engine and integration tests | 69 passing |
+| Engine and integration tests | 84 passing in the current post-correction suite |
 | Synthetic pricing/calibration validation | Complete for one clean and one 1% noise fixture |
 | ANN pricing adapter | Integrated with the real canonical engine |
 | Genuine-engine pilot data | 12 surfaces / 1,296 quotes generated |
-| Parameter-bounds audit | 5,000 candidates; `NEEDS_BOUNDS_REVIEW` |
-| Reviewed sampling configuration | Created; ranges remain provisional pending financial review |
+| Parameter-bounds audit | Prior 5,000-candidate audit retained as historical evidence |
+| Reviewed sampling audit | 19,000 candidates; `NEEDS_SAMPLER_CORRECTION` |
+| Reviewed sampling configuration | Four isolated distributions; ranges remain provisional pending financial review |
 | Full ANN research training | Not started |
 | NIFTY validation | Not started |
 | PINN comparison | Not started |
@@ -24,6 +25,7 @@ This private B.Tech capstone repository now contains an ordinary ANN inverse-cal
 - [Canonical engine](docs/DOUBLE_HESTON_ENGINE.md)
 - [Independent pricing benchmark](docs/INDEPENDENT_PRICING_BENCHMARK.md)
 - [Parameter-bounds audit](docs/PARAMETER_BOUNDS_AUDIT.md)
+- [Reviewed parameter sampling](docs/REVIEWED_PARAMETER_SAMPLING.md)
 - [Engine freeze](docs/ENGINE_FREEZE.md)
 - [Validation results](docs/DOUBLE_HESTON_VALIDATION_RESULTS.md)
 - [Current status](docs/CURRENT_STATUS.md)
@@ -62,7 +64,7 @@ The canonical regression fixture at `tests/fixtures/double_heston_clean_fixture.
 
 The deterministic ANN grid has nine log-moneyness values, six maturities, and separate call and put blocks: `9 * 6 * 2 = 108` normalized price inputs. The ANN produces the ten parameters in the fixed order above. Complete surfaces stay within one train, validation, or test split.
 
-`configs/parameter_bounds_PROVISIONAL.yaml` remains unchanged. The deterministic audit accepted 2,776 of 5,000 raw candidates and found material boundary concentration. `configs/parameter_sampling_REVIEWED.yaml` now separates hard validity limits, ANN training ranges, constraint margins, boundary challenges, noise tests, and out-of-distribution tests, while retaining insufficiently supported values as provisional. These ranges were not recovered from unavailable source and must not be treated as externally confirmed or NIFTY-calibrated.
+`configs/parameter_bounds_PROVISIONAL.yaml` remains unchanged. The reviewed audit generated 10,000 interior, 5,000 wide-valid, 2,000 boundary-challenge, and 2,000 OOD candidates. Interior accepted 8,116 (`81.16%`) and wide-valid accepted 3,371 (`67.42%`); challenge and OOD rows remain explicitly isolated. Four challenge pricing failures keep the gate at `NEEDS_SAMPLER_CORRECTION`. The reviewed ranges were not recovered from unavailable source and must not be treated as externally confirmed or NIFTY-calibrated.
 
 ## Install and validate
 
@@ -73,7 +75,7 @@ python -m pip install -r requirements.txt
 python -m compileall .
 python -m pytest tests -q
 python -m src.run_independent_pricing_benchmark
-python -m src.audit_parameter_bounds
+python -m src.audit_reviewed_sampling
 python -m src.run_double_heston_validation
 python -m src.run_smoke_test
 python -m src.evaluate_repricing

@@ -1,12 +1,12 @@
 # Results to Date
 
-Status date: 06 August 2026
+Status date: 07 August 2026
 
 ## Verified engineering results
 
 | Check | Fresh result |
 |---|---|
-| Full automated suite | 69 passed |
+| Full automated suite | 84 passed in the current post-correction run |
 | Engine-focused tests | 36 passed |
 | Canonical fixture | 18 quotes; deterministic and reproducible |
 | No-arbitrage bounds | Passed |
@@ -33,13 +33,15 @@ Status date: 06 August 2026
 | Maximum absolute difference | `8.100187187665142e-13` (64); `5.6985527407960035e-12` (96) |
 | Reference warnings / unreliable integrations | 0 / 0 |
 | Benchmark no-arbitrage / parity failures | 0 / 0 |
-| Raw audit candidates | 5,000 |
-| Accepted / rejected | 2,776 (`55.52%`) / 2,224 (`44.48%`) |
-| Accepted boundary-near / Feller-near | `32.6729%` / `7.0605%` |
-| Priced audit surfaces | 250; 21,000 finite prices |
-| Surface validity failures | 0 bounds, monotonicity, or convexity failures |
+| Prior raw audit candidates | 5,000 |
+| Reviewed sampling candidates | 19,000 across four populations |
+| Reviewed interior / wide accepted | 8,116 / 3,371 (`81.16%` / `67.42%`) |
+| Reviewed challenge / OOD valid | 2,000 / 2,000; 500 per challenge label |
+| Reviewed priced-surface failures | 4 retained challenge failures; no rows dropped |
+| Historical priced bounds-audit surfaces | 250; 21,000 finite prices |
+| Historical bounds-audit surface validity failures | 0 bounds, monotonicity, or convexity failures |
 | Similar-surface/separated-parameter pairs | 17 |
-| Freeze decision | `NEEDS_BOUNDS_REVIEW` |
+| Freeze decision | `NEEDS_SAMPLER_CORRECTION` |
 
 The detailed benchmark, bounds, controlled-calibration, and freeze evidence are in [Independent pricing benchmark](INDEPENDENT_PRICING_BENCHMARK.md), [Parameter-bounds audit](PARAMETER_BOUNDS_AUDIT.md), [Double Heston validation results](DOUBLE_HESTON_VALIDATION_RESULTS.md), and [Engine freeze](ENGINE_FREEZE.md).
 

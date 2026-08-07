@@ -21,19 +21,26 @@ Run from the repository root:
 python -m compileall .
 python -m pytest tests -q
 python -m src.run_independent_pricing_benchmark
-python -m src.audit_parameter_bounds
+python -m src.audit_reviewed_sampling
 python -m src.run_double_heston_validation
 python -m src.run_smoke_test
 python -m src.evaluate_repricing
 ```
 
-After every command passes, refresh the decision metadata without re-running the audit:
+The reviewed audit deliberately does not self-attest the complete external
+validation chain, so the canonical freeze remains `PENDING_PRIMARY_RERUN`. There
+is no trusted metadata-only finalizer in this workflow. The legacy
+`src.audit_parameter_bounds` command and its `--freeze-only` mode reproduce the
+historical bounds-audit workflow and must not be used to refresh the canonical
+reviewed freeze because they overwrite reviewed config or freeze evidence.
 
-```powershell
-python -m src.audit_parameter_bounds --freeze-only --commands-passed
-```
-
-Benchmark, audit, and freeze evidence is written under `outputs/double_heston_benchmark/`, `outputs/parameter_bounds_audit/`, and `outputs/engine_freeze/`. Smoke evidence remains beneath `outputs/metrics/smoke_test/`. Generated checkpoints, dummy surfaces, predictions, and row-level smoke errors are reproducible and intentionally excluded from Git.
+Benchmark, reviewed-audit, and freeze evidence is written under
+`outputs/double_heston_benchmark/`, `outputs/reviewed_sampling_audit/`, and
+`outputs/engine_freeze/`. Historical bounds-audit evidence remains under
+`outputs/parameter_bounds_audit/`. Smoke evidence remains beneath
+`outputs/metrics/smoke_test/`. Generated checkpoints, dummy surfaces,
+predictions, and row-level smoke errors are reproducible and intentionally
+excluded from Git.
 
 ## Determinism and normalization
 
@@ -55,7 +62,9 @@ Research pricing routes to the independent canonical engine and never falls back
 
 - Benchmark tolerances are fixed in source and fixture metadata before execution.
 - The reference uses `epsabs=1e-10`, `epsrel=1e-10`, and integration limit `500`.
-- The bounds audit uses `scipy.stats.qmc.LatinHypercube`, seed `20260806`, exactly 5,000 raw candidates, and a deterministic ten-stratum priced subset capped at 250 surfaces.
+- The historical bounds audit uses `scipy.stats.qmc.LatinHypercube`, seed `20260806`, exactly 5,000 raw candidates, and a deterministic ten-stratum priced subset capped at 250 surfaces.
+- The reviewed sampling audit uses latent-coordinate `scipy.stats.qmc.LatinHypercube`, seed `20260807`, fixed populations of 10,000 interior, 5,000 wide-valid, 2,000 challenge, and 2,000 OOD candidates, with clean pricing caps of 500/250/250/250 and retained raw-noise diagnostics at levels `0`, `0.005`, `0.01`, and `0.02`.
+- The reviewed audit does not self-attest the external validation chain. Freeze evidence remains `PENDING_PRIMARY_RERUN` until a separately trusted finalization records the primary-session results.
 - Runtime columns naturally vary; numerical and status outputs are tested for determinism within tight numerical tolerance.
 - `configs/parameter_bounds_PROVISIONAL.yaml` is read-only input to the audit. Reviewed evidence is written separately to `configs/parameter_sampling_REVIEWED.yaml`.
 

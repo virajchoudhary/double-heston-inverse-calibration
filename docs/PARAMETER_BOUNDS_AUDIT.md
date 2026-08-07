@@ -45,3 +45,15 @@ Uniform raw sampling over the current provisional ranges is not recommended for 
 - **REVIEW:** Add a validated implied-volatility inversion before using smile-range diagnostics.
 
 The source provisional file was not modified. `configs/parameter_sampling_REVIEWED.yaml` records the current evidence, retained provisional values, challenge/noise/OOD sections, and review status for every value. Detailed audit tables are under `outputs/parameter_bounds_audit/`.
+
+## Reviewed-sampling follow-up
+
+The subsequent reviewed design is documented in
+[REVIEWED_PARAMETER_SAMPLING.md](REVIEWED_PARAMETER_SAMPLING.md) and audited
+under `outputs/reviewed_sampling_audit/`. It uses four isolated populations
+(10,000 interior, 5,000 wide-valid, 2,000 challenge, and 2,000 OOD), retains
+all rejected and priced-failure rows, and records deterministic diagnostics for
+the configured noise levels. The reviewed gate is `NEEDS_SAMPLER_CORRECTION`
+because four challenge surfaces failed the clean pricing validity gate. The
+original 5,000-candidate audit above remains historical evidence and is not
+overwritten.

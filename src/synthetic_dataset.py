@@ -378,3 +378,20 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+
+def assign_reviewed_distribution_splits(
+    surface_ids: Sequence[str], distribution: str, seed: int = DEFAULT_SEED
+) -> dict[str, str]:
+    """Assign reviewed-design splits without allowing challenge/OOD leakage.
+
+    Boundary challenges require an explicit future training opt-in outside this
+    helper; OOD is permanently evaluation-only for the reviewed audit design.
+    """
+    if distribution == "boundary_challenge":
+        return {str(surface_id): "challenge_excluded" for surface_id in surface_ids}
+    if distribution == "ood_test":
+        return {str(surface_id): "ood_test" for surface_id in surface_ids}
+    if distribution not in {"interior_train", "wide_valid_train"}:
+        raise ValueError(f"Unknown reviewed distribution: {distribution}")
+    return assign_surface_splits(surface_ids, seed=seed)

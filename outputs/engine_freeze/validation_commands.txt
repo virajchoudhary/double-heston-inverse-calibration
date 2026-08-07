@@ -1,7 +1,9 @@
 python -m compileall .
 python -m pytest tests -q
 python -m src.run_independent_pricing_benchmark
-python -m src.audit_parameter_bounds
+python -m src.audit_reviewed_sampling
 python -m src.run_double_heston_validation
 python -m src.run_smoke_test
 python -m src.evaluate_repricing
+
+The reviewed audit never self-attests this chain; preserve PENDING_PRIMARY_RERUN until trusted external finalization records independently rerun results.

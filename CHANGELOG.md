@@ -2,6 +2,27 @@
 
 All notable project changes are recorded here. This private academic repository does not grant an open-source licence or imply permission for external reuse.
 
+## 0.4.0 - 2026-08-07
+
+### Added
+
+- Reviewed four-population Double Heston sampling design with deterministic
+  interior, wide-valid, boundary-challenge, and OOD cohorts.
+- 19,000-candidate reviewed audit evidence, per-distribution diversity metrics,
+  retained raw-noise diagnostics, and expanded sampler tests.
+- Reviewed sampling documentation and updated freeze/reproducibility records.
+
+### Changed
+
+- Replaced the prior single-box sampling recommendation with explicit challenge
+  and OOD isolation and a `NEEDS_SAMPLER_CORRECTION` gate.
+
+### Limitations
+
+- Four clean challenge pricing-validity failures remain retained in the audit.
+- Ranges remain provisional pending financial/domain review; no ANN training,
+  final large dataset, teammate-equivalence claim, or NIFTY validation exists.
+
 ## 0.3.0 - 2026-08-06
 
 ### Added

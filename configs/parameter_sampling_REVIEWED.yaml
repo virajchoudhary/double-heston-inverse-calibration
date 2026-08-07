@@ -1,373 +1,126 @@
-ann_synthetic_training_sampling_ranges:
-  kappa_fast:
-    lower: 1.6
-    provisional: true
-    rationale: Separates fast decay from the slow-factor range.
-    reviewed: false
-    source: parameter_bounds_PROVISIONAL.yaml empirical_sampling_ranges
-    status: REVIEW
-    upper: 6.0
-  kappa_slow:
-    lower: 0.2
-    provisional: true
-    rationale: Slow mean reversion for controlled pilot diversity.
-    reviewed: false
-    source: parameter_bounds_PROVISIONAL.yaml empirical_sampling_ranges
-    status: REVIEW
-    upper: 1.5
-  rho_fast:
-    lower: -0.6
-    provisional: true
-    rationale: Explores a distinct fast skew contribution.
-    reviewed: false
-    source: parameter_bounds_PROVISIONAL.yaml empirical_sampling_ranges
-    status: REVIEW
-    upper: 0.35
-  rho_slow:
-    lower: -0.75
-    provisional: true
-    rationale: Covers negative skew and a limited positive tail.
-    reviewed: false
-    source: parameter_bounds_PROVISIONAL.yaml empirical_sampling_ranges
-    status: REVIEW
-    upper: 0.2
-  sigma_fast:
-    lower: 0.03
-    provisional: true
-    rationale: Allows fast-factor curvature subject to Feller.
-    reviewed: false
-    source: parameter_bounds_PROVISIONAL.yaml empirical_sampling_ranges
-    status: REVIEW
-    upper: 0.65
-  sigma_slow:
-    lower: 0.03
-    provisional: true
-    rationale: Moderate vol-of-vol; the Feller rule is also enforced.
-    reviewed: false
-    source: parameter_bounds_PROVISIONAL.yaml empirical_sampling_ranges
-    status: REVIEW
-    upper: 0.45
-  theta_fast:
-    lower: 0.01
-    provisional: true
-    rationale: Keeps the fast variance contribution controlled.
-    reviewed: false
-    source: parameter_bounds_PROVISIONAL.yaml empirical_sampling_ranges
-    status: REVIEW
-    upper: 0.08
-  theta_slow:
-    lower: 0.02
-    provisional: true
-    rationale: Moderate slow-factor annualized variance.
-    reviewed: false
-    source: parameter_bounds_PROVISIONAL.yaml empirical_sampling_ranges
-    status: REVIEW
-    upper: 0.12
-  v0_fast:
-    lower: 0.008
-    provisional: true
-    rationale: Positive short-lived initial variance contribution.
-    reviewed: false
-    source: parameter_bounds_PROVISIONAL.yaml empirical_sampling_ranges
-    status: REVIEW
-    upper: 0.1
-  v0_slow:
-    lower: 0.015
-    provisional: true
-    rationale: Covers below- and above-mean initial slow variance.
-    reviewed: false
-    source: parameter_bounds_PROVISIONAL.yaml empirical_sampling_ranges
-    status: REVIEW
-    upper: 0.15
-boundary_near_challenge_sampling:
-  minimum_normalized_distance:
-    provisional: true
-    rationale: Challenge-only accepted-valid boundary definition; observed rate 0.3267
-      (907/2776).
-    reviewed: false
-    source: bounds audit specification
-    status: REVIEW
-    value: 0.05
-constraint_margins:
-  fast_feller:
-    provisional: true
-    rationale: Strict validity remains required; accepted-valid Feller-near rate is
-      0.0706.
-    reviewed: false
-    source: declared repository constraint
-    status: REVIEW
-    value: 0.0
-  joint_correlation_disk:
-    provisional: true
-    rationale: Strict disk validity remains required.
-    reviewed: false
-    source: declared repository constraint
-    status: REVIEW
-    value: 0.0
-  slow_fast_ordering:
-    provisional: true
-    rationale: Strict validity remains required; margin adequacy is under review.
-    reviewed: false
-    source: declared repository constraint
-    status: REVIEW
-    value: 0.0
-  slow_feller:
-    provisional: true
-    rationale: Strict validity remains required; accepted-valid Feller-near rate is
-      0.0706.
-    reviewed: false
-    source: declared repository constraint
-    status: REVIEW
-    value: 0.0
-evidence:
-  accepted_count:
-    provisional: true
-    rationale: Observed after declared constraints.
-    reviewed: false
-    source: bounds audit output
-    status: REVIEW
-    value: 2776
-  accepted_near_any_boundary:
-    provisional: true
-    rationale: 'Accepted-valid population only: 907/2776 candidates are boundary-near.'
-    reviewed: false
-    source: bounds audit output accepted_valid_candidates
-    status: REVIEW
-    value: 0.32672910662824206
-  accepted_near_either_feller:
-    provisional: true
-    rationale: 'Accepted-valid population only: 196/2776 candidates are Feller-near.'
-    reviewed: false
-    source: bounds audit output accepted_valid_candidates
-    status: REVIEW
-    value: 0.07060518731988473
-  no_real_market_validation:
-    provisional: true
-    rationale: Synthetic evidence is not market validation.
-    reviewed: false
-    source: milestone scope
-    status: REQUIRE_FINANCIAL_REVIEW
-    value: true
-  no_teammate_equivalence_claim:
-    provisional: false
-    rationale: Unavailable code was not compared.
-    reviewed: true
-    source: milestone scope
-    status: KEEP
-    value: true
-  priced_surface_count:
-    provisional: false
-    rationale: Capped audit-only production pricing sample.
-    reviewed: true
-    source: bounds audit output
-    status: KEEP
-    value: 250
-  raw_candidate_count:
-    provisional: false
-    rationale: Fixed audit population.
-    reviewed: true
-    source: bounds audit output
-    status: KEEP
-    value: 5000
-  statement:
-    provisional: true
-    rationale: Prevents unsupported readiness claims.
-    reviewed: false
-    source: milestone scope
-    status: REQUIRE_FINANCIAL_REVIEW
-    value: No real-market validation or teammate-equivalence evidence is claimed;
-      financial review remains required.
-  uniform_raw_bound_sampling_appropriate:
-    provisional: true
-    rationale: Evidence-based design diagnostic only.
-    reviewed: false
-    source: bounds audit output
-    status: REVIEW
-    value: false
-hard_numerical_validity_limits:
-  kappa_fast:
-    lower: 0.1
-    provisional: true
-    rationale: Allow faster decay while limiting stiff short-time dynamics.
-    reviewed: false
-    source: parameter_bounds_PROVISIONAL.yaml hard_numerical_safety_bounds
-    status: KEEP
-    upper: 12.0
-  kappa_slow:
-    lower: 0.05
-    provisional: true
-    rationale: Avoid near-zero decay and extreme stiffness.
-    reviewed: false
-    source: parameter_bounds_PROVISIONAL.yaml hard_numerical_safety_bounds
-    status: KEEP
-    upper: 3.0
-  rho_fast:
-    lower: -0.95
-    provisional: true
-    rationale: Keep distance from singular correlation endpoints.
-    reviewed: false
-    source: parameter_bounds_PROVISIONAL.yaml hard_numerical_safety_bounds
-    status: KEEP
-    upper: 0.95
-  rho_slow:
-    lower: -0.95
-    provisional: true
-    rationale: Keep distance from singular correlation endpoints.
-    reviewed: false
-    source: parameter_bounds_PROVISIONAL.yaml hard_numerical_safety_bounds
-    status: KEEP
-    upper: 0.95
-  sigma_fast:
-    lower: 0.005
-    provisional: true
-    rationale: Exclude the singular endpoint and cap transform stiffness.
-    reviewed: false
-    source: parameter_bounds_PROVISIONAL.yaml hard_numerical_safety_bounds
-    status: KEEP
-    upper: 1.5
-  sigma_slow:
-    lower: 0.005
-    provisional: true
-    rationale: Exclude a singular zero-vol-of-vol endpoint and extreme Fourier stiffness.
-    reviewed: false
-    source: parameter_bounds_PROVISIONAL.yaml hard_numerical_safety_bounds
-    status: KEEP
-    upper: 1.0
-  theta_fast:
-    lower: 0.002
-    provisional: true
-    rationale: Positive fast-factor long-run variance over a broad finite scale.
-    reviewed: false
-    source: parameter_bounds_PROVISIONAL.yaml hard_numerical_safety_bounds
-    status: KEEP
-    upper: 0.2
-  theta_slow:
-    lower: 0.005
-    provisional: true
-    rationale: Positive annualized variance with a broad but finite scale.
-    reviewed: false
-    source: parameter_bounds_PROVISIONAL.yaml hard_numerical_safety_bounds
-    status: KEEP
-    upper: 0.25
-  v0_fast:
-    lower: 0.002
-    provisional: true
-    rationale: Positive fast initial variance with a finite numerical ceiling.
-    reviewed: false
-    source: parameter_bounds_PROVISIONAL.yaml hard_numerical_safety_bounds
-    status: KEEP
-    upper: 0.25
-  v0_slow:
-    lower: 0.005
-    provisional: true
-    rationale: Positive initial variance with a finite numerical ceiling.
-    reviewed: false
-    source: parameter_bounds_PROVISIONAL.yaml hard_numerical_safety_bounds
-    status: KEEP
-    upper: 0.3
-method:
-  provisional: false
-  rationale: Deterministic coverage of provisional empirical ranges.
+schema_version: "2.0"
+status: REVIEWED_SYNTHETIC_DESIGN_NOT_FINANCIAL_APPROVAL
+sampler:
+  method: scipy.stats.qmc.LatinHypercube
+  latent_coordinate_design: true
+  seed: 20260807
+  version: reviewed-double-heston-sampling-v1
+  candidate_population_policy: fixed_requested_populations_with_retained_rejections
+  note: Conditional transforms are latent-coordinate LHS only, not physical-space LHS.
+hard_constraints:
+  kappa_slow: {lower: 0.05, upper: 3.0, source: parameter_bounds_PROVISIONAL.yaml, rationale: Immutable numerical safety bound, status: KEEP, provisional: true, reviewed: true}
+  theta_slow: {lower: 0.005, upper: 0.25, source: parameter_bounds_PROVISIONAL.yaml, rationale: Immutable numerical safety bound, status: KEEP, provisional: true, reviewed: true}
+  sigma_slow: {lower: 0.005, upper: 1.0, source: parameter_bounds_PROVISIONAL.yaml, rationale: Immutable numerical safety bound, status: KEEP, provisional: true, reviewed: true}
+  rho_slow: {lower: -0.95, upper: 0.95, source: parameter_bounds_PROVISIONAL.yaml, rationale: Immutable component correlation bound, status: KEEP, provisional: true, reviewed: true}
+  v0_slow: {lower: 0.005, upper: 0.30, source: parameter_bounds_PROVISIONAL.yaml, rationale: Immutable numerical safety bound, status: KEEP, provisional: true, reviewed: true}
+  kappa_fast: {lower: 0.10, upper: 12.0, source: parameter_bounds_PROVISIONAL.yaml, rationale: Immutable numerical safety bound, status: KEEP, provisional: true, reviewed: true}
+  theta_fast: {lower: 0.002, upper: 0.20, source: parameter_bounds_PROVISIONAL.yaml, rationale: Immutable numerical safety bound, status: KEEP, provisional: true, reviewed: true}
+  sigma_fast: {lower: 0.005, upper: 1.50, source: parameter_bounds_PROVISIONAL.yaml, rationale: Immutable numerical safety bound, status: KEEP, provisional: true, reviewed: true}
+  rho_fast: {lower: -0.95, upper: 0.95, source: parameter_bounds_PROVISIONAL.yaml, rationale: Immutable component correlation bound, status: KEEP, provisional: true, reviewed: true}
+  v0_fast: {lower: 0.002, upper: 0.25, source: parameter_bounds_PROVISIONAL.yaml, rationale: Immutable numerical safety bound, status: KEEP, provisional: true, reviewed: true}
+  correlation_disk: {lower: 0.0, upper: 1.0, source: declared repository constraint, rationale: Strict joint disk, status: KEEP, provisional: false, reviewed: true}
+  feller_margin: {lower: 0.0, upper: 1.0, source: canonical normalized margin, rationale: Strictly positive canonical Feller margin, status: KEEP, provisional: false, reviewed: true}
+interior_train:
+  intended_training_role: interior_train
+  candidate_count: 10000
+  price_cap: 500
+  feller_fraction: [0.25, 0.80]
+  correlation_radius: [0.05, 0.75]
+  separation_gap: 0.80
+  correlation_component_envelope: {rho_slow: [-0.75, 0.20], rho_fast: [-0.60, 0.35]}
+  acceptance_margin_policy: {exclude_any_boundary_near: true, near_threshold: 0.05, weak_separation_threshold: 0.10, source: reviewed sampling acceptance gate, rationale: "Retain near-bound rows as auditable rejections rather than silently mixing them into ordinary training; the shared union includes hard, Feller, joint-disk, and weak-separation predicates", status: REVIEW, provisional: true, reviewed: true}
+  parameter_ranges:
+    kappa_slow: {lower: 0.30, upper: 1.40, source: reviewed design, rationale: predeclared interior, status: REVIEW, provisional: true, reviewed: true}
+    theta_slow: {lower: 0.025, upper: 0.12, source: reviewed design, rationale: predeclared interior, status: REVIEW, provisional: true, reviewed: true}
+    sigma_slow: {lower: 0.030618621784789725, upper: 0.46372405587806204, source: Feller transform envelope, rationale: "f*[2*kappa_slow*theta_slow]^0.5 for f in [0.25,0.80]", status: REVIEW, provisional: true, reviewed: true}
+    rho_slow: {lower: -0.75, upper: 0.20, source: polar transform, rationale: component envelope, status: REVIEW, provisional: true, reviewed: true}
+    v0_slow: {lower: 0.02, upper: 0.15, source: reviewed design, rationale: predeclared interior, status: REVIEW, provisional: true, reviewed: true}
+    kappa_fast: {lower: 1.10, upper: 6.0, source: conditional transform, rationale: kappa slow plus gap, status: REVIEW, provisional: true, reviewed: true}
+    theta_fast: {lower: 0.01, upper: 0.08, source: reviewed design, rationale: predeclared interior, status: REVIEW, provisional: true, reviewed: true}
+    sigma_fast: {lower: 0.03708099243547831, upper: 0.783836717690617, source: Feller transform envelope, rationale: "f*[2*kappa_fast*theta_fast]^0.5 for f in [0.25,0.80]", status: REVIEW, provisional: true, reviewed: true}
+    rho_fast: {lower: -0.60, upper: 0.35, source: polar transform, rationale: component envelope, status: REVIEW, provisional: true, reviewed: true}
+    v0_fast: {lower: 0.008, upper: 0.10, source: reviewed design, rationale: predeclared interior, status: REVIEW, provisional: true, reviewed: true}
+wide_valid_train:
+  intended_training_role: wide_valid_train
+  candidate_count: 5000
+  price_cap: 250
+  feller_fraction: [0.15, 0.96]
+  correlation_radius: [0.05, 0.90]
+  separation_gap: 0.25
+  correlation_component_envelope: {rho_slow: [-0.90, 0.55], rho_fast: [-0.85, 0.65]}
+  acceptance_margin_policy: {exclude_any_boundary_near: true, near_threshold: 0.05, weak_separation_threshold: 0.10, source: reviewed sampling acceptance gate, rationale: "Retain near-bound rows as auditable rejections rather than silently mixing them into ordinary training; the shared union includes hard, Feller, joint-disk, and weak-separation predicates", status: REVIEW, provisional: true, reviewed: true}
+  parameter_ranges:
+    kappa_slow: {lower: 0.12, upper: 2.40, source: reviewed design, rationale: predeclared wide, status: REVIEW, provisional: true, reviewed: true}
+    theta_slow: {lower: 0.01, upper: 0.20, source: reviewed design, rationale: predeclared wide, status: REVIEW, provisional: true, reviewed: true}
+    sigma_slow: {lower: 0.007348469228349534, upper: 0.9406040612287403, source: Feller transform envelope, rationale: "f*[2*kappa_slow*theta_slow]^0.5 for f in [0.15,0.96]", status: REVIEW, provisional: true, reviewed: true}
+    rho_slow: {lower: -0.90, upper: 0.55, source: polar transform, rationale: component envelope, status: REVIEW, provisional: true, reviewed: true}
+    v0_slow: {lower: 0.01, upper: 0.24, source: reviewed design, rationale: predeclared wide, status: REVIEW, provisional: true, reviewed: true}
+    kappa_fast: {lower: 0.37, upper: 10.0, source: conditional transform, rationale: kappa slow plus gap, status: REVIEW, provisional: true, reviewed: true}
+    theta_fast: {lower: 0.005, upper: 0.16, source: reviewed design, rationale: predeclared wide, status: REVIEW, provisional: true, reviewed: true}
+    sigma_fast: {lower: 0.00912414379544733, upper: 1.4985, source: Feller transform and hard cap, rationale: "min(f*[2*kappa_fast*theta_fast]^0.5, 0.999*hard_sigma_fast_upper)", status: REVIEW, provisional: true, reviewed: true}
+    rho_fast: {lower: -0.85, upper: 0.65, source: polar transform, rationale: component envelope, status: REVIEW, provisional: true, reviewed: true}
+    v0_fast: {lower: 0.005, upper: 0.20, source: reviewed design, rationale: predeclared wide, status: REVIEW, provisional: true, reviewed: true}
+boundary_challenge:
+  intended_training_role: boundary_challenge
+  candidate_count: 2000
+  price_cap: 250
+  default_split: challenge_excluded
+  train_validation_eligible: false
+  feller_fraction: [0.15, 0.80]
+  correlation_radius: [0.05, 0.90]
+  separation_gap: 0.25
+  correlation_component_envelope: {rho_slow: [-0.90, 0.55], rho_fast: [-0.85, 0.65]}
+  acceptance_margin_policy: {exclude_any_boundary_near: true, near_threshold: 0.05, weak_separation_threshold: 0.10, source: reviewed sampling acceptance gate, rationale: "Retain near-bound rows as auditable rejections rather than silently mixing them into ordinary training; the shared union includes hard, Feller, joint-disk, and weak-separation predicates", status: REVIEW, provisional: true, reviewed: true}
+  future_generation_policy: {interior_train: 0.75, wide_valid_train: 0.15, boundary_challenge: 0.10, challenge_requires_explicit_opt_in: true}
+  regimes:
+    near_feller: {weight: 0.25, feller_fraction: [0.96, 0.985]}
+    weak_separation: {weight: 0.25, separation_gap: [0.26, 1.10]}
+    near_hard_bound: {weight: 0.25, hard_distance: [0.005, 0.045]}
+    near_correlation_disk: {weight: 0.25, correlation_radius: [0.975, 0.992]}
+  parameter_ranges:
+    kappa_slow: {lower: 0.12, upper: 2.40, source: challenge mixture, rationale: valid support, status: REVIEW, provisional: true, reviewed: true}
+    theta_slow: {lower: 0.01, upper: 0.20, source: challenge mixture, rationale: valid support, status: REVIEW, provisional: true, reviewed: true}
+    sigma_slow: {lower: 0.007348469228349534, upper: 0.9691408578648971, source: Feller transform envelope, rationale: "union of labelled feller and base f*[2*kappa_slow*theta_slow]^0.5 transforms", status: REVIEW, provisional: true, reviewed: true}
+    rho_slow: {lower: -0.95, upper: 0.95, source: hard component bound, rationale: valid polar support, status: REVIEW, provisional: true, reviewed: true}
+    v0_slow: {lower: 0.005, upper: 0.30, source: hard bound, rationale: near-bound support, status: REVIEW, provisional: true, reviewed: true}
+    kappa_fast: {lower: 0.37, upper: 10.0, source: challenge mixture, rationale: conditional valid support, status: REVIEW, provisional: true, reviewed: true}
+    theta_fast: {lower: 0.005, upper: 0.16, source: challenge mixture, rationale: valid support, status: REVIEW, provisional: true, reviewed: true}
+    sigma_fast: {lower: 0.00912414379544733, upper: 1.4310835055998654, source: Feller transform envelope, rationale: "union of labelled feller and base f*[2*kappa_fast*theta_fast]^0.5 transforms", status: REVIEW, provisional: true, reviewed: true}
+    rho_fast: {lower: -0.95, upper: 0.95, source: hard component bound, rationale: valid polar support, status: REVIEW, provisional: true, reviewed: true}
+    v0_fast: {lower: 0.002, upper: 0.25, source: hard bound, rationale: near-bound support, status: REVIEW, provisional: true, reviewed: true}
+ood_test:
+  intended_training_role: ood_test
+  candidate_count: 2000
+  price_cap: 250
+  evaluation_only: true
+  default_split: ood_test
+  train_validation_eligible: false
+  ood_dimension: kappa_fast
+  ood_regime: high_tail_kappa_fast
+  feller_fraction: [0.15, 0.80]
+  correlation_radius: [0.05, 0.85]
+  separation_gap: 0.25
+  correlation_component_envelope: {rho_slow: [-0.85, 0.50], rho_fast: [-0.80, 0.55]}
+  acceptance_margin_policy: {exclude_any_boundary_near: false, near_threshold: 0.05, weak_separation_threshold: 0.10, source: reviewed sampling diagnostics, rationale: Shared proximity union is reported for evaluation-only OOD rows but does not reject them, status: REVIEW, provisional: true, reviewed: true}
+  parameter_ranges:
+    kappa_slow: {lower: 0.12, upper: 2.40, source: OOD design, rationale: valid base support, status: REVIEW, provisional: true, reviewed: true}
+    theta_slow: {lower: 0.01, upper: 0.20, source: OOD design, rationale: valid base support, status: REVIEW, provisional: true, reviewed: true}
+    sigma_slow: {lower: 0.007348469228349534, upper: 0.783836717690617, source: Feller transform envelope, rationale: "f*[2*kappa_slow*theta_slow]^0.5 for f in [0.15,0.80]", status: REVIEW, provisional: true, reviewed: true}
+    rho_slow: {lower: -0.85, upper: 0.50, source: polar transform, rationale: component envelope, status: REVIEW, provisional: true, reviewed: true}
+    v0_slow: {lower: 0.01, upper: 0.24, source: OOD design, rationale: valid base support, status: REVIEW, provisional: true, reviewed: true}
+    kappa_fast: {lower: 10.25, upper: 12.0, source: OOD design, rationale: nonzero disjoint high tail, status: REVIEW, provisional: true, reviewed: true}
+    theta_fast: {lower: 0.005, upper: 0.16, source: OOD design, rationale: valid base support, status: REVIEW, provisional: true, reviewed: true}
+    sigma_fast: {lower: 0.04802343178074637, upper: 1.4985, source: Feller transform and hard cap, rationale: "min(f*[2*kappa_fast*theta_fast]^0.5, 0.999*hard_sigma_fast_upper)", status: REVIEW, provisional: true, reviewed: true}
+    rho_fast: {lower: -0.80, upper: 0.55, source: polar transform, rationale: component envelope, status: REVIEW, provisional: true, reviewed: true}
+    v0_fast: {lower: 0.005, upper: 0.20, source: OOD design, rationale: valid base support, status: REVIEW, provisional: true, reviewed: true}
+noise_tests:
+  levels: [0, 0.005, 0.01, 0.02]
+  source: reviewed sampling milestone
+  rationale: Configuration coverage only; clean arbitrage checks do not transfer after noise without an arbitrage-preserving method.
+  status: REVIEW
+  provisional: true
   reviewed: true
-  source: bounds audit specification
-  status: KEEP
-  value: scipy.stats.qmc.LatinHypercube
-noise_test_sampling:
-  relative_price_noise:
-    lower: 0.0
-    provisional: true
-    rationale: Controlled noise only, not a real-market claim.
-    reviewed: false
-    source: existing controlled validation
-    status: REVIEW
-    upper: 0.01
-out_of_distribution_test_ranges:
-  kappa_fast:
-    lower: 0.1
-    provisional: true
-    rationale: Allow faster decay while limiting stiff short-time dynamics.
-    reviewed: false
-    source: provisional hard numerical bounds; OOD design unresolved
-    status: REVIEW
-    upper: 12.0
-  kappa_slow:
-    lower: 0.05
-    provisional: true
-    rationale: Avoid near-zero decay and extreme stiffness.
-    reviewed: false
-    source: provisional hard numerical bounds; OOD design unresolved
-    status: REVIEW
-    upper: 3.0
-  rho_fast:
-    lower: -0.95
-    provisional: true
-    rationale: Keep distance from singular correlation endpoints.
-    reviewed: false
-    source: provisional hard numerical bounds; OOD design unresolved
-    status: REVIEW
-    upper: 0.95
-  rho_slow:
-    lower: -0.95
-    provisional: true
-    rationale: Keep distance from singular correlation endpoints.
-    reviewed: false
-    source: provisional hard numerical bounds; OOD design unresolved
-    status: REVIEW
-    upper: 0.95
-  sigma_fast:
-    lower: 0.005
-    provisional: true
-    rationale: Exclude the singular endpoint and cap transform stiffness.
-    reviewed: false
-    source: provisional hard numerical bounds; OOD design unresolved
-    status: REVIEW
-    upper: 1.5
-  sigma_slow:
-    lower: 0.005
-    provisional: true
-    rationale: Exclude a singular zero-vol-of-vol endpoint and extreme Fourier stiffness.
-    reviewed: false
-    source: provisional hard numerical bounds; OOD design unresolved
-    status: REVIEW
-    upper: 1.0
-  theta_fast:
-    lower: 0.002
-    provisional: true
-    rationale: Positive fast-factor long-run variance over a broad finite scale.
-    reviewed: false
-    source: provisional hard numerical bounds; OOD design unresolved
-    status: REVIEW
-    upper: 0.2
-  theta_slow:
-    lower: 0.005
-    provisional: true
-    rationale: Positive annualized variance with a broad but finite scale.
-    reviewed: false
-    source: provisional hard numerical bounds; OOD design unresolved
-    status: REVIEW
-    upper: 0.25
-  v0_fast:
-    lower: 0.002
-    provisional: true
-    rationale: Positive fast initial variance with a finite numerical ceiling.
-    reviewed: false
-    source: provisional hard numerical bounds; OOD design unresolved
-    status: REVIEW
-    upper: 0.25
-  v0_slow:
-    lower: 0.005
-    provisional: true
-    rationale: Positive initial variance with a finite numerical ceiling.
-    reviewed: false
-    source: provisional hard numerical bounds; OOD design unresolved
-    status: REVIEW
-    upper: 0.3
-schema_version: '1.0'
-seed:
-  provisional: false
-  rationale: Reproducible Latin-hypercube sampling.
-  reviewed: true
-  source: bounds audit specification
-  status: KEEP
-  value: 20260806
-status: REVIEWED_EVIDENCE_NOT_FINANCIAL_APPROVAL
+limitations:
+  no_real_market_validation: true
+  no_teammate_equivalence_claim: true
+  statement: No real-market validation, NIFTY claim, or teammate-equivalence claim is made; financial/domain review remains required.
