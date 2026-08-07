@@ -1,0 +1,92 @@
+schema_version: "1.0"
+status: PREPARED_NOT_EXECUTED
+
+readiness:
+  core_dataset_ready: true
+  core_dataset_ready_meaning: ready_to_generate_not_already_generated
+  core_generation_plan_ready: true
+  core_dataset_generated: false
+  challenge_stress_ready: false
+  engine_review_required: false
+  global_reviewed_sampling_audit_status: NEEDS_SAMPLER_CORRECTION
+  global_reviewed_sampling_audit_pass: false
+  scientific_generation_authorized: true
+  dataset_generation_execution_authorized: false
+  training_authorized: false
+
+implementation_boundary:
+  generator_exists: false
+  reviewed_core_generator_implemented: false
+  existing_generic_generator_compatible: false
+  next_milestone: implement_and_test_reviewed_core_generator
+  future_command: null
+
+synthetic_market_state:
+  spot: 100.0
+  risk_free_rate: 0.02
+  dividend_yield: 0.01
+
+ann_representation:
+  target: normalized_price
+  option_types: [call, put]
+  log_moneyness: [-0.30, -0.20, -0.10, -0.05, 0, 0.05, 0.10, 0.20, 0.30]
+  maturity_days: [7, 14, 30, 60, 90, 180]
+  input_dimension: 108
+  target_dimension: 10
+  parameter_order:
+    - kappa_slow
+    - theta_slow
+    - sigma_slow
+    - rho_slow
+    - v0_slow
+    - kappa_fast
+    - theta_fast
+    - sigma_fast
+    - rho_fast
+    - v0_fast
+
+clean_surface_plan:
+  total_surfaces: 10000
+  composition_percent:
+    interior_train: 83.34
+    wide_valid_train: 16.66
+  approximate_interior_to_wide_ratio: "5:1"
+  normal_clean_surface_quotas:
+    train: {total: 7500, interior_train: 6250, wide_valid_train: 1250}
+    validation: {total: 1250, interior_train: 1042, wide_valid_train: 208}
+    test: {total: 1250, interior_train: 1042, wide_valid_train: 208}
+    distribution_totals: {interior_train: 8334, wide_valid_train: 1666, total: 10000}
+  split_integrity:
+    unit: whole_surface
+    no_quote_row_splitting: true
+    unseen_parameter_vectors_across_splits: true
+    no_surface_id_overlap: true
+    no_parameter_vector_overlap: true
+    fit_normalization_on_train_only: true
+  excluded_populations: [boundary_challenge, ood_test, noisy_surfaces]
+  evaluation_isolation:
+    boundary_challenge: challenge_excluded
+    ood_test: ood_test_only
+    ood_train_validation_assignments: 0
+
+noise_follow_on_plan:
+  levels: [0, 0.005, 0.01, 0.02]
+  percent_labels: ["0%", "0.5%", "1%", "2%"]
+  retain_metadata: [original_clean_surface_id, noise_level, noise_seed, distribution_identity]
+  operation: raw_multiplicative_noise
+  no_clipping_projection_or_discard: true
+  no_arbitrage_repair: true
+  participates_in_core_ready_gate: false
+
+runtime_estimate:
+  basis: verified_price_only_108_quote_surface_timing
+  surfaces: 10000
+  mean_minutes: 16.04
+  p95_minutes: 16.34
+  excludes: [selection, validation, serialization, hashing, retries, contention]
+
+next_milestone:
+  name: implement_and_test_reviewed_core_generator
+  generator_exists: false
+  future_command: null
+  dataset_generation_authorized_in_this_task: false

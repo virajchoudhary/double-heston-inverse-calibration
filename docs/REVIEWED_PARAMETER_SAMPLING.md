@@ -58,3 +58,24 @@ external validation.
 This is synthetic engineering evidence only. It is not financial approval,
 real-market or NIFTY validation, ANN training evidence, a claim of equivalence
 to unavailable teammate code, or a statistical identifiability result.
+
+## Prepared reviewed-core ANN pilot
+
+The retained challenge rows keep the global sampler gate at
+`NEEDS_SAMPLER_CORRECTION`, but they do not invalidate the separately scoped
+normal clean core: the reviewed priced evidence has 500/500 interior and
+250/250 wide-valid surfaces passing finite, no-arbitrage, call/put monotonicity,
+and convexity checks. A 10,000-surface core generation plan is therefore
+prepared, not executed: 8,334 interior and 1,666 wide-valid surfaces, split as
+6,250/1,250 train, 1,042/208 validation, and 1,042/208 test. The normal clean
+population is 83.34% interior and 16.66% wide-valid, approximately a 5:1 ratio.
+Boundary challenges are a separate evaluation population and are not included
+in these 10,000 surfaces.
+
+The prepared core keeps full surfaces intact, uses unseen parameter vectors and
+non-overlapping surface IDs across splits, and fits normalization on training
+data only. Boundary challenge, OOD, and noisy surfaces are separate from the
+core. The generator implementation and execution authorization are still absent;
+scientific authorization applies only to the separately scoped clean core. See
+`configs/ann_dataset_FIRST_RESEARCH.yaml` and
+`outputs/core_dataset_readiness/core_dataset_readiness.json`.

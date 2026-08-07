@@ -11,6 +11,10 @@ All notable project changes are recorded here. This private academic repository 
 - 19,000-candidate reviewed audit evidence, per-distribution diversity metrics,
   retained raw-noise diagnostics, and expanded sampler tests.
 - Reviewed sampling documentation and updated freeze/reproducibility records.
+- Machine-readable readiness evidence and a prepared, unexecuted 10,000-surface
+  reviewed-core ANN pilot contract: 83.34% interior and 16.66% wide-valid with
+  explicit 108-input/ten-target and leakage-prevention contracts. Challenge,
+  OOD, and noisy populations remain separate; no dataset or training exists.
 
 ### Changed
 

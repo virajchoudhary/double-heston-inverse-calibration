@@ -50,6 +50,17 @@ Python, NumPy, and PyTorch receive the same non-negative seed. PyTorch determini
 
 Research pricing routes to the independent canonical engine and never falls back to `dummy_surface_generator_for_smoke_test`. Full generation should use reviewed bounds. Provisional bounds require an explicit opt-in and are currently limited to controlled pilot generation of at most 100 surfaces.
 
+## Prepared reviewed-core ANN pilot
+
+`configs/ann_dataset_FIRST_RESEARCH.yaml` and
+`outputs/core_dataset_readiness/core_dataset_readiness.json` record a prepared,
+unexecuted 10,000-surface normal-clean plan. Its price-only estimate for 108
+quotes per surface is about 16.04 minutes mean and 16.34 minutes p95; it excludes
+selection, validation, serialization, hashing, retries, and contention. The
+reviewed-core generator has not been implemented, so no generation command is
+currently available. Implementing and testing that generator is the next
+milestone; dataset generation still requires separate execution authorization.
+
 ## Reviewing the canonical pricing engine
 
 1. Review the documented equations and repository-specific correlation convention.

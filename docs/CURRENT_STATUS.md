@@ -18,7 +18,7 @@ The unavailable teammate engine is being replaced by an independently implemente
 | Fixed ten-parameter contract | Complete |
 | Canonical pricing engine | 36-case independent benchmark passed; freeze evidence created |
 | Engine-focused tests | 36 passed |
-| Full automated suite | 84 passed in the current post-correction run |
+| Full automated suite | 86 passed, including 2 readiness-contract tests |
 | Independent reference integrations | 36 / 36 reliable; zero warnings or failures |
 | Production/reference agreement | All 64-node and 96-node cases passed |
 | ANN research pricing adapter | Integrated |
@@ -48,3 +48,14 @@ normal `kappa_fast` support with no train/validation assignments. The 1,250 clea
 priced surfaces retain four challenge pricing failures, so the current gate is
 `NEEDS_SAMPLER_CORRECTION`. The complete evidence is in
 [REVIEWED_PARAMETER_SAMPLING.md](REVIEWED_PARAMETER_SAMPLING.md).
+
+## Scoped core-generation readiness
+
+The normal clean reviewed core is scientifically authorized for future generation:
+`CORE_DATASET_READY = true`. Stress readiness remains separate and false:
+`CHALLENGE_STRESS_READY = false`. The first plan contains 10,000 surfaces using
+the fixed 108-input and ordered ten-parameter contract. A dedicated generator
+must still be implemented and separately authorized for execution. This does not change the global audit decision:
+challenge stress remains not ready, the four retained challenge rows remain in
+the audit, and no dataset generation, ANN training, real-NIFTY validation, or
+PINN training or teammate-equivalence claim has occurred.

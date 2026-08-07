@@ -6,7 +6,7 @@ Status date: 07 August 2026
 
 | Check | Fresh result |
 |---|---|
-| Full automated suite | 84 passed in the current post-correction run |
+| Full automated suite | 86 passed, including 2 readiness-contract tests |
 | Engine-focused tests | 36 passed |
 | Canonical fixture | 18 quotes; deterministic and reproducible |
 | No-arbitrage bounds | Passed |
@@ -56,6 +56,14 @@ The clean controlled surface can be recovered to numerical precision from one de
 - Financially approved empirical sampling bounds
 - Chronological NIFTY EOD validation
 - ANN versus PINN versus numerical calibration versus Standard Heston results
+- A generated reviewed-core ANN dataset or any ANN training result
+
+## Prepared reviewed-core pilot
+
+The 10,000-surface normal-clean plan is prepared only; it has not generated a
+dataset, trained an ANN or PINN, validated real NIFTY data, or changed the global `NEEDS_SAMPLER_CORRECTION`
+decision. Its boundary challenge, OOD, and raw-noise populations remain
+separate from the core.
 
 ## Claims that must not be made
 
