@@ -51,6 +51,7 @@ local_settings.*
 
 # Generated research datasets and binary arrays
 data/raw/
+market_data_audit/stage_a/
 data/synthetic/*
 !data/synthetic/.gitkeep
 data/processed/*
