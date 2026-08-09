@@ -1,96 +1,114 @@
-# Physics-Informed Inverse Calibration of the Canonical Double Heston Model for Stable Option-Surface Parameter Recovery
+# Physics-Informed Inverse Calibration of the Canonical Double Heston Model
 
-This folder contains the complete starter project for the **ordinary ANN inverse-calibration baseline**. It is the non-physics neural comparator for the approved capstone. It does not contain a Double Heston PDE residual, a PINN loss, or claimed research results.
+This private B.Tech capstone repository contains an ordinary ANN inverse-calibration baseline, an independently implemented canonical Double Heston European-option pricing engine, and the Stage A real-market availability-audit scaffold. The production engine has been benchmarked against a separately coded adaptive-quadrature reference. The unavailable teammate engine is being replaced by this reimplementation; equivalence to the unavailable source is not claimed.
 
-> **The current smoke test is infrastructure validation only and is not a research result.**
+> The pricing benchmark passed and the normal reviewed synthetic core is ready under the existing contract, but full research-dataset generation is intentionally held until the Stage A market-support audit freezes the final surface representation. The historical challenge-stress decision remains `NEEDS_SAMPLER_CORRECTION`. No ANN/PINN research result or real-market performance claim is made.
 
 | Component | Status |
 |---|---|
 | ANN infrastructure | Complete |
-| Automated tests | Passing |
-| Smoke test | Passing |
-| Double Heston pricer | Awaiting teammate source |
-| Research synthetic data | Blocked |
-| ANN research training | Not started |
-| NIFTY validation | Not started |
-| PINN comparison | Not started |
+| Canonical Double Heston engine | Independently benchmarked and frozen for review |
+| Independent pricing benchmark | 36 / 36 cases passed at 64 and 96 nodes |
+| Full automated suite | 96 passed at the latest validated milestone |
+| Synthetic pricing/calibration validation | Complete for one clean and one 1% noise fixture |
+| ANN pricing adapter | Integrated with the real canonical engine |
+| Genuine-engine pilot data | 12 surfaces / 1,296 quotes generated |
+| Parameter-bounds audit | Prior 5,000-candidate audit retained as historical evidence |
+| Reviewed sampling audit | 19,000 candidates; normal core ready, challenge stress separate |
+| Stage A availability-audit scaffold | Complete and validated; no Bloomberg observations collected yet |
+| Market-data G1 gate | Not passed |
+| Surface-representation G2 gate | Not passed; current 108-input contract remains provisional/open |
+| Final 10,000-surface research dataset | Not generated |
+| Full ANN research training | Not started |
+| PINN development/comparison | Not started |
+| Real sector/NIFTY validation | Not started |
 
-## Project documentation
+## Documentation
 
+- [Canonical engine](docs/DOUBLE_HESTON_ENGINE.md)
+- [Independent pricing benchmark](docs/INDEPENDENT_PRICING_BENCHMARK.md)
+- [Parameter-bounds audit](docs/PARAMETER_BOUNDS_AUDIT.md)
+- [Reviewed parameter sampling](docs/REVIEWED_PARAMETER_SAMPLING.md)
+- [Engine freeze](docs/ENGINE_FREEZE.md)
+- [Validation results](docs/DOUBLE_HESTON_VALIDATION_RESULTS.md)
+- [Market-data availability audit](docs/market_data_availability_audit.md)
 - [Current status](docs/CURRENT_STATUS.md)
 - [Results to date](docs/RESULTS_TO_DATE.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Next steps](docs/NEXT_STEPS.md)
 - [Reproducibility](docs/REPRODUCIBILITY.md)
-- [Team handoff requirements](docs/TEAM_HANDOFF_REQUIREMENTS.md)
-- [Repository audit](docs/REPOSITORY_AUDIT.md)
+- [Handoff status](docs/TEAM_HANDOFF_REQUIREMENTS.md)
 
-## Purpose and scope
-
-The ANN maps one fixed-size normalized option surface to ten canonical Double Heston parameters. A future frozen pricing engine will then reconstruct the option surface from the ANN-predicted parameters. The ordinary ANN uses parameter-supervised mean-squared error. A future PINN is a separate model and must not be conflated with this baseline.
-
-The teammate handoff validates a locked prototype built on 11 power-sector stocks. The final approved project must use NIFTY end-of-day European option surfaces, synthetic parameter-recovery validation, chronological real-market validation, and comparisons against traditional Double Heston calibration, this ordinary ANN, a PINN, and Standard Heston.
-
-## Ten outputs
-
-The exact order is:
+## Exact ten-parameter order
 
 ```text
 kappa_slow, theta_slow, sigma_slow, rho_slow, v0_slow,
 kappa_fast, theta_fast, sigma_fast, rho_fast, v0_fast
 ```
 
-This is eight structural parameters plus two surface-specific initial variance states. All kappa, theta, sigma, and v0 values must be positive. The slow factor must satisfy `kappa_slow < kappa_fast`. Both factors require positive Feller gaps, and correlations must satisfy individual bounds and `rho_slow^2 + rho_fast^2 < 1`.
+All `kappa`, `theta`, `sigma`, and `v0` values are positive; `kappa_slow < kappa_fast`; both Feller gaps are positive; each correlation lies inside `(-1, 1)`; and `rho_slow^2 + rho_fast^2 < 1`.
 
-## Synthetic-first design
+## Engine
 
-Historical calibrated parameters are not treated as labels. Research labels must be known synthetic parameter vectors sampled from teammate-confirmed bounds and priced with the frozen canonical Double Heston engine. Complete surfaces, not quote rows, are assigned to train/validation/test splits.
+`src/double_heston.py` implements:
 
-There are two strictly separated generation paths:
+- a stable Little-Heston-Trap factor exponent;
+- a two-factor characteristic function formed by adding factor log-exponents;
+- configurable Gauss-Laguerre integration, defaulting to 64 nodes;
+- call pricing and put pricing through put-call parity;
+- scalar option and quote-aligned surface APIs;
+- strict validation with no silent price replacement or clipping;
+- documented variance-state propagation.
 
-- Research mode requires the real pricing engine and confirmed bounds. It fails clearly if either is missing.
-- Smoke-test mode uses `dummy_surface_generator_for_smoke_test`, writes only under `smoke_test` paths, and records `NOT_RESEARCH_DATA`. Genuine loaders reject it unless an explicit override is provided.
+The canonical regression fixture at `tests/fixtures/double_heston_clean_fixture.json` is marked `CANONICAL_REIMPLEMENTATION_FIXTURE`. It is generated by this implementation only and is not described as the teammate's fixture.
 
-## Surface representation
+## ANN and dataset boundary
 
-The deterministic grid contains nine log-moneyness values `[-0.30, -0.20, -0.10, -0.05, 0.00, 0.05, 0.10, 0.20, 0.30]`, six maturities `[7, 14, 30, 60, 90, 180]` days, and separate call and put blocks. The flattened normalized-price input therefore has `9 * 6 * 2 = 108` values. Strikes are `spot * exp(log-moneyness)`, maturities are `days / 365`, calls precede puts, and optional masks preserve fixed shapes.
+`src/pricing_interface.py` routes research pricing to the real canonical engine. `dummy_surface_generator_for_smoke_test` remains separate and can be used only by the explicit smoke-test path, whose rows retain `NOT_RESEARCH_DATA`.
 
-## Dataset fields
+The current candidate ANN grid has nine log-moneyness values, six maturities, and separate call and put blocks: `9 * 6 * 2 = 108` normalized price inputs. The ANN produces the ten parameters in the fixed order above. Complete surfaces stay within one train, validation, or test split.
 
-The row-level synthetic schema stores surface ID, market inputs, seed, noise level, surface split, log-moneyness, strike, maturity in days and years, option type, generated and spot-normalized prices, mask, data status, and all ten targets. The PyTorch dataset groups these rows into one fixed-length feature vector and one ten-parameter target per surface.
+The 108-input grid is **provisional** under the mentor-updated market-data plan. It must not be used for final 10,000-surface generation until Stage A confirms common real-market maturity/moneyness support and the G2 representation gate is passed. No 54-, 57-, or other replacement representation has been frozen.
 
-## PDF handoff conversion
+`configs/parameter_bounds_PROVISIONAL.yaml` remains unchanged. The reviewed audit generated 10,000 interior, 5,000 wide-valid, 2,000 boundary-challenge, and 2,000 OOD candidates. Interior accepted 8,116 (`81.16%`) and wide-valid accepted 3,371 (`67.42%`); challenge and OOD rows remain explicitly isolated. Four retained challenge pricing-tolerance stress cases keep the historical global stress decision at `NEEDS_SAMPLER_CORRECTION`; they pass at 96 Gauss-Laguerre nodes and agree with the independent adaptive reference within the frozen comparison tolerance, so they remain separate evidence rather than ordinary ANN training data. The reviewed ranges were not recovered from unavailable source and must not be treated as externally confirmed or market-calibrated.
 
-The only teammate file available was copied to `handoff/` and extracted with a local PDF parser. `handoff/HESTON_DOUBLE_HESTON_TEAM_CONTEXT.md` is a readable technical companion containing the audit verdict, equations, locked data lineage, historical results, synthetic-recovery findings, identifiability warnings, continuation protocol, and missing files. The original PDF remains the authoritative validated handoff.
+## Stage A market-data boundary
 
-## Installation and validation
+The Stage A scaffold defines one market surface as one `underlying + valuation_date` containing near, mid, and far expiry slices together. Eight sector candidates are ranked within Power, Healthcare/Pharma, IT, and Financial/Banking; NIFTY is a separate non-ranked reference. Price usability is evaluated independently from volume/open-interest activity, and futures-implied carry is audited as an available method rather than selected as the final carry convention.
 
-From the directory containing `ann_inverse_calibration`:
+No Bloomberg observations are committed to the repository. Raw Stage A inputs are ignored by Git, and the final market representation remains open until the availability/coverage evidence is collected and reviewed.
+
+## Install and validate
+
+Run from the repository root:
 
 ```powershell
-python -m pip install -r ann_inverse_calibration/requirements.txt
-python -m compileall ann_inverse_calibration
-python -m pytest ann_inverse_calibration/tests -q
-python -m ann_inverse_calibration.src.run_smoke_test
+python -m pip install -r requirements.txt
+python -m compileall .
+python -m pytest tests -q
+python -m src.run_independent_pricing_benchmark
+python -m src.audit_reviewed_sampling
+python -m src.run_double_heston_validation
+python -m src.run_smoke_test
+python -m src.evaluate_repricing
 ```
 
-The smoke test creates a small development-only dataset, trains the ordinary ANN for three CPU epochs, computes a loss, saves the best validation checkpoint, verifies `(test_surfaces, 10)` predictions, and writes under `outputs/metrics/smoke_test/`.
+The independent benchmark, bounds audit, and freeze evidence are written under `outputs/double_heston_benchmark/`, `outputs/parameter_bounds_audit/`, and `outputs/engine_freeze/`. The controlled calibration validation remains under `outputs/double_heston_validation/`. The default repricing command evaluates the best clean controlled calibration output; it is explicitly not an ANN research result.
 
-## Genuine synthetic generation after source arrival
+To regenerate a small genuine-engine pilot without starting full training:
 
-1. Verify the frozen teammate source and checksum without altering its mathematics.
-2. Implement only the thin adapter in `src/pricing_interface.py` and retain shape, finite-value, and option-bound checks.
-3. Record teammate-confirmed bounds and provenance in a non-template configuration marked `TEAMMATE_CONFIRMED`.
-4. Rerun the teammate pricing and controlled recovery tests.
-5. Call research generation; it will sample known valid vectors, price each complete grid, add only declared noise, and keep whole surfaces in one split.
-6. Train using train-only target normalization and validation-only checkpoint selection.
-7. Report parameter recovery and reconstructed-price errors, retaining all failures.
+```powershell
+python -m src.synthetic_dataset pilot --count 12
+```
 
-## Current limitations and missing dependencies
+The pilot command rejects counts above 100 and labels its rows `GENUINE_CANONICAL_DOUBLE_HESTON_SYNTHETIC_DATA`. This label means the values are genuine outputs of the new canonical engine, not proof of agreement with real market data.
 
-- The frozen validated `double_heston.py` was not available, so real pricing and repricing are blocked.
-- Genuine parameter bounds were not available; the template contains nulls and requires teammate confirmation.
-- The final NIFTY data contract and chronological dates were not available.
-- The smoke-test dummy mapping is not Double Heston pricing and cannot support financial or research conclusions.
-- No ANN or PINN research result is claimed.
-- Existing historical Heston files and results were not retuned or modified.
+## Current limitations
+
+- The unavailable teammate source, helpers, tests, fixtures, and exact original bounds cannot be reproduced or compared directly.
+- The repository's correlation-disk convention is preserved, but its provenance differs from the separable four-shock literature model; see the engine document.
+- Controlled clean recovery does not prove global or unique identification.
+- The 1% noise experiment shows substantial parameter instability and boundary-near solutions.
+- The current 108-input representation is provisional until the Stage A market-support audit passes G2.
+- The final four sector underlyings, market maturity grid, carry convention, and Black-Scholes baseline protocol are not yet frozen.
+- Full ANN/PINN research training, broader seed/noise studies, and frozen unseen real-market validation remain outstanding.

@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "baseline_commit": "bdb5aa275ec6a2b91841a07fd4f9f7fea42a1dca",
+  "status": "PREPARED_NOT_EXECUTED",
+  "decision": {
+    "CORE_DATASET_READY": true,
+    "CHALLENGE_STRESS_READY": false,
+    "scientific_generation_authorized": true,
+    "dataset_generation_execution_authorized": false,
+    "training_authorized": false
+  },
+  "readiness": {
+    "core_dataset_ready": true,
+    "core_dataset_ready_meaning": "ready_to_generate_not_already_generated",
+    "core_generation_plan_ready": true,
+    "core_dataset_generated": false,
+    "challenge_stress_ready": false,
+    "engine_review_required": false,
+    "global_reviewed_sampling_audit_status": "NEEDS_SAMPLER_CORRECTION",
+    "global_reviewed_sampling_audit_pass": false,
+    "scientific_generation_authorized": true,
+    "dataset_generation_execution_authorized": false,
+    "training_authorized": false
+  },
+  "implementation_boundary": {"generator_exists": false, "reviewed_core_generator_implemented": false, "existing_generic_generator_compatible": false, "next_milestone": "implement_and_test_reviewed_core_generator", "future_command": null},
+  "production_source_checksum": {"path": "src/double_heston.py", "sha256": "154d53fba17caddcb4d5a8d72001a43aa3cbb90cb1d6d9177c07ddefc5414b0a"},
+  "source_hashes_verified": {
+    "src/double_heston_reference.py": "467cab8eac4ddc9249833f3db064d5f58979d9b0dd15e22448bafa7ef9c12350",
+    "src/audit_reviewed_sampling.py": "1a451c864e0997e7ff9e52c1270fb1d8f28f5d539eede759612e842e1da44611",
+    "src/synthetic_dataset.py": "234087c91edd9b71da0358d3a638da6a3e2919f5e511847776a4f9e7798884fc",
+    "configs/parameter_sampling_REVIEWED.yaml": "2634446a3e11db8a620d24a4974ca9fc190d29271bef2a8965c10c01453fd29a",
+    "outputs/reviewed_sampling_audit/reviewed_sampling_summary.json": "df8b2f6817f0d920fb3dd323be146faf99733a0e5eb5a73baca12086d7ba144d",
+    "outputs/reviewed_sampling_audit/reviewed_sampling_decision.json": "3ad5beedd2478d1dfbaf93c0975472521fe1700ad12261fdbd5953ed7fbf899d",
+    "outputs/reviewed_sampling_audit/priced_surface_metrics.csv": "efee5d1813bd4fa8b2ee802df7168e9cf409c2ced22114a67fd0d2f56d8ef7dd"
+  },
+  "fixed_synthetic_market_state": {"spot": 100.0, "risk_free_rate": 0.02, "dividend_yield": 0.01},
+  "ann_representation": {"target": "normalized_price", "option_types": ["call", "put"], "log_moneyness": [-0.3, -0.2, -0.1, -0.05, 0.0, 0.05, 0.1, 0.2, 0.3], "maturity_days": [7, 14, 30, 60, 90, 180], "input_dimension": 108, "target_dimension": 10, "parameter_order": ["kappa_slow", "theta_slow", "sigma_slow", "rho_slow", "v0_slow", "kappa_fast", "theta_fast", "sigma_fast", "rho_fast", "v0_fast"]},
+  "reviewed_core_results": {
+    "interior_train": {"priced_surfaces": 500, "failures": 0, "finite": true, "no_arbitrage": true, "call_monotonicity": true, "put_monotonicity": true, "convexity": true},
+    "wide_valid_train": {"priced_surfaces": 250, "failures": 0, "finite": true, "no_arbitrage": true, "call_monotonicity": true, "put_monotonicity": true, "convexity": true}
+  },
+  "retained_challenge_cases": [
+    {"key": ["boundary_challenge", 1043], "regime": "near_hard_bound", "split": "challenge_excluded", "deterministic": true, "classification": "numerical_tolerance_stress", "all_96_node_gates_pass": true, "adaptive_reference_reliable": true, "adaptive_reference_warning_count": 0, "engine_review_required": false, "parameters": {"kappa_slow": 2.098596756980058, "theta_slow": 0.06834106148390959, "sigma_slow": 0.3689695075211807, "rho_slow": -0.7811538855500751, "v0_slow": 0.00999632822937107, "kappa_fast": 7.577616247512089, "theta_fast": 0.018163915309898488, "sigma_fast": 0.3122911998189585, "rho_fast": -0.15974577332410644, "v0_fast": 0.004187577455042539}, "representative_quote": {"option_type": "put", "strike": 70.0, "maturity_years": 0.05, "price_64": -7.122850007590387e-06, "price_96": 1.3826749523104809e-08, "adaptive_reference_price": 5.7838178690872155e-12, "failure_magnitude_normalized": -7.122850007590386e-08}},
+    {"key": ["boundary_challenge", 1091], "regime": "near_hard_bound", "split": "challenge_excluded", "deterministic": true, "classification": "numerical_tolerance_stress", "all_96_node_gates_pass": true, "adaptive_reference_reliable": true, "adaptive_reference_warning_count": 0, "engine_review_required": false, "parameters": {"kappa_slow": 1.0776103379871078, "theta_slow": 0.15810762981996782, "sigma_slow": 0.3367626485716245, "rho_slow": 0.23606184609232297, "v0_slow": 0.009848777208333544, "kappa_fast": 4.8548137446432005, "theta_fast": 0.01653477833176088, "sigma_fast": 0.2848884899823803, "rho_fast": -0.687895918559498, "v0_fast": 0.004480381642232854}, "representative_quote": {"option_type": "put", "strike": 70.0, "maturity_years": 0.05, "price_64": -1.2192554947887402e-06, "price_96": -2.362128270760877e-10, "adaptive_reference_price": -2.4868995751603507e-12, "failure_magnitude_normalized": -1.2192554805778855e-08}},
+    {"key": ["boundary_challenge", 1180], "regime": "near_hard_bound", "split": "challenge_excluded", "deterministic": true, "classification": "numerical_tolerance_stress", "all_96_node_gates_pass": true, "adaptive_reference_reliable": true, "adaptive_reference_warning_count": 0, "engine_review_required": false, "parameters": {"kappa_slow": 0.35503476357047636, "theta_slow": 0.07160983699113413, "sigma_slow": 0.1785635830978752, "rho_slow": -0.420004679221238, "v0_slow": 0.011421728345532582, "kappa_fast": 0.6879795795328034, "theta_fast": 0.12583642860005087, "sigma_fast": 0.06601684395184944, "rho_fast": -0.1031539352737142, "v0_fast": 0.0037029082502367237}, "representative_quote": {"option_type": "put", "strike_pair": [70.0, 80.0], "maturity_years": 0.05, "price_64": [2.4673425969012897e-08, 8.309797294714372e-10], "price_96": [5.9401372709544376e-12, 1.4139800441625994e-10], "adaptive_reference_price": [-1.7493562154413667e-11, 1.3507417406799505e-10], "failure_magnitude_price_64": -2.384244623954146e-08, "failure_magnitude_normalized": -2.384244623954146e-10}},
+    {"key": ["boundary_challenge", 1276], "regime": "near_hard_bound", "split": "challenge_excluded", "deterministic": true, "classification": "numerical_tolerance_stress", "all_96_node_gates_pass": true, "adaptive_reference_reliable": true, "adaptive_reference_warning_count": 0, "engine_review_required": false, "parameters": {"kappa_slow": 1.6466838666168968, "theta_slow": 0.13563744521128052, "sigma_slow": 0.34929540040418755, "rho_slow": -0.3930166262471917, "v0_slow": 0.006528780992939848, "kappa_fast": 7.376981710845598, "theta_fast": 0.028520166795726415, "sigma_fast": 0.505979768139395, "rho_fast": 0.035059594649179696, "v0_fast": 0.009557303445300307}, "representative_quote": {"option_type": "call", "strike": 130.0, "maturity_years": 0.05, "price_64": -1.627016084055415e-08, "price_96": 9.188598625224547e-10, "adaptive_reference_price": 9.123863727877754e-10, "failure_magnitude_normalized": -1.6270146422080515e-10}}
+  ],
+  "ood_evidence": {"candidate_count": 2000, "train_validation_assignments": 0, "excluded_from_core_training": true, "evaluation_split": "ood_test", "kappa_fast_normal_observed_max": 9.999194513618255, "kappa_fast_ood_observed_min": 10.250775309863311},
+  "noise_evidence": {"levels": [0.0, 0.005, 0.01, 0.02], "percent_labels": ["0%", "0.5%", "1%", "2%"], "seeds": [20260807, 20265810, 20270813, 20275816], "retain_metadata": ["original_clean_surface_id", "noise_level", "noise_seed", "distribution_identity"], "realized_stats": [[0.0, 0.0, 0.0, 0.0], [-3.5973199753104786e-05, 0.004982391857943997, -0.020075836861664073, 0.02453623988280705], [3.339648914660184e-05, 0.010005308725799033, -0.04100044102744706, 0.04596670580441297], [4.566452797751092e-05, 0.02003301575579086, -0.0856037915929921, 0.10019630570469257]], "no_clipping_projection_or_discard": true, "no_arbitrage_repair": true, "raw_shape_failures_invalidate_core_readiness": false, "ready_gating": false},
+  "first_dataset_plan": {"total_surfaces": 10000, "composition_percent": {"interior_train": 83.34, "wide_valid_train": 16.66}, "approximate_interior_to_wide_ratio": "5:1", "train": {"total": 7500, "interior_train": 6250, "wide_valid_train": 1250}, "validation": {"total": 1250, "interior_train": 1042, "wide_valid_train": 208}, "test": {"total": 1250, "interior_train": 1042, "wide_valid_train": 208}, "distribution_totals": {"interior_train": 8334, "wide_valid_train": 1666}, "input_dimension": 108, "target_dimension": 10, "split_integrity": {"atomic_unit": "complete_parameter_vector_and_surface", "no_quote_row_splitting": true, "no_surface_id_overlap": true, "no_parameter_vector_overlap": true, "fit_normalization_on_train_only": true}, "excluded_populations": ["boundary_challenge", "ood_test", "noisy_surfaces"], "generated": false, "training_started": false, "runtime_estimate": {"mean_minutes": 16.04, "p95_minutes": 16.34, "basis": "price_only_108_quotes", "excludes": ["selection", "validation", "serialization", "hashing", "retries", "contention"]}},
+  "next_milestone": {"name": "implement_and_test_reviewed_core_generator", "generator_exists": false, "future_command": null}
+}

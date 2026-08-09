@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import numpy as np
 
-from ann_inverse_calibration.src.constants import PARAMETER_NAMES
-from ann_inverse_calibration.src.constraints import dictionary_to_vector, vector_to_dictionary
+from src.constants import PARAMETER_NAMES
+from src.constraints import dictionary_to_vector, vector_to_dictionary
 
 
 EXPECTED_PARAMETER_NAMES = [

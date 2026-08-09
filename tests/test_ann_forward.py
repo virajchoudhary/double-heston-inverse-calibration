@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 import torch
 
-from ann_inverse_calibration.models.ann_model import ANNInverseCalibrator
+from models.ann_model import ANNInverseCalibrator
 
 
 def test_ann_returns_batch_by_ten() -> None:

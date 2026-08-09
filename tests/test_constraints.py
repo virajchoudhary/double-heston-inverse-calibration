@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import pytest
 
-from ann_inverse_calibration.src.constants import PARAMETER_INDICES
-from ann_inverse_calibration.src.constraints import validate_parameters
+from src.constants import PARAMETER_INDICES
+from src.constraints import validate_parameters
 
 
 @pytest.fixture

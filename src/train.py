@@ -13,8 +13,8 @@ from torch import nn
 from torch.optim import Adam
 from torch.utils.data import DataLoader, Subset
 
-from ann_inverse_calibration.models.ann_model import ANNInverseCalibrator
-from ann_inverse_calibration.models.parameter_transform import TargetStandardizer
+from models.ann_model import ANNInverseCalibrator
+from models.parameter_transform import TargetStandardizer
 
 from .constants import DEFAULT_SEED
 from .dataset import SurfaceParameterDataset

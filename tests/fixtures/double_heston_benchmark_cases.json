@@ -1,0 +1,1325 @@
+{
+  "schema_version": "1.0",
+  "fixture_type": "INDEPENDENT_PRICING_BENCHMARK_CASES",
+  "canonical_parameter_order": [
+    "kappa_slow",
+    "theta_slow",
+    "sigma_slow",
+    "rho_slow",
+    "v0_slow",
+    "kappa_fast",
+    "theta_fast",
+    "sigma_fast",
+    "rho_fast",
+    "v0_fast"
+  ],
+  "immutable_tolerances": {
+    "absolute": 0.00002,
+    "relative": 0.000002,
+    "no_arbitrage": 1e-8,
+    "parity": 1e-10,
+    "reference_epsabs": 1e-10,
+    "reference_epsrel": 1e-10,
+    "reference_limit": 500
+  },
+  "creation_method": "Frozen deterministic controlled design created before benchmark execution.",
+  "design_statement": "Cases are designed from controlled valid parameters rather than unstable historical calibration tables.",
+  "cases": [
+    {
+      "case_id": "A_1_call",
+      "spot": 100,
+      "strike": 80,
+      "maturity": 0.1,
+      "rate": 0.02,
+      "dividend_yield": 0,
+      "option_type": "call",
+      "parameters": [
+        1.2,
+        0.04,
+        0.25,
+        -0.35,
+        0.03,
+        3,
+        0.02,
+        0.25,
+        -0.25,
+        0.02
+      ],
+      "case_category": "low_total_variance_weak_negative_skew",
+      "generation_metadata": {
+        "pair_id": "A_1",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "A_1_put",
+      "spot": 100,
+      "strike": 80,
+      "maturity": 0.1,
+      "rate": 0.02,
+      "dividend_yield": 0,
+      "option_type": "put",
+      "parameters": [
+        1.2,
+        0.04,
+        0.25,
+        -0.35,
+        0.03,
+        3,
+        0.02,
+        0.25,
+        -0.25,
+        0.02
+      ],
+      "case_category": "low_total_variance_weak_negative_skew",
+      "generation_metadata": {
+        "pair_id": "A_1",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "A_2_call",
+      "spot": 100,
+      "strike": 100,
+      "maturity": 0.1,
+      "rate": 0.02,
+      "dividend_yield": 0,
+      "option_type": "call",
+      "parameters": [
+        1.2,
+        0.04,
+        0.25,
+        -0.35,
+        0.03,
+        3,
+        0.02,
+        0.25,
+        -0.25,
+        0.02
+      ],
+      "case_category": "low_total_variance_weak_negative_skew",
+      "generation_metadata": {
+        "pair_id": "A_2",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "A_2_put",
+      "spot": 100,
+      "strike": 100,
+      "maturity": 0.1,
+      "rate": 0.02,
+      "dividend_yield": 0,
+      "option_type": "put",
+      "parameters": [
+        1.2,
+        0.04,
+        0.25,
+        -0.35,
+        0.03,
+        3,
+        0.02,
+        0.25,
+        -0.25,
+        0.02
+      ],
+      "case_category": "low_total_variance_weak_negative_skew",
+      "generation_metadata": {
+        "pair_id": "A_2",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "A_3_call",
+      "spot": 100,
+      "strike": 120,
+      "maturity": 0.1,
+      "rate": 0.02,
+      "dividend_yield": 0,
+      "option_type": "call",
+      "parameters": [
+        1.2,
+        0.04,
+        0.25,
+        -0.35,
+        0.03,
+        3,
+        0.02,
+        0.25,
+        -0.25,
+        0.02
+      ],
+      "case_category": "low_total_variance_weak_negative_skew",
+      "generation_metadata": {
+        "pair_id": "A_3",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "A_3_put",
+      "spot": 100,
+      "strike": 120,
+      "maturity": 0.1,
+      "rate": 0.02,
+      "dividend_yield": 0,
+      "option_type": "put",
+      "parameters": [
+        1.2,
+        0.04,
+        0.25,
+        -0.35,
+        0.03,
+        3,
+        0.02,
+        0.25,
+        -0.25,
+        0.02
+      ],
+      "case_category": "low_total_variance_weak_negative_skew",
+      "generation_metadata": {
+        "pair_id": "A_3",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "B_1_call",
+      "spot": 95,
+      "strike": 75,
+      "maturity": 0.5,
+      "rate": 0.01,
+      "dividend_yield": 0.015,
+      "option_type": "call",
+      "parameters": [
+        0.8,
+        0.08,
+        0.25,
+        -0.65,
+        0.06,
+        2.5,
+        0.03,
+        0.3,
+        -0.35,
+        0.025
+      ],
+      "case_category": "high_total_variance_strong_negative_skew",
+      "generation_metadata": {
+        "pair_id": "B_1",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "B_1_put",
+      "spot": 95,
+      "strike": 75,
+      "maturity": 0.5,
+      "rate": 0.01,
+      "dividend_yield": 0.015,
+      "option_type": "put",
+      "parameters": [
+        0.8,
+        0.08,
+        0.25,
+        -0.65,
+        0.06,
+        2.5,
+        0.03,
+        0.3,
+        -0.35,
+        0.025
+      ],
+      "case_category": "high_total_variance_strong_negative_skew",
+      "generation_metadata": {
+        "pair_id": "B_1",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "B_2_call",
+      "spot": 95,
+      "strike": 95,
+      "maturity": 0.5,
+      "rate": 0.01,
+      "dividend_yield": 0.015,
+      "option_type": "call",
+      "parameters": [
+        0.8,
+        0.08,
+        0.25,
+        -0.65,
+        0.06,
+        2.5,
+        0.03,
+        0.3,
+        -0.35,
+        0.025
+      ],
+      "case_category": "high_total_variance_strong_negative_skew",
+      "generation_metadata": {
+        "pair_id": "B_2",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "B_2_put",
+      "spot": 95,
+      "strike": 95,
+      "maturity": 0.5,
+      "rate": 0.01,
+      "dividend_yield": 0.015,
+      "option_type": "put",
+      "parameters": [
+        0.8,
+        0.08,
+        0.25,
+        -0.65,
+        0.06,
+        2.5,
+        0.03,
+        0.3,
+        -0.35,
+        0.025
+      ],
+      "case_category": "high_total_variance_strong_negative_skew",
+      "generation_metadata": {
+        "pair_id": "B_2",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "B_3_call",
+      "spot": 95,
+      "strike": 115,
+      "maturity": 0.5,
+      "rate": 0.01,
+      "dividend_yield": 0.015,
+      "option_type": "call",
+      "parameters": [
+        0.8,
+        0.08,
+        0.25,
+        -0.65,
+        0.06,
+        2.5,
+        0.03,
+        0.3,
+        -0.35,
+        0.025
+      ],
+      "case_category": "high_total_variance_strong_negative_skew",
+      "generation_metadata": {
+        "pair_id": "B_3",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "B_3_put",
+      "spot": 95,
+      "strike": 115,
+      "maturity": 0.5,
+      "rate": 0.01,
+      "dividend_yield": 0.015,
+      "option_type": "put",
+      "parameters": [
+        0.8,
+        0.08,
+        0.25,
+        -0.65,
+        0.06,
+        2.5,
+        0.03,
+        0.3,
+        -0.35,
+        0.025
+      ],
+      "case_category": "high_total_variance_strong_negative_skew",
+      "generation_metadata": {
+        "pair_id": "B_3",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "C_1_call",
+      "spot": 110,
+      "strike": 80,
+      "maturity": 2,
+      "rate": 0.03,
+      "dividend_yield": 0.01,
+      "option_type": "call",
+      "parameters": [
+        1.1,
+        0.025,
+        0.2,
+        -0.15,
+        0.018,
+        4,
+        0.015,
+        0.25,
+        -0.55,
+        0.012
+      ],
+      "case_category": "low_total_variance_mixed_skew",
+      "generation_metadata": {
+        "pair_id": "C_1",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "C_1_put",
+      "spot": 110,
+      "strike": 80,
+      "maturity": 2,
+      "rate": 0.03,
+      "dividend_yield": 0.01,
+      "option_type": "put",
+      "parameters": [
+        1.1,
+        0.025,
+        0.2,
+        -0.15,
+        0.018,
+        4,
+        0.015,
+        0.25,
+        -0.55,
+        0.012
+      ],
+      "case_category": "low_total_variance_mixed_skew",
+      "generation_metadata": {
+        "pair_id": "C_1",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "C_2_call",
+      "spot": 110,
+      "strike": 110,
+      "maturity": 2,
+      "rate": 0.03,
+      "dividend_yield": 0.01,
+      "option_type": "call",
+      "parameters": [
+        1.1,
+        0.025,
+        0.2,
+        -0.15,
+        0.018,
+        4,
+        0.015,
+        0.25,
+        -0.55,
+        0.012
+      ],
+      "case_category": "low_total_variance_mixed_skew",
+      "generation_metadata": {
+        "pair_id": "C_2",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "C_2_put",
+      "spot": 110,
+      "strike": 110,
+      "maturity": 2,
+      "rate": 0.03,
+      "dividend_yield": 0.01,
+      "option_type": "put",
+      "parameters": [
+        1.1,
+        0.025,
+        0.2,
+        -0.15,
+        0.018,
+        4,
+        0.015,
+        0.25,
+        -0.55,
+        0.012
+      ],
+      "case_category": "low_total_variance_mixed_skew",
+      "generation_metadata": {
+        "pair_id": "C_2",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "C_3_call",
+      "spot": 110,
+      "strike": 140,
+      "maturity": 2,
+      "rate": 0.03,
+      "dividend_yield": 0.01,
+      "option_type": "call",
+      "parameters": [
+        1.1,
+        0.025,
+        0.2,
+        -0.15,
+        0.018,
+        4,
+        0.015,
+        0.25,
+        -0.55,
+        0.012
+      ],
+      "case_category": "low_total_variance_mixed_skew",
+      "generation_metadata": {
+        "pair_id": "C_3",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "C_3_put",
+      "spot": 110,
+      "strike": 140,
+      "maturity": 2,
+      "rate": 0.03,
+      "dividend_yield": 0.01,
+      "option_type": "put",
+      "parameters": [
+        1.1,
+        0.025,
+        0.2,
+        -0.15,
+        0.018,
+        4,
+        0.015,
+        0.25,
+        -0.55,
+        0.012
+      ],
+      "case_category": "low_total_variance_mixed_skew",
+      "generation_metadata": {
+        "pair_id": "C_3",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "D_1_call",
+      "spot": 100,
+      "strike": 90,
+      "maturity": 0.25,
+      "rate": 0,
+      "dividend_yield": 0.02,
+      "option_type": "call",
+      "parameters": [
+        1.5,
+        0.04,
+        0.33,
+        -0.5,
+        0.035,
+        5,
+        0.02,
+        0.4,
+        -0.45,
+        0.015
+      ],
+      "case_category": "moderately_close_feller_boundary",
+      "generation_metadata": {
+        "pair_id": "D_1",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "D_1_put",
+      "spot": 100,
+      "strike": 90,
+      "maturity": 0.25,
+      "rate": 0,
+      "dividend_yield": 0.02,
+      "option_type": "put",
+      "parameters": [
+        1.5,
+        0.04,
+        0.33,
+        -0.5,
+        0.035,
+        5,
+        0.02,
+        0.4,
+        -0.45,
+        0.015
+      ],
+      "case_category": "moderately_close_feller_boundary",
+      "generation_metadata": {
+        "pair_id": "D_1",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "D_2_call",
+      "spot": 100,
+      "strike": 100,
+      "maturity": 0.25,
+      "rate": 0,
+      "dividend_yield": 0.02,
+      "option_type": "call",
+      "parameters": [
+        1.5,
+        0.04,
+        0.33,
+        -0.5,
+        0.035,
+        5,
+        0.02,
+        0.4,
+        -0.45,
+        0.015
+      ],
+      "case_category": "moderately_close_feller_boundary",
+      "generation_metadata": {
+        "pair_id": "D_2",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "D_2_put",
+      "spot": 100,
+      "strike": 100,
+      "maturity": 0.25,
+      "rate": 0,
+      "dividend_yield": 0.02,
+      "option_type": "put",
+      "parameters": [
+        1.5,
+        0.04,
+        0.33,
+        -0.5,
+        0.035,
+        5,
+        0.02,
+        0.4,
+        -0.45,
+        0.015
+      ],
+      "case_category": "moderately_close_feller_boundary",
+      "generation_metadata": {
+        "pair_id": "D_2",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "D_3_call",
+      "spot": 100,
+      "strike": 115,
+      "maturity": 0.25,
+      "rate": 0,
+      "dividend_yield": 0.02,
+      "option_type": "call",
+      "parameters": [
+        1.5,
+        0.04,
+        0.33,
+        -0.5,
+        0.035,
+        5,
+        0.02,
+        0.4,
+        -0.45,
+        0.015
+      ],
+      "case_category": "moderately_close_feller_boundary",
+      "generation_metadata": {
+        "pair_id": "D_3",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "D_3_put",
+      "spot": 100,
+      "strike": 115,
+      "maturity": 0.25,
+      "rate": 0,
+      "dividend_yield": 0.02,
+      "option_type": "put",
+      "parameters": [
+        1.5,
+        0.04,
+        0.33,
+        -0.5,
+        0.035,
+        5,
+        0.02,
+        0.4,
+        -0.45,
+        0.015
+      ],
+      "case_category": "moderately_close_feller_boundary",
+      "generation_metadata": {
+        "pair_id": "D_3",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "E_1_call",
+      "spot": 105,
+      "strike": 85,
+      "maturity": 0.75,
+      "rate": 0.04,
+      "dividend_yield": 0.01,
+      "option_type": "call",
+      "parameters": [
+        1,
+        0.06,
+        0.25,
+        -0.7,
+        0.05,
+        3.5,
+        0.04,
+        0.35,
+        -0.4,
+        0.035
+      ],
+      "case_category": "high_total_variance_strong_negative_skew",
+      "generation_metadata": {
+        "pair_id": "E_1",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "E_1_put",
+      "spot": 105,
+      "strike": 85,
+      "maturity": 0.75,
+      "rate": 0.04,
+      "dividend_yield": 0.01,
+      "option_type": "put",
+      "parameters": [
+        1,
+        0.06,
+        0.25,
+        -0.7,
+        0.05,
+        3.5,
+        0.04,
+        0.35,
+        -0.4,
+        0.035
+      ],
+      "case_category": "high_total_variance_strong_negative_skew",
+      "generation_metadata": {
+        "pair_id": "E_1",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "E_2_call",
+      "spot": 105,
+      "strike": 105,
+      "maturity": 0.75,
+      "rate": 0.04,
+      "dividend_yield": 0.01,
+      "option_type": "call",
+      "parameters": [
+        1,
+        0.06,
+        0.25,
+        -0.7,
+        0.05,
+        3.5,
+        0.04,
+        0.35,
+        -0.4,
+        0.035
+      ],
+      "case_category": "high_total_variance_strong_negative_skew",
+      "generation_metadata": {
+        "pair_id": "E_2",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "E_2_put",
+      "spot": 105,
+      "strike": 105,
+      "maturity": 0.75,
+      "rate": 0.04,
+      "dividend_yield": 0.01,
+      "option_type": "put",
+      "parameters": [
+        1,
+        0.06,
+        0.25,
+        -0.7,
+        0.05,
+        3.5,
+        0.04,
+        0.35,
+        -0.4,
+        0.035
+      ],
+      "case_category": "high_total_variance_strong_negative_skew",
+      "generation_metadata": {
+        "pair_id": "E_2",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "E_3_call",
+      "spot": 105,
+      "strike": 130,
+      "maturity": 0.75,
+      "rate": 0.04,
+      "dividend_yield": 0.01,
+      "option_type": "call",
+      "parameters": [
+        1,
+        0.06,
+        0.25,
+        -0.7,
+        0.05,
+        3.5,
+        0.04,
+        0.35,
+        -0.4,
+        0.035
+      ],
+      "case_category": "high_total_variance_strong_negative_skew",
+      "generation_metadata": {
+        "pair_id": "E_3",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "E_3_put",
+      "spot": 105,
+      "strike": 130,
+      "maturity": 0.75,
+      "rate": 0.04,
+      "dividend_yield": 0.01,
+      "option_type": "put",
+      "parameters": [
+        1,
+        0.06,
+        0.25,
+        -0.7,
+        0.05,
+        3.5,
+        0.04,
+        0.35,
+        -0.4,
+        0.035
+      ],
+      "case_category": "high_total_variance_strong_negative_skew",
+      "generation_metadata": {
+        "pair_id": "E_3",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "F_1_call",
+      "spot": 90,
+      "strike": 70,
+      "maturity": 3,
+      "rate": 0.015,
+      "dividend_yield": 0.025,
+      "option_type": "call",
+      "parameters": [
+        2,
+        0.025,
+        0.28,
+        -0.2,
+        0.025,
+        4.5,
+        0.012,
+        0.3,
+        -0.55,
+        0.01
+      ],
+      "case_category": "safely_interior_low_total_variance",
+      "generation_metadata": {
+        "pair_id": "F_1",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "F_1_put",
+      "spot": 90,
+      "strike": 70,
+      "maturity": 3,
+      "rate": 0.015,
+      "dividend_yield": 0.025,
+      "option_type": "put",
+      "parameters": [
+        2,
+        0.025,
+        0.28,
+        -0.2,
+        0.025,
+        4.5,
+        0.012,
+        0.3,
+        -0.55,
+        0.01
+      ],
+      "case_category": "safely_interior_low_total_variance",
+      "generation_metadata": {
+        "pair_id": "F_1",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "F_2_call",
+      "spot": 90,
+      "strike": 90,
+      "maturity": 3,
+      "rate": 0.015,
+      "dividend_yield": 0.025,
+      "option_type": "call",
+      "parameters": [
+        2,
+        0.025,
+        0.28,
+        -0.2,
+        0.025,
+        4.5,
+        0.012,
+        0.3,
+        -0.55,
+        0.01
+      ],
+      "case_category": "safely_interior_low_total_variance",
+      "generation_metadata": {
+        "pair_id": "F_2",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "F_2_put",
+      "spot": 90,
+      "strike": 90,
+      "maturity": 3,
+      "rate": 0.015,
+      "dividend_yield": 0.025,
+      "option_type": "put",
+      "parameters": [
+        2,
+        0.025,
+        0.28,
+        -0.2,
+        0.025,
+        4.5,
+        0.012,
+        0.3,
+        -0.55,
+        0.01
+      ],
+      "case_category": "safely_interior_low_total_variance",
+      "generation_metadata": {
+        "pair_id": "F_2",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "F_3_call",
+      "spot": 90,
+      "strike": 115,
+      "maturity": 3,
+      "rate": 0.015,
+      "dividend_yield": 0.025,
+      "option_type": "call",
+      "parameters": [
+        2,
+        0.025,
+        0.28,
+        -0.2,
+        0.025,
+        4.5,
+        0.012,
+        0.3,
+        -0.55,
+        0.01
+      ],
+      "case_category": "safely_interior_low_total_variance",
+      "generation_metadata": {
+        "pair_id": "F_3",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    },
+    {
+      "case_id": "F_3_put",
+      "spot": 90,
+      "strike": 115,
+      "maturity": 3,
+      "rate": 0.015,
+      "dividend_yield": 0.025,
+      "option_type": "put",
+      "parameters": [
+        2,
+        0.025,
+        0.28,
+        -0.2,
+        0.025,
+        4.5,
+        0.012,
+        0.3,
+        -0.55,
+        0.01
+      ],
+      "case_category": "safely_interior_low_total_variance",
+      "generation_metadata": {
+        "pair_id": "F_3",
+        "creation_method": "hand-authored controlled valid parameters before benchmark execution",
+        "design_dimensions": [
+          "maturity",
+          "moneyness",
+          "total_variance",
+          "skew",
+          "Feller proximity",
+          "spot",
+          "rate",
+          "dividend"
+        ]
+      }
+    }
+  ]
+}

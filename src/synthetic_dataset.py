@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 from collections.abc import Callable, Mapping, Sequence
 from pathlib import Path
 from typing import Any
@@ -12,13 +13,12 @@ import yaml
 
 from .constants import (
     DEFAULT_SEED,
+    GENUINE_CANONICAL_DOUBLE_HESTON_SYNTHETIC_DATA,
     NOT_RESEARCH_DATA,
     PARAMETER_NAMES,
-    RESEARCH_STAGE,
 )
 from .constraints import validate_parameters, vector_to_dictionary
 from .pricing_interface import (
-    MissingPricingEngineError,
     dummy_surface_generator_for_smoke_test,
     price_double_heston_surface,
 )
@@ -72,23 +72,27 @@ def generate_research_dataset(
     n_surfaces: int,
     seed: int = DEFAULT_SEED,
     noise_level: float = 0.0,
+    allow_provisional_bounds: bool = False,
 ) -> pd.DataFrame:
-    """Generate true Double Heston surfaces; never falls back to a dummy mapping."""
-    bounds = load_confirmed_parameter_bounds(bounds_path)
+    """Generate canonical engine surfaces; never fall back to a dummy mapping.
+
+    Provisional ranges require an explicit opt-in because they are engineering
+    selections rather than externally confirmed historical bounds.
+    """
+    bounds, bounds_status = load_parameter_bounds(
+        bounds_path, allow_provisional=allow_provisional_bounds
+    )
     if n_surfaces < 3:
         raise ValueError("n_surfaces must be at least three")
-    try:
-        price_double_heston_surface(
-            100.0,
-            [100.0],
-            [30.0 / 365.0],
-            0.05,
-            0.0,
-            ["call"],
-            _sample_valid_parameter_vector(np.random.default_rng(seed), bounds),
-        )
-    except MissingPricingEngineError:
-        raise
+    price_double_heston_surface(
+        100.0,
+        [100.0],
+        [30.0 / 365.0],
+        0.05,
+        0.0,
+        ["call"],
+        _sample_valid_parameter_vector(np.random.default_rng(seed), bounds),
+    )
     rng = np.random.default_rng(seed)
     parameters = [
         _sample_valid_parameter_vector(rng, bounds) for _ in range(n_surfaces)
@@ -99,8 +103,31 @@ def generate_research_dataset(
         pricer=price_double_heston_surface,
         seed=seed,
         noise_level=noise_level,
-        data_status=RESEARCH_STAGE,
+        data_status=GENUINE_CANONICAL_DOUBLE_HESTON_SYNTHETIC_DATA,
         allow_dummy=False,
+        bounds_status=bounds_status,
+    )
+
+
+def generate_canonical_pilot_dataset(
+    output_directory: str | Path,
+    bounds_path: str | Path,
+    n_surfaces: int = 24,
+    seed: int = DEFAULT_SEED,
+) -> pd.DataFrame:
+    """Generate at most 100 genuine canonical-engine surfaces for validation."""
+    if not 3 <= n_surfaces <= 100:
+        raise ValueError("pilot n_surfaces must be between 3 and 100")
+    output_path = Path(output_directory)
+    if "pilot_surfaces" not in {part.lower() for part in output_path.parts}:
+        raise ValueError("pilot data must be saved beneath a pilot_surfaces path")
+    return generate_research_dataset(
+        output_path,
+        bounds_path,
+        n_surfaces,
+        seed=seed,
+        noise_level=0.0,
+        allow_provisional_bounds=True,
     )
 
 
@@ -126,6 +153,7 @@ def generate_smoke_test_dataset(
         noise_level=noise_level,
         data_status=NOT_RESEARCH_DATA,
         allow_dummy=True,
+        bounds_status="SMOKE_TEST_INTERNAL_RANGES",
     )
 
 
@@ -133,24 +161,43 @@ def load_confirmed_parameter_bounds(
     bounds_path: str | Path,
 ) -> dict[str, tuple[float, float]]:
     """Load only fully specified teammate-confirmed bounds in canonical order."""
+    bounds, _ = load_parameter_bounds(bounds_path, allow_provisional=False)
+    return bounds
+
+
+def load_parameter_bounds(
+    bounds_path: str | Path,
+    *,
+    allow_provisional: bool,
+) -> tuple[dict[str, tuple[float, float]], str]:
+    """Load confirmed bounds or explicitly opted-in provisional pilot ranges."""
     path = Path(bounds_path)
     payload = yaml.safe_load(path.read_text(encoding="utf-8"))
-    if payload.get("status") != "TEAMMATE_CONFIRMED":
-        raise ValueError("Parameter bounds are not marked TEAMMATE_CONFIRMED")
-    raw_bounds = payload.get("parameter_bounds", {})
+    status = str(payload.get("status", ""))
+    if status == "TEAMMATE_CONFIRMED":
+        raw_bounds = payload.get("parameter_bounds", {})
+    elif status == "PROVISIONAL_CANONICAL_REIMPLEMENTATION" and allow_provisional:
+        raw_bounds = payload.get("empirical_sampling_ranges", {}).get(
+            "parameter_bounds", {}
+        )
+    else:
+        raise ValueError(
+            "Parameter bounds must be TEAMMATE_CONFIRMED, or provisional use must "
+            "be explicitly enabled for controlled pilot generation"
+        )
     confirmed: dict[str, tuple[float, float]] = {}
     for name in PARAMETER_NAMES:
         entry = raw_bounds.get(name, {})
         lower = entry.get("lower")
         upper = entry.get("upper")
         if lower is None or upper is None:
-            raise ValueError(f"Missing confirmed lower/upper bound for {name}")
+            raise ValueError(f"Missing lower/upper bound for {name}")
         lower_value = float(lower)
         upper_value = float(upper)
         if not np.isfinite([lower_value, upper_value]).all() or lower_value >= upper_value:
-            raise ValueError(f"Invalid confirmed bounds for {name}")
+            raise ValueError(f"Invalid bounds for {name}")
         confirmed[name] = (lower_value, upper_value)
-    return confirmed
+    return confirmed, status
 
 
 def _generate_and_save(
@@ -161,6 +208,7 @@ def _generate_and_save(
     noise_level: float,
     data_status: str,
     allow_dummy: bool,
+    bounds_status: str,
 ) -> pd.DataFrame:
     if noise_level < 0.0 or not np.isfinite(noise_level):
         raise ValueError("noise_level must be finite and non-negative")
@@ -194,7 +242,11 @@ def _generate_and_save(
         noisy_prices = clean_prices.copy()
         if noise_level > 0.0:
             noisy_prices *= 1.0 + rng.normal(0.0, noise_level, size=noisy_prices.shape)
-            noisy_prices = np.maximum(noisy_prices, 0.0)
+            if np.any(noisy_prices < 0.0):
+                raise ValueError(
+                    f"Noise realization produced negative prices for {surface_id}; "
+                    "prices are not clipped or silently replaced"
+                )
         normalized = normalize_prices_by_spot(noisy_prices, spot)
         parameter_values = vector_to_dictionary(vector)
         for row_index, grid_row in grid.iterrows():
@@ -231,11 +283,17 @@ def _generate_and_save(
             "surface_count": len(parameters),
             "row_count": len(frame),
             "dummy_mapping_used": allow_dummy,
+            "parameter_bounds_status": bounds_status,
+            "equivalent_to_unavailable_teammate_source": False,
             "warning": (
                 "Development-only tensor-flow data; not Double Heston prices and "
                 "not research evidence."
                 if allow_dummy
-                else "Generated with the frozen teammate Double Heston engine."
+                else (
+                    "Genuine prices from the independent canonical Double Heston "
+                    "engine; not evidence of equivalence to unavailable source or "
+                    "of performance on real NIFTY data."
+                )
             ),
         },
     )
@@ -254,8 +312,8 @@ def _sample_valid_parameter_vector(
         if validate_parameters(vector)["is_valid"]:
             return vector
     raise RuntimeError(
-        "Unable to sample a valid vector from the confirmed bounds; teammate bounds "
-        "may be incompatible with the strict constraints"
+        "Unable to sample a valid vector; the selected ranges may be incompatible "
+        "with the strict constraints"
     )
 
 
@@ -285,3 +343,55 @@ def _sample_smoke_parameter_vector(rng: np.random.Generator) -> np.ndarray:
         ],
         dtype=np.float64,
     )
+
+
+def main() -> None:
+    """Run the deliberately small canonical pilot generation command."""
+    parser = argparse.ArgumentParser(description=__doc__)
+    subparsers = parser.add_subparsers(dest="command", required=True)
+    pilot = subparsers.add_parser("pilot", help="generate at most 100 real-engine surfaces")
+    pilot.add_argument("--count", type=int, default=24)
+    pilot.add_argument("--seed", type=int, default=DEFAULT_SEED)
+    pilot.add_argument(
+        "--bounds",
+        type=Path,
+        default=Path("configs/parameter_bounds_PROVISIONAL.yaml"),
+    )
+    pilot.add_argument(
+        "--output",
+        type=Path,
+        default=Path("outputs/double_heston_validation/pilot_surfaces"),
+    )
+    arguments = parser.parse_args()
+    if arguments.command == "pilot":
+        frame = generate_canonical_pilot_dataset(
+            arguments.output,
+            arguments.bounds,
+            n_surfaces=arguments.count,
+            seed=arguments.seed,
+        )
+        print(
+            f"Generated {frame['surface_id'].nunique()} genuine canonical Double "
+            f"Heston pilot surfaces ({len(frame)} quote rows)."
+        )
+
+
+if __name__ == "__main__":
+    main()
+
+
+def assign_reviewed_distribution_splits(
+    surface_ids: Sequence[str], distribution: str, seed: int = DEFAULT_SEED
+) -> dict[str, str]:
+    """Assign reviewed-design splits without allowing challenge/OOD leakage.
+
+    Boundary challenges require an explicit future training opt-in outside this
+    helper; OOD is permanently evaluation-only for the reviewed audit design.
+    """
+    if distribution == "boundary_challenge":
+        return {str(surface_id): "challenge_excluded" for surface_id in surface_ids}
+    if distribution == "ood_test":
+        return {str(surface_id): "ood_test" for surface_id in surface_ids}
+    if distribution not in {"interior_train", "wide_valid_train"}:
+        raise ValueError(f"Unknown reviewed distribution: {distribution}")
+    return assign_surface_splits(surface_ids, seed=seed)

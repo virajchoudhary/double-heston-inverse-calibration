@@ -1,0 +1,76 @@
+{
+  "acceptance": {
+    "absolute": 2e-05,
+    "no_arbitrage": 1e-08,
+    "non_negligible_reference_floor": 0.0001,
+    "parity": 1e-10,
+    "relative": 2e-06
+  },
+  "agreement_is_not_proof_of_correctness": true,
+  "benchmark_pass": true,
+  "case_count": 36,
+  "coverage": {
+    "calls": 18,
+    "maturity_buckets": [
+      "long",
+      "medium",
+      "short"
+    ],
+    "moneyness_buckets": [
+      "ATM",
+      "ITM",
+      "OTM"
+    ],
+    "puts": 18
+  },
+  "maximum_relative_difference_non_negligible": 1.064640411670892e-09,
+  "no_arbitrage_failures": {
+    "64": 0,
+    "96": 0,
+    "reference": 0
+  },
+  "no_arbitrage_failures_total": 0,
+  "no_teammate_equivalence_claim": true,
+  "node_comparisons": {
+    "64": {
+      "failing_cases": 0,
+      "mae": 5.18369298103178e-13,
+      "maximum_absolute_difference": 8.100187187665142e-13,
+      "median_runtime_seconds": 0.0009684500018920517,
+      "p95_runtime_seconds": 0.0028275000004214235,
+      "passing_cases": 36,
+      "rmse": 5.458369984817452e-13,
+      "total_runtime_seconds": 0.04300040001908201
+    },
+    "96": {
+      "failing_cases": 0,
+      "mae": 4.0641980521745795e-12,
+      "maximum_absolute_difference": 5.6985527407960035e-12,
+      "median_runtime_seconds": 0.0009614499995223014,
+      "p95_runtime_seconds": 0.0024457999998048763,
+      "passing_cases": 36,
+      "rmse": 4.2228670813888515e-12,
+      "total_runtime_seconds": 0.04494720000366215
+    }
+  },
+  "parity": {
+    "failures": {
+      "production_64": 0,
+      "production_96": 0,
+      "reference": 0
+    },
+    "max_errors": {
+      "production_64": 7.105427357601002e-15,
+      "production_96": 7.105427357601002e-15,
+      "reference": 7.105427357601002e-15
+    }
+  },
+  "reference": {
+    "integration_failure_or_unreliable_count": 0,
+    "median_runtime_seconds": 0.08555880000130855,
+    "p95_runtime_seconds": 0.12560387499797798,
+    "total_runtime_seconds": 3.2320760999937193,
+    "warning_count": 0
+  },
+  "schema_version": "1.0"
+}

@@ -1,0 +1,48 @@
+status: PROVISIONAL_CANONICAL_REIMPLEMENTATION
+provenance:
+  selected_by: independent_reimplementation
+  copied_from_unavailable_source: false
+  statement: >-
+    These ranges are newly selected research-engineering ranges. They are not
+    recovered from, copied from, or claimed equivalent to unavailable teammate
+    source code. They require later empirical review before research training.
+
+declared_constraints:
+  positivity: kappa, theta, sigma, and v0 are strictly positive for both factors
+  ordering: kappa_slow < kappa_fast
+  slow_feller: 2*kappa_slow*theta_slow - sigma_slow^2 > 0
+  fast_feller: 2*kappa_fast*theta_fast - sigma_fast^2 > 0
+  individual_correlations: -1 < rho_slow,rho_fast < 1
+  joint_correlation_disk: rho_slow^2 + rho_fast^2 < 1
+
+hard_numerical_safety_bounds:
+  kappa_slow: {lower: 0.05, upper: 3.0, rationale: "Avoid near-zero decay and extreme stiffness."}
+  theta_slow: {lower: 0.005, upper: 0.25, rationale: "Positive annualized variance with a broad but finite scale."}
+  sigma_slow: {lower: 0.005, upper: 1.0, rationale: "Exclude a singular zero-vol-of-vol endpoint and extreme Fourier stiffness."}
+  rho_slow: {lower: -0.95, upper: 0.95, rationale: "Keep distance from singular correlation endpoints."}
+  v0_slow: {lower: 0.005, upper: 0.30, rationale: "Positive initial variance with a finite numerical ceiling."}
+  kappa_fast: {lower: 0.10, upper: 12.0, rationale: "Allow faster decay while limiting stiff short-time dynamics."}
+  theta_fast: {lower: 0.002, upper: 0.20, rationale: "Positive fast-factor long-run variance over a broad finite scale."}
+  sigma_fast: {lower: 0.005, upper: 1.5, rationale: "Exclude the singular endpoint and cap transform stiffness."}
+  rho_fast: {lower: -0.95, upper: 0.95, rationale: "Keep distance from singular correlation endpoints."}
+  v0_fast: {lower: 0.002, upper: 0.25, rationale: "Positive fast initial variance with a finite numerical ceiling."}
+
+empirical_sampling_ranges:
+  status: PILOT_ONLY_NOT_EXTERNALLY_CONFIRMED
+  parameter_bounds:
+    kappa_slow: {lower: 0.20, upper: 1.50, rationale: "Slow mean reversion for controlled pilot diversity."}
+    theta_slow: {lower: 0.020, upper: 0.120, rationale: "Moderate slow-factor annualized variance."}
+    sigma_slow: {lower: 0.030, upper: 0.45, rationale: "Moderate vol-of-vol; the Feller rule is also enforced."}
+    rho_slow: {lower: -0.75, upper: 0.20, rationale: "Covers negative skew and a limited positive tail."}
+    v0_slow: {lower: 0.015, upper: 0.150, rationale: "Covers below- and above-mean initial slow variance."}
+    kappa_fast: {lower: 1.60, upper: 6.00, rationale: "Separates fast decay from the slow-factor range."}
+    theta_fast: {lower: 0.010, upper: 0.080, rationale: "Keeps the fast variance contribution controlled."}
+    sigma_fast: {lower: 0.030, upper: 0.65, rationale: "Allows fast-factor curvature subject to Feller."}
+    rho_fast: {lower: -0.60, upper: 0.35, rationale: "Explores a distinct fast skew contribution."}
+    v0_fast: {lower: 0.008, upper: 0.100, rationale: "Positive short-lived initial variance contribution."}
+
+usage_rules:
+  - Apply every declared constraint after sampling; ranges alone are insufficient.
+  - Use only for controlled validation and pilot surfaces until externally reviewed.
+  - Do not describe these ranges as original, teammate-confirmed, or NIFTY-calibrated.
+  - Do not begin full ANN research training from these provisional ranges.

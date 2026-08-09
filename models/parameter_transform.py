@@ -5,7 +5,7 @@ from __future__ import annotations
 import torch
 from torch import nn
 
-from ann_inverse_calibration.src.constants import PARAMETER_COUNT
+from src.constants import PARAMETER_COUNT
 
 
 class BoundedParameterTransform(nn.Module):

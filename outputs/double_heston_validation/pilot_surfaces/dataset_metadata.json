@@ -1,0 +1,11 @@
+{
+  "data_status": "GENUINE_CANONICAL_DOUBLE_HESTON_SYNTHETIC_DATA",
+  "dummy_mapping_used": false,
+  "equivalent_to_unavailable_teammate_source": false,
+  "generation_seed": 42,
+  "noise_level": 0.0,
+  "parameter_bounds_status": "PROVISIONAL_CANONICAL_REIMPLEMENTATION",
+  "row_count": 1296,
+  "surface_count": 12,
+  "warning": "Genuine prices from the independent canonical Double Heston engine; not evidence of equivalence to unavailable source or of performance on real NIFTY data."
+}

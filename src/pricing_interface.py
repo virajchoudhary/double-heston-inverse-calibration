@@ -1,4 +1,4 @@
-"""Strict boundary between this ANN scaffold and a future real pricing engine."""
+"""Pricing adapter used by the ANN dataset and evaluation infrastructure."""
 
 from __future__ import annotations
 
@@ -8,13 +8,14 @@ import numpy as np
 
 from .constants import CALL_OPTION, PARAMETER_NAMES, PUT_OPTION
 from .constraints import dictionary_to_vector, validate_parameters
+from .double_heston import price_double_heston_surface as _canonical_surface_price
 
-REAL_PRICING_ENGINE_AVAILABLE = False
+REAL_PRICING_ENGINE_AVAILABLE = True
 NOT_RESEARCH_DATA = "NOT_RESEARCH_DATA"
 
 
 class MissingPricingEngineError(RuntimeError):
-    """Raised when research pricing is requested without teammate source code."""
+    """Retained for backward compatibility with pre-engine callers."""
 
 
 def price_double_heston_surface(
@@ -26,13 +27,13 @@ def price_double_heston_surface(
     option_types: Sequence[str],
     parameters: Sequence[float] | Mapping[str, float],
 ) -> np.ndarray:
-    """Price a surface with the teammate's canonical Double Heston engine.
+    """Price a surface with the independent canonical implementation.
 
-    No compatible ``double_heston.py`` was available at takeover time. This
-    function therefore fails explicitly and never falls back to smoke-test data.
-    Replace only this adapter after the frozen teammate source arrives.
+    Research-mode callers always reach the real engine. The development-only
+    dummy mapping remains a separate, explicitly named smoke-test function and
+    cannot be selected implicitly through this adapter.
     """
-    del (
+    result = _canonical_surface_price(
         spot,
         strikes,
         maturities,
@@ -41,10 +42,16 @@ def price_double_heston_surface(
         option_types,
         parameters,
     )
-    raise MissingPricingEngineError(
-        "Research pricing is unavailable: the teammate's frozen double_heston.py "
-        "and its callable pricing contract were not provided."
+    _validate_surface_prices(
+        result,
+        float(spot),
+        np.asarray(strikes, dtype=np.float64),
+        np.asarray(maturities, dtype=np.float64),
+        np.asarray(option_types, dtype=str),
+        risk_free_rate,
+        dividend_yield,
     )
+    return result
 
 
 def dummy_surface_generator_for_smoke_test(
@@ -114,7 +121,15 @@ def dummy_surface_generator_for_smoke_test(
     call_prices = np.minimum(call_intrinsic + time_value, discounted_spot)
     put_prices = np.minimum(put_intrinsic + time_value, discounted_strike)
     result = np.where(option_array == CALL_OPTION, call_prices, put_prices)
-    _validate_surface_prices(result, spot, strike_array, maturity_array, option_array)
+    _validate_surface_prices(
+        result,
+        spot,
+        strike_array,
+        maturity_array,
+        option_array,
+        risk_free_rate,
+        dividend_yield,
+    )
     return result.astype(np.float64)
 
 
@@ -124,13 +139,22 @@ def _validate_surface_prices(
     strikes: np.ndarray,
     maturities: np.ndarray,
     option_types: np.ndarray,
+    risk_free_rate: float,
+    dividend_yield: float,
 ) -> None:
     if prices.shape != strikes.shape or not np.isfinite(prices).all():
         raise ValueError("Pricing output has the wrong shape or non-finite values")
     if np.any(prices < 0.0):
         raise ValueError("Pricing output contains negative prices")
-    call_upper = np.full_like(prices, spot)
-    put_upper = strikes
+    discounted_spot = spot * np.exp(-dividend_yield * maturities)
+    discounted_strike = strikes * np.exp(-risk_free_rate * maturities)
+    call_upper = discounted_spot
+    put_upper = discounted_strike
     upper = np.where(option_types == CALL_OPTION, call_upper, put_upper)
     if np.any(prices > upper + 1e-10):
         raise ValueError("Pricing output violates basic option upper bounds")
+    call_lower = np.maximum(discounted_spot - discounted_strike, 0.0)
+    put_lower = np.maximum(discounted_strike - discounted_spot, 0.0)
+    lower = np.where(option_types == CALL_OPTION, call_lower, put_lower)
+    if np.any(prices < lower - 1e-10):
+        raise ValueError("Pricing output violates basic option lower bounds")

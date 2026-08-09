@@ -1,0 +1,7 @@
+left_distribution,right_distribution,support_overlap_width_sum,ood_disjoint_by_declared_dimension
+interior_train,wide_valid_train,9.376747847030314,False
+interior_train,ood_test,4.520704683237128,True
+boundary_challenge,interior_train,9.376747847030314,False
+boundary_challenge,wide_valid_train,17.737644718405786,False
+boundary_challenge,ood_test,7.732133254337034,True
+ood_test,wide_valid_train,7.90678971131637,True

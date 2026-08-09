@@ -1,0 +1,41 @@
+{
+  "ann_training_occurred": false,
+  "canonical_parameter_order": [
+    "kappa_slow",
+    "theta_slow",
+    "sigma_slow",
+    "rho_slow",
+    "v0_slow",
+    "kappa_fast",
+    "theta_fast",
+    "sigma_fast",
+    "rho_fast",
+    "v0_fast"
+  ],
+  "constraint_definitions": {
+    "fast_feller": "2*kappa_fast*theta_fast - sigma_fast^2 > 0",
+    "individual_correlations": "-1 < rho_slow,rho_fast < 1",
+    "joint_correlation_disk": "rho_slow^2 + rho_fast^2 < 1",
+    "ordering": "kappa_slow < kappa_fast",
+    "positivity": "kappa, theta, sigma, and v0 are strictly positive for both factors",
+    "slow_feller": "2*kappa_slow*theta_slow - sigma_slow^2 > 0"
+  },
+  "expected_baseline_commit": "dea6a19238e13fccf5243935ffb6df8199135595",
+  "git_commit_before_new_commit": "dea6a19238e13fccf5243935ffb6df8199135595",
+  "no_real_market_validation_claim": true,
+  "no_teammate_equivalence_claim": true,
+  "numpy_version": "2.4.3",
+  "production_node_counts": [
+    64,
+    96
+  ],
+  "python_version": "3.13.9",
+  "reference_tolerances": {
+    "epsabs": 1e-10,
+    "epsrel": 1e-10,
+    "limit": 500
+  },
+  "schema_version": "1.0",
+  "scipy_version": "1.16.2",
+  "timestamp_utc": "2026-08-06T18:59:14.716650+00:00"
+}

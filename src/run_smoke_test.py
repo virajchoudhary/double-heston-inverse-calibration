@@ -9,7 +9,7 @@ from typing import Any
 import pandas as pd
 import torch
 
-from ann_inverse_calibration.models.ann_model import ANNInverseCalibrator
+from models.ann_model import ANNInverseCalibrator
 
 from .constants import DEFAULT_SEED, NOT_RESEARCH_DATA
 from .dataset import SurfaceParameterDataset
