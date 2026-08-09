@@ -52,7 +52,7 @@ The 1% controlled noise experiment remains an important research result: compara
 
 The reviewed sampler separates interior, wide-valid, boundary-challenge, and OOD populations. Interior acceptance is 81.16% and wide-valid acceptance is 67.42%; challenge rows are balanced across four labels and OOD rows lie outside normal `kappa_fast` support with no train/validation assignment.
 
-Four deliberately difficult challenge surfaces produced tiny 64-node numerical-tolerance stress failures. They were retained as evidence, agree under the higher-accuracy/reference checks documented by the project, and remain excluded from ordinary ANN training. Consequently normal core readiness and challenge stress readiness are tracked separately rather than forcing one global ready/not-ready label. See [REVIEWED_PARAMETER_SAMPLING.md](REVIEWED_PARAMETER_SAMPLING.md).
+Four deliberately difficult challenge surfaces produced tiny 64-node numerical-tolerance stress failures. They were retained as evidence, pass at 96 Gauss-Laguerre nodes, agree with the independent adaptive reference within the frozen comparison tolerance, and remain excluded from ordinary ANN training. Consequently normal core readiness and challenge stress readiness are tracked separately rather than forcing one global ready/not-ready label. See [REVIEWED_PARAMETER_SAMPLING.md](REVIEWED_PARAMETER_SAMPLING.md).
 
 ## Market-support representation gate
 
