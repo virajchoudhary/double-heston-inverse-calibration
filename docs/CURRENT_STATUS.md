@@ -8,7 +8,7 @@ Physics-Informed Inverse Calibration of the Canonical Double Heston Model for St
 
 ## Current completed milestone
 
-The canonical Double Heston pricing/calibration foundation, independent pricing verification, reviewed synthetic-sampling foundation, ANN infrastructure, and Stage A real-market availability-audit scaffold are complete. The next execution milestone is collection of small Stage A Bloomberg availability snapshots before the final market representation is frozen.
+The canonical Double Heston pricing/calibration foundation, independent pricing verification, reviewed synthetic-sampling foundation, ANN infrastructure, and deterministic official-NSE Stage A screen are complete. The screen analyzed 24 stock surfaces across three dates. The next research decision is candidate ranking, followed by common-support analysis and the G2 representation decision. Bloomberg is optional supplementary evidence for historical bid/ask quality, not the primary Stage A source and not a blocker to the next decision.
 
 The unavailable teammate engine is being replaced by an independently implemented canonical Double Heston engine. Equivalence to the unavailable source is not claimed.
 
@@ -18,7 +18,7 @@ The unavailable teammate engine is being replaced by an independently implemente
 | Fixed ten-parameter contract | Complete |
 | Canonical pricing engine | 36-case independent benchmark passed; freeze evidence created |
 | Engine-focused benchmark set | 36 / 36 passed |
-| Full automated suite | 96 passed at the latest validated milestone |
+| Full automated suite | 146 passed at the latest validated milestone |
 | Independent reference integrations | 36 / 36 reliable; zero warnings or failures |
 | Production/reference agreement | All 64-node and 96-node cases passed |
 | ANN research pricing adapter | Integrated |
@@ -30,15 +30,17 @@ The unavailable teammate engine is being replaced by an independently implemente
 | Reviewed sampling audit | 19,000 candidates; interior 8,116 accepted, wide-valid 3,371 accepted |
 | Normal synthetic core readiness | `CORE_DATASET_READY = true` under the existing candidate surface contract |
 | Challenge stress readiness | `CHALLENGE_STRESS_READY = false`; retained stress cases remain separate |
-| Stage A availability-audit scaffold | Complete and validated; no Bloomberg observations collected yet |
-| Market-data G1 gate | Not passed |
-| Surface-representation G2 gate | Not passed; representation remains `PROVISIONAL` / `OPEN` |
-| Current 108-input grid | Candidate contract only; not frozen for final research generation |
+| Stage A NSE screen | `COMPLETE`; 24 candidate stock surfaces across three dates |
+| Primary Stage A source | Official NSE CM and F&O UDiFF bhavcopies |
+| Candidate selection | `PENDING` |
+| Surface-representation G2 gate | `NOT_PASSED` |
+| Current 108-input grid | `REJECTED_AS_FINAL_UNCHANGED_GRID` |
+| Replacement representation | `OPEN`; no feature count frozen |
 | Final 10,000-surface research dataset | Not generated |
 | Development smoke test | Passing; remains `NOT_RESEARCH_DATA` |
 | Full ANN research training | Not started |
 | PINN development/comparison | Not started |
-| Real sector/NIFTY validation | Not started |
+| Frozen real-market evaluation | Not started |
 
 ## Honest research boundary
 
@@ -54,7 +56,7 @@ The reviewed sampler separates interior, wide-valid, boundary-challenge, and OOD
 
 Four deliberately difficult challenge surfaces produced tiny 64-node numerical-tolerance stress failures. They were retained as evidence, pass at 96 Gauss-Laguerre nodes, agree with the independent adaptive reference within the frozen comparison tolerance, and remain excluded from ordinary ANN training. Consequently normal core readiness and challenge stress readiness are tracked separately rather than forcing one global ready/not-ready label. See [REVIEWED_PARAMETER_SAMPLING.md](REVIEWED_PARAMETER_SAMPLING.md).
 
-## Market-support representation gate
+## Completed Stage A NSE market-support screen
 
 The prepared synthetic plan still uses the candidate 108-input contract:
 
@@ -63,9 +65,9 @@ The prepared synthetic plan still uses the candidate 108-input contract:
 - calls and puts;
 - 10 ordered Double Heston targets.
 
-However, the mentor-updated v2 execution plan requires a real-market availability/coverage audit before that representation is used for final 10,000-surface generation. Individual-stock option maturity support may not justify the existing six-tenor grid, so the current representation is explicitly `PROVISIONAL` and `OPEN`.
+The mentor-updated v2 execution plan requires real-market support evidence before the final 10,000-surface generation. The official-NSE screen has now supplied the Stage A evidence, but candidate selection and the replacement representation remain open.
 
-Stage A currently specifies:
+Stage A processed:
 
 - Power candidates: NTPC and POWERGRID;
 - Healthcare/Pharma candidates: SUNPHARMA and CIPLA;
@@ -75,12 +77,27 @@ Stage A currently specifies:
 - audit dates 01 July, 15 July, and 22 July 2026;
 - one surface as one underlying-date containing near, mid, and far expiry slices together;
 - price-usability checks separate from volume/open-interest activity;
-- futures-implied carry audited for availability but not selected as the final carry convention.
+- futures-implied carry inputs audited for availability without calculating or selecting final carry.
 
-The Stage A code/configuration/documentation scaffold is complete and tested, but no Bloomberg observations have been collected. Therefore neither G1 (market-data gate) nor G2 (representation gate) has passed. No 54-, 57-, or other replacement representation has been frozen.
+All eight stock candidates were present on all three dates. The result comprises 24 stock surfaces and 4,740 stock-option rows. Actual stock-option DTE patterns were `27/55/90`, `13/41/76`, and `6/34/69` by date. All 24 CM closes equaled the corresponding unique F&O `UndrlygPric`; all stock futures expiries aligned with stock-option expiries; and no selected stock row had an `XpryDt` / `FininstrmActlXpryDt` mismatch.
+
+The current grid is not supportable unchanged as the final representation. The 180-day node was outside observed expiry support for all 24 surfaces, while the `-0.30` and `+0.30` log-moneyness wings were observed in only 2/72 and 7/72 stock-expiry slices. The central `-0.10` through `+0.10` nodes were observed in all 72 slices. This evidence rejects the final unchanged 108-grid but does not freeze a replacement. `G2 = NOT_PASSED`.
+
+Official NSE is the primary Stage A source. Free NSE bhavcopy lacks historical bid/ask and quote-size fields; Bloomberg may later supplement quote-quality evidence but is not required to proceed to candidate ranking. See [STAGE_A_NSE_RESULTS.md](STAGE_A_NSE_RESULTS.md).
 
 ## Generation boundary
 
 `CORE_DATASET_READY = true` means the reviewed normal parameter population and leakage/split logic are ready **under the existing candidate surface contract**. It does not authorize immediate final dataset generation under the mentor-updated pipeline.
 
-The final 10,000-surface run remains blocked until Stage A evidence establishes common maturity/moneyness support, G2 freezes the representation, and any required configuration/tests are updated before generation. No final research dataset, ANN research training, PINN training, or real-market validation has occurred.
+The final 10,000-surface run remains blocked until candidate ranking and common-support analysis lead to a G2-approved representation and the synthetic surface contract is updated and revalidated. No final research dataset, ANN research training, PINN training, or frozen real-market evaluation has occurred.
+
+```text
+STAGE_A_NSE_SCREEN = COMPLETE
+CANDIDATE_SELECTION = PENDING
+CURRENT_108_GRID = REJECTED_AS_FINAL_UNCHANGED_GRID
+REPLACEMENT_REPRESENTATION = OPEN
+G2 = NOT_PASSED
+FINAL_10K = NOT_GENERATED
+ANN_RESEARCH_TRAINING = NOT_STARTED
+PINN = NOT_STARTED
+```

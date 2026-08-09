@@ -1,27 +1,27 @@
 # Physics-Informed Inverse Calibration of the Canonical Double Heston Model
 
-This private B.Tech capstone repository contains an ordinary ANN inverse-calibration baseline, an independently implemented canonical Double Heston European-option pricing engine, and the Stage A real-market availability-audit scaffold. The production engine has been benchmarked against a separately coded adaptive-quadrature reference. The unavailable teammate engine is being replaced by this reimplementation; equivalence to the unavailable source is not claimed.
+This private B.Tech capstone repository contains an ordinary ANN inverse-calibration baseline, an independently implemented canonical Double Heston European-option pricing engine, and a completed deterministic official-NSE Stage A market-support screen. The production engine has been benchmarked against a separately coded adaptive-quadrature reference. The unavailable teammate engine is being replaced by this reimplementation; equivalence to the unavailable source is not claimed.
 
-> The pricing benchmark passed and the normal reviewed synthetic core is ready under the existing contract, but full research-dataset generation is intentionally held until the Stage A market-support audit freezes the final surface representation. The historical challenge-stress decision remains `NEEDS_SAMPLER_CORRECTION`. No ANN/PINN research result or real-market performance claim is made.
+> The pricing benchmark passed, the normal reviewed synthetic core is ready under the existing contract, and the official-NSE Stage A market-support screen is complete. Stage A rejects the current 108-input grid as the final unchanged representation, especially at 180 DTE and the extreme wings, but no replacement representation is frozen. The historical challenge-stress decision remains `NEEDS_SAMPLER_CORRECTION`. No ANN/PINN research result or frozen real-market performance claim is made.
 
 | Component | Status |
 |---|---|
 | ANN infrastructure | Complete |
 | Canonical Double Heston engine | Independently benchmarked and frozen for review |
 | Independent pricing benchmark | 36 / 36 cases passed at 64 and 96 nodes |
-| Full automated suite | 96 passed at the latest validated milestone |
+| Full automated suite | 146 passed at the latest validated milestone |
 | Synthetic pricing/calibration validation | Complete for one clean and one 1% noise fixture |
 | ANN pricing adapter | Integrated with the real canonical engine |
 | Genuine-engine pilot data | 12 surfaces / 1,296 quotes generated |
 | Parameter-bounds audit | Prior 5,000-candidate audit retained as historical evidence |
 | Reviewed sampling audit | 19,000 candidates; normal core ready, challenge stress separate |
-| Stage A availability-audit scaffold | Complete and validated; no Bloomberg observations collected yet |
-| Market-data G1 gate | Not passed |
-| Surface-representation G2 gate | Not passed; current 108-input contract remains provisional/open |
+| Stage A official-NSE screen | Complete: 24 candidate stock surfaces across three dates |
+| Candidate selection | Pending |
+| Surface-representation G2 gate | Not passed; current 108-grid rejected as the final unchanged grid and replacement remains open |
 | Final 10,000-surface research dataset | Not generated |
 | Full ANN research training | Not started |
 | PINN development/comparison | Not started |
-| Real sector/NIFTY validation | Not started |
+| Frozen real-market evaluation | Not started |
 
 ## Documentation
 
@@ -32,6 +32,7 @@ This private B.Tech capstone repository contains an ordinary ANN inverse-calibra
 - [Engine freeze](docs/ENGINE_FREEZE.md)
 - [Validation results](docs/DOUBLE_HESTON_VALIDATION_RESULTS.md)
 - [Market-data availability audit](docs/market_data_availability_audit.md)
+- [Stage A NSE results](docs/STAGE_A_NSE_RESULTS.md)
 - [Current status](docs/CURRENT_STATUS.md)
 - [Results to date](docs/RESULTS_TO_DATE.md)
 - [Architecture](docs/ARCHITECTURE.md)
@@ -68,15 +69,15 @@ The canonical regression fixture at `tests/fixtures/double_heston_clean_fixture.
 
 The current candidate ANN grid has nine log-moneyness values, six maturities, and separate call and put blocks: `9 * 6 * 2 = 108` normalized price inputs. The ANN produces the ten parameters in the fixed order above. Complete surfaces stay within one train, validation, or test split.
 
-The 108-input grid is **provisional** under the mentor-updated market-data plan. It must not be used for final 10,000-surface generation until Stage A confirms common real-market maturity/moneyness support and the G2 representation gate is passed. No 54-, 57-, or other replacement representation has been frozen.
+The Stage A evidence shows that the 108-input grid is **unsuitable as the final unchanged representation**: 180 DTE is unsupported on all 24 candidate surfaces and the extreme moneyness wings are rarely observed. It must not be used for final 10,000-surface generation until candidate selection, common-support analysis, and the G2 representation decision are complete. No 54-, 57-, 30-, or other replacement representation has been frozen.
 
 `configs/parameter_bounds_PROVISIONAL.yaml` remains unchanged. The reviewed audit generated 10,000 interior, 5,000 wide-valid, 2,000 boundary-challenge, and 2,000 OOD candidates. Interior accepted 8,116 (`81.16%`) and wide-valid accepted 3,371 (`67.42%`); challenge and OOD rows remain explicitly isolated. Four retained challenge pricing-tolerance stress cases keep the historical global stress decision at `NEEDS_SAMPLER_CORRECTION`; they pass at 96 Gauss-Laguerre nodes and agree with the independent adaptive reference within the frozen comparison tolerance, so they remain separate evidence rather than ordinary ANN training data. The reviewed ranges were not recovered from unavailable source and must not be treated as externally confirmed or market-calibrated.
 
 ## Stage A market-data boundary
 
-The Stage A scaffold defines one market surface as one `underlying + valuation_date` containing near, mid, and far expiry slices together. Eight sector candidates are ranked within Power, Healthcare/Pharma, IT, and Financial/Banking; NIFTY is a separate non-ranked reference. Price usability is evaluated independently from volume/open-interest activity, and futures-implied carry is audited as an available method rather than selected as the final carry convention.
+The deterministic Stage A screen uses official NSE CM and F&O UDiFF bhavcopies as the primary source. It processed 01, 15, and 22 July 2026 and found all eight sector candidates on every date, producing 24 candidate stock surfaces; NIFTY remains a separate non-ranked reference. One surface is one `underlying + valuation_date` containing all observed expiry slices. Price observations, activity, and historical quote quality remain separate concepts.
 
-No Bloomberg observations are committed to the repository. Raw Stage A inputs are ignored by Git, and the final market representation remains open until the availability/coverage evidence is collected and reviewed.
+Free NSE bhavcopy does not contain historical bid/ask quotes or quote sizes. Bloomberg is optional supplementary evidence for a later quote-quality layer, not a prerequisite or replacement for the official-NSE Stage A source. Raw and derived Stage A data remain ignored by Git. Candidate selection is pending, G2 has not passed, and the replacement representation remains open. See [Stage A NSE results](docs/STAGE_A_NSE_RESULTS.md).
 
 ## Install and validate
 
@@ -109,6 +110,6 @@ The pilot command rejects counts above 100 and labels its rows `GENUINE_CANONICA
 - The repository's correlation-disk convention is preserved, but its provenance differs from the separable four-shock literature model; see the engine document.
 - Controlled clean recovery does not prove global or unique identification.
 - The 1% noise experiment shows substantial parameter instability and boundary-near solutions.
-- The current 108-input representation is provisional until the Stage A market-support audit passes G2.
+- Stage A rejects the current 108-input grid as the final unchanged representation; the replacement remains open until G2.
 - The final four sector underlyings, market maturity grid, carry convention, and Black-Scholes baseline protocol are not yet frozen.
 - Full ANN/PINN research training, broader seed/noise studies, and frozen unseen real-market validation remain outstanding.
