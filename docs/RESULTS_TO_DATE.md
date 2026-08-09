@@ -1,12 +1,12 @@
 # Results to Date
 
-Status date: 07 August 2026
+Status date: 09 August 2026
 
 ## Verified engineering results
 
 | Check | Fresh result |
 |---|---|
-| Full automated suite | 86 passed, including 2 readiness-contract tests |
+| Full automated suite | 146 passed |
 | Engine-focused tests | 36 passed |
 | Canonical fixture | 18 quotes; deterministic and reproducible |
 | No-arbitrage bounds | Passed |
@@ -22,6 +22,33 @@ Status date: 07 August 2026
 | Genuine-engine pilot | 12 surfaces / 1,296 quote rows |
 | ANN adapter | Calls the independent canonical engine |
 | Full ANN research training | Not started |
+
+## Verified Stage A NSE engineering results
+
+| Check | Verified result |
+|---|---:|
+| Primary source | Official NSE CM and F&O UDiFF bhavcopies |
+| Valuation dates | 01, 15, and 22 July 2026 |
+| Candidate stock surfaces | 24: three for each of eight candidates |
+| Selected stock-option rows | 4,740 |
+| Candidate presence | All eight candidates present on all three dates |
+| NIFTY | Derivatives present; reference-only and excluded from ranking |
+| Stock futures rows | 72; every futures expiry matched an option expiry |
+| Expiry-field mismatches | 0 in selected stock options and futures |
+| CM/F&O spot checks | 24/24 CM closes exactly matched unique F&O `UndrlygPric` |
+| Historical bid/ask and quote sizes | Not present in free NSE bhavcopy |
+| Focused Stage A/NSE validation | 60 passed |
+| Fresh full-suite validation | 146 passed |
+
+The deterministic downloader/parser preserves official URLs, filenames, timestamps, archive sizes, ZIP and CSV SHA-256 hashes, ZIP integrity, member names, encoding, delimiter, and trading date. Raw and derived market-data files remain ignored and were not committed. See [Stage A NSE results](STAGE_A_NSE_RESULTS.md).
+
+## Verified Stage A market-support findings
+
+- Actual stock-option DTE patterns were `27/55/90` on 01 July, `13/41/76` on 15 July, and `6/34/69` on 22 July.
+- The central log-moneyness nodes from `-0.10` through `+0.10` were observed in all 72 stock-expiry slices.
+- The extreme `-0.30` and `+0.30` nodes were observed in only 2/72 and 7/72 slices.
+- The 30- and 60-day nodes were bracketed on all 24 surfaces; 180 days was outside observed expiry support on all 24.
+- These observations reject the current 108-grid as the final unchanged representation but do not define a replacement.
 
 ## Independent benchmark and bounds audit
 
@@ -57,6 +84,10 @@ The clean controlled surface can be recovered to numerical precision from one de
 - Chronological NIFTY EOD validation
 - ANN versus PINN versus numerical calibration versus Standard Heston results
 - A generated reviewed-core ANN dataset or any ANN training result
+- Final Stage A candidate winners or four selected sector underlyings
+- A frozen replacement neural representation or a passed G2 gate
+- Bloomberg historical quote-quality evidence
+- The final 10,000-surface research dataset
 
 ## Prepared reviewed-core pilot
 
@@ -73,3 +104,16 @@ separate from the core.
 - Do not treat the smoke test as financial evidence.
 - Do not claim that synthetic validation proves real NIFTY performance.
 - Do not describe the ANN or PINN as research-trained.
+- Do not treat market-data availability as proof of parameter identifiability.
+- Do not claim that candidate selection or the replacement representation is complete.
+
+```text
+STAGE_A_NSE_SCREEN = COMPLETE
+CANDIDATE_SELECTION = PENDING
+CURRENT_108_GRID = REJECTED_AS_FINAL_UNCHANGED_GRID
+REPLACEMENT_REPRESENTATION = OPEN
+G2 = NOT_PASSED
+FINAL_10K = NOT_GENERATED
+ANN_RESEARCH_TRAINING = NOT_STARTED
+PINN = NOT_STARTED
+```
