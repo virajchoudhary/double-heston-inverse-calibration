@@ -1,12 +1,12 @@
 # Results to Date
 
-Status date: 09 August 2026
+Status date: 10 August 2026
 
 ## Verified engineering results
 
 | Check | Fresh result |
 |---|---|
-| Full automated suite | 146 passed |
+| Full automated suite | 161 passed |
 | Engine-focused tests | 36 passed |
 | Canonical fixture | 18 quotes; deterministic and reproducible |
 | No-arbitrage bounds | Passed |
@@ -37,10 +37,21 @@ Status date: 09 August 2026
 | Expiry-field mismatches | 0 in selected stock options and futures |
 | CM/F&O spot checks | 24/24 CM closes exactly matched unique F&O `UndrlygPric` |
 | Historical bid/ask and quote sizes | Not present in free NSE bhavcopy |
-| Focused Stage A/NSE validation | 60 passed |
-| Fresh full-suite validation | 146 passed |
+| Focused Stage A/provenance validation | 75 passed |
+| Fresh full-suite validation | 161 passed |
 
 The deterministic downloader/parser preserves official URLs, filenames, timestamps, archive sizes, ZIP and CSV SHA-256 hashes, ZIP integrity, member names, encoding, delimiter, and trading date. Raw and derived market-data files remain ignored and were not committed. See [Stage A NSE results](STAGE_A_NSE_RESULTS.md).
+
+## Verified Stage A candidate-selection result
+
+- Primaries: NTPC, CIPLA, INFY, and HDFCBANK.
+- Backups: POWERGRID, SUNPHARMA, TCS, and ICICIBANK.
+- The original three-date Power comparison was unresolved. The separately predeclared five-Wednesday July extension selected NTPC at moderate confidence.
+- Bloomberg was not used.
+- The next research milestone is common-support analysis across the four primaries.
+- `REPLACEMENT_REPRESENTATION = OPEN` and `G2 = NOT_PASSED`; no maturity grid, moneyness grid, or feature count is selected.
+
+See [Stage A candidate selection](STAGE_A_CANDIDATE_SELECTION.md).
 
 ## Verified Stage A market-support findings
 
@@ -84,7 +95,7 @@ The clean controlled surface can be recovered to numerical precision from one de
 - Chronological NIFTY EOD validation
 - ANN versus PINN versus numerical calibration versus Standard Heston results
 - A generated reviewed-core ANN dataset or any ANN training result
-- Final Stage A candidate winners or four selected sector underlyings
+- Common-support results across the four selected Stage A primaries
 - A frozen replacement neural representation or a passed G2 gate
 - Bloomberg historical quote-quality evidence
 - The final 10,000-surface research dataset
@@ -105,15 +116,18 @@ separate from the core.
 - Do not claim that synthetic validation proves real NIFTY performance.
 - Do not describe the ANN or PINN as research-trained.
 - Do not treat market-data availability as proof of parameter identifiability.
-- Do not claim that candidate selection or the replacement representation is complete.
+- Do not claim that the replacement representation is complete or that G2 has passed.
 
 ```text
 STAGE_A_NSE_SCREEN = COMPLETE
-CANDIDATE_SELECTION = PENDING
+STAGE_A_CANDIDATE_SELECTION = COMPLETE
+POWER_SELECTION = NTPC
+SELECTED_PRIMARY_SET = NTPC | CIPLA | INFY | HDFCBANK
+BACKUP_SET = POWERGRID | SUNPHARMA | TCS | ICICIBANK
 CURRENT_108_GRID = REJECTED_AS_FINAL_UNCHANGED_GRID
 REPLACEMENT_REPRESENTATION = OPEN
 G2 = NOT_PASSED
 FINAL_10K = NOT_GENERATED
 ANN_RESEARCH_TRAINING = NOT_STARTED
-PINN = NOT_STARTED
+PINN = NOT_DERIVED_OR_TRAINED
 ```
