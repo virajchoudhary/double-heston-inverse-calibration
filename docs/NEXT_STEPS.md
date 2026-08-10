@@ -4,18 +4,16 @@ The unavailable teammate source is no longer an expected dependency. The project
 
 ## Active mentor-updated v2 sequence
 
-1. Rank the eight Stage A stock candidates using the completed official-NSE evidence while keeping historical quote quality separate.
-2. Select four primary sector underlyings: one each for Power, Healthcare/Pharma, IT, and Financial/Banking.
-3. Analyze common observed and active moneyness/maturity support across the four selected stocks.
-4. Decide and freeze the replacement representation only through G2.
-5. Update and revalidate the synthetic surface contract for the G2-approved representation.
-6. Generate the final synthetic research dataset.
-7. Train and evaluate the ordinary ANN baseline across predeclared seeds.
-8. Build and evaluate the separate PDE/PINN approach after the ANN baseline.
-9. Run the frozen chronological real-market evaluation.
-10. Compare ANN, PINN, numerical Double Heston calibration, and Standard Heston under one fixed protocol.
+1. Analyze common observed and active moneyness/maturity support across NTPC, CIPLA, INFY, and HDFCBANK.
+2. Decide and freeze the replacement representation only through G2.
+3. Update and revalidate the synthetic surface contract for the G2-approved representation.
+4. Generate the final synthetic research dataset.
+5. Train and evaluate the ordinary ANN baseline across predeclared seeds.
+6. Build and evaluate the separate PDE/PINN approach after the ANN baseline.
+7. Run the frozen chronological real-market evaluation.
+8. Compare ANN, PINN, numerical Double Heston calibration, and Standard Heston under one fixed protocol.
 
-The immediate global next decision is **Stage A candidate ranking**. Bloomberg may later add supplementary historical bid/ask evidence, but it is not required to begin ranking from official NSE presence, expiry/strike support, price-observation coverage, activity, futures availability, missingness, and spot consistency.
+Stage A candidate selection is complete: NTPC, CIPLA, INFY, and HDFCBANK are the primaries, with NTPC selected at moderate confidence. The original three-date Power comparison was unresolved; the predeclared five-Wednesday July extension resolved the choice without Bloomberg. The immediate global next milestone is **common-support analysis across the four primaries**. No maturity grid, moneyness grid, feature count, or replacement representation is selected yet.
 
 ## Secondary sampler, challenge, and OOD follow-up
 
