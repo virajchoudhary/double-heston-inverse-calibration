@@ -1,12 +1,12 @@
 # Results to Date
 
-Status date: 10 August 2026
+Status date: 11 August 2026
 
 ## Verified engineering results
 
 | Check | Fresh result |
 |---|---|
-| Full automated suite | 161 passed |
+| Full automated suite | 206 passed at the G2 checkpoint |
 | Engine-focused tests | 36 passed |
 | Canonical fixture | 18 quotes; deterministic and reproducible |
 | No-arbitrage bounds | Passed |
@@ -38,7 +38,7 @@ Status date: 10 August 2026
 | CM/F&O spot checks | 24/24 CM closes exactly matched unique F&O `UndrlygPric` |
 | Historical bid/ask and quote sizes | Not present in free NSE bhavcopy |
 | Focused Stage A/provenance validation | 75 passed |
-| Fresh full-suite validation | 161 passed |
+| Fresh full-suite validation | 206 passed at the G2 checkpoint |
 
 The deterministic downloader/parser preserves official URLs, filenames, timestamps, archive sizes, ZIP and CSV SHA-256 hashes, ZIP integrity, member names, encoding, delimiter, and trading date. Raw and derived market-data files remain ignored and were not committed. See [Stage A NSE results](STAGE_A_NSE_RESULTS.md).
 
@@ -48,8 +48,8 @@ The deterministic downloader/parser preserves official URLs, filenames, timestam
 - Backups: POWERGRID, SUNPHARMA, TCS, and ICICIBANK.
 - The original three-date Power comparison was unresolved. The separately predeclared five-Wednesday July extension selected NTPC at moderate confidence.
 - Bloomberg was not used.
-- The next research milestone is common-support analysis across the four primaries.
-- `REPLACEMENT_REPRESENTATION = OPEN` and `G2 = NOT_PASSED`; no maturity grid, moneyness grid, or feature count is selected.
+- G2 common-support analysis across the four primaries is complete.
+- `G2_MARKET_SUPPORTED_GEOMETRY = ESTABLISHED`, `G2_FINAL_REPRESENTATION = NOT_FROZEN`, and `G2 = NOT_PASSED`.
 
 See [Stage A candidate selection](STAGE_A_CANDIDATE_SELECTION.md).
 
@@ -60,6 +60,25 @@ See [Stage A candidate selection](STAGE_A_CANDIDATE_SELECTION.md).
 - The extreme `-0.30` and `+0.30` nodes were observed in only 2/72 and 7/72 slices.
 - The 30- and 60-day nodes were bracketed on all 24 surfaces; 180 days was outside observed expiry support on all 24.
 - These observations reject the current 108-grid as the final unchanged representation but do not define a replacement.
+
+## Verified G2 identifiability results
+
+The market-supported geometry uses the near and middle revised/actual listed expiries, central log-moneyness nodes `[-0.10, -0.05, 0.00, +0.05, +0.10]`, and calls plus puts. It provides 20 normalized option-price observations; maturity and carry conditioning are considered separately.
+
+| Diagnostic | Local information result | Recovery result | Gate consequence |
+|---|---|---|---|
+| Reduced-grid | Algebraic rank full; practical full rank `0/24`; median condition approximately `5.107e7` | Clean/0.5%/1.0% all `0/12` | Not passed |
+| Third expiry | Smallest singular value `136.93×` better; condition `65.47×` better; practical full rank `12/24` | Clean `2/12`; noisy `0/12` | Not admitted; activity and recovery gates failed |
+| Multi-date A/B/C/D | A/B/C/D median conditions `4.504e7`, `7.261e3`, `5.120e4`, `6.279e3` | Clean `0/6`, `1/6`, `0/6`, `0/6`; every noisy design `0/6` | `MULTI_DATE_DIAGNOSTIC = INSUFFICIENT` |
+| Independent CIR-path replication | H1/H4 replicated; H2/H3 partially replicated because latent-state C practical rank was seed-sensitive | Maximum clean recovery remained `1/6`; every noisy design remained `0/6` | `REPLICATION = MIXED`; core recovery failure replicated |
+
+The original and replication CIR path seeds were `20260811` and `27182818`. Multi-date information and exact CIR dynamics materially improve local conditioning, but stable global recovery of the canonical ten parameters remains poor.
+
+```text
+G2 = NOT_PASSED — STRUCTURAL IDENTIFIABILITY PROBLEM REMAINS
+```
+
+See [G2 identifiability checkpoint](G2_IDENTIFIABILITY_CHECKPOINT.md) and the [G2 evidence manifest](evidence/G2_CHECKPOINT_MANIFEST.json).
 
 ## Independent benchmark and bounds audit
 
@@ -95,8 +114,8 @@ The clean controlled surface can be recovered to numerical precision from one de
 - Chronological NIFTY EOD validation
 - ANN versus PINN versus numerical calibration versus Standard Heston results
 - A generated reviewed-core ANN dataset or any ANN training result
-- Common-support results across the four selected Stage A primaries
 - A frozen replacement neural representation or a passed G2 gate
+- Stable recovery of all ten canonical parameters under the market-supported geometry
 - Bloomberg historical quote-quality evidence
 - The final 10,000-surface research dataset
 
@@ -126,7 +145,10 @@ SELECTED_PRIMARY_SET = NTPC | CIPLA | INFY | HDFCBANK
 BACKUP_SET = POWERGRID | SUNPHARMA | TCS | ICICIBANK
 CURRENT_108_GRID = REJECTED_AS_FINAL_UNCHANGED_GRID
 REPLACEMENT_REPRESENTATION = OPEN
-G2 = NOT_PASSED
+G2_MARKET_SUPPORTED_GEOMETRY = ESTABLISHED
+G2_FINAL_REPRESENTATION = NOT_FROZEN
+G2 = NOT_PASSED — STRUCTURAL IDENTIFIABILITY PROBLEM REMAINS
+MULTI_DATE_DIAGNOSTIC = INSUFFICIENT
 FINAL_10K = NOT_GENERATED
 ANN_RESEARCH_TRAINING = NOT_STARTED
 PINN = NOT_DERIVED_OR_TRAINED
