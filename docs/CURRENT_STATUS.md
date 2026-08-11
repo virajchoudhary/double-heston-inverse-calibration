@@ -1,6 +1,6 @@
 # Current Project Status
 
-Status date: 11 August 2026
+Status date: 12 August 2026
 
 ## Approved research objective
 
@@ -8,7 +8,7 @@ Physics-Informed Inverse Calibration of the Canonical Double Heston Model for St
 
 ## Current completed milestone
 
-The canonical Double Heston pricing/calibration foundation, independent pricing verification, reviewed synthetic-sampling foundation, ANN infrastructure, deterministic official-NSE Stage A candidate selection, and the completed G2 diagnostic sequence are checkpointed. The selected primaries are NTPC, CIPLA, INFY, and HDFCBANK; POWERGRID, SUNPHARMA, TCS, and ICICIBANK are retained as backups. G2 established a market-supported near/middle, central-five, calls-and-puts geometry, but reduced-grid, third-expiry, multi-date, and independent CIR-path replication evidence did not demonstrate stable recovery of the canonical ten parameters. The bounded global diagnostic then established that all four predeclared clean representative surfaces admit multiple materially separated valid ten-parameter solutions with essentially indistinguishable prices. The next research decision is which scientifically independent information source can separate those regions without changing the canonical objective prematurely.
+The canonical Double Heston pricing/calibration foundation, independent pricing verification, reviewed synthetic-sampling foundation, ANN infrastructure, deterministic official-NSE Stage A candidate selection, and the completed G2 diagnostic sequence are checkpointed. The selected primaries are NTPC, CIPLA, INFY, and HDFCBANK; POWERGRID, SUNPHARMA, TCS, and ICICIBANK are retained as backups. G2 established a market-supported near/middle, central-five, calls-and-puts geometry, but reduced-grid, third-expiry, multi-date, independent CIR-path replication, global-ambiguity, and complementary-observable evidence did not demonstrate stable recovery of the canonical ten parameters. The complementary experiment is insufficient: design B improved point recovery but retained global ambiguity, while C/D rejected the truth under the fixed finite-history screen and therefore cannot establish ambiguity resolution. The next research decision is a sampling-aware complementary-observable design with empirically justified scales and multiple fixed path seeds.
 
 The unavailable teammate engine is being replaced by an independently implemented canonical Double Heston engine. Equivalence to the unavailable source is not claimed.
 
@@ -18,7 +18,7 @@ The unavailable teammate engine is being replaced by an independently implemente
 | Fixed ten-parameter contract | Complete |
 | Canonical pricing engine | 36-case independent benchmark passed; freeze evidence created |
 | Engine-focused benchmark set | 36 / 36 passed |
-| Full automated suite | 219 passed at the global-ambiguity milestone |
+| Full automated suite | 238 passed at the complementary-observable milestone |
 | Independent reference integrations | 36 / 36 reliable; zero warnings or failures |
 | Production/reference agreement | All 64-node and 96-node cases passed |
 | ANN research pricing adapter | Integrated |
@@ -34,8 +34,9 @@ The unavailable teammate engine is being replaced by an independently implemente
 | Primary Stage A source | Official NSE CM and F&O UDiFF bhavcopies |
 | Candidate selection | `COMPLETE`; NTPC, CIPLA, INFY, and HDFCBANK |
 | G2 market-supported geometry | `ESTABLISHED`; near + middle, central-five, calls + puts |
-| Completed G2 diagnostics | Reduced-grid, third-expiry, multi-date A/B/C/D, independent CIR-path replication, global ambiguity |
+| Completed G2 diagnostics | Reduced-grid, third-expiry, multi-date A/B/C/D, independent CIR-path replication, global ambiguity, complementary observables |
 | Global ten-parameter ambiguity | `ESTABLISHED`; 4/4 representative cases, 40 near-equivalent solutions, 39 clusters |
+| Complementary-observable diagnostic | `INSUFFICIENT`; C/D truth outside fixed screen in 4/4 cases |
 | Surface-representation G2 gate | `NOT_PASSED`; stable ten-parameter recovery not demonstrated |
 | Current 108-input grid | `REJECTED_AS_FINAL_UNCHANGED_GRID` |
 | Final G2 representation | `NOT_FROZEN`; no feature count frozen |
@@ -118,6 +119,21 @@ G2 = NOT_PASSED — STRUCTURAL IDENTIFIABILITY PROBLEM REMAINS
 
 See [G2_GLOBAL_AMBIGUITY_ANALYSIS.md](G2_GLOBAL_AMBIGUITY_ANALYSIS.md) and its [reproducibility manifest](evidence/G2_GLOBAL_AMBIGUITY_MANIFEST.json).
 
+## Completed complementary-observable diagnostic
+
+The frozen A/B/C/D comparison tested options only; options plus exact oracle total variance; causal 21-day and 126-day realized variance; and those realized-variance observables plus lag-4 autocorrelation of non-overlapping 5-day realized-variance blocks. Median practical rank increased from `7.5` for A to `9.5` for D, and the median condition number fell from `6.556e8` to `1.641e6`.
+
+Those local gains did not establish global recovery. The oracle B design retained 33 clusters and 29 materially displaced near-equivalent solutions. C/D produced zero jointly qualifying fits because the true parameter vector itself failed the fixed complementary screen in all four cases; zero qualifying fits must therefore not be interpreted as ambiguity resolution. On the identical `case_1;case_3` noise panel, all designs had median parameter RMSE around `0.36` at 0.5% option noise and `0.40` at 1.0%.
+
+```text
+COMPLEMENTARY_OBSERVABLE = INSUFFICIENT
+EXPERIMENT_VALIDITY = NOT_PASSED_TRUTH_OUTSIDE_COMPLEMENTARY_SCREEN
+MARKET_OBSERVABLE_CONTRACT = UNRESOLVED
+G2 = NOT_PASSED
+```
+
+See [G2_COMPLEMENTARY_OBSERVABLE_ANALYSIS.md](G2_COMPLEMENTARY_OBSERVABLE_ANALYSIS.md) and its [reproducibility manifest](evidence/G2_COMPLEMENTARY_OBSERVABLE_MANIFEST.json).
+
 ## Generation boundary
 
 `CORE_DATASET_READY = true` means the reviewed normal parameter population and leakage/split logic are ready **under the existing candidate surface contract**. It does not authorize immediate final dataset generation under the mentor-updated pipeline.
@@ -136,6 +152,9 @@ G2_FINAL_REPRESENTATION = NOT_FROZEN
 G2 = NOT_PASSED
 MULTI_DATE_DIAGNOSTIC = INSUFFICIENT
 GLOBAL_AMBIGUITY = ESTABLISHED
+COMPLEMENTARY_OBSERVABLE = INSUFFICIENT
+EXPERIMENT_VALIDITY = NOT_PASSED_TRUTH_OUTSIDE_COMPLEMENTARY_SCREEN
+MARKET_OBSERVABLE_CONTRACT = UNRESOLVED
 FINAL_10K = NOT_GENERATED
 ANN_RESEARCH_TRAINING = NOT_STARTED
 PINN = NOT_DERIVED_OR_TRAINED

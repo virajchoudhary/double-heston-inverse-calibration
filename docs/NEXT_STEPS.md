@@ -4,8 +4,8 @@ The unavailable teammate source is no longer an expected dependency. The project
 
 ## Active mentor-updated v2 sequence
 
-1. Obtain mentor guidance on which independently justified information source should be tested against the established global ambiguity.
-2. Predeclare one bounded remedy experiment using complementary observables or joint historical inference targeted at the observed slow/fast variance-allocation and cross-factor compensation regions; do not implement it as part of this milestone.
+1. Predeclare a sampling-aware synthetic complementary-observable design with empirically justified finite-window likelihood/scales and multiple fixed path seeds.
+2. Require the true vectors to pass the observation-model screen before using zero qualifying fits or cluster counts as ambiguity evidence.
 3. Decide and freeze the final representation only through a passed G2 gate.
 4. Update and revalidate the synthetic surface contract for the G2-approved representation.
 5. Generate the final synthetic research dataset.
@@ -14,9 +14,9 @@ The unavailable teammate source is no longer an expected dependency. The project
 8. Run the frozen chronological real-market evaluation.
 9. Compare ANN, PINN, numerical Double Heston calibration, and Standard Heston under one fixed protocol.
 
-Stage A candidate selection is complete: NTPC, CIPLA, INFY, and HDFCBANK are the primaries, with NTPC selected at moderate confidence. G2 common-support established a near/middle, central-five, calls-and-puts market geometry. Reduced-grid, third-expiry, multi-date, independent CIR-path replication, and global-ambiguity diagnostics are complete. Global ambiguity is established in all four predeclared representative cases, while local weakest directions explain the aggregate displacement only partially at case level. The immediate research decision is therefore **which independent information source can separate the observed solution regions**. The final representation and feature count remain unfrozen.
+Stage A candidate selection is complete: NTPC, CIPLA, INFY, and HDFCBANK are the primaries, with NTPC selected at moderate confidence. G2 common-support established a near/middle, central-five, calls-and-puts market geometry. Reduced-grid, third-expiry, multi-date, independent CIR-path replication, global-ambiguity, and complementary-observable diagnostics are complete. The complementary experiment improved local conditioning but is `INSUFFICIENT`: the oracle retained separated solutions, and the sampled C/D truth failed the fixed complementary screen in all four cases. The final representation and feature count remain unfrozen.
 
-The replicated result is sufficient to stop blindly adding ordinary option-price features. A large CIR-seed panel is not automatically the next implementation. Any seed panel, new observable, prior, regularizer, or reparameterization requires a separate scientific rationale and mentor review.
+The result is sufficient to stop treating local rank or conditioning gains as global recovery evidence. A new seed panel is justified only within a predeclared sampling-aware observation model. Any new observable, prior, regularizer, or reparameterization still requires a separate scientific rationale and mentor review.
 
 ## Secondary sampler, challenge, and OOD follow-up
 

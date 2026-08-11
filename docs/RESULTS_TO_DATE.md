@@ -107,6 +107,28 @@ G2 = NOT_PASSED — STRUCTURAL IDENTIFIABILITY PROBLEM REMAINS
 
 See [G2 global-ambiguity analysis](G2_GLOBAL_AMBIGUITY_ANALYSIS.md) and the [global-ambiguity manifest](evidence/G2_GLOBAL_AMBIGUITY_MANIFEST.json).
 
+## Verified complementary-observable result
+
+The bounded A/B/C/D experiment retained the canonical ten-parameter target and tested only predeclared incremental observables.
+
+| Design | Observables | Median practical rank | Median condition number | Four-case clean parameter RMSE |
+|---|---|---:|---:|---:|
+| A | Options only | 7.5 | `6.556e8` | `0.121398` |
+| B | A + oracle `v0_slow + v0_fast` | 8.5 | `1.110e8` | `0.051845` |
+| C | A + causal 21/126-day realized variance | 8.5 | `1.189e8` | `0.197754` |
+| D | C + lag-4 autocorrelation of non-overlapping 5-day realized-variance blocks | 9.5 | `1.641e6` | `0.199805` |
+
+Design B retained 34 near-equivalent solutions, 29 materially displaced solutions, and 33 clusters. C/D had zero jointly qualifying fits, but the truth itself failed the fixed complementary screen in 4/4 cases, so those zeros are invalid as ambiguity-resolution evidence. On the identical two-case noise panel, the A/B/C/D median parameter RMSEs were `0.3513/0.3664/0.3615/0.3565` at 0.5% noise and `0.4030/0.4061/0.4032/0.4032` at 1.0% noise.
+
+```text
+COMPLEMENTARY_OBSERVABLE = INSUFFICIENT
+EXPERIMENT_VALIDITY = NOT_PASSED_TRUTH_OUTSIDE_COMPLEMENTARY_SCREEN
+MARKET_OBSERVABLE_CONTRACT = UNRESOLVED
+G2 = NOT_PASSED — STRUCTURAL IDENTIFIABILITY PROBLEM REMAINS
+```
+
+See [G2 complementary-observable analysis](G2_COMPLEMENTARY_OBSERVABLE_ANALYSIS.md) and the [complementary-observable manifest](evidence/G2_COMPLEMENTARY_OBSERVABLE_MANIFEST.json).
+
 ## Independent benchmark and bounds audit
 
 | Check | Fresh result |
@@ -177,6 +199,9 @@ G2_FINAL_REPRESENTATION = NOT_FROZEN
 G2 = NOT_PASSED — STRUCTURAL IDENTIFIABILITY PROBLEM REMAINS
 MULTI_DATE_DIAGNOSTIC = INSUFFICIENT
 GLOBAL_AMBIGUITY = ESTABLISHED
+COMPLEMENTARY_OBSERVABLE = INSUFFICIENT
+EXPERIMENT_VALIDITY = NOT_PASSED_TRUTH_OUTSIDE_COMPLEMENTARY_SCREEN
+MARKET_OBSERVABLE_CONTRACT = UNRESOLVED
 FINAL_10K = NOT_GENERATED
 ANN_RESEARCH_TRAINING = NOT_STARTED
 PINN = NOT_DERIVED_OR_TRAINED
