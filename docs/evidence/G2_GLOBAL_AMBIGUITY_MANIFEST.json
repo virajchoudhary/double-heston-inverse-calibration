@@ -1,0 +1,190 @@
+{
+  "schema_version": 2,
+  "milestone_date": "2026-08-11",
+  "repository": "C:/ann_inverse_calibration",
+  "canonical_base": "b9780474d53e91b4de3bc4ec9a3e9be8ffd588b5",
+  "research_branch": "feat/g2-global-ambiguity",
+  "scientific_state": {
+    "global_ambiguity": "ESTABLISHED",
+    "g2_market_supported_geometry": "ESTABLISHED",
+    "g2_final_representation": "NOT_FROZEN",
+    "g2": "NOT_PASSED — STRUCTURAL IDENTIFIABILITY PROBLEM REMAINS",
+    "multi_date_diagnostic": "INSUFFICIENT",
+    "final_10k": "NOT_GENERATED",
+    "ann_research_training": "NOT_STARTED",
+    "pinn": "NOT_DERIVED_OR_TRAINED"
+  },
+  "tracked_sources": [
+    "docs/G2_GLOBAL_AMBIGUITY_ANALYSIS.md",
+    "docs/evidence/G2_GLOBAL_AMBIGUITY_MANIFEST.json",
+    "scripts/run_g2_global_ambiguity_analysis.py",
+    "tests/test_g2_global_ambiguity_analysis.py"
+  ],
+  "ignored_output_root": "market_data_audit/stage_a/derived/g2_global_ambiguity",
+  "representative_cases": [
+    {
+      "case_id": "case_1",
+      "sample_id": "interior_train_4151",
+      "distribution": "interior_train",
+      "valuation_date": "2026-07-01",
+      "maturity_days": [27, 55],
+      "parameters": [0.7201001270341181, 0.0627343918595344, 0.2119791852951291, -0.1802978834235966, 0.0730662426958352, 3.703463446201858, 0.0433194740041468, 0.2627966047238745, -0.1036039245690306, 0.0678851614425259]
+    },
+    {
+      "case_id": "case_2",
+      "sample_id": "interior_train_1450",
+      "distribution": "interior_train",
+      "valuation_date": "2026-07-15",
+      "maturity_days": [13, 41],
+      "parameters": [1.3814304349374713, 0.1191704658387904, 0.2028616298687553, -0.6619571308153547, 0.1075045663356258, 5.940280012505328, 0.0738837487753257, 0.7311424537922181, -0.0610983933146679, 0.077538064427117]
+    },
+    {
+      "case_id": "case_3",
+      "sample_id": "wide_valid_train_744",
+      "distribution": "wide_valid_train",
+      "valuation_date": "2026-07-22",
+      "maturity_days": [6, 34],
+      "parameters": [1.345471123521795, 0.10402368329319, 0.1927738068021157, -0.1243602019590688, 0.1830631299606303, 6.931444137752705, 0.0773359823305846, 0.5905528253398824, -0.2870652967954047, 0.1220541374473158]
+    },
+    {
+      "case_id": "case_4",
+      "sample_id": "wide_valid_train_4264",
+      "distribution": "wide_valid_train",
+      "valuation_date": "2026-07-01",
+      "maturity_days": [27, 55],
+      "parameters": [2.297187948528226, 0.1999311918616672, 0.7611044302387986, 0.1827516134971883, 0.0523569672586306, 7.478763310652926, 0.0644440362118678, 0.9115907741472162, 0.6143052142846812, 0.1958509664540857]
+    }
+  ],
+  "parameter_order": ["kappa_slow", "theta_slow", "sigma_slow", "rho_slow", "v0_slow", "kappa_fast", "theta_fast", "sigma_fast", "rho_fast", "v0_fast"],
+  "experiment_contract": {
+    "analysis_seed": 31415926,
+    "representation": "central5_calls_puts",
+    "moneyness_nodes": [-0.10, -0.05, 0.00, 0.05, 0.10],
+    "option_types": ["call", "put"],
+    "price_normalization": "option price divided by spot",
+    "clean_start_count_per_case": 20,
+    "noise_start_count_per_case": 10,
+    "noise_cases": ["case_1", "case_3"],
+    "noise_levels": [0.005, 0.01],
+    "noise_definition": "observed = clean * (1 + Normal(0, noise_level)) with deterministic case/noise seed",
+    "noise_comparison_population": "case_1 and case_3 only; clean/noise change claims and figure 06 use their matched clean subset",
+    "near_price_equivalence_rmse": 2.5e-7,
+    "near_price_equivalence_derivation": "rounded ten times the prior clean median normalized RMSE 2.515e-8 and frozen before the run",
+    "material_displacement_rmse": 0.05,
+    "parameter_scaling": "each canonical parameter divided by its existing full hard-bound width",
+    "clustering": {
+      "method": "deterministic complete linkage",
+      "metric": "Euclidean distance in ten full-range-scaled parameter coordinates",
+      "distance_cutoff": 0.10
+    },
+    "optimizer": {
+      "name": "scipy.optimize.least_squares",
+      "method": "trf",
+      "max_nfev": 120,
+      "ftol": 1e-10,
+      "xtol": 1e-10,
+      "gtol": 1e-10,
+      "diff_step": 2e-5
+    },
+    "pricer_node_count": 64
+  },
+  "optimizer_reproducibility": {
+    "runtime": {
+      "python": "3.13.4 (tags/v3.13.4:8a526ec, Jun  3 2025, 17:46:04) [MSC v.1943 64 bit (AMD64)]",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "numpy": "2.2.6",
+      "scipy": "1.16.2",
+      "pandas": "2.3.2",
+      "matplotlib": "3.10.6"
+    },
+    "latent_start_generator": {
+      "api": "numpy.random.default_rng",
+      "bit_generator": "PCG64",
+      "neutral_start": "ten exact zeros at start_index 0 of every batch",
+      "broad_starts": "Normal(0, 1.25, size=10), drawn sequentially for start_index 1..count-1",
+      "batch_seeds": [
+        {"case_id": "case_1", "noise_level": 0.0, "count": 20, "seed": 31415937},
+        {"case_id": "case_1", "noise_level": 0.005, "count": 10, "seed": 31420937},
+        {"case_id": "case_1", "noise_level": 0.01, "count": 10, "seed": 31425937},
+        {"case_id": "case_2", "noise_level": 0.0, "count": 20, "seed": 31515937},
+        {"case_id": "case_3", "noise_level": 0.0, "count": 20, "seed": 31615937},
+        {"case_id": "case_3", "noise_level": 0.005, "count": 10, "seed": 31620937},
+        {"case_id": "case_3", "noise_level": 0.01, "count": 10, "seed": 31625937},
+        {"case_id": "case_4", "noise_level": 0.0, "count": 20, "seed": 31715937}
+      ],
+      "exact_schedule_serialization": "start_schedule() CSV, UTF-8, LF, no index, float_format %.17g",
+      "exact_schedule_sha256": "7831622B03BFEE7AE3E4A5BFA5F458A7153F16198C20D8293139389B004F400E",
+      "reconstruction_status": "EXACTLY_RECONSTRUCTIBLE_AND_TEST_FROZEN"
+    }
+  },
+  "canonical_result": {
+    "solutions_total": 120,
+    "clean_solutions": 80,
+    "noise_0_5_percent_solutions": 20,
+    "noise_1_0_percent_solutions": 20,
+    "clean_near_equivalent_solutions": 40,
+    "clean_clusters": 39,
+    "ambiguous_cases": "4/4",
+    "clean_median_price_rmse": 4.708e-8,
+    "clean_median_parameter_rmse": 0.1485,
+    "clean_parameter_rmse_range": [0.0289, 0.3463],
+    "optimizer_success_only_near_equivalent": 22,
+    "optimizer_success_only_material": 21,
+    "noise_0_5_percent_median_price_rmse": 2.998e-4,
+    "noise_0_5_percent_median_parameter_rmse": 0.332,
+    "noise_0_5_percent_boundary_hits": "20/20",
+    "noise_1_0_percent_median_price_rmse": 5.613e-4,
+    "noise_1_0_percent_median_parameter_rmse": 0.371,
+    "noise_1_0_percent_boundary_hits": "20/20",
+    "matched_noise_clean_cases": ["case_1", "case_3"],
+    "matched_noise_clean_median_parameter_rmse": 0.203073769183,
+    "local_global_alignment": "CONSISTENT",
+    "median_absolute_cosine": 0.535,
+    "case_alignment_detail": ["CONSISTENT", "CONSISTENT", "INCONSISTENT", "PARTIALLY_CONSISTENT"],
+    "dominant_compensation": "v0_slow/v0_fast strongly negative in all four cases",
+    "repeated_negative_compensation": ["theta_slow/theta_fast", "sigma_slow/theta_fast", "rho_slow/theta_fast"],
+    "unsupported_global_pair_claim": "kappa_slow/theta_slow did not pass the empirical screen",
+    "basin_volume_claim": "NOT_ESTABLISHED; 38 of 39 clusters are singleton solution regions"
+  },
+  "protected_prior_evidence": {
+    "file_count": 115,
+    "aggregate_sha256": "727172F8E3DF71A056BB9434549461A6CD96CA82E94467040C91B4DD9C60A0C1",
+    "status": "UNCHANGED_BEFORE_AND_AFTER"
+  },
+  "artifacts": [
+    {"path": "alignment.csv", "sha256": "4CB3E07E266171A3FFF2B90A4690A0697CF1D9A77BC77FACCCFF6633B7BFC1B3", "bytes": 1192, "data_rows": 39},
+    {"path": "all_solutions.csv", "sha256": "CAB9FAE2D1ED81445DFDDB2FC38F8C05DCC69BF9260E87AF82BE505EB3FB10D8", "bytes": 140547, "data_rows": 120},
+    {"path": "cases.csv", "sha256": "7E9D2E2EE3F20194A7EDCBC9EF09C7F7DABF03BCDDCF89CD857F8447DBF05E2F", "bytes": 2402, "data_rows": 4},
+    {"path": "clean_near_equivalent.csv", "sha256": "FC1B5FAA9B4B0077500A38D5EEB4426B163AD84228A79C945E57A1B6414377BA", "bytes": 45229, "data_rows": 40},
+    {"path": "cluster_summary.csv", "sha256": "3C154E1AB08A031714151587A409765FA45B735A116C154C24F473B68C1B27D1", "bytes": 7779, "data_rows": 39},
+    {"path": "clusters.csv", "sha256": "1469ED59DF582DAF55C8E806FD91D1FAF46368018B3CEEEA113480D4615AD39C", "bytes": 2493, "data_rows": 40},
+    {"path": "compensation_pairs.csv", "sha256": "43DEB588915D710FCB95BB73DD3A093BE640D8EE658EE9702875780187FB5936", "bytes": 5614, "data_rows": 90},
+    {"path": "contract.json", "sha256": "4CE5DA63DF2BB3BB4E4B2C06904763E1351008179F1A4AE6A8D43C814201A52F", "bytes": 1192},
+    {"path": "decision.json", "sha256": "99EF940780CF502CB16323D6C915619CC635FFE5DB5ED15E56BA8AB1965FE452", "bytes": 573},
+    {"path": "figures/01_price_rmse_vs_parameter_rmse.png", "sha256": "F560BFF7D71003F63917A7445350D7A075C34E2A992BB939C188BB03AAE30F02", "bytes": 69706},
+    {"path": "figures/02_true_vs_alternative_scaled_vectors.png", "sha256": "6EBAF7CE69FE1532D41BAA288B0777934D9AD2BE7442A18A57CDB7A8189DAAE3", "bytes": 270144},
+    {"path": "figures/03_compensation_pairs.png", "sha256": "1889770111283A2C7FC6176F4875790CE2FC3B1C4475112C8E09664BCD7BF66E", "bytes": 85175},
+    {"path": "figures/04_cluster_projection_pca.png", "sha256": "8AC63C839C08023061A07091160AA1CC6BC94EC2C829A8899DCF78A8EB499C1E", "bytes": 40831},
+    {"path": "figures/05_local_global_alignment.png", "sha256": "476144E401D1E6B9BF32896B6CC71AE1323D9EA244F587FB19959E5776F7659D", "bytes": 63811},
+    {"path": "figures/06_clean_noise_ambiguity_summary.png", "sha256": "CF98778F42A7C79E7D9190D22AD2802041196F99ABC844982E7E873F12516FC5", "bytes": 90378},
+    {"path": "noise_compensation_pairs.csv", "sha256": "1CACD93C4E5A508A6EABC2B4B5ABF6B3305DF01542073F323C0DA07C14C39D37", "bytes": 5986, "data_rows": 90},
+    {"path": "noise_summary.csv", "sha256": "2C120BFE40D64ED91CE1CC198C98FEF5760ABB5A84209DFBCDB008351F5FA6FE", "bytes": 1229, "data_rows": 8},
+    {"path": "summary.csv", "sha256": "3DFA27B1CF6834A91FF24D3A0BDD059B7489A0C7058B5DE013738D23D23674ED", "bytes": 847, "data_rows": 4},
+    {"path": "weakest_directions.csv", "sha256": "DBE422CBAEC9C4A0FAC0DCB828647EAA6276FE6BD8CDB3C815A7C819AFF35ADD", "bytes": 2941, "data_rows": 40}
+  ],
+  "reproduction": {
+    "analysis_command": "python -B scripts/run_g2_global_ambiguity_analysis.py",
+    "render_only_command": "python -B scripts/run_g2_global_ambiguity_analysis.py --render-only",
+    "canonical_optimization_run_count": 1,
+    "canonical_run_status": "COMPLETED",
+    "figure_replay_status": "VERIFIED: six figures and the tracked report were regenerated from the canonical CSV/JSON artifacts with --render-only; OPTIMIZATION_RERUN=FALSE",
+    "report_replay_status": "TRACKED_REPORT_IS_GENERATED_BY_RENDER_REPORT_FROM_PRESERVED_ARTIFACTS",
+    "artifact_policy": "All 19 generated files remain ignored and are referenced by path and hash only"
+  },
+  "validation": {
+    "focused_tests": "13 passed",
+    "full_suite": "219 passed",
+    "artifact_hashes": "19/19 matched",
+    "git_diff_check": "PASS"
+  }
+}
