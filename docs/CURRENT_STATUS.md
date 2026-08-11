@@ -8,7 +8,7 @@ Physics-Informed Inverse Calibration of the Canonical Double Heston Model for St
 
 ## Current completed milestone
 
-The canonical Double Heston pricing/calibration foundation, independent pricing verification, reviewed synthetic-sampling foundation, ANN infrastructure, deterministic official-NSE Stage A candidate selection, and the completed G2 diagnostic sequence are checkpointed. The selected primaries are NTPC, CIPLA, INFY, and HDFCBANK; POWERGRID, SUNPHARMA, TCS, and ICICIBANK are retained as backups. G2 established a market-supported near/middle, central-five, calls-and-puts geometry, but reduced-grid, third-expiry, multi-date, and independent CIR-path replication evidence did not demonstrate stable recovery of the canonical ten parameters. The next research decision is how to characterize the remaining global parameter ambiguity without changing the canonical research objective.
+The canonical Double Heston pricing/calibration foundation, independent pricing verification, reviewed synthetic-sampling foundation, ANN infrastructure, deterministic official-NSE Stage A candidate selection, and the completed G2 diagnostic sequence are checkpointed. The selected primaries are NTPC, CIPLA, INFY, and HDFCBANK; POWERGRID, SUNPHARMA, TCS, and ICICIBANK are retained as backups. G2 established a market-supported near/middle, central-five, calls-and-puts geometry, but reduced-grid, third-expiry, multi-date, and independent CIR-path replication evidence did not demonstrate stable recovery of the canonical ten parameters. The bounded global diagnostic then established that all four predeclared clean representative surfaces admit multiple materially separated valid ten-parameter solutions with essentially indistinguishable prices. The next research decision is which scientifically independent information source can separate those regions without changing the canonical objective prematurely.
 
 The unavailable teammate engine is being replaced by an independently implemented canonical Double Heston engine. Equivalence to the unavailable source is not claimed.
 
@@ -18,7 +18,7 @@ The unavailable teammate engine is being replaced by an independently implemente
 | Fixed ten-parameter contract | Complete |
 | Canonical pricing engine | 36-case independent benchmark passed; freeze evidence created |
 | Engine-focused benchmark set | 36 / 36 passed |
-| Full automated suite | 206 passed at the G2 checkpoint |
+| Full automated suite | 219 passed at the global-ambiguity milestone |
 | Independent reference integrations | 36 / 36 reliable; zero warnings or failures |
 | Production/reference agreement | All 64-node and 96-node cases passed |
 | ANN research pricing adapter | Integrated |
@@ -34,7 +34,8 @@ The unavailable teammate engine is being replaced by an independently implemente
 | Primary Stage A source | Official NSE CM and F&O UDiFF bhavcopies |
 | Candidate selection | `COMPLETE`; NTPC, CIPLA, INFY, and HDFCBANK |
 | G2 market-supported geometry | `ESTABLISHED`; near + middle, central-five, calls + puts |
-| Completed G2 diagnostics | Reduced-grid, third-expiry, multi-date A/B/C/D, independent CIR-path replication |
+| Completed G2 diagnostics | Reduced-grid, third-expiry, multi-date A/B/C/D, independent CIR-path replication, global ambiguity |
+| Global ten-parameter ambiguity | `ESTABLISHED`; 4/4 representative cases, 40 near-equivalent solutions, 39 clusters |
 | Surface-representation G2 gate | `NOT_PASSED`; stable ten-parameter recovery not demonstrated |
 | Current 108-input grid | `REJECTED_AS_FINAL_UNCHANGED_GRID` |
 | Final G2 representation | `NOT_FROZEN`; no feature count frozen |
@@ -102,6 +103,21 @@ MULTI_DATE_DIAGNOSTIC = INSUFFICIENT
 
 See [G2_IDENTIFIABILITY_CHECKPOINT.md](G2_IDENTIFIABILITY_CHECKPOINT.md) and the tracked [evidence manifest](evidence/G2_CHECKPOINT_MANIFEST.json).
 
+## Completed global-ambiguity milestone
+
+The clean primary diagnostic used four predeclared representative vectors, 20 deterministic starts per surface, the supported central-five calls-and-puts geometry, 64-node pricing, full-range parameter scaling, and a price-equivalence threshold frozen at normalized RMSE `2.5e-7`. It retained 40 near-equivalent clean solutions in 39 separated scaled-parameter clusters. Ambiguity was established in `4/4` cases; median price RMSE was `4.708e-8` while median range-scaled parameter RMSE was `0.1485`.
+
+The optimizer-success-only subset retained 22 near-equivalent solutions, 21 materially displaced, across all four cases. The dominant repeated compensation was strongly negative `v0_slow/v0_fast`; repeated negative relationships also involved `theta_slow/theta_fast`, `sigma_slow/theta_fast`, and `rho_slow/theta_fast`. `kappa_slow/theta_slow` did not pass the global empirical screen.
+
+Local/global displacement evidence is `CONSISTENT` in aggregate at median absolute cosine `0.535`, but not uniformly: two cases were consistent, one partially consistent, and one inconsistent. At both 0.5% and 1.0% noise every recovered vector hit at least one declared boundary and parameter error increased sharply. The mostly singleton clusters establish separated solution regions, not smooth basin volume.
+
+```text
+GLOBAL_AMBIGUITY = ESTABLISHED
+G2 = NOT_PASSED — STRUCTURAL IDENTIFIABILITY PROBLEM REMAINS
+```
+
+See [G2_GLOBAL_AMBIGUITY_ANALYSIS.md](G2_GLOBAL_AMBIGUITY_ANALYSIS.md) and its [reproducibility manifest](evidence/G2_GLOBAL_AMBIGUITY_MANIFEST.json).
+
 ## Generation boundary
 
 `CORE_DATASET_READY = true` means the reviewed normal parameter population and leakage/split logic are ready **under the existing candidate surface contract**. It does not authorize immediate final dataset generation under the mentor-updated pipeline.
@@ -119,6 +135,7 @@ G2_MARKET_SUPPORTED_GEOMETRY = ESTABLISHED
 G2_FINAL_REPRESENTATION = NOT_FROZEN
 G2 = NOT_PASSED
 MULTI_DATE_DIAGNOSTIC = INSUFFICIENT
+GLOBAL_AMBIGUITY = ESTABLISHED
 FINAL_10K = NOT_GENERATED
 ANN_RESEARCH_TRAINING = NOT_STARTED
 PINN = NOT_DERIVED_OR_TRAINED

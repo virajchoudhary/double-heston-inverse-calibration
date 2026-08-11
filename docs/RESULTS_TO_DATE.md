@@ -6,7 +6,7 @@ Status date: 11 August 2026
 
 | Check | Fresh result |
 |---|---|
-| Full automated suite | 206 passed at the G2 checkpoint |
+| Full automated suite | 219 passed at the global-ambiguity milestone |
 | Engine-focused tests | 36 passed |
 | Canonical fixture | 18 quotes; deterministic and reproducible |
 | No-arbitrage bounds | Passed |
@@ -38,7 +38,7 @@ Status date: 11 August 2026
 | CM/F&O spot checks | 24/24 CM closes exactly matched unique F&O `UndrlygPric` |
 | Historical bid/ask and quote sizes | Not present in free NSE bhavcopy |
 | Focused Stage A/provenance validation | 75 passed |
-| Fresh full-suite validation | 206 passed at the G2 checkpoint |
+| Fresh full-suite validation | 219 passed at the global-ambiguity milestone |
 
 The deterministic downloader/parser preserves official URLs, filenames, timestamps, archive sizes, ZIP and CSV SHA-256 hashes, ZIP integrity, member names, encoding, delimiter, and trading date. Raw and derived market-data files remain ignored and were not committed. See [Stage A NSE results](STAGE_A_NSE_RESULTS.md).
 
@@ -79,6 +79,33 @@ G2 = NOT_PASSED — STRUCTURAL IDENTIFIABILITY PROBLEM REMAINS
 ```
 
 See [G2 identifiability checkpoint](G2_IDENTIFIABILITY_CHECKPOINT.md) and the [G2 evidence manifest](evidence/G2_CHECKPOINT_MANIFEST.json).
+
+## Verified global-ambiguity result
+
+The bounded global diagnostic collected 120 solutions across four predeclared representative parameter cases: 80 clean, 20 at 0.5% noise, and 20 at 1.0% noise. The clean equivalence threshold was normalized price RMSE `2.5e-7`; material displacement was full-range-scaled parameter RMSE `0.05`.
+
+| Result | Verified value |
+|---|---:|
+| Clean near-equivalent solutions | 40 |
+| Distinct scaled-parameter clusters | 39 |
+| Representative cases with ambiguity | 4 / 4 |
+| Median clean near-equivalent price RMSE | `4.708e-8` |
+| Median clean near-equivalent parameter RMSE | `0.1485` |
+| Clean near-equivalent parameter RMSE range | `0.0289` to `0.3463` |
+| Optimizer-success-only near-equivalent solutions | 22; 21 materially displaced |
+| Aggregate local/global absolute cosine | `0.535`; `CONSISTENT` |
+| 0.5% median price / parameter RMSE | `2.998e-4` / `0.332` |
+| 1.0% median price / parameter RMSE | `5.613e-4` / `0.371` |
+| Noise boundary hits | 20 / 20 at each level |
+
+The dominant repeated compensation was negative `v0_slow/v0_fast` in all four cases. Negative `theta_slow/theta_fast`, `sigma_slow/theta_fast`, and `rho_slow/theta_fast` relationships repeated across cases. `kappa_slow/theta_slow` did not pass the empirical global screen. Local and global evidence is consistent in aggregate but heterogeneous: two cases were consistent, one partially consistent, and one inconsistent. Because 38 of 39 clusters were singleton solutions, the evidence establishes separated parameter regions rather than smooth basin volume.
+
+```text
+GLOBAL_AMBIGUITY = ESTABLISHED
+G2 = NOT_PASSED — STRUCTURAL IDENTIFIABILITY PROBLEM REMAINS
+```
+
+See [G2 global-ambiguity analysis](G2_GLOBAL_AMBIGUITY_ANALYSIS.md) and the [global-ambiguity manifest](evidence/G2_GLOBAL_AMBIGUITY_MANIFEST.json).
 
 ## Independent benchmark and bounds audit
 
@@ -149,6 +176,7 @@ G2_MARKET_SUPPORTED_GEOMETRY = ESTABLISHED
 G2_FINAL_REPRESENTATION = NOT_FROZEN
 G2 = NOT_PASSED — STRUCTURAL IDENTIFIABILITY PROBLEM REMAINS
 MULTI_DATE_DIAGNOSTIC = INSUFFICIENT
+GLOBAL_AMBIGUITY = ESTABLISHED
 FINAL_10K = NOT_GENERATED
 ANN_RESEARCH_TRAINING = NOT_STARTED
 PINN = NOT_DERIVED_OR_TRAINED

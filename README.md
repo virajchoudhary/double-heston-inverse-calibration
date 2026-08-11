@@ -2,14 +2,14 @@
 
 This private B.Tech capstone repository contains an ordinary ANN inverse-calibration baseline, an independently implemented canonical Double Heston European-option pricing engine, and a completed deterministic official-NSE Stage A market-support screen. The production engine has been benchmarked against a separately coded adaptive-quadrature reference. The unavailable teammate engine is being replaced by this reimplementation; equivalence to the unavailable source is not claimed.
 
-> The pricing benchmark passed, the normal reviewed synthetic core is ready under the existing contract, and official-NSE Stage A candidate selection is complete. The selected primaries are NTPC, CIPLA, INFY, and HDFCBANK; NTPC was selected at moderate confidence after a predeclared five-Wednesday Power extension resolved the original three-date tie. G2 established a market-supported near/middle, central-five, calls-and-puts geometry, but reduced-grid, third-expiry, multi-date, and independent CIR-path replication diagnostics did not demonstrate stable recovery of the canonical ten parameters. The final representation is not frozen and `G2 = NOT_PASSED`. The historical challenge-stress decision remains `NEEDS_SAMPLER_CORRECTION`. No final 10k dataset or ANN/PINN research result exists.
+> The pricing benchmark passed, the normal reviewed synthetic core is ready under the existing contract, and official-NSE Stage A candidate selection is complete. The selected primaries are NTPC, CIPLA, INFY, and HDFCBANK; NTPC was selected at moderate confidence after a predeclared five-Wednesday Power extension resolved the original three-date tie. G2 established a market-supported near/middle, central-five, calls-and-puts geometry, but reduced-grid, third-expiry, multi-date, and independent CIR-path replication diagnostics did not demonstrate stable recovery of the canonical ten parameters. A bounded clean multi-start diagnostic subsequently established global ambiguity in all four predeclared representative cases: 40 near-equivalent solutions formed 39 separated scaled-parameter clusters despite median normalized price RMSE `4.708e-8` and median range-scaled parameter RMSE `0.1485`. The final representation is not frozen and `G2 = NOT_PASSED`. The historical challenge-stress decision remains `NEEDS_SAMPLER_CORRECTION`. No final 10k dataset or ANN/PINN research result exists.
 
 | Component | Status |
 |---|---|
 | ANN infrastructure | Complete |
 | Canonical Double Heston engine | Independently benchmarked and frozen for review |
 | Independent pricing benchmark | 36 / 36 cases passed at 64 and 96 nodes |
-| Full automated suite | 206 passed at the G2 checkpoint |
+| Full automated suite | 219 passed at the global-ambiguity milestone |
 | Synthetic pricing/calibration validation | Complete for one clean and one 1% noise fixture |
 | ANN pricing adapter | Integrated with the real canonical engine |
 | Genuine-engine pilot data | 12 surfaces / 1,296 quotes generated |
@@ -18,6 +18,7 @@ This private B.Tech capstone repository contains an ordinary ANN inverse-calibra
 | Stage A official-NSE screen | Complete: 24 candidate stock surfaces across three dates |
 | Candidate selection | Complete: NTPC, CIPLA, INFY, and HDFCBANK; NTPC confidence moderate |
 | G2 market-supported geometry | Established: near + middle, central-five, calls + puts |
+| G2 global ambiguity | Established in 4/4 predeclared representative cases |
 | Surface-representation G2 gate | Not passed; stable canonical ten-parameter recovery was not demonstrated |
 | G2 final representation | Not frozen |
 | Final 10,000-surface research dataset | Not generated |
@@ -38,6 +39,8 @@ This private B.Tech capstone repository contains an ordinary ANN inverse-calibra
 - [Stage A candidate selection](docs/STAGE_A_CANDIDATE_SELECTION.md)
 - [G2 identifiability checkpoint](docs/G2_IDENTIFIABILITY_CHECKPOINT.md)
 - [G2 evidence manifest](docs/evidence/G2_CHECKPOINT_MANIFEST.json)
+- [G2 global-ambiguity analysis](docs/G2_GLOBAL_AMBIGUITY_ANALYSIS.md)
+- [G2 global-ambiguity manifest](docs/evidence/G2_GLOBAL_AMBIGUITY_MANIFEST.json)
 - [Current status](docs/CURRENT_STATUS.md)
 - [Results to date](docs/RESULTS_TO_DATE.md)
 - [Architecture](docs/ARCHITECTURE.md)
@@ -82,7 +85,7 @@ The Stage A evidence shows that the 108-input grid is **unsuitable as the final 
 
 The deterministic Stage A screen uses official NSE CM and F&O UDiFF bhavcopies as the primary source. It processed 01, 15, and 22 July 2026 and found all eight sector candidates on every date, producing 24 candidate stock surfaces; NIFTY remains a separate non-ranked reference. The original three-date Power comparison was unresolved, so the predeclared five-Wednesday July extension compared only NTPC and POWERGRID and selected NTPC at moderate confidence. The complete primary set is NTPC, CIPLA, INFY, and HDFCBANK, with POWERGRID, SUNPHARMA, TCS, and ICICIBANK retained as backups.
 
-Free NSE bhavcopy does not contain historical bid/ask quotes or quote sizes. Bloomberg was not used for candidate selection. Raw and derived Stage A data remain ignored by Git. Candidate selection and G2 common-support analysis are complete; the final representation is not frozen and G2 has not passed. The next research question is how to characterize the remaining global ten-parameter ambiguity. See [Stage A candidate selection](docs/STAGE_A_CANDIDATE_SELECTION.md) and the [G2 checkpoint](docs/G2_IDENTIFIABILITY_CHECKPOINT.md).
+Free NSE bhavcopy does not contain historical bid/ask quotes or quote sizes. Bloomberg was not used for candidate selection. Raw and derived Stage A data remain ignored by Git. Candidate selection and G2 common-support analysis are complete; the final representation is not frozen and G2 has not passed. Global ten-parameter ambiguity is now established; the next research question is which independently justified information source can separate the observed slow/fast variance-allocation and cross-factor compensation regions. See [Stage A candidate selection](docs/STAGE_A_CANDIDATE_SELECTION.md), the [G2 checkpoint](docs/G2_IDENTIFIABILITY_CHECKPOINT.md), and the [global-ambiguity analysis](docs/G2_GLOBAL_AMBIGUITY_ANALYSIS.md).
 
 ## Install and validate
 
@@ -117,5 +120,6 @@ The pilot command rejects counts above 100 and labels its rows `GENUINE_CANONICA
 - The 1% noise experiment shows substantial parameter instability and boundary-near solutions.
 - Stage A rejects the current 108-input grid as the final unchanged representation; G2 geometry is established but the final representation remains unfrozen.
 - Multi-date observations and exact CIR dynamics materially improve local conditioning, but stable global ten-parameter recovery remains unproven and `G2 = NOT_PASSED`.
+- Clean central-market-geometry surfaces admit multiple materially separated valid ten-parameter solutions with essentially indistinguishable prices; local weakest directions are informative in aggregate but do not fully explain every global displacement.
 - The four sector primaries are selected, but the market maturity grid, carry convention, and Black-Scholes baseline protocol are not yet frozen.
 - Full ANN/PINN research training, broader seed/noise studies, and frozen unseen real-market validation remain outstanding.
