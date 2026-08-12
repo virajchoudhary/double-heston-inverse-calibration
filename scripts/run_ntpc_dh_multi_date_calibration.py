@@ -344,15 +344,23 @@ def _fit(panel: pd.DataFrame) -> pd.DataFrame:
 
 
 def _stability(frame: pd.DataFrame, names: Sequence[str], bounds: dict[str, tuple[float, float]]) -> tuple[dict[str, Any], pd.DataFrame]:
+    if frame.empty:
+        raise RuntimeError("stability analysis has no fitted solutions")
     best = frame.sort_values(["date_balanced_objective", "start_id"]).iloc[0]
     threshold = max(float(best["date_balanced_objective"]) * 1.05, float(best["date_balanced_objective"]) + 0.01)
     near = frame.loc[frame["date_balanced_objective"] <= threshold].copy()
+    if near.empty:
+        raise RuntimeError("stability analysis has no near-equivalent solutions; best-solution invariant failed")
     widths = np.asarray([bounds[name][1] - bounds[name][0] for name in names])
     scaled = near[list(names)].to_numpy(float) / widths / math.sqrt(len(names))
-    distances = pdist(scaled)
+    distances = pdist(scaled) if len(near) > 1 else np.array([])
     best_scaled = best[list(names)].to_numpy(float) / widths / math.sqrt(len(names))
     from_best = np.linalg.norm(scaled - best_scaled, axis=1)
-    labels = fcluster(linkage(scaled, method="complete"), CLUSTER_DISTANCE, criterion="distance")
+    labels = (
+        fcluster(linkage(scaled, method="complete"), CLUSTER_DISTANCE, criterion="distance")
+        if len(near) > 1
+        else np.ones(1, dtype=int)
+    )
     near["distance_from_best"] = from_best; near["cluster_id"] = labels
     stats = {name: {"minimum": float(near[name].min()), "maximum": float(near[name].max()),
                     "range": float(near[name].max() - near[name].min()),
@@ -362,8 +370,10 @@ def _stability(frame: pd.DataFrame, names: Sequence[str], bounds: dict[str, tupl
     boundary_hits = (near[boundary_columns].fillna("").astype(str).apply(lambda x: x.str.len().gt(0)).any(axis=1)
                      if boundary_columns else pd.Series(False, index=near.index))
     return {"near_equivalent_count": len(near), "materially_displaced_count": int(np.sum(from_best >= MATERIAL_DISTANCE)),
-            "cluster_count": len(set(labels)), "median_pairwise_distance": float(np.median(distances)),
-            "maximum_pairwise_distance": float(np.max(distances)), "maximum_distance_from_best": float(np.max(from_best)),
+            "cluster_count": len(set(labels)),
+            "median_pairwise_distance": float(np.median(distances)) if len(distances) else 0.0,
+            "maximum_pairwise_distance": float(np.max(distances)) if len(distances) else 0.0,
+            "maximum_distance_from_best": float(np.max(from_best)) if len(from_best) else 0.0,
             "parameter_statistics": stats, "boundary_hit_rate": float(boundary_hits.mean()),
             "cap_rate": float(frame["reached_cap"].mean()), "optimizer_success_rate": float(frame["optimizer_success"].mean())}, near
 

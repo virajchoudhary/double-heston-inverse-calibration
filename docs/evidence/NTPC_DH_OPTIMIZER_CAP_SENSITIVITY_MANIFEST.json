@@ -1,54 +1,199 @@
 {
   "base_main": "e1e5b0fba1795c84b8c7a8cb534a8962dc1d22e0",
-  "baseline_reproduction": {
-    "canonical": {
-      "absolute_differences": {
-        "calibration_iv_rmse": 0.0,
-        "calibration_price_rmse": 0.0,
-        "cap_rate": 0.0,
-        "cluster_count": 0.0,
-        "holdout_iv_rmse": 0.0,
-        "holdout_price_rmse": 0.0,
-        "materially_displaced_start_count": 0.0,
-        "maximum_pairwise_range_scaled_distance": 0.0,
-        "maximum_range_scaled_distance_from_best": 0.0,
-        "median_pairwise_range_scaled_distance": 0.0,
-        "near_equivalent_start_count": 0.0,
-        "valid_start_count": 0.0
-      },
-      "passed": true
-    },
-    "passed": true,
-    "required_chart": "canonical",
-    "transformed": {
-      "absolute_differences": {
-        "calibration_iv_rmse": 8.71065199400077e-07,
-        "calibration_price_rmse": 8.644436838567415e-08,
-        "cap_rate": 0.0,
-        "cluster_count": 0.0,
-        "holdout_iv_rmse": 1.662003854220606e-05,
-        "holdout_price_rmse": 0.00014576283566891668,
-        "materially_displaced_start_count": 0.0,
-        "maximum_pairwise_range_scaled_distance": 5.057635964289542e-05,
-        "maximum_range_scaled_distance_from_best": 0.0006368072798538238,
-        "median_pairwise_range_scaled_distance": 6.586850872297711e-05,
-        "near_equivalent_start_count": 0.0,
-        "valid_start_count": 0.0
-      },
-      "passed": false
-    }
-  },
   "changed_variable_only": "max_nfev",
   "classification": "OPTIMIZER_CAP_UNRESOLVED",
+  "control_artifact_validation": {
+    "checks": {
+      "canonical": {
+        "actual_sha256": "8EA9B3A9EDE18953B9DEEB9FB60BF789DC4A8282DFEA290EB7E7667831258827",
+        "expected_sha256": "8EA9B3A9EDE18953B9DEEB9FB60BF789DC4A8282DFEA290EB7E7667831258827",
+        "passed": true
+      },
+      "transformed": {
+        "actual_sha256": "BC0B0F8349AA8BD0CE231428B5C5D13503261E70B0D0E8C3B6A08E39295522F3",
+        "expected_sha256": "BC0B0F8349AA8BD0CE231428B5C5D13503261E70B0D0E8C3B6A08E39295522F3",
+        "passed": true
+      }
+    },
+    "passed": true,
+    "sealed_reference_used": true
+  },
+  "corrected_160_controls": {
+    "charts": {
+      "canonical": {
+        "all_rows_valid": true,
+        "budget_matches": true,
+        "chart_matches": true,
+        "missing_columns": [],
+        "passed": true,
+        "start_ids": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "start_ids_match": true
+      },
+      "transformed": {
+        "all_rows_valid": true,
+        "budget_matches": true,
+        "chart_matches": true,
+        "missing_columns": [],
+        "passed": true,
+        "start_ids": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "start_ids_match": true
+      }
+    },
+    "optimizer_contracts_differ_only_by_budget": true,
+    "passed": true,
+    "pricing_input_contract": "STABLE_PRIMITIVES_DTE_OVER_365",
+    "source_hashes_match": true
+  },
+  "corrected_control_artifacts": {
+    "canonical": {
+      "path": "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/canonical_160_starts.csv",
+      "pricing_input_contract": "STABLE_PRIMITIVES_DTE_OVER_365",
+      "sha256": "8EA9B3A9EDE18953B9DEEB9FB60BF789DC4A8282DFEA290EB7E7667831258827"
+    },
+    "transformed": {
+      "path": "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/transformed_160_starts.csv",
+      "pricing_input_contract": "STABLE_PRIMITIVES_DTE_OVER_365",
+      "sha256": "BC0B0F8349AA8BD0CE231428B5C5D13503261E70B0D0E8C3B6A08E39295522F3"
+    }
+  },
+  "experiment_validation": {
+    "cells": {
+      "canonical_160": {
+        "all_rows_valid": true,
+        "budget_matches": true,
+        "chart_matches": true,
+        "missing_columns": [],
+        "passed": true,
+        "start_ids": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "start_ids_match": true
+      },
+      "canonical_320": {
+        "all_rows_valid": true,
+        "budget_matches": true,
+        "chart_matches": true,
+        "missing_columns": [],
+        "passed": true,
+        "start_ids": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "start_ids_match": true
+      },
+      "transformed_160": {
+        "all_rows_valid": true,
+        "budget_matches": true,
+        "chart_matches": true,
+        "missing_columns": [],
+        "passed": true,
+        "start_ids": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "start_ids_match": true
+      },
+      "transformed_320": {
+        "all_rows_valid": true,
+        "budget_matches": true,
+        "chart_matches": true,
+        "missing_columns": [],
+        "passed": true,
+        "start_ids": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "start_ids_match": true
+      }
+    },
+    "optimizer_contracts_differ_only_by_budget": true,
+    "paired_start_ids": {
+      "canonical": true,
+      "transformed": true
+    },
+    "passed": true,
+    "pricing_input_contract": "STABLE_PRIMITIVES_DTE_OVER_365",
+    "source_hashes_match": true
+  },
   "frozen_contract": {
     "activity_screen": "positive close, traded volume, executed trades, and open interest",
     "calibration_row_sha256": "F44371DD418304789DC4B97C1710DCE60CDC0232A75C172FDC90E220738A0B7F",
     "calibration_rows": 12,
     "carry_rule": "q=r-log(F/S)/T",
+    "corrected_calibration_input_sha256": "E9F22C823E59A7E4CC71AA8B93A1FC1D4483DAFE62F7984C0504983BC4058098",
+    "corrected_holdout_input_sha256": "98B6B7B043F95B4F144DCF06625E63D27D1E524AB4C2DF60E088DA2EC7F1D4FA",
     "discount_rule": "D(T)=1/(1+y*T)",
     "holdout_row_sha256": "E8B552A1B218F5405D5871C11F9AAA4F6460310BFEC8E300501A73C00F1FBA07",
     "holdout_rows": 7,
     "node_count": 64,
+    "pricing_input_contract": "STABLE_PRIMITIVES_DTE_OVER_365",
     "primary_price_field": "ClsPric",
     "risk_free_simple_yield": 0.053324,
     "spot": 344.35,
@@ -62,7 +207,7 @@
     "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/canonical_320_pairwise.csv": "BEC58E4BE7F0DE8C3EB6A0D681E5D4EEE993563D765C2AC23DE83C343CD60902",
     "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/canonical_320_starts.csv": "728A236669AFBB1B0851A2A94AE426633D31F3C9F1BF6F956C22A24935D71DB3",
     "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/canonical_paired_160_320.csv": "4D3B5FA9FBF8BC45B29041289BD11DAE6428B5038D74BB5A5E8F9D356981DEB8",
-    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/experiment_summary.json": "BE3BD21EC8F342EDB18EF5304B390390AA7B4CFC6C00623A4D7C87F23222B3A1",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/experiment_summary.json": "7AF90784E3D007E8BB720D75F9E152F929EBC419F5D9A033EA6C427C4B5A61F7",
     "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/figures/01_optimizer_cap_rate.png": "8F78649A5E8284CF3D23F0B83597D528B9E3E70B4DC14783FA304B62DE33719B",
     "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/figures/02_calibration_holdout_rmse.png": "3127AFDA8367829D93B2D07191191C6D789DB084032E2A888B52E3E951812328",
     "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/figures/03_materially_displaced_count.png": "D8230678F8E5AA56183068FFEBAEF7F2135912B2319B5613212D108F29723DB1",
@@ -79,6 +224,48 @@
     "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/transformed_320_pairwise.csv": "3B7AE1485016485730F16AA0B99D3D2C6F396B6CDE3839E4A18EABB2ABA867F1",
     "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/transformed_320_starts.csv": "C2442F8D532D166DEBF90EB800737CA75F89438383FB975484627573E5F7A4F8",
     "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/transformed_paired_160_320.csv": "1E5CC7E4DCC44C892E031A5461B922C9DF3E40657A28C5FB9960D3565302E3FF"
+  },
+  "historical_160_comparison": {
+    "canonical": {
+      "absolute_differences": {
+        "calibration_iv_rmse": 0.0,
+        "calibration_price_rmse": 0.0,
+        "cap_rate": 0.0,
+        "cluster_count": 0.0,
+        "holdout_iv_rmse": 0.0,
+        "holdout_price_rmse": 0.0,
+        "materially_displaced_start_count": 0.0,
+        "maximum_pairwise_range_scaled_distance": 0.0,
+        "maximum_range_scaled_distance_from_best": 0.0,
+        "median_pairwise_range_scaled_distance": 0.0,
+        "near_equivalent_start_count": 0.0,
+        "valid_start_count": 0.0
+      },
+      "exact_reproduction_required": true,
+      "passed": true,
+      "provenance": "HISTORICAL_STABLE_PRIMITIVES"
+    },
+    "passed": true,
+    "required_exact_reference": "canonical",
+    "transformed": {
+      "absolute_differences": {
+        "calibration_iv_rmse": 8.71065199400077e-07,
+        "calibration_price_rmse": 8.644436838567415e-08,
+        "cap_rate": 0.0,
+        "cluster_count": 0.0,
+        "holdout_iv_rmse": 1.662003854220606e-05,
+        "holdout_price_rmse": 0.00014576283566891668,
+        "materially_displaced_start_count": 0.0,
+        "maximum_pairwise_range_scaled_distance": 5.057635964289542e-05,
+        "maximum_range_scaled_distance_from_best": 0.0006368072798538238,
+        "median_pairwise_range_scaled_distance": 6.586850872297711e-05,
+        "near_equivalent_start_count": 0.0,
+        "valid_start_count": 0.0
+      },
+      "exact_reproduction_required": false,
+      "passed": false,
+      "provenance": "HISTORICAL_SERIALIZED_DERIVED_INPUTS"
+    }
   },
   "optimizer_contracts": [
     {
@@ -110,5 +297,6 @@
     "market_data_audit/stage_a/derived/ntpc_single_stock_pilot/parameter_stability.json": "064B15EE0BED6565109CD466FF3F64D1BC556BCD147DFB8526E191513C627B20",
     "market_data_audit/stage_a/derived/ntpc_single_stock_pilot/selected_options.csv": "981F4B04B816338BDC9EB6729182EA2DACFADA21578C03338A605BC7C124123D"
   },
-  "report_sha256": "1C782EE478C94DAD3221B12EB21DEF9102C5503875A246D6B044CF6ED6F44147"
+  "report_sha256": "F72BAB3FF898E3A71EB5E5F66CB0EB02B17B0B57BE108E41B5DF0E9310DE0EED",
+  "valid": true
 }

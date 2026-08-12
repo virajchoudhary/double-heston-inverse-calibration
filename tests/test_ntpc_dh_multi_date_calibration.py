@@ -99,6 +99,68 @@ def test_single_date_shared_baseline_is_recomputed_from_reviewed_vectors() -> No
     assert baseline["boundary_hit_rate"] > 0
 
 
+def _stability_frame(points: list[tuple[float, float]]) -> "multi.pd.DataFrame":
+    return multi.pd.DataFrame([
+        {
+            "start_id": start_id,
+            "date_balanced_objective": 1.0,
+            "kappa_slow": left,
+            "kappa_fast": right,
+            "boundary_reasons": "",
+            "reached_cap": False,
+            "optimizer_success": True,
+        }
+        for start_id, (left, right) in enumerate(points)
+    ])
+
+
+def test_stability_handles_single_near_equivalent_solution() -> None:
+    frame = _stability_frame([(1.0, 2.0)])
+    metrics, near = multi._stability(
+        frame, ("kappa_slow", "kappa_fast"), {"kappa_slow": (0.0, 4.0), "kappa_fast": (0.0, 8.0)}
+    )
+    assert metrics["near_equivalent_count"] == 1
+    assert metrics["cluster_count"] == 1
+    assert metrics["median_pairwise_distance"] == 0.0
+    assert metrics["maximum_pairwise_distance"] == 0.0
+    assert metrics["maximum_distance_from_best"] == 0.0
+    assert near["cluster_id"].tolist() == [1]
+
+
+def test_stability_handles_two_points_and_is_deterministic() -> None:
+    frame = _stability_frame([(1.0, 2.0), (1.2, 2.4)])
+    bounds = {"kappa_slow": (0.0, 4.0), "kappa_fast": (0.0, 8.0)}
+    first_metrics, first_near = multi._stability(frame, tuple(bounds), bounds)
+    second_metrics, second_near = multi._stability(frame, tuple(bounds), bounds)
+    assert first_metrics == second_metrics
+    assert first_near.equals(second_near)
+    assert first_metrics["near_equivalent_count"] == 2
+    assert first_metrics["cluster_count"] >= 1
+    assert first_metrics["median_pairwise_distance"] > 0.0
+    assert first_metrics["maximum_pairwise_distance"] == first_metrics["median_pairwise_distance"]
+
+
+def test_stability_fails_clearly_if_near_equivalent_invariant_is_broken() -> None:
+    frame = _stability_frame([(1.0, 2.0)])
+    frame.loc[:, "date_balanced_objective"] = np.nan
+    with pytest.raises(RuntimeError, match="no near-equivalent"):
+        multi._stability(
+            frame, ("kappa_slow", "kappa_fast"),
+            {"kappa_slow": (0.0, 4.0), "kappa_fast": (0.0, 8.0)},
+        )
+
+
+def test_persisted_multi_date_stability_replays_unchanged() -> None:
+    frame = multi.pd.read_csv(multi.OUTPUT_ROOT / "multistart.csv")
+    bounds = load_hard_safety_bounds(multi.BOUNDS_PATH)
+    metrics, _ = multi._stability(frame, multi.SHARED_NAMES, bounds)
+    assert metrics["materially_displaced_count"] == 7
+    assert metrics["cluster_count"] == 3
+    assert metrics["median_pairwise_distance"] == pytest.approx(0.324066116)
+    assert metrics["maximum_pairwise_distance"] == pytest.approx(0.481226608)
+    assert metrics["boundary_hit_rate"] == 1.0
+
+
 def test_predeclared_multi_date_classification() -> None:
     baseline = {"median": 0.40, "maximum": 0.80, "clusters": 10, "displaced": 10, "holdout": 1.0}
     strong = {"median": 0.30, "maximum": 0.60, "clusters": 6, "displaced": 5, "holdout": 1.05}

@@ -82,20 +82,54 @@ def test_exact_cap_detection(nfev: int, budget: int, expected: bool) -> None:
     assert experiment.reached_cap(nfev, budget) is expected
 
 
-def test_predeclared_dispersion_and_final_classification() -> None:
+def _dispersion_case(
+    *, median_reduction: float, maximum_reduction: float, clusters: int
+) -> tuple[dict[str, float], dict[str, float]]:
     baseline = {"materially_displaced_start_count": 12, "cluster_count": 10,
                 "median_pairwise_range_scaled_distance": 0.40,
                 "maximum_pairwise_range_scaled_distance": 0.80}
-    strong = {"materially_displaced_start_count": 6, "cluster_count": 6,
-              "median_pairwise_range_scaled_distance": 0.30,
-              "maximum_pairwise_range_scaled_distance": 0.60}
-    partial = {"materially_displaced_start_count": 8, "cluster_count": 10,
-               "median_pairwise_range_scaled_distance": 0.35,
-               "maximum_pairwise_range_scaled_distance": 0.78}
-    persistent = dict(baseline)
-    assert experiment.classify_dispersion(baseline, strong) == "STRONG_DISPERSION_COLLAPSE"
-    assert experiment.classify_dispersion(baseline, partial) == "PARTIAL_DISPERSION_IMPROVEMENT"
-    assert experiment.classify_dispersion(baseline, persistent) == "DISPERSION_PERSISTS"
+    result = {
+        "materially_displaced_start_count": 12,
+        "cluster_count": clusters,
+        "median_pairwise_range_scaled_distance": 0.40 * (1.0 - median_reduction),
+        "maximum_pairwise_range_scaled_distance": 0.80 * (1.0 - maximum_reduction),
+    }
+    return baseline, result
+
+
+@pytest.mark.parametrize(
+    ("median_reduction", "maximum_reduction", "clusters", "expected"),
+    [
+        (0.25, 0.25, 9, "STRONG_DISPERSION_COLLAPSE"),
+        (0.25 - 1e-8, 0.25, 9, "PARTIAL_DISPERSION_IMPROVEMENT"),
+        (0.25, 0.25 - 1e-8, 9, "PARTIAL_DISPERSION_IMPROVEMENT"),
+        (0.25, 0.25, 10, "PARTIAL_DISPERSION_IMPROVEMENT"),
+        (0.10, 0.10, 10, "PARTIAL_DISPERSION_IMPROVEMENT"),
+        (0.10 - 1e-8, 0.10, 10, "DISPERSION_PERSISTS"),
+        (0.10, 0.10 - 1e-8, 10, "DISPERSION_PERSISTS"),
+        (0.20, 0.05, 9, "DISPERSION_PERSISTS"),
+        (0.05, 0.20, 9, "DISPERSION_PERSISTS"),
+        (0.25, 0.25, 11, "DISPERSION_PERSISTS"),
+    ],
+)
+def test_frozen_dispersion_threshold_boundaries(
+    median_reduction: float, maximum_reduction: float, clusters: int, expected: str
+) -> None:
+    baseline, result = _dispersion_case(
+        median_reduction=median_reduction,
+        maximum_reduction=maximum_reduction,
+        clusters=clusters,
+    )
+    assert experiment.classify_dispersion(baseline, result) == expected
+
+
+def test_displaced_count_is_reported_but_not_a_dispersion_gate() -> None:
+    baseline, result = _dispersion_case(median_reduction=0.25, maximum_reduction=0.25, clusters=9)
+    result["materially_displaced_start_count"] = baseline["materially_displaced_start_count"]
+    assert experiment.classify_dispersion(baseline, result) == "STRONG_DISPERSION_COLLAPSE"
+
+
+def test_predeclared_final_classification() -> None:
     assert experiment.classify_cap(0.25) == "CAP_MATERIALLY_REDUCED"
     assert experiment.classify_cap(0.50) == "CAP_PARTIALLY_REDUCED"
     assert experiment.classify_cap(0.75) == "CAP_NOT_RESOLVED"
@@ -105,19 +139,130 @@ def test_predeclared_dispersion_and_final_classification() -> None:
     assert experiment.classify_final([0.25, 0.25], ["STRONG_DISPERSION_COLLAPSE"] * 2, False) == "INVALID"
 
 
-def test_320_gate_requires_reviewed_canonical_160_cell() -> None:
-    passing = {
-        "canonical": {"passed": True, "absolute_differences": {}},
-        "transformed": {"passed": False, "absolute_differences": {"holdout_price_rmse": 1e-4}},
-    } | {"passed": True}
-    experiment.require_reproduced_160_baseline(passing)
-    failing = {
-        "canonical": {"passed": False, "absolute_differences": {"holdout_price_rmse": 1e-4}},
-        "transformed": {"passed": True, "absolute_differences": {}},
-        "passed": False,
+def _minimal_cell(chart: str, budget: int, start_ids: list[int] | None = None) -> pd.DataFrame:
+    ids = list(range(12)) if start_ids is None else start_ids
+    return pd.DataFrame({
+        "chart": chart,
+        "max_nfev": budget,
+        "start_id": ids,
+        "valid": [True] * len(ids),
+    })
+
+
+def test_historical_transformed_reference_is_explicitly_non_identical() -> None:
+    cells = {
+        "canonical_160": {"pricing": {}, "stability": {}},
+        "transformed_160": {"pricing": {}, "stability": {}},
     }
-    with pytest.raises(RuntimeError, match="before any 320 fit"):
-        experiment.require_reproduced_160_baseline(failing)
+    for chart in experiment.CHARTS:
+        combined = experiment.REVIEWED_160[chart]
+        cells[f"{chart}_160"]["pricing"] = {
+            "best_calibration_price_rmse": combined["calibration_price_rmse"],
+            "calibration_iv_rmse": combined["calibration_iv_rmse"],
+            "best_holdout_price_rmse": combined["holdout_price_rmse"],
+            "holdout_iv_rmse": combined["holdout_iv_rmse"],
+        }
+        cells[f"{chart}_160"]["stability"] = {
+            key: value for key, value in combined.items() if key not in {
+                "calibration_price_rmse", "calibration_iv_rmse",
+                "holdout_price_rmse", "holdout_iv_rmse",
+            }
+        }
+    cells["transformed_160"]["pricing"]["best_holdout_price_rmse"] += 1e-4
+    comparison = experiment.historical_160_comparison(cells)
+    assert comparison["canonical"]["exact_reproduction_required"] is True
+    assert comparison["canonical"]["passed"] is True
+    assert comparison["transformed"]["provenance"] == "HISTORICAL_SERIALIZED_DERIVED_INPUTS"
+    assert comparison["transformed"]["exact_reproduction_required"] is False
+    assert comparison["transformed"]["passed"] is False
+    assert comparison["passed"] is True
+
+    comparison["canonical"]["passed"] = False
+    comparison["passed"] = False
+    with pytest.raises(RuntimeError, match="canonical historical"):
+        experiment.require_valid_160_controls(comparison, {"passed": True})
+
+
+def test_experiment_validation_fails_closed_on_required_contract_breaks() -> None:
+    frames = {
+        f"{chart}_{budget}": _minimal_cell(chart, budget)
+        for chart in experiment.CHARTS for budget in experiment.BUDGETS
+    }
+    protected = {"source": "A" * 64}
+    valid = experiment.validate_experiment_cells(frames, protected, protected)
+    assert valid["passed"] is True
+
+    canonical_bad = {key: value.copy() for key, value in frames.items()}
+    canonical_bad["canonical_160"] = _minimal_cell("canonical", 160, list(range(11)))
+    assert experiment.validate_experiment_cells(canonical_bad, protected, protected)["passed"] is False
+
+    transformed_bad = {key: value.copy() for key, value in frames.items()}
+    transformed_bad["transformed_160"] = _minimal_cell("transformed", 160, list(range(11)))
+    transformed_validation = experiment.validate_experiment_cells(transformed_bad, protected, protected)
+    assert transformed_validation["passed"] is False
+    with pytest.raises(RuntimeError, match="corrected 160 control"):
+        experiment.require_valid_160_controls(
+            {"passed": True}, experiment.validate_160_control_frames(transformed_bad, protected, protected)
+        )
+
+    starts_bad = {key: value.copy() for key, value in frames.items()}
+    starts_bad["canonical_320"] = _minimal_cell("canonical", 320, list(range(1, 13)))
+    assert experiment.validate_experiment_cells(starts_bad, protected, protected)["passed"] is False
+
+    source_bad = experiment.validate_experiment_cells(frames, protected, {"source": "B" * 64})
+    assert source_bad["passed"] is False
+
+
+def test_non_budget_optimizer_settings_must_match() -> None:
+    low = experiment.optimizer_contract(160)
+    high = experiment.optimizer_contract(320)
+    assert experiment.optimizer_contracts_differ_only_by_budget(low, high) is True
+    high["ftol"] = 1e-8
+    assert experiment.optimizer_contracts_differ_only_by_budget(low, high) is False
+
+
+def test_persisted_start_artifact_validation_rejects_changed_320(
+    monkeypatch: pytest.MonkeyPatch, tmp_path
+) -> None:
+    monkeypatch.setattr(experiment, "OUTPUT_ROOT", tmp_path)
+    for chart in experiment.CHARTS:
+        for budget in experiment.BUDGETS:
+            (tmp_path / f"{chart}_{budget}_starts.csv").write_text(
+                f"chart,max_nfev,start_id,valid\n{chart},{budget},0,True\n",
+                encoding="utf-8",
+            )
+    expected = {
+        f"{chart}_{budget}": experiment.sha256(tmp_path / f"{chart}_{budget}_starts.csv")
+        for chart in experiment.CHARTS for budget in experiment.BUDGETS
+    }
+    missing_seal = experiment.validate_persisted_start_artifacts({})
+    assert missing_seal["sealed_reference_used"] is False
+    assert missing_seal["passed"] is False
+    assert experiment.validate_persisted_start_artifacts(expected)["passed"] is True
+
+    (tmp_path / "transformed_320_starts.csv").write_text(
+        "chart,max_nfev,start_id,valid\ntransformed,320,0,False\n",
+        encoding="utf-8",
+    )
+    validation = experiment.validate_persisted_start_artifacts(expected)
+    assert validation["passed"] is False
+    assert validation["checks"]["transformed_320"]["passed"] is False
+
+
+def test_render_only_fails_before_publish_when_start_seal_is_invalid(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(experiment, "verify_frozen_contract", lambda: {})
+    monkeypatch.setattr(experiment, "protected_evidence_hashes", lambda: {"source": "A" * 64})
+    monkeypatch.setattr(experiment, "_require_prior_protected_seal", lambda current: None)
+    monkeypatch.setattr(experiment, "_expected_start_hashes_from_manifest", lambda: {})
+    monkeypatch.setattr(
+        experiment,
+        "validate_persisted_start_artifacts",
+        lambda expected: {"passed": False, "checks": {}, "sealed_reference_used": False},
+    )
+    with pytest.raises(RuntimeError, match="persisted optimizer start artifact"):
+        experiment.render_existing_outputs()
 
 
 def test_deterministic_stability_metrics(bounds: dict[str, tuple[float, float]]) -> None:
@@ -156,9 +301,15 @@ def test_preserved_render_only_evidence_matches_manifest() -> None:
         "PERSISTENT_PARAMETER_AMBIGUITY", "OPTIMIZER_CAP_UNRESOLVED",
     }
     assert manifest["changed_variable_only"] == "max_nfev"
-    assert manifest["baseline_reproduction"]["canonical"]["passed"] is True
+    assert manifest["historical_160_comparison"]["canonical"]["passed"] is True
+    assert manifest["historical_160_comparison"]["transformed"]["exact_reproduction_required"] is False
+    assert manifest["corrected_160_controls"]["charts"]["transformed"]["passed"] is True
+    assert manifest["experiment_validation"]["passed"] is True
+    assert manifest["valid"] is True
+    assert set(manifest["corrected_control_artifacts"]) == set(experiment.CHARTS)
     assert hashlib.sha256(experiment.REPORT_PATH.read_bytes()).hexdigest().upper() == manifest["report_sha256"]
     for relative, expected in manifest["generated_artifact_hashes"].items():
         path = experiment.REPOSITORY_ROOT / relative
         assert path.is_file()
         assert hashlib.sha256(path.read_bytes()).hexdigest().upper() == expected
+    assert experiment.verify_manifest_artifacts() == []
