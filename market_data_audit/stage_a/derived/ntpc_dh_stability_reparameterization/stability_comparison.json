@@ -1,0 +1,344 @@
+{
+  "base_commit": "dd539150898bf5ca4d168c5dba3f3a33c69628e2",
+  "baseline_contract": {
+    "contract": {
+      "calibration_rows": 12,
+      "holdout_rows": 7,
+      "max_nfev": 160,
+      "node_count": 64,
+      "primary_price_field": "ClsPric",
+      "risk_free_simple_yield": 0.053324,
+      "spot": 344.35,
+      "valuation_date": "2026-07-15"
+    },
+    "protected_hashes": {
+      "carry_contract.csv": "1C81C80EDD12D07C0E27478813879816B30376F0BA717BCB2BB5A0118CB03477",
+      "docs/evidence/NTPC_SINGLE_STOCK_PILOT_MANIFEST.json": "A19800FBEDBF00F8226A3F413A17D861420E82064D94384C9BA521FD2F1B9ADC",
+      "double_heston_multistart.csv": "4E092F2BEC5F53033E61EFB1D2B2D761C9D3AB8F72F17F33D6E989946FC1EB70",
+      "model_comparison.csv": "6BB98FE854D820EF4BE0DAD66B286510069DFDE449DF26EA21AF0EEE7785CAFF",
+      "parameter_stability.json": "064B15EE0BED6565109CD466FF3F64D1BC556BCD147DFB8526E191513C627B20",
+      "selected_options.csv": "981F4B04B816338BDC9EB6729182EA2DACFADA21578C03338A605BC7C124123D"
+    }
+  },
+  "baseline_stability": {
+    "boundary_hit_rate": 1.0,
+    "cluster_count": 7,
+    "derived_coordinate_statistics": {
+      "alpha_theta": {
+        "coefficient_of_variation": 1.2146956421343014,
+        "maximum": 0.9859387864592025,
+        "minimum": 0.0494523056414016,
+        "range": 0.936486480817801
+      },
+      "alpha_v": {
+        "coefficient_of_variation": 0.9964427004676185,
+        "maximum": 0.9500298724341786,
+        "minimum": 0.12530909177884877,
+        "range": 0.8247207806553298
+      },
+      "delta_kappa": {
+        "coefficient_of_variation": 0.6137148223972608,
+        "maximum": 9.138329827278149,
+        "minimum": 0.020360865849968768,
+        "range": 9.11796896142818
+      },
+      "fast_half_life_days": {
+        "coefficient_of_variation": 0.3971554050057101,
+        "maximum": 84.34036055045004,
+        "minimum": 21.083227160697188,
+        "range": 63.25713338975285
+      },
+      "slow_half_life_days": {
+        "coefficient_of_variation": 2.0189755765314494,
+        "maximum": 4929.677873258718,
+        "minimum": 84.3329076575978,
+        "range": 4845.344965601121
+      },
+      "theta_total": {
+        "coefficient_of_variation": 0.21901619844821335,
+        "maximum": 0.1640962076569904,
+        "minimum": 0.0929841597490191,
+        "range": 0.0711120479079713
+      },
+      "v0_total": {
+        "coefficient_of_variation": 0.005659651429258401,
+        "maximum": 0.0406751435797273,
+        "minimum": 0.039831887949841396,
+        "range": 0.0008432556298859015
+      }
+    },
+    "materially_displaced_start_count": 11,
+    "maximum_pairwise_range_scaled_distance": 0.5641491074467359,
+    "maximum_range_scaled_distance_from_best": 0.4910854918863381,
+    "median_pairwise_range_scaled_distance": 0.35733879424203197,
+    "near_equivalent_start_count": 12,
+    "near_equivalent_threshold_price_rmse": 0.24603677869279228,
+    "optimizer_cap_rate": 0.8333333333333334,
+    "parameter_statistics": {
+      "kappa_fast": {
+        "coefficient_of_variation": 0.3937236233431665,
+        "maximum": 11.999999761706963,
+        "minimum": 2.9997348748947226,
+        "range": 9.000264886812241
+      },
+      "kappa_slow": {
+        "coefficient_of_variation": 0.43974615208723566,
+        "maximum": 2.9999999754732354,
+        "minimum": 0.0513215523222692,
+        "range": 2.9486784231509664
+      },
+      "rho_fast": {
+        "coefficient_of_variation": 1.6669087481201919,
+        "maximum": 0.084876280689549,
+        "minimum": -0.947754868917681,
+        "range": 1.03263114960723
+      },
+      "rho_slow": {
+        "coefficient_of_variation": 3.0408379483297923,
+        "maximum": 0.9494726369428984,
+        "minimum": -0.9459420480050892,
+        "range": 1.8954146849479876
+      },
+      "sigma_fast": {
+        "coefficient_of_variation": 0.37183996583955864,
+        "maximum": 1.06628497865699,
+        "minimum": 0.2190889680319338,
+        "range": 0.8471960106250561
+      },
+      "sigma_slow": {
+        "coefficient_of_variation": 0.9295081177099019,
+        "maximum": 0.9172847084966664,
+        "minimum": 0.0069012700699022,
+        "range": 0.9103834384267643
+      },
+      "theta_fast": {
+        "coefficient_of_variation": 0.5232935635012137,
+        "maximum": 0.0961700456176215,
+        "minimum": 0.0020000000168912,
+        "range": 0.0941700456007303
+      },
+      "theta_slow": {
+        "coefficient_of_variation": 1.2897979961146018,
+        "maximum": 0.140235235694767,
+        "minimum": 0.0050032528800559,
+        "range": 0.1352319828147111
+      },
+      "v0_fast": {
+        "coefficient_of_variation": 0.4348142099516292,
+        "maximum": 0.0349057535429521,
+        "minimum": 0.0020000000506128,
+        "range": 0.0329057534923393
+      },
+      "v0_slow": {
+        "coefficient_of_variation": 0.9971503038908629,
+        "maximum": 0.0380239135431602,
+        "minimum": 0.0050004095826364,
+        "range": 0.033023503960523795
+      }
+    },
+    "valid_start_count": 12
+  },
+  "baseline_summary": {
+    "calibration_iv_rmse": 0.0077897124776684,
+    "calibration_price_rmse": 0.2343207416121831,
+    "holdout_iv_rmse": 0.072591562005221,
+    "holdout_price_rmse": 0.9268247197137796,
+    "runtime_seconds": 228.6067549000036
+  },
+  "classification": {
+    "classification": "INSUFFICIENT",
+    "heston_five_percent_threshold": 0.8650405499999999,
+    "heston_holdout_reference": 0.910569,
+    "invalid_reasons": [],
+    "materially_beats_heston_holdout_by_5_percent": false,
+    "maximum_pairwise_dispersion_reduction": -0.0527172921700938,
+    "median_pairwise_dispersion_reduction": -0.08755710867981836,
+    "pricing_preserved": true,
+    "pricing_ratios": {
+      "calibration_price_rmse": 0.995106733576605,
+      "holdout_iv_rmse": 0.989912109766085,
+      "holdout_price_rmse": 0.994344045084166
+    }
+  },
+  "equivalence": {
+    "analytical_equivalence": "Exact bijection on the same numerical interior: rectangle interiors for v0/theta are expressed by total plus conditional allocation; kappa uses the identical conditional ordering interval; sigma uses the identical Feller-safe conditional interval; correlations use a one-to-one conditional parameterization of the full intersection between the individual hard bounds and the unit disk.",
+    "correlation_annulus_count": 8,
+    "empirical_lost_fraction": 0.0,
+    "existing_best_fit_count": 1,
+    "maximum_abs_round_trip_error": 3.552713678800501e-15,
+    "near_boundary_count": 20,
+    "random_interior_count": 2000,
+    "round_trip_failure_count": 0,
+    "sample_count": 2029,
+    "search_space_changed": false
+  },
+  "figures": [
+    "market_data_audit/stage_a/derived/ntpc_dh_stability_reparameterization/figures/01_baseline_vs_transformed_rmse.png",
+    "market_data_audit/stage_a/derived/ntpc_dh_stability_reparameterization/figures/02_multistart_parameter_dispersion.png",
+    "market_data_audit/stage_a/derived/ntpc_dh_stability_reparameterization/figures/03_pairwise_cluster_separation.png",
+    "market_data_audit/stage_a/derived/ntpc_dh_stability_reparameterization/figures/04_v0_total_and_allocation.png",
+    "market_data_audit/stage_a/derived/ntpc_dh_stability_reparameterization/figures/05_theta_total_and_allocation.png",
+    "market_data_audit/stage_a/derived/ntpc_dh_stability_reparameterization/figures/06_kappa_and_half_life.png",
+    "market_data_audit/stage_a/derived/ntpc_dh_stability_reparameterization/figures/07_canonical_near_equivalent_vectors.png",
+    "market_data_audit/stage_a/derived/ntpc_dh_stability_reparameterization/figures/08_pricing_error_vs_displacement.png"
+  ],
+  "matched_population": true,
+  "predeclared_contract": {
+    "cluster_distance": 0.05,
+    "cluster_method": "complete_linkage",
+    "material_distance": 0.05,
+    "max_nfev": 160,
+    "node_count": 64,
+    "partial_dispersion_reduction": 0.1,
+    "start_count": 12,
+    "strong_dispersion_reduction": 0.25
+  },
+  "protected_hashes_after": {
+    "carry_contract.csv": "1C81C80EDD12D07C0E27478813879816B30376F0BA717BCB2BB5A0118CB03477",
+    "docs/evidence/NTPC_SINGLE_STOCK_PILOT_MANIFEST.json": "A19800FBEDBF00F8226A3F413A17D861420E82064D94384C9BA521FD2F1B9ADC",
+    "double_heston_multistart.csv": "4E092F2BEC5F53033E61EFB1D2B2D761C9D3AB8F72F17F33D6E989946FC1EB70",
+    "model_comparison.csv": "6BB98FE854D820EF4BE0DAD66B286510069DFDE449DF26EA21AF0EEE7785CAFF",
+    "parameter_stability.json": "064B15EE0BED6565109CD466FF3F64D1BC556BCD147DFB8526E191513C627B20",
+    "selected_options.csv": "981F4B04B816338BDC9EB6729182EA2DACFADA21578C03338A605BC7C124123D"
+  },
+  "transformed_stability": {
+    "boundary_hit_rate": 1.0,
+    "cluster_count": 6,
+    "derived_coordinate_statistics": {
+      "alpha_theta": {
+        "coefficient_of_variation": 0.7302714903555315,
+        "maximum": 0.9859388899028761,
+        "minimum": 0.04945104323107317,
+        "range": 0.936487846671803
+      },
+      "alpha_v": {
+        "coefficient_of_variation": 0.7614768872232647,
+        "maximum": 0.950029828758554,
+        "minimum": 0.12545802016353355,
+        "range": 0.8245718085950204
+      },
+      "delta_kappa": {
+        "coefficient_of_variation": 0.5988561916819684,
+        "maximum": 9.52020934686099,
+        "minimum": 0.0021050545423419997,
+        "range": 9.518104292318647
+      },
+      "fast_half_life_days": {
+        "coefficient_of_variation": 1.2861692070961723,
+        "maximum": 261.8073886842813,
+        "minimum": 21.083228692290458,
+        "range": 240.72415999199086
+      },
+      "slow_half_life_days": {
+        "coefficient_of_variation": 0.5539358331363088,
+        "maximum": 262.3789408847294,
+        "minimum": 84.3329087644648,
+        "range": 178.04603212026458
+      },
+      "theta_total": {
+        "coefficient_of_variation": 0.43799634465680193,
+        "maximum": 0.33477261389920043,
+        "minimum": 0.09568699526239839,
+        "range": 0.23908561863680206
+      },
+      "v0_total": {
+        "coefficient_of_variation": 0.009002894829555089,
+        "maximum": 0.0406351084284637,
+        "minimum": 0.039830760888032404,
+        "range": 0.0008043475404312939
+      }
+    },
+    "materially_displaced_start_count": 7,
+    "maximum_pairwise_range_scaled_distance": 0.593889520771503,
+    "maximum_range_scaled_distance_from_best": 0.5674247779466101,
+    "median_pairwise_range_scaled_distance": 0.3886263458849968,
+    "near_equivalent_start_count": 11,
+    "near_equivalent_threshold_price_rmse": 0.24483285518469455,
+    "optimizer_cap_rate": 0.8333333333333334,
+    "parameter_statistics": {
+      "kappa_fast": {
+        "coefficient_of_variation": 0.4328599918760907,
+        "maximum": 11.999998889965774,
+        "minimum": 0.9663543957862708,
+        "range": 11.033644494179503
+      },
+      "kappa_slow": {
+        "coefficient_of_variation": 0.2907877211800429,
+        "maximum": 2.9999999360983223,
+        "minimum": 0.9642493412439288,
+        "range": 2.0357505948543935
+      },
+      "rho_fast": {
+        "coefficient_of_variation": 1.8375671363881838,
+        "maximum": 0.7419575753947248,
+        "minimum": -0.9499999427449796,
+        "range": 1.6919575181397044
+      },
+      "rho_slow": {
+        "coefficient_of_variation": 6.857617946459204,
+        "maximum": 0.9494184264042764,
+        "minimum": -0.9497283653752852,
+        "range": 1.8991467917795615
+      },
+      "sigma_fast": {
+        "coefficient_of_variation": 0.2897665670864741,
+        "maximum": 1.053613670914964,
+        "minimum": 0.2190889775892084,
+        "range": 0.8345246933257555
+      },
+      "sigma_slow": {
+        "coefficient_of_variation": 0.5615351524650557,
+        "maximum": 0.9172881339524204,
+        "minimum": 0.1731894621414025,
+        "range": 0.7440986718110179
+      },
+      "theta_fast": {
+        "coefficient_of_variation": 0.8317591909910407,
+        "maximum": 0.1999996969205475,
+        "minimum": 0.0020000000583212,
+        "range": 0.1979996968622263
+      },
+      "theta_slow": {
+        "coefficient_of_variation": 0.7499450089053172,
+        "maximum": 0.2096272340430073,
+        "minimum": 0.0050035690794444,
+        "range": 0.20462366496356288
+      },
+      "v0_fast": {
+        "coefficient_of_variation": 0.3447908192097954,
+        "maximum": 0.0348577148797314,
+        "minimum": 0.0020000007973519,
+        "range": 0.032857714082379495
+      },
+      "v0_slow": {
+        "coefficient_of_variation": 0.7576011607989397,
+        "maximum": 0.038023892410624,
+        "minimum": 0.0050002849480739,
+        "range": 0.0330236074625501
+      }
+    },
+    "valid_start_count": 12
+  },
+  "transformed_summary": {
+    "best_start_id": 11,
+    "calibration_iv_rmse": 0.0078090854888881,
+    "calibration_price_mae": 0.1629926471399611,
+    "calibration_price_rmse": 0.2331741477949472,
+    "calibration_relative_price_error_mean": 0.0395745097919327,
+    "holdout_iv_rmse": 0.0718592662958039,
+    "holdout_price_mae": 0.6363727366379726,
+    "holdout_price_rmse": 0.921582640884198,
+    "holdout_relative_price_error_mean": 0.1969771142694412,
+    "kappa_fast": 11.632614857199266,
+    "kappa_slow": 2.7983927571021368,
+    "rho_fast": -0.6988898504769872,
+    "rho_slow": 0.7148986659308194,
+    "runtime_seconds": 197.0799947999949,
+    "sigma_fast": 0.7557918924999601,
+    "sigma_slow": 0.8658405186383352,
+    "theta_fast": 0.0245743634387363,
+    "theta_slow": 0.1340298494485261,
+    "v0_fast": 0.0273804165407892,
+    "v0_slow": 0.0132546918876745
+  }
+}
