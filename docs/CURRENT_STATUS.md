@@ -1,6 +1,8 @@
 # Current Project Status
 
-Status date: 12 August 2026
+Status date: 13 August 2026
+
+> Canonical current control and approval boundaries are maintained in [RESEARCH_CONTROL_AND_CURRENT_STATUS.md](RESEARCH_CONTROL_AND_CURRENT_STATUS.md). This file retains detailed background evidence.
 
 ## Approved research objective
 
@@ -8,7 +10,7 @@ Physics-Informed Inverse Calibration of the Canonical Double Heston Model for St
 
 ## Current completed milestone
 
-The canonical Double Heston pricing/calibration foundation, independent pricing verification, reviewed synthetic-sampling foundation, ANN infrastructure, deterministic official-NSE Stage A candidate selection, and the completed G2 diagnostic sequence are checkpointed. The selected primaries are NTPC, CIPLA, INFY, and HDFCBANK; POWERGRID, SUNPHARMA, TCS, and ICICIBANK are retained as backups. G2 established a market-supported near/middle, central-five, calls-and-puts geometry, but reduced-grid, third-expiry, multi-date, independent CIR-path replication, global-ambiguity, and complementary-observable evidence did not demonstrate stable recovery of the canonical ten parameters. The complementary experiment is insufficient: design B improved point recovery but retained global ambiguity, while C/D rejected the truth under the fixed finite-history screen and therefore cannot establish ambiguity resolution. The next research decision is a sampling-aware complementary-observable design with empirically justified scales and multiple fixed path seeds.
+The canonical Double Heston pricing/calibration foundation, independent pricing verification, reviewed synthetic-sampling foundation, ANN infrastructure, deterministic official-NSE Stage A candidate selection, and completed G2 diagnostics are checkpointed. PR #16 also completed the bounded NTPC optimizer-cap and three-date real-market information studies: optimizer-cap status is `OPTIMIZER_CAP_UNRESOLVED`, optimizer-only work is closed, and the three-date result is `MULTI_DATE_INSUFFICIENT`. Temporal information improved multi-start dispersion, but 15-Jul holdout RMSE deteriorated by `5.338%` and boundary-hit rate remained `1.0`. The final representation remains unfrozen and `G2 = NOT_PASSED`; the next action is the mentor decision recorded in [MENTOR_APPROVAL_BRIEF_G2_INFORMATION_DESIGN.md](MENTOR_APPROVAL_BRIEF_G2_INFORMATION_DESIGN.md).
 
 The unavailable teammate engine is being replaced by an independently implemented canonical Double Heston engine. Equivalence to the unavailable source is not claimed.
 
@@ -155,6 +157,9 @@ GLOBAL_AMBIGUITY = ESTABLISHED
 COMPLEMENTARY_OBSERVABLE = INSUFFICIENT
 EXPERIMENT_VALIDITY = NOT_PASSED_TRUTH_OUTSIDE_COMPLEMENTARY_SCREEN
 MARKET_OBSERVABLE_CONTRACT = UNRESOLVED
+OPTIMIZER_CAP = OPTIMIZER_CAP_UNRESOLVED
+OPTIMIZER_ONLY_WORK = CLOSED
+NTPC_THREE_DATE_INFORMATION = MULTI_DATE_INSUFFICIENT
 FINAL_10K = NOT_GENERATED
 ANN_RESEARCH_TRAINING = NOT_STARTED
 PINN = NOT_DERIVED_OR_TRAINED

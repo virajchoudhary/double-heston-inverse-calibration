@@ -28,6 +28,8 @@ This private B.Tech capstone repository contains an ordinary ANN inverse-calibra
 
 ## Documentation
 
+- [Canonical research control and current status](docs/RESEARCH_CONTROL_AND_CURRENT_STATUS.md)
+- [Mentor approval brief for G2 information design](docs/MENTOR_APPROVAL_BRIEF_G2_INFORMATION_DESIGN.md)
 - [Canonical engine](docs/DOUBLE_HESTON_ENGINE.md)
 - [Independent pricing benchmark](docs/INDEPENDENT_PRICING_BENCHMARK.md)
 - [Parameter-bounds audit](docs/PARAMETER_BOUNDS_AUDIT.md)

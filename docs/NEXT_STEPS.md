@@ -2,21 +2,11 @@
 
 The unavailable teammate source is no longer an expected dependency. The project proceeds from the independent canonical reimplementation without claiming source equivalence.
 
-## Active mentor-updated v2 sequence
+## Current next step after PR #16
 
-1. Predeclare a sampling-aware synthetic complementary-observable design with empirically justified finite-window likelihood/scales and multiple fixed path seeds.
-2. Require the true vectors to pass the observation-model screen before using zero qualifying fits or cluster counts as ambiguity evidence.
-3. Decide and freeze the final representation only through a passed G2 gate.
-4. Update and revalidate the synthetic surface contract for the G2-approved representation.
-5. Generate the final synthetic research dataset.
-6. Train and evaluate the ordinary ANN baseline across predeclared seeds.
-7. Build and evaluate the separate PDE/PINN approach after the ANN baseline.
-8. Run the frozen chronological real-market evaluation.
-9. Compare ANN, PINN, numerical Double Heston calibration, and Standard Heston under one fixed protocol.
+`OBTAIN MENTOR DECISION` on the formal G2 safeguard and one bounded richer NTPC-only temporal-information study. See the canonical [research control/status document](RESEARCH_CONTROL_AND_CURRENT_STATUS.md) and the short [mentor approval brief](MENTOR_APPROVAL_BRIEF_G2_INFORMATION_DESIGN.md).
 
-Stage A candidate selection is complete: NTPC, CIPLA, INFY, and HDFCBANK are the primaries, with NTPC selected at moderate confidence. G2 common-support established a near/middle, central-five, calls-and-puts market geometry. Reduced-grid, third-expiry, multi-date, independent CIR-path replication, global-ambiguity, and complementary-observable diagnostics are complete. The complementary experiment improved local conditioning but is `INSUFFICIENT`: the oracle retained separated solutions, and the sampled C/D truth failed the fixed complementary screen in all four cases. The final representation and feature count remain unfrozen.
-
-The result is sufficient to stop treating local rank or conditioning gains as global recovery evidence. A new seed panel is justified only within a predeclared sampling-aware observation model. Any new observable, prior, regularizer, or reparameterization still requires a separate scientific rationale and mentor review.
+Do not execute the richer study, freeze a representation, generate the final dataset, or start ANN/PINN work before that decision. If approved, freeze the bounded protocol before seeing results; if rejected, return to a mentor-approved formulation/G2 decision.
 
 ## Secondary sampler, challenge, and OOD follow-up
 
