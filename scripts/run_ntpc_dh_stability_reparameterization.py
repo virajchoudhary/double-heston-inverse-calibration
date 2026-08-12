@@ -30,6 +30,7 @@ if str(REPOSITORY_ROOT) not in sys.path:
     sys.path.insert(0, str(REPOSITORY_ROOT))
 
 from scripts import run_ntpc_single_stock_pilot as pilot
+from src.ntpc_pricing_input_contract import canonicalize_pricing_inputs
 from src.calibrate_double_heston import (
     boundary_diagnostics,
     load_hard_safety_bounds,
@@ -704,10 +705,15 @@ Run a separately predeclared **optimizer-cap sensitivity diagnostic**, not regul
     REPORT_PATH.write_text(report, encoding="utf-8", newline="\n")
 
 
+def load_frozen_selected_options(path: Path = BASELINE_ROOT / "selected_options.csv") -> pd.DataFrame:
+    """Load the frozen rows while restoring their pre-serialization pricing inputs."""
+    return canonicalize_pricing_inputs(pd.read_csv(path))
+
+
 def run() -> dict[str, Any]:
     before = verify_baseline_contract()
     hard_bounds = load_hard_safety_bounds(BOUNDS_PATH)
-    selected = pd.read_csv(BASELINE_ROOT / "selected_options.csv")
+    selected = load_frozen_selected_options()
     calibration = selected.loc[selected["sample_role"] == "CALIBRATION"].copy()
     holdout = selected.loc[selected["sample_role"] == "HOLDOUT"].copy()
     baseline_starts = pd.read_csv(BASELINE_ROOT / "double_heston_multistart.csv")
