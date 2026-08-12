@@ -1,0 +1,67 @@
+{
+  "analysis_id": "NTPC_CANONICAL160_REPRODUCTION_FORENSICS",
+  "base_main": "205e72757f978184dfdd588af72a31034c2a20ef",
+  "root_cause": "ARTIFACT_PROVENANCE_MISMATCH",
+  "reviewed_artifact": {
+    "path": "market_data_audit/stage_a/derived/ntpc_single_stock_pilot/double_heston_multistart.csv",
+    "sha256": "4E092F2BEC5F53033E61EFB1D2B2D761C9D3AB8F72F17F33D6E989946FC1EB70",
+    "source_commit": "dd539150898bf5ca4d168c5dba3f3a33c69628e2"
+  },
+  "replay_artifact": {
+    "path": "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/canonical_160_starts.csv",
+    "sha256": "CF148D54639EA194E620BABB5E6CF741A91AB77C269A2C1E3BA3CFA25B33926E",
+    "source_branch": "feat/ntpc-dh-optimizer-cap-sensitivity",
+    "committed": false
+  },
+  "start_population_sha256": "3AC1C30FF1B5416987D2103EA70B9262BBB8B4991F18F7A06C98E3A41C86ABA1",
+  "causal_probe_contract": {
+    "script": "scripts/run_ntpc_canonical160_causal_probe.py",
+    "script_sha256": "E8B38E6BF6B7E43CB380F7550970B68730C0DD751C19774455E055FF0D3F43F6",
+    "start_id": 6,
+    "max_nfev": 160,
+    "prohibited_budget_run": 320,
+    "raw_source_sha256": "5FCD3437CFA4D6C489608687D790BF26F11F8B0D02D088CF907D5A005A360FD5",
+    "selected_options_sha256": "981F4B04B816338BDC9EB6729182EA2DACFADA21578C03338A605BC7C124123D"
+  },
+  "correction_implementation_hashes": {
+    "scripts/investigate_ntpc_canonical160_reproduction.py": "4300B5C5951924009E73930849387CD2F5E2AA76B926829CE3F132F8A00D1888",
+    "src/ntpc_pricing_input_contract.py": "5218D68A7FFF20310875C46008C7FE1B82050715751360A832ECB6308DF1E1AA"
+  },
+  "reference_contract": {
+    "parameter_order": ["kappa_slow", "theta_slow", "sigma_slow", "rho_slow", "v0_slow", "kappa_fast", "theta_fast", "sigma_fast", "rho_fast", "v0_fast"],
+    "normalization": "full configured range per parameter and divide Euclidean norm by sqrt(10)",
+    "pair_rule": "unique unordered i<j; no diagonal; no symmetric double counting",
+    "expected_pair_count": 66,
+    "material_distance": 0.05,
+    "cluster_method": "complete_linkage",
+    "cluster_cutoff": 0.05
+  },
+  "reviewed_values": {
+    "median_pairwise_distance": 0.35733879424203197,
+    "maximum_pairwise_distance": 0.5641491074467359,
+    "maximum_distance_from_best": 0.4910854918863381,
+    "materially_displaced_count": 11,
+    "cluster_count": 7
+  },
+  "replay_values": {
+    "median_pairwise_distance": 0.3169421650862818,
+    "maximum_pairwise_distance": 0.5641666171316797,
+    "maximum_distance_from_best": 0.4914112891055993,
+    "materially_displaced_count": 11,
+    "cluster_count": 7
+  },
+  "fixture_hashes": {
+    "tests/fixtures/ntpc_canonical160_reviewed_vectors.csv": "090EC2EE30B75A4C0E2D366F80AA86625431C98D9900D03C5F508DA33B41C3AD",
+    "tests/fixtures/ntpc_canonical160_replay_vectors.csv": "3C6A9FF215961EFC72C3ACBF99CFF2B451EE9ECFD1FC29976F87D2BB2D440928",
+    "tests/fixtures/ntpc_canonical160_start_hashes.csv": "BB980C2FCA3F83BAC39C359ED6BD84083BA8CAD46074647E7D8E5C658B3D3D27"
+  },
+  "ignored_forensic_artifact_hashes": {
+    "canonical160_causal_probe.json": "418BC0F53356C2E9AF014EF84B2B3C1823E6E2E473FE2CC346D381B8937535B3",
+    "paired_start_comparison.csv": "4BA1CF0CD7E9A1034504B0B4A868B9C7B54237F14A29AE30651DB944640E3B4F",
+    "reviewed_pairwise_distances.csv": "C5568814B0496E8FA4A8F8485D8A345193FA37F8F21AC08CAE6F5136545F2B29",
+    "replay_pairwise_distances.csv": "E41734FF17217601856DDFBBBA715622D42A402D6F81F56565171EF741B34265",
+    "provenance_trace.json": "D862FE4E906A90EEE846EA1089919BFE4A0F546E971989FB1F51D34E4C249316",
+    "root_cause_summary.json": "9AEE34B01BB58E575D78FEF6C21062FA874C4D8FF80D48CFEC865643A945A217"
+  },
+  "scientific_conclusion_changed": false
+}
