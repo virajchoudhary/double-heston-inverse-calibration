@@ -1,0 +1,113 @@
+{
+  "base_main": "205e72757f978184dfdd588af72a31034c2a20ef",
+  "baseline_reproduction": {
+    "canonical": {
+      "absolute_differences": {
+        "calibration_iv_rmse": 8.927200992325801e-10,
+        "calibration_price_rmse": 1.0952504209127412e-08,
+        "cap_rate": 0.0,
+        "cluster_count": 0.0,
+        "holdout_iv_rmse": 2.7932171700606467e-08,
+        "holdout_price_rmse": 7.237846333385534e-08,
+        "materially_displaced_start_count": 0.0,
+        "maximum_pairwise_range_scaled_distance": 1.7509684943850523e-05,
+        "maximum_range_scaled_distance_from_best": 0.0003257972192611813,
+        "median_pairwise_range_scaled_distance": 0.04039662915575015,
+        "near_equivalent_start_count": 0.0,
+        "valid_start_count": 0.0
+      },
+      "passed": false
+    },
+    "passed": false,
+    "transformed": {
+      "absolute_differences": {
+        "calibration_iv_rmse": 0.0,
+        "calibration_price_rmse": 0.0,
+        "cap_rate": 0.0,
+        "cluster_count": 0.0,
+        "holdout_iv_rmse": 0.0,
+        "holdout_price_rmse": 0.0,
+        "materially_displaced_start_count": 0.0,
+        "maximum_pairwise_range_scaled_distance": 0.0,
+        "maximum_range_scaled_distance_from_best": 0.0,
+        "median_pairwise_range_scaled_distance": 0.0,
+        "near_equivalent_start_count": 0.0,
+        "valid_start_count": 0.0
+      },
+      "passed": true
+    }
+  },
+  "changed_variable_only": "max_nfev",
+  "classification": "INVALID",
+  "frozen_contract": {
+    "activity_screen": "positive close, traded volume, executed trades, and open interest",
+    "calibration_row_sha256": "F44371DD418304789DC4B97C1710DCE60CDC0232A75C172FDC90E220738A0B7F",
+    "calibration_rows": 12,
+    "carry_rule": "q=r-log(F/S)/T",
+    "discount_rule": "D(T)=1/(1+y*T)",
+    "holdout_row_sha256": "E8B552A1B218F5405D5871C11F9AAA4F6460310BFEC8E300501A73C00F1FBA07",
+    "holdout_rows": 7,
+    "node_count": 64,
+    "primary_price_field": "ClsPric",
+    "risk_free_simple_yield": 0.053324,
+    "spot": 344.35,
+    "valuation_date": "2026-07-15"
+  },
+  "generated_artifact_hashes": {
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/canonical_160_near_equivalent.csv": "149742EFB41D8750AB233742358916BA9755007BFE51171F0901302713E1FE55",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/canonical_160_pairwise.csv": "E41734FF17217601856DDFBBBA715622D42A402D6F81F56565171EF741B34265",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/canonical_160_starts.csv": "CF148D54639EA194E620BABB5E6CF741A91AB77C269A2C1E3BA3CFA25B33926E",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/canonical_320_near_equivalent.csv": "CC823BF966E20A7B2050562E62C2571701AE05C0CC459C993DACC6CB0794FEAD",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/canonical_320_pairwise.csv": "1366CFBBFB7CB69F263059B6FADC6C380F278BB7C70808E0D889B6396BE5E1B9",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/canonical_320_starts.csv": "6300EDA1AFDB3943B21B9E4681A78BE497F9730987B17F98A77A7568EBF0E977",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/canonical_paired_160_320.csv": "B721DFB32AC6395C3218469AD5C67ADF5F63D9B4CD747DE30A4A4F8908F7AA61",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/experiment_summary.json": "D7D7A3FBDD046E7B31AAE1571F25DACE685BB5C8D85D4C2F3635F8F505B57BDD",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/figures/01_optimizer_cap_rate.png": "8F78649A5E8284CF3D23F0B83597D528B9E3E70B4DC14783FA304B62DE33719B",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/figures/02_calibration_holdout_rmse.png": "3127AFDA8367829D93B2D07191191C6D789DB084032E2A888B52E3E951812328",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/figures/03_materially_displaced_count.png": "D8230678F8E5AA56183068FFEBAEF7F2135912B2319B5613212D108F29723DB1",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/figures/04_cluster_count.png": "9D6BE91F93FAF01E5DA7B09BCBB20B5A898C7B0A932B4DAD8A642BC7F55EEB16",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/figures/05_pairwise_separation.png": "D3EEB2B4D979709C74A30679274081A01BF70C804F74C2953C2F1505599EA915",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/figures/06_paired_parameter_movement.png": "EB107861C39F6664835F4277C82C9A2B0D1E6DA14CC459FA8459536583431484",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/figures/07_canonical_parameter_dispersion_320.png": "58198EE6A4C54F63840DE5A31F70F2B0EFFAD7F179E5C941F165BE28327803F5",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/figures/08_pricing_error_vs_displacement_320.png": "5C2658521B6411FE6A6DBFC1EF91984D3966B148EABA2F26913A97687B27F596",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/paired_starts.csv": "23AE041D770BABA21182944D18E91BEDDEAE7710856AE01246F503BE3D06B079",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/transformed_160_near_equivalent.csv": "FCEAAE76BA9D50D8F56DF0B46684D60D15990438593E5F5D3703297E84A00097",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/transformed_160_pairwise.csv": "E498AEAA136D5AF371499FB95D48E36B04445E2C0A4C2D3E86F9B0335139D7D5",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/transformed_160_starts.csv": "AF000740750054FFE4FE2E1AF9C27389807AABDC56B200341D3D40948F9B5D74",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/transformed_320_near_equivalent.csv": "822E2A16A638913FE7755172BD2907945FCB2B4257E626497FBC7EC74E2D2AF1",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/transformed_320_pairwise.csv": "510ECA4FD7B2C8ABE55BF77F2F0B1A6F2BDCF1D44066B1D19BBC6CCE07F0D9AA",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/transformed_320_starts.csv": "FDB5B678484F0DAD3A1142BC1984B06820FAABA36F34CB88C69BBBE2FA0C3C9F",
+    "market_data_audit/stage_a/derived/ntpc_dh_optimizer_cap_sensitivity/transformed_paired_160_320.csv": "776BA04B1D5A987A0BE3A4A918CB6FBEADBCD48FE4F1B0A2CA6F863B9D7467F1"
+  },
+  "optimizer_contracts": [
+    {
+      "diff_step": 2e-05,
+      "ftol": 1e-09,
+      "gtol": 1e-09,
+      "max_nfev": 160,
+      "method": "trf",
+      "xtol": 1e-09
+    },
+    {
+      "diff_step": 2e-05,
+      "ftol": 1e-09,
+      "gtol": 1e-09,
+      "max_nfev": 320,
+      "method": "trf",
+      "xtol": 1e-09
+    }
+  ],
+  "paired_start_ids": true,
+  "protected_evidence_hashes": {
+    "docs/evidence/NTPC_SINGLE_STOCK_PILOT_MANIFEST.json": "A19800FBEDBF00F8226A3F413A17D861420E82064D94384C9BA521FD2F1B9ADC",
+    "market_data_audit/stage_a/derived/ntpc_dh_stability_reparameterization/artifact_manifest.json": "EC6EE7B9EADBECC0A33716F9D7794A5B38FF9CE9BF5D79CB46C6F9E6D30A9E92",
+    "market_data_audit/stage_a/derived/ntpc_dh_stability_reparameterization/reparameterized_multistart.csv": "DE24D61A326393DB9DD8473533514C94985E7CFFEC23963561180519FF3DABDB",
+    "market_data_audit/stage_a/derived/ntpc_dh_stability_reparameterization/stability_comparison.json": "9EB702A24B978959BECC159B4C2CFCABBE81B8A0CCECC887A460AE57E15192F3",
+    "market_data_audit/stage_a/derived/ntpc_single_stock_pilot/carry_contract.csv": "1C81C80EDD12D07C0E27478813879816B30376F0BA717BCB2BB5A0118CB03477",
+    "market_data_audit/stage_a/derived/ntpc_single_stock_pilot/double_heston_multistart.csv": "4E092F2BEC5F53033E61EFB1D2B2D761C9D3AB8F72F17F33D6E989946FC1EB70",
+    "market_data_audit/stage_a/derived/ntpc_single_stock_pilot/model_comparison.csv": "6BB98FE854D820EF4BE0DAD66B286510069DFDE449DF26EA21AF0EEE7785CAFF",
+    "market_data_audit/stage_a/derived/ntpc_single_stock_pilot/parameter_stability.json": "064B15EE0BED6565109CD466FF3F64D1BC556BCD147DFB8526E191513C627B20",
+    "market_data_audit/stage_a/derived/ntpc_single_stock_pilot/selected_options.csv": "981F4B04B816338BDC9EB6729182EA2DACFADA21578C03338A605BC7C124123D"
+  },
+  "report_sha256": "30EECADA5670A0482629A2CB4E7E7979CC6F4CBA9617DD990500F8EA73382F2D"
+}
