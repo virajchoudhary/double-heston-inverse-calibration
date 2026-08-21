@@ -38,3 +38,4 @@ Safety confirmations:
 - Frozen production pricer NOT modified (only additions under scripts/ and .ai-research/; src/ untouched — verified by git diff scope).
 - No secrets committed (staged-diff scan clean); no large binaries (evidence dir 604K; only one png).
 - Focused tests: 43/44 pass; the 1 failure is pre-existing at genesis (platform rounding 3.3e-12 vs demanded 1e-12), reproduced in a clean worktree.
+- Final commit: f0844c537d78a4bf8245b0d4586547686f5ea5a8
