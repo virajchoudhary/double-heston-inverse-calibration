@@ -40,8 +40,16 @@ validity (not identification).
 
 ## 4. Identifiability/calibration conclusion
 
-Node B INTEGRATED (77b8f2e; mid-run — re-polled before consolidation). Core result:
-**global ambiguity replicates on the FULL 108-quote provisional grid.** Phase B multistart
+Node B INTEGRATED (61905d0, complete phases A–F). Core result, in three parts:
+**(1) strict-precision identification is GOOD on the full grid** (at 2.5e-7 price tolerance,
+max parameter RMSE 0.011 vs central-5's 0.1485 — distant near-equivalents are gone);
+**(2) noise-driven collapse is the governing failure** (parameter RMSE steps 0.097 → ~0.31
+between 0 and 0.5% noise, then flat, while repricing tracks the noise floor; 100% boundary
+saturation at 0.5%; the local Jacobian ALONE predicts the collapse scale — boundaries merely
+cap it); **(3) the flat compensated directions are in the landscape, not optimizer artifacts**
+(fixing kappa_slow at 7× truth, the other 9 parameters re-optimize to machine-level
+repricing). Severity is truth-dependent (case_4 with high vol-of-vol stays identified to
+1e-5; cases 1–3 disperse earlier). Phase B multistart
 (case_1, 12 starts): clean median parameter RMSE 0.148 at price RMSE 1.1e-6; with 0.5–2%
 noise, 12/12 boundary hits, parameter RMSE 0.31–0.34 with price fit at the noise floor.
 Phase A production entry: the clean best start recovers exactly (2.9e-11) but other starts
@@ -134,6 +142,10 @@ Node A's side after full read.
 | Implemented (buggy) PDE residual identity | residual == dropped f1+f2 exactly (diff 0) | A-014 |
 | G2 ambiguity backdrop | price RMSE 4.708e-8 vs param RMSE 1.485e-1; 39 clusters | repo doc |
 | Correctly-wired PDE residual floor (Node C) | 4-5e-9 relative — same noise scale as near-equivalence price differences | Node C F12 (supports: physics = regularization, not identification) |
+| Noise-collapse step (Node B B+C, 12 starts × 4 cases) | param RMSE 0.097 clean → ~0.31 at 0.5% noise, flat after; repricing at noise floor; 100% boundary hits at 0.5% | Node B |
+| Linearized propagation vs observed | predicted 3.1–28.9 full-range widths at 0.5%; observed ~0.3 (box-truncated) | Node B |
+| Tolerance spectrum on full-108 (clean) | 2.5e-7: max 0.011 · 1e-6: 0.159 · 1e-4: 0.380 (saturation) | Node B Phase F |
+| Landscape flatness (case_1) | kappa_slow fixed at 7× truth → 9-param re-opt to ~1e-12 objective | Node B Phase E |
 
 ## 10. Code worth considering for merge
 
@@ -183,9 +195,9 @@ From archive-2 (already on genesis; requires quarantine decisions first):
 - Node A: `overnight/20260822-a-architecture` @ (final SHA at consolidation) — evidence in
   `.ai-research/overnight/2026-08-22/node-A/` (STATUS, FINDINGS F1–F17, EXPERIMENTS A-000–
   A-012, SEAM_MATRIX, FINAL_REPORT, 2 diagnostics + adapter artifact).
-- Node B: `origin/overnight/20260822-b-identifiability` @ 77b8f2e (landed 03:11 IST,
-  mid-run: STATUS/FINDINGS(Phase D)/EXPERIMENTS + artifacts/tables; Phases A/B results in
-  STATUS checkpoint; FINAL_REPORT pending — re-polled before consolidation).
+- Node B: `origin/overnight/20260822-b-identifiability` @ 61905d0 (complete phases A–F
+  evidence: FINDINGS/STATUS/EXPERIMENTS + artifacts/tables; FINAL_REPORT pending —
+  re-polled before consolidation).
 - Node C: `origin/overnight/20260822-c-pde` @ 751551a (4 commits; STATUS/FINDINGS/
 EXPERIMENTS/FINAL_REPORT + derivations, tables, probe evidence, 25/25 focused tests).
 Integrated at 01:30 IST without merging.
