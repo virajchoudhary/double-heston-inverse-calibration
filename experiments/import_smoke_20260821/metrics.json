@@ -1,0 +1,87 @@
+{
+  "mode": "physics",
+  "synthetic_metrics": {
+    "price_mae_normalized": 0.016642465247657355,
+    "price_rmse_normalized": 0.021668604604049888,
+    "v01_mae": 0.15451277792453766,
+    "v01_rmse": 0.18942169046648655,
+    "kappa1_mae": 2.147674560546875,
+    "kappa1_rmse": 2.4138304960004193,
+    "theta1_mae": 0.14369066059589386,
+    "theta1_rmse": 0.1800050314060986,
+    "sigma1_mae": 0.5593956112861633,
+    "sigma1_rmse": 0.6774874850380588,
+    "rho1_mae": 0.3012729287147522,
+    "rho1_rmse": 0.37544543911074696,
+    "v02_mae": 0.2277650088071823,
+    "v02_rmse": 0.2753801817300399,
+    "kappa2_mae": 1.1188032627105713,
+    "kappa2_rmse": 1.5351668884064036,
+    "theta2_mae": 0.13214509189128876,
+    "theta2_rmse": 0.16030185756158874,
+    "sigma2_mae": 0.5218141078948975,
+    "sigma2_rmse": 0.63478489773176,
+    "rho2_mae": 0.41067788004875183,
+    "rho2_rmse": 0.45147217833914516
+  },
+  "real_metrics": {
+    "price_mae_normalized": 0.0146130698864245,
+    "price_rmse_normalized": 0.019136659790717384
+  },
+  "counts": {
+    "real_train_surfaces": 80,
+    "real_validation_surfaces": 24,
+    "real_test_surfaces": 24,
+    "synthetic_train_surfaces": 80,
+    "synthetic_validation_surfaces": 24,
+    "synthetic_test_surfaces": 24
+  },
+  "stage_logs": {
+    "synthetic": {
+      "history": [
+        {
+          "epoch": 1,
+          "train_total": 0.5491754498148851,
+          "train_parameter": 0.10386330261826515,
+          "train_price": 7.245544356103311e-05,
+          "train_order": 0.0,
+          "train_boundary": 1.1165864156079293e-11,
+          "train_pde": 8.905518389474455,
+          "valid_total": 0.11351838861625589,
+          "valid_parameter": 0.1134510909517606,
+          "valid_price": 0.00013459532899055344,
+          "valid_order": 0.0,
+          "valid_boundary": 0.0,
+          "valid_pde": 0.0
+        }
+      ],
+      "best_validation_total": 0.11351838861625589,
+      "status": "completed",
+      "next_epoch": 2,
+      "total_epochs": 1
+    },
+    "real_finetune": {
+      "history": [
+        {
+          "epoch": 1,
+          "train_total": 0.023706871532463047,
+          "train_parameter": 0.0,
+          "train_price": 0.00033270414297251183,
+          "train_order": 0.0,
+          "train_boundary": 1.541444523134848e-11,
+          "train_pde": 0.46748334775898187,
+          "valid_total": 0.0002683164800255449,
+          "valid_parameter": 0.0,
+          "valid_price": 0.0002683164800255449,
+          "valid_order": 0.0,
+          "valid_boundary": 0.0,
+          "valid_pde": 0.0
+        }
+      ],
+      "best_validation_total": 0.0002683164800255449,
+      "status": "completed",
+      "next_epoch": 2,
+      "total_epochs": 1
+    }
+  }
+}

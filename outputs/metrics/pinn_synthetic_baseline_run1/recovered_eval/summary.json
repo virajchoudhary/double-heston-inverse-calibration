@@ -1,0 +1,20 @@
+{
+  "best_epoch": 5,
+  "best_validation_total_loss": 2.870839966668023,
+  "test_parameter_validity_rate": 1.0,
+  "test_repricing_rmse": 1.5697325722867397,
+  "test_repricing_mae": 1.1451610392217104,
+  "test_repricing_mean_relative_error": 2803.550681254882,
+  "per_parameter_mae": {
+    "kappa_slow": 0.3000318623251385,
+    "theta_slow": 0.05274832507388459,
+    "sigma_slow": 0.12891272186405128,
+    "rho_slow": 0.2463664621528652,
+    "v0_slow": 0.03725471771839592,
+    "kappa_fast": 2.3340171443091497,
+    "theta_fast": 0.03353685461398628,
+    "sigma_fast": 0.14019343795047867,
+    "rho_fast": 0.3804175031060974,
+    "v0_fast": 0.07063043189959393
+  }
+}

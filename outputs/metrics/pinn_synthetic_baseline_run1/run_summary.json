@@ -1,0 +1,136 @@
+{
+  "dataset_directory": "outputs/metrics/pinn_synthetic_baseline_run1/dataset",
+  "evaluation_directory": "outputs/metrics/pinn_synthetic_baseline_run1/evaluation",
+  "no_cheat_summary": {
+    "normalization_fit_on_train_only": true,
+    "real_market_data_used": false,
+    "selection_uses_test_set": false,
+    "selection_uses_validation_only": true,
+    "target_parameters_known_before_pricing": true,
+    "train_validation_test_surface_ids_disjoint": true,
+    "whole_surface_split_integrity": true
+  },
+  "noise_level": 0.0,
+  "split_counts": {
+    "test_surfaces": 18,
+    "train_surfaces": 84,
+    "validation_surfaces": 18
+  },
+  "surface_count": 120,
+  "test_parameter_recovery": {
+    "correlation_disk_violation_rate": 0.0,
+    "factor_order_violation_rate": 0.0,
+    "fast_feller_violation_rate": 0.0,
+    "full_vector_validity_rate": 1.0,
+    "parameter_metrics": {
+      "kappa_fast": {
+        "bias": -0.4201299746831258,
+        "mae": 1.1639405753877428,
+        "maximum_absolute_error": 2.0874950885772705,
+        "mean_relative_error": 0.2939218069269067,
+        "median_absolute_error": 1.102615475654602,
+        "r2": -0.11571953473908136,
+        "rmse": 1.3072418741342091
+      },
+      "kappa_slow": {
+        "bias": -0.03776929610305362,
+        "mae": 0.234911118944486,
+        "maximum_absolute_error": 0.519556999206543,
+        "mean_relative_error": 0.2723917557871983,
+        "median_absolute_error": 0.2121446430683136,
+        "r2": -0.018493897729189746,
+        "rmse": 0.2835920973373049
+      },
+      "rho_fast": {
+        "bias": 0.18738798393557468,
+        "mae": 0.28329013836466604,
+        "maximum_absolute_error": 0.6338080279529095,
+        "mean_relative_error": 1.1982715300530693,
+        "median_absolute_error": 0.24915821105241776,
+        "r2": -0.45050764537028654,
+        "rmse": 0.3362258490232391
+      },
+      "rho_slow": {
+        "bias": -0.03657924239006308,
+        "mae": 0.24532098840508196,
+        "maximum_absolute_error": 0.4531651735305786,
+        "mean_relative_error": 4.955564672511086,
+        "median_absolute_error": 0.2348225568421185,
+        "r2": -0.017242098123922522,
+        "rmse": 0.27749880251923154
+      },
+      "sigma_fast": {
+        "bias": -0.05749168785081969,
+        "mae": 0.14878274872899055,
+        "maximum_absolute_error": 0.3759528696537018,
+        "mean_relative_error": 0.838997526140423,
+        "median_absolute_error": 0.13373979926109314,
+        "r2": -0.11449320742578517,
+        "rmse": 0.17949121420586903
+      },
+      "sigma_slow": {
+        "bias": -0.061195231353243194,
+        "mae": 0.12313093721038765,
+        "maximum_absolute_error": 0.24443192780017853,
+        "mean_relative_error": 0.7610644184710309,
+        "median_absolute_error": 0.11904406733810902,
+        "r2": -0.23770939689845672,
+        "rmse": 0.13969243222254726
+      },
+      "theta_fast": {
+        "bias": 0.0035527535817689365,
+        "mae": 0.022744736427234277,
+        "maximum_absolute_error": 0.031160105019807816,
+        "mean_relative_error": 0.7455304753720067,
+        "median_absolute_error": 0.026595160365104675,
+        "r2": -0.020725532914165568,
+        "rmse": 0.0242960352847092
+      },
+      "theta_slow": {
+        "bias": 0.0014048492949869898,
+        "mae": 0.022390465045140848,
+        "maximum_absolute_error": 0.058109158650040627,
+        "mean_relative_error": 0.4961642479951671,
+        "median_absolute_error": 0.019517067819833755,
+        "r2": -0.002359382333067428,
+        "rmse": 0.02836375144913882
+      },
+      "v0_fast": {
+        "bias": 0.010177570809092786,
+        "mae": 0.023797158462305863,
+        "maximum_absolute_error": 0.05325712729245424,
+        "mean_relative_error": 0.9441110139881652,
+        "median_absolute_error": 0.020009038969874382,
+        "r2": -0.1459192641386977,
+        "rmse": 0.028542327537095544
+      },
+      "v0_slow": {
+        "bias": -0.0053125010389420725,
+        "mae": 0.029507760889828205,
+        "maximum_absolute_error": 0.0758343506604433,
+        "mean_relative_error": 0.4362035075978592,
+        "median_absolute_error": 0.029076244682073593,
+        "r2": -0.023581510150881613,
+        "rmse": 0.03526140766369961
+      }
+    },
+    "sample_count": 18,
+    "slow_feller_violation_rate": 0.0
+  },
+  "test_repricing": {
+    "failure_rows": 0,
+    "mae": 0.3127569946078619,
+    "mean_relative_error": 5.445932262661136,
+    "rmse": 0.5090681581734021,
+    "status": "completed",
+    "successful_rows": 1944
+  },
+  "training": {
+    "best_epoch": 20,
+    "best_validation_total_loss": 1.1085637940300836,
+    "parameter_loss_weight": 1.0,
+    "physics_loss_weight": 1.0,
+    "pricing_node_count": 16
+  },
+  "training_directory": "outputs/metrics/pinn_synthetic_baseline_run1/training"
+}

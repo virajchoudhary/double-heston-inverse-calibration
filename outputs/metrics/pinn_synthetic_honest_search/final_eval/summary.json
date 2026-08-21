@@ -1,0 +1,61 @@
+{
+  "search_results": [
+    {
+      "name": "cfg_a",
+      "best_validation_total_loss": 6.471230983734131,
+      "best_epoch": 10,
+      "epochs": 10,
+      "lr": 0.0005,
+      "param_w": 5.0,
+      "phys_w": 1.0,
+      "nodes": 8
+    },
+    {
+      "name": "cfg_c",
+      "best_validation_total_loss": 7.109127521514893,
+      "best_epoch": 12,
+      "epochs": 12,
+      "lr": 0.0003,
+      "param_w": 5.0,
+      "phys_w": 0.5,
+      "nodes": 8
+    },
+    {
+      "name": "cfg_b",
+      "best_validation_total_loss": 13.719680786132812,
+      "best_epoch": 12,
+      "epochs": 12,
+      "lr": 0.0005,
+      "param_w": 10.0,
+      "phys_w": 1.0,
+      "nodes": 8
+    }
+  ],
+  "selected_by_validation_only": {
+    "name": "cfg_a",
+    "best_validation_total_loss": 6.471230983734131,
+    "best_epoch": 10,
+    "epochs": 10,
+    "lr": 0.0005,
+    "param_w": 5.0,
+    "phys_w": 1.0,
+    "nodes": 8
+  },
+  "test_parameter_validity_rate": 1.0,
+  "test_repricing_rmse": 0.7680489896033947,
+  "test_repricing_mae": 0.4778435939039388,
+  "test_repricing_mean_relative_error": 19918.78236405656,
+  "per_parameter_mae": {
+    "kappa_slow": 0.34056740601857505,
+    "theta_slow": 0.01920737201968829,
+    "sigma_slow": 0.07345345889528593,
+    "rho_slow": 0.2441228775928418,
+    "v0_slow": 0.03533623889088631,
+    "kappa_fast": 1.5762038071950277,
+    "theta_fast": 0.014737973858912786,
+    "sigma_fast": 0.17988166883587836,
+    "rho_fast": 0.26094405104716617,
+    "v0_fast": 0.02457984027763208
+  },
+  "test_surface_count": 15
+}

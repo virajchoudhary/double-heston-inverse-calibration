@@ -42,3 +42,5 @@ These outputs represent eight structural parameters and two surface-specific ini
 ## Research boundary
 
 `src/pricing_interface.py` routes research generation and repricing to `src/double_heston.py`. The development dummy remains available only through the explicitly labelled smoke-test path and is never an implicit fallback. Full ANN research training has not started.
+
+The repository also contains a PINN infrastructure path for inverse calibration. Unlike the ANN baseline, it uses a differentiable torch repricer that mirrors the canonical Double Heston surface contract and combines parameter supervision with full-surface repricing consistency. This is infrastructure, not a dated research-training result, and it does not change the historical G2 status recorded in the dated status documents.

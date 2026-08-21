@@ -1,0 +1,11 @@
+{
+  "data_status": "GENUINE_CANONICAL_DOUBLE_HESTON_SYNTHETIC_DATA",
+  "generation_attempts": 204,
+  "generation_seed": 20260814,
+  "noise_level": 0.0,
+  "parameter_bounds_status": "PROVISIONAL_CANONICAL_REIMPLEMENTATION",
+  "resampled_until_priceable": true,
+  "row_count": 9720,
+  "surface_count": 90,
+  "warning": "Genuine synthetic surfaces from the independent canonical Double Heston engine. Only parameter vectors that passed strict validity and priceability checks were retained."
+}

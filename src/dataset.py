@@ -22,11 +22,17 @@ class SurfaceParameterDataset(Dataset[tuple[torch.Tensor, torch.Tensor, str, dic
         features: np.ndarray | torch.Tensor,
         targets: np.ndarray | torch.Tensor,
         surface_ids: Sequence[str],
+        masks: np.ndarray | torch.Tensor | None = None,
         metadata: Sequence[dict[str, Any]] | None = None,
     ) -> None:
         self.features = torch.as_tensor(features, dtype=torch.float32)
         self.targets = torch.as_tensor(targets, dtype=torch.float32)
         self.surface_ids = [str(value) for value in surface_ids]
+        self.masks = (
+            torch.as_tensor(masks, dtype=torch.bool)
+            if masks is not None
+            else torch.ones_like(self.features, dtype=torch.bool)
+        )
         self.metadata = list(metadata or [{} for _ in self.surface_ids])
         if self.features.ndim != 2:
             raise ValueError("features must be a two-dimensional matrix")
@@ -34,13 +40,18 @@ class SurfaceParameterDataset(Dataset[tuple[torch.Tensor, torch.Tensor, str, dic
             raise ValueError(
                 f"targets must have shape ({len(self.features)}, {PARAMETER_COUNT})"
             )
+        if self.masks.shape != self.features.shape:
+            raise ValueError("masks must match features shape")
         if len(self.surface_ids) != len(self.features) or len(self.metadata) != len(
             self.features
         ):
             raise ValueError("features, targets, surface_ids, and metadata lengths differ")
         if len(set(self.surface_ids)) != len(self.surface_ids):
             raise ValueError("Each dataset item must have a unique surface_id")
-        if not torch.isfinite(self.features).all() or not torch.isfinite(self.targets).all():
+        if (
+            not torch.isfinite(self.features).all()
+            or not torch.isfinite(self.targets).all()
+        ):
             raise ValueError("features and targets must be finite")
 
     def __len__(self) -> int:
@@ -86,6 +97,7 @@ class SurfaceParameterDataset(Dataset[tuple[torch.Tensor, torch.Tensor, str, dic
         targets: list[np.ndarray] = []
         surface_ids: list[str] = []
         metadata: list[dict[str, Any]] = []
+        masks: list[np.ndarray] = []
         option_order = pd.CategoricalDtype([CALL_OPTION, PUT_OPTION], ordered=True)
         for surface_id, group in frame.groupby("surface_id", sort=True):
             if group["split"].nunique() != 1:
@@ -105,17 +117,30 @@ class SurfaceParameterDataset(Dataset[tuple[torch.Tensor, torch.Tensor, str, dic
                 raise ValueError(f"Surface {surface_id} has inconsistent target parameters")
             features.append(feature)
             targets.append(target_rows.iloc[0].to_numpy(dtype=np.float32))
+            masks.append(mask.astype(bool))
             surface_ids.append(str(surface_id))
             metadata.append(
                 {
                     "split": str(ordered["split"].iloc[0]),
                     "data_status": str(ordered["data_status"].iloc[0]),
                     "spot": float(ordered["spot"].iloc[0]),
+                    "risk_free_rate": float(ordered["risk_free_rate"].iloc[0]),
+                    "dividend_yield": float(ordered["dividend_yield"].iloc[0]),
                     "generation_seed": int(ordered["generation_seed"].iloc[0]),
                     "noise_level": float(ordered["noise_level"].iloc[0]),
+                    "strikes": ordered["strike"].to_numpy(dtype=np.float32).tolist(),
+                    "maturities_years": ordered["maturity_years"].to_numpy(dtype=np.float32).tolist(),
+                    "option_types": ordered["option_type"].astype(str).tolist(),
+                    "mask": mask.astype(bool).tolist(),
                 }
             )
-        return cls(np.stack(features), np.stack(targets), surface_ids, metadata)
+        return cls(
+            np.stack(features),
+            np.stack(targets),
+            surface_ids,
+            masks=np.stack(masks),
+            metadata=metadata,
+        )
 
     def indices_for_split(self, split: str) -> list[int]:
         """Return indices for exactly one stored surface-level split label."""

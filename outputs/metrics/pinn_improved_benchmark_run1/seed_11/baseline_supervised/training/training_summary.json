@@ -1,0 +1,12 @@
+{
+  "best_epoch": 5,
+  "best_validation_total_loss": 2.4017958641052246,
+  "checkpoint_path": "best_validation_checkpoint.pt",
+  "device_used": "cpu",
+  "epochs_completed": 5,
+  "parameter_loss_weight": 1.0,
+  "physics_loss": "differentiable_double_heston_repricing",
+  "physics_loss_weight": 0.0,
+  "pricing_node_count": 8,
+  "test_set_used_for_selection": false
+}

@@ -23,7 +23,7 @@ This private B.Tech capstone repository contains an ordinary ANN inverse-calibra
 | G2 final representation | Not frozen |
 | Final 10,000-surface research dataset | Not generated |
 | Full ANN research training | Not started |
-| PINN development/comparison | Not started |
+| PINN infrastructure | Implemented; not research-trained |
 | Frozen real-market evaluation | Not started |
 
 ## Documentation
@@ -76,6 +76,8 @@ The canonical regression fixture at `tests/fixtures/double_heston_clean_fixture.
 ## ANN and dataset boundary
 
 `src/pricing_interface.py` routes research pricing to the real canonical engine. `dummy_surface_generator_for_smoke_test` remains separate and can be used only by the explicit smoke-test path, whose rows retain `NOT_RESEARCH_DATA`.
+
+The repository now also includes a PINN infrastructure path built around a differentiable torch Double Heston repricer plus a constraint-by-construction inverse network. This infrastructure is not a dated research result and does not imply that G2 has passed, that the final representation is frozen, or that a research-trained PINN comparison already exists.
 
 The current candidate ANN grid has nine log-moneyness values, six maturities, and separate call and put blocks: `9 * 6 * 2 = 108` normalized price inputs. The ANN produces the ten parameters in the fixed order above. Complete surfaces stay within one train, validation, or test split.
 

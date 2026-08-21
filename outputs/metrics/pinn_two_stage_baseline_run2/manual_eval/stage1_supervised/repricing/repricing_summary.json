@@ -1,0 +1,8 @@
+{
+  "failure_rows": 0,
+  "mae": 0.697690082287067,
+  "mean_relative_error": 205.01458863308522,
+  "rmse": 0.9848039164945308,
+  "status": "completed",
+  "successful_rows": 864
+}

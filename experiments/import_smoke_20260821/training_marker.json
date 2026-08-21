@@ -1,0 +1,9 @@
+{
+  "mode": "physics",
+  "stage_name": "completed",
+  "next_epoch": 0,
+  "total_epochs": 0,
+  "status": "completed",
+  "checkpoint_file": "/Users/dhruvasbamb/Desktop/double-heston-inverse-calibration-main/experiments/import_smoke_20260821/latest_checkpoint.pt",
+  "updated_at": "2026-08-21T23:33:14"
+}

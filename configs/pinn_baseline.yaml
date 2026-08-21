@@ -1,0 +1,52 @@
+project:
+  name: physics_informed_double_heston_inverse_calibration
+  stage: infrastructure_test
+  seed: 42
+
+data:
+  representation: normalized_price
+  include_calls: true
+  include_puts: true
+
+  log_moneyness_grid:
+    - -0.30
+    - -0.20
+    - -0.10
+    - -0.05
+    - 0.00
+    - 0.05
+    - 0.10
+    - 0.20
+    - 0.30
+
+  maturity_days:
+    - 7
+    - 14
+    - 30
+    - 60
+    - 90
+    - 180
+
+model:
+  hidden_sizes:
+    - 512
+    - 512
+    - 256
+    - 256
+    - 128
+  activation: gelu
+  dropout: 0.05
+  output_size: 10
+
+training:
+  batch_size: 64
+  epochs: 200
+  learning_rate: 0.0005
+  weight_decay: 0.00001
+  patience: 20
+  parameter_loss_weight: 1.0
+  physics_loss_weight: 1.0
+  pricing_node_count: 64
+
+evaluation:
+  note: "Infrastructure config only. No research-trained PINN result is implied."
