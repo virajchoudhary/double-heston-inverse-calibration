@@ -315,6 +315,23 @@ evidence for the defect: THREE independent reproductions (Node C instrumented
 repro) and THREE independent PDE derivations in agreement (Node C, Node C's
 independent cross-reviewer, Node A's numerical operator verification).
 
+## F15. Deterministic variance-mean propagation is materially price-inconsistent
+[PROVEN, diagnostic]
+
+The true bridge is `U(S, v0, tau) = E_delta[U(S_delta, v_delta, tau-delta)]`
+over the JOINT law of `(S_delta, v_delta)`. Substituting propagated
+conditional means (`theta + (v0-theta)e^{-kappa delta}`, the formula in
+`propagate_variance_state`) as deterministic states understates prices
+progressively: measured gaps `U(S, E[v_delta], tau-delta) - U(S, v0, tau)` of
+-0.15% (1 day), -1.1% (7 days), -4.6% (30 days), -14.5% (90 days) at
+tau=1.0, VEC_A (`tests_evidence/probe_variance_propagation_gap.py` ->
+`variance_propagation_gap.json`). Two implications: (i) any future
+propagate-then-price shortcut would inject double-digit percent errors at
+quarterly horizons — per-date v0 fitting (as the NTPC multi-date calibration
+does) is the correct design; (ii) `propagate_variance_state` must remain an
+initialisation/visualisation utility only (it is currently unused by
+calibration scripts — verified).
+
 ## Required final classifications (Section 23 of the brief)
 
 - Canonical current stack: **constraint + repricing-informed inverse network**

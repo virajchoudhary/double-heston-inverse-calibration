@@ -1,0 +1,69 @@
+{
+  "rows": [
+    {
+      "tau": 0.5,
+      "delta_days": 1.0,
+      "base_price": 8.323843936362366,
+      "mean_propagated_price": 8.299302064351757,
+      "abs_gap": -0.024541872010608756,
+      "rel_gap": -0.0029483820453911455
+    },
+    {
+      "tau": 0.5,
+      "delta_days": 7.0,
+      "base_price": 8.323843936362366,
+      "mean_propagated_price": 8.150576323686785,
+      "abs_gap": -0.17326761267558055,
+      "rel_gap": -0.020815817067240797
+    },
+    {
+      "tau": 0.5,
+      "delta_days": 30.0,
+      "base_price": 8.323843936362366,
+      "mean_propagated_price": 7.555584634585621,
+      "abs_gap": -0.7682593017767445,
+      "rel_gap": -0.09229621646564465
+    },
+    {
+      "tau": 0.5,
+      "delta_days": 90.0,
+      "base_price": 8.323843936362366,
+      "mean_propagated_price": 5.765386557869938,
+      "abs_gap": -2.5584573784924274,
+      "rel_gap": -0.3073648903141868
+    },
+    {
+      "tau": 1.0,
+      "delta_days": 1.0,
+      "base_price": 12.557932993027329,
+      "mean_propagated_price": 12.539109027786466,
+      "abs_gap": -0.018823965240862606,
+      "rel_gap": -0.0014989700336284985
+    },
+    {
+      "tau": 1.0,
+      "delta_days": 7.0,
+      "base_price": 12.557932993027329,
+      "mean_propagated_price": 12.4255020582046,
+      "abs_gap": -0.13243093482272883,
+      "rel_gap": -0.0105455997333526
+    },
+    {
+      "tau": 1.0,
+      "delta_days": 30.0,
+      "base_price": 12.557932993027329,
+      "mean_propagated_price": 11.979427653675593,
+      "abs_gap": -0.5785053393517359,
+      "rel_gap": -0.04606692356719417
+    },
+    {
+      "tau": 1.0,
+      "delta_days": 90.0,
+      "base_price": 12.557932993027329,
+      "mean_propagated_price": 10.733693421028207,
+      "abs_gap": -1.8242395719991222,
+      "rel_gap": -0.1452659106408685
+    }
+  ],
+  "note": "Gap = U(S, E[v_delta], tau-delta) - U(S, v0, tau). The true bridge averages over the JOINT (S_delta, v_delta) law; deterministic mean propagation is a Jensen-type approximation. Documents the cost of any future propagate-then-price shortcut."
+}
