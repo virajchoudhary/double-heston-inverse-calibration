@@ -42,7 +42,11 @@ validity (not identification).
 PENDING NODE B EVIDENCE (none pushed at draft time). Standing repo context: G2 global
 ambiguity analysis established 40 near-equivalent clean solutions in 39 separated clusters —
 median normalized price RMSE 4.708e-8 vs range-scaled parameter RMSE 1.485e-1 — i.e.
-repricing fit does not imply parameter recovery. Node A's architecture stance: evaluation
+repricing fit does not imply parameter recovery. Node C added two identifiability-relevant
+datapoints: the correctly-wired PDE residual floor (4-5e-9) sits at the same noise scale as
+the near-equivalence price differences (a PDE term cannot distinguish near-equivalent
+vectors), and deterministic variance-mean propagation is price-inconsistent (-1.1% at 7d to
+-14.5% at 90d), vindicating per-date v0 fitting. Node A's architecture stance: evaluation
 claims must separate repricing from recovery and report equivalence-class structure; a
 neural model must not be described as uniquely recovering truth from an ambiguous surface.
 

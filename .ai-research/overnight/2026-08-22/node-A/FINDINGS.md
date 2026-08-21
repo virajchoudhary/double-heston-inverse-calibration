@@ -434,3 +434,15 @@ Node A records:
    UNIQUE to archive-2; canonical stack has no such pattern (all .detach() uses are
    validation guards). Latent minor: torch factor exponent early-returns a graph-free zero
    at maturity == 0.0 (non-differentiable point at the terminal boundary; LOW severity).
+
+## F24. Node C F15 adopted into identifiability backdrop (87f238c)
+
+Deterministic variance-mean propagation is materially price-inconsistent: substituting
+propagated conditional means as deterministic states understates prices by -0.15% (1d) to
+-14.5% (90d) at tau=1.0 (Node C probe). Implications adopted by Node A: (i) per-date v0
+fitting (the NTPC multi-date design) is correct — propagate-then-price shortcuts would
+inject double-digit percent errors at quarterly horizons; (ii) `propagate_variance_state`
+must stay an initialisation/visualisation utility (currently unused by calibration —
+verified by Node C). Cross-interpreter datapoint: repo canonical-engine tests 34/36 on
+py3.9 with 2 explained environment artifacts (vs 25/25 of the focused suites on py3.13
+here).
