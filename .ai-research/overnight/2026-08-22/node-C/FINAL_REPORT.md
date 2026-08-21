@@ -188,18 +188,33 @@ canonical path. The canonical NSE/NTPC scripts are scipy least-squares
 calibrations of the production pricer (not neural) and do not violate the
 control.
 
-## Interaction with identifiability (for Node B)
+## Interaction with identifiability (for Node B) — EMPIRICALLY CONFIRMED
 
 A PDE residual derived from the same model that generates the surfaces cannot
 add identifying information beyond the repricing loss: both constrain the
 same parameter-to-price map. It can regularize, enforce structural validity
 of a learned pricing function, or impose an (artificial) preference among
 observationally equivalent parameter vectors — it cannot resolve structural
-non-identifiability. If Node B confirms near-equivalent parameter vectors,
-the paper should claim regularization/validity, not identification. Current
-Archive-2 implementation provides neither (broken residual). A low
-price/repricing loss does NOT establish ten-parameter identification —
-consistent with the repo's own control language.
+non-identifiability. A low price/repricing loss does NOT establish
+ten-parameter identification — consistent with the repo's own control
+language.
+
+Node B's completed evidence (final 03:55 IST) confirms and sharpens this
+(F16): global ambiguity REPLICATES on the full 108 grid (12/12 starts,
+param RMSE ~0.15 clean / 0.31-0.34 under 0.5-2% noise, price RMSE at the
+noise floor) despite full local practical rank; there is an EXACT factor-swap
+degeneracy (verified on the production pricer to 4.26e-14 — float association
+order only; bitwise on Node B's fast pricer), broken only by the declared
+kappa ordering constraint. The canonical PDE is factor-swap invariant, so a
+correctly implemented residual evaluates identically (to its ~4e-9 quadrature
+floor) across the entire near-equivalent manifold — Node B's near-equivalence
+price RMSE 1.1e-6 sits ~3 orders of magnitude above that floor. Paper claim
+should be: physics = regularisation / structural validity, never
+identification; identification content lives in constraints and data. Node B
+adopted this formulation in their final report; Node A's refinement (clean
+strict-precision identification is good on the full grid; ambiguity
+manifests at noise scales) is consistent — the residual floor (4e-9) is far
+below noise scales and bridges nothing.
 
 ## Strongest findings (ranked by confidence)
 
