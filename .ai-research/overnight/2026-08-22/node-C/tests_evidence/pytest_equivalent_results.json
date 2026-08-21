@@ -1,6 +1,6 @@
 {
-  "total": 25,
-  "passed": 25,
+  "total": 27,
+  "passed": 27,
   "failed": 0,
   "results": [
     {
@@ -45,6 +45,14 @@
     },
     {
       "test": "test_canonical_pricer_satisfies_canonical_pde[100.0,110.0,0.5,'B',[0.3, 0.06, 0.16, -0.3, 0.05, 6.0, 0.06, 0.7, -0.6, 0.03]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_cos_correct_wiring_satisfies_pde_broken_wiring_does_not[[0.6, 0.04, 0.18, -0.55, 0.04, 2.8, 0.03, 0.35, -0.35, 0.02]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_cos_correct_wiring_satisfies_pde_broken_wiring_does_not[[0.3, 0.06, 0.16, -0.3, 0.05, 6.0, 0.06, 0.7, -0.6, 0.03]]",
       "status": "PASS"
     },
     {

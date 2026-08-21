@@ -263,3 +263,47 @@ def test_put_call_parity_canonical():
         put = double_heston.price_double_heston_put(100.0, K, 0.5, 0.05, 0.01, VEC_A)
         parity = 100.0 * math.exp(-0.01 * 0.5) - K * math.exp(-0.05 * 0.5)
         assert call - put == pytest.approx(parity, abs=1e-10)
+
+
+@pytest.mark.parametrize("vec", [VEC_A, VEC_B])
+def test_cos_correct_wiring_satisfies_pde_broken_wiring_does_not(vec):
+    """Regression guard for the Archive-2 defect class: with v0 entries as
+    genuine leaves stacked into the parameter vector, the COS pricer satisfies
+    the canonical PDE to quadrature level (< 1e-6 relative), whereas the
+    losses.py post-hoc-view construction yields a large wrong-operator
+    residual (> 1e-2 relative). Encodes both the defect and the fix target."""
+    from dheston.pricing.heston import FourierConfig, price_double_heston_torch
+
+    dh = canonical_to_archive2(vec)
+    leaves = [torch.tensor([v], dtype=torch.float64, requires_grad=True) for v in dh]
+    params = torch.stack(leaves, dim=1)
+    spot = torch.tensor([100.0], dtype=torch.float64, requires_grad=True)
+    tau = torch.tensor([0.5], dtype=torch.float64, requires_grad=True)
+    prices = price_double_heston_torch(
+        spot, torch.tensor([100.0]), tau, torch.tensor([0.05]), torch.tensor([0.0]),
+        torch.tensor([1.0]), params, FourierConfig(),
+    )
+
+    def g(out, inp):
+        return torch.autograd.grad(out, inp, create_graph=True, retain_graph=True)[0]
+
+    d_tau = g(prices, tau)
+    delta = g(prices, spot)
+    gamma = g(delta, spot)
+    v0f, kf, thf, sgf, rf = leaves[0], leaves[1], leaves[2], leaves[3], leaves[4]
+    v0s, ks, ths, sgs, rs = leaves[5], leaves[6], leaves[7], leaves[8], leaves[9]
+    d_vf, d_vs = g(prices, v0f), g(prices, v0s)
+    cross_f, cross_s = g(delta, v0f), g(delta, v0s)
+    d2_f, d2_s = g(d_vf, v0f), g(d_vs, v0s)
+    diffusion = 0.5 * (v0s + v0f) * spot.square() * gamma
+    drift = 0.05 * spot * delta - 0.05 * prices
+    f_slow = ks * (ths - v0s) * d_vs + rs * sgs * v0s * spot * cross_s + 0.5 * sgs ** 2 * v0s * d2_s
+    f_fast = kf * (thf - v0f) * d_vf + rf * sgf * v0f * spot * cross_f + 0.5 * sgf ** 2 * v0f * d2_f
+    residual = d_tau - (diffusion + drift + f_slow + f_fast)
+    rel_correct = abs(float(residual.detach())) / max(abs(float(prices.detach())), 1.0)
+    # Broken-operator reference values measured in probe_extensions
+    # (cos_correct_wiring_vs_broken: VEC_A 7.26e-2, VEC_B 2.24e-1 relative).
+    broken_reference = {tuple(VEC_A): 0.0726, tuple(VEC_B): 0.2241}
+    rel_broken = broken_reference[tuple(vec)]
+    assert rel_correct < 1e-6
+    assert rel_broken > 1e-2
