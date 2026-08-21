@@ -3,6 +3,27 @@
 Role: PDE_PHYSICS_AUDIT. Branch `overnight/20260822-c-pde` from genesis
 `642702e6706a3d17b3031619f35bda39bc144483`.
 
+## Checkpoint log
+
+- ~00:40 IST: bootstrap, phases A/B complete (derivation + independent
+  cross-derivation), probe evidence, 25-case suite, FINDINGS/STATUS/tables,
+  first push (a44c8bb), final report v1 (861f232), issue #18 report
+  (be1eab7).
+- ~01:30 IST: extension probe — F2 closed BIT-EXACTLY (production loss ==
+  broken operator), F3 quantified (correct wiring 4e-9 vs broken 7e-2),
+  defect invariance, market-price independence, BS-limit O(sigma^2),
+  terminal-condition sweep, in-grid negative-price scan; peer verification of
+  Node A F16/F18/G2 cross-check (751551a, faaeaf3).
+- ~01:55 IST: adversarial review returned — all load-bearing claims
+  CONFIRMED (independent re-execution); 5 corrections applied; F13 added
+  (dead FourierConfig fields, canonical-stack autograd scan CLEAN, probe
+  float32 fix, latent tau=0 early-return, dead compute, naming); broadened
+  120-point certification sweep (<= 1.6e-8); independent derivation +
+  adversarial report committed as artifacts; correct-wiring regression test
+  added — suite now 27/27 (54fb52e, 27a6a25). Issue #18 correction comment
+  re dead fields posted.
+- Pending: periodic peer polls; final consolidation ~07:00 IST.
+
 ## Phase status
 
 | Phase | Status | Key output |
@@ -25,12 +46,20 @@ Role: PDE_PHYSICS_AUDIT. Branch `overnight/20260822-c-pde` from genesis
 
 ## Test evidence
 
-- `tests/test_node_c_pde_physics_audit.py` — 25 cases, 25 PASS
+- `tests/test_node_c_pde_physics_audit.py` — 27 cases, 27 PASS
   (runner: `tests_evidence/run_node_c_tests.py`, results
   `tests_evidence/pytest_equivalent_results.json`; interpreter lacks pytest,
   no environment mutation per compute policy).
-- Numerical probe: `tests_evidence/probe_residuals.py` ->
-  `probe_results.json`.
+- Numerical probes: `tests_evidence/probe_residuals.py` ->
+  `probe_results.json`; `tests_evidence/probe_extensions.py` ->
+  `probe_extension_results.json`.
+- Adversarial review artifact: `tests_evidence/ADVERSARIAL_REVIEW_REPORT.md`
+  (independent re-derivation + re-execution; all load-bearing claims
+  confirmed).
+- Independent cross-derivation committed:
+  `derivations/INDEPENDENT_CROSS_DERIVATION.md`.
+- Reproducibility: full suite + probes re-run from a clean worktree of the
+  pushed branch — bit-identical values.
 
 ## Safety confirmations
 

@@ -2,9 +2,13 @@
 
 Overnight 2026-08-22. Branch `overnight/20260822-c-pde`, genesis
 `642702e6706a3d17b3031619f35bda39bc144483`. All claims carry file/line
-citations and/or executable evidence
-(`tests/test_node_c_pde_physics_audit.py` 25/25 PASS; numerical probe
-`tests_evidence/probe_residuals.py` -> `probe_results.json`).
+citations and/or executable evidence (`tests/test_node_c_pde_physics_audit.py`
+27/27 PASS; probes `tests_evidence/probe_residuals.py`,
+`probe_extensions.py`). The report was adversarially reviewed by an
+independent agent that re-derived the mathematics and re-executed the decisive
+experiments — every load-bearing claim was CONFIRMED and no retraction was
+required (verbatim: `tests_evidence/ADVERSARIAL_REVIEW_REPORT.md`; its five
+required corrections are applied in this version).
 
 ---
 
@@ -13,25 +17,34 @@ citations and/or executable evidence
 Is the repository's current PINN physics mathematically defensible?
 
 - **Canonical stack: YES as physics, NO as "PINN".** The canonical production
-  model and differentiable pricer are mathematically sound and now
-  *numerically certified*: the derived canonical pricing PDE is satisfied to
-  machine precision (relative residual <= 1.3e-15), with all limiting cases
-  passing. However, the canonical model is **not PDE-informed**: its
-  "physics" loss is differentiable repricing plus hard structural
-  constraints. Label: **constraint + differentiable-repricing informed
-  inverse network**.
+  model and differentiable pricer are mathematically sound and numerically
+  certified across a stated domain: the derived canonical pricing PDE is
+  satisfied to machine precision at moderate collocation points (<= 1.3e-15
+  relative, 8 points) and to <= 1.6e-8 across a 120-point sweep
+  (S in 80-120, K/S 0.85-1.15, tau 0.1-2.0), with all limiting cases passing
+  (BS-limit converging at O(sigma^2)). However, the canonical model is
+  **not PDE-informed**: its "physics" loss is differentiable repricing plus
+  hard structural constraints. Label: **constraint + differentiable-repricing
+  informed inverse network**.
 - **Archive-2 stack: NO.** Its PDE residual formula is the correct canonical
-  PDE on paper, but the implementation is broken: every variance-state
-  derivative evaluates to exactly ZERO (autograd views created after the
-  forward pass are not graph nodes; `_safe_grad`'s `allow_unused` silently
-  returns zeros). The actually-penalized operator is a Black–Scholes-type
-  operator missing ALL variance dynamics. Additionally, even a fixed version
-  would differentiate the analytic pricer itself, so the residual carries no
-  information about the inverse problem. Archive-2's parameter contract is
-  also semantically incompatible with the canonical contract (no Feller, no
-  correlation disk, rho restricted negative; demonstrated canonical-invalid
-  emissions), and its real-market fine-tuning path violates the research
-  control that real observations must not update primary NN weights.
+  PDE on paper, but the implementation is broken — and this is now closed
+  BIT-EXACTLY: the production `pde_residual_loss` equals a manually assembled
+  Black–Scholes-type operator (ALL variance dynamics missing) to the last
+  floating-point bit, on identical batches. Every variance-state derivative
+  evaluates to exactly ZERO (autograd views created after the forward pass
+  are not graph nodes; `_safe_grad`'s `allow_unused` silently returns zeros;
+  the true dV/dv0 at the tested point is 28.5). The defect is invariant
+  across spots/taus/integration settings, independent of market prices, and —
+  per adversarial re-execution — has no workaround: no mechanism (storage
+  aliasing, grad_fn accumulation, object reuse) can route gradient into a
+  post-hoc view. A correctly-wired residual on the same COS pricer measures
+  4e-9 (quadrature noise) — so a fix alone would render the term
+  information-free: it differentiates the analytic pricer itself. Archive-2's
+  parameter contract is also semantically incompatible with the canonical
+  contract (no Feller, no correlation disk, rho restricted negative;
+  demonstrated canonical-invalid emissions), and its real-market fine-tuning
+  path violates the research control that real observations must not update
+  primary NN weights.
 
 No changes to the production pricer were needed or made.
 
@@ -123,10 +136,17 @@ invalid emission (reproducible test).
 ## Limiting-case tests (commands/results)
 
 `/usr/bin/python3 .ai-research/overnight/2026-08-22/node-C/tests_evidence/run_node_c_tests.py`
-(= pytest suite, 25/25): factor-additivity identity 1.8e-15; two-half-factor
+(= pytest suite, 27/27): factor-additivity identity 1.8e-15; two-half-factor
 reduction to single Heston vs independent COS pricer 3.2e-11; BS
-deterministic-variance limit <= 4.0e-4 relative; put-call parity <= 7.1e-15;
-Archive-2 zero-derivative proof; constraint-gap demonstration.
+deterministic-variance limit <= 4.0e-4 relative with measured O(sigma^2)
+convergence (halving ratios 4.2-5.2); put-call parity <= 7.1e-15; Archive-2
+zero-derivative proof; constraint-gap demonstration; correct-wiring vs
+broken-wiring regression guard. Broadened PDE certification sweep: 120
+points, max relative residual 1.6e-8 (worst at short-maturity OTM,
+monotonically improving with maturity — same pattern as the ultra-short-
+maturity accuracy boundary in FINDINGS F10: far-OTM tau <= 1e-3 prices can go
+slightly negative from quadrature under-resolution, while the research grid
+>= 7 days is clean to float level, worst -6.3e-12).
 
 ## Autograd/PDE implementation findings
 
@@ -184,57 +204,94 @@ consistent with the repo's own control language.
 ## Strongest findings (ranked by confidence)
 
 1. [PROVEN] Archive-2 PDE residual: all variance-state derivatives exactly
-   zero; effective operator misses the entire variance dynamics; residual is
-   a wrong-operator signal (consistent with train_pde=8.9).
-2. [PROVEN] Canonical pricer satisfies the derived canonical PDE to machine
-   precision (with sensitivity controls); all limiting cases pass. The
-   canonical physics contract is sound.
+   zero; the production loss is BIT-EXACTLY the variance-free operator
+   (0.005275259112477837 == 0.005275259112477837 on identical batches);
+   defect invariant across configurations and independent of market prices;
+   adversarially re-executed and confirmed with no-workaround mechanism
+   analysis.
+2. [PROVEN] Canonical pricer satisfies the derived canonical PDE: machine
+   precision at moderate points, <= 1.6e-8 across a 120-point sweep, with
+   perturbation controls 7 orders of magnitude above; all limiting cases
+   pass; O(sigma^2) BS-limit convergence measured.
 3. [PROVEN] Canonical model is constraint + repricing informed, not
-   PDE-informed ("PINN" mislabel).
+   PDE-informed ("PINN" mislabel). Canonical-stack autograd scan CLEAN — the
+   defect class is unique to Archive-2's `_safe_grad`.
 4. [PROVEN] Parameter contract conflict: order double-transposition +
-   semantic constraint conflicts (demonstrated invalid emissions).
+   semantic constraint conflicts (demonstrated invalid emissions; verified
+   adapter permutation apples-to-apples).
 5. [PROVEN] Archive-2 validation/selection excludes its PDE loss (objective
-   mismatch); real fine-tuning violates the no-NN-update-on-real control.
-6. [DERIVED] Even a fixed Archive-2 residual (analytic pricer object) carries
-   no inverse-problem information; genuine physics seam requires a learned
-   pricing function with leaf-state inputs.
+   mismatch; artifact train_pde 8.9055 / valid_pde 0.0); real fine-tuning
+   violates the no-NN-update-on-real control (prohibition verbatim at
+   docs/RESEARCH_CONTROL_AND_CURRENT_STATUS.md:36).
+6. [PROVEN] A correctly-wired residual on the same COS pricer measures 4e-9
+   (quadrature noise) — quantifies that the PDE term is information-free for
+   the inverse problem even after a fix; the term should target a learned
+   pricing function instead.
 7. [DERIVED] PDE physics cannot resolve structural non-identifiability; it
-   can regularize.
+   can regularize. Empirically cross-checked against Node A's G2 numbers
+   (40 near-equivalent solutions; price RMSE 4.7e-8) — the correct-residual
+   floor (4e-9) sits at the same noise scale as near-equivalence price
+   differences.
+8. [PROVEN, minor] Dead `FourierConfig` fields (alpha, u_max,
+   integration_eps) — latent operational trap; latent non-differentiable
+   early-return at tau=0 in the torch exponent; boundary-penalty naming
+   misnomer; pricer accuracy boundary at tau <= 1e-3 far-OTM.
 
 ## Failed hypotheses (seemed problematic, was actually correct)
 
 - Hypothesis: "the canonical pricer may not satisfy the canonical PDE because
   Gauss-Laguerre quadrature noise dominates derivatives" — FALSE: residual is
-  1e-15-level; perturbation controls confirm sensitivity.
+  1e-15-level at moderate points (and <= 1.6e-8 over the broad sweep);
+  perturbation controls confirm sensitivity.
 - Hypothesis: "Archive-2's residual must be near-zero because it
   differentiates the analytic pricer (vacuous)" — the residual IS meaningless,
   but for a different, worse reason: broken derivative wiring makes it
-  LARGE-and-wrong, actively injecting bias toward BS-like solutions.
+  LARGE-and-wrong, actively injecting bias toward BS-like solutions. Only the
+  CORRECTLY-WIRED residual is near-zero (4e-9) — confirming vacuity applies
+  after the fix, not before.
+- Hypothesis: "the COS truncation-range dependence will materially corrupt
+  autograd derivatives" — measured NEGLIGIBLE (~1e-12 on delta at tested
+  points); softened after adversarial review. (Related hygiene lesson: my own
+  finite-difference harness had a float32 bug producing a spurious 3.4e-4
+  discrepancy — caught and fixed in review.)
 - Hypothesis: "the disk constraint rho_s^2+rho_f^2<1 suggests the model uses a
   single spot driver (non-affine)" — FALSE: the CF structure proves the
   two-driver affine construction; the disk is a conservative sufficient
-  condition.
+  condition, stronger than needed for every property identified (adversarial
+  sharpening).
+- Hypothesis: "the BS-limit converges at O(sigma)" — the measured order is
+  O(sigma^2) (ratios 4.2-5.2 when halving sigma; consistent with rho=O(sigma)
+  making leading corrections quadratic).
 - Hypothesis: "put-call parity/one-factor reduction might expose canonical
   pricer inconsistencies" — FALSE: parity exact to 7e-15; reduction to
   single-factor Heston exact to 3.2e-11 against an independent pricer.
 - Initially suspected my own VEC_B was valid — it failed the slow-factor
   Feller gate (canonical validation caught it; gate works as designed).
+- Hypothesis: "propagate_variance_state (CIR conditional mean) might be used
+  to generate prices in the multi-date calibration, implying a Jensen gap" —
+  FALSE: it is defined and unit-tested but unused by calibration scripts.
 
 ## Changes made
 
-- `tests/test_node_c_pde_physics_audit.py` (new, 25 evidence tests)
-- `.ai-research/overnight/2026-08-22/node-C/` (STATUS, FINDINGS, EXPERIMENTS,
-  FINAL_REPORT, derivations/, tables/, tests_evidence/ incl. probe + results)
-- No production files modified. Commits: `a44c8bb` (+ final report commit).
+- `tests/test_node_c_pde_physics_audit.py` (new, 27 evidence tests incl. the
+  correct-wiring regression guard)
+- `.ai-research/overnight/2026-08-22/node-C/` (STATUS, FINDINGS F1-F13,
+  EXPERIMENTS ledger, FINAL_REPORT, derivations/ incl. committed independent
+  cross-derivation, tables/, tests_evidence/ incl. both probes + results +
+  adversarial review report + pytest-equivalent runner)
+- No production files modified. Commits: a44c8bb, 861f232, be1eab7, 751551a,
+  faaeaf3, 54fb52e, 27a6a25 (+ final consolidation commit).
 
 ## Tests
 
 Command: `/usr/bin/python3
 .ai-research/overnight/2026-08-22/node-C/tests_evidence/run_node_c_tests.py`
-— 25/25 PASS (pytest-equivalent runner because the torch-capable interpreter
+— 27/27 PASS (pytest-equivalent runner because the torch-capable interpreter
 lacks pytest; compute policy forbids environment changes; the runner
-implements pytest.parametrize cross-products by name). Tolerances and their
-justification are in the test file docstrings/comments (observed vs bound).
+implements pytest.parametrize cross-products with by-name binding).
+Tolerances and their justification are in the test file docstrings/comments.
+Reproducibility: suite + probes re-run from a clean worktree of the pushed
+branch — bit-identical values.
 
 ## Recommended canonical physics seam (what to eventually implement)
 
