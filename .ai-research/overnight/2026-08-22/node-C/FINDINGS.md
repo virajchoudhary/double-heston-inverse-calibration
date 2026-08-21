@@ -59,26 +59,43 @@ large wrong-operator residual, not with quadrature noise. Classification:
 INCORRECT (implementation), independent of the residual's conceptual problem
 (F3).
 
+Closure strengthened (extension probe, `probe_extensions.py` ->
+`probe_extension_results.json`):
+- the PRODUCTION `pde_residual_loss` equals the manually-assembled
+  broken-operator loss BIT-EXACTLY on identical single-point batches
+  (0.005275259112477837 == 0.005275259112477837, VEC_A;
+  0.05021953002489268 == 0.05021953002489268, VEC_B);
+- the zero-derivative defect is invariant across 9 (spot, tau) configurations
+  spanning S in {70,100,130}, tau in {0.1,0.75,2.0}, for both vectors;
+- through the full `build_loss_components` path: the PDE component is
+  independent of `market_price` (bit-identical when market prices are scaled
+  7x, while the price component moves) — the residual is a pure self-referential
+  term.
+
 Note for Node B/A: the same broken pattern makes the PDE term a source of
 bias/noise gradients toward whatever reduces a wrong operator's residual,
 e.g. pushing toward BS-like regions of parameter space.
 
 ## F3. Even if F2 were fixed, the Archive-2 "PINN" differentiates the wrong
-object [DERIVED]
+object — now QUANTIFIED [PROVEN]
 
 The differentiated function is the analytic COS pricer
 (`price_double_heston_torch`, losses.py:104), not a learned solution
 `V_theta(S, v1, v2, tau)`. Because the analytic pricer satisfies the model PDE
 up to quadrature error for ANY parameter vector, a correct residual would be
 numerically ~0 regardless of parameters — carrying NO identifying information
-about `surface -> params`, and market prices never enter the residual (market
-price is unused in `pde_residual_loss`). The only reason the measured residual
-is large today is defect F2. Additionally, differentiating through the COS
-truncation range (a,b) — which depends on spot/tau/params through the cumulants
-(`src/dheston/pricing/heston.py:348-399`) — injects spurious derivative
-components even after an F2 fix. A genuine PDE-informed term requires a
-learned price network (or collocation on a trusted pricer with FROZEN
-truncation parameters and leaf state inputs).
+about `surface -> params`, and market prices never enter the residual (proven
+invariant under market-price rescaling, see F2 closure). Quantification
+(`cos_correct_wiring_vs_broken`): with the SAME COS pricer and the SAME points
+but correctly-wired leaf v0 inputs, the full canonical PDE residual is
+4.8e-9 / 3.8e-9 (relative) — 7-8 orders of magnitude below the broken
+operator's 7.3e-2 / 2.2e-1. So a fixed implementation would measure pure
+quadrature noise; today's large values are defect signal, and after a fix the
+term would be information-free. A genuine PDE-informed term requires a learned
+price network with leaf state inputs. (Secondary caveat now measured as
+NEGLIGIBLE: differentiating through the cumulant-dependent COS truncation
+range shifts autograd delta by only ~1e-12 vs the fixed-node Gauss-Laguerre
+pricer at the tested points — `delta_contamination`.)
 
 ## F4. Canonical current stack classification: constraint-informed +
 differentiable-repricing-informed inverse network — NOT a PINN [PROVEN]
@@ -164,6 +181,34 @@ should be regularisation/validity, not identification. Tonight's evidence
 - `src/double_heston.py` uses `enforce_ordering=False` escape hatch "only for
   factor-symmetry diagnostics" — the two-identical-half-factors reduction test
   legitimately uses it.
+
+## F10. Numerical-accuracy boundary of the canonical pricer at ultra-short
+maturities [PROVEN, LOW severity, no action required for the research grid]
+
+Terminal-condition sweep (`probe_extensions.py: terminal_condition`):
+- ITM calls converge to the discounted payoff as tau -> 0 (error -0.11 at
+  tau=1e-4, shrinking with tau) — correct.
+- ATM calls approach the payoff at rate O(sqrt(tau)), as diffusion theory
+  requires (value ~ 0.4 S sqrt(v tau)) — the slow approach is mathematical,
+  not a defect.
+- Deep-OTM calls at tau <= 1e-3 can return small NEGATIVE prices (down to
+  -0.091 at K=105, tau=1e-3): the 64-node Gauss-Laguerre rule under-resolves
+  the near-delta integrand at ultra-short maturity. Within the RESEARCH GRID
+  (maturities >= 7 days, |log-moneyness| <= 0.30 -- and even to 0.40) the
+  worst observed value is -6.3e-12, i.e. float-level rounding on an
+  effectively-zero price. Classification: benign; document that the pricer's
+  validated domain excludes tau <~ 5e-3 for far-OTM strikes.
+
+## F11. Black-Scholes limit converges at O(sigma^2), not O(sigma) [PROVEN,
+strengthens F1]
+
+Sigma-halving error ratios 4.20 / 4.46 / 5.21 (`bs_limit_sigma_convergence`)
+show the deterministic-variance limit error is QUADRATIC in sigma. This is
+consistent with the correction structure: with rho = -0.02 = O(sigma), the
+leading stochastic-vol price corrections are O(sigma^2) (vol-of-vol variance
+and rho-cross terms both quadratic). Recorded because the probe's original
+annotation guessed O(sigma); the measured order is stronger evidence of the
+correct limiting behaviour.
 
 ## Required final classifications (Section 23 of the brief)
 

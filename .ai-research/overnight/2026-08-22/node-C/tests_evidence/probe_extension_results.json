@@ -1,0 +1,128 @@
+{
+  "closure_production_equals_broken": {
+    "VEC_A": {
+      "production_loss": 0.005275259112477837,
+      "manual_broken_operator_loss": 0.005275259112477837,
+      "bit_exact_equal": true
+    },
+    "VEC_B": {
+      "production_loss": 0.05021953002489268,
+      "manual_broken_operator_loss": 0.05021953002489268,
+      "bit_exact_equal": true
+    }
+  },
+  "cos_correct_wiring_vs_broken": {
+    "VEC_A": {
+      "correct_wiring_rel_residual": 4.755804436895254e-09,
+      "broken_operator_rel_residual": 0.07263097901362639
+    },
+    "VEC_B": {
+      "correct_wiring_rel_residual": 3.8068612735248315e-09,
+      "broken_operator_rel_residual": 0.2240971441694264
+    }
+  },
+  "delta_contamination": {
+    "VEC_A": {
+      "delta_GL_autograd": 0.61458740427067,
+      "delta_COS_autograd": 0.614587404269701,
+      "delta_COS_finite_diff": 0.6142498012078335,
+      "abs_diff_COS_vs_GL": 9.690026558928366e-13,
+      "abs_diff_COS_autograd_vs_fd": 0.00033760306186758626
+    },
+    "VEC_B": {
+      "delta_GL_autograd": 0.612119418461172,
+      "delta_COS_autograd": 0.6121194184601828,
+      "delta_COS_finite_diff": 0.6117831711325294,
+      "abs_diff_COS_vs_GL": 9.892087149410145e-13,
+      "abs_diff_COS_autograd_vs_fd": 0.00033624732765336063
+    }
+  },
+  "defect_robustness": {
+    "zero_derivative_invariant_9_configs": {
+      "VEC_A": true,
+      "VEC_B": true
+    },
+    "build_loss_components_pde_value": 0.005708160468666334,
+    "pde_component_market_price_independent": true,
+    "price_component_moves_with_market": true
+  },
+  "bs_limit_sigma_convergence": {
+    "abs_errors": {
+      "0.08": 0.008598350234748864,
+      "0.04": 0.002047224956328364,
+      "0.02": 0.00045867159597889895,
+      "0.01": 8.797233011392791e-05
+    },
+    "ratios_halving_sigma": [
+      4.2000026465922655,
+      4.463378535483907,
+      5.213816610119338
+    ],
+    "note": "ratio ~2 => error is O(sigma) as expected for vol-of-vol -> 0 with rho ~ O(sigma)"
+  },
+  "terminal_condition": [
+    {
+      "K": 95.0,
+      "tau": 0.0001,
+      "price": 4.889009573283161,
+      "discounted_payoff": 5.000474998812507,
+      "abs_err": -0.11146542552934591
+    },
+    {
+      "K": 95.0,
+      "tau": 0.001,
+      "price": 4.9831905520955075,
+      "discounted_payoff": 5.004749881251982,
+      "abs_err": -0.021559329156474405
+    },
+    {
+      "K": 95.0,
+      "tau": 0.01,
+      "price": 5.0649470149601825,
+      "discounted_payoff": 5.047488126978919,
+      "abs_err": 0.01745888798126316
+    },
+    {
+      "K": 100.0,
+      "tau": 0.0001,
+      "price": 0.04444905931725174,
+      "discounted_payoff": 0.0004999987500013958,
+      "abs_err": 0.04394906056725034
+    },
+    {
+      "K": 100.0,
+      "tau": 0.001,
+      "price": 0.29395133656352357,
+      "discounted_payoff": 0.004999875002084764,
+      "abs_err": 0.2889514615614388
+    },
+    {
+      "K": 100.0,
+      "tau": 0.01,
+      "price": 1.0029493196053565,
+      "discounted_payoff": 0.04998750208307001,
+      "abs_err": 0.9529618175222865
+    },
+    {
+      "K": 105.0,
+      "tau": 0.0001,
+      "price": -0.09147596540370673,
+      "discounted_payoff": 0.0,
+      "abs_err": -0.09147596540370673
+    },
+    {
+      "K": 105.0,
+      "tau": 0.001,
+      "price": -0.017726809650654318,
+      "discounted_payoff": 0.0,
+      "abs_err": -0.017726809650654318
+    },
+    {
+      "K": 105.0,
+      "tau": 0.01,
+      "price": 0.02026960099863251,
+      "discounted_payoff": 0.0,
+      "abs_err": 0.02026960099863251
+    }
+  ]
+}
