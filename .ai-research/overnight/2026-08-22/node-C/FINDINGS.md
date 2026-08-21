@@ -296,7 +296,7 @@ New minor findings from the review (all LOW severity, none affect conclusions):
    float64 — FD now agrees with autograd to ~1e-9. The autograd-vs-GL
    comparison F3 relies on (9.7e-13) was unaffected.
 
-## F14. Cross-node convergence (02:00 IST): Node A independently reproduced
+## F14. Cross-node convergence (01:41 IST): Node A independently reproduced
 F2 and certified the Node C derivation [PROVEN]
 
 Node A's F19 (their own seeded repro: loss 0.5319 dtype-invariant on their

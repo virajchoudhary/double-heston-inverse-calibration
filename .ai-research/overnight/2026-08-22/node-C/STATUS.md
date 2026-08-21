@@ -5,16 +5,16 @@ Role: PDE_PHYSICS_AUDIT. Branch `overnight/20260822-c-pde` from genesis
 
 ## Checkpoint log
 
-- ~00:40 IST: bootstrap, phases A/B complete (derivation + independent
+- ~00:50 IST: bootstrap, phases A/B complete (derivation + independent
   cross-derivation), probe evidence, 25-case suite, FINDINGS/STATUS/tables,
   first push (a44c8bb), final report v1 (861f232), issue #18 report
   (be1eab7).
-- ~01:30 IST: extension probe — F2 closed BIT-EXACTLY (production loss ==
+- ~01:25 IST: extension probe — F2 closed BIT-EXACTLY (production loss ==
   broken operator), F3 quantified (correct wiring 4e-9 vs broken 7e-2),
   defect invariance, market-price independence, BS-limit O(sigma^2),
   terminal-condition sweep, in-grid negative-price scan; peer verification of
   Node A F16/F18/G2 cross-check (751551a, faaeaf3).
-- ~01:55 IST: adversarial review returned — all load-bearing claims
+- ~01:40 IST: adversarial review returned — all load-bearing claims
   CONFIRMED (independent re-execution); 5 corrections applied; F13 added
   (dead FourierConfig fields, canonical-stack autograd scan CLEAN, probe
   float32 fix, latent tau=0 early-return, dead compute, naming); broadened
