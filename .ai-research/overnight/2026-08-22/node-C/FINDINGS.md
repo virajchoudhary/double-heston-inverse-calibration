@@ -210,6 +210,25 @@ and rho-cross terms both quadratic). Recorded because the probe's original
 annotation guessed O(sigma); the measured order is stronger evidence of the
 correct limiting behaviour.
 
+## F12. Peer-result verification round (01:50 IST) [PROVEN]
+
+Independently verified Node A claims from code/behaviour:
+- F16 constraint-map shells CONFIRMED: saturated heads reach exactly the
+  0.995·sqrt(2κθ) sigma cap and disk radius 0.995 (asymptotically); the
+  shells (cap, Feller] and radius (0.995, 1) are unreachable — a map-imposed
+  recovery-error floor on boundary-hugging targets.
+- F18 metrics normalization CONFIRMED: dheston parameter_summary uses raw
+  per-parameter RMSE (no range scaling); cross-stack metric comparisons must
+  state the convention.
+- COS damping alpha=1.5 CONFIRMED (`src/dheston/pricing/heston.py:11`).
+- Cross-check with Node A's G2 ambiguity numbers (F17: 40 near-equivalent
+  solutions; median normalized price RMSE 4.7e-8 vs parameter RMSE 0.149):
+  my correctly-wired PDE residual floor (4-5e-9 relative) sits at the same
+  numerical-noise scale as the near-equivalence price differences — direct
+  empirical support for F8: a PDE-residual term cannot distinguish
+  near-equivalent parameter vectors; claims should be regularisation/validity
+  only.
+
 ## Required final classifications (Section 23 of the brief)
 
 - Canonical current stack: **constraint + repricing-informed inverse network**
