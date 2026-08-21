@@ -496,3 +496,42 @@ fairness-contract requirement and the F6 taxonomy caveat.
 
 No conflicts between Node B evidence and Node A/Node C findings (Node B's own note:
 "Complementary; no conflicts").
+
+## F26. Node B complete-phases integration (61905d0, 03:27 IST) — refined identifiability picture
+
+Refines the F25 headline. The precise three-part statement now supported:
+
+1. **Strict-precision identification is GOOD on the full grid**: Phase F tolerance spectrum
+   (clean, 48 solutions): at 2.5e-7 normalized price tolerance, only near-truth solutions
+   survive (max param RMSE 0.011 vs committed central-5 median 0.1485). The full 108 grid
+   removes the DISTANT near-equivalents the central-5 geometry admitted.
+2. **Noise-driven collapse is the governing failure**: Phases B+C (12 starts x 4 cases x 4
+   noise levels): parameter RMSE is a step function of noise — 0.097 clean, ~0.31 at 0.5%,
+   flat thereafter — while repricing tracks the noise floor at every level (noisy solutions
+   still reprice the TRUE surface within 2-5e-4). 100% of 0.5%-noise solutions hit at least
+   one declared boundary/Feller/ordering constraint. Linearized propagation predicts
+   3.1-28.9 full-range widths at 0.5% — the LOCAL JACOBIAN ALONE predicts the collapse
+   scale; boundaries merely truncate it. (Case ordering matches: best-conditioned case_4
+   recovers best.)
+3. **The flat directions are in the landscape** (Phase E, case_1): fixing kappa_slow at up
+   to 7x truth, the remaining 9 parameters re-optimize to machine-level repricing
+   (~1e-12); fixing theta_fast at 5-8x truth stays under the 0.5% noise floor. NOT
+   optimizer artifacts. Truth remains a genuine minimizer (exact recovery observed).
+
+Plus heterogeneity: case_4 (high vol-of-vol, sigma 0.76/0.91) stays identified to tolerance
+1e-5 while cases 1-3 disperse earlier — identifiability severity is truth-dependent. The
+committed v0_slow/v0_fast + theta_slow/theta_fast compensation pattern reappears on the
+full grid (strongest preserved example: kappa_slow +141%, theta_slow +64%, v0_slow +64%,
+theta_fast -88%, v0_fast -69%, rho_fast sign flip).
+
+Architecture implications adopted by Node A:
+- Evaluation contracts must report equivalence-class structure and noise-level context, not
+  point recovery alone; repricing-vs-recovery separation is now empirically mandatory
+  (step function + boundary saturation + noise-floor tracking).
+- Constraint-boundary saturation under noise is EXPECTED (100% at 0.5%) — evaluation must
+  distinguish saturation from OOD nonsense (ties to F11 OOD quantification: report both).
+- Dataset/eval design should stratify by identifiability severity (case_4-like truths vs
+  cases 1-3); aggregate-only metrics hide truth-dependent identifiability.
+- Phase E forecloses "just run a better optimizer" as a resolution; combined with Node C
+  F16 (PDE invariance on the near-equivalent manifold), physics-as-regularization is the
+  only defensible physics claim — physics cannot identify.
