@@ -1,0 +1,141 @@
+# DOUBLE HESTON OVERNIGHT SWARM REPORT
+
+**STATUS: DRAFT — Node A sections complete; Node B/C sections reflect evidence pushed as of
+the last fetch (see §15). Consolidation target 07:00–07:30 IST. No peer results are invented.**
+
+## 1. Executive summary
+
+Node A completed the full architecture and research-contract audit. The canonical stack is
+confirmed as the correct canonical inverse-calibration architecture; archive-2 is a donor of
+patterns (variable-length surfaces, chronological zero-leakage evaluation, independent COS
+pricer) behind adapters, never positional interop. The "physics-informed" label must be
+downgraded honestly to constraint+repricing-informed until a genuine network-side PDE
+construction is approved. One research-control violation was found and evidenced in the
+archive-2 trainer (real-market weight updating), already exercised once at smoke scale.
+Node B/C contributed no pushed evidence at draft time (see §8/§15).
+
+## 2. Starting state
+
+Genesis SHA `642702e6706a3d17b3031619f35bda39bc144483` (= origin/main at start, verified).
+Scientific state per control doc: G2 NOT PASSED; representation not frozen (108-grid
+rejected as final unchanged representation); final 10k not generated; no research ANN/PINN
+training; real-market weight updating prohibited; mentor gate outstanding.
+
+## 3. Architecture conclusion
+
+Canonical seam (see node-A `architecture/SEAM_MATRIX.md`, 20 seams classified):
+canonical parameter contract + frozen production pricer + machine-precision torch mirror +
+hard-by-construction `DoubleHestonConstraintMap` + data-derived-input-size surface features +
+synthetic-only training with validation-gated checkpoints + post-freeze chronological
+zero-leakage real-market evaluation (pattern adapted from archive-2). Cross-stack parameter
+interop only via the verified permutation adapter (node-A artifact). Archive-2's real
+fine-tuning paths are removed from any canonical path.
+
+## 4. Identifiability/calibration conclusion
+
+PENDING NODE B EVIDENCE (none pushed at draft time). Standing repo context: G2 global
+ambiguity analysis established 40 near-equivalent clean solutions in 39 separated clusters —
+median normalized price RMSE 4.708e-8 vs range-scaled parameter RMSE 1.485e-1 — i.e.
+repricing fit does not imply parameter recovery. Node A's architecture stance: evaluation
+claims must separate repricing from recovery and report equivalence-class structure; a
+neural model must not be described as uniquely recovering truth from an ambiguous surface.
+
+## 5. PDE/physics conclusion
+
+PENDING NODE C EVIDENCE (none pushed at draft time). Node A's independent mathematical read:
+archive-2's PDE residual is the correct Double Heston pricing PDE term-by-term, but it is
+evaluated on the spectral pricer's own output, so as a training signal it measures pricer/
+autograd discretization error (smoke log: train_pde 8.91 vs parameter loss 0.10; validation
+disables PDE entirely). Neither stack is presently a PDE-informed inverse network in the
+classic sense. A genuine Model 3 requires a research decision on a network-side construction.
+
+## 6. Findings reproduced or independently supported
+
+- Torch mirror = production pricer at ~1e-15 relative, and COS = production at 1e-12..1e-9:
+  three independent implementations agree on the same mathematics (Node A diagnostics A-004;
+  consistent with the repo's existing independent-pricing-benchmark history).
+- Parameter-order conflict: verified by direct source read AND by exact gradient permutation
+  (two independent methods, same mapping).
+- Canonical training-policy cleanliness: direct trainer audit + test suite (22 tests passed)
+  + explicit `real_market_data_used: False` logging in the canonical benchmark runner.
+
+## 7. Important negative findings
+
+- `ordering_penalty` in archive-2 is dead-by-construction (kappa2<kappa1 already guaranteed);
+  lambda_order=0 in all configs regardless.
+- The constraint map provides ~zero protection w.r.t. reviewed sampling ranges (0.43%/0.33%
+  of Feller-accepted pilot samples lie in the map's unrepresentable boundary shell; interior
+  impact negligible, boundary-challenge populations over-represent it).
+- Archive-2 PDE loss does not currently provide usable physics gradient to the inverse
+  network (noise-dominated through the COS integrator).
+
+## 8. Remaining disagreements
+
+None recorded between agents yet (no peer evidence pushed). Documented intra-repo
+contradiction: stale PINN status tokens in two status docs vs accurate README (F8).
+
+## 9. Strongest quantitative evidence
+
+| Quantity | Value | Source |
+|---|---|---|
+| Torch GLQ mirror vs production, max rel (liquid region) | ~1e-15 | A-004 |
+| Archive-2 COS vs production, rel range (liquid region) | 1e-12..1e-9 | A-004 |
+| Constraint-map outputs inside pilot sampling box | ~0% (any raw surrogate) | A-007 |
+| Median pilot-edge violation multiples | 8x (N(0,1)) to 502x (U[-50,50]) | A-007 |
+| Structural guarantee hold rate at N(0,3) raws (n=200k) | 1.0000 (Feller/disk/order/positivity) | A-007 |
+| Unrepresentable Feller-shell occupancy (pilot, Feller-accepted) | 0.436% slow / 0.332% fast / 0% disk | A-011 |
+| Smoke-run PDE residual at init | 8.91 (vs parameter loss 0.10; valid PDE = 0 by construction) | A-009 |
+| G2 ambiguity backdrop | price RMSE 4.708e-8 vs param RMSE 1.485e-1; 39 clusters | repo doc |
+
+## 10. Code worth considering for merge
+
+Nothing tonight (protocol: no merges). After review, consider FROM Node A's branch:
+- `artifacts/canonical_archive2_adapter.py` (adapter promotion, with tests) — commit will be
+  finalized in §15.
+- The seam matrix + fairness contract as docs.
+From archive-2 (already on genesis; requires quarantine decisions first):
+- `verify_zero_leakage` + chronological split pattern (re-homed on canonical ids);
+- COS pricer as an independent cross-check harness.
+
+## 11. Changes that should NOT be merged
+
+- Any path exposing `real_finetune` / `--continuous` real-market weight updating as a
+  canonical training mode (research-control violation; exercised once at smoke scale).
+- Archive-2 box constraints / negative-only rho as canonical constraint semantics.
+- Positional (adapter-free) cross-stack parameter passing.
+
+## 12. Research gate status
+
+- G2: UNCHANGED (NOT PASSED; no representation frozen; no grid chosen tonight).
+- G8/real-market freeze: UNCHANGED (policy violation found and quarantined, not exercised).
+- PINN milestone: NEW EVIDENCE ONLY (infrastructure classification clarified; no training).
+- Mentor gate (G2 safeguard + NTPC temporal study): UNCHANGED, still the immediate blocker.
+
+## 13. Recommended next five actions
+
+1. Mentor decision on the G2 safeguard + bounded NTPC temporal study (existing gate).
+2. Human review + adoption of the seam matrix; extend `docs/ARCHITECTURE.md` accordingly.
+3. Quarantine/remove `real_finetune` + `--continuous` from canonical entry points (Decision #1).
+4. Docs reconciliation PR: two-axis PINN status vocabulary (Decision #2).
+5. Representation-interface design (informed by archive-2's variable-length pattern) BEFORE
+   any 10k generation, respecting the F16 shell disclosure for challenge populations.
+
+## 14. Human/mentor decisions required
+
+1. Approve quarantine plan for real-market fine-tuning paths (policy violation, evidenced).
+2. Approve two-axis PINN status vocabulary + docs PR.
+3. Decide reviewed-box vs structural-only constraint policy (quantified OOD reach, A-007).
+4. Decide whether Model 3 (PDE-informed) enters the research plan (Node C input pending).
+5. Approve the permutation adapter as the only sanctioned cross-stack interop mechanism.
+
+## 15. Git references
+
+- Node A: `overnight/20260822-a-architecture` @ (final SHA at consolidation) — evidence in
+  `.ai-research/overnight/2026-08-22/node-A/` (STATUS, FINDINGS F1–F17, EXPERIMENTS A-000–
+  A-012, SEAM_MATRIX, FINAL_REPORT, 2 diagnostics + adapter artifact).
+- Node B: `origin/overnight/20260822-b-identifiability` — branch exists at genesis; NO
+  evidence pushed as of last fetch (time in §STATUS).
+- Node C: NO branch pushed as of last fetch.
+
+If Node B/C evidence lands before consolidation, sections 4/5/8/15 will be updated with
+REPRODUCED/SUPPORTED/PRELIMINARY/DISPUTED/UNRESOLVED labels per protocol.

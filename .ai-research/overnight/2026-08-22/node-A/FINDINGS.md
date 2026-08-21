@@ -290,3 +290,11 @@ challenge targets, or (b) a research decision on margin width. No code change to
 - Cross-check: all four predeclared G2 ambiguity cases lie INSIDE the constraint map's
   representable set (e.g. case_4 sigma_fast 0.9116 < ceiling 0.9769). The F16 shell issue
   does NOT taint the existing G2 ambiguity evidence.
+
+## F18. Archive-2 evaluation metrics note (completeness)
+
+`src/dheston/evaluation/metrics.py`: raw-scale per-parameter MAE/RMSE only — NO range
+normalization. Canonical recovery metrics (e.g., range-scaled RMSE used throughout the G2
+analyses) normalize per parameter range; archive-2's smoke metrics (kappa1_rmse 2.41 etc.)
+are therefore not directly comparable to canonical numbers without rescaling. Any
+cross-stack metric comparison must state the normalization convention explicitly.
