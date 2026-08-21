@@ -275,3 +275,18 @@ Interior training populations: negligible. **Boundary-challenge populations (whi
 deliberately hug boundaries) can over-represent the shell** — recovery metrics on those
 populations must disclose this floor. Suggests either (a) report shell-membership of
 challenge targets, or (b) a research decision on margin width. No code change tonight.
+
+## F17. Documentation/architecture alignment + ambiguity-case representability (A-012)
+
+- `docs/ARCHITECTURE.md` is CONSISTENT with the seam matrix: it documents the 108 contract,
+  exact parameter order, declared constraints, pricing-interface research boundary, and the
+  honest PINN-infrastructure framing. It does not cover the archive-2 stack — the seam matrix
+  extends it. Recommendation: after human review, extend ARCHITECTURE.md with the archive-2
+  seam section (adapter rule, quarantine classifications).
+- G2 global-ambiguity backdrop (for Node B integration): 40 clean near-equivalent solutions /
+  39 materially displaced clusters; median normalized price RMSE 4.708e-8 vs range-scaled
+  parameter RMSE 1.485e-1; median nearest separation 0.2769. This is the identifiability
+  context any Node B finding will extend.
+- Cross-check: all four predeclared G2 ambiguity cases lie INSIDE the constraint map's
+  representable set (e.g. case_4 sigma_fast 0.9116 < ceiling 0.9769). The F16 shell issue
+  does NOT taint the existing G2 ambiguity evidence.
