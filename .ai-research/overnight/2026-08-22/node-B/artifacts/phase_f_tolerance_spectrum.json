@@ -1,0 +1,100 @@
+{
+  "tolerance_spectrum": [
+    {
+      "price_tol_normalized": 2.5e-07,
+      "n_solutions": 18,
+      "max_param_rmse_any_case": 0.0111785111157495,
+      "max_param_rmse_case_1": 0.0111785111157495,
+      "max_param_rmse_case_2": 0.0019963377367983,
+      "max_param_rmse_case_3": 0.0027609799497507,
+      "max_param_rmse_case_4": 6.385098917316357e-08
+    },
+    {
+      "price_tol_normalized": 1e-06,
+      "n_solutions": 23,
+      "max_param_rmse_any_case": 0.1589031634579975,
+      "max_param_rmse_case_1": 0.1589031634579975,
+      "max_param_rmse_case_2": 0.0492286823534223,
+      "max_param_rmse_case_3": 0.0027609799497507,
+      "max_param_rmse_case_4": 6.385098917316357e-08
+    },
+    {
+      "price_tol_normalized": 3e-06,
+      "n_solutions": 33,
+      "max_param_rmse_any_case": 0.2349650403071084,
+      "max_param_rmse_case_1": 0.2349650403071084,
+      "max_param_rmse_case_2": 0.0617439937336086,
+      "max_param_rmse_case_3": 0.2298044528625638,
+      "max_param_rmse_case_4": 6.385098917316357e-08
+    },
+    {
+      "price_tol_normalized": 1e-05,
+      "n_solutions": 41,
+      "max_param_rmse_any_case": 0.3233096970651244,
+      "max_param_rmse_case_1": 0.3146423076755971,
+      "max_param_rmse_case_2": 0.150468803420787,
+      "max_param_rmse_case_3": 0.3233096970651244,
+      "max_param_rmse_case_4": 0.1032508877023765
+    },
+    {
+      "price_tol_normalized": 0.0001,
+      "n_solutions": 45,
+      "max_param_rmse_any_case": 0.3804538500111235,
+      "max_param_rmse_case_1": 0.3146423076755971,
+      "max_param_rmse_case_2": 0.3804538500111235,
+      "max_param_rmse_case_3": 0.3233096970651244,
+      "max_param_rmse_case_4": 0.1032508877023765
+    },
+    {
+      "price_tol_normalized": 0.001,
+      "n_solutions": 45,
+      "max_param_rmse_any_case": 0.3804538500111235,
+      "max_param_rmse_case_1": 0.3146423076755971,
+      "max_param_rmse_case_2": 0.3804538500111235,
+      "max_param_rmse_case_3": 0.3233096970651244,
+      "max_param_rmse_case_4": 0.1032508877023765
+    }
+  ],
+  "strongest_example_at_1e-6": {
+    "case_id": "case_1",
+    "start_strategy": "deterministic_broad_10",
+    "price_rmse_normalized": 6.710476367536887e-07,
+    "parameter_rmse_full_range": 0.1589031634579975,
+    "true_parameters": {
+      "kappa_slow": 0.7201001270341181,
+      "theta_slow": 0.0627343918595344,
+      "sigma_slow": 0.2119791852951291,
+      "rho_slow": -0.1802978834235966,
+      "v0_slow": 0.0730662426958352,
+      "kappa_fast": 3.703463446201858,
+      "theta_fast": 0.0433194740041468,
+      "sigma_fast": 0.2627966047238745,
+      "rho_fast": -0.1036039245690306,
+      "v0_fast": 0.0678851614425259
+    },
+    "recovered_parameters": {
+      "kappa_slow": 1.7319724340979334,
+      "theta_slow": 0.1027062245763576,
+      "sigma_slow": 0.2376205427938713,
+      "rho_slow": -0.160263283767846,
+      "v0_slow": 0.1199792972147948,
+      "kappa_fast": 4.42687556306938,
+      "theta_fast": 0.0053747304947592,
+      "sigma_fast": 0.185837322933169,
+      "rho_fast": 0.0057830503783323,
+      "v0_fast": 0.0209751376478071
+    },
+    "per_parameter_relative_error": [
+      1.4051827920534075,
+      0.6371598023349334,
+      0.12096167585059296,
+      0.11111943898243548,
+      0.6420619534831188,
+      0.19533394277441257,
+      0.8759280758061675,
+      0.29284732149248316,
+      1.055818835072016,
+      0.6910202877610384
+    ]
+  }
+}

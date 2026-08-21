@@ -1,0 +1,11 @@
+[phase_h] case_1 baseline: median param RMSE=0.120 best=1.118e-02 price RMSE median=1.175e-06
+/opt/anaconda3/lib/python3.13/site-packages/scipy/stats/_qmc.py:993: UserWarning: The balance properties of Sobol' points require n to be a power of 2.
+  sample = self._random(n, workers=workers)
+[phase_h] case_1 sobol: median param RMSE=0.157 best=6.393e-03 price RMSE median=1.141e-06
+[phase_h] case_1 relweight: median param RMSE=0.370 best=1.312e-01 price RMSE median=1.709e-03
+[phase_h] case_1 polish: median param RMSE=0.160 best=3.761e-04 price RMSE median=6.469e-07
+[phase_h] case_1 prior_ranges: median param RMSE=0.098 best=3.611e-02 price RMSE median=1.197e-06
+[phase_h] case_2 baseline: median param RMSE=0.061 best=2.418e-12 price RMSE median=2.251e-06
+/opt/anaconda3/lib/python3.13/site-packages/scipy/stats/_qmc.py:993: UserWarning: The balance properties of Sobol' points require n to be a power of 2.
+  sample = self._random(n, workers=workers)
+[phase_h] case_2 sobol: median param RMSE=0.064 best=1.597e-11 price RMSE median=2.257e-06

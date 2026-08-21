@@ -3,3 +3,34 @@
 [phase_b] case_1 noise=1.00%: median price RMSE=1.426e-03 median param RMSE=0.309 boundary hits=12/12
 [phase_b] case_1 noise=2.00%: median price RMSE=2.617e-03 median param RMSE=0.337 boundary hits=12/12
 [phase_b] case_2 noise=0.00%: median price RMSE=1.316e-06 median param RMSE=0.055 boundary hits=3/12
+[phase_b] case_2 noise=0.50%: median price RMSE=6.688e-04 median param RMSE=0.329 boundary hits=12/12
+/Users/dhruvasbamb/Desktop/double-heston-inverse-calibration-main/scripts/node_b_toolkit.py:180: RuntimeWarning: divide by zero encountered in scalar divide
+  g = (b - d) / denominator
+/Users/dhruvasbamb/Desktop/double-heston-inverse-calibration-main/scripts/node_b_toolkit.py:180: RuntimeWarning: invalid value encountered in scalar divide
+  g = (b - d) / denominator
+/Users/dhruvasbamb/Desktop/double-heston-inverse-calibration-main/scripts/node_b_toolkit.py:182: RuntimeWarning: invalid value encountered in multiply
+  numerator = 1.0 - g * exp_minus_dt
+/Users/dhruvasbamb/Desktop/double-heston-inverse-calibration-main/scripts/node_b_toolkit.py:183: RuntimeWarning: invalid value encountered in multiply
+  log_ratio = np.log1p(-g * exp_minus_dt) - np.log1p(-g)
+/Users/dhruvasbamb/Desktop/double-heston-inverse-calibration-main/scripts/node_b_toolkit.py:185: RuntimeWarning: invalid value encountered in divide
+  d_term = ((b - d) / sigma**2) * ((-np.expm1(-d * maturities)) / numerator)
+/Users/dhruvasbamb/Desktop/double-heston-inverse-calibration-main/scripts/node_b_toolkit.py:141: RuntimeWarning: invalid value encountered in divide
+  p1_integrand = np.real(oscillation * phi_shifted * inverse_iu / phi_minus_i[:, None])
+[phase_b] case_2 noise=1.00%: median price RMSE=1.413e-03 median param RMSE=0.277 boundary hits=12/12
+[phase_b] case_2 noise=2.00%: median price RMSE=2.309e-03 median param RMSE=0.267 boundary hits=12/12
+[phase_b] case_3 noise=0.00%: median price RMSE=2.141e-06 median param RMSE=0.209 boundary hits=5/12
+[phase_b] case_3 noise=0.50%: median price RMSE=7.216e-04 median param RMSE=0.309 boundary hits=12/12
+[phase_b] case_3 noise=1.00%: median price RMSE=1.462e-03 median param RMSE=0.342 boundary hits=12/12
+[phase_b] case_3 noise=2.00%: median price RMSE=2.774e-03 median param RMSE=0.291 boundary hits=4/12
+[phase_b] case_4 noise=0.00%: median price RMSE=9.190e-12 median param RMSE=0.000 boundary hits=4/12
+[phase_b] case_4 noise=0.50%: median price RMSE=6.478e-04 median param RMSE=0.286 boundary hits=12/12
+[phase_b] case_4 noise=1.00%: median price RMSE=1.102e-03 median param RMSE=0.300 boundary hits=11/12
+[phase_b] case_4 noise=2.00%: median price RMSE=2.196e-03 median param RMSE=0.287 boundary hits=11/12
+Traceback (most recent call last):
+  File "/Users/dhruvasbamb/Desktop/double-heston-inverse-calibration-main/scripts/run_node_b_phase_b_multistart.py", line 291, in <module>
+    main()
+    ~~~~^^
+  File "/Users/dhruvasbamb/Desktop/double-heston-inverse-calibration-main/scripts/run_node_b_phase_b_multistart.py", line 209, in main
+    [row[f"recovered_{name}"] for name in PARAMETER_NAMES] for row in group.itertuples()
+     ~~~^^^^^^^^^^^^^^^^^^^^^
+TypeError: tuple indices must be integers or slices, not str

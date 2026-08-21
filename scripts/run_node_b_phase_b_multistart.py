@@ -180,24 +180,32 @@ def main() -> None:
     bounds = toolkit.load_hard_safety_bounds(toolkit.BOUNDS_PATH)
     geometry = toolkit.full_108_geometry()
     cases = toolkit.representative_cases()
+    output_csv = ARTIFACT_DIR / "phase_b_multistart_full108.csv"
 
-    records: list[dict] = []
+    import os
+
     started = time.perf_counter()
-    for case_row in cases.itertuples():
-        for noise_level in NOISE_LEVELS:
-            batch = recover_one_case(case_row, geometry, bounds, noise_level=noise_level)
-            records.extend(batch)
-            usable = [r for r in batch if np.isfinite(r["price_rmse_normalized"])]
-            print(
-                f"[phase_b] {case_row.case_id} noise={noise_level:.2%}: "
-                f"median price RMSE={np.median([r['price_rmse_normalized'] for r in usable]):.3e} "
-                f"median param RMSE={np.median([r['parameter_rmse_full_range'] for r in usable]):.3f} "
-                f"boundary hits={sum(r['bound_hit'] for r in usable)}/{len(usable)}",
-                flush=True,
-            )
-    frame = pd.DataFrame(records)
-    ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
-    frame.to_csv(ARTIFACT_DIR / "phase_b_multistart_full108.csv", index=False)
+    if output_csv.exists() and os.environ.get("NODE_B_REUSE") == "1":
+        frame = pd.read_csv(output_csv)
+        print(f"[phase_b] reusing {len(frame)} saved runs from {output_csv}")
+    else:
+        records: list[dict] = []
+        started = time.perf_counter()
+        for case_row in cases.itertuples():
+            for noise_level in NOISE_LEVELS:
+                batch = recover_one_case(case_row, geometry, bounds, noise_level=noise_level)
+                records.extend(batch)
+                usable = [r for r in batch if np.isfinite(r["price_rmse_normalized"])]
+                print(
+                    f"[phase_b] {case_row.case_id} noise={noise_level:.2%}: "
+                    f"median price RMSE={np.median([r['price_rmse_normalized'] for r in usable]):.3e} "
+                    f"median param RMSE={np.median([r['parameter_rmse_full_range'] for r in usable]):.3f} "
+                    f"boundary hits={sum(r['bound_hit'] for r in usable)}/{len(usable)}",
+                    flush=True,
+                )
+        frame = pd.DataFrame(records)
+        ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
+        frame.to_csv(output_csv, index=False)
 
     # ---- Phase F: near-equivalent analysis on clean runs ----
     clean = frame[(frame.noise_level == 0.0) & frame.finite_solution & frame.constraint_valid]
@@ -206,7 +214,7 @@ def main() -> None:
     exemplars: list[dict] = []
     for case_id, group in near.groupby("case_id"):
         recovered_matrix = np.asarray([
-            [row[f"recovered_{name}"] for name in PARAMETER_NAMES] for row in group.itertuples()
+            [getattr(row, f"recovered_{name}") for name in PARAMETER_NAMES] for row in group.itertuples()
         ])
         lower = np.asarray([bounds[name][0] for name in PARAMETER_NAMES])
         widths = toolkit.parameter_widths(bounds)
