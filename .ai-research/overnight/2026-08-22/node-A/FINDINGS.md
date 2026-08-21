@@ -222,3 +222,23 @@ decision. Node A's recommendations are therefore explicitly SUBORDINATED to that
 gate — the seam matrix and fairness contract define what to build once gates open. This
 also strengthens Phase H: since the grid WILL change, the data-derived `input_size` seam is
 the load-bearing defense against a costly rewrite.
+
+## F14. Import-smoke forensics (experiments/import_smoke_20260821, A-009)
+
+- Provenance: teammate machine paths (`/Users/dhruvasbamb/Desktop/archive-2/...` dataset,
+  checkpoint under `double-heston-inverse-calibration-main`), updated 2026-08-21T23:33:14 —
+  the archive-2 import was validated by a 1-epoch smoke run hours before this overnight.
+- **The `real_finetune` stage has ALREADY EXECUTED once in this repository's imported
+  artifacts** (stage_logs.real_finetune, 80 real train surfaces, 1 epoch, parameter loss
+  pinned 0.0). Scale is smoke-only (no research training occurred), but the policy-violating
+  path is exercised, not hypothetical. Reinforces REMOVE FROM CANONICAL PATH + the need for
+  an explicit quarantine decision (Human Decision #1).
+- PDE-term behavior at init: `train_pde = 8.91` vs `train_parameter = 0.104`; validation
+  computes `valid_pde = 0.0` because validation runs with `pde_points=0`
+  (`train_double_heston.py:257`). A residual of ~9 (scale-normalized, squared) at exact
+  pricer outputs is direct numerical evidence that autograd second derivatives through the
+  256-step COS integrator are noise-dominated — supporting F2 #3 (the PDE term does not
+  carry usable physics signal for the inverse network in its current form).
+- `configs/default_experiment.json` and `configs/archive2_default_experiment.json` are
+  identical (byte-equal after normalization); `archive2_smoke_experiment.json` only shrinks
+  caps/epochs. No hidden divergence between the two configs.
