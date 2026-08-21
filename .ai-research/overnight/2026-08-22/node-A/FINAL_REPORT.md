@@ -46,8 +46,14 @@ liquid region).
 
 **Conflicts:** incompatible parameter order (double permutation — factor swap + reorder);
 box constraints allowing Feller-violating and correlation-disk-violating regions;
-negative-only rho; PDE residual evaluated on the spectral pricer's own output (near-vacuous
-as a network training signal); `ordering_penalty` dead by construction; single test file.
+negative-only rho; `ordering_penalty` dead by construction; single test file.
+
+**Critical defect (F19):** the PDE residual loss is incorrectly implemented — an autograd
+slice-view bug (`grad(prices, chosen_params[:,0])` -> None -> `_safe_grad` zeros) silently
+drops all six variance-factor derivative terms, so the implemented residual is
+`d_tau - (diffusion + drift)`, a wrong PDE. Identity-proven (residual == dropped terms
+exactly); correctly wired it is machine-zero (~1e-14), hence non-discriminating for
+parameters. DEPRECATE; do not import. Repro: `artifacts/diag_pde_bug_repro.py`.
 
 **Risks:** `real_finetune` mode and `--continuous` flag update neural weights on real NSE
 market data — direct violation of the canonical research control. REMOVE FROM CANONICAL PATH.

@@ -298,3 +298,42 @@ normalization. Canonical recovery metrics (e.g., range-scaled RMSE used througho
 analyses) normalize per parameter range; archive-2's smoke metrics (kappa1_rmse 2.41 etc.)
 are therefore not directly comparable to canonical numbers without rescaling. Any
 cross-stack metric comparison must state the normalization convention explicitly.
+
+## F19. ARCHIVE-2 PDE RESIDUAL IS INCORRECTLY IMPLEMENTED — autograd slice-view bug (A-013/A-014)
+
+**This finding CORRECTS the mechanism claims in F2 #3 and F14.** The earlier
+"noise-dominated through the COS integrizer" reading was wrong; the provisional conclusion
+was re-tested adversarially (as the role requires) and the truth is sharper:
+
+**Bug.** `pde_residual_loss` (`src/dheston/models/losses.py:121-126`) differentiates wrt
+`v01 = chosen_params[:, 0]` / `v02 = chosen_params[:, 5]` — slice views that are NOT on the
+executed autograd graph (the pricer consumes parameters via `_broadcast_parameter_grid_*`
+reshape). `torch.autograd.grad(prices, v01)` returns None (allow_unused=True), and
+`_safe_grad` converts None into `torch.zeros_like` **silently**. All six variance-factor
+derivative terms (d_v0, cross S-v0, second v0) are therefore EXACTLY ZERO in every
+evaluation. The implemented residual is actually `d_tau - (diffusion + drift)` — a WRONG
+PDE missing both factor terms.
+
+**Proof chain** (`artifacts/diag_pde_bug_repro.py`, seeded, deterministic):
+1. Repo loss on a minimal synthetic put batch: 0.5319 in float32 AND float64 (dtype/real-data
+   independent; earlier hypotheses — fp32 precision, real-market geometry, batch mixing,
+   parameter-shape — were each tested and ELIMINATED).
+2. Mechanism: `v01.requires_grad=True` (guard passes) but `grad(prices, v01) = None` while
+   `grad(prices, parameters)[:,0] = 41.36` (healthy).
+3. Identity: implemented residual per point [9.581, 5.003, -3.453] equals the true (dropped)
+   f1+f2 per point EXACTLY; residual − (f1+f2) = 0 to machine precision.
+4. Correct wiring (differentiate the leaf, then slice): residual = -1.5e-10 — machine zero.
+
+**Interpretation.** (a) The smoke-run's `train_pde = 8.91` is the magnitude of the DROPPED
+terms, not autograd noise. (b) Even correctly implemented, the residual is machine-zero for
+an accurate pricer (GLQ autograd ~1e-14; COS autograd ~1e-12) — so it carries NO
+parameter-discriminating physics signal for the inverse network: the F2#3 "architecturally
+vacuous" conclusion STANDS and is strengthened. (c) As shipped, the term is worse than
+vacuous — it is a silently-wrong PDE whose parameter gradients flow only through
+d_tau/delta/gamma.
+
+**Classification change (seam matrix row 9):** archive-2 PDE-loss code moves from
+"ADAPT-concept pending Node C" to **DEPRECATE (bug; do not import)**. A genuine Model 3
+must be designed fresh with correct differentiation seams and Node C verification.
+
+Pending: Node C independent mathematical audit (this finding is reproducible on demand).

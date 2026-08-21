@@ -42,12 +42,17 @@ neural model must not be described as uniquely recovering truth from an ambiguou
 
 ## 5. PDE/physics conclusion
 
-PENDING NODE C EVIDENCE (none pushed at draft time). Node A's independent mathematical read:
-archive-2's PDE residual is the correct Double Heston pricing PDE term-by-term, but it is
-evaluated on the spectral pricer's own output, so as a training signal it measures pricer/
-autograd discretization error (smoke log: train_pde 8.91 vs parameter loss 0.10; validation
-disables PDE entirely). Neither stack is presently a PDE-informed inverse network in the
-classic sense. A genuine Model 3 requires a research decision on a network-side construction.
+PENDING NODE C EVIDENCE (none pushed at draft time). Node A's independent mathematical and
+numerical audit (F19, reproducible): archive-2's PDE residual states the correct Double
+Heston pricing PDE on paper, but is INCORRECTLY IMPLEMENTED — an autograd slice-view bug
+makes `grad(prices, v01/v02)` return None and `_safe_grad` silently converts it to zeros,
+so all six variance-factor derivative terms are exactly zero and the implemented residual
+is `d_tau - (diffusion + drift)`, a wrong PDE. Proof: implemented residual equals the
+dropped factor terms exactly (difference = 0 at machine precision); correct wiring yields
+-1.5e-10. Neither stack is presently a PDE-informed inverse network: the canonical stack has
+no PDE term, and archive-2's is both wrong-as-shipped and — even fixed — machine-zero for an
+accurate pricer, hence non-discriminating for parameters. A genuine Model 3 requires a
+research decision on a fresh network-side construction (Node C verification pending).
 
 ## 6. Findings reproduced or independently supported
 
@@ -66,8 +71,9 @@ classic sense. A genuine Model 3 requires a research decision on a network-side 
 - The constraint map provides ~zero protection w.r.t. reviewed sampling ranges (0.43%/0.33%
   of Feller-accepted pilot samples lie in the map's unrepresentable boundary shell; interior
   impact negligible, boundary-challenge populations over-represent it).
-- Archive-2 PDE loss does not currently provide usable physics gradient to the inverse
-  network (noise-dominated through the COS integrator).
+- Archive-2's PDE loss is incorrectly implemented (F19): autograd slice-view bug zeroes all
+  variance-factor terms; the trained "physics" signal is a wrong PDE. The smoke-run 8.91 is
+  the dropped-terms magnitude, not noise.
 
 ## 8. Remaining disagreements
 
@@ -84,7 +90,8 @@ contradiction: stale PINN status tokens in two status docs vs accurate README (F
 | Median pilot-edge violation multiples | 8x (N(0,1)) to 502x (U[-50,50]) | A-007 |
 | Structural guarantee hold rate at N(0,3) raws (n=200k) | 1.0000 (Feller/disk/order/positivity) | A-007 |
 | Unrepresentable Feller-shell occupancy (pilot, Feller-accepted) | 0.436% slow / 0.332% fast / 0% disk | A-011 |
-| Smoke-run PDE residual at init | 8.91 (vs parameter loss 0.10; valid PDE = 0 by construction) | A-009 |
+| Correctly-wired PDE residual, GLQ autograd / COS autograd | ~1e-14 / ~1e-12 (machine zero) | A-013 |
+| Implemented (buggy) PDE residual identity | residual == dropped f1+f2 exactly (diff 0) | A-014 |
 | G2 ambiguity backdrop | price RMSE 4.708e-8 vs param RMSE 1.485e-1; 39 clusters | repo doc |
 
 ## 10. Code worth considering for merge
@@ -101,6 +108,8 @@ From archive-2 (already on genesis; requires quarantine decisions first):
 
 - Any path exposing `real_finetune` / `--continuous` real-market weight updating as a
   canonical training mode (research-control violation; exercised once at smoke scale).
+- Archive-2's `pde_residual_loss` in its current form (F19 bug — silently wrong PDE; fix
+  would still be non-discriminating for an accurate pricer).
 - Archive-2 box constraints / negative-only rho as canonical constraint semantics.
 - Positional (adapter-free) cross-stack parameter passing.
 
