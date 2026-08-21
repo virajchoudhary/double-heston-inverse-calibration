@@ -1,0 +1,107 @@
+{
+  "total": 25,
+  "passed": 25,
+  "failed": 0,
+  "results": [
+    {
+      "test": "test_archive2_emits_canonical_invalid_parameters",
+      "status": "PASS"
+    },
+    {
+      "test": "test_archive2_variance_derivatives_are_structurally_zero[[0.6, 0.04, 0.18, -0.55, 0.04, 2.8, 0.03, 0.35, -0.35, 0.02]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_archive2_variance_derivatives_are_structurally_zero[[0.3, 0.06, 0.16, -0.3, 0.05, 6.0, 0.06, 0.7, -0.6, 0.03]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_canonical_pricer_satisfies_canonical_pde[100.0,100.0,0.25,'A',[0.6, 0.04, 0.18, -0.55, 0.04, 2.8, 0.03, 0.35, -0.35, 0.02]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_canonical_pricer_satisfies_canonical_pde[100.0,100.0,0.25,'B',[0.3, 0.06, 0.16, -0.3, 0.05, 6.0, 0.06, 0.7, -0.6, 0.03]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_canonical_pricer_satisfies_canonical_pde[100.0,100.0,1.0,'A',[0.6, 0.04, 0.18, -0.55, 0.04, 2.8, 0.03, 0.35, -0.35, 0.02]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_canonical_pricer_satisfies_canonical_pde[100.0,100.0,1.0,'B',[0.3, 0.06, 0.16, -0.3, 0.05, 6.0, 0.06, 0.7, -0.6, 0.03]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_canonical_pricer_satisfies_canonical_pde[100.0,90.0,0.5,'A',[0.6, 0.04, 0.18, -0.55, 0.04, 2.8, 0.03, 0.35, -0.35, 0.02]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_canonical_pricer_satisfies_canonical_pde[100.0,90.0,0.5,'B',[0.3, 0.06, 0.16, -0.3, 0.05, 6.0, 0.06, 0.7, -0.6, 0.03]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_canonical_pricer_satisfies_canonical_pde[100.0,110.0,0.5,'A',[0.6, 0.04, 0.18, -0.55, 0.04, 2.8, 0.03, 0.35, -0.35, 0.02]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_canonical_pricer_satisfies_canonical_pde[100.0,110.0,0.5,'B',[0.3, 0.06, 0.16, -0.3, 0.05, 6.0, 0.06, 0.7, -0.6, 0.03]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_deterministic_variance_black_scholes_limit",
+      "status": "PASS"
+    },
+    {
+      "test": "test_exact_factor_additivity_identity",
+      "status": "PASS"
+    },
+    {
+      "test": "test_half_mix_residual_is_exactly_half['A',[0.6, 0.04, 0.18, -0.55, 0.04, 2.8, 0.03, 0.35, -0.35, 0.02]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_half_mix_residual_is_exactly_half['B',[0.3, 0.06, 0.16, -0.3, 0.05, 6.0, 0.06, 0.7, -0.6, 0.03]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_put_call_parity_canonical",
+      "status": "PASS"
+    },
+    {
+      "test": "test_residual_detects_wrong_correlation_coefficient[100.0,100.0,0.25,'A',[0.6, 0.04, 0.18, -0.55, 0.04, 2.8, 0.03, 0.35, -0.35, 0.02]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_residual_detects_wrong_correlation_coefficient[100.0,100.0,0.25,'B',[0.3, 0.06, 0.16, -0.3, 0.05, 6.0, 0.06, 0.7, -0.6, 0.03]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_residual_detects_wrong_correlation_coefficient[100.0,100.0,1.0,'A',[0.6, 0.04, 0.18, -0.55, 0.04, 2.8, 0.03, 0.35, -0.35, 0.02]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_residual_detects_wrong_correlation_coefficient[100.0,100.0,1.0,'B',[0.3, 0.06, 0.16, -0.3, 0.05, 6.0, 0.06, 0.7, -0.6, 0.03]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_residual_detects_wrong_correlation_coefficient[100.0,90.0,0.5,'A',[0.6, 0.04, 0.18, -0.55, 0.04, 2.8, 0.03, 0.35, -0.35, 0.02]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_residual_detects_wrong_correlation_coefficient[100.0,90.0,0.5,'B',[0.3, 0.06, 0.16, -0.3, 0.05, 6.0, 0.06, 0.7, -0.6, 0.03]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_residual_detects_wrong_correlation_coefficient[100.0,110.0,0.5,'A',[0.6, 0.04, 0.18, -0.55, 0.04, 2.8, 0.03, 0.35, -0.35, 0.02]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_residual_detects_wrong_correlation_coefficient[100.0,110.0,0.5,'B',[0.3, 0.06, 0.16, -0.3, 0.05, 6.0, 0.06, 0.7, -0.6, 0.03]]",
+      "status": "PASS"
+    },
+    {
+      "test": "test_two_half_factors_reduce_to_single_heston",
+      "status": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,269 @@
+{
+  "canonical_gl_pde_residual": {
+    "VEC_A": [
+      {
+        "S,K,tau": "100.0,100.0,0.25",
+        "price": 5.5848706998681905,
+        "residual": 0.0,
+        "rel_residual": 0.0,
+        "rel_no_rho": 0.025141290496946668,
+        "rel_half_mix": 0.012570645248473334
+      },
+      {
+        "S,K,tau": "100.0,100.0,1.0",
+        "price": 12.557932993027336,
+        "residual": -5.329070518200751e-15,
+        "rel_residual": -4.243588910021787e-16,
+        "rel_no_rho": 0.009852516917383296,
+        "rel_half_mix": 0.004926258458691471
+      },
+      {
+        "S,K,tau": "100.0,90.0,0.5",
+        "price": 14.676691276292345,
+        "residual": 1.7763568394002505e-15,
+        "rel_residual": 1.2103251379755106e-16,
+        "rel_no_rho": 0.043630982338162386,
+        "rel_half_mix": 0.021815491169081252
+      },
+      {
+        "S,K,tau": "100.0,110.0,0.5",
+        "price": 4.076609724558459,
+        "residual": -1.7763568394002505e-15,
+        "rel_residual": -4.357436594185256e-16,
+        "rel_no_rho": -0.1708158894319365,
+        "rel_half_mix": -0.08540794471596846
+      }
+    ],
+    "VEC_B": [
+      {
+        "S,K,tau": "100.0,100.0,0.25",
+        "price": 6.667956410263422,
+        "residual": 8.881784197001252e-15,
+        "rel_residual": 1.3320099368571566e-15,
+        "rel_no_rho": -0.0057566972530989115,
+        "rel_half_mix": -0.00287834862654879
+      },
+      {
+        "S,K,tau": "100.0,100.0,1.0",
+        "price": 15.070643689678583,
+        "residual": 0.0,
+        "rel_residual": 0.0,
+        "rel_no_rho": 0.002037229730077315,
+        "rel_half_mix": 0.0010186148650386574
+      },
+      {
+        "S,K,tau": "100.0,90.0,0.5",
+        "price": 16.00415429348066,
+        "residual": 3.552713678800501e-15,
+        "rel_residual": 2.2198696748679243e-16,
+        "rel_no_rho": 0.02611385283772066,
+        "rel_half_mix": 0.013056926418860497
+      },
+      {
+        "S,K,tau": "100.0,110.0,0.5",
+        "price": 5.75836251760569,
+        "residual": -1.7763568394002505e-15,
+        "rel_residual": -3.084829817451046e-16,
+        "rel_no_rho": -0.09366930205635227,
+        "rel_half_mix": -0.0468346510281766
+      }
+    ]
+  },
+  "archive2_cos_pde_residual": {
+    "VEC_A_residual_loss": 0.0057081604686662875,
+    "VEC_B_residual_loss": 0.04303527762029518,
+    "VEC_A_384_steps": 0.0057081604686662875,
+    "note": "mean squared RELATIVE residual (losses.py scale = max(|V|,1)); compare with canonical rel_residual^2"
+  },
+  "archive2_integration_steps_sensitivity": {
+    "price_steps_64": 8.323761475296727,
+    "price_steps_256": 8.323843956177527,
+    "price_steps_1024": 8.323843956177527
+  },
+  "archive2_derivative_instrumentation": {
+    "VEC_A": {
+      "price": 8.323843936383234,
+      "d_tau_nonzero": true,
+      "delta": 0.6145874034648654,
+      "d_v01_value": 0.0,
+      "d_v02_value": 0.0,
+      "cross_sv01_value": 0.0,
+      "d2_v01_value": 0.0,
+      "true_dV_dv01_via_params_grad": 28.48514232457483,
+      "v_derivatives_all_zero": true
+    },
+    "VEC_B": {
+      "price": 10.019540260732741,
+      "d_tau_nonzero": true,
+      "delta": 0.6121194178070859,
+      "d_v01_value": 0.0,
+      "d_v02_value": 0.0,
+      "cross_sv01_value": 0.0,
+      "d2_v01_value": 0.0,
+      "true_dV_dv01_via_params_grad": 13.154014614546895,
+      "v_derivatives_all_zero": true
+    }
+  },
+  "archive2_effective_residual": {
+    "VEC_A": {
+      "residual": 0.604568934256152,
+      "residual_without_v_terms": 0.604568934256152,
+      "price": 8.323843936383234
+    },
+    "VEC_B": {
+      "residual": 2.245350358320797,
+      "residual_without_v_terms": 2.245350358320797,
+      "price": 10.019540260732741
+    }
+  },
+  "archive2_constraint_gap": {
+    "archive2_emitted": {
+      "v01": 0.010000000008193887,
+      "k1": 0.30000000010693717,
+      "th1": 0.010000000008193887,
+      "sg1": 1.4999999999798623,
+      "rho1": -0.9499999999875008,
+      "v02": 0.010000000008193887,
+      "k2": 0.10000000000277759,
+      "th2": 0.010000000008193887,
+      "sg2": 1.4999999999798623,
+      "rho2": -0.9499999999875008
+    },
+    "canonical_mapped": {
+      "kappa_slow": 0.10000000000277759,
+      "theta_slow": 0.010000000008193887,
+      "sigma_slow": 1.4999999999798623,
+      "rho_slow": -0.9499999999875008,
+      "v0_slow": 0.010000000008193887,
+      "kappa_fast": 0.30000000010693717,
+      "theta_fast": 0.010000000008193887,
+      "sigma_fast": 1.4999999999798623,
+      "rho_fast": -0.9499999999875008,
+      "v0_fast": 0.010000000008193887
+    },
+    "canonical_violations": [
+      "slow-factor Feller gap must be strictly positive",
+      "fast-factor Feller gap must be strictly positive",
+      "rho_slow^2 + rho_fast^2 must be strictly less than 1"
+    ],
+    "feller_gap_slow_mapped": -2.2479999999378926,
+    "feller_gap_fast_mapped": -2.243999999932532,
+    "correlation_disk": 1.8049999999525033
+  },
+  "factor_additivity_identity": [
+    {
+      "vec": [
+        1.5,
+        0.04,
+        0.2,
+        -0.5,
+        0.04
+      ],
+      "max_abs_identity_error": 1.7763568394002505e-15
+    },
+    {
+      "vec": [
+        0.9,
+        0.06,
+        0.16,
+        -0.35,
+        0.05
+      ],
+      "max_abs_identity_error": 1.7763568394002505e-15
+    }
+  ],
+  "one_factor_price_reduction": {
+    "strikes": [
+      90.0,
+      95.0,
+      100.0,
+      105.0,
+      110.0
+    ],
+    "canonical_double_half_factors": [
+      15.37400259860894,
+      11.817327283263765,
+      8.743873709002628,
+      6.205237666667365,
+      4.212220746143522
+    ],
+    "dheston_single_heston": [
+      15.374002598618036,
+      11.817327283276333,
+      8.743873709020093,
+      6.205237666691447,
+      4.212220746175966
+    ],
+    "max_abs_diff": 3.2443381314806174e-11
+  },
+  "black_scholes_limit": [
+    {
+      "K": 90.0,
+      "tau": 0.25,
+      "canonical": 11.955968797978173,
+      "bs_limit": 11.955492748111553,
+      "abs_err": 0.0004760498666200874,
+      "rel_err": 3.981850657684373e-05
+    },
+    {
+      "K": 90.0,
+      "tau": 1.0,
+      "canonical": 17.678017245348443,
+      "bs_limit": 17.677478166787118,
+      "abs_err": 0.000539078561324402,
+      "rel_err": 3.0495218618752765e-05
+    },
+    {
+      "K": 100.0,
+      "tau": 0.25,
+      "canonical": 5.163801176434653,
+      "bs_limit": 5.164020059645374,
+      "abs_err": -0.00021888321072083272,
+      "rel_err": -4.238620458338498e-05
+    },
+    {
+      "K": 100.0,
+      "tau": 1.0,
+      "canonical": 11.747886147919736,
+      "bs_limit": 11.748685925335167,
+      "abs_err": -0.0007997774154304693,
+      "rel_err": -6.80737761238309e-05
+    },
+    {
+      "K": 110.0,
+      "tau": 0.25,
+      "canonical": 1.6197377106697814,
+      "bs_limit": 1.6203822462985293,
+      "abs_err": -0.0006445356287478887,
+      "rel_err": -0.00039776764415940376
+    },
+    {
+      "K": 110.0,
+      "tau": 1.0,
+      "canonical": 7.4061783327219,
+      "bs_limit": 7.40805256668326,
+      "abs_err": -0.0018742339613595504,
+      "rel_err": -0.00025299954940771757
+    }
+  ],
+  "put_call_parity": [
+    {
+      "K": 95.0,
+      "call-put": 6.846806276576643,
+      "S*e^-qT-K*e^-rT": 6.846806276576643,
+      "abs_err": 0.0
+    },
+    {
+      "K": 100.0,
+      "call-put": 1.9702567164349816,
+      "S*e^-qT-K*e^-rT": 1.9702567164349745,
+      "abs_err": 7.105427357601002e-15
+    },
+    {
+      "K": 105.0,
+      "call-put": -2.9062928437066873,
+      "S*e^-qT-K*e^-rT": -2.90629284370668,
+      "abs_err": -7.105427357601002e-15
+    }
+  ]
+}

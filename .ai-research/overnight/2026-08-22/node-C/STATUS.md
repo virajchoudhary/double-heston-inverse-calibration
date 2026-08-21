@@ -1,0 +1,41 @@
+# Node C Status — Overnight 2026-08-22
+
+Role: PDE_PHYSICS_AUDIT. Branch `overnight/20260822-c-pde` from genesis
+`642702e6706a3d17b3031619f35bda39bc144483`.
+
+## Phase status
+
+| Phase | Status | Key output |
+|---|---|---|
+| Git bootstrap | DONE | clean tree, genesis verified, branch created from genesis, evidence dirs created |
+| A. Stochastic specification freeze | DONE | `derivations/CANONICAL_DOUBLE_HESTON_PDE.md` §1 |
+| B. Canonical Feynman-Kac PDE | DONE | derivation + independent cross-derivation + numerical certification (rel. residual <= 1.3e-15) |
+| C. Terminal/boundary conditions | DONE | derivation §3; Archive-2 "boundary" term classified as not boundary physics |
+| D. Archive-2 PDE loss line-by-line | DONE | `tables/ARCHIVE2_PDE_TERM_MAP.md` — INCORRECT (all variance derivatives structurally zero) |
+| E. Canonical model classification | DONE | constraint + differentiable-repricing informed inverse network (NOT PDE-informed) |
+| F. Parameter contract matrix | DONE | `tables/PARAMETER_CONTRACT_MATRIX.md` — ADAPTER + SEMANTIC CONFLICT |
+| G. Constraint audit | DONE | Archive-2 emits canonical-invalid vectors (reproducible, 3 violations) |
+| H. Limiting-case tests | DONE | additivity 1.8e-15; half-factor reduction 3.2e-11 vs independent COS; BS limit 4e-4; parity 7e-15 |
+| I. PDE residual sanity tests | DONE | machine-precision residual on canonical pricer + coefficient-perturbation sensitivity + Archive-2 zero-derivative proof |
+| J. Training/validation objective audit | DONE | Archive-2 validation excludes PDE loss (pde_points=0 + no_grad; artifact valid_pde=0.0); canonical stack has no mismatch |
+| K. Real-market training policy | DONE | Archive-2 real_finetune updates all NN weights -> conflicts with control; recommend ISOLATE + DISABLE BY DEFAULT |
+| Web/literature check | DONE (light) | standard references cross-check only; no equation copied |
+| Peer sync | DONE (one fetch) | Node A FINDINGS corroborates (their candidates = my proven items); Node B branch at genesis, no evidence yet |
+| Final report | DONE | `FINAL_REPORT.md` |
+
+## Test evidence
+
+- `tests/test_node_c_pde_physics_audit.py` — 25 cases, 25 PASS
+  (runner: `tests_evidence/run_node_c_tests.py`, results
+  `tests_evidence/pytest_equivalent_results.json`; interpreter lacks pytest,
+  no environment mutation per compute policy).
+- Numerical probe: `tests_evidence/probe_residuals.py` ->
+  `probe_results.json`.
+
+## Safety confirmations
+
+main untouched; no force push; no 10k generation; no real-market training; G2
+untouched; no environment mutation; production pricer unmodified (evidence
+tests import it read-only; the only loader shim is a documented Python-3.9
+typing compatibility exec inside the test harness, zero mathematical lines
+changed); branch pushed only to `overnight/20260822-c-pde`.
