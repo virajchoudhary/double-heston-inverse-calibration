@@ -34,7 +34,7 @@ Candidate incompatibilities (from exploration, to be verified directly in Phase 
 6. Test coverage asymmetry: Stack A has 3 test files; Stack B only a pricing smoke test.
 7. Stack B `ordering_penalty` targets theta ordering, not kappa ordering; default weight 0.
 
-Verification status: **COMPLETE (01:10 IST)** — each candidate verified directly against source.
+Verification status: **COMPLETE (00:57 IST)** — each candidate verified directly against source.
 
 ---
 
@@ -75,7 +75,7 @@ Any parameter vector used for cross-stack comparison must satisfy BOTH constrain
 strict subset of each individual space. Diagnostic pricer-agreement runs must sample only
 in this intersection.
 
-## F5. Pricer agreement + adapter verification (diagnostic A-004, seeded, CPU)
+## F5. Pricer agreement + adapter verification (diagnostic A-004 (run 00:59 IST), seeded, CPU)
 
 Script: `artifacts/diag_pricer_agreement.py` (spot 100, r=0.05, q=0, taus 7d-365d,
 log-moneyness -0.30..+0.30, canonical params in both stacks' constraint intersection).
