@@ -446,3 +446,53 @@ must stay an initialisation/visualisation utility (currently unused by calibrati
 verified by Node C). Cross-interpreter datapoint: repo canonical-engine tests 34/36 on
 py3.9 with 2 explained environment artifacts (vs 25/25 of the focused suites on py3.13
 here).
+
+## F25. Node B integration (77b8f2e landed 03:11 IST; mid-run, FINDINGS covers Phase D so far)
+
+Node B (IDENTIFIABILITY_CALIBRATION) evidence integrated read-only. Their STATUS checkpoint
+records Phases A/B results; FINDINGS.md currently carries Phase D (they resumed after a
+session break and are still working — re-poll for updates before consolidation).
+
+**Phase D — Jacobian conditioning (median, 4 representative cases + 16 interior samples):**
+- full108: condition 2.55e4, practical rank 10/10 (sigma_min ~2.0e-5) — the provisional
+  grid is NOT locally rank-deficient.
+- central5 market 27/55 (G2 anchor, 20 quotes): 6.54e8, rank 7.5 — the committed G2
+  ill-conditioning REPLICATES (committed median was 5.1e7 on their reduced panel; both
+  noise-dominated).
+- Maturity span drives conditioning (2->6 maturities improves ~4.5 orders); moneyness
+  width adds little beyond ~4 nodes.
+- Calls/puts informationally redundant under the carry contract (identical conditioning to
+  5 digits — parity transforms).
+- Noise-vs-sensitivity: sigma_min ~1.4e-5 normalized sits BELOW realistic noise (2.5e-4) —
+  linear propagation displaces estimates O(10) full-range widths along the weakest
+  direction even on the full grid. Local full rank coexists with noise-driven collapse.
+
+**Phases A/B (from STATUS checkpoint):**
+- Phase A (production entry, case_1): clean best start exact (param RMSE 2.9e-11, price
+  RMSE 1.1e-13) BUT other starts disperse to param RMSE 0.39; 1% noise: param RMSE up to
+  0.57 at price noise floor.
+- Phase B (case_1, 12 starts): clean median param RMSE 0.148 at price RMSE 1.1e-6;
+  0.5-2% noise: 12/12 boundary hits, param RMSE 0.31-0.34, price at noise floor.
+  **GLOBAL AMBIGUITY REPLICATES ON THE FULL 108 GRID.** Consistent with standing
+  G2_GLOBAL_AMBIGUITY evidence (40 solutions / 39 clusters) — label: SUPPORTED (new grid,
+  same phenomenon; not merely reproduced — extended to the provisional full grid).
+- Fast diagnostic pricer validated 0.0 diff vs production on the 108 grid, 11.7x speedup.
+
+**Factor-swap degeneracy (three-node triangulation):**
+- Node B: bitwise 0.0 on their fast pricer.
+- Node C F16: 4.26e-14 on the production pricer (association order in exponent assembly).
+- **Node A independent check (A-018): 2.842e-14 over the full 108 grid.** All three at
+  float-association-order level. Instructive addition: with `enforce_ordering=True` the
+  production pricer REJECTS the swapped vector at the gate — the `kappa_slow < kappa_fast`
+  constraint is exactly what excludes the exact degenerate twin from the declared space.
+
+**Node C F16 synthesis adopted (three-node converged):** the canonical PDE is invariant
+under factor swap (symmetric sum over factors), so even a CORRECTLY implemented PDE
+residual evaluates identically (to its ~4e-9 floor) on every point of the near-equivalent
+manifold; Node B's near-equivalence price RMSE 1.1e-6 sits ~3 orders above that floor.
+Physics losses = regularization/structural validity, NEVER identification; the identifying
+content lives in the constraints and the data. This empirically grounds Node A's F7
+fairness-contract requirement and the F6 taxonomy caveat.
+
+No conflicts between Node B evidence and Node A/Node C findings (Node B's own note:
+"Complementary; no conflicts").
