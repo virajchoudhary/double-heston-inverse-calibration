@@ -1,7 +1,8 @@
 # DOUBLE HESTON OVERNIGHT SWARM REPORT
 
-**STATUS: DRAFT — Node A complete; Node C INTEGRATED (01:24 IST, 4 commits, 10 findings);
-Node B evidence still absent. Consolidation target 07:00–07:30 IST. No peer results invented.**
+**STATUS: DRAFT — ALL THREE NODES INTEGRATED (Node B landed 03:11 IST, mid-run; Node C
+complete with verification rounds). Consolidation target 07:00–07:30 IST; Node B may push
+more evidence before then (re-polled). No peer results invented.**
 
 ## 1. Executive summary
 
@@ -39,7 +40,17 @@ validity (not identification).
 
 ## 4. Identifiability/calibration conclusion
 
-PENDING NODE B EVIDENCE (none pushed at draft time). Standing repo context: G2 global
+Node B INTEGRATED (77b8f2e; mid-run — re-polled before consolidation). Core result:
+**global ambiguity replicates on the FULL 108-quote provisional grid.** Phase B multistart
+(case_1, 12 starts): clean median parameter RMSE 0.148 at price RMSE 1.1e-6; with 0.5–2%
+noise, 12/12 boundary hits, parameter RMSE 0.31–0.34 with price fit at the noise floor.
+Phase A production entry: the clean best start recovers exactly (2.9e-11) but other starts
+disperse (0.39) — optimizer-path dependence is real. Jacobian conditioning: full108
+condition 2.55e4, practical rank 10/10 (NOT locally rank-deficient); the G2-anchor central-5
+geometry's catastrophically worse conditioning (6.5e8, rank 7.5) REPLICATES. Failure mode is
+therefore noise-scale vs weakest sensitivities (sigma_min 1.4e-5 < realistic noise 2.5e-4)
+plus global multimodality — not classical rank deficiency. Calls/puts are parity-redundant
+(conditioning identical to 5 digits). Standing repo context: G2 global
 ambiguity analysis established 40 near-equivalent clean solutions in 39 separated clusters —
 median normalized price RMSE 4.708e-8 vs range-scaled parameter RMSE 1.485e-1 — i.e.
 repricing fit does not imply parameter recovery. Node C added two identifiability-relevant
@@ -66,6 +77,14 @@ accurate pricer, hence non-discriminating for parameters. A genuine Model 3 requ
 research decision on a fresh network-side construction (Node C verification pending).
 
 ## 6. Findings reproduced or independently supported
+
+- Node B global ambiguity on full 108 grid: consistent with standing G2_GLOBAL_AMBIGUITY
+  evidence (40 solutions / 39 clusters, different grid) — SUPPORTED/EXTENDED; fast pricer
+  validated 0.0-diff vs production.
+- Factor-swap degeneracy: triangulated by ALL THREE nodes (Node B bitwise 0.0 fast pricer;
+  Node C 4.26e-14 production; Node A 2.842e-14 production) — REPRODUCED; and the production
+  gate REJECTS the swapped vector under enforce_ordering=True, proving the ordering
+  constraint is what excludes the twin.
 
 - Torch mirror = production pricer at ~1e-15 relative, and COS = production at 1e-12..1e-9:
   three independent implementations agree on the same mathematics (Node A diagnostics A-004;
@@ -98,7 +117,8 @@ None between Node A and Node C. One disposition nuance (recorded, not conflictin
 classifies real_finetune as REMOVE FROM CANONICAL PATH; Node C as ISOLATE AS NON-PRIMARY
 ABLATION + DISABLE BY DEFAULT — both forbid a canonical named mode; ablation status is
 Human Decision #1. Documented intra-repo contradiction: stale PINN status tokens in two
-status docs vs accurate README (F8). Node B: no evidence to compare yet.
+status docs vs accurate README (F8). Node B's own status note: "Complementary; no conflicts" with Nodes A/C — confirmed on
+Node A's side after full read.
 
 ## 9. Strongest quantitative evidence
 
@@ -163,8 +183,9 @@ From archive-2 (already on genesis; requires quarantine decisions first):
 - Node A: `overnight/20260822-a-architecture` @ (final SHA at consolidation) — evidence in
   `.ai-research/overnight/2026-08-22/node-A/` (STATUS, FINDINGS F1–F17, EXPERIMENTS A-000–
   A-012, SEAM_MATRIX, FINAL_REPORT, 2 diagnostics + adapter artifact).
-- Node B: `origin/overnight/20260822-b-identifiability` — branch exists at genesis; NO
-  evidence pushed as of last fetch (time in §STATUS).
+- Node B: `origin/overnight/20260822-b-identifiability` @ 77b8f2e (landed 03:11 IST,
+  mid-run: STATUS/FINDINGS(Phase D)/EXPERIMENTS + artifacts/tables; Phases A/B results in
+  STATUS checkpoint; FINAL_REPORT pending — re-polled before consolidation).
 - Node C: `origin/overnight/20260822-c-pde` @ 751551a (4 commits; STATUS/FINDINGS/
 EXPERIMENTS/FINAL_REPORT + derivations, tables, probe evidence, 25/25 focused tests).
 Integrated at 01:30 IST without merging.
