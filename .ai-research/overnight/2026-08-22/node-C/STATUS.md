@@ -22,7 +22,15 @@ Role: PDE_PHYSICS_AUDIT. Branch `overnight/20260822-c-pde` from genesis
   adversarial report committed as artifacts; correct-wiring regression test
   added — suite now 27/27 (54fb52e, 27a6a25). Issue #18 correction comment
   re dead fields posted.
-- Pending: periodic peer polls; final consolidation ~07:00 IST.
+- ~01:55 IST: cross-interpreter datapoint — repo's own canonical-engine tests
+  34/36 on py3.9 + documented shim (2 explained environment artifacts:
+  fixture atol=1e-12 missed by a 3.3e-12 cross-platform libm diff; the test
+  file's own zip(strict=True)); variance-mean propagation gap quantified
+  (F15: -1.1% at 7d to -14.5% at 90d — per-date v0 fitting vindicated);
+  ledger timestamps corrected to wall clock. Node A integrated the Node C
+  refresh (their F19/F23) and corrected the dead-field attributions;
+  convergence recorded (their F20 / my F14). Polling until final
+  consolidation ~07:00 IST.
 
 ## Phase status
 
