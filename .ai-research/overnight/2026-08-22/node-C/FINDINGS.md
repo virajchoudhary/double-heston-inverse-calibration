@@ -296,6 +296,25 @@ New minor findings from the review (all LOW severity, none affect conclusions):
    float64 — FD now agrees with autograd to ~1e-9. The autograd-vs-GL
    comparison F3 relies on (9.7e-13) was unaffected.
 
+## F14. Cross-node convergence (02:00 IST): Node A independently reproduced
+F2 and certified the Node C derivation [PROVEN]
+
+Node A's F19 (their own seeded repro: loss 0.5319 dtype-invariant on their
+batch) independently discovered the same zero-derivative defect and reclassified
+the Archive-2 PDE loss as DEPRECATE (bug; do not import) — compatible with
+Node C's "KEEP ISOLATED + do not adapt its PDE loss" (deprecate the loss
+component, keep non-PHE utilities isolated). Their F20 records full claim-level
+convergence (F2/F3/F4/F1/F5/F7 all REPRODUCED across the two instrumentations)
+and they extracted Node C's 25-test suite read-only and ran it under their
+local pytest: 25/25 PASS — Node C evidence independently reproduced
+end-to-end. Their F21 reviewed Node C's derivation line-by-line: VERDICT
+correct and complete. Disposition nuance resolved: both forbid a canonical
+real-finetune mode; the ablation question is Human Decision #1. The state of
+evidence for the defect: THREE independent reproductions (Node C instrumented
++ bit-exact closure, Node C adversarial reviewer re-execution, Node A seeded
+repro) and THREE independent PDE derivations in agreement (Node C, Node C's
+independent cross-reviewer, Node A's numerical operator verification).
+
 ## Required final classifications (Section 23 of the brief)
 
 - Canonical current stack: **constraint + repricing-informed inverse network**
