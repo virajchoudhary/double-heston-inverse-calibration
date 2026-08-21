@@ -404,3 +404,33 @@ by direct Node A verification (each item independently checked):
   Node A's (F12), independently derived and verified on both sides (REPRODUCED).
 Canonical path: no leakage, no objective mismatch, no dummy-pricer fallback, no real-market
 training, enforced disjoint splits. KEEP classifications stand.
+
+## F23. Node C refresh integration (0254c92, 01:41 IST) — mutual verification round
+
+Node C ran their own adversarial-review pass (independent reviewer re-derived math and
+re-executed decisive experiments; all load-bearing claims CONFIRMED). Changes material to
+Node A records:
+
+1. **CORRECTION TO NODE A F2#4 / seam matrix row 8**: `FourierConfig.alpha` (the "damping
+   alpha=1.5" I cited), `u_max`, and `integration_eps` are DEAD config fields — never
+   consumed by the COS pricer (only integration_steps, truncation_scaler,
+   min_truncation_width are used). The series saturates via exponential CF decay below
+   float64 resolution, not a frequency cap. Latent operational trap: editing dead fields
+   changes nothing.
+2. Certification domain stated (F1): 8-point machine precision (<=1.3e-15) + 120-point
+   sweep bound <=1.6e-8 relative (worst short-maturity OTM corners, improving with
+   maturity — same quadrature-degradation pattern as F10).
+3. F2 mechanism sharpened: pricer creates its own SelectBackward nodes internally
+   (heston.py:156-157); losses.py views are CHILDREN of the output node — structural,
+   no workaround in the current design.
+4. **Node C verified Node A claims**: F16 constraint shells CONFIRMED (saturated heads
+   reach exactly the 0.995 caps asymptotically); F18 metrics normalization CONFIRMED.
+   Mutual verification now bidirectional.
+5. Connective insight (morning-report worthy): Node C's correctly-wired residual floor
+   (4-5e-9) sits at the same numerical-noise scale as the G2 near-equivalence price
+   differences — empirical support that a PDE-residual term cannot distinguish
+   near-equivalent parameter vectors (physics = regularization/validity, not identification).
+6. Repo-wide autograd scan: the `_safe_grad`/allow_unused zero-silencing defect class is
+   UNIQUE to archive-2; canonical stack has no such pattern (all .detach() uses are
+   validation guards). Latent minor: torch factor exponent early-returns a graph-free zero
+   at maturity == 0.0 (non-differentiable point at the terminal boundary; LOW severity).

@@ -109,6 +109,7 @@ status docs vs accurate README (F8). Node B: no evidence to compare yet.
 | Correctly-wired PDE residual, GLQ autograd / COS autograd | ~1e-14 / ~1e-12 (machine zero) | A-013 |
 | Implemented (buggy) PDE residual identity | residual == dropped f1+f2 exactly (diff 0) | A-014 |
 | G2 ambiguity backdrop | price RMSE 4.708e-8 vs param RMSE 1.485e-1; 39 clusters | repo doc |
+| Correctly-wired PDE residual floor (Node C) | 4-5e-9 relative — same noise scale as near-equivalence price differences | Node C F12 (supports: physics = regularization, not identification) |
 
 ## 10. Code worth considering for merge
 
