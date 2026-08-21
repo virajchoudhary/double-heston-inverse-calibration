@@ -31,7 +31,7 @@ Legend: CORRECT / LIKELY CORRECT / INCORRECT / INCOMPLETE / UNVERIFIED.
 | `scale = prices.abs().clamp_min(1)` (133) | relative residual scaling | LIKELY CORRECT | detached; relative scaling defensible |
 | `mean((residual/scale)^2)` (134) | loss aggregation | LIKELY CORRECT | — |
 | point subsampling `indices[::step][:max_points]` (86-91) | collocation subset | LIKELY CORRECT | deterministic stride; fine |
-| `boundary_penalty` (48-59) | no-arbitrage band | NOT BOUNDARY PHYSICS | static band the analytic pricer satisfies identically; no terminal/edge PDE conditions exist in this stack |
+| `boundary_penalty` (48-59) | no-arbitrage band | NOT BOUNDARY PHYSICS | the band itself is the CORRECT tight European no-arbitrage bound under continuous dividends (misnamed `intrinsic_*`); satisfied by the analytic pricer up to quadrature error (smoke artifact train_boundary 1.1e-11; COS prices clamped at 1e-8); no terminal/edge PDE conditions exist in this stack |
 | no terminal-condition loss | U(S,v,0) = payoff | INCOMPLETE | absent entirely |
 | `_safe_grad` allow_unused -> zeros (62-75) | robustness shim | INCORRECT DESIGN | converts autograd non-connectivity into silent zeros — the direct enabler of the F2 defect |
 

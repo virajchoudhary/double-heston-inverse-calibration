@@ -25,16 +25,16 @@
     "VEC_A": {
       "delta_GL_autograd": 0.61458740427067,
       "delta_COS_autograd": 0.614587404269701,
-      "delta_COS_finite_diff": 0.6142498012078335,
+      "delta_COS_finite_diff": 0.6145874033478549,
       "abs_diff_COS_vs_GL": 9.690026558928366e-13,
-      "abs_diff_COS_autograd_vs_fd": 0.00033760306186758626
+      "abs_diff_COS_autograd_vs_fd": 9.21846154966488e-10
     },
     "VEC_B": {
       "delta_GL_autograd": 0.612119418461172,
       "delta_COS_autograd": 0.6121194184601828,
-      "delta_COS_finite_diff": 0.6117831711325294,
+      "delta_COS_finite_diff": 0.6121194177390876,
       "abs_diff_COS_vs_GL": 9.892087149410145e-13,
-      "abs_diff_COS_autograd_vs_fd": 0.00033624732765336063
+      "abs_diff_COS_autograd_vs_fd": 7.210951835645574e-10
     }
   },
   "defect_robustness": {
@@ -124,5 +124,23 @@
       "discounted_payoff": 0.0,
       "abs_err": 0.02026960099863251
     }
-  ]
+  ],
+  "certification_sweep": {
+    "points": 120,
+    "domain": "S in {80,100,120}; K/S in {0.85,0.95,1.0,1.05,1.15}; tau in {0.1,0.5,1.0,2.0}; 2 canonical-valid vectors",
+    "max_rel_residual": 1.584011425553319e-08,
+    "worst_point": [
+      "vec=A",
+      "S=120.0",
+      "K/S=1.05",
+      "tau=0.1"
+    ],
+    "max_rel_residual_by_tau": {
+      "0.1": 1.584011425553319e-08,
+      "0.5": 7.418590769055197e-09,
+      "1.0": 4.3854821916941446e-09,
+      "2.0": 2.5701212258131957e-09
+    },
+    "verdict": "canonical pricer satisfies the derived PDE across the swept domain to <= 2e-8 (worst at short-maturity OTM corners, consistent with F10)"
+  }
 }

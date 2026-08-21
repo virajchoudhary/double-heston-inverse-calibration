@@ -11,20 +11,28 @@ numerical confirmation, [INFERRED]=structure argument, [UNVERIFIED].
 
 ---
 
-## F1. Canonical physics contract is sound and now numerically certified [PROVEN]
+## F1. Canonical physics contract is sound and numerically certified across a
+stated domain [PROVEN]
 
 The canonical production model is the affine two-spot-driver Double Heston
 (independent variance factors, additive total spot variance, per-factor
 leverage correlations). The derived canonical pricing PDE (see derivation) is
 satisfied by the differentiable Gauss–Laguerre torch pricer to machine
-precision: |relative residual| <= 1.3e-15 over 8 parameter/point combinations
-(two parameter vectors x four (S,K,tau) points). Sensitivity controls: zeroing
-the two rho cross terms raises the relative residual to 6e-3..1.7e-1 (>= 7
-orders of magnitude); halving the cross coefficient produces EXACTLY half the
-perturbed residual (internal consistency). Limiting cases all pass: put-call
-parity 7e-15; exact CF factor-additivity identity 1.8e-15; two-identical-half-
-factors == single Heston cross-validated against the independent COS pricer to
-3.2e-11; deterministic-variance Black–Scholes limit within 4e-4 relative.
+precision at moderate collocation points: |relative residual| <= 1.3e-15 over
+8 parameter/point combinations (tau in {0.25, 0.5, 1.0}, K in 90-110, S=100).
+A broadened sweep (120 points: S in {80,100,120}, K/S in {0.85..1.15},
+tau in {0.1, 0.5, 1.0, 2.0}, both vectors) bounds the relative residual by
+1.6e-8, worst at short-maturity OTM corners and monotonically improving with
+maturity (1.6e-8 @ tau=0.1 -> 2.6e-9 @ tau=2.0) — the same quadrature-degradation
+pattern as F10, still 5-6 orders of magnitude below any perturbation signal
+(`probe_extension_results.json: certification_sweep`). Sensitivity controls:
+zeroing the two rho cross terms raises the relative residual to 6e-3..1.7e-1
+(>= 7 orders of magnitude above); halving the cross coefficient produces
+EXACTLY half the perturbed residual (internal consistency of the assembly).
+Limiting cases all pass: put-call parity 7e-15; exact CF factor-additivity
+identity 1.8e-15; two-identical-half-factors == single Heston cross-validated
+against the independent COS pricer to 3.2e-11; deterministic-variance
+Black–Scholes limit within 4e-4 relative, converging at O(sigma^2) (F11).
 
 **The canonical pricer, torch mirror, and derived PDE are mutually consistent.
 Nothing tonight needs changing in the production physics.**
@@ -54,10 +62,22 @@ Instrumented reproduction (`archive2_derivative_instrumentation`):
 `V_tau - [ 0.5(v1+v2) S^2 V_SS + (r-q) S V_S - r V ]`
 — a Black–Scholes-type operator with ALL variance dynamics missing — evaluated
 on the COS pricer's own output.** The published smoke-run value `train_pde:
-8.9` (experiments/import_smoke_20260821/metrics.json) is consistent with this
-large wrong-operator residual, not with quadrature noise. Classification:
+8.9` (experiments/import_smoke_20260821/metrics.json) is qualitatively
+consistent with a wrong-operator O(1)-scale signal (exact reproduction not
+possible: the smoke dataset lives on another machine; single-point broken
+losses here measure 0.005-0.05). Classification:
 INCORRECT (implementation), independent of the residual's conceptual problem
 (F3).
+
+Mechanism sharpened by adversarial review (independently re-executed): the
+pricer consumes the WHOLE 2-D `chosen_params` and creates its own internal
+SelectBackward nodes (`heston.py:156-157` slices `parameters[..., 0]`,
+`[..., 5]`); the losses.py views are CHILDREN (not ancestors) of the output
+node. No mechanism — storage aliasing, grad_fn accumulation, or object reuse —
+can ever route gradient into a post-hoc view; a view created even BEFORE the
+forward pass also receives zero if never consumed. Without `allow_unused`,
+`torch.autograd.grad` raises; with it, None -> zeros (`losses.py:73-74`). The
+defect is structural and has no workaround inside the current design.
 
 Closure strengthened (extension probe, `probe_extensions.py` ->
 `probe_extension_results.json`):
@@ -115,8 +135,8 @@ name should not be used for this stack in the paper without qualification.
 
 Archive-2's hard output space (sigmoid boxes, `transforms.py:22-94`) has no
 Feller condition and no correlation disk; its own valid extreme emits a vector
-that the canonical contract rejects with THREE violations (both Feller gaps
--2.245/-2.248; disk 1.805 > 1) — see `archive2_constraint_gap` and
+that the canonical contract rejects with THREE violations (Feller gaps
+-2.248 slow / -2.244 fast; disk 1.805 > 1) — see `archive2_constraint_gap` and
 `tables/PARAMETER_CONTRACT_MATRIX.md`. Also, its rho box (-0.95, -0.05)
 excludes canonical-valid vectors (rho_f > -0.05 incl. 0), so neither
 admissible set contains the other. Order/index mapping alone (double
@@ -172,8 +192,10 @@ should be regularisation/validity, not identification. Tonight's evidence
   former as its default — the repo-level "default" config IS the Archive-2
   config; naming hazard for Node A.
 - COS `integration_steps`: 64 vs 256 changes the price in the 4th decimal
-  (8.323761 vs 8.323844); 256 vs 1024 is bit-identical (series saturated at
-  u_max=120). The 256-default is adequate; residual identical at 256/384.
+  (8.323761 vs 8.323844); 256 vs 1024 is bit-identical. CORRECTED (adversarial
+  review): this saturation comes from exponential decay of the CF series terms
+  below float64 resolution — NOT from a frequency cap; `FourierConfig.u_max`
+  is a DEAD field (see F13).
 - Archive-2 stack provenance: single commit `642702e` "Add PINN implementation
   from Desktop"; dataset path in config points to another machine's Desktop
   (does not exist locally); no docs mention the stack; not re-runnable as
@@ -220,7 +242,10 @@ Independently verified Node A claims from code/behaviour:
 - F18 metrics normalization CONFIRMED: dheston parameter_summary uses raw
   per-parameter RMSE (no range scaling); cross-stack metric comparisons must
   state the convention.
-- COS damping alpha=1.5 CONFIRMED (`src/dheston/pricing/heston.py:11`).
+- COS damping alpha=1.5: the field EXISTS (`heston.py:11`) but is a DEAD
+  config field (see F13) — Node A's "COS with damping alpha=1.5" describes an
+  unused knob, not an active numerical treatment (correction to my earlier
+  F12 phrasing and to Node A's seam-matrix wording).
 - Cross-check with Node A's G2 ambiguity numbers (F17: 40 near-equivalent
   solutions; median normalized price RMSE 4.7e-8 vs parameter RMSE 0.149):
   my correctly-wired PDE residual floor (4-5e-9 relative) sits at the same
@@ -228,6 +253,48 @@ Independently verified Node A claims from code/behaviour:
   empirical support for F8: a PDE-residual term cannot distinguish
   near-equivalent parameter vectors; claims should be regularisation/validity
   only.
+
+## F13. Adversarial review outcome (01:55 IST) — all load-bearing claims
+confirmed; corrections applied [PROVEN]
+
+An independent adversarial reviewer re-derived the mathematics and re-executed
+the decisive experiments from a clean checkout. Verdicts: (a) two-driver
+construction, (b) PDE + tau convention, (d) post-hoc-view zero-gradient
+mechanism ("airtight"), (e) disk sufficient-not-necessary, (f) additivity,
+(g) half-factor reduction, (i) parameter mapping — all CONFIRMED; canonical
+classifications (F2-F7) verified including exact artifact values
+(train_pde 8.9055 / valid_pde 0.0; research-control prohibition verbatim at
+docs/RESEARCH_CONTROL_AND_CURRENT_STATUS.md:36). No claim required retraction.
+Corrections applied from the review: F1 certification domain stated (8-point
+machine precision + 120-point sweep <= 1.6e-8); F5 gap values fixed; F9/F12
+dead-field attributions corrected; boundary band phrased "satisfied up to
+quadrature error" (smoke artifact train_boundary 1.1e-11, COS prices clamped
+at 1e-8); derivation §1.2 equality-in-law wording, §1.3 sharpening, §3
+O(sigma^2) + terminal phrasing.
+
+New minor findings from the review (all LOW severity, none affect conclusions):
+1. **Dead FourierConfig fields**: `alpha`, `u_max`, `integration_eps` are
+   defined but NEVER consumed (only `integration_steps`,
+   `truncation_scaler`, `min_truncation_width` are used) — latent operational
+   trap: editing them changes nothing.
+2. **Canonical-stack autograd scan CLEAN**: repo-wide, `torch.autograd.grad`
+   / `allow_unused` appear only in Archive-2's `_safe_grad` (and Node C
+   tests); `train_pinn.py` / `pinn_model.py` / `torch_double_heston.py` have
+   no such pattern; all `.detach()` uses are validation guards. The F2 defect
+   class is unique to Archive-2.
+3. **Latent non-differentiable point**: the torch factor exponent early-returns
+   a graph-free zero at `maturity == 0.0`
+   (`torch_double_heston.py:295-296`) — unreachable via validated entry
+   points today; flag for any future tau=0 collocation.
+4. **Dead compute**: `boundary_penalty` builds and discards
+   `_expand_batch_to_points` output (`losses.py:49-50`).
+5. **Naming misnomer**: `intrinsic_call/put` in `boundary_penalty` actually
+   hold DISCOUNTED European no-arbitrage lower bounds (the bounds themselves
+   are correct and tight; only the names mislead).
+6. **Probe hygiene**: my earlier FD delta used default-float32 spot tensors,
+   corrupting the finite-difference estimate (3.4e-4 apparent error); fixed to
+   float64 — FD now agrees with autograd to ~1e-9. The autograd-vs-GL
+   comparison F3 relies on (9.7e-13) was unaffected.
 
 ## Required final classifications (Section 23 of the brief)
 

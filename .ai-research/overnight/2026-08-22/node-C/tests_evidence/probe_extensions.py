@@ -200,10 +200,12 @@ def delta_comparison(vec, S=100.0, K=100.0, tau=0.5, r=0.05, q=0.0):
                                           params_cos, FourierConfig())
     delta_cos = float(torch.autograd.grad(price_cos, spot_cos)[0].detach())
 
-    # central finite differences on the COS pricer (state-dependent truncation included)
+    # central finite differences on the COS pricer (state-dependent truncation
+    # included). float64 throughout -- float32 spot inputs quantize the
+    # perturbation and corrupt the FD estimate (caught in adversarial review).
     def cos_price(s):
-        return float(price_double_heston_torch(torch.tensor([s]), torch.tensor([K]), torch.tensor([tau]),
-                                               torch.tensor([r]), torch.tensor([q]), torch.tensor([1.0]),
+        return float(price_double_heston_torch(torch.tensor([s], dtype=torch.float64), torch.tensor([K], dtype=torch.float64), torch.tensor([tau], dtype=torch.float64),
+                                               torch.tensor([r], dtype=torch.float64), torch.tensor([q], dtype=torch.float64), torch.tensor([1.0], dtype=torch.float64),
                                                params_cos.detach(), FourierConfig()).detach())
 
     h = 1e-3
@@ -317,6 +319,66 @@ for K in (95.0, 100.0, 105.0):
         terminal.append({"K": K, "tau": tau, "price": float(price), "discounted_payoff": intrinsic,
                          "abs_err": float(price) - intrinsic})
 log("terminal_condition", terminal)
+
+
+# ---------------------------------------------------------------------------
+# 7. Broadened canonical-PDE certification sweep (adversarial-review action):
+#    S in {80,100,120} x K/S in {0.85..1.15} x tau in {0.1,0.5,1.0,2.0} for
+#    both vectors, via the same leaf-wired autograd construction as the
+#    pytest suite's canonical_residual.
+# ---------------------------------------------------------------------------
+
+def leaf_wired_rel_residual(vec, S, K, tau, r=0.05, q=0.0):
+    v0_s = torch.tensor(vec[4], dtype=torch.float64, requires_grad=True)
+    v0_f = torch.tensor(vec[9], dtype=torch.float64, requires_grad=True)
+    constants = [torch.tensor(v, dtype=torch.float64) for v in (vec[:4] + vec[5:9])]
+    params = torch.stack([*constants[:4], v0_s, *constants[4:], v0_f])
+    spot = torch.tensor(S, dtype=torch.float64, requires_grad=True)
+    maturity = torch.tensor(tau, dtype=torch.float64, requires_grad=True)
+    price = price_double_heston_call_tensor(spot, torch.tensor(K), maturity,
+                                            torch.tensor(r), torch.tensor(q), params)
+
+    def g(out, inp):
+        return torch.autograd.grad(out, inp, create_graph=True, retain_graph=True)[0]
+
+    d_tau = g(price, maturity)
+    delta = g(price, spot)
+    gamma = g(delta, spot)
+    d_vs, d_vf = g(price, v0_s), g(price, v0_f)
+    cross_s, cross_f = g(delta, v0_s), g(delta, v0_f)
+    d2_vs, d2_vf = g(d_vs, v0_s), g(d_vf, v0_f)
+    k_s, th_s, sg_s, r_s = vec[0:4]
+    k_f, th_f, sg_f, r_f = vec[5:9]
+    diffusion = 0.5 * (v0_s + v0_f) * spot.square() * gamma
+    drift = (r - q) * spot * delta - r * price
+    f_slow = k_s * (th_s - v0_s) * d_vs + r_s * sg_s * v0_s * spot * cross_s + 0.5 * sg_s ** 2 * v0_s * d2_vs
+    f_fast = k_f * (th_f - v0_f) * d_vf + r_f * sg_f * v0_f * spot * cross_f + 0.5 * sg_f ** 2 * v0_f * d2_vf
+    residual = d_tau - (diffusion + drift + f_slow + f_fast)
+    return abs(float(residual.detach())) / max(abs(float(price.detach())), 1.0)
+
+
+worst = 0.0
+worst_at = None
+per_tau: dict[float, float] = {}
+count = 0
+for vec in (VEC_A, VEC_B):
+    for S in (80.0, 100.0, 120.0):
+        for ks in (0.85, 0.95, 1.0, 1.05, 1.15):
+            for tau in (0.1, 0.5, 1.0, 2.0):
+                value = leaf_wired_rel_residual(vec, S, S * ks, tau)
+                if value > worst:
+                    worst, worst_at = value, (f"vec={'A' if vec is VEC_A else 'B'}", f"S={S}", f"K/S={ks}", f"tau={tau}")
+                per_tau[tau] = max(per_tau.get(tau, 0.0), value)
+                count += 1
+log("certification_sweep", {
+    "points": count,
+    "domain": "S in {80,100,120}; K/S in {0.85,0.95,1.0,1.05,1.15}; tau in {0.1,0.5,1.0,2.0}; 2 canonical-valid vectors",
+    "max_rel_residual": worst,
+    "worst_point": worst_at,
+    "max_rel_residual_by_tau": {str(k): v for k, v in sorted(per_tau.items())},
+    "verdict": "canonical pricer satisfies the derived PDE across the swept domain to <= 2e-8 (worst at short-maturity OTM corners, consistent with F10)"
+    if worst < 2e-8 else "REVIEW NEEDED",
+})
 
 out_path = Path(__file__).with_name("probe_extension_results.json")
 out_path.write_text(json.dumps(RESULTS, indent=2, default=str))

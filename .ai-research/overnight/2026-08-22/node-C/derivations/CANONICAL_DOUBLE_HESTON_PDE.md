@@ -41,7 +41,7 @@ characteristic functions MULTIPLY.
 
 ### 1.2 The SDE this represents (proven from the code structure)
 
-A product/sum decomposition of this form exists if and only if the model is
+A product/sum decomposition of this form exists — as an equality in law — for
 the **affine two-spot-driver Double Heston** (Christoffersen–Heston–Jacobs
 style): take four mutually independent standard Brownian motions
 `B_slow, B_fast, Z_slow, Z_fast` and set
@@ -103,11 +103,16 @@ the DIFFERENT, single-spot-driver 3-BM correlation matrix
 For the implemented model the disk is therefore a **sufficient, conservative,
 state-independent condition — not a necessary one** (e.g. rho = (−0.8, −0.7)
 is pointwise admissible in the implemented model but excluded by the disk).
-Classification: design choice, documented here; not an inconsistency. It
-guarantees the observable instantaneous correlation matrix of
-`(dS/S, dB_slow, dB_fast)` is uniformly PD for all variance states, since
-`Corr(dS/S, dB_i) = rho_i sqrt(v_i / (v_s + v_f))` and
-`rho_s^2 v_s + rho_f^2 v_f <= (rho_s^2 + rho_f^2)(v_s+v_f) < v_s + v_f`.
+Sharpened (adversarial review): the disk is not needed even for uniform PD of
+the observable instantaneous correlation matrix of `(dS/S, dB_s, dB_f)` — that
+matrix has determinant proportional to
+`(1−rho_s^2) w_s + (1−rho_f^2) w_f` with weights `w_i = v_i/(v_s+v_f)`, which
+is positive for ALL variance states iff `|rho_i| < 1` each. So the disk is
+strictly stronger than required by every property identified in this
+document; classification remains a deliberate conservative modelling choice,
+to be stated as such in the paper. Note `Corr(dS/S, dB_i) = rho_i sqrt(w_i)`
+and `rho_s^2 w_s + rho_f^2 w_f <= (rho_s^2 + rho_f^2)(w_s + w_f) < 1` when the
+disk holds, which is how the disk implies the observable condition.
 
 ---
 
@@ -183,7 +188,9 @@ leaves (see FINDINGS F2 for the Archive-2 failure mode).
 ## 3. Terminal and boundary conditions (Phase C)
 
 Terminal (`tau = 0`, i.e. `t = T`), independent of variance state — implied by
-the payoff structure and verified by the pricer's payoff at `maturity -> 0`:
+the payoff structure; the pricer's behaviour near `tau -> 0` is consistent
+with this modulo quadrature limits (ITM convergence, ATM O(sqrt(tau)) approach,
+see FINDINGS F10):
 
 ```
 call: U(S, v_s, v_f, 0) = max(S - K, 0)
@@ -196,16 +203,17 @@ put-call parity (`src/double_heston.py:290-319`) — parity verified to 7e-15.
 Spot boundaries: `S = 0` is absorbing (`dS = S(...) = 0`): call -> 0,
 put -> `K e^{-r tau}`. As `S -> infinity`, call ~ `S e^{-q tau} - K e^{-r tau}`,
 put -> 0. (Standard; also the mathematical content of Archive-2's
-`boundary_penalty` band, `src/dheston/models/losses.py:48-59`.)
+`boundary_penalty` band, `src/dheston/models/losses.py:48-59` — the band is
+the correct tight European no-arbitrage band under continuous dividends, but
+it is satisfied by the analytic pricer up to quadrature error and is not
+boundary physics.)
 
 Variance boundaries: `v_i = 0` is a degenerate (no boundary condition needed)
 boundary of the square-root process: with the enforced strict Feller condition
 `2 kappa_i theta_i > sigma_i^2` the factor is strictly positive a.s. and zero
 is unattainable. No boundary condition in `v` is required or imposed by the
 canonical pricer (Fourier solution). Archive-2's PDE loss imposes NO
-terminal/boundary PDE conditions at all — its "boundary" term is the static
-no-arbitrage band above, which the analytic pricer satisfies identically; it
-is not boundary physics.
+terminal/boundary PDE conditions at all.
 
 Limiting-case validations executed (Phase H):
 - exact factor-additivity identity at CF level: error 1.8e-15;
@@ -214,7 +222,17 @@ Limiting-case validations executed (Phase H):
   on prices of size 4-15 (`one_factor_price_reduction`);
 - deterministic-variance (sigma -> 0.02, rho -> -0.02) Black–Scholes limit:
   relative error <= 4.0e-4 across moneyness/maturities (`black_scholes_limit`),
-  consistent with the O(sigma) convergence rate of the limit.
+  with measured convergence O(sigma^2) in sigma (halving ratios 4.2-5.2; the
+  leading corrections are quadratic because rho = O(sigma) in the
+  construction) — see FINDINGS F11.
+
+Terminal-condition behaviour at the numerical level (FINDINGS F10): ITM calls
+converge to the discounted payoff as tau -> 0; ATM calls approach the payoff
+at the mathematically expected O(sqrt(tau)) rate; far-OTM strikes at
+tau <= 1e-3 can produce small negative prices from 64-node Gauss-Laguerre
+under-resolution (down to -0.09), while within the research grid
+(maturities >= 7 days, |log-moneyness| <= 0.30) the worst observed value is
+-6.3e-12, i.e. float-level rounding on an effectively-zero price.
 
 ---
 
