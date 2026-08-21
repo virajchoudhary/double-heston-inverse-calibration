@@ -366,3 +366,8 @@ question is Human Decision #1.
 
 No contradictions found between Node C evidence and Node A findings. Node C final
 SHA at integration: 751551a.
+
+Cross-verification (A-015): Node C's 25-test suite extracted read-only and run under
+Node A's local pytest — 25/25 passed (initial 4 failures were /tmp path artifacts).
+Node C evidence is independently reproduced end-to-end: derivation, bug, constraints,
+limits. Their F10 boundary also spot-verified locally (-0.013/-0.089 at tau 1e-3/1e-4).

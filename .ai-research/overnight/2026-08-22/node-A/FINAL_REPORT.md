@@ -153,6 +153,14 @@ and reproducible.
 4. Representation-interface design (informed by B's pattern) BEFORE 10k generation.
 5. Integrate Node B/C evidence into Model 3 go/no-go.
 
+## Peer integration summary
+
+- Node C: INTEGRATED (751551a). Bug REPRODUCED with independent instrumentation + bit-exact
+  closure; canonical physics certified (25/25 tests, also run under Node A pytest, A-015);
+  F10 boundary spot-verified. One disposition nuance recorded (real_finetune: REMOVE vs
+  ISOLATE-AS-ABLATION).
+- Node B: (status at consolidation).
+
 ## Branch and final SHA
 
 Branch: `overnight/20260822-a-architecture`. Final SHA: (filled at consolidation).

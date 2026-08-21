@@ -25,13 +25,17 @@ training; real-market weight updating prohibited; mentor gate outstanding.
 
 ## 3. Architecture conclusion
 
-Canonical seam (see node-A `architecture/SEAM_MATRIX.md`, 20 seams classified):
+Joint Node A + Node C position (independently derived, mutually supportive):
 canonical parameter contract + frozen production pricer + machine-precision torch mirror +
 hard-by-construction `DoubleHestonConstraintMap` + data-derived-input-size surface features +
 synthetic-only training with validation-gated checkpoints + post-freeze chronological
 zero-leakage real-market evaluation (pattern adapted from archive-2). Cross-stack parameter
 interop only via the verified permutation adapter (node-A artifact). Archive-2's real
-fine-tuning paths are removed from any canonical path.
+fine-tuning paths are removed from any canonical path. If a genuine PDE-informed tier
+(Model 3) is approved, both nodes converge on: learned forward price network with
+canonical-PDE collocation + leaf state inputs; inverse network coupled through the LEARNED
+pricer's residual; validation/objective parity; claims limited to regularization/structural
+validity (not identification).
 
 ## 4. Identifiability/calibration conclusion
 
