@@ -1,0 +1,81 @@
+{
+  "analysis_id": "NTPC_DH_MULTI_DATE_CALIBRATION",
+  "base_main": "e1e5b0fba1795c84b8c7a8cb534a8962dc1d22e0",
+  "classification": "MULTI_DATE_INSUFFICIENT",
+  "date_balanced_loss": "raw price residuals divided by sqrt(calibration row count per date)",
+  "generated_artifact_hashes": {
+    "market_data_audit/stage_a/derived/ntpc_dh_multi_date_calibration/figures/01_three_date_option_support.png": "CB4BACF564B04A919628961813298318ECBE77A7C237DD06DBD4FAA8A926ACA2",
+    "market_data_audit/stage_a/derived/ntpc_dh_multi_date_calibration/figures/02_holdout_rmse.png": "5ECA760B254540A3F4277F530B0464E1AAE89AC932E27BE6BEE2E883FAB69065",
+    "market_data_audit/stage_a/derived/ntpc_dh_multi_date_calibration/figures/03_shared_parameter_dispersion.png": "45B34F57B05D53E0A14801D3C08A3236D1026CDA4F0B2EA695DC1FB0AC461F95",
+    "market_data_audit/stage_a/derived/ntpc_dh_multi_date_calibration/figures/04_cluster_separation.png": "54DE261B5B76D4484F16C344A8C2D40FDF909C085F0BB3B68C50B306534A98FA",
+    "market_data_audit/stage_a/derived/ntpc_dh_multi_date_calibration/figures/05_kappa_half_life.png": "7482FB82209FEDF33DEDA2B4E8BFEEA57AA51145BFACF88B06ABD6E077041E53",
+    "market_data_audit/stage_a/derived/ntpc_dh_multi_date_calibration/figures/06_date_specific_variance.png": "E1D449EAF0C7AFD5C7945C78430190ADEA2CD5AA179D0EB5863D3C87F3542C64",
+    "market_data_audit/stage_a/derived/ntpc_dh_multi_date_calibration/figures/07_market_vs_model_iv.png": "355FFF64D84303F043483A4322177F00D4CAB78485D5F9A495D3D824EFA3D328",
+    "market_data_audit/stage_a/derived/ntpc_dh_multi_date_calibration/figures/08_pricing_residuals.png": "F763453614615C0481CF14AED3B94C8C51F3F6BF06FAE2B3B093DC160490B401",
+    "market_data_audit/stage_a/derived/ntpc_dh_multi_date_calibration/joint_starts.csv": "68FBE6D2E39A503A8C4FA57D01B0784B1AC9B390EFC8DE7B90D14446289ED718",
+    "market_data_audit/stage_a/derived/ntpc_dh_multi_date_calibration/multistart.csv": "D660D27F2640C119665930E5F6455881CEEF9B2F1C7B8BBD592A1249FE5B9C79",
+    "market_data_audit/stage_a/derived/ntpc_dh_multi_date_calibration/near_equivalent.csv": "8DBFB3B767E3061EB98BE6BA1AAD6BE59496ECDDC22C366486430B75C3358E55",
+    "market_data_audit/stage_a/derived/ntpc_dh_multi_date_calibration/selected_options.csv": "CD596DB54B9A62AB16D137403240340B4F2A27F2429F266DCBF90C4B7A5B3509",
+    "market_data_audit/stage_a/derived/ntpc_dh_multi_date_calibration/summary.json": "1A9FE7B3B539A94C3F2766EFF7A693CE6D1196C057FBBF2AAD1F1CB4BB8EAAD5",
+    "market_data_audit/stage_a/derived/ntpc_dh_multi_date_calibration/target_support.csv": "7A05010B8E80B196B3EC4DA6B56C39A90C536808591A4AF959AE4664CF0988F5"
+  },
+  "parameter_contract": "8 shared structural + 2 states per date; canonical 10-vector per date",
+  "rate_contract": {
+    "2026-07-01": {
+      "cutoff_price": 98.7075,
+      "html": "rbi_tbill_full_auction_result_20260701.html",
+      "observed": "2026-07-01",
+      "preserved_path": "market_data_audit/stage_a/derived/ntpc_dh_multi_date_calibration/rate_provenance/rbi_tbill_full_auction_result_20260701.html",
+      "release_date": "2026-07-01",
+      "sha256": "E9CCF5D501E4488F18F185490A119C3B184F341C6C42F45861B898DCB6285B00",
+      "source_identifier": "RBI Press Release 2026-2027/584",
+      "url": "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=63062",
+      "yield": 0.052521
+    },
+    "2026-07-15": {
+      "cutoff_price": 98.688,
+      "html": "rbi_tbill_full_auction_result_20260715.html",
+      "observed": "2026-07-15",
+      "preserved_path": "market_data_audit/stage_a/derived/ntpc_dh_multi_date_calibration/rate_provenance/rbi_tbill_full_auction_result_20260715.html",
+      "release_date": "2026-07-15",
+      "sha256": "98A4DE63E7C8D427ECBBA9156EDE47F7BED9B802A5508DBE4B73C98801F499D6",
+      "source_identifier": "RBI Press Release 2026-2027/672",
+      "url": "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=63150",
+      "yield": 0.053324
+    },
+    "2026-07-22": {
+      "cutoff_price": 98.688,
+      "html": "rbi_tbill_full_auction_result_20260715.html",
+      "observed": "2026-07-15",
+      "preserved_path": "market_data_audit/stage_a/derived/ntpc_dh_multi_date_calibration/rate_provenance/rbi_tbill_full_auction_result_20260715.html",
+      "release_date": "2026-07-15",
+      "sha256": "98A4DE63E7C8D427ECBBA9156EDE47F7BED9B802A5508DBE4B73C98801F499D6",
+      "source_identifier": "RBI Press Release 2026-2027/672",
+      "url": "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=63150",
+      "yield": 0.053324
+    }
+  },
+  "report_sha256": "65BFABC97BD9FC64E498070332315F5E740EC7B93501CEEB030982D922E4E5EA",
+  "runtime": {
+    "numpy": "2.2.6",
+    "pandas": "2.3.2",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.4 (tags/v3.13.4:8a526ec, Jun  3 2025, 17:46:04) [MSC v.1943 64 bit (AMD64)]",
+    "scipy": "1.16.2"
+  },
+  "source_hashes": {
+    "market_data_audit/stage_a/derived/ntpc_dh_multi_date_calibration/rate_provenance/rbi_tbill_full_auction_result_20260701.html": "E9CCF5D501E4488F18F185490A119C3B184F341C6C42F45861B898DCB6285B00",
+    "market_data_audit/stage_a/derived/ntpc_dh_multi_date_calibration/rate_provenance/rbi_tbill_full_auction_result_20260715.html": "98A4DE63E7C8D427ECBBA9156EDE47F7BED9B802A5508DBE4B73C98801F499D6",
+    "market_data_audit/stage_a/raw/nse/2026-07-01/BhavCopy_NSE_CM_0_0_0_20260701_F_0000.csv": "B4B41E84E4B1ECC499D457B10EAABF57E1A818AD8994B48572059307FEA8C495",
+    "market_data_audit/stage_a/raw/nse/2026-07-01/BhavCopy_NSE_FO_0_0_0_20260701_F_0000.csv": "F6E852E25C2AA0801FCDE8EFAB0DDFC25BE7A11D82C26CEF7FDE3C0182DE68F1",
+    "market_data_audit/stage_a/raw/nse/2026-07-15/BhavCopy_NSE_CM_0_0_0_20260715_F_0000.csv": "F073234AB734FBD679755C485CD607BEC220BFE77FA2EEBF4E605766386F5A19",
+    "market_data_audit/stage_a/raw/nse/2026-07-15/BhavCopy_NSE_FO_0_0_0_20260715_F_0000.csv": "5FCD3437CFA4D6C489608687D790BF26F11F8B0D02D088CF907D5A005A360FD5",
+    "market_data_audit/stage_a/raw/nse/2026-07-22/BhavCopy_NSE_CM_0_0_0_20260722_F_0000.csv": "5E0B57775BA82E779CF58A5530CE308F2228723D43D0AF85CC9238DB67EA5C1E",
+    "market_data_audit/stage_a/raw/nse/2026-07-22/BhavCopy_NSE_FO_0_0_0_20260722_F_0000.csv": "CEB335EF5819E3921C02095A2778B169F98610A853B8E6B7D1604EB32D98824D"
+  },
+  "valuation_dates": [
+    "2026-07-01",
+    "2026-07-15",
+    "2026-07-22"
+  ]
+}

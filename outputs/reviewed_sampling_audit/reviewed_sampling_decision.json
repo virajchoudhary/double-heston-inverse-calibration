@@ -1,0 +1,11 @@
+{
+  "audit_pass": false,
+  "limitations": {
+    "no_real_market_validation": true,
+    "no_teammate_equivalence_claim": true,
+    "statement": "No real-market validation, NIFTY claim, or teammate-equivalence claim is made; financial/domain review remains required."
+  },
+  "no_ann_training_occurred": true,
+  "no_final_large_dataset_generated": true,
+  "status": "NEEDS_SAMPLER_CORRECTION"
+}

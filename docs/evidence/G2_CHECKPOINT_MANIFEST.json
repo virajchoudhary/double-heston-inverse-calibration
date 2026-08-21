@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "checkpoint_date": "2026-08-11",
+  "repository": "C:/ann_inverse_calibration",
+  "branch": "feat/g2-common-support",
+  "canonical_base": "5e5a829828c3009ea42475c2e2ff8e9681995a5a",
+  "scientific_state": {
+    "stage_a_candidate_selection": "COMPLETE",
+    "selected_primary_set": [
+      "NTPC",
+      "CIPLA",
+      "INFY",
+      "HDFCBANK"
+    ],
+    "g2_market_supported_geometry": "ESTABLISHED",
+    "g2_final_representation": "NOT_FROZEN",
+    "g2": "NOT_PASSED — STRUCTURAL IDENTIFIABILITY PROBLEM REMAINS",
+    "multi_date_diagnostic": "INSUFFICIENT",
+    "final_10k": "NOT_GENERATED",
+    "ann_research_training": "NOT_STARTED",
+    "pinn": "NOT_DERIVED_OR_TRAINED"
+  },
+  "aggregate_hash_contract": {
+    "algorithm": "SHA-256",
+    "file_order": "ascending repository-relative POSIX path",
+    "record_bytes": "utf8(relative_path) + NUL + uppercase_sha256(file_bytes) + LF"
+  },
+  "stage_a_snapshot": {
+    "root": "market_data_audit/stage_a",
+    "file_count": 98,
+    "aggregate_sha256": "FC80D6A8F7B36C2FF0A4D6DE4ED1AB2EF241F7FA3ABAA38249E0B1E22D3BFAF0",
+    "staging_policy": "ignored; referenced but not staged"
+  },
+  "evidence_sets": [
+    {
+      "id": "common_support",
+      "artifact_paths": [
+        "market_data_audit/stage_a/derived/g2_maturity_support.csv",
+        "market_data_audit/stage_a/derived/g2_moneyness_support.csv",
+        "market_data_audit/stage_a/derived/g2_representation_candidates.csv",
+        "market_data_audit/stage_a/derived/g2_surface_support.csv",
+        "market_data_audit/stage_a/derived/g2_figures/"
+      ],
+      "file_count": 7,
+      "aggregate_sha256": "E1C9F9AFB2D2B4FBC68D86F4238ECFF5104678A9248B6F00B295DA157A60A13B",
+      "csv_row_counts": {
+        "g2_maturity_support.csv": 192,
+        "g2_moneyness_support.csv": 792,
+        "g2_representation_candidates.csv": 11,
+        "g2_surface_support.csv": 72
+      },
+      "analysis_command": "python -B scripts/run_g2_common_support_analysis.py",
+      "seed": null,
+      "node_count": null,
+      "optimizer": null,
+      "parameter_sample": "balanced official-NSE panel: 4 primaries x 3 valuation dates",
+      "noise_levels": [],
+      "replay_status": "existing deterministic artifacts rehashed; canonical experiment not rerun for checkpoint"
+    },
+    {
+      "id": "reduced_grid_identifiability",
+      "artifact_root": "market_data_audit/stage_a/derived/g2_identifiability/",
+      "file_count": 11,
+      "aggregate_sha256": "8685F24A85F3A30D331E05EF458C97D06C6FF3B053BEA234DBCEB80A3AADD250",
+      "csv_row_counts": {
+        "jacobian_summary.csv": 96,
+        "near_null_directions.csv": 960,
+        "parameter_sensitivity.csv": 960,
+        "recovery_starts.csv": 36,
+        "recovery_summary.csv": 12,
+        "representative_parameters.csv": 8
+      },
+      "analysis_command": "python -B scripts/run_g2_identifiability_analysis.py",
+      "seed": 20260810,
+      "node_count": 64,
+      "optimizer": {
+        "name": "scipy.optimize.least_squares",
+        "starts_per_target": 3,
+        "max_nfev": 120
+      },
+      "parameter_sample": "8 deterministic maximin vectors: 4 reviewed interior + 4 reviewed wide-valid; recovery uses 2 per distribution",
+      "noise_levels": [
+        0.0,
+        0.005,
+        0.01
+      ],
+      "replay_status": "existing deterministic artifacts rehashed; prior common-support replay/preservation contract retained; canonical experiment not rerun for checkpoint"
+    },
+    {
+      "id": "information_remediation",
+      "artifact_root": "market_data_audit/stage_a/derived/g2_information_remediation/",
+      "file_count": 15,
+      "aggregate_sha256": "8688C5FBFAB76265ECB20DE767193CE56F7114886B0CA0017C96B15A8180FA85",
+      "csv_row_counts": {
+        "experiment_matrix.csv": 2,
+        "far_expiry_market_support.csv": 12,
+        "jacobian_comparison.csv": 48,
+        "parameter_sensitivity_comparison.csv": 480,
+        "recovery_starts.csv": 72,
+        "recovery_summary.csv": 24,
+        "weakest_directions_comparison.csv": 480
+      },
+      "key_json": {
+        "decision.json_sha256": "EE3683910532FF41F43F14A736A5CE3B3C314E4EE95EEE5BABA05F4B74E4439F"
+      },
+      "analysis_command": "python -B scripts/run_g2_information_remediation.py",
+      "seed": 20260810,
+      "node_count": 64,
+      "optimizer": {
+        "name": "scipy.optimize.least_squares",
+        "starts_per_target": 3,
+        "max_nfev": 120
+      },
+      "parameter_sample": "same 8 deterministic reduced-grid vectors; recovery uses 2 per distribution",
+      "noise_levels": [
+        0.0,
+        0.005,
+        0.01
+      ],
+      "replay_status": "existing deterministic artifacts and prior evidence hashes reverified; canonical experiment not rerun for checkpoint"
+    },
+    {
+      "id": "multi_date_identifiability",
+      "artifact_root": "market_data_audit/stage_a/derived/g2_multi_date_identifiability/",
+      "file_count": 17,
+      "aggregate_sha256": "199B2F47D5268635C6CF00F5F32BCB8C5D882C921C40D4311A17709980DC55BC",
+      "csv_row_counts": {
+        "experiment_designs.csv": 4,
+        "identifiability_summary.csv": 32,
+        "nuisance_state_recovery.csv": 48,
+        "parameter_error_summary.csv": 120,
+        "parameter_sensitivity.csv": 320,
+        "recovery_starts.csv": 72,
+        "recovery_summary.csv": 12,
+        "state_paths.csv": 8,
+        "weakest_directions.csv": 320
+      },
+      "key_json": {
+        "decision.json_sha256": "B371DE5C5EAB23ADEAC685DB2D6920CCB3AED661562B178CD052B81BC92A00E7"
+      },
+      "analysis_command": "python -B scripts/run_g2_multi_date_identifiability.py --node-count 64 --maxiter 80 --start-count 3 --per-distribution 1",
+      "seed": 20260811,
+      "node_count": 64,
+      "optimizer": {
+        "name": "L-BFGS-B",
+        "starts_per_target": 3,
+        "maxiter": 80
+      },
+      "parameter_sample": "8 deterministic vectors for local information; recovery uses 1 target per reviewed distribution (2 total)",
+      "noise_levels": [
+        0.0,
+        0.005,
+        0.01
+      ],
+      "replay_status": "existing 17-file artifact set rehashed; report records protected prior evidence unchanged; canonical experiment not rerun for checkpoint"
+    },
+    {
+      "id": "independent_cir_path_replication",
+      "artifact_root": "market_data_audit/stage_a/derived/g2_multi_date_replication/",
+      "file_count": 17,
+      "aggregate_sha256": "7232E749BFDC34729F5129FD2A5B4230BEB5981B2342345AD6E27B6B31192A8F",
+      "csv_row_counts": {
+        "hypothesis_status.csv": 4,
+        "original_vs_replication.csv": 4,
+        "replication_contract.csv": 1,
+        "replication_identifiability.csv": 32,
+        "replication_nuisance_state_recovery.csv": 48,
+        "replication_parameter_errors.csv": 120,
+        "replication_parameter_sensitivity.csv": 320,
+        "replication_recovery_starts.csv": 72,
+        "replication_recovery_summary.csv": 12,
+        "replication_state_paths.csv": 8,
+        "replication_weakest_directions.csv": 320,
+        "weakest_direction_stability.csv": 4
+      },
+      "key_json": {
+        "decision.json_sha256": "B1DD862ABE5AC81DE820252A366F5081A44E47E0E2F8332F733BA69C52D054EE"
+      },
+      "analysis_command": "python -B scripts/run_g2_multi_date_replication.py --node-count 64 --maxiter 80 --start-count 3 --per-distribution 1",
+      "seeds": {
+        "original_cir_path": 20260811,
+        "replication_cir_path": 27182818,
+        "recovery_noise_start_unchanged": 20260811
+      },
+      "node_count": 64,
+      "optimizer": {
+        "name": "L-BFGS-B",
+        "starts_per_target": 3,
+        "maxiter": 80
+      },
+      "parameter_sample": "same frozen 8-vector local-information and 2-target recovery contract as the original multi-date run",
+      "noise_levels": [
+        0.0,
+        0.005,
+        0.01
+      ],
+      "replay_status": "independent seed-only canonical run completed once; artifacts rehashed; no rerun for checkpoint",
+      "verdict": "REPLICATION = MIXED"
+    }
+  ],
+  "checkpoint_validation": {
+    "focused_g2_tests": {
+      "status": "PASS",
+      "count": 45
+    },
+    "full_suite": {
+      "status": "PASS",
+      "count": 206
+    },
+    "canonical_scientific_experiments_rerun": false,
+    "ignored_evidence_staged": false
+  }
+}

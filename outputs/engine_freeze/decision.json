@@ -1,0 +1,31 @@
+{
+  "decisive_evidence": {
+    "benchmark_pass": true,
+    "benchmark_present": true,
+    "benchmark_tolerance_breaches": false,
+    "current_full_validation_chain_passed": false,
+    "current_full_validation_chain_status": "PENDING_PRIMARY_RERUN",
+    "prior_bounds_audit_pass": true,
+    "reference_unreliable_count": 0,
+    "reviewed_sampling_audit_pass": false,
+    "trusted_external_finalization_recorded": false
+  },
+  "remaining_limitations": {
+    "no_real_market_validation": true,
+    "no_teammate_equivalence_claim": true,
+    "statement": "No real-market validation, NIFTY claim, or teammate-equivalence claim is made; financial/domain review remains required."
+  },
+  "reviewed_sampling": {
+    "audit_pass": false,
+    "limitations": {
+      "no_real_market_validation": true,
+      "no_teammate_equivalence_claim": true,
+      "statement": "No real-market validation, NIFTY claim, or teammate-equivalence claim is made; financial/domain review remains required."
+    },
+    "no_ann_training_occurred": true,
+    "no_final_large_dataset_generated": true,
+    "status": "NEEDS_SAMPLER_CORRECTION"
+  },
+  "status": "NEEDS_SAMPLER_CORRECTION",
+  "timestamp_utc": "2026-08-07T07:46:44.313831+00:00"
+}

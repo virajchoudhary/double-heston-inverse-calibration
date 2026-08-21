@@ -1,0 +1,160 @@
+schema_version: "1.0"
+stage: A
+status: PREPARED_NO_BLOOMBERG_DATA
+purpose: real_market_availability_audit
+
+universe:
+  sectors:
+    power:
+      directory_name: power
+      candidates: [NTPC, POWERGRID]
+    healthcare_pharma:
+      directory_name: healthcare_pharma
+      candidates: [SUNPHARMA, CIPLA]
+    it:
+      directory_name: it
+      candidates: [INFY, TCS]
+    financial_banking:
+      directory_name: financial_banking
+      candidates: [ICICIBANK, HDFCBANK]
+  reference:
+    underlying: NIFTY
+    reference_only: true
+    ranked: false
+
+valuation_dates:
+  - 2026-07-01
+  - 2026-07-15
+  - 2026-07-22
+
+surface_contract:
+  identity: [underlying, valuation_date]
+  definition: one_underlying_date_with_all_near_mid_far_expiry_slices
+  expiry_is_a_surface: false
+  expected_expiry_slices: 3
+  expiry_classification: ascending_actual_expiry_date
+
+raw_semantic_fields:
+  options:
+    required:
+      - valuation_date
+      - underlying
+      - expiry_date
+      - strike
+      - option_type
+      - bid
+      - ask
+      - volume
+      - open_interest
+    optional:
+      - security_id
+      - last_price
+      - currency
+      - observation_timestamp
+  futures:
+    required:
+      - valuation_date
+      - underlying
+      - expiry_date
+      - futures_price
+    optional:
+      - security_id
+      - bid
+      - ask
+      - settlement_price
+      - currency
+      - observation_timestamp
+  spot:
+    required:
+      - valuation_date
+      - underlying
+      - spot
+    optional:
+      - security_id
+      - currency
+      - observation_timestamp
+
+bloomberg_candidate_mnemonics:
+  status: PROVISIONAL_NOT_VERIFIED
+  warning: candidate_values_only_verify_against_function_security_entitlements_and_export_layout
+  options:
+    security_id: ID_BB_GLOBAL
+    expiry_date: OPT_EXPIRE_DT
+    strike: OPT_STRIKE_PX
+    option_type: OPT_PUT_CALL
+    bid: PX_BID
+    ask: PX_ASK
+    last_price: PX_LAST
+    volume: PX_VOLUME
+    open_interest: OPEN_INT
+    currency: CRNCY
+    observation_timestamp: LAST_UPDATE_DT
+  futures:
+    security_id: ID_BB_GLOBAL
+    expiry_date: FUT_DLV_DT_LAST
+    futures_price: PX_LAST
+    bid: PX_BID
+    ask: PX_ASK
+    settlement_price: PX_SETTLE
+    currency: CRNCY
+    observation_timestamp: LAST_UPDATE_DT
+  spot:
+    security_id: ID_BB_GLOBAL
+    spot: PX_LAST
+    currency: CRNCY
+    observation_timestamp: LAST_UPDATE_DT
+  request_metadata_not_assumed_to_be_bloomberg_fields:
+    - valuation_date
+    - underlying
+
+price_usable_rules:
+  status: PROVISIONAL_AUDIT_RULES
+  positive_spot: true
+  positive_strike: true
+  positive_dte: true
+  finite_nonnegative_bid: true
+  finite_positive_ask: true
+  require_ask_greater_than_or_equal_to_bid: true
+  require_positive_mid: true
+  maximum_relative_bid_ask_spread: null
+  depends_on_volume: false
+  depends_on_open_interest: false
+
+activity_fields:
+  reported_independently: true
+  volume:
+    source_field: volume
+    flags: [volume_reported, volume_positive]
+  open_interest:
+    source_field: open_interest
+    flags: [open_interest_reported, open_interest_positive]
+  affects_price_usable: false
+
+candidate_grids:
+  status: PROVISIONAL_COMPARISON_ONLY
+  source: existing_108_input_contract
+  log_k_over_s: [-0.30, -0.20, -0.10, -0.05, 0.00, 0.05, 0.10, 0.20, 0.30]
+  maturity_days: [7, 14, 30, 60, 90, 180]
+  interpolation_authorized: false
+  extrapolation_authorized: false
+
+futures_implied_carry_audit:
+  availability_check_only: true
+  formula: q_impl = r - ln(F/S) / T
+  final_carry_convention_selected: false
+  risk_free_rate_source_selected: false
+  unmatched_maturity_fill_authorized: false
+
+no_extrapolation_rule:
+  use_observed_strikes_only: true
+  use_observed_expiries_only: true
+  infer_quotes_outside_observed_domain: false
+  infer_carry_outside_matched_maturities: false
+
+representation_status: PROVISIONAL
+representation_decision: OPEN
+replacement_representation: null
+existing_108_input_contract_changed: false
+replacement_54_feature_representation_defined: false
+replacement_57_feature_representation_defined: false
+other_replacement_neural_representation_defined: false

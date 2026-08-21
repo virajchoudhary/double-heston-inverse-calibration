@@ -1,0 +1,86 @@
+# Python caches and test/tool output
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Virtual environments and local environment values
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+
+# Packaging and build output
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# IDE, OS, logs, backups, and temporary files
+.idea/
+.vscode/
+*.code-workspace
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.log
+*.tmp
+*.temp
+*.bak
+~$*
+tmp/
+temp/
+.backups/
+
+# Credentials, keys, and machine-local configuration
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*
+secrets*
+local_settings.*
+
+# Generated research datasets and binary arrays
+data/raw/
+market_data_audit/stage_a/
+data/synthetic/*
+!data/synthetic/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/splits/*
+!data/splits/.gitkeep
+*.npy
+*.npz
+*.parquet
+*.feather
+*.h5
+*.hdf5
+*.pkl
+
+# Reproducible model artifacts and production-style checkpoints
+checkpoints/*
+!checkpoints/.gitkeep
+*.pt
+*.pth
+*.ckpt
+
+# Generated predictions, figures, and temporary output
+outputs/predictions/*
+!outputs/predictions/.gitkeep
+outputs/figures/*
+!outputs/figures/.gitkeep
+outputs/**/*.tmp
+
+# Keep only the selected lightweight smoke-test milestone evidence
+outputs/metrics/smoke_test/data/
+outputs/metrics/smoke_test/smoke_predictions.csv
+outputs/metrics/smoke_test/parameter_evaluation/parameter_predictions_and_errors.csv

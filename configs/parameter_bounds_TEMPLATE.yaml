@@ -1,0 +1,34 @@
+parameter_bounds:
+  kappa_slow:
+    lower: null
+    upper: null
+  theta_slow:
+    lower: null
+    upper: null
+  sigma_slow:
+    lower: null
+    upper: null
+  rho_slow:
+    lower: null
+    upper: null
+  v0_slow:
+    lower: null
+    upper: null
+  kappa_fast:
+    lower: null
+    upper: null
+  theta_fast:
+    lower: null
+    upper: null
+  sigma_fast:
+    lower: null
+    upper: null
+  rho_fast:
+    lower: null
+    upper: null
+  v0_fast:
+    lower: null
+    upper: null
+
+status: TEAMMATE_CONFIRMATION_REQUIRED
+origin: null

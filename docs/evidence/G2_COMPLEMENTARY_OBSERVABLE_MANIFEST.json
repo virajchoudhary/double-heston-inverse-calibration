@@ -1,0 +1,107 @@
+{
+  "analysis_id": "G2_COMPLEMENTARY_OBSERVABLE",
+  "status": {
+    "complementary_observable": "INSUFFICIENT",
+    "experiment_validity": "NOT_PASSED_TRUTH_OUTSIDE_COMPLEMENTARY_SCREEN",
+    "market_observable_contract": "UNRESOLVED",
+    "g2": "NOT_PASSED",
+    "g2_final_representation": "NOT_FROZEN"
+  },
+  "observables": {
+    "A": ["normalized_option_prices"],
+    "B": ["normalized_option_prices", "oracle_total_variance"],
+    "C": ["normalized_option_prices", "log_rv_21", "log_rv_126"],
+    "D": ["normalized_option_prices", "log_rv_21", "log_rv_126", "rv_block_persistence"]
+  },
+  "windows_and_lags": {
+    "history_trading_days": 252,
+    "short_rv_trading_days": 21,
+    "long_rv_trading_days": 126,
+    "persistence_block_days": 5,
+    "persistence_lag_blocks": 4,
+    "persistence_lag_trading_days": 20
+  },
+  "runtime": {
+    "canonical_python": "C:\\Python313\\python.exe",
+    "python": "3.13.4",
+    "numpy": "2.2.6",
+    "pandas": "2.3.2",
+    "scipy": "1.16.2",
+    "matplotlib": "3.10.6",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "seed": 20260811,
+  "node_count": 64,
+  "optimizer": {
+    "max_nfev": 80,
+    "clean_combined_warm_start_count": 40,
+    "noisy_warm_start_count_per_case_level": 5
+  },
+  "panels": {
+    "clean_case_ids": ["case_1", "case_2", "case_3", "case_4"],
+    "noise_matched_case_ids": ["case_1", "case_3"],
+    "noise_matched_case_count": 2,
+    "market_securities": ["NTPC", "CIPLA", "INFY", "HDFCBANK"],
+    "market_valuation_dates": ["2026-07-01", "2026-07-15", "2026-07-22"]
+  },
+  "thresholds": {
+    "practical_rank_relative": 1e-06,
+    "price_near_equivalence_rmse": 2.5e-07,
+    "complementary_near_equivalence_standardized_rmse": 1.0,
+    "material_parameter_rmse": 0.05,
+    "cluster_distance": 0.1,
+    "cluster_ratio_max": 0.5,
+    "material_solution_ratio_max": 0.5,
+    "parameter_error_ratio_max": 0.75,
+    "minimum_distinct_case_count": 3
+  },
+  "protected_prior_evidence": {
+    "file_count": 138,
+    "aggregate_sha256": "AAE30A596D6E95496C97867EE33DF2F2ADAE7F6115036BA135F988BACA4B9A50"
+  },
+  "predeclared_contract_sha256": "F4CF48F5A3EE5939A030497748C2D0ED62C6C861BDEA0234F961C688797D5CD4",
+  "artifact_hashes": {
+    "ambiguity_summary.csv": "72D55748DAF25CE856D5A94392292A76498DECC5A062FAB6689C1C56611144EE",
+    "cases.csv": "7E9D2E2EE3F20194A7EDCBC9EF09C7F7DABF03BCDDCF89CD857F8447DBF05E2F",
+    "contract.json": "76A977C4E7FD06C977F9EF7CD1DE3E744AF51B0505D5ED8181EB41262EEEC0C5",
+    "decision.json": "5DEC41B90831658C79417D6943F177CBF0AC384494C8B344207DF87BFB05EAB8",
+    "experiment_matrix.csv": "C14C3E79F00825F1B07B49DF364734D95A3887BE42DF139204671305B3C9D3A2",
+    "figures/01_conditioning_comparison.png": "188BA6A1DB8CA2E432A3937396812C18523E2A8D591FCA3387C9A4A92999A08A",
+    "figures/02_parameter_error_comparison.png": "5CB45F2AE2D49EE4C8CA580005E1684E56133F9C0F5E51E28CBBFBBB0DF4D3E0",
+    "figures/03_global_ambiguity_comparison.png": "4EFA575B2C6133F79B19D191B367DC26AD9CB94B4DB89A8FBC45308095C2C36A",
+    "figures/04_slow_fast_variance_allocation.png": "8156B75091D2AAF1D828B231BFE4F0A1DD7E7130D4BA161488D48AFE2813F365",
+    "figures/05_theta_kappa_information.png": "93AF573BAC3D707D8508FF8EFB117C06EEAA9C49FEB185C51AC865D4F20843B4",
+    "figures/06_clean_vs_noisy.png": "DB6E2B6ABF9E62ECF1E2D551042C65801EB9CAA3C475AE915215B2736BCBCDBB",
+    "jacobian_summary.csv": "37314B3DF847DAA6248F543E35188FE9AF37C404737AEE41F31E6E14B62CD612",
+    "market_feasibility.csv": "928B2E69C70264E790FD4EDA544B04B9F9934A2AB0C0263A9EDD95582A595802",
+    "parameter_errors.csv": "0B46754F94D843F76A96917CEB3A0E45B24C9A3876A057E5A072719718FE10D6",
+    "parameter_sensitivities.csv": "ED3DAB4C34B9CC97DFA51438B58D9CCABA61AF3CDB48DAD06F4C62E20EE6FF05",
+    "path_observables.csv": "7D53A44F7000A929C185CE9029DC7B9AB8CC38FDFB17DB6F8AE3B2D52023BC2E",
+    "predeclared_contract.json": "F4CF48F5A3EE5939A030497748C2D0ED62C6C861BDEA0234F961C688797D5CD4",
+    "recovery_solutions.csv": "95A843737FDDE59301E673D71F90FCA59A47B543A4E97C80B0D933BDD9E6640A",
+    "recovery_summary.csv": "AA2CA7A265F77F84600B700C43395209C3FE6D1EDCD0DBFAC4882893A9F699D3",
+    "singular_values.csv": "A7F872F893CA4F806EE9B7EB1920146DE1B559AAD7436DAD92802CCBAAF5F998",
+    "synthetic_return_history.csv": "C9DDA64BEEC588BBA6467BC83199DAC8EE844361658717BE13FC05D27F23144F",
+    "truth_fit_diagnostics.csv": "BA85873B8276DE489820FF162D4047BB6463C325755528649C05E5B96C2CF787",
+    "weakest_directions.csv": "B82D2E9F5D7BD3BB298C359CD33DC76C5D292EF542F2152DD940EC21DC9C4934"
+  },
+  "commands": {
+    "analysis": "C:\\Python313\\python.exe -B scripts/run_g2_complementary_observable_analysis.py",
+    "render_replay": "C:\\Python313\\python.exe -B scripts/run_g2_complementary_observable_analysis.py --render-only",
+    "focused_tests": "C:\\Python313\\python.exe -m pytest -q -p no:cacheprovider tests/test_g2_complementary_observable_analysis.py",
+    "full_tests": "C:\\Python313\\python.exe -m pytest -q -p no:cacheprovider",
+    "diff_check": "git diff --check"
+  },
+  "verification": {
+    "focused_tests": {"passed": 19, "failed": 0},
+    "full_tests": {"passed": 238, "failed": 0},
+    "render_replay": "MATCHED",
+    "git_diff_check": "PASSED",
+    "independent_review": {
+      "model": "GPT-5.6 Sol",
+      "effort": "High",
+      "mode": "fresh standalone read-only",
+      "verdict": "SHIP"
+    }
+  }
+}

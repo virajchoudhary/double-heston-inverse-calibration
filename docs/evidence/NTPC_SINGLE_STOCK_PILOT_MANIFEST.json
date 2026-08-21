@@ -1,0 +1,170 @@
+{
+  "T": [
+    0.03561643835616438,
+    0.11232876712328767,
+    0.20821917808219179
+  ],
+  "analysis_id": "NTPC_SINGLE_STOCK_PILOT",
+  "artifact_hashes": {
+    "all_options.csv": "5E0FD0D665A96C4C63EDEFB7C33FDA00E76B9CDB2AF437CE45F7C4EE8A033CE2",
+    "carry_contract.csv": "1C81C80EDD12D07C0E27478813879816B30376F0BA717BCB2BB5A0118CB03477",
+    "double_heston_multistart.csv": "4E092F2BEC5F53033E61EFB1D2B2D761C9D3AB8F72F17F33D6E989946FC1EB70",
+    "figures/01_strike_support.png": "326CD81990EEB575D6476ED84CC0CF1A51CFF6253DEE60A4D7894CA8A1105972",
+    "figures/02_market_iv_smile.png": "6C3BEB8BEBB0FBDB1907B08450F6CE5CBB1161AA0DD440DE788A1EF7DB6F076E",
+    "figures/03_market_vs_predicted_price.png": "B12CC8627B9EE72951C89524027B8E137863D3A326F6CBCAC81F7557C62C2381",
+    "figures/04_residual_vs_moneyness.png": "D528CFDAB961CD4F09267F8F79DA6726C8A308D6CA51F385D8553A888F05A315",
+    "figures/05_market_iv_vs_model_iv.png": "FDDF84A585BA288DECD500A1F6EC373EA03A1A69528FDFA5C71644AE52951416",
+    "figures/06_variance_decomposition.png": "CFDBD6DD878CBB5371E8B1E2DAE453ED2B8AB4200E1536ACC55ACC353F4D81CD",
+    "figures/07_kappa_half_life.png": "659C7F455252CFBBBA3DB77F17DCC92B51AEBF049E11A668AADE0F1F9172485A",
+    "figures/08_predicted_vs_realized_volatility.png": "FF6982BC9B68245664E3D4DDBD3D6D5A3F494F67768C25024F3D119CEB1F3127",
+    "figures/09_double_heston_multistart_stability.png": "F5C784C94CFB266EBFD0844EDAB36B45D1AEDC34260FF0AB057AF597CAB0E325",
+    "figures/10_model_comparison.png": "CFBFA4D00A1A5DFB8C27D687EA98FCD8189DFE511305BE1E6CEB7668F3D9126E",
+    "heston_multistart.csv": "39B2B76ED2824C5081413B1057541BE69ABB2A71A61BB07FC43E2C40E95433ED",
+    "model_comparison.csv": "6BB98FE854D820EF4BE0DAD66B286510069DFDE449DF26EA21AF0EEE7785CAFF",
+    "model_predictions.csv": "0ADED514CC87FDCE5DB803DF53311BBB12F6E8EA291900A41FB1A6E2DB364F45",
+    "parameter_stability.json": "064B15EE0BED6565109CD466FF3F64D1BC556BCD147DFB8526E191513C627B20",
+    "raw/ntpc_corporate_actions_20260715_20260728.json": "37517E5F3DC66819F61F5A7BB8ACE1921282415F10551D2DEFA5C3EB0985B570",
+    "raw/rbi_91_day_tbill_observation_20260715.json": "F30903184A9C272E4F7DF71E6EEBCE21E8AAD074C27156DAD68F461DF9E6CD22",
+    "raw/rbi_current_rates_archive_20260715.html": "C4FEA90351E5F6E1B1689E51D337B66DF42D82235C244ADD78D9064F5A31A62A",
+    "raw/rbi_tbill_full_auction_result_20260715.html": "98A4DE63E7C8D427ECBBA9156EDE47F7BED9B802A5508DBE4B73C98801F499D6",
+    "realized_history.csv": "0E6D875E179CF90FB45F6CE5988A03EB88E815520461730B23BA2E52478AC7E9",
+    "risk_free_contract.json": "DE1978E304BCC7BAE2E05A6E98DDE576D54976645C6817AB873E8270AAE9D1F5",
+    "selected_options.csv": "981F4B04B816338BDC9EB6729182EA2DACFADA21578C03338A605BC7C124123D",
+    "source_research.md": "F473BF2B4B0DFA423981240490BEAD04A49ED261E018F2890DF1D20F5869DF84",
+    "volatility_comparison.csv": "39275A0220D373950A70521EA51F75211F49967F822146CCF47DBD620205C134"
+  },
+  "as_of_date": "2026-08-12",
+  "carry_contract": {
+    "carry_rule": "q=r-log(F/S)/T",
+    "discount_rule": "D(T)=1/(1+y*T)",
+    "dividend_truth_claimed": false,
+    "exact_daily_zero_curve_acquired": false,
+    "forward_source": "matched active NTPC futures ClsPric",
+    "risk_free_simple_yield": 0.053324,
+    "risk_free_source_url": "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=63150",
+    "tenor_rule": "hold official 91-day simple yield flat; short-end extrapolation at 13 and 41 days; 91-day proxy at 76 days"
+  },
+  "commands": {
+    "diff_check": "git diff --check",
+    "focused_tests": "C:\\Python313\\python.exe -m pytest -q -p no:cacheprovider tests/test_ntpc_single_stock_pilot.py",
+    "full_tests": "C:\\Python313\\python.exe -m pytest -q -p no:cacheprovider",
+    "render_replay": "C:\\Python313\\python.exe -B scripts\\run_ntpc_single_stock_pilot.py --render-only",
+    "run": "C:\\Python313\\python.exe -B scripts/run_ntpc_single_stock_pilot.py"
+  },
+  "dte": [
+    13,
+    41,
+    76
+  ],
+  "expiries": [
+    "2026-07-28",
+    "2026-08-25",
+    "2026-09-29"
+  ],
+  "optimizer": {
+    "max_nfev": 160,
+    "method": "scipy.optimize.least_squares trf",
+    "node_count": 64
+  },
+  "runtime": {
+    "matplotlib": "3.10.6",
+    "numpy": "2.2.6",
+    "pandas": "2.3.2",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.4",
+    "scipy": "1.16.2"
+  },
+  "seeds": {
+    "analysis": 20260812,
+    "double_heston_starts": 12,
+    "heston_starts": 8
+  },
+  "selection": {
+    "activity_rule": "positive close, traded volume, executed trades, and open interest",
+    "calibration_rows": 12,
+    "calibration_targets": [
+      -0.05,
+      0.0,
+      0.05
+    ],
+    "geometry_alternative": "near-call negative-outer target unmatched; no gate widening",
+    "holdout_rows": 7,
+    "holdout_targets": [
+      -0.1,
+      0.1
+    ],
+    "maximum_target_distance": 0.05,
+    "moneyness_rule": "exact abs(log(K/S)) <= 0.10",
+    "primary_price_field": "ClsPric",
+    "raw_option_rows": 146,
+    "target_assignment": "minimum-total-distance unique matching by expiry and option type"
+  },
+  "source_hashes": {
+    "2026-07-15/BhavCopy_NSE_CM_0_0_0_20260715_F_0000.csv": "F073234AB734FBD679755C485CD607BEC220BFE77FA2EEBF4E605766386F5A19",
+    "2026-07-15/BhavCopy_NSE_CM_0_0_0_20260715_F_0000.csv.zip": "A2AC7C63056BC1FBB10DC0894719F16215FD79C7E40397F7E749FFDB6DDC70A3",
+    "2026-07-16/BhavCopy_NSE_CM_0_0_0_20260716_F_0000.csv": "8F9EE750381B764DFDEBAFCE8164EA73A3385CBD1BFBBA61EF9418E30969B7D1",
+    "2026-07-16/BhavCopy_NSE_CM_0_0_0_20260716_F_0000.csv.zip": "74CE6B6AECDB0660F7A07C8ABE854B53F728BB43A8E533204E830B99E27CF9E8",
+    "2026-07-17/BhavCopy_NSE_CM_0_0_0_20260717_F_0000.csv": "978C5EB70A9A0DC852B5C97A93B583090FB3DEEA0CF0EEF555A3F3D9A0EB339C",
+    "2026-07-17/BhavCopy_NSE_CM_0_0_0_20260717_F_0000.csv.zip": "3E11C183125FB8710316F4DE32E9A0E758796DDD6C5FF9567F95B663C114EBE9",
+    "2026-07-20/BhavCopy_NSE_CM_0_0_0_20260720_F_0000.csv": "F52D8DFE50807D3303743434188831115EEE268B4BB7539B00ED5C1CDB714AC5",
+    "2026-07-20/BhavCopy_NSE_CM_0_0_0_20260720_F_0000.csv.zip": "9509F5CF8921C6CA2C10A32B5ED7A18A6FB43BB4302B1D16C9DAB454182D81E7",
+    "2026-07-21/BhavCopy_NSE_CM_0_0_0_20260721_F_0000.csv": "D1D45E39DC501B2F48F9A5FEA59B98BECE2A49DC70564717CD57C3CBDC39D0DE",
+    "2026-07-21/BhavCopy_NSE_CM_0_0_0_20260721_F_0000.csv.zip": "8874AAFFE410342C43DA666873A16618993A299E6370ABF5B4AF8915BA0E6217",
+    "2026-07-22/BhavCopy_NSE_CM_0_0_0_20260722_F_0000.csv": "5E0B57775BA82E779CF58A5530CE308F2228723D43D0AF85CC9238DB67EA5C1E",
+    "2026-07-22/BhavCopy_NSE_CM_0_0_0_20260722_F_0000.csv.zip": "1E8B49F6F217B82618B2E1977C979808F6B6E71DF179D042416784A93E525D71",
+    "2026-07-23/BhavCopy_NSE_CM_0_0_0_20260723_F_0000.csv": "C108B7CFB21CC8EBC44A94F5290FCFA3E7C78200CC572ACD4960EC7B8DDAD645",
+    "2026-07-23/BhavCopy_NSE_CM_0_0_0_20260723_F_0000.csv.zip": "4F2197AC541E745CCF8D1E4C6DC54FD2BCCFF90337B0C97733CE8392B2ADB550",
+    "2026-07-24/BhavCopy_NSE_CM_0_0_0_20260724_F_0000.csv": "619C3322D984FD5FC1CC96AB150BCADD7C145A13D3C2D647479D76BD6A78976E",
+    "2026-07-24/BhavCopy_NSE_CM_0_0_0_20260724_F_0000.csv.zip": "885DF092735BCFFD03ABAF20D27EC0823D570DC0CBE53E0853D82E85A9BEAE64",
+    "2026-07-27/BhavCopy_NSE_CM_0_0_0_20260727_F_0000.csv": "783A9837D0F1799A35DCC60DB43795C32A0C38666107A31F34B7FA6247B37226",
+    "2026-07-27/BhavCopy_NSE_CM_0_0_0_20260727_F_0000.csv.zip": "89F2B9B41830BDC306A19AAA17CDBB260600E4CC0C19468334071753380AFD39",
+    "2026-07-28/BhavCopy_NSE_CM_0_0_0_20260728_F_0000.csv": "56C3D1BE12BC64589953B8B6276C38BD5C980A8BAE414BCBFD940AFF9037F03D",
+    "2026-07-28/BhavCopy_NSE_CM_0_0_0_20260728_F_0000.csv.zip": "A7FAD7FC48C3E84A8EA4BC93A8C0CF936FECC65533E1BEF474F63D4EC9C9A5DD",
+    "BhavCopy_NSE_FO_0_0_0_20260715_F_0000.csv": "5FCD3437CFA4D6C489608687D790BF26F11F8B0D02D088CF907D5A005A360FD5",
+    "BhavCopy_NSE_FO_0_0_0_20260715_F_0000.csv.zip": "9B17C397B54815FEBFE99C8AC4C8371AAF599276056BF8744BF973F6F600A679",
+    "ntpc_corporate_actions_20260715_20260728.json": "37517E5F3DC66819F61F5A7BB8ACE1921282415F10551D2DEFA5C3EB0985B570",
+    "raw/rbi_91_day_tbill_observation_20260715.json": "F30903184A9C272E4F7DF71E6EEBCE21E8AAD074C27156DAD68F461DF9E6CD22",
+    "raw/rbi_current_rates_archive_20260715.html": "C4FEA90351E5F6E1B1689E51D337B66DF42D82235C244ADD78D9064F5A31A62A",
+    "raw/rbi_tbill_full_auction_result_20260715.html": "98A4DE63E7C8D427ECBBA9156EDE47F7BED9B802A5508DBE4B73C98801F499D6"
+  },
+  "source_identifiers": {
+    "cm_archive_url_pattern": "https://nsearchives.nseindia.com/content/cm/BhavCopy_NSE_CM_0_0_0_YYYYMMDD_F_0000.csv.zip",
+    "corporate_actions_url": "https://www.nseindia.com/api/corporates-corporateActions?index=equities&from_date=15-07-2026&to_date=28-07-2026&symbol=NTPC",
+    "fo_archive_url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260715_F_0000.csv.zip",
+    "risk_free_observation_path": "raw/rbi_91_day_tbill_observation_20260715.json",
+    "risk_free_url": "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=63150"
+  },
+  "spot": 344.35,
+  "status": {
+    "carry_contract": "RESOLVED_WITH_DECLARED_OFFICIAL_91D_PROXY",
+    "double_heston_parameter_truth": "UNKNOWN_NOT_CLAIMED",
+    "experiment": "COMPLETE_WITH_FUTURE_REALIZED_HORIZONS_UNAVAILABLE",
+    "realized_vol_contract_middle_far": "UNAVAILABLE_FUTURE_EXPIRIES",
+    "realized_vol_contract_near": "RESOLVED",
+    "winner": "NO_CLEAR_WINNER"
+  },
+  "tracked_artifact_hashes": {
+    "docs/NTPC_MENTOR_CHECKPOINT.md": "39CAF26474EB1A6E293E83D11A5A1F2FF15DE017BC5365E3428CD33751A99851",
+    "docs/NTPC_SINGLE_STOCK_CALIBRATION.md": "6519F5AB4A0DEF071E86FF00883CF5EF0D9B2757473489BA72FD52DC60A14BC5",
+    "scripts/run_ntpc_single_stock_pilot.py": "1E641C02A8493177F64B6FBFC7FABAF28AB3725E61A1AFE81017D95C6301F908"
+  },
+  "underlying": "NTPC",
+  "valuation_date": "2026-07-15",
+  "verification": {
+    "deterministic_replay": "MATCHED_BYTE_FOR_BYTE_AFTER_FINAL_SCIENTIFIC_CORRECTIONS",
+    "first_review_findings_corrected": [
+      "stable dated official RBI auction-result HTML and normalized rate observation hash-sealed",
+      "risk-neutral Q versus physical P volatility distinction disclosed",
+      "verification results recorded",
+      "Heston test now uses independently implemented affine transform and adaptive quadrature reference"
+    ],
+    "focused_tests": "13 PASSED IN 7.86S; INDEPENDENT REVIEWER FRESH RUN 13 PASSED IN 7.80S",
+    "full_tests": "251 PASSED IN 50.54S",
+    "independent_review": "SHIP_AFTER_FRESH_STANDALONE_GPT_5_6_SOL_HIGH_REREVIEW",
+    "independent_review_evidence": "all tracked/artifact/source hashes matched; NSE ZIP payloads matched CSVs; DTE/T, cleaning, carry, IV, BS fairness, Heston independent reference, canonical Double Heston, variance, half-lives, realized volatility, leakage, optimizer caps, instability, figures, and claims independently inspected"
+  },
+  "winner_rule": {
+    "holdout_price_rmse_margin": 0.05,
+    "requires_no_worse_holdout_iv_rmse": true
+  }
+}
