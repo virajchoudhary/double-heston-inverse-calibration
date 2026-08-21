@@ -1,0 +1,5 @@
+[phase_b] case_1 noise=0.00%: median price RMSE=1.073e-06 median param RMSE=0.148 boundary hits=5/12
+[phase_b] case_1 noise=0.50%: median price RMSE=7.748e-04 median param RMSE=0.309 boundary hits=12/12
+[phase_b] case_1 noise=1.00%: median price RMSE=1.426e-03 median param RMSE=0.309 boundary hits=12/12
+[phase_b] case_1 noise=2.00%: median price RMSE=2.617e-03 median param RMSE=0.337 boundary hits=12/12
+[phase_b] case_2 noise=0.00%: median price RMSE=1.316e-06 median param RMSE=0.055 boundary hits=3/12
