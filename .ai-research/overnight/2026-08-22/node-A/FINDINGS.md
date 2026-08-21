@@ -242,3 +242,36 @@ the load-bearing defense against a costly rewrite.
 - `configs/default_experiment.json` and `configs/archive2_default_experiment.json` are
   identical (byte-equal after normalization); `archive2_smoke_experiment.json` only shrinks
   caps/epochs. No hidden divergence between the two configs.
+
+## F15. Independent verification round (A-010, 01:10-01:15 IST)
+
+- `verify_zero_leakage` (`src/dheston/data/surfaces.py:138-157`): assert-based, dual-keyed
+  (trade dates AND surface keys) — ADAPT recommendation for the frozen real-market evaluation
+  stage confirmed sound; must be re-homed on canonical surface_ids.
+- Archive-2 traditional calibration (`src/dheston/calibration/optimize.py`): scipy multistart
+  on COS prices, box bounds, kappa-ordering via 1e6 barrier. Redundant with canonical
+  `src/calibrate_double_heston.py` — classification ISOLATE (canonical owns the comparison arm).
+- `src/pricing_interface.py`: research callers ALWAYS reach the frozen engine; the dummy
+  pricer is a separately named smoke-test function that cannot be selected implicitly —
+  no dummy-pricer leakage risk in the canonical path. KEEP confirmed.
+- `src/double_heston_reference.py`: independent SciPy adaptive-quadrature benchmark that
+  deliberately does not import the production pricer — true independence confirmed.
+  Phase E hierarchy level 2 verified.
+- Full canonical PINN/ANN test sweep: `test_pinn_training.py`, `test_torch_double_heston.py`,
+  `test_ann_forward.py` — 7 passed (on top of the earlier 15).
+- Determinism: diagnostic A-004 re-run twice — bit-identical outputs, same max-rel values.
+
+## F16. Constraint-map representable set is strictly smaller than the declared set (A-011)
+
+The map's safety margins carve a thin shell out of the declared constraint set:
+sigma_i < 0.995*sqrt(2*kappa_i*theta_i) (vs declared >0 Feller) and disk radius < 0.995
+(vs declared <1). Targets inside these shells are unreachable exactly (approached only
+asymptotically by sigmoid/softplus heads), imposing a recovery-error floor that is a
+property of the MAP, not the network.
+
+Quantified on 501,212 Feller-accepted pilot-box samples (seed 42):
+- slow-factor Feller shell: 0.436% · fast-factor shell: 0.332% · disk shell: 0.000%.
+Interior training populations: negligible. **Boundary-challenge populations (which
+deliberately hug boundaries) can over-represent the shell** — recovery metrics on those
+populations must disclose this floor. Suggests either (a) report shell-membership of
+challenge targets, or (b) a research decision on margin width. No code change tonight.
