@@ -68,3 +68,43 @@ Expected parameter RMSE from trace(J^+ Sigma J^+T): 3.1-28.9 full-range widths a
 - Interpretation: the full 108 grid DOES identify better than the committed central-5 geometry at strict precision (at 2.5e-7, distant near-equivalents are gone: max 0.011 vs committed central-5 median 0.1485), BUT the equivalence radius grows monotonically with tolerance and reaches ~38% of the parameter box at a price tolerance (1e-4 normalized = 0.01 currency units on spot 100) that is still ~2.5x BELOW the smallest realistic noise floor.
 - Strongest preserved example (case_1, deterministic_broad_10, price RMSE 6.7e-7, param RMSE 0.159): kappa_slow +141%, theta_slow +64%, v0_slow +64%, theta_fast -88% (to its floor), v0_fast -69%, rho_fast sign flip. Slow-factor inflation vs fast-factor collapse — the committed v0_slow/v0_fast, theta_slow/theta_fast compensation pattern reappears on the full grid.
 - Heterogeneity: case_4 remains identified to tol 1e-5 (its truth has high vol-of-vol sigma_slow=0.76, sigma_fast=0.91); cases 1-3 disperse earlier. Non-identifiability severity is truth-dependent.
+
+## Phase H — improvement arms (same 4 clean surfaces, 12 starts each)
+
+Aggregate median parameter RMSE (full-range): baseline 0.103; sobol 0.134; polish (warm, 8x budget) 4.2e-4; relweight (relative-price residuals) 0.297; prior_ranges 0.238.
+
+Per-case median parameter RMSE:
+
+| case | baseline | polish | prior_ranges | relweight | sobol |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| case_1 | 0.120 | 0.160 | 0.098 | 0.370 | 0.157 |
+| case_2 | 0.061 | 0.031 | 0.205 | 0.276 | 0.064 |
+| case_3 | 0.259 | 0.0002 | 0.247 | 0.317 | 0.232 |
+| case_4 | 0.000 | 0.000 | 0.289 | 0.125 | 0.000 |
+
+- Sobol (quasi-random) starts: no material change -> initialization coverage is not the mechanism.
+- Relative-price (vega-like) weighting: WORSE parameters everywhere despite 92% optimizer success -> confident convergence to wrong/boundary solutions; convergence flags are meaningless for identification.
+- Prior (empirical sampling ranges as transform bounds): hurts whenever truth lies outside the prior (case_2/3/4 truths exceed prior uppers for kappa_fast, theta_slow, sigma_fast); marginal gain only for the inside-prior case_1. Prior-driven stabilization is real but mis-specified priors actively bias — must never be pooled with data-driven results.
+- Polish (warm-started, 800 nfev): fixes case_3 completely (0.259 -> 0.0002, price RMSE 5.7e-10) but leaves case_1 dispersed (0.16 at price RMSE 6.5e-7). Capacity is case-dependent; case_1's distant alternative basin survives 8x budget. (A fresh-start 800-nfev control isolates warm-start selection - see EXPERIMENTS.jsonl.)
+
+## Per-parameter degradation with noise (median |scaled displacement|, full-range widths, 12 starts x 4 cases)
+
+| noise | kappa_slow | theta_slow | sigma_slow | rho_slow | v0_slow | kappa_fast | theta_fast | sigma_fast | rho_fast | v0_fast |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0% | 0.097 | 0.043 | 0.036 | 0.005 | 0.060 | 0.056 | 0.048 | 0.023 | 0.019 | 0.072 |
+| 0.5% | 0.252 | 0.083 | 0.158 | 0.375 | 0.161 | 0.206 | 0.096 | 0.339 | 0.076 | 0.184 |
+| 1% | 0.227 | 0.280 | 0.139 | 0.253 | 0.217 | 0.275 | 0.207 | 0.220 | 0.075 | 0.266 |
+| 2% | 0.179 | 0.200 | 0.098 | 0.225 | 0.161 | 0.327 | 0.152 | 0.394 | 0.106 | 0.208 |
+
+- Degradation is broad-based (8-10 of 10 parameters move materially), consistent with a near-degenerate weakest subspace rather than a single bad parameter. rho_slow is the most noise-sensitive correlation; sigma_fast and kappa_fast degrade most at 2%.
+
+## Fresh-start capacity control (800 nfev, midpoint + 11 broad starts)
+
+| case | baseline 120 nfev | fresh 800 nfev | warm polish 800 nfev |
+| --- | ---: | ---: | ---: |
+| case_1 | 0.120 | 0.160 | 0.160 |
+| case_2 | 0.061 | 0.061 | 0.031 |
+| case_3 | 0.259 | 0.323 | 0.0002 |
+| case_4 | 0.000 | 0.000 | 0.000 |
+
+Eight times the optimizer budget from fresh starts does NOT reduce dispersion; the polish arm's aggregate gain was warm-start selection, not capacity. OPTIMIZER-CAP answer for the clean problem: additional budget alone does not resolve multi-start dispersion; informed/warm starts help case-dependent. Under noise >= 0.5% no optimizer setting can help because the information is absent (Phase C boundary saturation + linearized propagation).

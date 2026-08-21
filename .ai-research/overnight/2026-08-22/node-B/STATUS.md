@@ -24,3 +24,17 @@ Building fast vectorized diagnostic pricer + Phase A baseline reproduction.
 - Phase A (production entry, case_1): clean best start exact (param RMSE 2.9e-11, price RMSE 1.1e-13) BUT other starts disperse to param RMSE 0.39; 1% noise: param RMSE up to 0.57 at price RMSE 0.13 (~noise floor).
 - Phase B (case_1, 12 starts): clean median param RMSE 0.148 at price RMSE 1.1e-6; 0.5%/1%/2% noise: 12/12 boundary hits, param RMSE ~0.31-0.34, price RMSE at noise floor. GLOBAL AMBIGUITY REPLICATES ON FULL 108 GRID.
 - Peers fetched: Node A (PINN stack incompatibilities, real_finetune control risk), Node C (canonical PDE certified; archive-2 derivatives broken). Complementary; no conflicts.
+
+## Final state (03:55 IST)
+
+FINAL_REPORT.md complete. All phases A-H executed and logged.
+
+Safety confirmations:
+- main was NEVER modified (origin/main == genesis 642702e verified at close).
+- No force push; no history rewrite; only branch overnight/20260822-b-identifiability pushed.
+- No final 10k dataset generated; no ANN/PINN training; no real-market weight updates.
+- G2 status untouched; no canonical documents modified.
+- No environment/package mutation (CPU-only throughout).
+- Frozen production pricer NOT modified (only additions under scripts/ and .ai-research/; src/ untouched — verified by git diff scope).
+- No secrets committed (staged-diff scan clean); no large binaries (evidence dir 604K; only one png).
+- Focused tests: 43/44 pass; the 1 failure is pre-existing at genesis (platform rounding 3.3e-12 vs demanded 1e-12), reproduced in a clean worktree.

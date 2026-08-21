@@ -1,0 +1,4 @@
+case_1 fresh800: median param RMSE=0.1599 best=2.48e-04 success=8/12
+case_2 fresh800: median param RMSE=0.0609 best=3.41e-12 success=13/12
+case_3 fresh800: median param RMSE=0.3233 best=6.99e-12 success=13/12
+case_4 fresh800: median param RMSE=0.0000 best=2.06e-12 success=13/12

@@ -9,3 +9,26 @@
 /opt/anaconda3/lib/python3.13/site-packages/scipy/stats/_qmc.py:993: UserWarning: The balance properties of Sobol' points require n to be a power of 2.
   sample = self._random(n, workers=workers)
 [phase_h] case_2 sobol: median param RMSE=0.064 best=1.597e-11 price RMSE median=2.257e-06
+[phase_h] case_2 relweight: median param RMSE=0.276 best=1.498e-01 price RMSE median=2.880e-04
+[phase_h] case_2 polish: median param RMSE=0.031 best=2.013e-12 price RMSE median=1.126e-06
+[phase_h] case_2 prior_ranges: median param RMSE=0.204 best=1.485e-01 price RMSE median=2.166e-04
+[phase_h] case_3 baseline: median param RMSE=0.259 best=8.090e-10 price RMSE median=6.708e-06
+/opt/anaconda3/lib/python3.13/site-packages/scipy/stats/_qmc.py:993: UserWarning: The balance properties of Sobol' points require n to be a power of 2.
+  sample = self._random(n, workers=workers)
+[phase_h] case_3 sobol: median param RMSE=0.232 best=1.570e-04 price RMSE median=3.148e-06
+[phase_h] case_3 relweight: median param RMSE=0.317 best=2.238e-08 price RMSE median=3.977e-05
+[phase_h] case_3 polish: median param RMSE=0.000 best=8.921e-12 price RMSE median=5.731e-10
+[phase_h] case_3 prior_ranges: median param RMSE=0.247 best=2.389e-01 price RMSE median=2.776e-03
+[phase_h] case_4 baseline: median param RMSE=0.000 best=3.035e-12 price RMSE median=1.696e-11
+/opt/anaconda3/lib/python3.13/site-packages/scipy/stats/_qmc.py:993: UserWarning: The balance properties of Sobol' points require n to be a power of 2.
+  sample = self._random(n, workers=workers)
+[phase_h] case_4 sobol: median param RMSE=0.000 best=2.630e-12 price RMSE median=4.052e-14
+[phase_h] case_4 relweight: median param RMSE=0.125 best=4.547e-07 price RMSE median=6.573e-05
+[phase_h] case_4 polish: median param RMSE=0.000 best=3.885e-12 price RMSE median=4.779e-12
+[phase_h] case_4 prior_ranges: median param RMSE=0.289 best=2.811e-01 price RMSE median=2.028e-03
+         arm  median_parameter_rmse  best_parameter_rmse  median_price_rmse  boundary_hit_fraction  optimizer_success_fraction  failures
+    baseline               0.102655         2.418332e-12       1.326044e-06               0.458333                    0.479167         0
+      polish               0.000419         2.012787e-12       1.356486e-09               0.395833                    1.000000         0
+prior_ranges               0.237939         3.611438e-02       8.983849e-04               0.541667                    0.666667         0
+   relweight               0.297391         2.238058e-08       1.542328e-04               0.666667                    0.916667         0
+       sobol               0.133669         2.630016e-12       1.062366e-06               0.437500                    0.416667         0
