@@ -13,13 +13,15 @@ Base SHA: `642702e6706a3d17b3031619f35bda39bc144483` (= origin/main at start, ve
 | 01:00 | **Session resumed after interruption.** Phase 1 COMPLETE: all 7 candidates verified (6 confirmed/refined, 1 corrected: ordering_penalty is kappa-not-theta but dead-by-construction). Pricer agreement diagnostic run: A-torch = production at ~1e-15; B-COS agrees 1e-12..1e-9; parameter adapter verified via exact gradient permutation. Training-policy red flag: Stack B `real_finetune` mode + `--continuous` violate canonical no-real-weight-update control. | DONE |
 | 01:01 | Committing Phase 1 checkpoint; next: Phase B seam matrix + Phases C-J synthesis. | DONE |
 | 01:09 | All solo phases COMPLETE: seam matrix (20 seams), phases C-J (F6-F8), Phase G policy audit incl. run_pinn_* runners (F10), OOD quantification (F11), adapter artifact w/ named-field self-test that caught an inverted permutation (F12), NEXT_STEPS alignment (F13), import-smoke forensics: real_finetune executed at smoke scale + PDE term noise-dominated (F14), verification round incl. determinism re-run (F15), representable-set shell quantification (F16), ARCHITECTURE.md alignment + ambiguity-case representability (F17), metrics normalization note (F18). FINAL_REPORT + MORNING_SWARM_REPORT drafted. 22 canonical tests passing. | DONE |
-| 01:10 | Adversarial reviewer relaunched after transient network failure (first attempt died at ~9.5 min). Peer heartbeat posted on Issue #18 (B at genesis, C absent). 30-min peer-poll automation active. | IN PROGRESS |
+| 01:10 | Adversarial reviewer relaunched after transient network failure (first attempt died at ~9.5 min). Peer heartbeat posted on Issue #18 (B at genesis, C absent). 30-min peer-poll automation active. | PARTIAL |
+| 01:24 | **SWARM PHASE BEGINS: Node C branch landed** (4 commits, 10 findings, 25/25 tests, final report). Integrated read-only. See F20 for the full convergence table. | DONE |
+| 01:45 | **F19 CRITICAL FINDING (self-derived before reading Node C)**: archive-2 pde_residual_loss incorrectly implemented — autograd slice-view bug zeroes all variance-factor terms; implemented residual = d_tau - (diffusion + drift). Identity-proven; repro artifact committed. CORRECTS earlier F2#3/F14 mechanism claims. Adversarial-reviewer subagent failed 2x on network errors; adversarial function fulfilled by direct investigation (which produced this correction). | DONE |
+| 01:50 | Node C integration COMPLETE (F20): PDE bug REPRODUCED by both nodes with independent instrumentations; canonical contract certified; constraint incompatibility + real_finetune violation REPRODUCED. Node C F10 spot-verified independently. Morning report §5/6/8/15 updated. One disposition nuance recorded. | DONE |
 
 ## Current activity
 
-Waiting on: adversarial reviewer (background), Node B/C evidence (none pushed).
-On receipt: integrate reviewer verdict into seam matrix; integrate peer evidence with
-REPRODUCED/SUPPORTED/PRELIMINARY/DISPUTED/UNRESOLVED labels. Consolidation ~07:00 IST.
+Polling Node B (branch still at genesis, no evidence). Waiting on nothing else internally.
+Consolidation ~07:00 IST; between polls: remaining verification/deepening tasks only.
 
 ## Scope confirmation
 
