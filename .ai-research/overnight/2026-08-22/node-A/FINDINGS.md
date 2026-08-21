@@ -95,3 +95,84 @@ Phase E conclusion: pricing-engine differences are numerical, not mathematical. 
 production Gauss-Laguerre engine remains the scientific source of truth; Stack A torch mirror
 is its validated differentiable image; Stack B COS is an acceptable independent cross-check
 with a far-OTM tail caveat. No pricer bug suspected; no production change warranted.
+
+---
+
+## F6. Phase F — physics-informed classification (pending Node C confirmation)
+
+Classification of the current canonical model: **constraint-informed + repricing-informed
+inverse network** (NOT a PDE-informed PINN). Evidence: `models/pinn_model.py` supplies
+structural constraint satisfaction; canonical training losses use differentiable repricing
+through the torch mirror; no PDE residual exists anywhere in the canonical path.
+
+Classification of Stack B's model: **constraint(box)-informed + repricing-informed + nominal
+PDE-residual network**, where the PDE term is mathematically correct in form but operates on
+the spectral pricer's own output surface (F2 #3) — it penalizes pricer/autograd discretization
+error, not network physics violation. Calling it "PDE-informed" in a paper without disclosing
+this would overstate the mechanism.
+
+Recommended experimental taxonomy for the eventual paper:
+- **Model 1** — ordinary ANN (existing `models/ann_model.py` baseline).
+- **Model 2** — constraint + repricing-informed inverse network (current canonical PINN
+  infrastructure; honest label: "physics-informed" only in the weak sense of model-consistent
+  repricing).
+- **Model 3** — PDE-informed inverse network. Recommend ONLY after a network-side PDE
+  construction is designed and Node C-verified; importing Stack B's residual as-is does not
+  achieve this. REQUIRES RESEARCH DECISION.
+
+## F7. Phase I — fair ANN-vs-PINN fairness contract (proposal)
+
+Held constant by construction (already satisfied by canonical seam): canonical parameter
+order/targets; same `SurfaceParameterDataset` splits (index-disjoint, enforced); same surface
+representation behind the interface; same production/torch repricer; train-only target
+standardization; validation-gated checkpointing; identical final synthetic test set;
+multi-seed (>=3) with reported spread; identical frozen-real-market evaluation stage;
+parameter-recovery + repricing + validity + stability + runtime metric families reported
+together. Explicit prohibitions: no model-specific real fine-tuning; no winner declaration on
+repricing RMSE alone; no constraint-map advantage silently re-labeled as "physics" (Model 2
+must be reported with its constraint ablation). Capacity/compute parity: report parameter
+counts and wall-clock; justify differences.
+
+## F8. Phase J — documentation contradictions
+
+- `README.md:26,80`: "PINN infrastructure | Implemented; not research-trained" + explicit
+  non-claim disclaimers — ACCURATE.
+- `docs/RESEARCH_CONTROL_AND_CURRENT_STATUS.md:97`: `PINN = NOT_IMPLEMENTED_OR_TRAINED` —
+  the NOT_IMPLEMENTED half is stale (infrastructure exists: `models/pinn_model.py`,
+  `src/train_pinn.py`, `src/run_pinn_*.py`, `tests/test_pinn_*.py`).
+- `docs/CURRENT_STATUS.md:48,165`: "PINN development/comparison | Not started" /
+  `PINN = NOT_DERIVED_OR_TRAINED` — "development not started" is stale; "not derived/trained"
+  remains accurate in the PDE-derivation sense.
+
+Proposed reconciliation (for human approval; NOT applied tonight): adopt a two-axis
+vocabulary — `PINN_INFRASTRUCTURE = IMPLEMENTED_NOT_RESEARCH_TRAINED` (true today) and
+`PINN_RESEARCH_MILESTONE = NOT_DERIVED_OR_TRAINED` (true today) — and update the two status
+docs' tokens via a reviewed docs PR. This matches the existing README terminology and avoids
+implying milestone progress. Related: the project title's "Physics-Informed" should be
+read aspirationally; docs should adopt the F6 taxonomy when describing Model 2.
+
+## F9. Phase H — G2/representation coupling (verified)
+
+No hardcoded 108 in model/trainer code: `input_size` derives from data
+(`src/train.py:204`, `src/train_pinn.py:326`, `src/run_pinn_synthetic_baseline.py:61`) and
+`src/surface_grid.py:86 expected_input_size()` computes from grid constants. G2 grid change
+costs: constants + synthetic generator + regenerated datasets + retrained models; zero model
+class changes. Stack B's variable-length masked-pooling pattern is the reference for a
+future representation interface if G2 selects a non-rectangular or market-driven quote set.
+
+## F10. Phase G — training-policy audit (complete)
+
+Canonical path verdict: **ACCEPTABLE — synthetic-only, no leakage path found.**
+- `src/train.py` (ANN): zero real-market references; synthetic only.
+- `src/train_pinn.py`: enforced disjoint splits; `TargetStandardizer` fit on training rows only
+  (`train_pinn.py:58-59`); best-validation checkpointing (line 81).
+- `src/run_pinn_two_stage_baseline.py`: "supervised warm start then PINN fine-tune" — both
+  stages synthetic (docstring line 1, structure lines 35-83).
+- `src/run_pinn_improved_benchmark.py:116` logs `"real_market_data_used": False` explicitly.
+- Remaining market-touching files are non-neural: `nse_stage_a.py` (candidate selection),
+  `market_data_audit.py` (data audit), `calibrate_double_heston.py` (traditional optimizer
+  calibration — permitted comparison arm).
+
+Stack B verdicts (carried from F3): `real_finetune` + `--continuous` =
+**REMOVE FROM CANONICAL PATH**; synthetic-on-real-grids = **ISOLATE + disclose**; box-bound
+sampling = ISOLATE (archive sampling contract).
