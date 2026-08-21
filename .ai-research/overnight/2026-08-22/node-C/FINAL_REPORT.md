@@ -277,6 +277,13 @@ push; no 10k generation; no real-market neural training; G2 and canonical
 status documents unchanged; no environment mutation; production pricer
 unmodified.
 
+Peer corroboration (final fetch): Node A's updated FINDINGS independently
+confirm the two-stack map, the parameter-order divergence, and classify the
+Archive-2 residual as a pricer-consistency check ("near-vacuous") — consistent
+with F3 — but did NOT detect the zero-derivative defect; F2 deepens their
+result and was reported to the swarm issue (#18). Node B still had no pushed
+evidence at final fetch.
+
 ## Final safety checklist
 
 - [x] all Node C evidence committed and pushed to the Node C branch only
