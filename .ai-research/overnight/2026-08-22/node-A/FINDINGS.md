@@ -371,3 +371,36 @@ Cross-verification (A-015): Node C's 25-test suite extracted read-only and run u
 Node A's local pytest — 25/25 passed (initial 4 failures were /tmp path artifacts).
 Node C evidence is independently reproduced end-to-end: derivation, bug, constraints,
 limits. Their F10 boundary also spot-verified locally (-0.013/-0.089 at tau 1e-3/1e-4).
+
+## F21. Node A mathematical review of Node C's derivation (requested by Node C)
+
+Reviewed `node-C/derivations/CANONICAL_DOUBLE_HESTON_PDE.md` line-by-line. VERDICT: correct
+and complete. The SDE reverse-engineering from the Little-Heston-Trap CF (4-BM construction,
+independent variance drivers, additive spot variance) is properly evidenced from source; the
+Itô table and backward/forward PDE match the operator I verified numerically to machine
+precision (A-013: GLQ autograd residual ~1e-14). The factor-additivity identity
+E(u,T;θ,v0)=2E(u,T;θ/2,v0/2) at 1.8e-15 is an elegant independent signature.
+
+Adopted refinement to Node A Phase D: Node C §1.3 shows the canonical correlation DISK
+(rho_s²+rho_f²<1) is a SUFFICIENT, conservative, state-independent condition for the
+IMPLEMENTED 4-BM model — pointwise admissibility only requires |rho_i|<1. The disk is the
+PD condition of the single-spot-driver 3-BM construction. Implication: the constraint map's
+polar disk enforces the CONTRACT (a deliberate conservative choice), not bare mathematical
+necessity — supports KEEP classification, and any future relaxation is a research decision,
+not a bug fix.
+
+## F22. Canonical-path adversarial clearance (completing the failed subagent's checklist)
+
+The adversarial-review subagent failed twice on network errors; its checklist was completed
+by direct Node A verification (each item independently checked):
+- Validation/objective parity in `train_pinn.py`: `_evaluate_validation` receives the SAME
+  `parameter_loss_weight`/`physics_loss_weight` as training (lines 118-125); selection on
+  validation total; best-state checkpoint; test untouched. Node C F6 canonical claim
+  INDEPENDENTLY VERIFIED.
+- `run_pinn_synthetic_baseline.py`: split assignment via `assign_surface_splits`, explicit
+  `_assert_no_leakage(dataset, train, validation, test)` guard (line 59); test indices used
+  only for final evaluation artifacts. No leakage path.
+- Node C parameter-contract matrix cross-checked: their adapter mapping is IDENTICAL to
+  Node A's (F12), independently derived and verified on both sides (REPRODUCED).
+Canonical path: no leakage, no objective mismatch, no dummy-pricer fallback, no real-market
+training, enforced disjoint splits. KEEP classifications stand.
