@@ -497,6 +497,15 @@ fairness-contract requirement and the F6 taxonomy caveat.
 No conflicts between Node B evidence and Node A/Node C findings (Node B's own note:
 "Complementary; no conflicts").
 
+F26 addendum (1dff8a3, 03:48 IST — Node B COMPLETE incl. FINAL_REPORT): final
+classification ILL-CONDITIONED-AT-NOISE-SCALE + STRUCTURALLY/PRACTICALLY NON-IDENTIFIABLE
+at market tolerance, MIXED with case-dependent optimizer-basin sensitivity on clean data;
+REPRESENTATION-LIMITED for central-5 only. New in final report: optimizer
+capacity/initialization/weighting RULED OUT as primary mechanisms (8x budget, Sobol
+starts, vega-like weighting; warm-start polish fixes 1/4 — basins not budget). All Node B
+experiments synthetic; no real-market weight updates; G2 untouched; no environment
+mutation (their safety section).
+
 ## F26. Node B complete-phases integration (61905d0, 03:27 IST) — refined identifiability picture
 
 Refines the F25 headline. The precise three-part statement now supported:

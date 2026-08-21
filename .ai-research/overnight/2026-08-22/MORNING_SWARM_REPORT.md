@@ -49,7 +49,17 @@ saturation at 0.5%; the local Jacobian ALONE predicts the collapse scale — bou
 cap it); **(3) the flat compensated directions are in the landscape, not optimizer artifacts**
 (fixing kappa_slow at 7× truth, the other 9 parameters re-optimize to machine-level
 repricing). Severity is truth-dependent (case_4 with high vol-of-vol stays identified to
-1e-5; cases 1–3 disperse earlier). Phase B multistart
+1e-5; cases 1–3 disperse earlier). Optimizer capacity/initialization/weighting are RULED
+OUT as primary mechanisms (8× budget and Sobol starts change nothing; vega-like weighting
+is worse; warm-start polish fixes 1/4 cases — basins, not budget).
+
+**Node B final classification**: ILL-CONDITIONED-AT-NOISE-SCALE + STRUCTURALLY/PRACTICALLY
+NON-IDENTIFIABLE at market tolerance, MIXED with case-dependent optimizer-basin
+sensitivity on clean data. REPRESENTATION-LIMITED applies to the committed central-5
+market geometry (rank 7.5, κ 6.5e8) but NOT to the provisional full grid. Consequence for
+claims (three-node converged): parameter recovery claims must be equivalence-class /
+tolerance-conditioned; repricing quality is not recovery; physics terms regularize but
+never identify. Phase B multistart
 (case_1, 12 starts): clean median parameter RMSE 0.148 at price RMSE 1.1e-6; with 0.5–2%
 noise, 12/12 boundary hits, parameter RMSE 0.31–0.34 with price fit at the noise floor.
 Phase A production entry: the clean best start recovers exactly (2.9e-11) but other starts
@@ -195,9 +205,9 @@ From archive-2 (already on genesis; requires quarantine decisions first):
 - Node A: `overnight/20260822-a-architecture` @ (final SHA at consolidation) — evidence in
   `.ai-research/overnight/2026-08-22/node-A/` (STATUS, FINDINGS F1–F17, EXPERIMENTS A-000–
   A-012, SEAM_MATRIX, FINAL_REPORT, 2 diagnostics + adapter artifact).
-- Node B: `origin/overnight/20260822-b-identifiability` @ 61905d0 (complete phases A–F
-  evidence: FINDINGS/STATUS/EXPERIMENTS + artifacts/tables; FINAL_REPORT pending —
-  re-polled before consolidation).
+- Node B: `origin/overnight/20260822-b-identifiability` @ 1dff8a3 (COMPLETE: FINDINGS,
+  STATUS, EXPERIMENTS, FINAL_REPORT + artifacts/figures/tables; final SHA recorded by them
+  at 03:48 IST).
 - Node C: `origin/overnight/20260822-c-pde` @ 751551a (4 commits; STATUS/FINDINGS/
 EXPERIMENTS/FINAL_REPORT + derivations, tables, probe evidence, 25/25 focused tests).
 Integrated at 01:30 IST without merging.
