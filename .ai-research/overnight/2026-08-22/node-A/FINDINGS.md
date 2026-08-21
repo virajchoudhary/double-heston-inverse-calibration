@@ -200,3 +200,25 @@ Script: `artifacts/diag_constraint_ood.py` (n=200k per raw distribution, seeded)
   hold at **exactly 1.0000**. The by-construction guarantees are robust across any plausible
   trained-network output distribution; no fix warranted tonight. Precision note for the
   future: if extreme-raw robustness ever matters, use a float64 head or a scaled margin.
+
+## F12. Cross-stack adapter artifact (A-008)
+
+`artifacts/canonical_archive2_adapter.py` — the documented, self-tested permutation
+(canonical <-> archive-2). PROCESS NOTE (honest evidence): the first version of this artifact
+had the two permutation directions INVERTED; the round-trip test alone would have passed
+ silently, but the named-field spot check caught it. This is exactly why positional interop
+is dangerous and why the artifact carries named-field verification. A-004 (gradient
+permutation) was unaffected — that diagnostic built the archive vector field-by-field.
+
+Final state: 10/10 named fields verified against archive-2 field names, round trip exact.
+Deliberately NOT installed into src/ tonight: promotion requires human review (Decision #5).
+
+## F13. NEXT_STEPS alignment check
+
+`docs/NEXT_STEPS.md` confirms: the current 108-grid is already REJECTED as the final
+unchanged representation; G2 NOT PASSED; the immediate gate is `OBTAIN MENTOR DECISION` on
+the G2 safeguard + bounded NTPC temporal study; no ANN/PINN research work before that
+decision. Node A's recommendations are therefore explicitly SUBORDINATED to that mentor
+gate — the seam matrix and fairness contract define what to build once gates open. This
+also strengthens Phase H: since the grid WILL change, the data-derived `input_size` seam is
+the load-bearing defense against a costly rewrite.

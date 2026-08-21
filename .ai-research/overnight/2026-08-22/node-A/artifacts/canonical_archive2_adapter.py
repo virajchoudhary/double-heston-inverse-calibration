@@ -28,45 +28,27 @@ from __future__ import annotations
 
 import numpy as np
 
-# canonical index of (kappa, theta, sigma, rho, v0) for slow = [0,1,2,3,4], fast = [5,6,7,8,9]
-# archive index of (v0, kappa, theta, sigma, rho) for fast = [0,1,2,3,4], slow = [5,6,7,8,9]
-_CANONICAL_TO_ARCHIVE = [
-    # kappa_slow -> kappa2 (archive 6)
-    6,
-    # theta_slow -> theta2 (archive 7)
-    7,
-    # sigma_slow -> sigma2 (archive 8)
-    8,
-    # rho_slow -> rho2 (archive 9)
-    9,
-    # v0_slow -> v02 (archive 5)
-    5,
-    # kappa_fast -> kappa1 (archive 1)
-    1,
-    # theta_fast -> theta1 (archive 2)
-    2,
-    # sigma_fast -> sigma1 (archive 3)
-    3,
-    # rho_fast -> rho1 (archive 4)
-    4,
-    # v0_fast -> v01 (archive 0)
-    0,
-]
-_ARCHIVE_TO_CANONICAL = np.argsort(_CANONICAL_TO_ARCHIVE).tolist()
+# archive[i] = canonical[_ARCHIVE_FROM_CANONICAL[i]]:
+#   archive = [v01,kappa1,theta1,sigma1,rho1, v02,kappa2,theta2,sigma2,rho2]
+#   = [v0_fast, kappa_fast, theta_fast, sigma_fast, rho_fast,
+#      v0_slow, kappa_slow, theta_slow, sigma_slow, rho_slow]
+_ARCHIVE_FROM_CANONICAL = [9, 5, 6, 7, 8, 4, 0, 1, 2, 3]
+_CANONICAL_FROM_ARCHIVE = [6, 7, 8, 9, 5, 1, 2, 3, 4, 0]
 
-assert sorted(_CANONICAL_TO_ARCHIVE) == list(range(10)), "not a permutation"
+assert sorted(_ARCHIVE_FROM_CANONICAL) == list(range(10)), "not a permutation"
+assert sorted(_CANONICAL_FROM_ARCHIVE) == list(range(10)), "not a permutation"
 
 
 def canonical_to_archive2(canonical: np.ndarray) -> np.ndarray:
     """Map canonical-order parameters to archive-2 order (pure permutation)."""
     values = np.asarray(canonical, dtype=np.float64)
-    return values[..., _CANONICAL_TO_ARCHIVE]
+    return values[..., _ARCHIVE_FROM_CANONICAL]
 
 
 def archive2_to_canonical(archive: np.ndarray) -> np.ndarray:
     """Map archive-2-order parameters to canonical order (pure permutation)."""
     values = np.asarray(archive, dtype=np.float64)
-    return values[..., _ARCHIVE_TO_CANONICAL]
+    return values[..., _CANONICAL_FROM_ARCHIVE]
 
 
 if __name__ == "__main__":
