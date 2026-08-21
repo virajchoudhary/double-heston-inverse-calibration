@@ -176,3 +176,27 @@ Canonical path verdict: **ACCEPTABLE — synthetic-only, no leakage path found.*
 Stack B verdicts (carried from F3): `real_finetune` + `--continuous` =
 **REMOVE FROM CANONICAL PATH**; synthetic-on-real-grids = **ISOLATE + disclose**; box-bound
 sampling = ISOLATE (archive sampling contract).
+
+## F11. Phase D quantification — constraint-map OOD reach + fp32 edge notes (A-007)
+
+Script: `artifacts/diag_constraint_ood.py` (n=200k per raw distribution, seeded).
+
+**OOD reach (the reviewed-box concern, now quantified):**
+- Fraction of constraint-mapped outputs inside PILOT empirical sampling ranges: **~0%**
+  for every raw surrogate (N(0,1), N(0,3), N(0,10), uniform[-50,50]).
+- Median violation multiples: 8-13x past the nearest pilot edge for N(0,1)/N(0,3) raws
+  (theta_fast 99%@x8.7, v0_fast 99%@x7.0); up to 275-502x for uniform[-50,50].
+- rho_slow spans the full (-0.995, 0.995) disk regardless of raw scale (pilot: [-0.75, 0.20]).
+- Conclusion: the constraint map provides **zero protection** w.r.t. reviewed sampling-box
+  membership. This is the quantified basis for the RDD: either report OOD predictions as OOD
+  (recommended), or add an explicit box-compliance *reporting* layer — never silent clipping.
+
+**fp32 edge phenomena (verified mechanisms, extreme-only):**
+- raw_sigma < ~-88 → `sigmoid` underflows to exact 0.0 → sigma = 0.0 exactly (strict
+  positivity marginally broken; singular vol-of-vol endpoint). Reproduced at raw = -90.
+- kappa_slow ≳ 100 → `+ _POSITIVE_EPS` rounds away in fp32 → kappa_fast == kappa_slow
+  exactly (strict ordering degenerates to a tie; never an inversion).
+- At realistic scales (N(0,3) raws, n=200k): Feller/disk/strict-order/strict-positivity all
+  hold at **exactly 1.0000**. The by-construction guarantees are robust across any plausible
+  trained-network output distribution; no fix warranted tonight. Precision note for the
+  future: if extreme-raw robustness ever matters, use a float64 head or a scaled margin.
