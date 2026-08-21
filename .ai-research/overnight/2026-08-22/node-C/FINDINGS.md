@@ -332,6 +332,35 @@ does) is the correct design; (ii) `propagate_variance_state` must remain an
 initialisation/visualisation utility only (it is currently unused by
 calibration scripts — verified).
 
+## F16. Node B verification round (03:15 IST) [PROVEN]
+
+Node B landed (77b8f2e). Verified from Node C's side:
+- **Global ambiguity replicates on the FULL 108 grid** (their Phase B: 12/12
+  starts disperse to param RMSE ~0.15 clean / ~0.31-0.34 under 0.5-2% noise,
+  price RMSE at the noise floor) despite full local practical rank 10/10
+  with condition ~2.6e4 — the failure mode is noise-scale vs weakest
+  sensitivities + global multimodality, not local rank deficiency. This is
+  precisely the empirical setup my F8 addresses.
+- **Factor-swap degeneracy**: Node B reports bitwise 0.0 on their fast
+  pricer. Node C verification on the PRODUCTION pricer: max abs diff
+  4.26e-14 over the 108-quote grid — exact symmetry in exact arithmetic; the
+  tiny float difference is association order in the exponent assembly
+  `(X+slow)+fast` vs `(X+fast)+slow`. Both claims correct; refinement
+  recorded (production pricer swap-consistent to 4e-14, far below any
+  meaningful price scale).
+- **Answer to the brief's Node-B interaction question (Section 19), now
+  empirically grounded**: the canonical PDE is invariant under factor swap
+  (the operator is a symmetric sum over factors), so a PDE residual — even a
+  correctly implemented one — evaluates identically (to its ~4e-9 quadrature
+  floor) on every point of a near-equivalent manifold, including the exact
+  swap pair. Node B's near-equivalence price RMSE 1.1e-6 (normalized) sits
+  ~3 orders of magnitude ABOVE the correct-residual floor: the residual
+  cannot see those differences. Only the declared constraint
+  `kappa_slow < kappa_fast` breaks the exact swap degeneracy. Conclusion for
+  the paper stands, sharpened: physics losses = regularisation / structural
+  validity, never identification; the identifying content lives in the
+  constraints and the data.
+
 ## Required final classifications (Section 23 of the brief)
 
 - Canonical current stack: **constraint + repricing-informed inverse network**
