@@ -1,7 +1,7 @@
 # DOUBLE HESTON OVERNIGHT SWARM REPORT
 
-**STATUS: DRAFT — Node A sections complete; Node B/C sections reflect evidence pushed as of
-the last fetch (see §15). Consolidation target 07:00–07:30 IST. No peer results are invented.**
+**STATUS: DRAFT — Node A complete; Node C INTEGRATED (01:24 IST, 4 commits, 10 findings);
+Node B evidence still absent. Consolidation target 07:00–07:30 IST. No peer results invented.**
 
 ## 1. Executive summary
 
@@ -12,7 +12,9 @@ pricer) behind adapters, never positional interop. The "physics-informed" label 
 downgraded honestly to constraint+repricing-informed until a genuine network-side PDE
 construction is approved. One research-control violation was found and evidenced in the
 archive-2 trainer (real-market weight updating), already exercised once at smoke scale.
-Node B/C contributed no pushed evidence at draft time (see §8/§15).
+Node C independently reproduced Node A's critical findings (PDE-loss bug, physics
+classification, constraint incompatibility, policy violation); Node B contributed no pushed
+evidence at draft time (see §8/§15).
 
 ## 2. Starting state
 
@@ -42,8 +44,9 @@ neural model must not be described as uniquely recovering truth from an ambiguou
 
 ## 5. PDE/physics conclusion
 
-PENDING NODE C EVIDENCE (none pushed at draft time). Node A's independent mathematical and
-numerical audit (F19, reproducible): archive-2's PDE residual states the correct Double
+Node C INTEGRATED (F1-F10, 25/25 tests, derivation certified). Node A's independent
+mathematical and numerical audit (F19, reproducible) — REPRODUCED by Node C with an
+independent instrumentation: archive-2's PDE residual states the correct Double
 Heston pricing PDE on paper, but is INCORRECTLY IMPLEMENTED — an autograd slice-view bug
 makes `grad(prices, v01/v02)` return None and `_safe_grad` silently converts it to zeros,
 so all six variance-factor derivative terms are exactly zero and the implemented residual
@@ -61,6 +64,12 @@ research decision on a fresh network-side construction (Node C verification pend
   consistent with the repo's existing independent-pricing-benchmark history).
 - Parameter-order conflict: verified by direct source read AND by exact gradient permutation
   (two independent methods, same mapping).
+- Archive-2 PDE-loss autograd bug: REPRODUCED by two nodes with different instrumentations
+  (Node A identity proof; Node C bit-exact broken-operator equality + 9-config invariance).
+- Canonical PDE/physics contract certification: Node A machine-precision mirror agreement +
+  Node C derivation and multi-limit certification (REPRODUCED/SUPPORTED).
+- Archive-2 constraint-space incompatibility (disk 1.805 reachable; rho box excludes
+  canonical-valid vectors): computed independently by both nodes (REPRODUCED).
 - Canonical training-policy cleanliness: direct trainer audit + test suite (22 tests passed)
   + explicit `real_market_data_used: False` logging in the canonical benchmark runner.
 
@@ -77,8 +86,11 @@ research decision on a fresh network-side construction (Node C verification pend
 
 ## 8. Remaining disagreements
 
-None recorded between agents yet (no peer evidence pushed). Documented intra-repo
-contradiction: stale PINN status tokens in two status docs vs accurate README (F8).
+None between Node A and Node C. One disposition nuance (recorded, not conflicting): Node A
+classifies real_finetune as REMOVE FROM CANONICAL PATH; Node C as ISOLATE AS NON-PRIMARY
+ABLATION + DISABLE BY DEFAULT — both forbid a canonical named mode; ablation status is
+Human Decision #1. Documented intra-repo contradiction: stale PINN status tokens in two
+status docs vs accurate README (F8). Node B: no evidence to compare yet.
 
 ## 9. Strongest quantitative evidence
 
@@ -144,7 +156,9 @@ From archive-2 (already on genesis; requires quarantine decisions first):
   A-012, SEAM_MATRIX, FINAL_REPORT, 2 diagnostics + adapter artifact).
 - Node B: `origin/overnight/20260822-b-identifiability` — branch exists at genesis; NO
   evidence pushed as of last fetch (time in §STATUS).
-- Node C: NO branch pushed as of last fetch.
+- Node C: `origin/overnight/20260822-c-pde` @ 751551a (4 commits; STATUS/FINDINGS/
+EXPERIMENTS/FINAL_REPORT + derivations, tables, probe evidence, 25/25 focused tests).
+Integrated at 01:30 IST without merging.
 
 If Node B/C evidence lands before consolidation, sections 4/5/8/15 will be updated with
 REPRODUCED/SUPPORTED/PRELIMINARY/DISPUTED/UNRESOLVED labels per protocol.

@@ -337,3 +337,32 @@ d_tau/delta/gamma.
 must be designed fresh with correct differentiation seams and Node C verification.
 
 Pending: Node C independent mathematical audit (this finding is reproducible on demand).
+
+## F20. Node C integration (branch landed 01:24 IST; read without merging)
+
+Node C completed a full PDE/physics audit (10 findings, 25/25 focused tests, derivation
+doc, probe evidence, final report). Convergence with Node A:
+
+| Claim | Node A | Node C | Label |
+|---|---|---|---|
+| Archive-2 PDE loss broken: all variance-state derivatives exactly zero (slice views not graph ancestors; `_safe_grad` None->zeros) | F19 (A-014; identity residual == dropped terms at machine precision) | F2 [PROVEN] (bit-exact equality with manually-assembled broken operator; 9-config invariance; market-price invariance through full loss path) | **REPRODUCED (two independent instrumentations)** |
+| Correctly-wired residual is quadrature/machine-noise level -> non-discriminating | F19 Part 3 (~1e-14 GLQ / ~1e-12 COS) | F3 (4.8e-9/3.8e-9 relative vs 7.3e-2/2.2e-1 broken; truncation-range autograd contamination ~1e-12 negligible) | **REPRODUCED** |
+| Canonical stack = constraint + repricing-informed, NOT a PINN | F6 | F4 [PROVEN] incl. honest checkpoint metadata | **REPRODUCED** |
+| Canonical physics/PDE contract sound; torch mirror satisfies PDE to machine precision | A-004 (~1e-15 vs production) | F1 [PROVEN] (<=1.3e-15; put-call parity 7e-15; CF additivity; two-half-factors==1-factor vs COS 3.2e-11; BS limit) | **REPRODUCED/SUPPORTED** |
+| Archive-2 constraint space semantically incompatible; neither admissible set contains the other | F2#2/F4 (disk 1.805 reachable; negative-only rho) | F5 [PROVEN] (same 1.805; rho box excludes canonical-valid rho_f > -0.05) | **REPRODUCED** |
+| real_finetune + --continuous violate research control | F3/F10/F14 (executed once at smoke scale) | F7 [PROVEN] | **REPRODUCED** (disposition nuance below) |
+| default_experiment.json == archive2_default_experiment.json | F14 | F9 + NEW: `dheston/config.py` loads the former as ITS default — repo-level "default" IS the archive-2 config (naming hazard) | **REPRODUCED + EXTENDED** |
+
+New Node-C-only evidence incorporated: F6 (validation objective mismatch — validation
+disables PDE, hiding the F2 bug from model selection); F8 (a same-model PDE residual
+cannot add identifying information beyond repricing — regularisation/validity, not
+identification); F10 (canonical pricer ultra-short-maturity boundary: negative deep-OTM
+prices below tau ~ 5e-3; benign within the research grid, worst -6.3e-12 at >= 7 days).
+
+One disposition nuance (not a disagreement): Node A classifies real_finetune as
+REMOVE FROM CANONICAL PATH; Node C recommends ISOLATE AS NON-PRIMARY ABLATION +
+DISABLE BY DEFAULT. Compatible: both forbid a canonical named mode; the ablation
+question is Human Decision #1.
+
+No contradictions found between Node C evidence and Node A findings. Node C final
+SHA at integration: 751551a.
