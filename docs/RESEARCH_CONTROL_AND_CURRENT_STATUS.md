@@ -217,14 +217,19 @@ A genuine PDE-informed Model 3 may be added later as a separately justified regu
 
 ## 13. Exact next scientific action
 
-`FORMALIZE THE FROZEN R2 REPRESENTATION INTERFACE`
+`REGENERATE / REVALIDATE THE FINAL SYNTHETIC SURFACE CONTRACT ON THE FROZEN R2 INTERFACE`
 
 The predeclared G2 R2/R3 study was executed and sealed on 22 August 2026. The
 stopping rule froze **R2** (20 nominal slots with explicit real-market mask/missingness; synthetic panel complete by construction; never impute a missing real quote) after no strong/partial practical-information improvement
 for R3 at any realistic noise level, despite better local conditioning), with
-`PRACTICAL_NON_IDENTIFIABILITY = RETAINED_RESEARCH_FINDING`. The next action is
-to formalize the frozen R2 interface (explicit actual maturities and per-rank
-rate/carry conditioning, 20 central-five call/put slots), then regenerate and
-revalidate the final synthetic surface contract. Final 10k generation,
+`PRACTICAL_NON_IDENTIFIABILITY = RETAINED_RESEARCH_FINDING`. The frozen R2
+interface has been formalized as the canonical post-G2 representation
+contract (`src/r2_representation/`,
+[R2_REPRESENTATION_CONTRACT.md](R2_REPRESENTATION_CONTRACT.md)): explicit
+actual maturities and per-rank rate/carry conditioning, 20 central-five
+call/put slots in one deterministic tested order, explicit mask semantics,
+versioned serialization, and structural rejection of legacy-108/rejected-R3
+data. The next action is to regenerate and revalidate the final synthetic
+surface contract on that interface. Final 10k generation,
 ANN/Model-2 research training, final G8 date selection, and frozen real-market
 evaluation remain separately controlled milestones.

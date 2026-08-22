@@ -19,21 +19,27 @@ Implement Issue #20 as a focused code/test PR:
 
 This is policy hardening and may proceed in parallel with the next research milestone.
 
-### 2. Formalize the frozen R2 representation interface — EXACT NEXT ACTION
+### 2. Formalize the frozen R2 representation interface — COMPLETE (PR pending review)
 
 G2 selected **R2** (ranked two-expiry central-five calls/puts, **20 NOMINAL
 slots** with explicit mask/missingness for unsupported or unusable real-market
 observations — never impute a missing real quote with a model price;
 spot-normalized; actual maturity conditioning; existing rate/carry
-conditioning; the synthetic G2 panel is complete by construction). Make the
-production dataset/model interface explicitly represent that frozen contract,
-including the mask channel for real surfaces.
+conditioning; the synthetic G2 panel is complete by construction). The
+canonical interface is implemented as `src/r2_representation/` with the
+contract document
+[R2_REPRESENTATION_CONTRACT.md](R2_REPRESENTATION_CONTRACT.md): one
+deterministic tested slot order, explicit mask semantics, a synthetic
+constructor over the unchanged production pricer, a real-market constructor
+reusing the sealed official-NSE quote-selection audit, versioned JSON
+serialization, structural rejection of legacy-108 and rejected-R3 data, and
+a full focused test suite. The canonical parameter order, pricer,
+constraints, and target semantics are unchanged.
 
-Keep the canonical parameter order, pricer, constraints, and target semantics unchanged. Because R2 carries actual maturities and per-rank rate/carry conditioning, the interface must supply those explicitly rather than assuming a fixed grid.
+### 3. Generate final synthetic truth data — EXACT NEXT ACTION
 
-### 3. Generate final synthetic truth data
-
-Only after representation freeze:
+Only after representation freeze (done) and interface formalization (done,
+`src/r2_representation/`):
 
 1. freeze the final sampling + representation manifest;
 2. generate the final synthetic dataset;
@@ -87,4 +93,4 @@ PINN_RESEARCH_MILESTONE = NOT_VALIDATED_OR_TRAINED
 
 The exact next scientific action is:
 
-`FORMALIZE THE FROZEN R2 REPRESENTATION INTERFACE`
+`REGENERATE / REVALIDATE THE FINAL SYNTHETIC SURFACE CONTRACT ON THE FROZEN R2 INTERFACE`
