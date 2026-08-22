@@ -32,6 +32,7 @@ The project is no longer waiting for external mentor approval to continue. G2 is
 | Current 108-input grid | Rejected as final unchanged representation |
 | G2 candidate protocol | Self-governed R2 vs R3, predeclared — executed and sealed 22 Aug 2026 |
 | Final G2 representation | **Frozen: R2** (ranked two-expiry central-five, 20 nominal slots + explicit real-market masking) |
+| Canonical R2 representation interface | Formalized: `src/r2_representation/` ([R2_REPRESENTATION_CONTRACT.md](R2_REPRESENTATION_CONTRACT.md)) |
 | G2 | **PASSED_REPRESENTATION_FROZEN_WITH_PRACTICAL_NON_IDENTIFIABILITY** |
 | Global ten-parameter ambiguity | Established |
 | Full-108 overnight identifiability diagnostic | Completed; locally full-rank can still be practically non-identifiable at noise scale |
@@ -141,6 +142,16 @@ FROZEN_REAL_MARKET_EVALUATION = NOT_STARTED
 
 ## Exact next action
 
-`FORMALIZE THE FROZEN R2 REPRESENTATION INTERFACE`
+`REGENERATE / REVALIDATE THE FINAL SYNTHETIC SURFACE CONTRACT ON THE FROZEN R2 INTERFACE`
 
-Then regenerate/revalidate the final synthetic surface contract. The final 10k generation, ANN/Model-2 research training, final G8 date selection, and frozen real-market evaluation remain separately controlled milestones that have not started.
+The frozen R2 representation interface is formalized as the canonical
+post-G2 representation contract (`src/r2_representation/`,
+[R2_REPRESENTATION_CONTRACT.md](R2_REPRESENTATION_CONTRACT.md)): 20 nominal
+slots in one deterministic tested order, explicit mask semantics (never
+impute a missing real quote), synthetic construction through the unchanged
+production pricer, real-market construction through the sealed official-NSE
+audit contract, and a versioned serialization schema; legacy 108-feature and
+rejected-R3 data are structurally rejected. The final 10k generation,
+ANN/Model-2 research training, final G8 date selection, and frozen
+real-market evaluation remain separately controlled milestones that have
+not started.

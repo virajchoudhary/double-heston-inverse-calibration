@@ -38,9 +38,14 @@ ranks x central-five log-moneyness x calls/puts = 20 NOMINAL spot-normalized
 price slots with explicit mask/missingness for unsupported or unusable
 real-market observations (never imputed with model prices; the synthetic G2
 panel is complete by construction), with actual time-to-maturity supplied
-explicitly and existing per-rank rate/carry conditioning. A formal interface for this frozen contract should be
-completed before final synthetic generation without changing the canonical
-parameter or pricing contracts.
+explicitly and existing per-rank rate/carry conditioning. The canonical
+software interface for this frozen contract is
+`src/r2_representation/` ([R2_REPRESENTATION_CONTRACT.md](R2_REPRESENTATION_CONTRACT.md)):
+one deterministic 20-slot key order, explicit mask semantics, a synthetic
+constructor over the unchanged production pricer, a real-market constructor
+over the sealed official-NSE audit contract, and a versioned JSON
+serialization schema. Final synthetic generation and dataset loaders must
+build on it rather than re-pointing the legacy 108-grid utilities.
 
 Complete surfaces must remain together in exactly one train, validation, or test split.
 
