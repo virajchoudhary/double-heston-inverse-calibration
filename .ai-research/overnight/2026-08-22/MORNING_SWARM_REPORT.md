@@ -1,8 +1,7 @@
 # DOUBLE HESTON OVERNIGHT SWARM REPORT
 
-**STATUS: DRAFT — ALL THREE NODES INTEGRATED (Node B landed 03:11 IST, mid-run; Node C
-complete with verification rounds). Consolidation target 07:00–07:30 IST; Node B may push
-more evidence before then (re-polled). No peer results invented.**
+**STATUS: FINAL — consolidated in the 07:00 IST window after consuming the last available
+Node B (1dff8a3) and Node C (c30dcef) evidence. All claims trace to branch evidence.**
 
 ## 1. Executive summary
 
@@ -176,6 +175,12 @@ From archive-2 (already on genesis; requires quarantine decisions first):
 - Archive-2 box constraints / negative-only rho as canonical constraint semantics.
 - Positional (adapter-free) cross-stack parameter passing.
 
+## 11.5 Node completion state
+
+All three nodes completed final consolidations: Node A (this branch), Node B (1dff8a3,
+FINAL_REPORT + figures/tables, final SHA self-recorded), Node C (c30dcef, safety checks
+verified, suite 27/27, swarm end-state recorded). No node failed to complete.
+
 ## 12. Research gate status
 
 - G2: UNCHANGED (NOT PASSED; no representation frozen; no grid chosen tonight).
@@ -208,9 +213,9 @@ From archive-2 (already on genesis; requires quarantine decisions first):
 - Node B: `origin/overnight/20260822-b-identifiability` @ 1dff8a3 (COMPLETE: FINDINGS,
   STATUS, EXPERIMENTS, FINAL_REPORT + artifacts/figures/tables; final SHA recorded by them
   at 03:48 IST).
-- Node C: `origin/overnight/20260822-c-pde` @ 751551a (4 commits; STATUS/FINDINGS/
-EXPERIMENTS/FINAL_REPORT + derivations, tables, probe evidence, 25/25 focused tests).
-Integrated at 01:30 IST without merging.
+- Node C: `origin/overnight/20260822-c-pde` @ c30dcef (final consolidation: derivation,
+  adversarial-review artifact, independent cross-derivation, probes, suite 27/27 with
+  clean-worktree reproducibility, safety confirmations).
 
 If Node B/C evidence lands before consolidation, sections 4/5/8/15 will be updated with
 REPRODUCED/SUPPORTED/PRELIMINARY/DISPUTED/UNRESOLVED labels per protocol.

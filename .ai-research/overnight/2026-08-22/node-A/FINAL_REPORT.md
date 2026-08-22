@@ -1,6 +1,6 @@
 # Node A Final Report — Overnight 2026-08-22
 
-**STATUS: DRAFT (auto-refreshed as evidence lands; peer sections pending until ~07:00 IST)**
+**STATUS: FINAL (consolidated 07:00 IST window; all three nodes complete and integrated)**
 
 ## Executive conclusion
 
@@ -130,11 +130,13 @@ and reproducible.
 
 ## Remaining uncertainty
 
-- Whether the reviewed sampling box should constrain predictions (RDD).
-- Model 3 PDE construction design (RDD; Node C input pending).
-- Node B identifiability evidence and Node C PDE audit — PENDING at draft time.
+- Whether the reviewed sampling box should constrain predictions (RDD, quantified in A-007).
+- Model 3 PDE construction design (RDD; Node C's learned-forward-network sketch is the
+  peer-supported starting point; gated on identifiability expectation-setting).
 - Whether archive-2's variable-grid pattern should enter the canonical interface before or
   after G2 resolution (RDD, low urgency).
+- Node B's evidence is synthetic-truth-based; real-market identifiability at market
+  spreads/noise remains unmeasured by design (frozen evaluation is post-freeze).
 
 ## Human decisions required
 
@@ -155,12 +157,25 @@ and reproducible.
 
 ## Peer integration summary
 
-- Node C: INTEGRATED (751551a). Bug REPRODUCED with independent instrumentation + bit-exact
-  closure; canonical physics certified (25/25 tests, also run under Node A pytest, A-015);
-  F10 boundary spot-verified. One disposition nuance recorded (real_finetune: REMOVE vs
-  ISOLATE-AS-ABLATION).
-- Node B: (status at consolidation).
+- Node C: COMPLETE (final c30dcef, 06:55-area consolidation; suite 27/27, adversarial
+  review artifact, independent cross-derivation, clean-worktree reproducibility). The
+  PDE-loss bug was REPRODUCED with independent instrumentation + bit-exact closure; the
+  canonical physics contract was derived and certified; refresh rounds corrected my
+  dead-field attributions (alpha/u_max/integration_eps) and added the variance-propagation
+  gap (-1.1% at 7d to -14.5% at 90d) and the PDE-residual/near-equivalence noise-scale
+  argument. One disposition nuance recorded (real_finetune: REMOVE vs ISOLATE-AS-ABLATION).
+- Node B: COMPLETE (final 1dff8a3). Established: full-108 grid is locally full-rank
+  (cond ~2.6e4) yet global ambiguity persists at market tolerance (param RMSE steps
+  0.097 -> ~0.31 at 0.5% noise with repricing at the noise floor; 100% boundary
+  saturation; local Jacobian alone predicts collapse scale); flat compensated directions
+  exist in the landscape; optimizer budget/weighting ruled out; severity truth-dependent.
+  Final classification: ill-conditioned-at-noise-scale + practically non-identifiable at
+  market tolerance, mixed with case-dependent optimizer-basin sensitivity. Factor-swap
+  degeneracy triangulated by all three nodes (my check: 2.842e-14 on the production
+  pricer, full grid).
+- Disagreements: none. One disposition nuance (real_finetune) routed to Human Decision #1.
 
 ## Branch and final SHA
 
-Branch: `overnight/20260822-a-architecture`. Final SHA: (filled at consolidation).
+Branch: `overnight/20260822-a-architecture`. Final SHA: sealed in the closing commit of
+this branch (see `git log` — consolidation commit at ~07:00 IST 2026-08-22).
