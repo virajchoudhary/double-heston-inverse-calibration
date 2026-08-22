@@ -54,6 +54,13 @@
       0.3
     ]
   },
+  "harness_ready": {
+    "fast_pricer_validation": "evidence/g2_r2_r3_20260822/fast_pricer_validation.json - worst max-abs diff 0.0 vs production across 20 truths x R2/R3 (tolerance 1e-10)",
+    "requirements_covered": 17,
+    "smoke": "evidence/g2_r2_r3_20260822/smoke.json (2 truths x R2/R3 x {0%,0.5%} x 2 starts, market construction on all five dates)",
+    "smoke_market_note": "2026-07-15: R2 19/20 usable, R3 19/30 (third expiry contributes zero usable slots) - matches prior committed support inventory for the first two ranks",
+    "tests": "tests/test_g2_r2r3_harness.py - 18 passed"
+  },
   "matrix_plan": {
     "noise_levels": 4,
     "representations": [
@@ -74,7 +81,7 @@
     "Truth panel frozen before any R2/R3 outcome computation.",
     "All five NTPC development dates remain excluded from final G8."
   ],
-  "phase": "TRUTH_PANEL_FROZEN",
+  "phase": "HARNESS_READY",
   "protocol": "docs/G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md",
   "randomization": {
     "multistart_seed": 20260823,
