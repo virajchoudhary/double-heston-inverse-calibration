@@ -30,9 +30,9 @@ The project is no longer waiting for external mentor approval to continue. G2 is
 | Selected primary sector set | NTPC, CIPLA, INFY, HDFCBANK |
 | G2 market-supported geometry | Established |
 | Current 108-input grid | Rejected as final unchanged representation |
-| G2 candidate protocol | Self-governed R2 vs R3, predeclared |
-| Final G2 representation | Not frozen |
-| G2 | NOT_PASSED |
+| G2 candidate protocol | Self-governed R2 vs R3, predeclared — executed and sealed 22 Aug 2026 |
+| Final G2 representation | **Frozen: R2** (ranked two-expiry central-five, 20 slots) |
+| G2 | **PASSED_REPRESENTATION_FROZEN_WITH_PRACTICAL_NON_IDENTIFIABILITY** |
 | Global ten-parameter ambiguity | Established |
 | Full-108 overnight identifiability diagnostic | Completed; locally full-rank can still be practically non-identifiable at noise scale |
 | Final 10,000-surface research dataset | Not generated |
@@ -107,20 +107,17 @@ Do not import the current Archive-2 PDE loss.
 
 A correctly wired residual on an already accurate model pricer is approximately machine-zero and is not an independent source of parameter-identification information. A future Model 3 would require a different network-side formulation and a research question centered on regularization/structural validity rather than assumed uniqueness.
 
-## Active G2 protocol
+## G2 outcome (22 August 2026)
 
-G2 is now a bounded representation-selection milestone, not an open-ended uniqueness search.
-
-Candidates:
-
-- **R2:** two eligible listed expiry ranks x central five log-moneyness targets x calls/puts, with actual maturity conditioning;
-- **R3:** three eligible listed expiry ranks x central five x calls/puts, with explicit masking for unsupported/unusable slots and actual maturity conditioning.
-
-The unchanged 108-grid is excluded.
-
-The experiment uses the five existing NTPC development dates for market support and a deterministic synthetic truth panel for identifiability. It runs identical 12-start calibration at 0%, 0.5%, 1%, and 2% noise and reports market support, local sensitivity, global dispersion/clusters, parameter recovery, repricing, boundary pressure, stability, and runtime.
-
-If practical non-identifiability remains after representation selection, it is retained as a research result rather than used as a reason to keep changing the representation indefinitely.
+The predeclared self-governed R2-vs-R3 protocol was executed once and sealed
+([G2_R2_R3_REPRESENTATION_SELECTION_RESULTS.md](G2_R2_R3_REPRESENTATION_SELECTION_RESULTS.md)).
+The frozen stopping rule selected **R2** (rule 2: R3 showed no strong/partial
+practical-information improvement at any realistic noise level, despite better
+Jacobian conditioning and a strong clean-data improvement that noise
+destroyed). Both candidates remain practically non-identifiable at realistic
+noise, retained as a central research finding. R3's third expiry rank
+contributed zero usable central-five slots on all five development dates
+(far-month NTPC chains inactive under the existing contract).
 
 ## Current gate summary
 
@@ -128,9 +125,10 @@ If practical non-identifiability remains after representation selection, it is r
 PRODUCTION_DH_PRICER = VALIDATED_AND_FROZEN
 CURRENT_108_GRID = REJECTED_AS_FINAL_UNCHANGED_GRID
 G2_MARKET_SUPPORTED_GEOMETRY = ESTABLISHED
-G2_PROTOCOL = SELF_GOVERNED_R2_VS_R3_PREDECLARED
-G2_FINAL_REPRESENTATION = NOT_FROZEN
-G2 = NOT_PASSED
+G2_PROTOCOL = SELF_GOVERNED_R2_VS_R3_EXECUTED_AND_SEALED
+G2_FINAL_REPRESENTATION = FROZEN_R2_RANKED_TWO_EXPIRY_CENTRAL_FIVE
+G2 = PASSED_REPRESENTATION_FROZEN_WITH_PRACTICAL_NON_IDENTIFIABILITY
+PRACTICAL_NON_IDENTIFIABILITY = RETAINED_RESEARCH_FINDING
 GLOBAL_AMBIGUITY = ESTABLISHED
 FINAL_10K = NOT_GENERATED
 ANN_RESEARCH_TRAINING = NOT_STARTED
@@ -141,6 +139,6 @@ FROZEN_REAL_MARKET_EVALUATION = NOT_STARTED
 
 ## Exact next action
 
-`EXECUTE SELF-GOVERNED G2 REPRESENTATION SELECTION`
+`FORMALIZE THE FROZEN R2 REPRESENTATION INTERFACE`
 
-Do not generate the final 10k or start research ANN/Model-2 training until the R2/R3 experiment has selected and frozen the final representation.
+Then regenerate/revalidate the final synthetic surface contract. The final 10k generation, ANN/Model-2 research training, final G8 date selection, and frozen real-market evaluation remain separately controlled milestones that have not started.
