@@ -291,11 +291,83 @@ def test_decision_evaluator_cannot_change_protocol_thresholds():
         {"median_dispersion": 0.20, "maximum_dispersion": 0.60, "mean_cluster_count": 1.2},
     )
     assert assessment["classification"] in (
-        "STRONG_IMPROVEMENT", "PARTIAL_IMPROVEMENT", "NO_MATERIEL_IMPROVEMENT",
+        "STRONG_IMPROVEMENT", "PARTIAL_IMPROVEMENT", "NO_MATERIAL_IMPROVEMENT",
     )
     # Frozen constants must equal the protocol numbers.
     assert frozen.STRONG_IMPROVEMENT_MEDIAN == 0.25
     assert frozen.PARTIAL_IMPROVEMENT_MEDIAN == 0.10
+
+
+def _eligible(name: str) -> dict[str, object]:
+    return {"satisfied": True, "name": name}
+
+
+def _ineligible(name: str) -> dict[str, object]:
+    return {"satisfied": False, "name": name}
+
+
+def _non_ident(retained: bool) -> dict[str, object]:
+    return {
+        "practical_non_identifiability_retained": retained,
+        "median_best_parameter_rmse_scaled": 0.9 if retained else 0.001,
+        "median_best_repricing_rmse_relative": 0.001,
+    }
+
+
+def _assessment(classification: str) -> dict[str, object]:
+    return {"classification": classification}
+
+
+def test_rule_1_r3_selected_on_qualifying_improvement():
+    for classification in ("STRONG_IMPROVEMENT", "PARTIAL_IMPROVEMENT"):
+        final = decision.apply_frozen_decision(
+            {"R2": _eligible("R2"), "R3": _eligible("R3")},
+            _assessment(classification),
+            {"R2": _non_ident(True), "R3": _non_ident(False)},
+        )
+        assert final["selected_representation"] == "R3"
+        assert final["rule_applied"] == "rule_1_r3_market_supported_with_improvement"
+        assert final["g2_label"] == frozen.G2_LABEL_IDENTIFIABILITY_ACCEPTABLE
+        # Label follows the SELECTED representation's record (R3 here).
+        assert final["practical_non_identifiability_retained"] is False
+
+
+def test_rule_1_r3_non_identifiable_label_uses_selected_record():
+    final = decision.apply_frozen_decision(
+        {"R2": _eligible("R2"), "R3": _eligible("R3")},
+        _assessment("PARTIAL_IMPROVEMENT"),
+        {"R2": _non_ident(False), "R3": _non_ident(True)},
+    )
+    assert final["selected_representation"] == "R3"
+    assert final["g2_label"] == frozen.G2_LABEL_PRACTICAL_NON_IDENTIFIABILITY
+
+
+def test_rule_2_r2_selected_when_r3_does_not_qualify():
+    final = decision.apply_frozen_decision(
+        {"R2": _eligible("R2"), "R3": _eligible("R3")},
+        _assessment("NO_MATERIAL_IMPROVEMENT"),
+        {"R2": _non_ident(True), "R3": _non_ident(True)},
+    )
+    assert final["selected_representation"] == "R2"
+    assert final["rule_applied"] == "rule_2_r2_simpler_market_supported_representation"
+    assert final["g2_label"] == frozen.G2_LABEL_PRACTICAL_NON_IDENTIFIABILITY
+    assert final["practical_non_identifiability_retained"] is True
+
+
+def test_rule_4_both_hard_requirements_fail_returns_exact_failed_label():
+    # Even with non-identifiability retained on both candidates, the
+    # both-fail branch must return exactly the FAILED label — no PASSED
+    # label may be derived from either candidate's records.
+    final = decision.apply_frozen_decision(
+        {"R2": _ineligible("R2"), "R3": _ineligible("R3")},
+        _assessment("STRONG_IMPROVEMENT"),
+        {"R2": _non_ident(True), "R3": _non_ident(True)},
+    )
+    assert final["selected_representation"] is None
+    assert final["rule_applied"] == "rule_4_both_failed_hard_requirements"
+    assert final["g2_label"] == frozen.G2_LABEL_FAILED_MARKET_CONSTRUCTION
+    assert final["g2_label"] == "G2 = FAILED_MARKET_CONSTRUCTION_REQUIREMENTS"
+    assert "PASSED" not in final["g2_label"]
 
 
 def test_dispersion_record_on_real_fit_output():

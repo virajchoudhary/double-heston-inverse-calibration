@@ -122,9 +122,21 @@ def apply_frozen_decision(
         "PARTIAL_IMPROVEMENT",
     )
     if not r2_eligible and not r3_eligible:
-        selected = None
-        rule = "rule_4_both_failed_hard_requirements"
-    elif r3_eligible and improvement and not (holdout_applicable and holdout_violated):
+        # Rule 4: both candidates failed the hard market-construction
+        # requirements.  The protocol requires exactly the FAILED label here;
+        # no PASSED label may be derived from either candidate's records.
+        return {
+            "selected_representation": None,
+            "g2_label": frozen.G2_LABEL_FAILED_MARKET_CONSTRUCTION,
+            "rule_applied": "rule_4_both_failed_hard_requirements",
+            "improvement_classification": assessment["classification"],
+            "practical_non_identifiability_retained": None,
+            "practical_non_identifiability_by_representation": (
+                non_identifiability_by_representation
+            ),
+            "holdout_guardrail": frozen.HOLDOUT_GUARDRAIL_STATUS,
+        }
+    if r3_eligible and improvement and not (holdout_applicable and holdout_violated):
         selected = "R3"
         rule = "rule_1_r3_market_supported_with_improvement"
     elif r2_eligible:
@@ -134,16 +146,14 @@ def apply_frozen_decision(
         selected = "R3"
         rule = "rule_2_fallback_r3_only_eligible_candidate"
 
-    if selected is None:
-        non_ident = non_identifiability_by_representation["R3"]
-    else:
-        non_ident = non_identifiability_by_representation[selected]
+    non_ident = non_identifiability_by_representation[selected]
 
     label = (
         frozen.G2_LABEL_PRACTICAL_NON_IDENTIFIABILITY
         if non_ident["practical_non_identifiability_retained"]
         else frozen.G2_LABEL_IDENTIFIABILITY_ACCEPTABLE
     )
+    # Rule 4 is unreachable here: it returned the exact FAILED label above.
     return {
         "selected_representation": selected,
         "g2_label": label,

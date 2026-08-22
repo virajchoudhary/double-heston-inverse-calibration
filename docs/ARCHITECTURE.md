@@ -34,9 +34,11 @@ G2 = PASSED_REPRESENTATION_FROZEN_WITH_PRACTICAL_NON_IDENTIFIABILITY
 
 The model layer already derives its input size from the dataset rather than treating 108 as an immutable neural-network constant. The frozen G2 representation (selected 22 August 2026 by the predeclared
 self-governed R2-vs-R3 protocol) is **R2**: first two eligible listed expiry
-ranks x central-five log-moneyness x calls/puts = 20 spot-normalized price
-slots, with actual time-to-maturity supplied explicitly and existing per-rank
-rate/carry conditioning. A formal interface for this frozen contract should be
+ranks x central-five log-moneyness x calls/puts = 20 NOMINAL spot-normalized
+price slots with explicit mask/missingness for unsupported or unusable
+real-market observations (never imputed with model prices; the synthetic G2
+panel is complete by construction), with actual time-to-maturity supplied
+explicitly and existing per-rank rate/carry conditioning. A formal interface for this frozen contract should be
 completed before final synthetic generation without changing the canonical
 parameter or pricing contracts.
 

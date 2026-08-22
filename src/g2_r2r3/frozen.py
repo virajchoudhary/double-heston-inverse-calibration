@@ -36,6 +36,10 @@ START_COUNT: Final[int] = 12
 BROAD_START_SCALE: Final[float] = 1.25  # N(0, 1.25^2) latent draws, existing convention
 
 # --- candidate representations -----------------------------------------------
+# Nominal slot counts are MAXIMAL geometric sizes.  On real-market
+# construction, unsupported or unusable slots are explicitly masked and are
+# never filled with model prices; the synthetic G2 panel is complete by
+# construction.  (See geometry.py for the full frozen R2/R3 contract text.)
 CENTRAL_FIVE: Final[tuple[float, ...]] = (-0.10, -0.05, 0.0, 0.05, 0.10)
 R2_EXPIRY_RANKS: Final[int] = 2
 R3_EXPIRY_RANKS: Final[int] = 3

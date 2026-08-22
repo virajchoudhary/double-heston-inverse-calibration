@@ -21,10 +21,13 @@ This is policy hardening and may proceed in parallel with the next research mile
 
 ### 2. Formalize the frozen R2 representation interface — EXACT NEXT ACTION
 
-G2 selected **R2** (ranked two-expiry central-five calls/puts, 20 slots,
-spot-normalized, actual maturity conditioning, existing rate/carry
-conditioning). Make the production dataset/model interface explicitly
-represent that frozen contract.
+G2 selected **R2** (ranked two-expiry central-five calls/puts, **20 NOMINAL
+slots** with explicit mask/missingness for unsupported or unusable real-market
+observations — never impute a missing real quote with a model price;
+spot-normalized; actual maturity conditioning; existing rate/carry
+conditioning; the synthetic G2 panel is complete by construction). Make the
+production dataset/model interface explicitly represent that frozen contract,
+including the mask channel for real surfaces.
 
 Keep the canonical parameter order, pricer, constraints, and target semantics unchanged. Because R2 carries actual maturities and per-rank rate/carry conditioning, the interface must supply those explicitly rather than assuming a fixed grid.
 

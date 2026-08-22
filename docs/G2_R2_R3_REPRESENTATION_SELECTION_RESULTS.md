@@ -55,20 +55,28 @@ from the archived Node-B toolkit, not merged) was validated against the
 production pricer at worst max-abs difference **0.0** across all 20 truths ×
 R2/R3 before use.
 
-## 4. R2 definition
+## 4. R2 definition (the frozen representation)
 
-First TWO eligible listed expiry ranks × central log-moneyness
-`[-0.10, -0.05, 0.00, +0.05, +0.10]` × calls and puts = 20 nominal price slots,
-spot-normalized prices, actual time-to-maturity supplied explicitly,
-existing per-rank rate/carry conditioning, no interpolation or extrapolation.
+**20 NOMINAL price slots**: first TWO eligible listed expiry ranks × central
+log-moneyness `[-0.10, -0.05, 0.00, +0.05, +0.10]` × calls and puts;
+spot-normalized prices; actual time-to-maturity supplied explicitly; existing
+per-rank rate/carry conditioning; no interpolation or extrapolation.
+On real-market construction, unsupported or unusable slots carry an **explicit
+mask/missingness flag** — a missing real quote is never imputed with a model
+price or any proxy (real development-date support is 78/100 usable slots).
+The **synthetic G2 panel is complete by construction** (no missing slots),
+which is a property of the synthetic design, not an assumption about real
+surfaces.
 
 ## 5. R3 definition
 
-Same contract with the first THREE eligible listed expiry ranks = 30 nominal
-slots, explicit masks for unsupported/unusable observations, missing
-observations never filled with model prices. Per the protocol, R3 is a
-maximum-size masked representation, not a claim that real surfaces contain 30
-equally reliable observations.
+Same contract with the first THREE eligible listed expiry ranks = **30 NOMINAL
+slots**, the same explicit mask/missingness semantics for unsupported/unusable
+observations, and missing observations never filled with model prices. Per the
+protocol, R3 is a maximum-size masked representation, not a claim that real
+surfaces contain 30 equally reliable observations. In this study R3's
+synthetic third-rank slots were complete while real third-rank support was
+100% masked on all five NTPC development dates (limitation 1).
 
 ## 6. NTPC market-support table
 
@@ -216,17 +224,23 @@ in `synthetic_runs.csv`.
 
 ## 15. Limitations
 
-1. **R3's third expiry is unusable on the development market panel.** Its extra
-   slots are 100% masked on all five dates (aggregate R3 completeness 0.52 vs
-   R2 0.78). The predeclared hard requirements define market support as
-   reproducible construction with explicit masking, which R3 satisfies; the
-   protocol explicitly defines R3 as a maximum-size masked representation. The
-   frozen rule was therefore applied as written — but a representation whose
-   added slots are entirely masked in current NTPC market practice would have
-   delivered no additional real observations had it been selected.
+1. **R3's third expiry is unusable on the development market panel — the
+   synthetic/real contrast is a limitation of the R3 comparison.** R3's
+   synthetic third-rank slots were complete (30/30 by construction), while its
+   real third-rank support was 100% masked on all five NTPC development dates
+   (aggregate R3 completeness 0.52 vs R2 0.78). The predeclared hard
+   requirements define market support as reproducible construction with
+   explicit masking, which R3 satisfies; the protocol explicitly defines R3 as
+   a maximum-size masked representation. The frozen rule was therefore applied
+   as written. This does not change the R2 decision — R3 lost under the frozen
+   rule on realistic-noise evidence regardless of third-rank support — but it
+   matters for the rationale and for the next interface design: a
+   representation whose added slots are entirely masked in current NTPC market
+   practice would have delivered no additional real observations had it been
+   selected.
 2. **Practical non-identifiability persists under every candidate and noise
    level**: surfaces are fitted to noise scale while best-start parameters
-   displace by ~0.36–0.48 range-scaled RMSE (≫ the 0.05 material-displacement
+   displace by ~0.34–0.48 range-scaled RMSE (≫ the 0.05 material-displacement
    convention).
 3. Rates for 07-08 and 07-29 are carry-forward observations (documented
    artifact absence), affecting only the IV eligibility gate and synthetic
@@ -262,8 +276,10 @@ imported only from `frozen.py`:
 
 ## 17. Selected representation
 
-**R2 — ranked two-expiry central-five calls/puts (20 slots), spot-normalized,
-actual maturity conditioning, existing rate/carry conditioning.**
+**R2 — ranked two-expiry central-five calls/puts (20 NOMINAL slots with
+explicit mask/missingness for unsupported or unusable real-market
+observations; never impute a missing real quote), spot-normalized, actual
+maturity conditioning, existing rate/carry conditioning.**
 
 ## 18. Exact G2 completion label
 
@@ -302,7 +318,7 @@ NOT started here.
 ```bash
 git checkout research/g2-r2-r3-selection   # checkpoint G commit 09aa1d7 or later
 python scripts/run_g2_r2r3_truth_panel.py      # checkpoint A (panel freeze)
-python -m pytest tests/test_g2_r2r3_harness.py # 18/18 at HARNESS_READY; 19/19 incl. audit-added integration test
+python -m pytest tests/test_g2_r2r3_harness.py # 18/18 at HARNESS_READY; 23/23 after audit integration + pre-merge rule regression tests
 python scripts/run_g2_r2r3_smoke.py            # tiny smoke
 python scripts/run_g2_r2r3_market_support.py   # checkpoint C (5-date audit)
 python scripts/run_g2_r2r3_matrix.py           # 1,920-run matrix (shardable)

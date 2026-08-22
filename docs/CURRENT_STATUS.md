@@ -31,7 +31,7 @@ The project is no longer waiting for external mentor approval to continue. G2 is
 | G2 market-supported geometry | Established |
 | Current 108-input grid | Rejected as final unchanged representation |
 | G2 candidate protocol | Self-governed R2 vs R3, predeclared — executed and sealed 22 Aug 2026 |
-| Final G2 representation | **Frozen: R2** (ranked two-expiry central-five, 20 slots) |
+| Final G2 representation | **Frozen: R2** (ranked two-expiry central-five, 20 nominal slots + explicit real-market masking) |
 | G2 | **PASSED_REPRESENTATION_FROZEN_WITH_PRACTICAL_NON_IDENTIFIABILITY** |
 | Global ten-parameter ambiguity | Established |
 | Full-108 overnight identifiability diagnostic | Completed; locally full-rank can still be practically non-identifiable at noise scale |
@@ -114,7 +114,9 @@ The predeclared self-governed R2-vs-R3 protocol was executed once and sealed
 The frozen stopping rule selected **R2** (rule 2: R3 showed no strong/partial
 practical-information improvement at any realistic noise level, despite better
 Jacobian conditioning and a strong clean-data improvement that noise
-destroyed). Both candidates remain practically non-identifiable at realistic
+destroyed). R2 is 20 NOMINAL slots with explicit mask/missingness for
+unsupported or unusable real-market observations (never impute a missing real
+quote); the synthetic G2 panel is complete by construction. Both candidates remain practically non-identifiable at realistic
 noise, retained as a central research finding. R3's third expiry rank
 contributed zero usable central-five slots on all five development dates
 (far-month NTPC chains inactive under the existing contract).

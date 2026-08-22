@@ -1,13 +1,19 @@
 """R2/R3 representation geometry for the G2 selection study.
 
-R2: first TWO eligible listed expiry ranks x central-five log-moneyness x
-calls/puts, spot-normalized prices, actual time-to-maturity supplied
-explicitly, existing per-rank rate/carry conditioning.
+R2: 20 NOMINAL price slots — first TWO eligible listed expiry ranks x
+central-five log-moneyness x calls/puts — spot-normalized prices, actual
+time-to-maturity supplied explicitly, existing per-rank rate/carry
+conditioning.  On real-market construction, unsupported or unusable slots
+carry an explicit mask/missingness flag; a missing real quote is NEVER
+imputed with a model price or any proxy.  The synthetic G2 panel is complete
+by construction (no missing slots), which is a property of the synthetic
+design, not an assumption about real surfaces.
 
-R3: first THREE eligible listed expiry ranks, same contract, explicit masks
-for unsupported/unusable slots (masks matter on real-market construction; the
-synthetic panel has no missing slots by construction, which is recorded
-honestly rather than imputed around).
+R3: 30 NOMINAL price slots — first THREE eligible listed expiry ranks, same
+contract and same explicit masking semantics.  In this study R3's synthetic
+third-rank slots were complete while real third-rank support was 100% masked
+on all five NTPC development dates (a limitation of the R3 comparison, not of
+the frozen R2 decision).
 
 Slot identity is ``(expiry_rank, moneyness, option_type)`` — the same key the
 noise scheme uses — so common R2/R3 slots are aligned by construction.

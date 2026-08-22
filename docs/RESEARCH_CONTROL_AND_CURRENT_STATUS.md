@@ -220,7 +220,7 @@ A genuine PDE-informed Model 3 may be added later as a separately justified regu
 `FORMALIZE THE FROZEN R2 REPRESENTATION INTERFACE`
 
 The predeclared G2 R2/R3 study was executed and sealed on 22 August 2026. The
-stopping rule froze **R2** (no strong/partial practical-information improvement
+stopping rule froze **R2** (20 nominal slots with explicit real-market mask/missingness; synthetic panel complete by construction; never impute a missing real quote) after no strong/partial practical-information improvement
 for R3 at any realistic noise level, despite better local conditioning), with
 `PRACTICAL_NON_IDENTIFIABILITY = RETAINED_RESEARCH_FINDING`. The next action is
 to formalize the frozen R2 interface (explicit actual maturities and per-rank
