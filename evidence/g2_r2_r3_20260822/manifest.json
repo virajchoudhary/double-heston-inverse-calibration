@@ -2,7 +2,8 @@
   "adversarial_audit_20260822": {
     "audits": [
       "representation-contract + leakage audit",
-      "decision-rule fidelity audit"
+      "decision-rule fidelity audit",
+      "determinism + seed audit"
     ],
     "material_findings_and_resolutions": [
       {
@@ -18,12 +19,15 @@
       "rate-literal fidelity assertion added against committed hash-sealed RATE_SOURCES + future-observation guard",
       "decision evaluator now takes per-representation non-identifiability records (no caller pre-guess of winner)",
       "stale single-threaded partial run log preserved under tmp/ at merge time",
-      "NO_MATERIEL typo fixed (string value only)"
+      "NO_MATERIEL typo fixed (string value only)",
+      "merge conflict comparison now ignores runtime_seconds and is NaN-safe (JSON canonical form)",
+      "matrix driver committed; scipy 1.16.2 pin documented as load-bearing for the seed->stream mapping of the truth panel draw"
     ],
     "note": "no frozen threshold, seed, band, or rule order was modified after outcomes",
     "verdicts": [
       "MATERIAL_ISSUES_FOUND (decision-stage)",
-      "MATERIAL_ISSUES_FOUND (pipeline integrity)"
+      "MATERIAL_ISSUES_FOUND (pipeline integrity)",
+      "PASS_WITH_MINOR_ISSUES (bit-identical reproduction incl. live shard evidence)"
     ]
   },
   "analysis_id": "G2_R2_R3_REPRESENTATION_SELECTION",
@@ -37,6 +41,7 @@
     "scipy": "1.16.2",
     "torch": "2.11.0+cpu"
   },
+  "environment_note": "scipy 1.16.2 pin is load-bearing: qmc.LatinHypercube(seed=...) stream identity is version-sensitive; the committed truth_panel.csv is the byte-exact frozen artifact",
   "execution_branch": "research/g2-r2-r3-selection",
   "expected_starting_main": "c64aaaf54f72a48768316c582d312dd8cf27a089",
   "hard_bounds": {
@@ -115,7 +120,7 @@
     "Truth panel frozen before any R2/R3 outcome computation.",
     "All five NTPC development dates remain excluded from final G8."
   ],
-  "phase": "MATRIX_IN_PROGRESS_25PCT_PLUS",
+  "phase": "MATRIX_IN_PROGRESS_50PCT_PLUS",
   "protocol": "docs/G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md",
   "randomization": {
     "multistart_seed": 20260823,

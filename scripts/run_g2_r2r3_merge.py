@@ -22,6 +22,20 @@ EVIDENCE_ROOT = REPOSITORY_ROOT / "evidence" / "g2_r2_r3_20260822"
 CANONICAL = EVIDENCE_ROOT / "synthetic_runs.jsonl"
 EXPECTED_TOTAL = 20 * 2 * 4 * frozen.START_COUNT
 
+# Duplicate-key conflict comparison ignores wall-clock runtime and treats NaN
+# fields as equal to NaN (JSON round-trip form), so a crash-resume duplicate of
+# a deterministic cell never aborts the merge while a true divergence still does.
+NON_SCIENTIFIC_FIELDS = ("runtime_seconds",)
+
+
+def _canonical_form(record: dict) -> str:
+    trimmed = {
+        key: value
+        for key, value in record.items()
+        if key not in NON_SCIENTIFIC_FIELDS
+    }
+    return json.dumps(trimmed, sort_keys=True, default=float)
+
 
 def merge() -> dict:
     records: dict[tuple[str, str, int, int], dict] = {}
@@ -55,7 +69,7 @@ def merge() -> dict:
                 record["noise_index"],
                 record["start_index"],
             )
-            if key in records and records[key] != record:
+            if key in records and _canonical_form(records[key]) != _canonical_form(record):
                 raise RuntimeError(f"conflicting records for {key}")
             records[key] = record
     expected_keys = set()
