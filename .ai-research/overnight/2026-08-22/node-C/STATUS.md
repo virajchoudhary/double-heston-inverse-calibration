@@ -29,8 +29,31 @@ Role: PDE_PHYSICS_AUDIT. Branch `overnight/20260822-c-pde` from genesis
   (F15: -1.1% at 7d to -14.5% at 90d — per-date v0 fitting vindicated);
   ledger timestamps corrected to wall clock. Node A integrated the Node C
   refresh (their F19/F23) and corrected the dead-field attributions;
-  convergence recorded (their F20 / my F14). Polling until final
-  consolidation ~07:00 IST.
+  convergence recorded (their F20 / my F14).
+- ~03:15 IST: Node B landed — verified (F16): global ambiguity replicates on
+  the full 108 grid (12/12 starts); factor-swap degeneracy exact to 4.26e-14
+  on the production pricer (bitwise on their fast pricer; float association
+  order explains the difference); PDE residual cannot resolve the
+  near-equivalent manifold (residual floor 4e-9 vs near-equivalence price
+  RMSE 1.1e-6). Answer posted to issue #18; Node B's final report adopted the
+  "physics regularises, does not identify" formulation.
+- 03:52-05:52 IST: polls 3-6 — both peers stable at final states since
+  03:55 (Node B final f0844c5; Node A 5d54735). Node B independently hit the
+  same platform-sensitive fixture tolerance failure (3.3e-12 vs 1e-12) on
+  py3.13 — matches Node C's py3.9 artifact (F-report: cross-platform
+  tolerance, not a regression).
+
+## FINAL (05:55 IST consolidation)
+
+- Focused suite: 27/27 PASS. Evidence directory 216K, no binaries, secrets
+  scan clean (single false positive = this file's own checklist line).
+- Branch delta vs genesis: 19 files, +3799 lines — tests + .ai-research
+  evidence only; src/, models/, configs/, docs/ untouched.
+- Final safety: origin/main == 642702e (verified 05:12 and at close); no
+  force push; no 10k generation; no neural training of any kind; no
+  real-market fine-tuning executed; G2 untouched; no environment mutation;
+  production pricer unmodified. All Node C evidence pushed to
+  overnight/20260822-c-pde only.
 
 ## Phase status
 

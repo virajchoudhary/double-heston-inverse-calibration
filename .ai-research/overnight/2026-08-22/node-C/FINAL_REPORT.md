@@ -333,21 +333,25 @@ If a genuine PDE-informed term is wanted for the paper:
   choice vs single-driver carry-over) — paper should state which.
 - Whether strict `kappa_slow < kappa_fast` identifiability ordering should
   also be imposed in any future learned-pricer coupling (it is a tie-breaking
-  convention, not physics).
+  convention, not physics — Node B's exact factor-swap degeneracy shows the
+  ordering is the ONLY declared element breaking it).
 - Boundary truncation strategy for a future collocation implementation
   (log-spot vs spot coordinates; variance-domain truncation) — not settled
   tonight; no collocation code was written (out of scope).
-- Node B's identifiability evidence was not yet pushed at last fetch; my
-  identifiability conclusions are mathematical, not yet cross-checked
-  against their numerical Jacobian analysis.
+- The engine fixture test's 1e-12 tolerance is platform-sensitive (fails by
+  3.3e-12 on both Node C's py3.9 and Node B's py3.13) — the team may want a
+  platform-normalised tolerance.
 
 ## Branch and final commit
 
 Branch `overnight/20260822-c-pde` (from genesis `642702e`, pushed to origin).
-Final commit: see `git log` head of this branch. main untouched; no force
-push; no 10k generation; no real-market neural training; G2 and canonical
-status documents unchanged; no environment mutation; production pricer
-unmodified.
+Final commit: this consolidation commit (see `git log`). Branch delta vs
+genesis: 19 files, +3799 lines — `tests/test_node_c_pde_physics_audit.py`
+plus `.ai-research/overnight/2026-08-22/node-C/` evidence only; src/, models/,
+configs/, docs/ untouched. main untouched (origin/main == 642702e verified at
+close); no force push; no 10k generation; no real-market neural training; G2
+and canonical status documents unchanged; no environment mutation; production
+pricer unmodified.
 
 Peer corroboration (final fetch): Node A's updated FINDINGS independently
 confirm the two-stack map, the parameter-order divergence, and classify the
