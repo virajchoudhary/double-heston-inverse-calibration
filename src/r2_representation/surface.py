@@ -9,9 +9,12 @@ real-market evaluation.  Field semantics (see
   carry strictly positive finite values; masked (unavailable) slots carry
   exactly ``0.0`` (``contract.MASKED_PRICE_PLACEHOLDER``).  NaN/Inf are never
   allowed anywhere.
-- ``mask`` -- 20 validity flags.  ``True`` = real, usable observation (or
-  synthetic slot, complete by construction).  ``False`` = unsupported or
-  unusable slot; never imputed.
+- ``mask`` -- 20 validity flags, each a genuine boolean (``bool`` or
+  ``numpy.bool_``).  Strings, numbers, and other truthy/falsy objects are
+  REJECTED, never coerced — e.g. the string ``"False"`` must not silently
+  become a valid observation.  ``True`` = real, usable observation (or
+  synthetic slot, complete by construction); ``False`` = unsupported or
+  unusable slot, never imputed.
 - ``maturities`` / ``rates`` / ``carries`` -- per-slot actual time-to-maturity
   (years) and the existing per-rank rate/carry conditioning.  These are known
   for every slot of an eligible rank, including masked quote slots, so they
@@ -19,14 +22,20 @@ real-market evaluation.  Field semantics (see
 - ``spot`` -- the normalization spot for this surface.
 - ``slot_keys`` -- must equal ``contract.CANONICAL_SLOT_KEYS`` exactly
   (identity and order).
-- ``metadata`` -- JSON-safe provenance (source/date identifiers, raw-quote
-  provenance for real surfaces, parameter vectors for synthetic surfaces).
+- ``metadata`` -- JSON-safe provenance, validated and defensively normalized
+  at construction: a mapping of finite-number JSON-compatible values only
+  (NaN/Infinity and unsupported Python objects raise
+  ``RepresentationContractError``).  The surface stores a deeply immutable,
+  normalized copy, so neither the caller's input nor a returned nested value
+  can mutate recorded provenance.
 """
 
 from __future__ import annotations
 
+import json
 import math
 from dataclasses import dataclass, field
+from types import MappingProxyType
 from typing import Any, Mapping, Sequence
 
 import numpy as np
@@ -149,7 +158,10 @@ class R2Surface:
             raise RepresentationContractError("source must be non-empty")
         _require_finite_positive(self.spot, "spot")
         prices = tuple(float(value) for value in self.prices)
-        mask = tuple(bool(value) for value in self.mask)
+        mask = tuple(
+            _require_mask_boolean(value, index)
+            for index, value in enumerate(self.mask)
+        )
         maturities = tuple(float(value) for value in self.maturities)
         rates = tuple(float(value) for value in self.rates)
         carries = tuple(float(value) for value in self.carries)
@@ -190,11 +202,13 @@ class R2Surface:
             raise RepresentationContractError(
                 "rank-2 maturity must exceed rank-1 maturity (chronological ranks)"
             )
+        metadata = _prepared_stored_metadata(self.metadata)
         object.__setattr__(self, "prices", prices)
         object.__setattr__(self, "mask", mask)
         object.__setattr__(self, "maturities", maturities)
         object.__setattr__(self, "rates", rates)
         object.__setattr__(self, "carries", carries)
+        object.__setattr__(self, "metadata", metadata)
 
     @staticmethod
     def _per_rank_rank_slices() -> dict[int, list[int]]:
@@ -252,6 +266,102 @@ def _require_finite_positive(value: float, name: str) -> None:
         raise RepresentationContractError(f"{name} must be finite and strictly positive, got {value}")
 
 
+def _require_mask_boolean(value: Any, index: int) -> bool:
+    """Accept only genuine booleans; never coerce truthy/falsy objects.
+
+    ``bool`` covers Python literals and JSON round-trips; ``np.bool_``
+    covers numpy mask arrays used by normal callers (note ``np.bool_`` is
+    NOT a subclass of ``bool``).  Everything else — strings such as
+    ``"False"``/``"True"``, ints 0/1, floats, None, arbitrary objects — is
+    rejected so a malformed value can never silently flip a missing quote
+    into a valid observation.
+    """
+    if isinstance(value, bool) or isinstance(value, np.bool_):
+        return bool(value)
+    raise RepresentationContractError(
+        f"mask[{index}] must be a genuine boolean (bool or numpy.bool_), got "
+        f"{type(value).__name__} ({value!r}); truthy/falsy coercion of mask "
+        "values is forbidden (e.g. the string \"False\" must never become a "
+        "valid observation)"
+    )
+
+
+def normalize_metadata_mapping(metadata: Any) -> dict[str, Any]:
+    """Validate metadata as finite-number JSON-safe and return a plain copy."""
+    if not isinstance(metadata, Mapping):
+        raise RepresentationContractError(
+            f"metadata must be a mapping/JSON object, got {type(metadata).__name__}"
+        )
+
+    def normalize(value: Any) -> Any:
+        if isinstance(value, (Mapping, list, tuple)):
+            marker = id(value)
+            if marker in active_containers:
+                raise RepresentationContractError(
+                    "metadata must be acyclic; circular references are forbidden"
+                )
+            active_containers.add(marker)
+            try:
+                if isinstance(value, Mapping):
+                    result: dict[str, Any] = {}
+                    for key, item in value.items():
+                        if not isinstance(key, str):
+                            raise RepresentationContractError(
+                                f"metadata keys must be strings, got {type(key).__name__}"
+                            )
+                        result[key] = normalize(item)
+                    return result
+                return [normalize(item) for item in value]
+            finally:
+                active_containers.discard(marker)
+        if value is None or type(value) in (bool, int, float, str):
+            if isinstance(value, float) and not math.isfinite(value):
+                raise RepresentationContractError(
+                    "metadata numbers must be finite (NaN/Infinity are forbidden)"
+                )
+            return value
+        raise RepresentationContractError(
+            f"metadata contains unsupported non-JSON value of type "
+            f"{type(value).__name__}; values are never stringified or lossily coerced"
+        )
+
+    active_containers: set[int] = set()
+    try:
+        normalized = normalize(metadata)
+        try:
+            json.dumps(normalized, allow_nan=False)
+        except (TypeError, ValueError, RecursionError) as error:
+            raise RepresentationContractError(
+                f"metadata is not finite-number JSON-serializable: {error}"
+            ) from error
+        return normalized
+    except RecursionError as error:
+        raise RepresentationContractError(
+            "metadata is too deeply nested or circular"
+        ) from error
+
+
+def _immutable_metadata(value: Any) -> Any:
+    """Freeze validated JSON structure without changing its meaning."""
+    if isinstance(value, dict):
+        return MappingProxyType(
+            {key: _immutable_metadata(item) for key, item in value.items()}
+        )
+    if isinstance(value, list):
+        return tuple(_immutable_metadata(item) for item in value)
+    return value
+
+
+def _prepared_stored_metadata(metadata: Any) -> Any:
+    """Validate then freeze metadata with one contract-typed depth boundary."""
+    try:
+        return _immutable_metadata(normalize_metadata_mapping(metadata))
+    except RecursionError as error:
+        raise RepresentationContractError(
+            "metadata is too deeply nested"
+        ) from error
+
+
 def surface_from_vectors(
     prices: Sequence[float],
     mask: Sequence[bool],
@@ -281,7 +391,7 @@ def surface_from_vectors(
         surface_id=surface_id,
         source=source,
         slot_keys=tuple(slot_keys) if slot_keys is not None else CANONICAL_SLOT_KEYS,
-        metadata=dict(metadata or {}),
+        metadata={} if metadata is None else metadata,
     )
 
 
@@ -291,5 +401,6 @@ __all__ = [
     "SOURCE_REAL_NSE_DEVELOPMENT",
     "SOURCE_SYNTHETIC",
     "SYNTHETIC_NORMALIZATION_SPOT",
+    "normalize_metadata_mapping",
     "surface_from_vectors",
 ]

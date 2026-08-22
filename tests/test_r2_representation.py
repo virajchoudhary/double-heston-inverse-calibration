@@ -586,7 +586,7 @@ def test_review_real_constructor_rejects_mismatched_audit_report():
         build_real_surface("2026-07-01", audit_report=_audit_report("2026-07-15"))
 
 
-def test_review_nan_metadata_rejected_on_read_path(tmp_path):
+def test_review_nan_metadata_rejected_on_read_path():
     import tempfile
 
     surface = _synthetic_surface()
@@ -594,15 +594,18 @@ def test_review_nan_metadata_rejected_on_read_path(tmp_path):
         path = Path(tmp) / "surface.json"
         write_surface_json(surface, path)
         text = path.read_text(encoding="utf-8")
-    poisoned = text.replace('"synthetic": true', '"synthetic": NaN')
-    bad_file = tmp_path / "poisoned.json"
-    bad_file.write_text(poisoned, encoding="utf-8")
-    with pytest.raises(RepresentationContractError, match="NaN"):
-        read_surface_json(bad_file)
+    with tempfile.TemporaryDirectory() as tmp:
+        bad_file = Path(tmp) / "poisoned.json"
+        bad_file.write_text(
+            text.replace('"synthetic": true', '"synthetic": NaN'),
+            encoding="utf-8",
+        )
+        with pytest.raises(RepresentationContractError, match="NaN"):
+            read_surface_json(bad_file)
     # The in-memory boundary rejects non-finite metadata values too.
     payload = surface_to_payload(surface)
     nan_payload = dict(payload, metadata=dict(payload["metadata"], bad=float("nan")))
-    with pytest.raises(RepresentationContractError, match="serializable"):
+    with pytest.raises(RepresentationContractError, match="must be finite"):
         validate_payload(nan_payload)
 
 
@@ -610,13 +613,14 @@ def test_review_non_json_metadata_rejected_with_contract_error():
     surface = _synthetic_surface()
     metadata = dict(surface.metadata)
     metadata["bad_numpy"] = np.int64(3)  # not JSON-serializable
-    with pytest.raises(RepresentationContractError, match="serializable"):
-        surface_to_payload(
-            surface_from_vectors(
-                surface.prices, surface.mask, surface.maturities, surface.rates,
-                surface.carries, spot=surface.spot, surface_id="x",
-                source=surface.source, metadata=metadata,
-            )
+    # In-memory construction rejects non-JSON metadata (not just serialization).
+    with pytest.raises(
+        RepresentationContractError, match="unsupported non-JSON value"
+    ):
+        surface_from_vectors(
+            surface.prices, surface.mask, surface.maturities, surface.rates,
+            surface.carries, spot=surface.spot, surface_id="x",
+            source=surface.source, metadata=metadata,
         )
 
 
@@ -641,3 +645,245 @@ def test_review_numpy_slot_keys_rejected_with_contract_error():
             spot=100.0, surface_id="x", source="x",
             slot_keys=np.zeros((20, 3)),
         )
+
+
+# -- pre-merge review regressions (PR #26): mask typing, provenance, metadata --
+
+
+def _rankwise_maturities(surface: R2Surface) -> list[float]:
+    return [surface.maturities[index] for index in range(surface.slot_count)]
+
+
+def test_pr_review_mask_accepts_only_genuine_booleans():
+    good = _synthetic_surface()
+    maturities = _rankwise_maturities(good)
+    # Accepted: Python bool and numpy bool_ (normal callers).
+    numpy_mask = np.array([True] * 20, dtype=bool)
+    surface = surface_from_vectors(
+        good.prices, numpy_mask, maturities, good.rates, good.carries,
+        spot=good.spot, surface_id="x", source="x",
+    )
+    assert surface.mask == (True,) * 20
+    assert all(type(value) is bool for value in surface.mask)
+    # Rejected, never coerced: strings, ints, floats, None, numpy ints.
+    class TruthyObject:
+        def __bool__(self) -> bool:
+            return True
+
+    for malformed in (
+        "False", "True", "", 0, 1, 0.0, 1.0, None,
+        np.int64(1), np.float64(0.0), TruthyObject(),
+    ):
+        mask = [True] * 20
+        mask[7] = malformed
+        with pytest.raises(RepresentationContractError, match="mask\\[7\\]"):
+            surface_from_vectors(
+                good.prices, mask, maturities, good.rates, good.carries,
+                spot=good.spot, surface_id="x", source="x",
+            )
+
+
+def test_pr_review_malformed_mask_cannot_create_a_valid_observation():
+    # The exact corruption scenario from the review: a masked slot that has
+    # been given a plausible nonzero price AND a truthy non-boolean mask
+    # value ("False") must NOT silently become a valid observation (under
+    # the old bool() coercion, "False" was truthy and this passed).
+    real = build_real_surface("2026-07-01", audit_report=_audit_report("2026-07-01"))
+    masked_index = real.mask.index(False)
+    prices = list(real.prices)
+    prices[masked_index] = 0.017  # smuggled model-looking price
+    mask = list(real.mask)
+    mask[masked_index] = "False"  # truthy string
+    with pytest.raises(RepresentationContractError, match="genuine boolean"):
+        surface_from_vectors(
+            prices, mask, list(real.maturities), real.rates, real.carries,
+            spot=real.spot, surface_id="forged", source=real.source,
+        )
+    # Serialized payloads remain JSON-boolean-only (unchanged policy).
+    payload = surface_to_payload(real)
+    assert all(isinstance(value, bool) for value in payload["mask"])
+
+
+RESERVED_SYNTHETIC_KEYS = (
+    "synthetic",
+    "parameters_canonical_order",
+    "pricing_engine",
+    "node_count",
+    "target_moneyness_strikes",
+    "date_conditioning_id",
+    "expiry_dates",
+    "dte",
+    "imputation",
+)
+
+
+def test_pr_review_reserved_provenance_cannot_be_overwritten():
+    forged = {key: "FALSIFIED" for key in RESERVED_SYNTHETIC_KEYS}
+    forged["synthetic"] = False
+    forged["parameters_canonical_order"] = {"kappa_slow": 0.0}
+    forged["imputation"] = "MODEL_FILLED"
+    surface = build_synthetic_surface(
+        g2_frozen.STANDING_TRUTH_VECTORS["case_1"], DEV_CONDITIONING,
+        surface_id="protected", metadata=forged,
+    )
+    # Authoritative fields are the constructor's own values, untouched.
+    assert surface.metadata["synthetic"] is True
+    assert surface.metadata["pricing_engine"] == "production_double_heston_unchanged"
+    assert surface.metadata["imputation"] == "NONE_COMPLETE_BY_CONSTRUCTION"
+    assert list(surface.metadata["dte"]) == [13, 41]
+    assert list(surface.metadata["expiry_dates"]) == ["2026-07-28", "2026-08-25"]
+    assert surface.metadata["node_count"] == 64
+    assert surface.metadata["target_moneyness_strikes"] is True
+    assert surface.metadata["date_conditioning_id"] == DEV_CONDITIONING.date_id
+    assert (
+        surface.metadata["parameters_canonical_order"]
+        == surface_to_payload(surface)["metadata"]["parameters_canonical_order"]
+    )
+    # The attempted forgery is preserved only inside the user namespace
+    # (nothing silently dropped), and all forged keys stayed out of the top level.
+    assert set(RESERVED_SYNTHETIC_KEYS) <= set(surface.metadata["user_metadata"])
+    assert surface.metadata["user_metadata"]["imputation"] == "MODEL_FILLED"
+    assert surface.metadata["user_metadata"]["synthetic"] is False
+    assert surface.metadata["user_metadata"]["dte"] == "FALSIFIED"
+    # Returned nested provenance is immutable as well as authoritative.
+    with pytest.raises(TypeError):
+        surface.metadata["user_metadata"]["synthetic"] = True
+    # Round-trip preserves the protection.
+    restored = payload_to_surface(surface_to_payload(surface))
+    assert restored.metadata["pricing_engine"] == "production_double_heston_unchanged"
+    assert restored.metadata["user_metadata"] == surface.metadata["user_metadata"]
+
+
+def test_pr_review_user_metadata_namespace_key_reserved():
+    with pytest.raises(RepresentationContractError, match="user_metadata.*reserved"):
+        build_synthetic_surface(
+            g2_frozen.STANDING_TRUTH_VECTORS["case_1"], DEV_CONDITIONING,
+            surface_id="bad", metadata={"user_metadata": {"imputation": "LIE"}},
+        )
+
+
+def test_pr_review_surface_without_user_metadata_has_no_namespace():
+    surface = _synthetic_surface()  # no caller metadata
+    assert "user_metadata" not in surface.metadata
+    assert surface.metadata["imputation"] == "NONE_COMPLETE_BY_CONSTRUCTION"
+
+
+def test_pr_review_metadata_validated_in_memory_at_construction():
+    good = _synthetic_surface()
+    maturities = _rankwise_maturities(good)
+    for bad in (
+        {"x": float("nan")},
+        {"x": float("inf")},
+        {"x": float("-inf")},
+        {"x": np.int64(1)},
+        {"x": {1, 2}},  # set: not JSON-representable
+        {"x": object()},  # arbitrary Python object
+        {1: "non-string key"},
+        [("a", 1)],  # not a mapping
+        "text",  # not a mapping
+    ):
+        with pytest.raises(RepresentationContractError):
+            surface_from_vectors(
+                good.prices, good.mask, maturities, good.rates, good.carries,
+                spot=good.spot, surface_id="x", source="x", metadata=bad,
+        )
+
+
+def test_pr_review_synthetic_builder_rejects_non_mapping_metadata():
+    for bad in (0, [("x", 1)]):
+        with pytest.raises(RepresentationContractError, match="mapping"):
+            build_synthetic_surface(
+                g2_frozen.STANDING_TRUTH_VECTORS["case_1"],
+                DEV_CONDITIONING,
+                surface_id="bad",
+                metadata=bad,
+            )
+
+
+def test_pr_review_metadata_cycles_rejected_as_contract_errors():
+    good = _synthetic_surface()
+    circular: dict[str, Any] = {"kind": "cycle"}
+    circular["self"] = circular
+    with pytest.raises(RepresentationContractError, match="circular"):
+        surface_from_vectors(
+            good.prices, good.mask, list(good.maturities), good.rates,
+            good.carries, spot=good.spot, surface_id="cyclic", source="x",
+            metadata=circular,
+        )
+
+    payload = surface_to_payload(good)
+    cyclic_payload = dict(payload, metadata=circular)
+    with pytest.raises(RepresentationContractError, match="circular"):
+        validate_payload(cyclic_payload)
+
+
+def test_pr_review_deep_acyclic_metadata_has_contract_typed_depth_limit():
+    deep: dict[str, Any] = {"leaf": True}
+    for _ in range(1100):
+        deep = {"child": deep}
+
+    good = _synthetic_surface()
+    with pytest.raises(RepresentationContractError, match="too deeply nested"):
+        surface_from_vectors(
+            good.prices, good.mask, list(good.maturities), good.rates,
+            good.carries, spot=good.spot, surface_id="deep", source="x",
+            metadata=deep,
+        )
+    payload = surface_to_payload(good)
+    with pytest.raises(RepresentationContractError, match="too deeply nested"):
+        payload_to_surface(dict(payload, metadata=deep))
+
+
+def test_pr_review_integer_encoder_limits_are_treated_as_contract_errors():
+    good = _synthetic_surface()
+    unrepresentable = {"value": 10**5000}
+    with pytest.raises(
+        RepresentationContractError, match="finite-number JSON-serializable"
+    ):
+        surface_from_vectors(
+            good.prices, good.mask, list(good.maturities), good.rates,
+            good.carries, spot=good.spot, surface_id="large-int", source="x",
+            metadata=unrepresentable,
+        )
+    payload = surface_to_payload(good)
+    with pytest.raises(
+        RepresentationContractError, match="finite-number JSON-serializable"
+    ):
+        validate_payload(dict(payload, metadata=unrepresentable))
+
+
+def test_pr_review_metadata_defensively_copied_from_caller():
+    good = _synthetic_surface()
+    maturities = _rankwise_maturities(good)
+    original = {"cohort": "normal", "tags": ["a", "b"]}
+    original["nested"] = {"value": 1}
+    surface = surface_from_vectors(
+        good.prices, good.mask, maturities, good.rates, good.carries,
+        spot=good.spot, surface_id="x", source="x", metadata=original,
+    )
+    # Mutating the caller's dict after construction cannot alter the surface.
+    original["cohort"] = "tampered"
+    original["tags"].append("injected")
+    original["nested"]["value"] = 999
+    original["new_key"] = "injected"
+    assert surface.metadata["cohort"] == "normal"
+    assert list(surface.metadata["tags"]) == ["a", "b"]
+    assert surface.metadata["nested"] == {"value": 1}
+    assert "new_key" not in surface.metadata
+    # Stored mappings and arrays are deeply immutable, not merely shallow-copied.
+    with pytest.raises(TypeError):
+        surface.metadata["replacement"] = "mutated"
+    with pytest.raises(TypeError):
+        surface.metadata["nested"]["value"] = 999
+    assert isinstance(surface.metadata["tags"], tuple)
+    with pytest.raises(AttributeError):
+        surface.metadata["tags"].append("injected")
+    # Stored metadata is JSON-normalized; arrays are immutable tuples in memory.
+    tuple_meta = {"pair": (1, 2)}
+    surface2 = surface_from_vectors(
+        good.prices, good.mask, maturities, good.rates, good.carries,
+        spot=good.spot, surface_id="y", source="x", metadata=tuple_meta,
+    )
+    assert list(surface2.metadata["pair"]) == [1, 2]
+    stored_as_json = json.loads(json.dumps(dict(surface2.metadata)))
+    assert stored_as_json == surface_to_payload(surface2)["metadata"]

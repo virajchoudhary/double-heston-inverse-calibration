@@ -41,7 +41,7 @@ from .contract import (
     validate_slot_keys,
     validate_vector_length,
 )
-from .surface import R2Surface
+from .surface import R2Surface, normalize_metadata_mapping
 
 _PAYLOAD_FIELDS: tuple[str, ...] = (
     "representation_name",
@@ -76,20 +76,13 @@ def surface_to_payload(surface: R2Surface) -> dict[str, Any]:
         "spot": float(surface.spot),
         "surface_id": str(surface.surface_id),
         "source": str(surface.source),
-        "metadata": _normalize_metadata(surface.metadata),
+        # R2Surface already stores normalized metadata; re-normalizing here
+        # is defense in depth so the payload boundary never depends on the
+        # construction path.
+        "metadata": normalize_metadata_mapping(surface.metadata),
     }
     _require_serializable(payload)
     return payload
-
-
-def _normalize_metadata(metadata: Mapping[str, Any]) -> dict[str, Any]:
-    """JSON-normalize metadata (tuples -> lists) with contract error typing."""
-    try:
-        return json.loads(json.dumps(dict(metadata), allow_nan=False))
-    except (TypeError, ValueError) as error:
-        raise RepresentationContractError(
-            f"surface metadata is not finite-number JSON-serializable: {error}"
-        ) from None
 
 
 def validate_payload(payload: Mapping[str, Any]) -> None:
@@ -154,15 +147,10 @@ def validate_payload(payload: Mapping[str, Any]) -> None:
         raise RepresentationContractError("payload source must be non-empty")
     if not isinstance(payload["metadata"], Mapping):
         raise RepresentationContractError("payload metadata must be a JSON object/dict")
-    # Metadata VALUES must also be finite-number JSON-safe: NaN/Inf can enter
-    # a JSON file through Python's permissive NaN/Infinity literals, and the
-    # contract forbids non-finite values anywhere in a surface.
-    try:
-        json.dumps(dict(payload["metadata"]), allow_nan=False)
-    except (TypeError, ValueError) as error:
-        raise RepresentationContractError(
-            f"payload metadata is not finite-number JSON-serializable: {error}"
-        ) from None
+    # Metadata values must also be finite-number JSON-safe: NaN/Infinity can
+    # enter a JSON file through Python's permissive literals, and unsupported
+    # objects must not be silently coerced at the payload boundary.
+    normalize_metadata_mapping(payload["metadata"])
 
 
 def payload_to_surface(payload: Mapping[str, Any]) -> R2Surface:
@@ -178,7 +166,7 @@ def payload_to_surface(payload: Mapping[str, Any]) -> R2Surface:
         surface_id=str(payload["surface_id"]),
         source=str(payload["source"]),
         slot_keys=_payload_slot_keys(payload["slot_keys"]),
-        metadata=dict(payload["metadata"]),
+        metadata=payload["metadata"],
     )
 
 

@@ -34,7 +34,12 @@ from .contract import (
     RepresentationContractError,
     SlotKey,
 )
-from .surface import R2Conditioning, R2Surface, SOURCE_SYNTHETIC
+from .surface import (
+    R2Conditioning,
+    R2Surface,
+    SOURCE_SYNTHETIC,
+    normalize_metadata_mapping,
+)
 
 
 def build_synthetic_surface(
@@ -51,6 +56,12 @@ def build_synthetic_surface(
     and must satisfy the canonical structural constraints (validated — no
     silent clamping).  Prices are spot-normalized (price / conditioning.spot)
     at the five target moneyness strikes ``spot * exp(k)`` per rank.
+
+    Caller-supplied ``metadata`` is provenance-protected: it is stored under
+    the ``user_metadata`` namespace and can never overwrite the authoritative
+    scientific fields (``synthetic``, ``parameters_canonical_order``,
+    ``pricing_engine``, ``node_count``, ``target_moneyness_strikes``,
+    ``date_conditioning_id``, ``expiry_dates``, ``dte``, ``imputation``).
     """
     vector = np.asarray(
         [parameters[name] for name in PARAMETER_NAMES]
@@ -113,7 +124,19 @@ def build_synthetic_surface(
         "dte": list(conditioning.dte),
         "imputation": "NONE_COMPLETE_BY_CONSTRUCTION",
     }
-    surface_metadata.update(dict(metadata or {}))
+    # Authoritative provenance protection: caller metadata can never
+    # overwrite the reserved scientific fields above.  Caller-supplied
+    # metadata is stored under a separate "user_metadata" namespace; the
+    # namespace key itself is reserved so a caller cannot nest a conflicting
+    # namespace inside itself.
+    user_metadata = {} if metadata is None else normalize_metadata_mapping(metadata)
+    if "user_metadata" in user_metadata:
+        raise RepresentationContractError(
+            "caller metadata key 'user_metadata' is reserved; caller metadata "
+            "is stored under that namespace and cannot redefine it"
+        )
+    if user_metadata:
+        surface_metadata["user_metadata"] = user_metadata
     return R2Surface(
         prices=tuple(float(value) for value in normalized),
         mask=tuple(True for _ in CANONICAL_SLOT_KEYS),
