@@ -120,7 +120,7 @@
     "Truth panel frozen before any R2/R3 outcome computation.",
     "All five NTPC development dates remain excluded from final G8."
   ],
-  "phase": "MATRIX_IN_PROGRESS_50PCT_PLUS",
+  "phase": "MATRIX_IN_PROGRESS_75PCT_PLUS",
   "protocol": "docs/G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md",
   "randomization": {
     "multistart_seed": 20260823,
