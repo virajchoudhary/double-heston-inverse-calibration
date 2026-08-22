@@ -1,0 +1,466 @@
+{
+  "aggregate": {
+    "aggregate_r2_completeness": 0.78,
+    "aggregate_r3_completeness": 0.52,
+    "dates": [
+      "2026-07-01",
+      "2026-07-08",
+      "2026-07-15",
+      "2026-07-22",
+      "2026-07-29"
+    ],
+    "dates_constructible": 5,
+    "dte_distribution": [
+      6,
+      13,
+      20,
+      27,
+      34,
+      41,
+      48,
+      55,
+      62,
+      69,
+      76,
+      83,
+      90
+    ],
+    "rate_carry_forward_dates": [
+      "2026-07-08",
+      "2026-07-22",
+      "2026-07-29"
+    ],
+    "total_r2_slots": 100,
+    "total_r2_usable": 78,
+    "total_r3_usable": 78
+  },
+  "all_dates_remain_development_excluded_from_g8": true,
+  "analysis_id": "G2_R2_R3_MARKET_SUPPORT_AUDIT",
+  "contract": "existing official-NSE UDiFF support/activity/quote-selection contract (scripts/run_ntpc_dh_multi_date_calibration.py), extended to three expiry ranks and five development dates; failures recorded not imputed",
+  "per_date": [
+    {
+      "constructible": true,
+      "date_id": "2026-07-01",
+      "eligible_expiry_ranks": [
+        1,
+        2,
+        3
+      ],
+      "expiry_details": [
+        {
+          "carry": 0.018467311360835778,
+          "discount": 0.9961299206351635,
+          "dte": 27,
+          "expiry_date": "2026-07-28",
+          "forward": 358.8,
+          "rank": 1,
+          "rate": 0.052419238420882544
+        },
+        {
+          "carry": 0.02178943215746626,
+          "discount": 0.9921480182638414,
+          "dte": 55,
+          "expiry_date": "2026-08-25",
+          "forward": 359.55,
+          "rank": 2,
+          "rate": 0.052314261219846246
+        },
+        {
+          "carry": 0.02733075989891676,
+          "discount": 0.9872151847002527,
+          "dte": 90,
+          "expiry_date": "2026-09-29",
+          "forward": 360.1,
+          "rank": 3,
+          "rate": 0.05218382436825127
+        }
+      ],
+      "futures_support_failures": [],
+      "listed_expiry_count": 3,
+      "listed_expiry_ranks": [
+        "2026-07-28",
+        "2026-08-25",
+        "2026-09-29"
+      ],
+      "mask_count": 19,
+      "mask_rate": 0.6333333333333333,
+      "quote_selection_failures": [
+        "rank1/call/k-0.10: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank2/call/k-0.10: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank2/call/k-0.05: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank2/call/k+0.05: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank2/call/k+0.10: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank2/put/k-0.10: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank2/put/k-0.05: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank2/put/k+0.05: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank2/put/k+0.10: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank3/call/k-0.10: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/call/k-0.05: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/call/k+0.00: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/call/k+0.05: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/call/k+0.10: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k-0.10: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k-0.05: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k+0.00: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k+0.05: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k+0.10: SUPPORT_ACTIVITY_FAILURE"
+      ],
+      "r2_completeness": 0.55,
+      "r2_slots": 20,
+      "r2_usable": 11,
+      "r3_completeness": 0.36666666666666664,
+      "r3_usable": 11,
+      "rate_carry_forward": false,
+      "rate_observation_date": "2026-07-01",
+      "rate_simple_yield": 0.052521,
+      "slot_failure_breakdown": {
+        "QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE": 9,
+        "SUPPORT_ACTIVITY_FAILURE": 10
+      },
+      "spot": 357.9,
+      "total_slots": 30,
+      "usable_call_slots": 5,
+      "usable_put_slots": 6,
+      "usable_slots": 11
+    },
+    {
+      "constructible": true,
+      "date_id": "2026-07-08",
+      "eligible_expiry_ranks": [
+        1,
+        2,
+        3
+      ],
+      "expiry_details": [
+        {
+          "carry": 0.03675114505574131,
+          "discount": 0.997130395315487,
+          "dte": 20,
+          "expiry_date": "2026-07-28",
+          "forward": 349.0,
+          "rank": 1,
+          "rate": 0.05244557056073594
+        },
+        {
+          "carry": 0.03165179316381188,
+          "discount": 0.993140506406099,
+          "dte": 48,
+          "expiry_date": "2026-08-25",
+          "forward": 349.65,
+          "rank": 2,
+          "rate": 0.05234045297461697
+        },
+        {
+          "carry": 0.036473797701846236,
+          "discount": 0.9881978234398754,
+          "dte": 83,
+          "expiry_date": "2026-09-29",
+          "forward": 349.95,
+          "rank": 3,
+          "rate": 0.05220984240894607
+        }
+      ],
+      "futures_support_failures": [],
+      "listed_expiry_count": 3,
+      "listed_expiry_ranks": [
+        "2026-07-28",
+        "2026-08-25",
+        "2026-09-29"
+      ],
+      "mask_count": 12,
+      "mask_rate": 0.4,
+      "quote_selection_failures": [
+        "rank2/call/k-0.05: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank2/put/k+0.10: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank3/call/k-0.10: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/call/k-0.05: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/call/k+0.00: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/call/k+0.05: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/call/k+0.10: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k-0.10: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k-0.05: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k+0.00: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k+0.05: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k+0.10: SUPPORT_ACTIVITY_FAILURE"
+      ],
+      "r2_completeness": 0.9,
+      "r2_slots": 20,
+      "r2_usable": 18,
+      "r3_completeness": 0.6,
+      "r3_usable": 18,
+      "rate_carry_forward": true,
+      "rate_observation_date": "2026-07-01",
+      "rate_simple_yield": 0.052521,
+      "slot_failure_breakdown": {
+        "QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE": 2,
+        "SUPPORT_ACTIVITY_FAILURE": 10
+      },
+      "spot": 348.7,
+      "total_slots": 30,
+      "usable_call_slots": 9,
+      "usable_put_slots": 9,
+      "usable_slots": 18
+    },
+    {
+      "constructible": true,
+      "date_id": "2026-07-15",
+      "eligible_expiry_ranks": [
+        1,
+        2,
+        3
+      ],
+      "expiry_details": [
+        {
+          "carry": -0.04439968962850673,
+          "discount": 0.9981043892058897,
+          "dte": 13,
+          "expiry_date": "2026-07-28",
+          "forward": 345.55,
+          "rank": 1,
+          "rate": 0.05327342725949597
+        },
+        {
+          "carry": 0.01446983271309761,
+          "discount": 0.9940458451329298,
+          "dte": 41,
+          "expiry_date": "2026-08-25",
+          "forward": 345.85,
+          "rank": 2,
+          "rate": 0.05316493430818486
+        },
+        {
+          "carry": 0.033544000442899055,
+          "discount": 0.9890188451823607,
+          "dte": 76,
+          "expiry_date": "2026-09-29",
+          "forward": 345.75,
+          "rank": 3,
+          "rate": 0.05303014284116871
+        }
+      ],
+      "futures_support_failures": [],
+      "listed_expiry_count": 3,
+      "listed_expiry_ranks": [
+        "2026-07-28",
+        "2026-08-25",
+        "2026-09-29"
+      ],
+      "mask_count": 11,
+      "mask_rate": 0.36666666666666664,
+      "quote_selection_failures": [
+        "rank1/call/k-0.10: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank3/call/k-0.10: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/call/k-0.05: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/call/k+0.00: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/call/k+0.05: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/call/k+0.10: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k-0.10: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k-0.05: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k+0.00: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k+0.05: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k+0.10: SUPPORT_ACTIVITY_FAILURE"
+      ],
+      "r2_completeness": 0.95,
+      "r2_slots": 20,
+      "r2_usable": 19,
+      "r3_completeness": 0.6333333333333333,
+      "r3_usable": 19,
+      "rate_carry_forward": false,
+      "rate_observation_date": "2026-07-15",
+      "rate_simple_yield": 0.053324,
+      "slot_failure_breakdown": {
+        "QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE": 1,
+        "SUPPORT_ACTIVITY_FAILURE": 10
+      },
+      "spot": 344.35,
+      "total_slots": 30,
+      "usable_call_slots": 9,
+      "usable_put_slots": 10,
+      "usable_slots": 19
+    },
+    {
+      "constructible": true,
+      "date_id": "2026-07-22",
+      "eligible_expiry_ranks": [
+        1,
+        2,
+        3
+      ],
+      "expiry_details": [
+        {
+          "carry": 0.122764919104625,
+          "discount": 0.9991242087784838,
+          "dte": 6,
+          "expiry_date": "2026-07-28",
+          "forward": 350.1,
+          "rank": 1,
+          "rate": 0.05330064283478495
+        },
+        {
+          "carry": 0.03635952287617267,
+          "discount": 0.99505738367801,
+          "dte": 34,
+          "expiry_date": "2026-08-25",
+          "forward": 351.05,
+          "rank": 2,
+          "rate": 0.05319200231275404
+        },
+        {
+          "carry": 0.050039426893578806,
+          "discount": 0.9900201735190185,
+          "dte": 69,
+          "expiry_date": "2026-09-29",
+          "forward": 350.7,
+          "rank": 3,
+          "rate": 0.05305702827173741
+        }
+      ],
+      "futures_support_failures": [],
+      "listed_expiry_count": 3,
+      "listed_expiry_ranks": [
+        "2026-07-28",
+        "2026-08-25",
+        "2026-09-29"
+      ],
+      "mask_count": 12,
+      "mask_rate": 0.4,
+      "quote_selection_failures": [
+        "rank1/call/k-0.10: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank2/put/k+0.10: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank3/call/k-0.10: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/call/k-0.05: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/call/k+0.00: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/call/k+0.05: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/call/k+0.10: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k-0.10: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k-0.05: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k+0.00: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k+0.05: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k+0.10: SUPPORT_ACTIVITY_FAILURE"
+      ],
+      "r2_completeness": 0.9,
+      "r2_slots": 20,
+      "r2_usable": 18,
+      "r3_completeness": 0.6,
+      "r3_usable": 18,
+      "rate_carry_forward": true,
+      "rate_observation_date": "2026-07-15",
+      "rate_simple_yield": 0.053324,
+      "slot_failure_breakdown": {
+        "QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE": 2,
+        "SUPPORT_ACTIVITY_FAILURE": 10
+      },
+      "spot": 350.5,
+      "total_slots": 30,
+      "usable_call_slots": 9,
+      "usable_put_slots": 9,
+      "usable_slots": 18
+    },
+    {
+      "constructible": true,
+      "date_id": "2026-07-29",
+      "eligible_expiry_ranks": [
+        1,
+        2,
+        3
+      ],
+      "expiry_details": [
+        {
+          "carry": -0.027219307338063714,
+          "discount": 0.9960709829982746,
+          "dte": 27,
+          "expiry_date": "2026-08-25",
+          "forward": 345.55,
+          "rank": 1,
+          "rate": 0.05321910708322457
+        },
+        {
+          "carry": 0.038534165053341264,
+          "discount": 0.9910235314926427,
+          "dte": 62,
+          "expiry_date": "2026-09-29",
+          "forward": 344.35,
+          "rank": 2,
+          "rate": 0.05308395005061049
+        },
+        {
+          "carry": 0.022980936324420356,
+          "discount": 0.9870222528358366,
+          "dte": 90,
+          "expiry_date": "2026-10-27",
+          "forward": 346.05,
+          "rank": 3,
+          "rate": 0.05297648069437583
+        }
+      ],
+      "futures_support_failures": [],
+      "listed_expiry_count": 3,
+      "listed_expiry_ranks": [
+        "2026-08-25",
+        "2026-09-29",
+        "2026-10-27"
+      ],
+      "mask_count": 18,
+      "mask_rate": 0.6,
+      "quote_selection_failures": [
+        "rank2/call/k-0.10: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank2/call/k-0.05: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank2/call/k+0.00: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank2/call/k+0.10: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank2/put/k-0.10: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank2/put/k-0.05: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank2/put/k+0.05: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank2/put/k+0.10: QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+        "rank3/call/k-0.10: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/call/k-0.05: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/call/k+0.00: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/call/k+0.05: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/call/k+0.10: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k-0.10: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k-0.05: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k+0.00: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k+0.05: SUPPORT_ACTIVITY_FAILURE",
+        "rank3/put/k+0.10: SUPPORT_ACTIVITY_FAILURE"
+      ],
+      "r2_completeness": 0.6,
+      "r2_slots": 20,
+      "r2_usable": 12,
+      "r3_completeness": 0.4,
+      "r3_usable": 12,
+      "rate_carry_forward": true,
+      "rate_observation_date": "2026-07-15",
+      "rate_simple_yield": 0.053324,
+      "slot_failure_breakdown": {
+        "QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE": 8,
+        "SUPPORT_ACTIVITY_FAILURE": 10
+      },
+      "spot": 343.5,
+      "total_slots": 30,
+      "usable_call_slots": 6,
+      "usable_put_slots": 6,
+      "usable_slots": 12
+    }
+  ],
+  "rate_provenance": {
+    "note": "07-08 and 07-29 use the committed carry-forward convention (latest preserved hash-sealed observation on or before the valuation date); no preserved RBI auction artifact exists for those dates and nothing was fabricated or newly acquired",
+    "source_by_valuation": {
+      "2026-07-01": "2026-07-01",
+      "2026-07-08": "2026-07-01",
+      "2026-07-15": "2026-07-15",
+      "2026-07-22": "2026-07-15",
+      "2026-07-29": "2026-07-15"
+    },
+    "validated_observations": {
+      "2026-07-01": {
+        "observed": "2026-07-01",
+        "source_identifier": "RBI Press Release 2026-2027/584 (validated, hash-sealed in NTPC_DH_MULTI_DATE_CALIBRATION_MANIFEST.json)",
+        "yield": 0.052521
+      },
+      "2026-07-15": {
+        "observed": "2026-07-15",
+        "source_identifier": "RBI Press Release 2026-2027/672 (validated, hash-sealed in NTPC_DH_MULTI_DATE_CALIBRATION_MANIFEST.json)",
+        "yield": 0.053324
+      }
+    }
+  }
+}

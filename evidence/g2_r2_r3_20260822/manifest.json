@@ -61,6 +61,13 @@
     "smoke_market_note": "2026-07-15: R2 19/20 usable, R3 19/30 (third expiry contributes zero usable slots) - matches prior committed support inventory for the first two ranks",
     "tests": "tests/test_g2_r2r3_harness.py - 18 passed"
   },
+  "market_support": {
+    "geometry_assignment": "truth_index mod 5 over the five profiles in protocol date order, frozen before the matrix",
+    "headline": "R2 usable 78/100 (0.78); R3 usable 78/150 (0.52); third expiry rank contributes zero usable central-five slots on all five dates (far-month NTPC chains fully inactive under the existing activity contract); R2 per-date counts reproduce the committed three-date inventory exactly (11/19/18 of 20)",
+    "profiles": "evidence/g2_r2_r3_20260822/market_profiles.json",
+    "slots": "evidence/g2_r2_r3_20260822/market_support_slots.csv",
+    "summary": "evidence/g2_r2_r3_20260822/market_support_summary.json"
+  },
   "matrix_plan": {
     "noise_levels": 4,
     "representations": [
@@ -81,7 +88,7 @@
     "Truth panel frozen before any R2/R3 outcome computation.",
     "All five NTPC development dates remain excluded from final G8."
   ],
-  "phase": "HARNESS_READY",
+  "phase": "MARKET_SUPPORT_COMPLETE",
   "protocol": "docs/G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md",
   "randomization": {
     "multistart_seed": 20260823,
