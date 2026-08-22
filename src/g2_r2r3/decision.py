@@ -46,7 +46,7 @@ def comparative_assessment(
     elif partial:
         classification = "PARTIAL_IMPROVEMENT"
     else:
-        classification = "NO_MATERIEL_IMPROVEMENT"
+        classification = "NO_MATERIAL_IMPROVEMENT"
     return {
         "median_dispersion_improvement": median_improvement,
         "maximum_dispersion_improvement": maximum_improvement,
@@ -96,7 +96,7 @@ def practical_non_identifiability(
 def apply_frozen_decision(
     hard_requirements: dict[str, dict[str, Any]],
     assessment: dict[str, Any],
-    non_identifiability: dict[str, Any],
+    non_identifiability_by_representation: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
     """Apply the predeclared freeze rule once, in order, unchanged.
 
@@ -107,28 +107,24 @@ def apply_frozen_decision(
     Rule 3: if both remain practically non-identifiable at realistic noise,
     do not reopen representation search; retain the finding.
     Rule 4: only fail G2 if BOTH candidates fail the hard requirements.
+
+    ``non_identifiability_by_representation`` supplies the predeclared test
+    outcome per candidate; the evaluator itself reads the SELECTED
+    representation's record, so no caller pre-guesses the winner.
     """
     r2_eligible = bool(hard_requirements["R2"]["satisfied"])
     r3_eligible = bool(hard_requirements["R3"]["satisfied"])
     holdout_applicable = False  # frozen: NOT_APPLICABLE per protocol section 7
     holdout_violated = False
 
-    if not r2_eligible and not r3_eligible:
-        return {
-            "selected_representation": None,
-            "g2_label": frozen.G2_LABEL_FAILED_MARKET_CONSTRUCTION,
-            "rule_applied": "rule_4_both_failed_hard_requirements",
-            "practical_non_identifiability_retained": non_identifiability[
-                "practical_non_identifiability_retained"
-            ],
-            "holdout_guardrail": frozen.HOLDOUT_GUARDRAIL_STATUS,
-        }
-
     improvement = assessment["classification"] in (
         "STRONG_IMPROVEMENT",
         "PARTIAL_IMPROVEMENT",
     )
-    if r3_eligible and improvement and not (holdout_applicable and holdout_violated):
+    if not r2_eligible and not r3_eligible:
+        selected = None
+        rule = "rule_4_both_failed_hard_requirements"
+    elif r3_eligible and improvement and not (holdout_applicable and holdout_violated):
         selected = "R3"
         rule = "rule_1_r3_market_supported_with_improvement"
     elif r2_eligible:
@@ -138,9 +134,14 @@ def apply_frozen_decision(
         selected = "R3"
         rule = "rule_2_fallback_r3_only_eligible_candidate"
 
+    if selected is None:
+        non_ident = non_identifiability_by_representation["R3"]
+    else:
+        non_ident = non_identifiability_by_representation[selected]
+
     label = (
         frozen.G2_LABEL_PRACTICAL_NON_IDENTIFIABILITY
-        if non_identifiability["practical_non_identifiability_retained"]
+        if non_ident["practical_non_identifiability_retained"]
         else frozen.G2_LABEL_IDENTIFIABILITY_ACCEPTABLE
     )
     return {
@@ -148,8 +149,9 @@ def apply_frozen_decision(
         "g2_label": label,
         "rule_applied": rule,
         "improvement_classification": assessment["classification"],
-        "practical_non_identifiability_retained": non_identifiability[
+        "practical_non_identifiability_retained": non_ident[
             "practical_non_identifiability_retained"
         ],
+        "practical_non_identifiability_selected_representation": non_ident,
         "holdout_guardrail": frozen.HOLDOUT_GUARDRAIL_STATUS,
     }

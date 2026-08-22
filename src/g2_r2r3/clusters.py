@@ -57,7 +57,10 @@ def complete_linkage_clusters(
 
 
 def _scaled_matrix(frame: pd.DataFrame) -> np.ndarray:
-    return frame[[f"scaled_{name}" for name in PARAMETER_NAMES]].to_numpy(float)
+    # Run records carry range-scaled DISPLACEMENTS (scaled_error_*).  Pairwise
+    # distances equal those of absolute scaled coordinates because every run in
+    # a cell shares the same truth offset.
+    return frame[[f"scaled_error_{name}" for name in PARAMETER_NAMES]].to_numpy(float)
 
 
 def classify_basin(near: pd.DataFrame) -> dict[str, Any]:
@@ -133,7 +136,7 @@ def dispersion_record(cell_runs: pd.DataFrame) -> dict[str, Any]:
         maximum_pairwise = 0.0
     best_row = near.loc[near["repricing_rmse"].idxmin()]
     best_scaled = np.asarray(
-        [best_row[f"scaled_{name}"] for name in PARAMETER_NAMES], dtype=np.float64
+        [best_row[f"scaled_error_{name}"] for name in PARAMETER_NAMES], dtype=np.float64
     )
     from_best = np.linalg.norm(coordinates - best_scaled[None, :], axis=1)
     boundary_hits = near["boundary_reasons"].fillna("").astype(str).str.len().gt(0)

@@ -1,4 +1,31 @@
 {
+  "adversarial_audit_20260822": {
+    "audits": [
+      "representation-contract + leakage audit",
+      "decision-rule fidelity audit"
+    ],
+    "material_findings_and_resolutions": [
+      {
+        "finding": "clusters._scaled_matrix read scaled_<param> but run records emit scaled_error_<param>; diagnostics would crash before any decision output",
+        "resolution": "column-name fix (pairwise distances unchanged: displacements share the per-truth offset); integration test added (dispersion_record on real fit_cell output); 19/19 tests pass"
+      },
+      {
+        "finding": "rule-1 structural tension: R3 freezable on synthetic improvement although third-expiry slots are 100% masked on all five development dates",
+        "resolution": "NOT changed: the freeze rule and hard requirements are predeclared and applied exactly as frozen; the masking tension is reported as a central limitation in the final report; protocol section 3 explicitly defines R3 as a maximum-size masked representation"
+      }
+    ],
+    "minor_resolutions": [
+      "rate-literal fidelity assertion added against committed hash-sealed RATE_SOURCES + future-observation guard",
+      "decision evaluator now takes per-representation non-identifiability records (no caller pre-guess of winner)",
+      "stale single-threaded partial run log preserved under tmp/ at merge time",
+      "NO_MATERIEL typo fixed (string value only)"
+    ],
+    "note": "no frozen threshold, seed, band, or rule order was modified after outcomes",
+    "verdicts": [
+      "MATERIAL_ISSUES_FOUND (decision-stage)",
+      "MATERIAL_ISSUES_FOUND (pipeline integrity)"
+    ]
+  },
   "analysis_id": "G2_R2_R3_REPRESENTATION_SELECTION",
   "environment": {
     "cuda_available": "False",
@@ -88,7 +115,7 @@
     "Truth panel frozen before any R2/R3 outcome computation.",
     "All five NTPC development dates remain excluded from final G8."
   ],
-  "phase": "MARKET_SUPPORT_COMPLETE",
+  "phase": "MATRIX_IN_PROGRESS_25PCT_PLUS",
   "protocol": "docs/G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md",
   "randomization": {
     "multistart_seed": 20260823,

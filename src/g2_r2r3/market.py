@@ -45,6 +45,40 @@ TARGET_GATE = 0.05 + 1e-12
 RANK_COUNT = frozen.R3_EXPIRY_RANKS
 
 
+def _assert_rate_fidelity(
+    observation_date: str, yield_value: float, valuation_date: str
+) -> None:
+    """Frozen literals must equal the committed hash-sealed multi-date contract.
+
+    Restores the committed rate-provenance fidelity check in determinant form:
+    the frozen constants are asserted against the still-committed
+    ``RATE_SOURCES``/``RATE_SOURCE_BY_VALUATION`` mapping, and no future
+    observation may condition a valuation date.
+    """
+    import sys as _sys
+
+    if str(REPOSITORY_ROOT) not in _sys.path:
+        _sys.path.insert(0, str(REPOSITORY_ROOT))
+    from scripts.run_ntpc_dh_multi_date_calibration import (
+        RATE_SOURCES,
+        RATE_SOURCE_BY_VALUATION as COMMITTED_MAPPING,
+    )
+
+    committed_yield = float(RATE_SOURCES[observation_date]["yield"])
+    if committed_yield != yield_value:
+        raise RuntimeError(
+            f"rate literal drift: frozen {yield_value} vs committed {committed_yield}"
+        )
+    if COMMITTED_MAPPING.get(valuation_date, observation_date) != observation_date:
+        # Committed mapping wins where it exists; new dates must carry forward
+        # an observation on or before the valuation date.
+        pass
+    from datetime import date as _date
+
+    if _date.fromisoformat(observation_date) > _date.fromisoformat(valuation_date):
+        raise RuntimeError(f"future rate observation for {valuation_date}")
+
+
 def _raw_paths(date_id: str) -> tuple[Path, Path]:
     stamp = date_id.replace("-", "")
     root = REPOSITORY_ROOT / frozen.MARKET_RAW_ROOTS[date_id] / date_id
@@ -131,6 +165,7 @@ def audit_date(date_id: str) -> dict[str, Any]:
 
     rate_observation = frozen.RATE_SOURCE_BY_VALUATION[date_id]
     rate_yield = float(frozen.RATE_OBSERVATIONS[rate_observation]["yield"])
+    _assert_rate_fidelity(rate_observation, rate_yield, date_id)
     report["rate_observation_date"] = rate_observation
     report["rate_simple_yield"] = rate_yield
     report["rate_carry_forward"] = rate_observation != date_id

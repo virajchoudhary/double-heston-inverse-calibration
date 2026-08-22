@@ -298,6 +298,24 @@ def test_decision_evaluator_cannot_change_protocol_thresholds():
     assert frozen.PARTIAL_IMPROVEMENT_MEDIAN == 0.10
 
 
+def test_dispersion_record_on_real_fit_output():
+    """Integration: dispersion/cluster analysis runs on real fit_cell records."""
+    from src.g2_r2r3.clusters import aggregate_dispersion, dispersion_record
+
+    truth = frozen.STANDING_TRUTH_VECTORS["case_1"]
+    schedule = start_schedule_for_cell(0, 1)  # a noisy cell exercises clustering
+    rows = fit_cell(
+        "case_1", 0, truth, "R2", 1, 0.005, SMOKE_PROFILE, schedule
+    )
+    record = dispersion_record(pd.DataFrame(rows))
+    assert record["near_equivalent_count"] >= 1
+    assert record["cluster_count"] >= 1
+    assert np.isfinite(record["median_pairwise_distance"])
+    aggregate = aggregate_dispersion([record])
+    assert aggregate["cell_count"] == 1
+    assert np.isfinite(aggregate["median_of_median_pairwise"])
+
+
 def test_jacobian_record_structure():
     vector = frozen.STANDING_TRUTH_VECTORS["case_1"]
     for representation in frozen.REPRESENTATIONS:
