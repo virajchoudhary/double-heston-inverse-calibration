@@ -87,8 +87,11 @@ All five dates remain ineligible for final G8 regardless of outcome.
 Use the existing reviewed parameter contract and a deterministic predeclared truth panel:
 
 - retain the four standing representative G2 truth cases;
-- add 16 deterministic reviewed-interior truths selected before running representation outcomes, using a fixed seed recorded in the experiment manifest;
+- add 16 deterministic reviewed-interior truths using **truth-selection seed `20260822`**;
+- select those 16 before running any R2/R3 outcome computation;
 - do not replace difficult truths after results are seen.
+
+The experiment manifest must record the exact 20 truth vectors and their source identifiers before the first representation-comparison result is written.
 
 For each truth and each candidate representation, run the same diagnostic stack.
 
@@ -99,9 +102,17 @@ For each truth and each candidate representation, run the same diagnostic stack.
 - 1.0%
 - 2.0%
 
+### Frozen randomization
+
+- truth-selection seed: `20260822`;
+- multi-start seed: `20260823`;
+- noise base seed: `20260824`.
+
+Noise must be keyed deterministically by `(truth_id, expiry_rank, moneyness, option_type, noise_level)` so every quote slot common to R2 and R3 receives the identical perturbation. R3-only third-expiry slots receive deterministic additional draws from the same keyed scheme. Do not regenerate noise until a more favorable realization appears.
+
 ### Multi-start calibration
 
-- 12 deterministic starts per truth per noise level;
+- 12 deterministic starts per truth per noise level, generated from seed `20260823`;
 - identical starts across R2 and R3;
 - identical optimizer, bounds, constraints, and stopping rules across candidates;
 - retain all solutions, including failures and boundary hits.
