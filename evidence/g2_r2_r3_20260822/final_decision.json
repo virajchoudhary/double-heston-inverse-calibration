@@ -1,0 +1,79 @@
+{
+  "applied_once_after_results": true,
+  "comparative_assessment": {
+    "classification": "NO_MATERIAL_IMPROVEMENT",
+    "cluster_count_change": -1.0999999999999996,
+    "maximum_dispersion_improvement": 0.01700624064160594,
+    "median_dispersion_improvement": -0.1782882340227352,
+    "r2_maximum_dispersion": 2.081374329018355,
+    "r2_mean_cluster_count": 6.6,
+    "r2_median_dispersion": 0.9306810380089023,
+    "r3_maximum_dispersion": 2.0459779763138077,
+    "r3_mean_cluster_count": 5.5,
+    "r3_median_dispersion": 1.0966105167139557,
+    "thresholds_locked_to_frozen_module": true
+  },
+  "decision": {
+    "g2_label": "G2 = PASSED_REPRESENTATION_FROZEN_WITH_PRACTICAL_NON_IDENTIFIABILITY",
+    "holdout_guardrail": "NOT_APPLICABLE_NO_DIRECTLY_COMPARABLE_HOLDOUT_METRIC",
+    "improvement_classification": "NO_MATERIAL_IMPROVEMENT",
+    "practical_non_identifiability_retained": true,
+    "practical_non_identifiability_selected_representation": {
+      "material_displacement_threshold": 0.05,
+      "median_best_parameter_rmse_scaled": 0.38307395936568445,
+      "median_best_repricing_rmse_relative": 0.008839325426380735,
+      "noise_level": 0.005,
+      "parameter_displacement_test_passed": true,
+      "practical_non_identifiability_retained": true,
+      "repricing_at_noise_scale_test_passed": true,
+      "repricing_ceiling": 0.01
+    },
+    "rule_applied": "rule_2_r2_simpler_market_supported_representation",
+    "selected_representation": "R2"
+  },
+  "hard_requirements": {
+    "R2": {
+      "all_five_dates_constructible": true,
+      "canonical_parameter_and_pricing_contracts_unchanged": true,
+      "missing_observations_explicitly_masked": true,
+      "no_unsupported_interpolation_or_extrapolation": true,
+      "reproducible_from_existing_official_nse_contract": true,
+      "satisfied": true,
+      "synthetic_real_separation_and_g8_protection_preserved": true
+    },
+    "R3": {
+      "all_five_dates_constructible": true,
+      "canonical_parameter_and_pricing_contracts_unchanged": true,
+      "missing_observations_explicitly_masked": true,
+      "no_unsupported_interpolation_or_extrapolation": true,
+      "note": "R3 is constructible under explicit masking; its third-expiry slots are 100% masked on all five development dates because far-month NTPC chains are inactive under the existing support/activity contract.",
+      "reproducible_from_existing_official_nse_contract": true,
+      "satisfied": true,
+      "synthetic_real_separation_and_g8_protection_preserved": true,
+      "third_rank_usable_slot_count": 0
+    }
+  },
+  "practical_non_identifiability_by_representation": {
+    "R2": {
+      "material_displacement_threshold": 0.05,
+      "median_best_parameter_rmse_scaled": 0.38307395936568445,
+      "median_best_repricing_rmse_relative": 0.008839325426380735,
+      "noise_level": 0.005,
+      "parameter_displacement_test_passed": true,
+      "practical_non_identifiability_retained": true,
+      "repricing_at_noise_scale_test_passed": true,
+      "repricing_ceiling": 0.01
+    },
+    "R3": {
+      "material_displacement_threshold": 0.05,
+      "median_best_parameter_rmse_scaled": 0.35614601226732906,
+      "median_best_repricing_rmse_relative": 0.007350546927477097,
+      "noise_level": 0.005,
+      "parameter_displacement_test_passed": true,
+      "practical_non_identifiability_retained": true,
+      "repricing_at_noise_scale_test_passed": true,
+      "repricing_ceiling": 0.01
+    }
+  },
+  "threshold_source": "src/g2_r2r3/frozen.py (predeclared, unchanged)"
+}
