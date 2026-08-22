@@ -1,166 +1,150 @@
 # Current Project Status
 
-Status date: 13 August 2026
+Status date: 22 August 2026
 
-> Canonical current control and approval boundaries are maintained in [RESEARCH_CONTROL_AND_CURRENT_STATUS.md](RESEARCH_CONTROL_AND_CURRENT_STATUS.md). This file retains detailed background evidence.
+> Canonical control and approval boundaries are maintained in [RESEARCH_CONTROL_AND_CURRENT_STATUS.md](RESEARCH_CONTROL_AND_CURRENT_STATUS.md). The durable 22 August three-node audit conclusions are recorded in [OVERNIGHT_SWARM_2026-08-22_DECISION_RECORD.md](OVERNIGHT_SWARM_2026-08-22_DECISION_RECORD.md). Earlier detailed status remains preserved in Git history and the experiment-specific documents under `docs/`.
 
 ## Approved research objective
 
 Physics-Informed Inverse Calibration of the Canonical Double Heston Model for Stable Option-Surface Parameter Recovery.
 
-## Current completed milestone
+## Current high-level state
 
-The canonical Double Heston pricing/calibration foundation, independent pricing verification, reviewed synthetic-sampling foundation, ANN infrastructure, deterministic official-NSE Stage A candidate selection, and completed G2 diagnostics are checkpointed. PR #16 also completed the bounded NTPC optimizer-cap and three-date real-market information studies: optimizer-cap status is `OPTIMIZER_CAP_UNRESOLVED`, optimizer-only work is closed, and the three-date result is `MULTI_DATE_INSUFFICIENT`. Temporal information improved multi-start dispersion, but 15-Jul holdout RMSE deteriorated by `5.338%` and boundary-hit rate remained `1.0`. The final representation remains unfrozen and `G2 = NOT_PASSED`; the next action is the mentor decision recorded in [MENTOR_APPROVAL_BRIEF_G2_INFORMATION_DESIGN.md](MENTOR_APPROVAL_BRIEF_G2_INFORMATION_DESIGN.md).
+The canonical Double Heston pricing/calibration foundation remains validated. The main project bottleneck is representation / information / practical identifiability, not pricing-engine correctness.
 
-The unavailable teammate engine is being replaced by an independently implemented canonical Double Heston engine. Equivalence to the unavailable source is not claimed.
+The 22 August three-node diagnostic swarm completed architecture, identifiability/calibration, and PDE/physics audits without changing `main`, passing G2, generating the final dataset, or running research-scale ANN/PINN training.
+
+### Current status table
 
 | Component | Status |
 |---|---|
-| ANN project structure | Complete |
 | Fixed ten-parameter contract | Complete |
-| Canonical pricing engine | 36-case independent benchmark passed; freeze evidence created |
-| Engine-focused benchmark set | 36 / 36 passed |
-| Full automated suite | 238 passed at the complementary-observable milestone |
-| Independent reference integrations | 36 / 36 reliable; zero warnings or failures |
-| Production/reference agreement | All 64-node and 96-node cases passed |
-| ANN research pricing adapter | Integrated |
-| Clean controlled recovery | Completed; one exact best result, start sensitivity retained |
-| One-percent noise recovery | Completed; parameter instability and boundary-near solutions observed |
-| Genuine-engine pilot | 12 surfaces / 1,296 quotes |
-| Prior provisional-bounds audit | 5,000 raw / 2,776 accepted / 2,224 rejected |
-| Historical priced bounds-audit subset | 250 surfaces / 21,000 prices; all validity checks passed |
-| Reviewed sampling audit | 19,000 candidates; interior 8,116 accepted, wide-valid 3,371 accepted |
-| Normal synthetic core readiness | `CORE_DATASET_READY = true` under the existing candidate surface contract |
-| Challenge stress readiness | `CHALLENGE_STRESS_READY = false`; retained stress cases remain separate |
-| Stage A NSE screen | `COMPLETE`; 24 candidate stock surfaces across three dates |
-| Primary Stage A source | Official NSE CM and F&O UDiFF bhavcopies |
-| Candidate selection | `COMPLETE`; NTPC, CIPLA, INFY, and HDFCBANK |
-| G2 market-supported geometry | `ESTABLISHED`; near + middle, central-five, calls + puts |
-| Completed G2 diagnostics | Reduced-grid, third-expiry, multi-date A/B/C/D, independent CIR-path replication, global ambiguity, complementary observables |
-| Global ten-parameter ambiguity | `ESTABLISHED`; 4/4 representative cases, 40 near-equivalent solutions, 39 clusters |
-| Complementary-observable diagnostic | `INSUFFICIENT`; C/D truth outside fixed screen in 4/4 cases |
-| Surface-representation G2 gate | `NOT_PASSED`; stable ten-parameter recovery not demonstrated |
-| Current 108-input grid | `REJECTED_AS_FINAL_UNCHANGED_GRID` |
-| Final G2 representation | `NOT_FROZEN`; no feature count frozen |
+| Canonical production pricer | Validated and frozen |
+| Differentiable Torch mirror | Implemented and independently cross-checked |
+| ANN infrastructure | Implemented |
+| Constraint + repricing inverse infrastructure | Implemented, not research-trained |
+| Genuine PDE-informed inverse model | Not implemented/validated as a research milestone |
+| Stage A NSE market-support screen | Complete |
+| Selected primary sector set | NTPC, CIPLA, INFY, HDFCBANK |
+| G2 market-supported geometry | Established |
+| Current 108-input grid | Rejected as final unchanged representation |
+| Final G2 representation | Not frozen |
+| G2 | NOT_PASSED |
+| Global ten-parameter ambiguity | Established |
+| Full-108 overnight identifiability diagnostic | Completed; locally full-rank can still be practically non-identifiable at noise scale |
 | Final 10,000-surface research dataset | Not generated |
-| Development smoke test | Passing; remains `NOT_RESEARCH_DATA` |
-| Full ANN research training | Not started |
-| PINN development/comparison | Not started |
+| ANN research training | Not started |
+| Model-2 research training | Not started |
 | Frozen real-market evaluation | Not started |
+| Archive-2 PDE loss | Do not adopt; implementation defect independently reproduced |
+| Archive-2 real-market fine-tuning | Non-canonical; quarantine/remove from canonical entry points |
 
-## Honest research boundary
+## Canonical architecture
 
-The independent benchmark materially strengthens the pricing evidence, but agreement between two implementations is not proof of universal correctness. The historical 5,000-row uniform bounds audit did not approve that earlier sampling design: 44.48% of raw candidates were rejected, and among the 2,776 accepted vectors 32.6729% were near at least one declared boundary and 7.0605% were near a Feller boundary. Rejected vectors are reported separately and are not counted as boundary-near.
+Keep the existing canonical stack as the source of truth:
 
-The reviewed four-distribution sampler separates normal training populations from deliberately difficult boundary-challenge and OOD populations. The normal clean core is ready under the current candidate surface contract, while retained challenge stress cases remain a separate non-ready evidence set. This does not establish externally valid parameter ranges, unique parameter recovery, ANN/PINN performance, or market generalization.
+- `src/constants.py` parameter contract;
+- frozen production Double Heston pricer;
+- differentiable Torch mirror;
+- canonical hard-by-construction constraints;
+- synthetic-only primary training;
+- validation-gated model selection; and
+- frozen chronological real-market evaluation.
 
-The 1% controlled noise experiment remains an important research result: comparatively reasonable price fit can coexist with severe deterioration in ten-parameter identification. This motivates the later ANN and physics-informed inverse comparisons rather than constituting evidence that either neural method is superior.
+Archive-2 / `src/dheston` is experimental donor code only. Selected patterns may be adapted behind explicit interfaces, but its parameter order, constraint semantics, PDE loss, and real-market weight-update path are not canonical.
 
-## Reviewed sampling follow-up
+Cross-stack positional parameter passing is forbidden. Use only a verified named adapter if interoperability is required.
 
-The reviewed sampler separates interior, wide-valid, boundary-challenge, and OOD populations. Interior acceptance is 81.16% and wide-valid acceptance is 67.42%; challenge rows are balanced across four labels and OOD rows lie outside normal `kappa_fast` support with no train/validation assignment.
+## Neural / physics terminology
 
-Four deliberately difficult challenge surfaces produced tiny 64-node numerical-tolerance stress failures. They were retained as evidence, pass at 96 Gauss-Laguerre nodes, agree with the independent adaptive reference within the frozen comparison tolerance, and remain excluded from ordinary ANN training. Consequently normal core readiness and challenge stress readiness are tracked separately rather than forcing one global ready/not-ready label. See [REVIEWED_PARAMETER_SAMPLING.md](REVIEWED_PARAMETER_SAMPLING.md).
-
-## Completed Stage A NSE market-support screen
-
-The prepared synthetic plan still uses the candidate 108-input contract:
-
-- 9 log-moneyness points;
-- 6 candidate maturities: 7, 14, 30, 60, 90, and 180 days;
-- calls and puts;
-- 10 ordered Double Heston targets.
-
-The mentor-updated v2 execution plan requires real-market support and inverse-identifiability evidence before final 10,000-surface generation. Stage A and G2 common-support supplied the market evidence. G2 identifiability diagnostics then showed that the supported geometry does not stably identify the canonical ten targets.
-
-Stage A processed:
-
-- Power candidates: NTPC and POWERGRID;
-- Healthcare/Pharma candidates: SUNPHARMA and CIPLA;
-- IT candidates: INFY and TCS;
-- Financial/Banking candidates: ICICIBANK and HDFCBANK;
-- NIFTY as a separate non-ranked reference;
-- audit dates 01 July, 15 July, and 22 July 2026;
-- one surface as one underlying-date containing near, mid, and far expiry slices together;
-- price-usability checks separate from volume/open-interest activity;
-- futures-implied carry inputs audited for availability without calculating or selecting final carry.
-
-All eight stock candidates were present on all three dates. The result comprises 24 stock surfaces and 4,740 stock-option rows. Actual stock-option DTE patterns were `27/55/90`, `13/41/76`, and `6/34/69` by date. All 24 CM closes equaled the corresponding unique F&O `UndrlygPric`; all stock futures expiries aligned with stock-option expiries; and no selected stock row had an `XpryDt` / `FininstrmActlXpryDt` mismatch.
-
-The current grid is not supportable unchanged as the final representation. The 180-day node was outside observed expiry support for all 24 surfaces, while the `-0.30` and `+0.30` log-moneyness wings were observed in only 2/72 and 7/72 stock-expiry slices. The central `-0.10` through `+0.10` nodes were observed in all 72 slices. This evidence rejects the final unchanged 108-grid but does not freeze a replacement. `G2 = NOT_PASSED`.
-
-Official NSE is the primary Stage A source. Free NSE bhavcopy lacks historical bid/ask and quote-size fields, and Bloomberg was not used. The original three-date Power comparison remained unresolved; the separate five-Wednesday July extension selected NTPC at moderate confidence. The selected primaries are NTPC, CIPLA, INFY, and HDFCBANK. See [STAGE_A_CANDIDATE_SELECTION.md](STAGE_A_CANDIDATE_SELECTION.md).
-
-## Completed G2 identifiability checkpoint
-
-Common-support analysis established the near and middle listed expiries, five central log-moneyness nodes `[-0.10, -0.05, 0.00, +0.05, +0.10]`, and calls plus puts: 20 normalized option prices with maturity/carry conditioning treated separately.
-
-The reduced-grid test had full algebraic rank but zero practical full-rank cases, approximately `5.107e7` median condition number, and `0/12` parameter-recovery passes at clean, 0.5%, and 1.0% noise. A third listed expiry improved the median smallest singular value by approximately `136.93×` and the median condition number by `65.47×`, but achieved only `12/24` practical full rank, `2/12` clean recovery, and `0/12` noisy recovery; it also failed the existing Stage A activity rule.
-
-The multi-date A/B/C/D diagnostic showed that oracle multi-date information and exact CIR transition physics materially improve local conditioning. Its independent CIR-path replication was mixed only in the practical-rank behavior of latent-state C; the core recovery failure replicated. Maximum clean recovery remained `1/6`, and all 0.5% and 1.0% recovery results remained `0/6`.
+Use:
 
 ```text
-G2 = NOT_PASSED — STRUCTURAL IDENTIFIABILITY PROBLEM REMAINS
-MULTI_DATE_DIAGNOSTIC = INSUFFICIENT
+PINN_INFRASTRUCTURE = IMPLEMENTED_NOT_RESEARCH_TRAINED
+PINN_RESEARCH_MILESTONE = NOT_VALIDATED_OR_TRAINED
 ```
 
-See [G2_IDENTIFIABILITY_CHECKPOINT.md](G2_IDENTIFIABILITY_CHECKPOINT.md) and the tracked [evidence manifest](evidence/G2_CHECKPOINT_MANIFEST.json).
+The current canonical neural inverse path is **constraint-informed + differentiable-repricing-informed**, not a genuine PDE-informed PINN.
 
-## Completed global-ambiguity milestone
+Recommended comparison taxonomy:
 
-The clean primary diagnostic used four predeclared representative vectors, 20 deterministic starts per surface, the supported central-five calls-and-puts geometry, 64-node pricing, full-range parameter scaling, and a price-equivalence threshold frozen at normalized RMSE `2.5e-7`. It retained 40 near-equivalent clean solutions in 39 separated scaled-parameter clusters. Ambiguity was established in `4/4` cases; median price RMSE was `4.708e-8` while median range-scaled parameter RMSE was `0.1485`.
+- Model 1 — ordinary ANN inverse model;
+- Model 2 — canonical constraint + differentiable-repricing informed inverse model;
+- Model 3 — optional future genuine network-side PDE-informed model, only after separate approval.
 
-The optimizer-success-only subset retained 22 near-equivalent solutions, 21 materially displaced, across all four cases. The dominant repeated compensation was strongly negative `v0_slow/v0_fast`; repeated negative relationships also involved `theta_slow/theta_fast`, `sigma_slow/theta_fast`, and `rho_slow/theta_fast`. `kappa_slow/theta_slow` did not pass the global empirical screen.
+## Identifiability status
 
-Local/global displacement evidence is `CONSISTENT` in aggregate at median absolute cosine `0.535`, but not uniformly: two cases were consistent, one partially consistent, and one inconsistent. At both 0.5% and 1.0% noise every recovered vector hit at least one declared boundary and parameter error increased sharply. The mostly singleton clusters establish separated solution regions, not smooth basin volume.
+The full provisional 108-quote grid can be locally full practical rank while still becoming practically non-identifiable at realistic market-noise tolerance.
+
+Key overnight conclusion:
 
 ```text
-GLOBAL_AMBIGUITY = ESTABLISHED
-G2 = NOT_PASSED — STRUCTURAL IDENTIFIABILITY PROBLEM REMAINS
+STRICT_PRECISION_IDENTIFICATION = CAN_BE_GOOD
+MARKET_TOLERANCE_IDENTIFICATION = PRACTICALLY_NON_IDENTIFIABLE / ILL_CONDITIONED
 ```
 
-See [G2_GLOBAL_AMBIGUITY_ANALYSIS.md](G2_GLOBAL_AMBIGUITY_ANALYSIS.md) and its [reproducibility manifest](evidence/G2_GLOBAL_AMBIGUITY_MANIFEST.json).
+Therefore:
 
-## Completed complementary-observable diagnostic
+- price fit does not imply parameter recovery;
+- parameter recovery must be reported separately from repricing;
+- multi-start/multi-seed dispersion matters;
+- noise robustness matters;
+- equivalence-class / tolerance-conditioned recovery should be reported; and
+- physics constraints may regularize but must not be claimed to create unique identification.
 
-The frozen A/B/C/D comparison tested options only; options plus exact oracle total variance; causal 21-day and 126-day realized variance; and those realized-variance observables plus lag-4 autocorrelation of non-overlapping 5-day realized-variance blocks. Median practical rank increased from `7.5` for A to `9.5` for D, and the median condition number fell from `6.556e8` to `1.641e6`.
+Factor-swap symmetry is an exact/near-machine-precision degeneracy; the declared `kappa_slow < kappa_fast` ordering is the tie-breaking convention that excludes the swapped twin.
 
-Those local gains did not establish global recovery. The oracle B design retained 33 clusters and 29 materially displaced near-equivalent solutions. C/D produced zero jointly qualifying fits because the true parameter vector itself failed the fixed complementary screen in all four cases; zero qualifying fits must therefore not be interpreted as ambiguity resolution. On the identical `case_1;case_3` noise panel, all designs had median parameter RMSE around `0.36` at 0.5% option noise and `0.40` at 1.0%.
+## PDE/physics status
 
-```text
-COMPLEMENTARY_OBSERVABLE = INSUFFICIENT
-EXPERIMENT_VALIDITY = NOT_PASSED_TRUTH_OUTSIDE_COMPLEMENTARY_SCREEN
-MARKET_OBSERVABLE_CONTRACT = UNRESOLVED
-G2 = NOT_PASSED
-```
+Node A and Node C independently reproduced the same Archive-2 PDE-loss implementation bug: variance-factor derivatives are silently zeroed by autograd slice-view handling, so the implemented residual is not the intended Double Heston PDE.
 
-See [G2_COMPLEMENTARY_OBSERVABLE_ANALYSIS.md](G2_COMPLEMENTARY_OBSERVABLE_ANALYSIS.md) and its [reproducibility manifest](evidence/G2_COMPLEMENTARY_OBSERVABLE_MANIFEST.json).
+Do not import the current Archive-2 PDE loss.
 
-## Generation boundary
+A correctly wired residual on an already accurate model pricer is approximately machine-zero and is not an independent source of parameter-identification information. A future Model 3 would require a different network-side formulation and a research question centered on regularization/structural validity rather than assumed uniqueness.
 
-`CORE_DATASET_READY = true` means the reviewed normal parameter population and leakage/split logic are ready **under the existing candidate surface contract**. It does not authorize immediate final dataset generation under the mentor-updated pipeline.
-
-The final 10,000-surface run remains blocked until the global parameter ambiguity is addressed, G2 approves a final representation, and the synthetic surface contract is updated and revalidated. No final research dataset, ANN research training, PINN derivation or training, or frozen real-market evaluation has occurred.
+## Current gate summary
 
 ```text
-STAGE_A_NSE_SCREEN = COMPLETE
-STAGE_A_CANDIDATE_SELECTION = COMPLETE
-POWER_SELECTION = NTPC
-SELECTED_PRIMARY_SET = NTPC | CIPLA | INFY | HDFCBANK
-BACKUP_SET = POWERGRID | SUNPHARMA | TCS | ICICIBANK
+PRODUCTION_DH_PRICER = VALIDATED_AND_FROZEN
 CURRENT_108_GRID = REJECTED_AS_FINAL_UNCHANGED_GRID
 G2_MARKET_SUPPORTED_GEOMETRY = ESTABLISHED
 G2_FINAL_REPRESENTATION = NOT_FROZEN
 G2 = NOT_PASSED
-MULTI_DATE_DIAGNOSTIC = INSUFFICIENT
 GLOBAL_AMBIGUITY = ESTABLISHED
-COMPLEMENTARY_OBSERVABLE = INSUFFICIENT
-EXPERIMENT_VALIDITY = NOT_PASSED_TRUTH_OUTSIDE_COMPLEMENTARY_SCREEN
-MARKET_OBSERVABLE_CONTRACT = UNRESOLVED
-OPTIMIZER_CAP = OPTIMIZER_CAP_UNRESOLVED
-OPTIMIZER_ONLY_WORK = CLOSED
-NTPC_THREE_DATE_INFORMATION = MULTI_DATE_INSUFFICIENT
 FINAL_10K = NOT_GENERATED
 ANN_RESEARCH_TRAINING = NOT_STARTED
-PINN = NOT_DERIVED_OR_TRAINED
+PINN_INFRASTRUCTURE = IMPLEMENTED_NOT_RESEARCH_TRAINED
+PINN_RESEARCH_MILESTONE = NOT_VALIDATED_OR_TRAINED
+FROZEN_REAL_MARKET_EVALUATION = NOT_STARTED
 ```
+
+## Immediate next scientific action
+
+`OBTAIN MENTOR DECISION`
+
+The existing mentor-controlled G2 safeguard and bounded richer NTPC information study remain the immediate scientific blocker.
+
+Until that decision:
+
+- do not freeze a final representation;
+- do not generate the final 10k dataset;
+- do not begin research ANN/Model-2 training;
+- do not choose final G8 dates; and
+- do not introduce new priors, regularizers, optimizers, objectives, bounds, sectors, or other methodology changes.
+
+Repository cleanup, documentation reconciliation, evidence preservation, and quarantine of non-canonical execution paths may proceed without implying scientific gate passage.
+
+## Post-G2 sequence
+
+After mentor approval and a successful G2 decision:
+
+1. freeze the final representation;
+2. formalize the representation interface;
+3. freeze final parameter sampling and data-generation protocol;
+4. generate and validate the final synthetic dataset;
+5. freeze train/validation/test splits;
+6. run traditional calibration vs Model 1 vs Model 2 under a common evaluation contract;
+7. evaluate frozen models on untouched real-market data; and
+8. consider Model 3 only as a separately approved extension.
+
+See [NEXT_STEPS.md](NEXT_STEPS.md) for the ordered execution plan.

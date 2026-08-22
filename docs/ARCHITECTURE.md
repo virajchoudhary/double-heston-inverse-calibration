@@ -1,21 +1,42 @@
 # Architecture
 
+The repository contains one canonical research stack and one non-canonical imported/experimental stack. The canonical stack remains the source of truth for parameter semantics, structural validity, pricing, training policy, and research evaluation.
+
+See [OVERNIGHT_SWARM_2026-08-22_DECISION_RECORD.md](OVERNIGHT_SWARM_2026-08-22_DECISION_RECORD.md) for the evidence-backed architecture decision produced by the three-node audit.
+
+## Canonical research stack
+
 The ordinary ANN baseline is a parameter-supervised, non-physics neural network. It intentionally contains no PDE residual.
 
 ```mermaid
 flowchart LR
-    A["Option surface"] --> B["Deterministic call and put grid"]
-    B --> C["108 spot-normalized price inputs"]
+    A["Option surface"] --> B["Approved surface representation"]
+    B --> C["Data-derived model input size"]
     C --> D["Ordinary PyTorch MLP"]
-    D --> E["Ten Double Heston outputs"]
+    D --> E["Ten canonical Double Heston outputs"]
     E --> F["Independent canonical Double Heston repricer"]
 ```
 
-## Fixed surface contract
+The canonical inverse-model infrastructure additionally supports a differentiable Torch Double Heston repricer and hard-by-construction structural constraints. Its present scientific classification is **constraint-informed + differentiable-repricing-informed inverse network**. It is not presently a genuine PDE-informed PINN.
 
-The grid combines nine log-moneyness coordinates, six maturity coordinates, and separate call and put blocks: `9 x 6 x 2 = 108` normalized inputs. Complete surfaces remain together in exactly one train, validation, or test split.
+## Surface contract and G2 boundary
 
-## Exact parameter order
+The historical/provisional candidate grid combines nine log-moneyness coordinates, six maturity coordinates, and separate call and put blocks: `9 x 6 x 2 = 108` normalized inputs.
+
+That 108-feature representation is **not** the frozen final research representation. Current status is:
+
+```text
+CURRENT_108_GRID = REJECTED_AS_FINAL_UNCHANGED_GRID
+G2_MARKET_SUPPORTED_GEOMETRY = ESTABLISHED
+G2_FINAL_REPRESENTATION = NOT_FROZEN
+G2 = NOT_PASSED
+```
+
+The model layer already derives its input size from the dataset rather than treating 108 as an immutable neural-network constant. A formal representation interface should be completed before final synthetic generation so the mentor-approved G2 representation can be substituted without changing the canonical parameter or pricing contracts.
+
+Complete surfaces must remain together in exactly one train, validation, or test split.
+
+## Exact canonical parameter order
 
 1. `kappa_slow`
 2. `theta_slow`
@@ -30,7 +51,7 @@ The grid combines nine log-moneyness coordinates, six maturity coordinates, and 
 
 These outputs represent eight structural parameters and two surface-specific initial variance states.
 
-## Declared constraints
+## Declared canonical constraints
 
 - Positive `kappa`, `theta`, `sigma`, and `v0` for both factors
 - `kappa_slow < kappa_fast`
@@ -39,8 +60,72 @@ These outputs represent eight structural parameters and two surface-specific ini
 - Each correlation strictly inside `(-1, 1)`
 - `rho_slow^2 + rho_fast^2 < 1`
 
-## Research boundary
+Structural validity and reviewed sampling-box membership are deliberately separate concepts. Do not silently clamp network outputs to the synthetic training box merely to improve recovery metrics.
 
-`src/pricing_interface.py` routes research generation and repricing to `src/double_heston.py`. The development dummy remains available only through the explicitly labelled smoke-test path and is never an implicit fallback. Full ANN research training has not started.
+## Pricing ownership
 
-The repository also contains a PINN infrastructure path for inverse calibration. Unlike the ANN baseline, it uses a differentiable torch repricer that mirrors the canonical Double Heston surface contract and combines parameter supervision with full-surface repricing consistency. This is infrastructure, not a dated research-training result, and it does not change the historical G2 status recorded in the dated status documents.
+The pricing hierarchy is:
+
+1. frozen production canonical Double Heston engine in `src/double_heston.py` — scientific source of truth;
+2. independently checked differentiable Torch mirror — canonical differentiable workhorse;
+3. Archive-2 COS pricer — independent numerical cross-check only after parameter adaptation.
+
+The overnight audit found the production and Torch implementations in machine-precision agreement in the tested liquid region, while the independent COS implementation agreed closely enough to support use as a cross-check. No production-pricer change is warranted from the overnight evidence.
+
+## Archive-2 / `src/dheston` disposition
+
+Archive-2 is a donor of selected patterns, not a second canonical implementation.
+
+Potentially reusable after explicit adaptation:
+
+- variable-length masked surface representation;
+- chronological zero-leakage real-market evaluation pattern;
+- COS pricer as an independent pricing cross-check.
+
+Do not adopt directly:
+
+- positional parameter interchange;
+- Archive-2 parameter constraints as canonical semantics;
+- negative-only rho box semantics;
+- its current PDE loss;
+- its real-market fine-tuning / continuous-training path.
+
+The two stacks use different parameter layouts. Any interoperability must use an explicitly verified named adapter; positional tensor passing is forbidden.
+
+## PDE / physics boundary
+
+The overnight audit independently reproduced a defect in Archive-2's PDE loss: its autograd wiring silently zeros the variance-factor derivative terms, so the implemented residual is not the intended Double Heston PDE residual.
+
+Do not import that loss into the canonical path.
+
+More fundamentally, a correctly wired PDE residual evaluated on an already accurate model pricer is approximately machine-zero and does not create independent parameter-identification information. If a genuine PDE-informed Model 3 is later approved, it requires a separate network-side construction and must be evaluated as a regularization/structural-validity mechanism rather than assumed to resolve inverse non-identifiability.
+
+## Research training and evaluation policy
+
+Primary ANN and inverse-model learning is synthetic. Real-market observations are reserved for frozen-model evaluation and must not update primary neural-network weights.
+
+The canonical experimental comparison should hold the surface contract, target order, synthetic splits, evaluation sets, and metric families fixed across methods.
+
+Future reports must separate:
+
+- parameter recovery;
+- repricing;
+- structural validity;
+- seed/start stability;
+- tolerance-conditioned or equivalence-class recovery;
+- noise robustness; and
+- runtime.
+
+No method may be declared superior from repricing RMSE alone.
+
+## Current implementation status
+
+```text
+PINN_INFRASTRUCTURE = IMPLEMENTED_NOT_RESEARCH_TRAINED
+PINN_RESEARCH_MILESTONE = NOT_VALIDATED_OR_TRAINED
+FINAL_10K = NOT_GENERATED
+ANN_RESEARCH_TRAINING = NOT_STARTED
+FROZEN_REAL_MARKET_EVALUATION = NOT_STARTED
+```
+
+`src/pricing_interface.py` continues to route research generation and repricing to the canonical pricing engine. Development smoke-test paths remain explicitly labelled and must never become implicit fallbacks.

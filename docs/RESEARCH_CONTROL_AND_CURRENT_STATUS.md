@@ -1,24 +1,26 @@
 # Research Control and Current Status
 
-Status date: 13 August 2026
+Status date: 22 August 2026
 
-This is the canonical repository control/status document for the next scientific decision. It records approved constraints and validated evidence; it does not approve or execute a new treatment.
+This is the canonical repository control/status document for the next scientific decision. It records approved constraints and validated evidence; it does not itself approve or execute a new treatment.
+
+The detailed 13 August 2026 state remains preserved in Git history and in the experiment-specific documents linked throughout `docs/`. The 22 August three-node diagnostic consolidation is recorded in [OVERNIGHT_SWARM_2026-08-22_DECISION_RECORD.md](OVERNIGHT_SWARM_2026-08-22_DECISION_RECORD.md).
 
 ## 1. Source-of-truth hierarchy
 
-1. **Canonical design — v2.0.** The mentor-updated research design is the canonical scientific design.
-2. **Controlled update — v2.1.** A v2.1 status/update may record results or proposals, but a proposal in v2.1 is not approved merely because it appears there.
-3. **Implementation truth — this repository.** Code, configurations, manifests, persisted evidence, tests, Git history, and hashes determine what was actually implemented and validated.
+1. **Canonical design — v2.0.** The mentor-updated research design remains the canonical scientific design.
+2. **Controlled update — v2.1.** A status/update may record results or proposals, but a proposal is not approved merely because it appears in repository documentation.
+3. **Implementation truth — this repository.** Code, configurations, manifests, persisted evidence, tests, Git history, hashes, and approved merge history determine what was actually implemented and validated.
 
-The full v2.0 and v2.1 documents are not tracked in this repository. This hierarchy is therefore an external project-control rule, not a claim that those files exist here. Tracked documents corresponding to parts of the hierarchy include [ARCHITECTURE.md](ARCHITECTURE.md), [CURRENT_STATUS.md](CURRENT_STATUS.md), [NEXT_STEPS.md](NEXT_STEPS.md), the detailed experiment reports linked below, and their tracked evidence manifests.
+The external v2.0/v2.1 documents are not tracked here. This hierarchy is a project-control rule, not a claim that those files exist in the repository.
 
 ## 2. Fixed approved research contract
 
 **Project title / repository-approved objective:** Physics-Informed Inverse Calibration of the Canonical Double Heston Model for Stable Option-Surface Parameter Recovery.
 
-**Central research question (operational statement of the tracked contract):** Can the canonical ten-parameter Double Heston inverse problem recover stable parameters from a market-supported option-surface representation, and how do traditional calibration, an ordinary ANN, and a physics-informed inverse method compare under one frozen protocol? The full external v2.0 wording is not tracked here; this sentence summarizes the repository contract and does not replace v2.0.
+**Operational research question:** Can the canonical ten-parameter Double Heston inverse problem recover stable parameters from a market-supported option-surface representation, and how do traditional calibration, an ordinary ANN, and a physics-informed inverse method compare under one frozen protocol?
 
-The canonical target order remains:
+Canonical target order:
 
 1. `kappa_slow`
 2. `theta_slow`
@@ -31,151 +33,166 @@ The canonical target order remains:
 9. `rho_fast`
 10. `v0_fast`
 
-The approved contract preserves positivity, strict factorwise Feller conditions, the joint correlation disk, slow/fast ordering, and the frozen production Double Heston pricing engine. It preserves the Black-Scholes -> Standard Heston -> Double Heston comparison and the traditional calibration -> ANN -> physics-informed inverse comparison.
+The approved contract preserves positivity, strict factorwise Feller conditions, the declared joint correlation disk, slow/fast ordering, and the frozen production Double Heston pricing engine. It preserves the Black-Scholes -> Standard Heston -> Double Heston comparison and the traditional calibration -> ANN -> physics-informed inverse comparison.
 
-Synthetic truth remains the basis for parameter-recovery claims. Real-market fitted parameters are not ground truth. Primary ANN/PINN training remains synthetic; primary real-market PINN weight updating is prohibited. Sector separation and a frozen, unseen real-market final evaluation remain mandatory. This milestone does not change equations, parameter definitions or order, bounds, optimizer, objective, pricer, or quote rules.
+Synthetic truth remains the basis for parameter-recovery claims. Real-market fitted parameters are not ground truth. Primary ANN/inverse-model learning remains synthetic; primary real-market neural-weight updating is prohibited. Sector separation and frozen, unseen real-market final evaluation remain mandatory.
 
-## 3. Verified merged checkpoint
+## 3. Pricing foundation
 
-The readiness baseline verified on 13 August 2026 is `main = 775b5cb2a204e5a55a024e6fe9e364172bc38109`, the normal merge of PR #16. Repair head `b9a64c8e761f09e7ff20926297ec4fa1976adbeb` is in that merge's ancestry. This SHA is the scientific checkpoint on which this status document was prepared; the later documentation-only merge containing this file may become the repository HEAD without changing the scientific checkpoint.
+The canonical production Double Heston pricer remains validated and frozen. The overnight audit additionally confirmed machine-precision agreement with the differentiable Torch mirror in the tested region and close agreement with the independent Archive-2 COS implementation in the liquid region.
 
-## 4. Current scientific evidence
+No overnight evidence warrants changing the production pricing engine.
 
-### Pricing and NTPC classical comparison
+## 4. G2 / identifiability evidence
 
-The production Double Heston pricer is validated against the independent benchmark; see [DOUBLE_HESTON_VALIDATION_RESULTS.md](DOUBLE_HESTON_VALIDATION_RESULTS.md) and [ENGINE_FREEZE.md](ENGINE_FREEZE.md).
+The central bottleneck remains **representation / information / practical identifiability**, not pricing-engine correctness.
 
-The 15-Jul NTPC holdout price RMSE values are:
+Standing evidence before the overnight run already established global ambiguity on the market-supported central geometry and rejected the provisional 108-grid as the final unchanged representation.
 
-| Model | Holdout price RMSE |
-|---|---:|
-| Black-Scholes | `1.053335898` |
-| Standard Heston | `0.910569272` |
-| single-date Double Heston | `0.926824720` |
+The 22 August Node B diagnostic extended the picture on the full provisional 108-quote grid:
 
-Heston and Double Heston materially outperform Black-Scholes on this holdout. Double Heston has not clearly outperformed Standard Heston out of sample. See [NTPC_SINGLE_STOCK_CALIBRATION.md](NTPC_SINGLE_STOCK_CALIBRATION.md) and its [manifest](evidence/NTPC_SINGLE_STOCK_PILOT_MANIFEST.json).
+- representative full-grid Jacobians can be locally full practical rank;
+- strict-precision clean recovery can be good;
+- realistic small price noise produces sharp parameter instability while repricing remains near the noise floor;
+- materially different parameter vectors can occupy near-equivalent price-surface regions;
+- increased optimizer budget, alternative starts, and weighting changes do not remove the governing failure; and
+- factor-swap symmetry is an exact/near-machine-precision degeneracy broken by the declared slow/fast ordering convention.
 
-### Single-date stability and optimizer-cap closure
+The defensible interpretation is **ill-conditioned at realistic noise scale and practically non-identifiable at market tolerance**, with case-dependent optimizer-basin sensitivity on clean data.
 
-The reviewed single-date shared-eight comparator has `11` materially displaced starts and `7` clusters. Optimizer convergence and price RMSE are not parameter-identification evidence.
+Consequently:
 
-The optimizer-budget-only study finished with:
+- repricing quality is not parameter-recovery evidence;
+- parameter-recovery claims must be tolerance/equivalence-class conditioned; and
+- a physics term may regularize/structure the problem but must not be claimed to create missing identifying information.
+
+## 5. Current neural / PINN status
+
+The repository now contains implemented inverse-model infrastructure, but no validated research-scale PINN result.
+
+Use these two axes:
 
 ```text
-OPTIMIZER_CAP = OPTIMIZER_CAP_UNRESOLVED
-OPTIMIZER_ONLY_WORK = CLOSED
+PINN_INFRASTRUCTURE = IMPLEMENTED_NOT_RESEARCH_TRAINED
+PINN_RESEARCH_MILESTONE = NOT_VALIDATED_OR_TRAINED
 ```
 
-Doubling the cap did not resolve cap incidence or separated near-equivalent basins. See [NTPC_DH_OPTIMIZER_CAP_SENSITIVITY.md](NTPC_DH_OPTIMIZER_CAP_SENSITIVITY.md) and its [manifest](evidence/NTPC_DH_OPTIMIZER_CAP_SENSITIVITY_MANIFEST.json).
+The current canonical inverse model is accurately described as **constraint-informed + differentiable-repricing-informed**. It is not presently a genuine PDE-informed PINN.
 
-### Three-date NTPC information study
+Archive-2's current PDE loss must not be adopted into the canonical path. Node A and Node C independently reproduced an autograd slice-view defect that silently removes the variance-factor derivative terms from the implemented residual. Even with correct derivative wiring, a pricer-side residual on an already accurate model pricer is approximately machine-zero and is not an independent parameter-identification signal.
 
-| Metric | Single-date shared-eight | Three-date shared-eight |
-|---|---:|---:|
-| materially displaced | `11` | `7` |
-| clusters | `7` | `3` |
-| median separation | `0.399516908` | `0.324066116` |
-| maximum separation | `0.627751647` | `0.481226608` |
-| boundary-hit rate | `1.0` | `1.0` |
-| 15-Jul holdout RMSE | `0.926824720` | `0.976300061` |
+A genuine network-side PDE-informed Model 3 is a separate future research decision, not an approved current milestone.
 
-Temporal information materially improved dispersion, but the 15-Jul holdout deteriorated by `5.338%`, exceeding the inherited 5% ceiling. The final classification is `MULTI_DATE_INSUFFICIENT`. See [NTPC_DH_MULTI_DATE_CALIBRATION.md](NTPC_DH_MULTI_DATE_CALIBRATION.md) and its [manifest](evidence/NTPC_DH_MULTI_DATE_CALIBRATION_MANIFEST.json).
+## 6. Architecture control
 
-## 5. Current pipeline location
+The canonical stack remains the source of truth for:
+
+- parameter order and semantics;
+- structural constraints;
+- production pricing;
+- differentiable repricing;
+- synthetic training policy; and
+- frozen real-market evaluation policy.
+
+Archive-2 / `src/dheston` is experimental/donor code only. Selected patterns may be adapted behind explicit interfaces, including variable-length surfaces, chronological zero-leakage evaluation, and the COS pricer as a cross-check.
+
+Cross-stack positional parameter passing is prohibited. Any interoperability requires an explicitly verified named adapter because the stacks differ in both factor placement and within-factor parameter order.
+
+Archive-2 `real_finetune` / `--continuous` real-market weight updating is outside the canonical primary protocol and must be removed or hard-quarantined from canonical entry points before any future training milestone.
+
+## 7. Current pipeline state
 
 ```text
-PRODUCTION_DH_PRICER = VALIDATED
+PRODUCTION_DH_PRICER = VALIDATED_AND_FROZEN
 CURRENT_108_GRID = REJECTED_AS_FINAL_UNCHANGED_GRID
 G2_MARKET_SUPPORTED_GEOMETRY = ESTABLISHED
 G2_FINAL_REPRESENTATION = NOT_FROZEN
 G2 = NOT_PASSED
-OPTIMIZER_CAP = OPTIMIZER_CAP_UNRESOLVED
 OPTIMIZER_ONLY_WORK = CLOSED
 NTPC_THREE_DATE_INFORMATION = MULTI_DATE_INSUFFICIENT
+GLOBAL_AMBIGUITY = ESTABLISHED
 FINAL_10K = ABSENT
 ANN_RESEARCH_TRAINING = NOT_STARTED
-PINN = NOT_IMPLEMENTED_OR_TRAINED
+PINN_INFRASTRUCTURE = IMPLEMENTED_NOT_RESEARCH_TRAINED
+PINN_RESEARCH_MILESTONE = NOT_VALIDATED_OR_TRAINED
+FROZEN_REAL_MARKET_EVALUATION = NOT_STARTED
 ```
 
-The bottleneck is **representation / information / identifiability**, not pricing-engine correctness.
+The overnight run did not change any gate.
 
-## 6. Development-data registry and G8 protection
+## 8. Development-data registry and G8 protection
 
-Any NTPC observation already used for market-support audit, representation design, traditional calibration, stability diagnosis, optimizer analysis, or multi-date information analysis is `DEVELOPMENT / DIAGNOSTIC` and is ineligible for final frozen G8 ANN/PINN evaluation.
+All previously used NTPC dates remain DEVELOPMENT / DIAGNOSTIC and ineligible for final frozen G8 ANN/inverse-model evaluation:
 
-| NTPC valuation date | Evidence already using the date | Registry status |
-|---|---|---|
-| `2026-07-01` | Original Stage A/G2 support work and three-date calibration | `DEVELOPMENT / DIAGNOSTIC` |
-| `2026-07-08` | Five-Wednesday Stage A Power support extension only; not yet used in richer calibration | `DEVELOPMENT / DIAGNOSTIC`; `PROPOSED DEVELOPMENT CANDIDATE — NOT YET APPROVED/USED IN RICHER CALIBRATION` |
-| `2026-07-15` | Original Stage A/G2 support, traditional calibration, stability, optimizer, and three-date calibration | `DEVELOPMENT / DIAGNOSTIC` |
-| `2026-07-22` | Original Stage A/G2 support and three-date calibration | `DEVELOPMENT / DIAGNOSTIC` |
-| `2026-07-29` | Five-Wednesday Stage A Power support extension only; not yet used in richer calibration | `DEVELOPMENT / DIAGNOSTIC`; `PROPOSED DEVELOPMENT CANDIDATE — NOT YET APPROVED/USED IN RICHER CALIBRATION` |
+- 2026-07-01
+- 2026-07-08
+- 2026-07-15
+- 2026-07-22
+- 2026-07-29
 
-08-Jul and 29-Jul are not untouched: official NSE observations were already analyzed for market support. Their proposed status applies only to the not-yet-approved richer calibration treatment. All five dates above are excluded from final G8.
+Final G8 dates must be later and untouched, reserved before ANN/inverse-model evaluation, not selected using neural performance, not used during representation design, and not used to update primary neural weights.
 
-Final G8 dates must be later and untouched, reserved before ANN/PINN evaluation, not selected using ANN/PINN performance, not used during representation design, and not used to update neural weights in the primary design. No final G8 dates are selected here.
+No final G8 dates are selected here.
 
-## 7. Approval-sensitive proposals
+## 9. Approval-sensitive G2 proposal
 
-### Formal G2 safeguard — mentor approval required
+The previously prepared mentor decision remains the immediate scientific blocker.
 
 Before final representation freeze, require both:
 
 - a market-supported representation; and
-- sufficient ten-parameter informativeness/stability;
+- sufficient ten-parameter informativeness/stability under the approved tolerance/noise interpretation;
 
-or an explicitly mentor-approved revised formulation. This safeguard does not alter the canonical ten-parameter model.
+or an explicitly mentor-approved revised formulation.
 
-### One bounded richer NTPC information study — mentor approval required
+The proposed bounded richer NTPC information study remains mentor-controlled. It must not silently introduce priors, regularization, temporal smoothing, realized-volatility supervision, CIR penalties, wider bounds, a new optimizer/objective, a new sector, ANN training, or inverse-model training.
 
-Candidate development dates are 01-Jul, 08-Jul, 15-Jul, 22-Jul, and 29-Jul. Only dates passing the existing official-NSE activity/support contract may enter the treatment. The ten parameters, pricer, bounds, constraints, optimizer, objective, quote rules, and shared-structure/date-specific-variance concept remain fixed; only temporal information density may change.
+Pre-existing dispersion/holdout rules remain unchanged. Any new minimum-date, minimum-row, boundary-pressure, or `RICHER_INFORMATION_*` decision thresholds must be predeclared and mentor-confirmed before results are seen.
 
-The study excludes priors, regularization, temporal smoothing, realized-volatility supervision, CIR penalties, wider bounds, a new optimizer, a new sector, ANN, and PINN.
+## 10. Allowed now
 
-### Decision rules
+Allowed before mentor approval:
 
-**Inherited/pre-existing rules:**
+- maintain and review documentation;
+- preserve and review overnight evidence;
+- quarantine non-canonical execution paths without changing the approved scientific method;
+- prepare the mentor handoff;
+- design non-binding software interfaces that do not freeze the representation; and
+- perform ordinary code/test hygiene that does not create new research results.
 
-- material-distance and complete-linkage cluster diagnostics remain unchanged;
-- strong dispersion reduction requires at least 25% reductions in both median and maximum pairwise separation and fewer clusters;
-- partial dispersion reduction requires at least 10% reductions in both separation metrics and no increase in clusters;
-- the existing 5% holdout-deterioration ceiling remains unchanged; and
-- positivity, Feller, correlation-disk, slow/fast-ordering, bounds, and all other hard validity constraints remain unchanged.
+## 11. Blocked work
 
-**PROPOSED — REQUIRES MENTOR CONFIRMATION:**
+Blocked pending the existing mentor/G2 decision:
 
-- a minimum eligible-date count;
-- a minimum selected-row count per date;
-- an acceptable boundary-hit threshold; and
-- the exact mapping from inherited dispersion/holdout evidence into any `RICHER_INFORMATION_*` label.
+- activating the richer NTPC information treatment;
+- freezing the final representation;
+- generating the final research dataset;
+- research ANN training;
+- research inverse/PINN training;
+- final G8 date selection; and
+- any methodology change not already approved.
 
-The repository does not currently provide approved numeric provenance for those four new rules. Their values must be predeclared and mentor-confirmed before results are seen; this document does not invent them or activate a new methodology.
+## 12. After mentor approval
 
-## 8. Allowed now and blocked work
-
-Allowed immediately under the existing contract: inspect repository evidence, maintain status/control documentation, prepare the mentor handoff, and perform normal documentation validation/review.
-
-Blocked pending mentor approval: the formal G2 safeguard as an active methodology change, the richer NTPC study, and any representation freeze based on it.
-
-Also blocked: final 10k generation, ANN, PINN, a new sector, changed bounds/methodology, priors, regularization, smoothing, realized-volatility supervision, CIR penalties, optimizer/objective changes, and final G8 date selection.
-
-## 9. AFTER MENTOR APPROVAL
-
-The next Codex milestone will:
+If the bounded G2 study is approved:
 
 1. freeze the approved protocol before seeing results;
-2. audit existing 08-Jul/29-Jul evidence and acquire only approved missing evidence if needed;
-3. retain only dates passing the existing support rules;
-4. run the same information-only treatment;
-5. analyze pricing, stability, and boundary pressure;
+2. audit existing development evidence and acquire only approved missing evidence;
+3. retain only dates satisfying the existing support rules;
+4. run the approved information-only treatment;
+5. analyze pricing, stability, identifiability, and boundary pressure;
 6. apply the predeclared rules;
-7. stop information-design work after this bounded study;
+7. stop information-design work after the bounded study;
 8. either recommend representation freeze or return to the mentor; and
-9. not automatically start ANN or PINN in the same experiment.
+9. do not automatically start ANN/inverse-model research training in the same experiment.
 
-## 10. Exact next action
+After G2 passes, formalize the representation interface, generate/validate the final synthetic dataset, freeze splits, and only then execute the fair traditional-calibration vs Model-1 ANN vs Model-2 comparison.
+
+## 13. Exact next scientific action
 
 `OBTAIN MENTOR DECISION`
 
-- If approved: launch the bounded richer NTPC milestone immediately.
+- If approved: launch the bounded richer NTPC information milestone under the frozen protocol.
 - If rejected: return to a mentor-approved formulation/G2 decision.
+
+Repository cleanup/documentation may proceed in parallel, but it must not be confused with scientific gate passage.
