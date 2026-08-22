@@ -106,8 +106,10 @@ Archive-2 `real_finetune` / `--continuous` real-market weight updating is outsid
 PRODUCTION_DH_PRICER = VALIDATED_AND_FROZEN
 CURRENT_108_GRID = REJECTED_AS_FINAL_UNCHANGED_GRID
 G2_MARKET_SUPPORTED_GEOMETRY = ESTABLISHED
-G2_FINAL_REPRESENTATION = NOT_FROZEN
-G2 = NOT_PASSED
+G2_PROTOCOL = SELF_GOVERNED_R2_VS_R3_EXECUTED_AND_SEALED
+G2_FINAL_REPRESENTATION = FROZEN_R2_RANKED_TWO_EXPIRY_CENTRAL_FIVE
+G2 = PASSED_REPRESENTATION_FROZEN_WITH_PRACTICAL_NON_IDENTIFIABILITY
+PRACTICAL_NON_IDENTIFIABILITY = RETAINED_RESEARCH_FINDING
 OPTIMIZER_ONLY_WORK = CLOSED
 NTPC_THREE_DATE_INFORMATION = MULTI_DATE_INSUFFICIENT
 GLOBAL_AMBIGUITY = ESTABLISHED
@@ -118,7 +120,11 @@ PINN_RESEARCH_MILESTONE = NOT_VALIDATED_OR_TRAINED
 FROZEN_REAL_MARKET_EVALUATION = NOT_STARTED
 ```
 
-The overnight run did not itself change any gate.
+The overnight run did not itself change any gate. The predeclared G2
+representation study, executed and sealed on 22 August 2026
+([G2_R2_R3_REPRESENTATION_SELECTION_RESULTS.md](G2_R2_R3_REPRESENTATION_SELECTION_RESULTS.md)),
+changed the G2 gates exactly once: representation frozen to R2 and G2 passed
+with practical non-identifiability retained.
 
 ## 8. Development-data registry and G8 protection
 
@@ -134,26 +140,20 @@ Final G8 dates must be later and untouched, reserved before ANN/inverse-model ev
 
 No final G8 dates are selected here.
 
-## 9. Self-governed G2 protocol
+## 9. Self-governed G2 protocol — executed and sealed
 
-The former mentor-approval blocker is retired. G2 is controlled by the predeclared [G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md](G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md).
+The former mentor-approval blocker is retired. G2 was controlled by the predeclared [G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md](G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md), which was executed exactly once on 22 August 2026 with all thresholds frozen before outcomes.
 
-G2 no longer requires proof of universal unique ten-parameter recovery. The overnight evidence shows that such a requirement would conflate representation selection with an intrinsic inverse-problem limitation.
-
-The bounded experiment compares:
+The bounded experiment compared:
 
 - **R2:** ranked two-expiry central-five calls/puts with actual maturity conditioning; and
 - **R3:** ranked three-expiry masked central-five calls/puts with actual maturity conditioning and explicit masking of unsupported/unusable slots.
 
-The unchanged 108-grid is not a candidate.
+The unchanged 108-grid was not a candidate.
 
-The study uses the five already-designated NTPC development dates for market support and a deterministic synthetic truth panel for identifiability. It runs identical multi-start calibration under 0%, 0.5%, 1%, and 2% noise and reports market support, Jacobian conditioning, parameter recovery, repricing, boundary pressure, clustering/dispersion, stability, and runtime.
+Execution used the five already-designated NTPC development dates for market support (R2 usable 78/100 slots; R3 78/150 — the third expiry rank contributed zero usable central-five slots on every date) and the frozen 20-truth synthetic panel for identifiability (1,920 calibration attempts: 20 truths x 2 representations x 4 noise levels x 12 starts; identical truths, common-slot perturbations, starts, optimizer, bounds, constraints, objective, and stopping rules across candidates).
 
-Thresholds and stopping rules are frozen before results. Do not tune them after seeing outcomes.
-
-## 10. G2 stopping rule
-
-The purpose of the next milestone is to **select and freeze a defensible representation**, not to continue representation hunting until apparent uniqueness is manufactured.
+## 10. G2 stopping rule — applied once
 
 At the end of the bounded R2/R3 experiment:
 
@@ -161,6 +161,14 @@ At the end of the bounded R2/R3 experiment:
 - otherwise freeze R2 as the simpler supported representation;
 - if practical non-identifiability remains at realistic noise, preserve it as a central research finding rather than reopening an unlimited search; and
 - reopen representation design only if both candidates fail the hard market-construction requirements.
+
+**Applied outcome (22 August 2026):** rule 2 fired — R3 showed strong clean-data improvement
+(median/max dispersion −35.0%/−30.8%, fewer clusters) that collapsed at every realistic
+noise level (classification NO_MATERIAL_IMPROVEMENT at 0.5%, 1%, and 2%), so **R2 is
+frozen**; both candidates remain practically non-identifiable at 0.5% noise (median
+best parameter RMSE 0.383/0.356 range-scaled vs the 0.05 material-displacement
+convention while repricing stays at noise scale), so the finding is retained. The
+holdout guardrail was NOT_APPLICABLE by predeclared determination.
 
 Valid completion labels are:
 
@@ -209,6 +217,14 @@ A genuine PDE-informed Model 3 may be added later as a separately justified regu
 
 ## 13. Exact next scientific action
 
-`EXECUTE SELF-GOVERNED G2 REPRESENTATION SELECTION`
+`FORMALIZE THE FROZEN R2 REPRESENTATION INTERFACE`
 
-Implement the frozen R2/R3 protocol, preserve all evidence, apply the predeclared stopping rule exactly once, and then either freeze the selected representation or record failure of both candidates' hard market-construction requirements.
+The predeclared G2 R2/R3 study was executed and sealed on 22 August 2026. The
+stopping rule froze **R2** (20 nominal slots with explicit real-market mask/missingness; synthetic panel complete by construction; never impute a missing real quote) after no strong/partial practical-information improvement
+for R3 at any realistic noise level, despite better local conditioning), with
+`PRACTICAL_NON_IDENTIFIABILITY = RETAINED_RESEARCH_FINDING`. The next action is
+to formalize the frozen R2 interface (explicit actual maturities and per-rank
+rate/carry conditioning, 20 central-five call/put slots), then regenerate and
+revalidate the final synthetic surface contract. Final 10k generation,
+ANN/Model-2 research training, final G8 date selection, and frozen real-market
+evaluation remain separately controlled milestones.

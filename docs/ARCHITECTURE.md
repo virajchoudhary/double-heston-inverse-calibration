@@ -28,11 +28,19 @@ That 108-feature representation is **not** the frozen final research representat
 ```text
 CURRENT_108_GRID = REJECTED_AS_FINAL_UNCHANGED_GRID
 G2_MARKET_SUPPORTED_GEOMETRY = ESTABLISHED
-G2_FINAL_REPRESENTATION = NOT_FROZEN
-G2 = NOT_PASSED
+G2_FINAL_REPRESENTATION = FROZEN_R2_RANKED_TWO_EXPIRY_CENTRAL_FIVE
+G2 = PASSED_REPRESENTATION_FROZEN_WITH_PRACTICAL_NON_IDENTIFIABILITY
 ```
 
-The model layer already derives its input size from the dataset rather than treating 108 as an immutable neural-network constant. A formal representation interface should be completed before final synthetic generation so the mentor-approved G2 representation can be substituted without changing the canonical parameter or pricing contracts.
+The model layer already derives its input size from the dataset rather than treating 108 as an immutable neural-network constant. The frozen G2 representation (selected 22 August 2026 by the predeclared
+self-governed R2-vs-R3 protocol) is **R2**: first two eligible listed expiry
+ranks x central-five log-moneyness x calls/puts = 20 NOMINAL spot-normalized
+price slots with explicit mask/missingness for unsupported or unusable
+real-market observations (never imputed with model prices; the synthetic G2
+panel is complete by construction), with actual time-to-maturity supplied
+explicitly and existing per-rank rate/carry conditioning. A formal interface for this frozen contract should be
+completed before final synthetic generation without changing the canonical
+parameter or pricing contracts.
 
 Complete surfaces must remain together in exactly one train, validation, or test split.
 

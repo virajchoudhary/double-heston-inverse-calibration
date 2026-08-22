@@ -1,0 +1,197 @@
+{
+  "all_runs_have_diagnostics": true,
+  "clean_best_repricing_by_cell": {
+    "case_1|R2|0.0": 1.0612215974423202e-08,
+    "case_1|R2|0.005": 0.0003099408323423561,
+    "case_1|R3|0.0": 8.007446781920648e-08,
+    "case_1|R3|0.005": 0.0002922237696864251,
+    "case_2|R2|0.0": 3.588377107435364e-06,
+    "case_2|R2|0.005": 0.0003745362621015337,
+    "case_2|R3|0.0": 2.62744046044378e-06,
+    "case_2|R3|0.005": 0.0003691991419928671
+  },
+  "market_construction_date": "2026-07-15",
+  "market_summary": {
+    "mask_count": 11,
+    "mask_rate": 0.36666666666666664,
+    "r2_completeness": 0.95,
+    "r2_usable": 19,
+    "r3_completeness": 0.6333333333333333,
+    "r3_usable": 19,
+    "usable_slots": 19
+  },
+  "noise_levels": [
+    0.0,
+    0.005
+  ],
+  "representations": [
+    "R2",
+    "R3"
+  ],
+  "run_count": 16,
+  "runtime_seconds": 132.2190838000024,
+  "slot_table_head": [
+    {
+      "date_id": "2026-07-15",
+      "dte": 13,
+      "expiry_date": "2026-07-28",
+      "expiry_rank": 1,
+      "failure_reason": "QUOTE_SELECTION_FAILURE_NO_TARGET_WITHIN_GATE",
+      "log_moneyness_actual": NaN,
+      "observed_price": NaN,
+      "option_type": "call",
+      "strike": NaN,
+      "target_log_moneyness": -0.1,
+      "usable": false
+    },
+    {
+      "date_id": "2026-07-15",
+      "dte": 13,
+      "expiry_date": "2026-07-28",
+      "expiry_rank": 1,
+      "failure_reason": "",
+      "log_moneyness_actual": -0.04256592753018137,
+      "observed_price": 16.5,
+      "option_type": "call",
+      "strike": 330.0,
+      "target_log_moneyness": -0.05,
+      "usable": true
+    },
+    {
+      "date_id": "2026-07-15",
+      "dte": 13,
+      "expiry_date": "2026-07-28",
+      "expiry_rank": 1,
+      "failure_reason": "",
+      "log_moneyness_actual": 0.0018858350406525156,
+      "observed_price": 5.7,
+      "option_type": "call",
+      "strike": 345.0,
+      "target_log_moneyness": 0.0,
+      "usable": true
+    },
+    {
+      "date_id": "2026-07-15",
+      "dte": 13,
+      "expiry_date": "2026-07-28",
+      "expiry_rank": 1,
+      "failure_reason": "",
+      "log_moneyness_actual": 0.05136589230402208,
+      "observed_price": 1.0,
+      "option_type": "call",
+      "strike": 362.5,
+      "target_log_moneyness": 0.05,
+      "usable": true
+    },
+    {
+      "date_id": "2026-07-15",
+      "dte": 13,
+      "expiry_date": "2026-07-28",
+      "expiry_rank": 1,
+      "failure_reason": "",
+      "log_moneyness_actual": 0.09851267072972414,
+      "observed_price": 0.3,
+      "option_type": "call",
+      "strike": 380.0,
+      "target_log_moneyness": 0.1,
+      "usable": true
+    },
+    {
+      "date_id": "2026-07-15",
+      "dte": 13,
+      "expiry_date": "2026-07-28",
+      "expiry_rank": 1,
+      "failure_reason": "",
+      "log_moneyness_actual": -0.08908594316507427,
+      "observed_price": 0.95,
+      "option_type": "put",
+      "strike": 315.0,
+      "target_log_moneyness": -0.1,
+      "usable": true
+    },
+    {
+      "date_id": "2026-07-15",
+      "dte": 13,
+      "expiry_date": "2026-07-28",
+      "expiry_rank": 1,
+      "failure_reason": "",
+      "log_moneyness_actual": -0.05017052691540071,
+      "observed_price": 0.55,
+      "option_type": "put",
+      "strike": 327.5,
+      "target_log_moneyness": -0.05,
+      "usable": true
+    },
+    {
+      "date_id": "2026-07-15",
+      "dte": 13,
+      "expiry_date": "2026-07-28",
+      "expiry_rank": 1,
+      "failure_reason": "",
+      "log_moneyness_actual": 0.0018858350406525156,
+      "observed_price": 5.15,
+      "option_type": "put",
+      "strike": 345.0,
+      "target_log_moneyness": 0.0,
+      "usable": true
+    },
+    {
+      "date_id": "2026-07-15",
+      "dte": 13,
+      "expiry_date": "2026-07-28",
+      "expiry_rank": 1,
+      "failure_reason": "",
+      "log_moneyness_actual": 0.04444544945944838,
+      "observed_price": 15.35,
+      "option_type": "put",
+      "strike": 360.0,
+      "target_log_moneyness": 0.05,
+      "usable": true
+    },
+    {
+      "date_id": "2026-07-15",
+      "dte": 13,
+      "expiry_date": "2026-07-28",
+      "expiry_rank": 1,
+      "failure_reason": "",
+      "log_moneyness_actual": 0.09851267072972414,
+      "observed_price": 35.1,
+      "option_type": "put",
+      "strike": 380.0,
+      "target_log_moneyness": 0.1,
+      "usable": true
+    },
+    {
+      "date_id": "2026-07-15",
+      "dte": 41,
+      "expiry_date": "2026-08-25",
+      "expiry_rank": 2,
+      "failure_reason": "",
+      "log_moneyness_actual": -0.07333758619693505,
+      "observed_price": 30.0,
+      "option_type": "call",
+      "strike": 320.0,
+      "target_log_moneyness": -0.1,
+      "usable": true
+    },
+    {
+      "date_id": "2026-07-15",
+      "dte": 41,
+      "expiry_date": "2026-08-25",
+      "expiry_rank": 2,
+      "failure_reason": "",
+      "log_moneyness_actual": -0.04256592753018137,
+      "observed_price": 20.0,
+      "option_type": "call",
+      "strike": 330.0,
+      "target_log_moneyness": -0.05,
+      "usable": true
+    }
+  ],
+  "smoke_id": "G2_R2_R3_SMOKE",
+  "starts_used": 2,
+  "truths": [
+    "case_1",
+    "case_2"
+  ]
+}

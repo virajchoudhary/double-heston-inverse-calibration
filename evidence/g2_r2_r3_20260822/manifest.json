@@ -1,0 +1,175 @@
+{
+  "adversarial_audit_20260822": {
+    "audits": [
+      "representation-contract + leakage audit",
+      "decision-rule fidelity audit",
+      "determinism + seed audit"
+    ],
+    "material_findings_and_resolutions": [
+      {
+        "finding": "clusters._scaled_matrix read scaled_<param> but run records emit scaled_error_<param>; diagnostics would crash before any decision output",
+        "resolution": "column-name fix (pairwise distances unchanged: displacements share the per-truth offset); integration test added (dispersion_record on real fit_cell output); 19/19 tests pass"
+      },
+      {
+        "finding": "rule-1 structural tension: R3 freezable on synthetic improvement although third-expiry slots are 100% masked on all five development dates",
+        "resolution": "NOT changed: the freeze rule and hard requirements are predeclared and applied exactly as frozen; the masking tension is reported as a central limitation in the final report; protocol section 3 explicitly defines R3 as a maximum-size masked representation"
+      }
+    ],
+    "minor_resolutions": [
+      "rate-literal fidelity assertion added against committed hash-sealed RATE_SOURCES + future-observation guard",
+      "decision evaluator now takes per-representation non-identifiability records (no caller pre-guess of winner)",
+      "stale single-threaded partial run log preserved under tmp/ at merge time",
+      "NO_MATERIEL typo fixed (string value only)",
+      "merge conflict comparison now ignores runtime_seconds and is NaN-safe (JSON canonical form)",
+      "matrix driver committed; scipy 1.16.2 pin documented as load-bearing for the seed->stream mapping of the truth panel draw"
+    ],
+    "note": "no frozen threshold, seed, band, or rule order was modified after outcomes",
+    "verdicts": [
+      "MATERIAL_ISSUES_FOUND (decision-stage)",
+      "MATERIAL_ISSUES_FOUND (pipeline integrity)",
+      "PASS_WITH_MINOR_ISSUES (bit-identical reproduction incl. live shard evidence)"
+    ]
+  },
+  "analysis_id": "G2_R2_R3_REPRESENTATION_SELECTION",
+  "decision_summary": {
+    "g2_label": "G2 = PASSED_REPRESENTATION_FROZEN_WITH_PRACTICAL_NON_IDENTIFIABILITY",
+    "practical_non_identifiability_retained": true,
+    "rule_applied": "rule_2_r2_simpler_market_supported_representation",
+    "selected_representation": "R2"
+  },
+  "environment": {
+    "cuda_available": "False",
+    "git_version": "git version 2.51.0.windows.1",
+    "numpy": "2.2.6",
+    "pandas": "2.3.2",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.4 (tags/v3.13.4:8a526ec, Jun  3 2025, 17:46:04) [MSC v.1943 64 bit (AMD64)]",
+    "scipy": "1.16.2",
+    "torch": "2.11.0+cpu"
+  },
+  "environment_note": "scipy 1.16.2 pin is load-bearing: qmc.LatinHypercube(seed=...) stream identity is version-sensitive; the committed truth_panel.csv is the byte-exact frozen artifact",
+  "execution_branch": "research/g2-r2-r3-selection",
+  "expected_starting_main": "c64aaaf54f72a48768316c582d312dd8cf27a089",
+  "final_claims_review": {
+    "method": "independent recomputation of every headline number from raw evidence (slots, run records, Jacobians, dispersion records)",
+    "minor_precision_fixes_applied": [
+      "R2 median runtime 10.2s",
+      "dispersion range 0.45-1.15",
+      "displacement range 0.34-0.48",
+      "status-4 tally",
+      "carry-forward dates phrasing",
+      "pre-matrix gate count",
+      "primary-level predeclaration anchor footnote"
+    ],
+    "verdict": "CLAIMS_VERIFIED"
+  },
+  "final_sha": "7b7f3ab9c269e0783588f08c4defae29cf2ff988",
+  "hard_bounds": {
+    "kappa_fast": [
+      0.1,
+      12.0
+    ],
+    "kappa_slow": [
+      0.05,
+      3.0
+    ],
+    "rho_fast": [
+      -0.95,
+      0.95
+    ],
+    "rho_slow": [
+      -0.95,
+      0.95
+    ],
+    "sigma_fast": [
+      0.005,
+      1.5
+    ],
+    "sigma_slow": [
+      0.005,
+      1.0
+    ],
+    "theta_fast": [
+      0.002,
+      0.2
+    ],
+    "theta_slow": [
+      0.005,
+      0.25
+    ],
+    "v0_fast": [
+      0.002,
+      0.25
+    ],
+    "v0_slow": [
+      0.005,
+      0.3
+    ]
+  },
+  "harness_ready": {
+    "fast_pricer_validation": "evidence/g2_r2_r3_20260822/fast_pricer_validation.json - worst max-abs diff 0.0 vs production across 20 truths x R2/R3 (tolerance 1e-10)",
+    "requirements_covered": 17,
+    "smoke": "evidence/g2_r2_r3_20260822/smoke.json (2 truths x R2/R3 x {0%,0.5%} x 2 starts, market construction on all five dates)",
+    "smoke_market_note": "2026-07-15: R2 19/20 usable, R3 19/30 (third expiry contributes zero usable slots) - matches prior committed support inventory for the first two ranks",
+    "tests": "tests/test_g2_r2r3_harness.py - 18 passed"
+  },
+  "market_support": {
+    "geometry_assignment": "truth_index mod 5 over the five profiles in protocol date order, frozen before the matrix",
+    "headline": "R2 usable 78/100 (0.78); R3 usable 78/150 (0.52); third expiry rank contributes zero usable central-five slots on all five dates (far-month NTPC chains fully inactive under the existing activity contract); R2 per-date counts reproduce the committed three-date inventory exactly (11/19/18 of 20)",
+    "profiles": "evidence/g2_r2_r3_20260822/market_profiles.json",
+    "slots": "evidence/g2_r2_r3_20260822/market_support_slots.csv",
+    "summary": "evidence/g2_r2_r3_20260822/market_support_summary.json"
+  },
+  "matrix_plan": {
+    "noise_levels": 4,
+    "representations": [
+      "R2",
+      "R3"
+    ],
+    "starts": 12,
+    "total_calibration_attempts": 1920,
+    "truths": 20
+  },
+  "noise_levels": [
+    0.0,
+    0.005,
+    0.01,
+    0.02
+  ],
+  "notes": [
+    "Truth panel frozen before any R2/R3 outcome computation.",
+    "All five NTPC development dates remain excluded from final G8."
+  ],
+  "phase": "SEALED",
+  "protocol": "docs/G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md",
+  "randomization": {
+    "multistart_seed": 20260823,
+    "noise_base_seed": 20260824,
+    "truth_selection_seed": 20260822
+  },
+  "start_count": 12,
+  "truth_panel": {
+    "additional_draw_count": 64,
+    "additional_truths_procedure": "first 16 accepted rows (existing ordinary-training margin gate) of a single interior_train LHS draw of 64 rows with seed 20260822 via src/audit_reviewed_sampling.sample_distribution",
+    "panel_csv": "evidence/g2_r2_r3_20260822/truth_panel.csv",
+    "parameter_order": [
+      "kappa_slow",
+      "theta_slow",
+      "sigma_slow",
+      "rho_slow",
+      "v0_slow",
+      "kappa_fast",
+      "theta_fast",
+      "sigma_fast",
+      "rho_fast",
+      "v0_fast"
+    ],
+    "size": 20,
+    "standing_cases": [
+      "case_1",
+      "case_2",
+      "case_3",
+      "case_4"
+    ]
+  }
+}
