@@ -1,8 +1,10 @@
 # Overnight Swarm Decision Record — 22 August 2026
 
-Status: CONSOLIDATED FOR HUMAN REVIEW
+Status: CONSOLIDATED AND PRESERVED
 
-This document records the durable project conclusions from the three-node overnight diagnostic run on 22 August 2026. It does not pass G2, freeze a final representation, authorize the final 10k dataset, authorize ANN/PINN research training, or alter the mentor-controlled research contract.
+This document records the durable project conclusions from the three-node overnight diagnostic run on 22 August 2026. The overnight run itself did not pass G2, freeze a final representation, authorize the final 10k dataset, or run ANN/PINN research training.
+
+**Post-swarm governance amendment, 22 August 2026:** the earlier mentor-approval dependency has been retired by project decision. The active G2 control is now the predeclared [G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md](G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md). This amendment changes the approval workflow, not the overnight evidence below.
 
 ## Provenance
 
@@ -67,9 +69,9 @@ Recommended experimental taxonomy:
 
 - Model 1: ordinary ANN inverse model;
 - Model 2: canonical constraint + differentiable-repricing informed inverse model;
-- Model 3: genuine network-side PDE-informed model, only if separately approved and correctly constructed.
+- Model 3: genuine network-side PDE-informed model, only if separately justified and correctly constructed.
 
-Model 3 is not authorized by this record.
+Model 3 is optional and is not a blocker for the primary comparison.
 
 ## 3. Archive-2 PDE-loss defect
 
@@ -115,7 +117,7 @@ Canonical disposition:
 
 Historical smoke evidence remains evidence and must not be deleted.
 
-A non-primary real-data adaptation ablation may be considered only after explicit human/mentor approval and must never be confused with the primary experiment.
+Any non-primary real-data adaptation ablation must be explicitly isolated, disabled by default, and never confused with the primary experiment.
 
 ## 6. Constraint policy
 
@@ -144,21 +146,21 @@ PINN_RESEARCH_TRAINING = NOT_STARTED
 FROZEN_REAL_MARKET_EVALUATION = NOT_STARTED
 ```
 
-The current fixed-size model code already derives input size from data, which reduces architectural coupling to 108 features. Before final synthetic generation, formalize a representation interface so a mentor-approved final surface contract can be substituted without redesigning the model stack.
+The current fixed-size model code already derives input size from data, which reduces architectural coupling to 108 features. Before final synthetic generation, formalize the representation interface after G2 selects the final surface contract.
 
 Archive-2's variable-length representation may inform that interface, but it is not adopted wholesale.
 
-## 8. Immediate project sequence
+## 8. Updated immediate project sequence
 
 Do the following in order:
 
-1. preserve the overnight evidence and archive refs;
-2. reconcile canonical documentation and terminology;
-3. quarantine Archive-2 real-market weight-update paths from canonical entry points;
-4. obtain the existing mentor decision on the G2 safeguard and bounded richer NTPC information study;
-5. execute only the approved bounded information study if approved;
-6. freeze the final representation only after the G2 decision criteria are satisfied;
-7. formalize the representation interface;
+1. preserve the overnight evidence and archive refs — complete;
+2. reconcile canonical documentation and terminology — complete;
+3. quarantine Archive-2 real-market weight-update paths from canonical entry points — tracked separately;
+4. execute the predeclared self-governed R2-vs-R3 G2 representation protocol;
+5. apply the frozen stopping rule once and freeze the selected representation;
+6. retain any remaining practical non-identifiability as a research result rather than reopening unlimited representation search;
+7. formalize the selected representation interface;
 8. generate and validate the final synthetic dataset only after representation freeze;
 9. run the fair traditional-calibration vs Model-1 ANN vs Model-2 comparison under identical splits and metrics;
 10. perform frozen, untouched real-market evaluation; and
@@ -178,15 +180,17 @@ Future comparisons must report at least:
 
 No model may be declared superior from repricing RMSE alone.
 
-## 10. Decisions still requiring mentor or explicit research approval
+## 10. Active research decisions
 
-The following remain approval-sensitive:
+The following are now controlled internally by predeclared repository protocols rather than external approval:
 
-1. the formal G2 safeguard and bounded richer NTPC information study;
-2. the final representation / feature contract;
-3. any change to reviewed parameter sampling policy;
-4. whether a genuine Model-3 PDE-informed experiment enters the research plan; and
-5. any real-market weight-update ablation.
+1. G2 representation selection — controlled by `G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md`;
+2. final representation freeze — determined by that protocol's stopping rule;
+3. reviewed parameter sampling changes — require a separate predeclared decision record before execution;
+4. Model-3 PDE-informed work — optional future extension, not a blocker; and
+5. any real-market weight-update ablation — non-primary only, explicitly isolated and disabled by default.
+
+The project team may consult mentors/advisors, but no scientific milestone waits solely for external approval unless the team explicitly records a new dependency.
 
 ## 11. Preservation rule
 

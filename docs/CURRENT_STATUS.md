@@ -2,7 +2,7 @@
 
 Status date: 22 August 2026
 
-> Canonical control and approval boundaries are maintained in [RESEARCH_CONTROL_AND_CURRENT_STATUS.md](RESEARCH_CONTROL_AND_CURRENT_STATUS.md). The durable 22 August three-node audit conclusions are recorded in [OVERNIGHT_SWARM_2026-08-22_DECISION_RECORD.md](OVERNIGHT_SWARM_2026-08-22_DECISION_RECORD.md). Earlier detailed status remains preserved in Git history and the experiment-specific documents under `docs/`.
+> Canonical research control is maintained in [RESEARCH_CONTROL_AND_CURRENT_STATUS.md](RESEARCH_CONTROL_AND_CURRENT_STATUS.md). The durable 22 August three-node audit conclusions are recorded in [OVERNIGHT_SWARM_2026-08-22_DECISION_RECORD.md](OVERNIGHT_SWARM_2026-08-22_DECISION_RECORD.md). The active bounded representation-selection experiment is defined in [G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md](G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md). Earlier detailed status remains preserved in Git history and the experiment-specific documents under `docs/`.
 
 ## Approved research objective
 
@@ -12,7 +12,9 @@ Physics-Informed Inverse Calibration of the Canonical Double Heston Model for St
 
 The canonical Double Heston pricing/calibration foundation remains validated. The main project bottleneck is representation / information / practical identifiability, not pricing-engine correctness.
 
-The 22 August three-node diagnostic swarm completed architecture, identifiability/calibration, and PDE/physics audits without changing `main`, passing G2, generating the final dataset, or running research-scale ANN/PINN training.
+The 22 August three-node diagnostic swarm completed architecture, identifiability/calibration, and PDE/physics audits without changing the scientific gates, generating the final dataset, or running research-scale ANN/PINN training.
+
+The project is no longer waiting for external mentor approval to continue. G2 is now governed by a frozen, self-declared R2-vs-R3 protocol. The project team will run that experiment once, apply its predeclared stopping rule, freeze a representation, and carry any remaining practical non-identifiability forward as an explicit research finding.
 
 ### Current status table
 
@@ -28,6 +30,7 @@ The 22 August three-node diagnostic swarm completed architecture, identifiabilit
 | Selected primary sector set | NTPC, CIPLA, INFY, HDFCBANK |
 | G2 market-supported geometry | Established |
 | Current 108-input grid | Rejected as final unchanged representation |
+| G2 candidate protocol | Self-governed R2 vs R3, predeclared |
 | Final G2 representation | Not frozen |
 | G2 | NOT_PASSED |
 | Global ten-parameter ambiguity | Established |
@@ -70,7 +73,9 @@ Recommended comparison taxonomy:
 
 - Model 1 — ordinary ANN inverse model;
 - Model 2 — canonical constraint + differentiable-repricing informed inverse model;
-- Model 3 — optional future genuine network-side PDE-informed model, only after separate approval.
+- Model 3 — optional future genuine network-side PDE-informed model.
+
+Model 3 is not a blocker for the primary study.
 
 ## Identifiability status
 
@@ -102,12 +107,28 @@ Do not import the current Archive-2 PDE loss.
 
 A correctly wired residual on an already accurate model pricer is approximately machine-zero and is not an independent source of parameter-identification information. A future Model 3 would require a different network-side formulation and a research question centered on regularization/structural validity rather than assumed uniqueness.
 
+## Active G2 protocol
+
+G2 is now a bounded representation-selection milestone, not an open-ended uniqueness search.
+
+Candidates:
+
+- **R2:** two eligible listed expiry ranks x central five log-moneyness targets x calls/puts, with actual maturity conditioning;
+- **R3:** three eligible listed expiry ranks x central five x calls/puts, with explicit masking for unsupported/unusable slots and actual maturity conditioning.
+
+The unchanged 108-grid is excluded.
+
+The experiment uses the five existing NTPC development dates for market support and a deterministic synthetic truth panel for identifiability. It runs identical 12-start calibration at 0%, 0.5%, 1%, and 2% noise and reports market support, local sensitivity, global dispersion/clusters, parameter recovery, repricing, boundary pressure, stability, and runtime.
+
+If practical non-identifiability remains after representation selection, it is retained as a research result rather than used as a reason to keep changing the representation indefinitely.
+
 ## Current gate summary
 
 ```text
 PRODUCTION_DH_PRICER = VALIDATED_AND_FROZEN
 CURRENT_108_GRID = REJECTED_AS_FINAL_UNCHANGED_GRID
 G2_MARKET_SUPPORTED_GEOMETRY = ESTABLISHED
+G2_PROTOCOL = SELF_GOVERNED_R2_VS_R3_PREDECLARED
 G2_FINAL_REPRESENTATION = NOT_FROZEN
 G2 = NOT_PASSED
 GLOBAL_AMBIGUITY = ESTABLISHED
@@ -118,33 +139,8 @@ PINN_RESEARCH_MILESTONE = NOT_VALIDATED_OR_TRAINED
 FROZEN_REAL_MARKET_EVALUATION = NOT_STARTED
 ```
 
-## Immediate next scientific action
+## Exact next action
 
-`OBTAIN MENTOR DECISION`
+`EXECUTE SELF-GOVERNED G2 REPRESENTATION SELECTION`
 
-The existing mentor-controlled G2 safeguard and bounded richer NTPC information study remain the immediate scientific blocker.
-
-Until that decision:
-
-- do not freeze a final representation;
-- do not generate the final 10k dataset;
-- do not begin research ANN/Model-2 training;
-- do not choose final G8 dates; and
-- do not introduce new priors, regularizers, optimizers, objectives, bounds, sectors, or other methodology changes.
-
-Repository cleanup, documentation reconciliation, evidence preservation, and quarantine of non-canonical execution paths may proceed without implying scientific gate passage.
-
-## Post-G2 sequence
-
-After mentor approval and a successful G2 decision:
-
-1. freeze the final representation;
-2. formalize the representation interface;
-3. freeze final parameter sampling and data-generation protocol;
-4. generate and validate the final synthetic dataset;
-5. freeze train/validation/test splits;
-6. run traditional calibration vs Model 1 vs Model 2 under a common evaluation contract;
-7. evaluate frozen models on untouched real-market data; and
-8. consider Model 3 only as a separately approved extension.
-
-See [NEXT_STEPS.md](NEXT_STEPS.md) for the ordered execution plan.
+Do not generate the final 10k or start research ANN/Model-2 training until the R2/R3 experiment has selected and frozen the final representation.

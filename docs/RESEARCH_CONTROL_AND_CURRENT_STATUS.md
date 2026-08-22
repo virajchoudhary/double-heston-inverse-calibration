@@ -2,23 +2,23 @@
 
 Status date: 22 August 2026
 
-This is the canonical repository control/status document for the next scientific decision. It records approved constraints and validated evidence; it does not itself approve or execute a new treatment.
+This is the canonical repository control/status document for the next scientific milestone. It records fixed contracts, validated evidence, and the self-governed G2 protocol that now controls representation selection.
 
-The detailed 13 August 2026 state remains preserved in Git history and in the experiment-specific documents linked throughout `docs/`. The 22 August three-node diagnostic consolidation is recorded in [OVERNIGHT_SWARM_2026-08-22_DECISION_RECORD.md](OVERNIGHT_SWARM_2026-08-22_DECISION_RECORD.md).
+The detailed 13 August 2026 state remains preserved in Git history and in the experiment-specific documents linked throughout `docs/`. The 22 August three-node diagnostic consolidation is recorded in [OVERNIGHT_SWARM_2026-08-22_DECISION_RECORD.md](OVERNIGHT_SWARM_2026-08-22_DECISION_RECORD.md). The bounded representation-selection protocol is [G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md](G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md).
 
 ## 1. Source-of-truth hierarchy
 
-1. **Canonical design — v2.0.** The mentor-updated research design remains the canonical scientific design.
-2. **Controlled update — v2.1.** A status/update may record results or proposals, but a proposal is not approved merely because it appears in repository documentation.
-3. **Implementation truth — this repository.** Code, configurations, manifests, persisted evidence, tests, Git history, hashes, and approved merge history determine what was actually implemented and validated.
+1. **Scientific objective and fixed contracts.** The project objective, canonical ten-parameter model, pricing engine, structural constraints, synthetic-truth recovery policy, and frozen real-market evaluation policy remain fixed unless a documented research decision changes them.
+2. **Predeclared experiment protocols.** New experiments must be specified before their outcome is observed; thresholds and stopping rules may not be changed post hoc to manufacture a preferred result.
+3. **Implementation truth — this repository.** Code, configurations, manifests, persisted evidence, tests, Git history, hashes, and merge history determine what was actually implemented and validated.
 
-The external v2.0/v2.1 documents are not tracked here. This hierarchy is a project-control rule, not a claim that those files exist in the repository.
+The project team owns technical research design. External mentor approval is not a prerequisite for routine continuation; mentor/advisor input may still be sought when useful, but the repository must not block progress solely waiting for it.
 
-## 2. Fixed approved research contract
+## 2. Fixed research contract
 
-**Project title / repository-approved objective:** Physics-Informed Inverse Calibration of the Canonical Double Heston Model for Stable Option-Surface Parameter Recovery.
+**Project objective:** Physics-Informed Inverse Calibration of the Canonical Double Heston Model for Stable Option-Surface Parameter Recovery.
 
-**Operational research question:** Can the canonical ten-parameter Double Heston inverse problem recover stable parameters from a market-supported option-surface representation, and how do traditional calibration, an ordinary ANN, and a physics-informed inverse method compare under one frozen protocol?
+**Operational research question:** How do traditional numerical calibration, an ordinary ANN, and a constraint/physics-informed inverse method compare on the canonical ten-parameter Double Heston inverse problem under one frozen representation and evaluation protocol, especially when the inverse problem is practically non-identifiable at realistic market tolerance?
 
 Canonical target order:
 
@@ -33,7 +33,7 @@ Canonical target order:
 9. `rho_fast`
 10. `v0_fast`
 
-The approved contract preserves positivity, strict factorwise Feller conditions, the declared joint correlation disk, slow/fast ordering, and the frozen production Double Heston pricing engine. It preserves the Black-Scholes -> Standard Heston -> Double Heston comparison and the traditional calibration -> ANN -> physics-informed inverse comparison.
+The contract preserves positivity, strict factorwise Feller conditions, the declared joint correlation disk, slow/fast ordering, and the frozen production Double Heston pricing engine. It preserves the Black-Scholes -> Standard Heston -> Double Heston comparison and the traditional calibration -> ANN -> informed-inverse comparison.
 
 Synthetic truth remains the basis for parameter-recovery claims. Real-market fitted parameters are not ground truth. Primary ANN/inverse-model learning remains synthetic; primary real-market neural-weight updating is prohibited. Sector separation and frozen, unseen real-market final evaluation remain mandatory.
 
@@ -68,7 +68,7 @@ Consequently:
 
 ## 5. Current neural / PINN status
 
-The repository now contains implemented inverse-model infrastructure, but no validated research-scale PINN result.
+The repository contains implemented inverse-model infrastructure, but no validated research-scale PINN result.
 
 Use these two axes:
 
@@ -81,7 +81,7 @@ The current canonical inverse model is accurately described as **constraint-info
 
 Archive-2's current PDE loss must not be adopted into the canonical path. Node A and Node C independently reproduced an autograd slice-view defect that silently removes the variance-factor derivative terms from the implemented residual. Even with correct derivative wiring, a pricer-side residual on an already accurate model pricer is approximately machine-zero and is not an independent parameter-identification signal.
 
-A genuine network-side PDE-informed Model 3 is a separate future research decision, not an approved current milestone.
+A genuine network-side PDE-informed Model 3 is optional future work, not a blocker for the primary study.
 
 ## 6. Architecture control
 
@@ -118,7 +118,7 @@ PINN_RESEARCH_MILESTONE = NOT_VALIDATED_OR_TRAINED
 FROZEN_REAL_MARKET_EVALUATION = NOT_STARTED
 ```
 
-The overnight run did not change any gate.
+The overnight run did not itself change any gate.
 
 ## 8. Development-data registry and G8 protection
 
@@ -134,65 +134,81 @@ Final G8 dates must be later and untouched, reserved before ANN/inverse-model ev
 
 No final G8 dates are selected here.
 
-## 9. Approval-sensitive G2 proposal
+## 9. Self-governed G2 protocol
 
-The previously prepared mentor decision remains the immediate scientific blocker.
+The former mentor-approval blocker is retired. G2 is controlled by the predeclared [G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md](G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md).
 
-Before final representation freeze, require both:
+G2 no longer requires proof of universal unique ten-parameter recovery. The overnight evidence shows that such a requirement would conflate representation selection with an intrinsic inverse-problem limitation.
 
-- a market-supported representation; and
-- sufficient ten-parameter informativeness/stability under the approved tolerance/noise interpretation;
+The bounded experiment compares:
 
-or an explicitly mentor-approved revised formulation.
+- **R2:** ranked two-expiry central-five calls/puts with actual maturity conditioning; and
+- **R3:** ranked three-expiry masked central-five calls/puts with actual maturity conditioning and explicit masking of unsupported/unusable slots.
 
-The proposed bounded richer NTPC information study remains mentor-controlled. It must not silently introduce priors, regularization, temporal smoothing, realized-volatility supervision, CIR penalties, wider bounds, a new optimizer/objective, a new sector, ANN training, or inverse-model training.
+The unchanged 108-grid is not a candidate.
 
-Pre-existing dispersion/holdout rules remain unchanged. Any new minimum-date, minimum-row, boundary-pressure, or `RICHER_INFORMATION_*` decision thresholds must be predeclared and mentor-confirmed before results are seen.
+The study uses the five already-designated NTPC development dates for market support and a deterministic synthetic truth panel for identifiability. It runs identical multi-start calibration under 0%, 0.5%, 1%, and 2% noise and reports market support, Jacobian conditioning, parameter recovery, repricing, boundary pressure, clustering/dispersion, stability, and runtime.
 
-## 10. Allowed now
+Thresholds and stopping rules are frozen before results. Do not tune them after seeing outcomes.
 
-Allowed before mentor approval:
+## 10. G2 stopping rule
 
-- maintain and review documentation;
-- preserve and review overnight evidence;
-- quarantine non-canonical execution paths without changing the approved scientific method;
-- prepare the mentor handoff;
-- design non-binding software interfaces that do not freeze the representation; and
-- perform ordinary code/test hygiene that does not create new research results.
+The purpose of the next milestone is to **select and freeze a defensible representation**, not to continue representation hunting until apparent uniqueness is manufactured.
 
-## 11. Blocked work
+At the end of the bounded R2/R3 experiment:
 
-Blocked pending the existing mentor/G2 decision:
+- freeze R3 if it is market-supported under masking and shows the predeclared strong/partial information improvement over R2 without violating the existing holdout guardrail;
+- otherwise freeze R2 as the simpler supported representation;
+- if practical non-identifiability remains at realistic noise, preserve it as a central research finding rather than reopening an unlimited search; and
+- reopen representation design only if both candidates fail the hard market-construction requirements.
 
-- activating the richer NTPC information treatment;
-- freezing the final representation;
-- generating the final research dataset;
-- research ANN training;
-- research inverse/PINN training;
-- final G8 date selection; and
-- any methodology change not already approved.
+Valid completion labels are:
 
-## 12. After mentor approval
+```text
+G2 = PASSED_REPRESENTATION_FROZEN_IDENTIFIABILITY_ACCEPTABLE
+G2 = PASSED_REPRESENTATION_FROZEN_WITH_PRACTICAL_NON_IDENTIFIABILITY
+G2 = FAILED_MARKET_CONSTRUCTION_REQUIREMENTS
+```
 
-If the bounded G2 study is approved:
+The second label is a legitimate pass state for moving into the primary method comparison.
 
-1. freeze the approved protocol before seeing results;
-2. audit existing development evidence and acquire only approved missing evidence;
-3. retain only dates satisfying the existing support rules;
-4. run the approved information-only treatment;
-5. analyze pricing, stability, identifiability, and boundary pressure;
-6. apply the predeclared rules;
-7. stop information-design work after the bounded study;
-8. either recommend representation freeze or return to the mentor; and
-9. do not automatically start ANN/inverse-model research training in the same experiment.
+## 11. Allowed now
 
-After G2 passes, formalize the representation interface, generate/validate the final synthetic dataset, freeze splits, and only then execute the fair traditional-calibration vs Model-1 ANN vs Model-2 comparison.
+Allowed immediately:
+
+- implement and run the frozen G2 R2/R3 protocol;
+- maintain and review documentation/evidence;
+- quarantine non-canonical real-market training paths;
+- build non-binding representation plumbing required to execute R2/R3 without freezing the winner early;
+- run focused deterministic tests/diagnostics required by the G2 protocol; and
+- preserve all failures and negative findings.
+
+Still prohibited before G2 representation freeze:
+
+- final 10k generation;
+- research ANN/Model-2 training;
+- final G8 date selection;
+- real-market neural weight updating; and
+- post-hoc methodology changes designed to improve the G2 outcome.
+
+## 12. After G2
+
+After the bounded G2 experiment selects and freezes R2 or R3:
+
+1. formalize the selected representation interface;
+2. update and revalidate the synthetic surface contract;
+3. generate the final synthetic dataset;
+4. run integrity/validity checks;
+5. freeze train/validation/test splits;
+6. run traditional calibration vs Model 1 ANN vs Model 2 constraint+repricing-informed inverse network under identical evaluation contracts;
+7. report parameter recovery, repricing, structural validity, multi-seed stability, equivalence/tolerance-conditioned recovery, noise robustness, and runtime separately;
+8. freeze models; and
+9. run untouched chronological G8 real-market evaluation without weight updating.
+
+A genuine PDE-informed Model 3 may be added later as a separately justified regularization/structural-validity extension, but it must not delay the primary comparison.
 
 ## 13. Exact next scientific action
 
-`OBTAIN MENTOR DECISION`
+`EXECUTE SELF-GOVERNED G2 REPRESENTATION SELECTION`
 
-- If approved: launch the bounded richer NTPC information milestone under the frozen protocol.
-- If rejected: return to a mentor-approved formulation/G2 decision.
-
-Repository cleanup/documentation may proceed in parallel, but it must not be confused with scientific gate passage.
+Implement the frozen R2/R3 protocol, preserve all evidence, apply the predeclared stopping rule exactly once, and then either freeze the selected representation or record failure of both candidates' hard market-construction requirements.

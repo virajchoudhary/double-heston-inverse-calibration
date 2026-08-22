@@ -2,45 +2,72 @@
 
 The unavailable teammate source is no longer an expected dependency. The project proceeds from the independent canonical reimplementation without claiming source equivalence.
 
-The 22 August 2026 three-node diagnostic swarm is complete. Its durable conclusions are recorded in [OVERNIGHT_SWARM_2026-08-22_DECISION_RECORD.md](OVERNIGHT_SWARM_2026-08-22_DECISION_RECORD.md). The swarm did not pass G2, freeze a representation, generate the final dataset, or authorize research ANN/PINN training.
+The 22 August 2026 three-node diagnostic swarm is complete. Its durable conclusions are recorded in [OVERNIGHT_SWARM_2026-08-22_DECISION_RECORD.md](OVERNIGHT_SWARM_2026-08-22_DECISION_RECORD.md).
+
+The previous mentor-approval blocker has been retired. The project now proceeds under the predeclared [G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md](G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md).
 
 ## Immediate sequence
 
-### 1. Complete repository consolidation
+### 1. Quarantine non-canonical Archive-2 training behavior
 
-- keep the three overnight node branches and archive refs;
-- reconcile architecture/status terminology;
-- preserve the PDE-defect and identifiability evidence;
-- quarantine Archive-2 real-market weight-update paths from canonical entry points; and
-- do not merge the overnight research branches wholesale.
+Implement Issue #20 as a focused code/test PR:
 
-### 2. Obtain the existing mentor decision
+- prevent `real_finetune` / `--continuous` from silently updating weights on real data in normal repository usage;
+- preserve historical smoke evidence;
+- leave canonical synthetic-only paths unchanged;
+- do not import Archive-2's current PDE loss.
 
-`OBTAIN MENTOR DECISION` on the formal G2 safeguard and one bounded richer NTPC-only temporal-information study. See the canonical [research control/status document](RESEARCH_CONTROL_AND_CURRENT_STATUS.md) and the short [mentor approval brief](MENTOR_APPROVAL_BRIEF_G2_INFORMATION_DESIGN.md).
+This is policy hardening and may proceed in parallel with G2 implementation preparation.
 
-Do not execute the richer study, freeze a representation, generate the final dataset, or start research ANN/PINN work before that decision.
+### 2. Execute the self-governed G2 representation study
 
-If approved, freeze the bounded protocol before seeing results. If rejected, return to a mentor-approved formulation/G2 decision.
+Run exactly the frozen protocol in [G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md](G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md).
 
-### 3. Resolve G2 and freeze the representation
+The bounded comparison is:
 
-The final surface representation must satisfy both market-support and practical-information requirements under the approved protocol.
+- **R2:** ranked two-expiry central-five calls/puts with actual maturity conditioning;
+- **R3:** ranked three-expiry masked central-five calls/puts with actual maturity conditioning and explicit masking.
 
-The current 108-input grid remains rejected as the final unchanged representation. Node B's overnight evidence shows that the full provisional grid can be locally full-rank yet still become practically non-identifiable at realistic noise scale. Therefore rank alone is not a G2 pass condition.
+The unchanged 108-grid is not a candidate.
 
-Before final synthetic generation, formalize a representation interface so the final approved surface contract can replace the provisional grid without changing the canonical parameter or pricing contracts.
+Use all five existing NTPC development dates for market-support evidence and the fixed synthetic truth panel for identifiability. Run identical multi-start diagnostics at 0%, 0.5%, 1%, and 2% noise.
 
-### 4. Generate final synthetic truth data only after G2
+Do not alter thresholds, candidate definitions, truth selection, optimizer, constraints, or stopping rules after results are seen.
 
-After representation freeze:
+### 3. Freeze the representation exactly once
 
-1. freeze the final sampling and representation protocol;
+Apply the protocol's stopping rule:
+
+- freeze R3 if it is market-supported under masking and shows the predeclared strong/partial information improvement without violating the existing holdout guardrail;
+- otherwise freeze R2 as the simpler supported representation;
+- if realistic-noise practical non-identifiability remains, retain it as a research finding rather than reopening unlimited representation search;
+- reopen G2 design only if both candidates fail the hard market-construction requirements.
+
+Valid outcomes:
+
+```text
+G2 = PASSED_REPRESENTATION_FROZEN_IDENTIFIABILITY_ACCEPTABLE
+G2 = PASSED_REPRESENTATION_FROZEN_WITH_PRACTICAL_NON_IDENTIFIABILITY
+G2 = FAILED_MARKET_CONSTRUCTION_REQUIREMENTS
+```
+
+### 4. Formalize the selected representation interface
+
+After G2 chooses R2 or R3, make the production dataset/model interface explicitly represent that frozen contract.
+
+Keep the canonical parameter order, pricer, constraints, and target semantics unchanged.
+
+### 5. Generate final synthetic truth data
+
+Only after representation freeze:
+
+1. freeze the final sampling + representation manifest;
 2. generate the final synthetic dataset;
-3. run integrity and validity checks;
+3. run validity/integrity checks;
 4. freeze train/validation/test splits; and
-5. preserve noise/challenge/OOD populations as explicitly separate cohorts.
+5. preserve normal, noise, challenge, and OOD cohorts separately.
 
-### 5. Run the primary comparison
+### 6. Run the primary comparison
 
 Primary methods:
 
@@ -50,44 +77,39 @@ Primary methods:
 
 Hold constant:
 
-- final representation;
+- frozen representation;
 - canonical ten-parameter order;
 - synthetic truth splits;
 - pricing/evaluation contract;
 - real-market freeze policy; and
 - metric families.
 
-Report parameter recovery separately from repricing and include validity, stability, noise robustness, tolerance/equivalence-class recovery, and runtime. No method wins on repricing RMSE alone.
+Report parameter recovery separately from repricing and include structural validity, multi-seed stability, tolerance/equivalence-class recovery, noise robustness, and runtime. No method wins on repricing RMSE alone.
 
-### 6. Frozen real-market evaluation
+### 7. Frozen real-market evaluation
 
-Only after the primary neural models are frozen, evaluate them chronologically on untouched real-market dates reserved under G8. Do not update primary network weights with those observations.
+Only after the primary models are frozen, evaluate them chronologically on untouched real-market dates reserved under G8. Do not update primary network weights with those observations.
 
-### 7. Optional Model 3
+### 8. Optional Model 3
 
-A genuine PDE-informed model is a separate research decision, not a default next step. The existing canonical model is not PDE-informed, and Archive-2's current PDE loss must not be adopted.
+A genuine PDE-informed model is not a blocker for the primary study.
 
-If Model 3 is approved later, its scientific question should focus on whether physics regularization improves structural validity/stability, not assume that a PDE term uniquely identifies an observationally ambiguous ten-parameter surface.
+If added later, its scientific question should be whether network-side physics regularization improves structural validity/stability, not whether a PDE term creates unique identification from an observationally ambiguous surface.
 
-## Secondary sampler, challenge, and OOD follow-up
-
-The still-valid sampling work remains required but is not the immediate global pipeline step:
-
-- resolve or formally disposition the four retained challenge pricing-tolerance failures under `NEEDS_SAMPLER_CORRECTION` without dropping rows or tuning ranges post hoc;
-- review interior, wide-valid, challenge, noise-test, and OOD ranges with quantitative-finance/domain supervision;
-- re-run the deterministic reviewed-sampling audit before including challenge/stress populations in research data;
-- expand controlled short-maturity and boundary convergence tests if an approved sampling revision introduces new regions; and
-- run the predeclared multi-seed 0%, 0.5%, 1%, and 2% noise experiments under the final representation.
-
-The normal clean core remains ready only under its current scoped contract. No final 10,000-surface dataset, ANN research training, or validated PINN research result exists.
+## Current state
 
 ```text
 CURRENT_108_GRID = REJECTED_AS_FINAL_UNCHANGED_GRID
 G2_MARKET_SUPPORTED_GEOMETRY = ESTABLISHED
 G2_FINAL_REPRESENTATION = NOT_FROZEN
 G2 = NOT_PASSED
+G2_PROTOCOL = SELF_GOVERNED_R2_VS_R3_PREDECLARED
 FINAL_10K = NOT_GENERATED
 ANN_RESEARCH_TRAINING = NOT_STARTED
 PINN_INFRASTRUCTURE = IMPLEMENTED_NOT_RESEARCH_TRAINED
 PINN_RESEARCH_MILESTONE = NOT_VALIDATED_OR_TRAINED
 ```
+
+The exact next scientific action is:
+
+`EXECUTE SELF-GOVERNED G2 REPRESENTATION SELECTION`
