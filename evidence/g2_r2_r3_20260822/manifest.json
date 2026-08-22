@@ -31,6 +31,12 @@
     ]
   },
   "analysis_id": "G2_R2_R3_REPRESENTATION_SELECTION",
+  "decision_summary": {
+    "g2_label": "G2 = PASSED_REPRESENTATION_FROZEN_WITH_PRACTICAL_NON_IDENTIFIABILITY",
+    "practical_non_identifiability_retained": true,
+    "rule_applied": "rule_2_r2_simpler_market_supported_representation",
+    "selected_representation": "R2"
+  },
   "environment": {
     "cuda_available": "False",
     "git_version": "git version 2.51.0.windows.1",
@@ -44,6 +50,20 @@
   "environment_note": "scipy 1.16.2 pin is load-bearing: qmc.LatinHypercube(seed=...) stream identity is version-sensitive; the committed truth_panel.csv is the byte-exact frozen artifact",
   "execution_branch": "research/g2-r2-r3-selection",
   "expected_starting_main": "c64aaaf54f72a48768316c582d312dd8cf27a089",
+  "final_claims_review": {
+    "method": "independent recomputation of every headline number from raw evidence (slots, run records, Jacobians, dispersion records)",
+    "minor_precision_fixes_applied": [
+      "R2 median runtime 10.2s",
+      "dispersion range 0.45-1.15",
+      "displacement range 0.34-0.48",
+      "status-4 tally",
+      "carry-forward dates phrasing",
+      "pre-matrix gate count",
+      "primary-level predeclaration anchor footnote"
+    ],
+    "verdict": "CLAIMS_VERIFIED"
+  },
+  "final_sha": "7b7f3ab9c269e0783588f08c4defae29cf2ff988",
   "hard_bounds": {
     "kappa_fast": [
       0.1,
@@ -120,7 +140,7 @@
     "Truth panel frozen before any R2/R3 outcome computation.",
     "All five NTPC development dates remain excluded from final G8."
   ],
-  "phase": "MATRIX_COMPLETE_DIAGNOSTICS_AND_DECISION_APPLIED",
+  "phase": "SEALED",
   "protocol": "docs/G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md",
   "randomization": {
     "multistart_seed": 20260823,
