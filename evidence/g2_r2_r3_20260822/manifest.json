@@ -1,0 +1,109 @@
+{
+  "analysis_id": "G2_R2_R3_REPRESENTATION_SELECTION",
+  "environment": {
+    "cuda_available": "False",
+    "git_version": "git version 2.51.0.windows.1",
+    "numpy": "2.2.6",
+    "pandas": "2.3.2",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.4 (tags/v3.13.4:8a526ec, Jun  3 2025, 17:46:04) [MSC v.1943 64 bit (AMD64)]",
+    "scipy": "1.16.2",
+    "torch": "2.11.0+cpu"
+  },
+  "execution_branch": "research/g2-r2-r3-selection",
+  "expected_starting_main": "c64aaaf54f72a48768316c582d312dd8cf27a089",
+  "hard_bounds": {
+    "kappa_fast": [
+      0.1,
+      12.0
+    ],
+    "kappa_slow": [
+      0.05,
+      3.0
+    ],
+    "rho_fast": [
+      -0.95,
+      0.95
+    ],
+    "rho_slow": [
+      -0.95,
+      0.95
+    ],
+    "sigma_fast": [
+      0.005,
+      1.5
+    ],
+    "sigma_slow": [
+      0.005,
+      1.0
+    ],
+    "theta_fast": [
+      0.002,
+      0.2
+    ],
+    "theta_slow": [
+      0.005,
+      0.25
+    ],
+    "v0_fast": [
+      0.002,
+      0.25
+    ],
+    "v0_slow": [
+      0.005,
+      0.3
+    ]
+  },
+  "matrix_plan": {
+    "noise_levels": 4,
+    "representations": [
+      "R2",
+      "R3"
+    ],
+    "starts": 12,
+    "total_calibration_attempts": 1920,
+    "truths": 20
+  },
+  "noise_levels": [
+    0.0,
+    0.005,
+    0.01,
+    0.02
+  ],
+  "notes": [
+    "Truth panel frozen before any R2/R3 outcome computation.",
+    "All five NTPC development dates remain excluded from final G8."
+  ],
+  "phase": "TRUTH_PANEL_FROZEN",
+  "protocol": "docs/G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md",
+  "randomization": {
+    "multistart_seed": 20260823,
+    "noise_base_seed": 20260824,
+    "truth_selection_seed": 20260822
+  },
+  "start_count": 12,
+  "truth_panel": {
+    "additional_draw_count": 64,
+    "additional_truths_procedure": "first 16 accepted rows (existing ordinary-training margin gate) of a single interior_train LHS draw of 64 rows with seed 20260822 via src/audit_reviewed_sampling.sample_distribution",
+    "panel_csv": "evidence/g2_r2_r3_20260822/truth_panel.csv",
+    "parameter_order": [
+      "kappa_slow",
+      "theta_slow",
+      "sigma_slow",
+      "rho_slow",
+      "v0_slow",
+      "kappa_fast",
+      "theta_fast",
+      "sigma_fast",
+      "rho_fast",
+      "v0_fast"
+    ],
+    "size": 20,
+    "standing_cases": [
+      "case_1",
+      "case_2",
+      "case_3",
+      "case_4"
+    ]
+  }
+}
