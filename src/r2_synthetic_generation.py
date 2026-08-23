@@ -826,9 +826,11 @@ def _build_generation_cohort(
         "serialization_round_trip": True,
         "manifest_complete": True,
     }
-    file_hashes["integrity_report_json_sha256"] = sha256_bytes(
-        deterministic_json_bytes(integrity)
-    )
+    # The integrity report is hashed and written from the same deterministic
+    # bytes so the manifest hash always matches the artifact on disk.
+    integrity_bytes = deterministic_json_bytes(integrity)
+    (output / "integrity_report.json").write_bytes(integrity_bytes)
+    file_hashes["integrity_report_json_sha256"] = sha256_bytes(integrity_bytes)
     deterministic_content_sha256 = file_hashes["surfaces_jsonl_sha256"]
     manifest: dict[str, Any] = {
         "schema_version": "1.0",
@@ -896,7 +898,6 @@ def _build_generation_cohort(
         "training_started": False,
         "replay_status": "PENDING",
     }
-    write_json(output / "integrity_report.json", integrity)
     write_json(output / "manifest.json", manifest)
     return output, manifest
 
@@ -1030,8 +1031,10 @@ def _verified_pilot_evidence() -> dict[str, Any]:
         key = (distribution, split)
         observed_split_counts[key] = observed_split_counts.get(key, 0) + 1
         surface_id = str(payload["surface_id"])
+        # The canonical vector lives in the provenance-protected metadata
+        # namespace, not in caller-supplied user_metadata.
         vector = tuple(
-            float(payload["metadata"]["user_metadata"]["parameters_canonical_order"][name])
+            float(payload["metadata"]["parameters_canonical_order"][name])
             for name in PARAMETER_NAMES
         )
         if surface_id in seen_ids or vector in seen_vectors:

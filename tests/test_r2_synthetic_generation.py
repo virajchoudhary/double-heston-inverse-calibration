@@ -582,3 +582,185 @@ def test_internal_builder_physically_prohibits_final_surface_generation() -> Non
             "forbidden-by-test",
         )
     assert not output.exists()
+
+
+def test_manifest_artifact_hashes_match_files_on_disk(
+    config: dict,
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    small = copy.deepcopy(config)
+    small["sampling"]["pools"]["pilot"] = {
+        "interior_train": {"candidate_count": 40, "required_quota": 3},
+        "wide_valid_train": {"candidate_count": 24, "required_quota": 2},
+    }
+    small["quotas"]["development_pilot_not_final_research_dataset"] = {
+        "total_surfaces": 5,
+        "distributions": {"interior_train": 3, "wide_valid_train": 2},
+        "splits": {
+            "train": {"total": 3, "interior_train": 2, "wide_valid_train": 1},
+            "validation": {"total": 1, "interior_train": 1, "wide_valid_train": 0},
+            "test": {"total": 1, "interior_train": 0, "wide_valid_train": 1},
+        },
+    }
+    monkeypatch.setattr(generator, "load_generation_config", lambda path=None: small)
+    output = tmp_path / "pilot"
+    _, manifest = generator._build_generation_cohort(
+        "pilot", output, "hash-consistency-test"
+    )
+    artifact_files = {
+        "surfaces_jsonl_sha256": "surfaces.jsonl",
+        "selected_parameters_csv_sha256": "selected_parameters.csv",
+        "candidates_csv_sha256": "candidates.csv",
+        "rejections_jsonl_sha256": "rejections.jsonl",
+        "conditioning_jsonl_sha256": "conditioning.jsonl",
+        "numerical_sanity_jsonl_sha256": "numerical_sanity.jsonl",
+        "integrity_report_json_sha256": "integrity_report.json",
+    }
+    for hash_field, filename in artifact_files.items():
+        artifact = output / filename
+        assert artifact.is_file()
+        assert generator.sha256_file(artifact) == manifest["provenance_hashes"][hash_field], (
+            f"manifest hash for {filename} does not match the file on disk"
+        )
+    json.loads((output / "integrity_report.json").read_text(encoding="utf-8"))
+
+
+def _gate_payload(index: int, distribution: str, split: str) -> dict:
+    values = {name: 0.5 for name in PARAMETER_NAMES}
+    values["v0_slow"] = 0.01 + index * 1e-6
+    moneyness = [-0.10, -0.05, 0.0, 0.05, 0.10]
+    slot_keys = [
+        [rank, level, option]
+        for option in ("call", "put")
+        for rank in (1, 2)
+        for level in moneyness
+    ]
+    return {
+        "representation_name": "FROZEN_R2_RANKED_TWO_EXPIRY_CENTRAL_FIVE",
+        "representation_version": "1.0",
+        "slot_keys": slot_keys,
+        "prices": [1.0 + 0.01 * position for position in range(20)],
+        "mask": [True] * 20,
+        "maturities": [7.0 / 365.0] * 10 + [14.0 / 365.0] * 10,
+        "rates": [0.02] * 20,
+        "carries": [0.01] * 20,
+        "spot": 100.0,
+        "surface_id": f"R2_PILOT_fake_{index:06d}",
+        "source": "synthetic",
+        "metadata": {
+            "parameters_canonical_order": values,
+            "user_metadata": {"distribution": distribution, "split": split},
+        },
+    }
+
+
+def _write_gate_evidence(root: Path, payloads: list[dict]) -> None:
+    root.mkdir(parents=True)
+    surfaces_payload = b"".join(
+        generator.deterministic_json_bytes(payload) for payload in payloads
+    )
+    (root / "surfaces.jsonl").write_bytes(surfaces_payload)
+    hashes = {"surfaces_jsonl_sha256": generator.sha256_bytes(surfaces_payload)}
+    artifacts = (
+        ("selected_parameters_csv_sha256", "selected_parameters.csv", None),
+        ("candidates_csv_sha256", "candidates.csv", None),
+        ("rejections_jsonl_sha256", "rejections.jsonl", []),
+        ("conditioning_jsonl_sha256", "conditioning.jsonl", []),
+        ("numerical_sanity_jsonl_sha256", "numerical_sanity.jsonl", []),
+    )
+    for field, filename, records in artifacts:
+        if records is None:
+            frame = pd.DataFrame({"placeholder": [1]})
+            hashes[field] = generator._write_csv(frame, root / filename)
+        else:
+            hashes[field] = generator._write_jsonl(records, root / filename)
+    integrity = {
+        "representation_validated": True,
+        "all_masks_true": True,
+        "all_slot_counts_20": True,
+        "unique_surface_ids": True,
+        "unique_parameter_vectors": True,
+        "serialization_round_trip": True,
+    }
+    integrity_bytes = generator.deterministic_json_bytes(integrity)
+    (root / "integrity_report.json").write_bytes(integrity_bytes)
+    hashes["integrity_report_json_sha256"] = generator.sha256_bytes(integrity_bytes)
+    return hashes
+
+
+def test_readiness_gate_accepts_well_formed_pilot_evidence(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    allocation = [
+        ("interior_train", "train", 150),
+        ("interior_train", "validation", 25),
+        ("interior_train", "test", 25),
+        ("wide_valid_train", "train", 30),
+        ("wide_valid_train", "validation", 5),
+        ("wide_valid_train", "test", 5),
+    ]
+    payloads: list[dict] = []
+    for distribution, split, count in allocation:
+        for _ in range(count):
+            payloads.append(_gate_payload(len(payloads), distribution, split))
+    assert len(payloads) == 240
+
+    primary = tmp_path / "pilot"
+    replay = tmp_path / "pilot_replay"
+    primary_hashes = _write_gate_evidence(primary, payloads)
+    replay_hashes = _write_gate_evidence(replay, payloads)
+    hash_fields = [
+        "surfaces_jsonl_sha256",
+        "selected_parameters_csv_sha256",
+        "candidates_csv_sha256",
+        "rejections_jsonl_sha256",
+        "conditioning_jsonl_sha256",
+        "numerical_sanity_jsonl_sha256",
+        "integrity_report_json_sha256",
+    ]
+    primary_manifest = {
+        "cohort": "pilot",
+        "surface_count": 240,
+        "replay_status": "VERIFIED_IDENTICAL",
+        "replay_report": {
+            "identical": True,
+            "hash_comparisons": {field: True for field in hash_fields},
+        },
+        "numerical_sanity": {"all_passed": True},
+        "provenance_hashes": primary_hashes,
+    }
+    replay_manifest = {
+        "cohort": "pilot",
+        "surface_count": 240,
+        "replay_status": "PENDING",
+        "provenance_hashes": replay_hashes,
+    }
+    generator.write_json(primary / "manifest.json", primary_manifest)
+    generator.write_json(replay / "manifest.json", replay_manifest)
+    monkeypatch.setattr(generator, "PILOT_OUTPUT", primary)
+    evidence = generator._verified_pilot_evidence()
+    assert evidence["primary_manifest"]["surface_count"] == 240
+
+    duplicated = list(payloads)
+    duplicated[1] = {**duplicated[1], "metadata": {**duplicated[1]["metadata"]}}
+    duplicated[1]["metadata"]["parameters_canonical_order"] = dict(
+        payloads[0]["metadata"]["parameters_canonical_order"]
+    )
+    tampered = tmp_path / "tampered"
+    tampered_hashes = _write_gate_evidence(tampered, duplicated)
+    tampered_manifest = {
+        **primary_manifest,
+        "provenance_hashes": tampered_hashes,
+    }
+    generator.write_json(tampered / "manifest.json", tampered_manifest)
+    tampered_replay = tmp_path / "tampered_replay"
+    tampered_replay_hashes = _write_gate_evidence(tampered_replay, duplicated)
+    generator.write_json(
+        tampered_replay / "manifest.json",
+        {**replay_manifest, "provenance_hashes": tampered_replay_hashes},
+    )
+    monkeypatch.setattr(generator, "PILOT_OUTPUT", tampered)
+    with pytest.raises(generator.GenerationContractError, match="duplicate identity"):
+        generator._verified_pilot_evidence()
