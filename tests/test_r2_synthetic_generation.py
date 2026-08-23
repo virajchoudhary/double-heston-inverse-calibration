@@ -764,3 +764,94 @@ def test_readiness_gate_accepts_well_formed_pilot_evidence(
     monkeypatch.setattr(generator, "PILOT_OUTPUT", tampered)
     with pytest.raises(generator.GenerationContractError, match="duplicate identity"):
         generator._verified_pilot_evidence()
+
+
+def test_final_readiness_insufficient_pool_fails_closed_with_retention(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    """The insufficient FINAL readiness path itself must fail closed with
+    complete retention — not crash before it can preserve evidence."""
+    from src import r2_representation
+
+    pool_calls = {"count": 0}
+
+    def _pool_frame(distribution: str, accepted_count: int, rejected_count: int) -> pd.DataFrame:
+        rows = []
+        for i in range(accepted_count + rejected_count):
+            row = {
+                "candidate_id": i,
+                "distribution": distribution,
+                "accepted": i < accepted_count,
+                "rejection_reasons": "" if i < accepted_count else "ordinary_training_margin_policy",
+            }
+            row.update({name: 0.5 for name in PARAMETER_NAMES})
+            rows.append(row)
+        return pd.DataFrame(rows)
+
+    interior_frame = _pool_frame("interior_train", 8_334, 10)
+    wide_frame = _pool_frame("wide_valid_train", 100, 100)
+
+    def fake_pools(cohort: str, config: dict) -> dict:
+        assert cohort == "final"
+        pool_calls["count"] += 1
+        return {"interior_train": interior_frame, "wide_valid_train": wide_frame}
+
+    def fail_pricing(*args, **kwargs):
+        raise AssertionError("final readiness must not price any surface")
+
+    monkeypatch.setattr(generator, "_verified_pilot_evidence", lambda: {"ok": True})
+    monkeypatch.setattr(generator, "generate_candidate_pools", fake_pools)
+    monkeypatch.setattr(r2_representation, "build_synthetic_surface", fail_pricing)
+
+    output = tmp_path / "readiness"
+    with pytest.raises(generator.CandidatePoolInsufficientError) as excinfo:
+        generator.run_final_readiness(output)
+    assert "rejections were retained" in str(excinfo.value)
+
+    # Exactly one fixed-pool pass: no refill, reseed, or retry loop.
+    assert pool_calls["count"] == 1
+
+    # Deterministic failure location derived from output_directory.
+    failure_output = Path(str(output) + "_failed_insufficient")
+    assert failure_output.is_dir()
+    assert sorted(path.name for path in failure_output.iterdir()) == [
+        "all_final_candidates.csv",
+        "readiness_manifest.json",
+        "rejections.jsonl",
+    ]
+    # No success output and no surface dataset anywhere.
+    assert not output.exists()
+    assert not list(failure_output.glob("surfaces*"))
+
+    manifest = json.loads((failure_output / "readiness_manifest.json").read_text(encoding="utf-8"))
+    assert manifest["status"] == "FAILED_INSUFFICIENT_FIXED_POOL_RETAINED_REJECTIONS"
+    assert manifest["all_sufficient"] is False
+    assert manifest["selected_panel_count"] == 0
+    assert manifest["surfaces_generated"] is False
+    assert manifest["pricing_performed"] is False
+    assert manifest["final_10k_generated"] is False
+    assert manifest["training_started"] is False
+    assert manifest["sufficiency"]["interior_train"] == {
+        "pool_count": 8_344,
+        "accepted_count": 8_334,
+        "required_quota": 8_334,
+        "sufficient": True,
+    }
+    assert manifest["sufficiency"]["wide_valid_train"] == {
+        "pool_count": 200,
+        "accepted_count": 100,
+        "required_quota": 1_666,
+        "sufficient": False,
+    }
+
+    # Complete fixed candidate/rejection evidence retained and hash-sealed.
+    candidates = pd.read_csv(failure_output / "all_final_candidates.csv")
+    assert len(candidates) == 8_344 + 200
+    rejection_lines = [
+        line for line in (failure_output / "rejections.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()
+    ]
+    assert len(rejection_lines) == 10 + 100
+    assert all(json.loads(line)["accepted"] is False for line in rejection_lines)
+    assert generator.sha256_file(failure_output / "all_final_candidates.csv") == manifest["all_candidates_csv_sha256"]
+    assert generator.sha256_file(failure_output / "rejections.jsonl") == manifest["rejections_jsonl_sha256"]

@@ -1107,6 +1107,7 @@ def run_final_readiness(
     output_directory: str | Path = READINESS_OUTPUT,
 ) -> tuple[Path, dict[str, Any]]:
     """Evaluate fixed final candidate pools without generating/pricing surfaces."""
+    output = Path(output_directory)
     config = load_generation_config()
     _verified_pilot_evidence()
     pools = generate_candidate_pools("final", config)
@@ -1171,7 +1172,6 @@ def run_final_readiness(
             "rejections were retained"
         )
 
-    output = Path(output_directory)
     if output.exists():
         raise GenerationContractError(f"refusing to overwrite readiness output: {output}")
     output.mkdir(parents=True)
