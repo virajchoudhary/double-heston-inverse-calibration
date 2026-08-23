@@ -13,6 +13,7 @@ time, never during execution.
 from __future__ import annotations
 
 import argparse
+import json
 import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
@@ -80,27 +81,61 @@ def run_traditional_calibration(
     limit: int | None = None,
     split: str = "test",
 ) -> pd.DataFrame:
-    """Execute the frozen calibration on every surface of ``split``."""
+    """Execute the frozen calibration on every surface of ``split``.
+
+    Results are appended incrementally to a companion ``.jsonl`` file as each
+    surface completes (crash-safe), and previously completed surfaces are
+    resumed/skipped when the jsonl already exists.  The final CSV is written
+    once every requested surface is present.
+    """
     indices = dataset.indices_for_split(split)
     if limit is not None:
         indices = indices[:limit]
-    payloads = [
-        {"item": dataset.items[index], "index": position}
-        for position, index in enumerate(indices)
-    ]
-    all_rows: list[dict[str, Any]] = []
     output_path = Path(output_csv)
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    with ProcessPoolExecutor(max_workers=workers) as executor:
-        futures = {
-            executor.submit(calibrate_surface, payload): payload for payload in payloads
-        }
-        completed = 0
-        for future in as_completed(futures):
-            all_rows.extend(future.result())
-            completed += 1
-            if completed % 50 == 0 or completed == len(payloads):
-                print(f"calibrated {completed}/{len(payloads)} surfaces", flush=True)
+    journal_path = output_path.with_name(output_path.stem + "_journal.jsonl")
+
+    completed: set[str] = set()
+    if journal_path.exists():
+        with journal_path.open(encoding="utf-8") as handle:
+            for line in handle:
+                if line.strip():
+                    completed.add(json.loads(line)["surface_id"])
+        print(f"resuming: {len(completed)} surfaces already complete", flush=True)
+
+    pending = [
+        {"item": dataset.items[index], "index": position}
+        for position, index in enumerate(indices)
+        if dataset.items[index].surface_id not in completed
+    ]
+    all_rows: list[dict[str, Any]] = []
+    if completed:
+        with journal_path.open(encoding="utf-8") as handle:
+            for line in handle:
+                if line.strip():
+                    all_rows.extend(json.loads(line)["rows"])
+    with journal_path.open("a", encoding="utf-8") as journal:
+        with ProcessPoolExecutor(max_workers=workers) as executor:
+            futures = {
+                executor.submit(calibrate_surface, payload): payload
+                for payload in pending
+            }
+            done = 0
+            for future in as_completed(futures):
+                rows = future.result()
+                all_rows.extend(rows)
+                journal.write(
+                    json.dumps({"surface_id": rows[0]["surface_id"], "rows": rows})
+                    + "\n"
+                )
+                journal.flush()
+                done += 1
+                if done % 50 == 0 or done == len(pending):
+                    print(
+                        f"calibrated {done}/{len(pending)} pending surfaces "
+                        f"({len(completed) + done}/{len(indices)} total)",
+                        flush=True,
+                    )
     frame = pd.DataFrame(all_rows)
     frame.to_csv(output_path, index=False)
     return frame
