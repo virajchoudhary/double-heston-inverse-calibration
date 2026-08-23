@@ -300,7 +300,9 @@ def measure_inference_runtime(
     import torch
 
     model.eval()
-    features = torch.stack([dataset.items[index].features for index in indices])
+    features = torch.as_tensor(
+        np.stack([dataset.items[index].features for index in indices])
+    )
     timings: list[float] = []
     with torch.no_grad():
         for _ in range(repetitions):
@@ -342,10 +344,10 @@ def summarize_run(
     )
     repriced = reprice_normalized(dataset, indices, predicted_parameters)
     recovery = parameter_recovery_metrics(truth, predicted_parameters, scaling)
-    validity = constraint_validity_metrics(predicted)
+    validity = constraint_validity_metrics(predicted_parameters)
     repricing = repricing_metrics(observed, repriced)
     identifiability = identifiability_aware_metrics(
-        observed, repriced, truth, predicted, scaling
+        observed, repriced, truth, predicted_parameters, scaling
     )
     per_surface_rmse = repricing.pop("per_surface_rmse")
     summary: dict[str, Any] = {
