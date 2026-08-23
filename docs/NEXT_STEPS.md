@@ -36,16 +36,16 @@ serialization, structural rejection of legacy-108 and rejected-R3 data, and
 a full focused test suite. The canonical parameter order, pricer,
 constraints, and target semantics are unchanged.
 
-### 3. Generate final synthetic truth data — CONTRACT FROZEN BEFORE PILOT
+### 3. Generate final synthetic truth data — PILOT VALIDATED, FINAL 10K NOT GENERATED
 
 Only after representation freeze (done) and interface formalization (done,
 `src/r2_representation/`):
 
-1. final sampling/generation contract frozen (`configs/r2_synthetic_generation_FINAL.yaml`);
-2. execute only the contracted 240-surface development pilot and deterministic replay;
-3. verify fixed final candidate pools without pricing the final core;
-4. reserve any final-10k execution for a separate explicitly authorized gate; and
-5. keep normal, noise, challenge, OOD, real-market, and training boundaries intact.
+1. final sampling/generation contract frozen (`configs/r2_synthetic_generation_FINAL.yaml`, commit `53aed7b`);
+2. contracted 240-surface development pilot executed and validated with a `VERIFIED_IDENTICAL` deterministic replay (0 pricing failures);
+3. fixed final 15k/5k candidate pools verified sufficient (12,217 ≥ 8,334 interior; 3,371 ≥ 1,666 wide) without pricing the final core;
+4. any final-10k execution remains reserved for a separate explicitly authorized gate; and
+5. normal, noise, challenge, OOD, real-market, and training boundaries remain intact.
 
 ### 4. Run the primary comparison
 
