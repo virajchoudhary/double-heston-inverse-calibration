@@ -1,0 +1,192 @@
+schema_version: "1.0"
+contract_name: R2_SYNTHETIC_GENERATION_FINAL
+generator_version: r2-synthetic-generation-v1
+status: FROZEN_BEFORE_PILOT
+tracking_issue: 27
+final_10k_generated: false
+
+representation:
+  name: FROZEN_R2_RANKED_TWO_EXPIRY_CENTRAL_FIVE
+  version: "1.0"
+  nominal_slot_count: 20
+  expiry_ranks: [1, 2]
+  target_log_moneyness: [-0.10, -0.05, 0.00, +0.05, +0.10]
+  option_types: [call, put]
+  slot_order: option_type_major_then_expiry_rank_then_log_moneyness
+  implementation_package: src/r2_representation
+  synthetic_mask_policy: all_true_complete_by_construction
+  price_normalization: spot_normalized_with_spot_100
+
+parameter_contract:
+  order:
+    - kappa_slow
+    - theta_slow
+    - sigma_slow
+    - rho_slow
+    - v0_slow
+    - kappa_fast
+    - theta_fast
+    - sigma_fast
+    - rho_fast
+    - v0_fast
+  reviewed_sampling_config: configs/parameter_sampling_REVIEWED.yaml
+  transforms: reuse_reviewed_latent_lhs_conditional_transforms_unchanged
+  hard_constraints: reuse_reviewed_hard_constraints_unchanged
+  acceptance_margin_policy: reuse_reviewed_distribution_acceptance_gate_unchanged
+  canonical_validation: src.constraints.validate_parameters
+
+sampling:
+  method: scipy_stats_qmc_latin_hypercube_latent_coordinates
+  candidate_id_rule: zero_based_row_order_within_distribution
+  selection_order: distribution_then_candidate_id_ascending
+  fixed_pool_policy: generate_entire_pool_retain_all_candidates_and_rejections_no_refill_no_reseed
+  insufficient_pool_behavior: HARD_FAIL
+  seeds:
+    pilot_interior_train: 20260822
+    pilot_wide_valid_train: 20260823
+    final_interior_train: 20260807
+    final_wide_valid_train: 20260808
+  pools:
+    pilot:
+      interior_train: {candidate_count: 400, required_quota: 200}
+      wide_valid_train: {candidate_count: 200, required_quota: 40}
+    final:
+      interior_train: {candidate_count: 15000, required_quota: 8334}
+      wide_valid_train: {candidate_count: 5000, required_quota: 1666}
+
+quotas:
+  final_clean_core:
+    total_surfaces: 10000
+    distributions:
+      interior_train: 8334
+      wide_valid_train: 1666
+    splits:
+      train: {total: 7500, interior_train: 6250, wide_valid_train: 1250}
+      validation: {total: 1250, interior_train: 1042, wide_valid_train: 208}
+      test: {total: 1250, interior_train: 1042, wide_valid_train: 208}
+  development_pilot_not_final_research_dataset:
+    total_surfaces: 240
+    distributions:
+      interior_train: 200
+      wide_valid_train: 40
+    splits:
+      train: {total: 180, interior_train: 150, wide_valid_train: 30}
+      validation: {total: 30, interior_train: 25, wide_valid_train: 5}
+      test: {total: 30, interior_train: 25, wide_valid_train: 5}
+
+split_assignment:
+  algorithm: accepted_candidates_sorted_by_candidate_id_exact_nonoverlapping_slices_per_distribution
+  random_permutation_used: false
+  atomic_unit: whole_parameter_vector_and_whole_surface
+  quote_row_splitting_allowed: false
+  cross_split_parameter_overlap_allowed: false
+  duplicate_parameter_vectors_allowed: false
+
+conditioning:
+  classification: SYNTHETIC_ONLY_ENGINEERING_RESEARCH_DESIGN_NOT_REAL_MARKET_DISTRIBUTION_CLAIM
+  real_market_inputs_used: false
+  spot: 100.0
+  deterministic_mode: predeclared_lattice_mixed_radix_stride
+  seeds:
+    pilot: 20260822
+    final: 20260807
+  strides:
+    pilot: 997
+    final: 1103
+  lattice:
+    rank1_dte_days: [7, 14, 21, 30, 45, 60, 75, 90]
+    rank2_gap_dte_days: [7, 14, 21, 30, 45, 60, 90]
+    rates: [0.01, 0.02, 0.03, 0.04, 0.05, 0.06]
+    carry_offsets: [-0.02, -0.01, 0.00, 0.01, 0.02, 0.03]
+    combination_count: 2016
+  index_formula:
+    lattice_index: "(generation_index * configured_stride) modulo 2016"
+    rank1_dte: "lattice_index modulo 8"
+    rank2_gap_dte: "floor(lattice_index / 8) modulo 7"
+    rate: "floor(lattice_index / 56) modulo 6"
+    carry_offset: "floor(lattice_index / 336) modulo 6"
+    carry: "configured_rate_plus_carry_offset"
+  invariants:
+    dte_integer_days: true
+    rank1_dte_positive: true
+    rank2_dte_strictly_greater_than_rank1: true
+    rates_finite: true
+    carries_finite: true
+    observed_nse_option_spot_future_rate_or_carry_used: false
+
+pricing:
+  production_source: src/double_heston.py
+  entrypoint: price_double_heston_surface
+  node_count: 64
+  target_strike_rule: spot_exp_target_log_moneyness
+  rank_pricing: constant_conditioning_per_rank_piece
+  clipping_or_imputation_allowed: false
+  replacement_on_failure_allowed: false
+
+noise:
+  clean_core_level: 0.0
+  future_levels_are_separate_derivatives: [0.005, 0.01, 0.02]
+  generation_in_this_milestone: false
+
+exclusions:
+  clean_core_excludes:
+    - boundary_challenge
+    - ood_test
+    - noisy_copies
+    - real_market_data
+  boundary_challenge_status: SEPARATE_EVALUATION_COHORT_NOT_GENERATED_HERE
+  ood_status: EVALUATION_ONLY_NOT_GENERATED_HERE
+  global_sampler_status_preserved: NEEDS_SAMPLER_CORRECTION
+  challenge_stress_ready: false
+
+failure_retention:
+  pricing_failure_policy: retain_candidate_surface_id_parameters_conditioning_and_error_then_fail_closed
+  rejection_policy: retain_every_candidate_and_all_rejection_reasons
+  silent_replacement_or_refill_forbidden: true
+
+output_schema:
+  surface_payload: src.r2_representation.serialization.surface_to_payload
+  surface_artifact: surfaces.jsonl_one_canonical_payload_per_line
+  required_surface_fields:
+    - representation_name
+    - representation_version
+    - slot_keys
+    - prices
+    - mask
+    - maturities
+    - rates
+    - carries
+    - spot
+    - surface_id
+    - source
+    - metadata
+  required_metadata_provenance:
+    - dataset_status
+    - distribution
+    - split
+    - candidate_id
+    - parameter_vector_hash
+    - parameter_sampler_seed
+    - conditioning_seed
+    - conditioning_lattice_index
+    - generation_config_sha256
+    - generator_version
+    - production_pricer_sha256
+  manifest_required_hashes:
+    - generation_config_sha256
+    - production_pricer_sha256
+    - selected_parameters_csv_sha256
+    - candidates_csv_sha256
+    - rejections_jsonl_sha256
+    - split_assignment_sha256
+    - surfaces_jsonl_sha256
+    - deterministic_content_sha256
+
+execution_gates:
+  contract_freeze_before_pilot_output: REQUIRED
+  pilot_command_requires_contract_checkpoint: true
+  readiness_requires_verified_pilot: true
+  final_readiness_command: python -m src.r2_synthetic_generation readiness --output evidence/final_r2_candidate_pool_readiness_20260822
+  final_10k_generation_command: NOT_AUTHORIZED_IN_THIS_MILESTONE
+  final_10k_requires_separate_explicit_command_and_authorization: true
+  training_commands_in_this_milestone: NONE

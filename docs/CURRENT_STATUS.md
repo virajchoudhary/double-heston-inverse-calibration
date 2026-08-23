@@ -34,6 +34,8 @@ The project is no longer waiting for external mentor approval to continue. G2 is
 | Final G2 representation | **Frozen: R2** (ranked two-expiry central-five, 20 nominal slots + explicit real-market masking) |
 | Canonical R2 representation interface | Formalized: `src/r2_representation/` ([R2_REPRESENTATION_CONTRACT.md](R2_REPRESENTATION_CONTRACT.md)) |
 | G2 | **PASSED_REPRESENTATION_FROZEN_WITH_PRACTICAL_NON_IDENTIFIABILITY** |
+| R2 synthetic-generation contract | Frozen before pilot: [R2_SYNTHETIC_GENERATION_CONTRACT.md](R2_SYNTHETIC_GENERATION_CONTRACT.md) |
+| Deterministic R2 development pilot | Contracted; not executed at contract freeze |
 | Global ten-parameter ambiguity | Established |
 | Full-108 overnight identifiability diagnostic | Completed; locally full-rank can still be practically non-identifiable at noise scale |
 | Final 10,000-surface research dataset | Not generated |
@@ -135,6 +137,9 @@ PRACTICAL_NON_IDENTIFIABILITY = RETAINED_RESEARCH_FINDING
 GLOBAL_AMBIGUITY = ESTABLISHED
 FINAL_10K = NOT_GENERATED
 ANN_RESEARCH_TRAINING = NOT_STARTED
+MODEL2_RESEARCH_TRAINING = NOT_STARTED
+CHALLENGE_OOD_FINAL_GENERATION = NOT_STARTED
+G8 = NOT_STARTED
 PINN_INFRASTRUCTURE = IMPLEMENTED_NOT_RESEARCH_TRAINED
 PINN_RESEARCH_MILESTONE = NOT_VALIDATED_OR_TRAINED
 FROZEN_REAL_MARKET_EVALUATION = NOT_STARTED

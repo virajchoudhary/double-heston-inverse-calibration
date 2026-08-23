@@ -119,6 +119,12 @@ Primary ANN and inverse-model learning is synthetic. Real-market observations ar
 
 The canonical experimental comparison should hold the surface contract, target order, synthetic splits, evaluation sets, and metric families fixed across methods.
 
+The active final synthetic-generation boundary is canonical R2
+(`configs/r2_synthetic_generation_FINAL.yaml`), not the historical 108 grid.
+Final 10k generation requires a separate explicit gate; the current milestone
+authorizes only a contracted 240-surface development pilot, deterministic
+replay, integrity checks, and unpriced final candidate-pool readiness.
+
 Future reports must separate:
 
 - parameter recovery;
@@ -138,6 +144,7 @@ PINN_INFRASTRUCTURE = IMPLEMENTED_NOT_RESEARCH_TRAINED
 PINN_RESEARCH_MILESTONE = NOT_VALIDATED_OR_TRAINED
 FINAL_10K = NOT_GENERATED
 ANN_RESEARCH_TRAINING = NOT_STARTED
+MODEL2_RESEARCH_TRAINING = NOT_STARTED
 FROZEN_REAL_MARKET_EVALUATION = NOT_STARTED
 ```
 

@@ -1,0 +1,7 @@
+R2_SYNTHETIC_GENERATION_CONTRACT_FROZEN_BEFORE_PILOT
+
+This controlled checkpoint records that the final R2 synthetic-generation
+contract was frozen before authoritative pilot execution.
+
+NO PILOT OUTPUT EXISTED WHEN THIS CONTRACT SHA WAS COMMITTED.
+NO AUTHORITATIVE PILOT OUTPUT EXISTED WHEN THIS CONTRACT SHA WAS COMMITTED.
