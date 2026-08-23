@@ -77,15 +77,19 @@ FP64 capability, core count, and the git SHA.
 
 ## Model 2 on an accelerator (after a POSITIVE benchmark)
 
-The trainer already supports a device argument; pass it through the CLI
-(execution-only change, no scientific effect; provenance records the device):
+The training CLI exposes an explicit execution-placement flag (default
+`cpu`; CUDA is never auto-selected; placement only — frozen numerics,
+architecture, loss, optimizer, batch sizes, and seeds are unchanged;
+provenance records the device):
 
 ```bash
-export R2_DEVICE=cuda          # or leave unset for CPU
 python -m src.r2_primary.training --model model2 --seed 11 --device cuda
 python -m src.r2_primary.training --model model2 --seed 22 --device cuda
 python -m src.r2_primary.training --model model2 --seed 33 --device cuda
 ```
+
+(Leave off `--device` or pass `--device cpu` for CPU execution. There is no
+environment-variable device override by design: placement must be explicit.)
 
 Uniformity rule (predeclared, not result-based): if ANY Model-2 seed runs on
 an accelerator, run ALL THREE seeds there; a local CPU run of a seed already

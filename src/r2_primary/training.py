@@ -111,30 +111,42 @@ def _repricing_loss(
     batch_items: list,
     node_count: int,
 ) -> torch.Tensor:
-    """Masked MSE of repriced normalized prices vs observed (float64)."""
-    batch_size = len(batch_items)
+    """Masked MSE of repriced normalized prices vs observed (float64).
+
+    All pricer input tensors live on ``predicted_parameters.device`` so the
+    differentiable pricing term runs single-device (execution placement only;
+    values, dtypes, node_count, and the frozen loss formula are unchanged).
+    """
+    device = predicted_parameters.device
     spots = torch.tensor(
-        [item.spot for item in batch_items], dtype=torch.float64
+        [item.spot for item in batch_items], dtype=torch.float64, device=device
     )
     strikes = torch.tensor(
-        np.stack([item.strikes for item in batch_items]), dtype=torch.float64
+        np.stack([item.strikes for item in batch_items]),
+        dtype=torch.float64,
+        device=device,
     )
     maturities = torch.tensor(
-        np.stack([item.maturities for item in batch_items]), dtype=torch.float64
+        np.stack([item.maturities for item in batch_items]),
+        dtype=torch.float64,
+        device=device,
     )
     rates = torch.tensor(
-        [item.rate for item in batch_items], dtype=torch.float64
+        [item.rate for item in batch_items], dtype=torch.float64, device=device
     )
     carries = torch.tensor(
-        [item.carry for item in batch_items], dtype=torch.float64
+        [item.carry for item in batch_items], dtype=torch.float64, device=device
     )
     option_types = [list(item.option_types) for item in batch_items]
     observed = torch.tensor(
         np.stack([item.normalized_prices for item in batch_items]),
         dtype=torch.float64,
+        device=device,
     )
     mask = torch.tensor(
-        np.stack([item.mask for item in batch_items]), dtype=torch.float64
+        np.stack([item.mask for item in batch_items]),
+        dtype=torch.float64,
+        device=device,
     )
     repriced = price_double_heston_surface_batch_vectorized(
         predicted_parameters.to(torch.float64),
@@ -581,7 +593,7 @@ def load_run(checkpoint_directory: str | Path, model_kind: str) -> dict[str, Any
     return {"model": model, "standardizer": standardizer, "payload": payload}
 
 
-def main() -> int:
+def _build_argument_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", choices=["model1", "model2"], required=True)
     parser.add_argument("--seed", type=int, required=True)
@@ -590,11 +602,24 @@ def main() -> int:
     )
     parser.add_argument("--output", type=Path, default=None)
     parser.add_argument(
+        "--device",
+        choices=["cpu", "cuda"],
+        default="cpu",
+        help=(
+            "execution placement only (frozen numerics unchanged); default "
+            "'cpu'; CUDA is never auto-selected"
+        ),
+    )
+    parser.add_argument(
         "--smoke",
         action="store_true",
         help="tiny DEVELOPMENT_SMOKE_NOT_RESEARCH_RESULT pipeline run",
     )
-    args = parser.parse_args()
+    return parser
+
+
+def main() -> int:
+    args = _build_argument_parser().parse_args()
 
     # Wall-clock scheduling only (never numerics): allow capping torch's
     # intra-op threads when sharing the machine with calibration workers.
@@ -612,19 +637,29 @@ def main() -> int:
         print("DEVELOPMENT_SMOKE_NOT_RESEARCH_RESULT")
         if args.model == "model1":
             result = train_model1(
-                dataset, args.seed, output, max_epochs=2, max_train_surfaces=64
+                dataset,
+                args.seed,
+                output,
+                max_epochs=2,
+                max_train_surfaces=64,
+                device=args.device,
             )
         else:
             result = train_model2(
-                dataset, args.seed, output, max_epochs=2, max_train_surfaces=64
+                dataset,
+                args.seed,
+                output,
+                max_epochs=2,
+                max_train_surfaces=64,
+                device=args.device,
             )
     else:
         if output.exists() and any(output.glob("best_validation_checkpoint.pt")):
             raise SystemExit(f"refusing to overwrite existing research run at {output}")
         if args.model == "model1":
-            result = train_model1(dataset, args.seed, output)
+            result = train_model1(dataset, args.seed, output, device=args.device)
         else:
-            result = train_model2(dataset, args.seed, output)
+            result = train_model2(dataset, args.seed, output, device=args.device)
     print(
         f"{args.model} seed {args.seed}: best_epoch={result['best_epoch']} "
         f"epochs={result['epochs_completed']} runtime={result['runtime_seconds']:.1f}s"

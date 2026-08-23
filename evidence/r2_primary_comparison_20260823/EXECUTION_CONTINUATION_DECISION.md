@@ -134,3 +134,31 @@ per protocol section `metrics.runtime`).
 G8 / real-market / noise-cohort / boundary / OOD evaluations remain out of
 scope. The frozen protocol remains unchanged. Nothing in this note authorizes
 any protocol modification.
+
+## 9. Addendum — cloud benchmark outcome and GPU plumbing repair (factual log)
+
+Date: 2026-08-23. Facts only; no scientific change.
+
+- Kaggle P100 benchmark PASSED before any cloud research training:
+  CUDA Model-2 step 0.0479512682 s vs local frozen baseline 0.26 s
+  (~5.4x speedup); float64 gradients finite; vectorized-vs-loop max diff
+  5.68e-14 and vectorized-vs-production max diff 7.11e-14, both inside the
+  1e-9 frozen tolerance; environment verification and 14/14 implementation
+  tests passed on the P100 (Torch 2.10.0+cu126, Tesla P100-PCIE-16GB).
+- A CLI/device-plumbing defect prevented any cloud research seed from
+  starting: the training module accepted ``device=`` only as a Python
+  keyword, argparse exposed no ``--device`` flag, and the differentiable
+  repricing term built its input tensors on CPU regardless of model device.
+- The attempted Model-2 seed 11/22 cloud commands exited at argparse
+  argument parsing. NO research checkpoint, training history, summary, or any
+  other research output was created by those attempts.
+- Repair commit wires an explicit ``--device {cpu,cuda}`` flag (default cpu,
+  never auto-selecting CUDA) through both research and smoke paths, makes
+  ``_repricing_loss`` construct every pricer input tensor on the prediction
+  device at the frozen float64 dtype, and updates ``scripts/cloud/
+  README_CLOUD_RUN.md`` to document the real CLI. Placement-only change:
+  architecture, optimizer, losses/weights, batch sizes, seeds, node_count,
+  early stopping, dataset/splits, metrics, and calibration settings are
+  untouched; CPU numerics are proven bitwise unchanged by test.
+- Traditional calibration journal remains untouched at 465/1250; no local or
+  cloud training has been started by this repair.
