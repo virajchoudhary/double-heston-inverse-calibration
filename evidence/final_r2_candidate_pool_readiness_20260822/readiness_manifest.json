@@ -1,0 +1,77 @@
+{
+  "all_candidates_csv_sha256": "8540056b69c290338b7338583bb4f71622c04fa222fd727b727146967d08be56",
+  "all_sufficient": true,
+  "command": "python -m src.r2_synthetic_generation readiness --output C:\\ann_inverse_calibration\\evidence\\final_r2_candidate_pool_readiness_20260822",
+  "environment": {
+    "numpy_version": "2.2.6",
+    "pandas_version": "2.3.2",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python_version": "3.13.4",
+    "scipy_version": "1.16.2"
+  },
+  "final_10k_generated": false,
+  "generated_at_utc": "2026-08-23T04:55:52.216666+00:00",
+  "generation_config_sha256": "d8e705cd424c56189b01c14723df0e24f750543d904d5a4593a171483aef0393",
+  "generator_source_sha256": "7152a4cfd820802afda4cb1a15c546428f835a0cc0929dbfde1388aa7c20dfc4",
+  "git_commit_sha": "df55a0bf709c082d3020f66795195a3da728b1b7",
+  "panel_label": "FINAL_PARAMETER_PANEL_ONLY",
+  "pricing_performed": false,
+  "r2_synthetic_interface_sha256": "a0f49feb97981d27cefd25d918f7d90cbcf928609549cdfe511d4dd64ddd643d",
+  "rejection_summary": {
+    "accepted_count": 15588,
+    "candidate_count": 20000,
+    "rejected_count": 4412,
+    "rejection_reason_counts": {
+      "ordinary_training_margin_policy": 4412
+    }
+  },
+  "rejections_jsonl_sha256": "94094f6d1f9338b2d77766fe87991c19d242fa7cecdea36cce0b81d6ae3d086e",
+  "reviewed_sampler_source_sha256": "1a451c864e0997e7ff9e52c1270fb1d8f28f5d539eede759612e842e1da44611",
+  "reviewed_sampling_config_sha256": "2634446a3e11db8a620d24a4974ca9fc190d29271bef2a8965c10c01453fd29a",
+  "schema_version": "1.0",
+  "seeds": {
+    "interior_train": 20260807,
+    "wide_valid_train": 20260808
+  },
+  "selected_panel_count": 10000,
+  "selected_panel_csv_sha256": "9e11842842d919490611afc519ab21db98474af674f38bc49a3b9f26f49037c7",
+  "split_summary": {
+    "by_distribution": {
+      "interior_train": {
+        "test": 1042,
+        "train": 6250,
+        "validation": 1042
+      },
+      "wide_valid_train": {
+        "test": 208,
+        "train": 1250,
+        "validation": 208
+      }
+    },
+    "matches_frozen_quota": true,
+    "totals": {
+      "test": 1250,
+      "train": 7500,
+      "validation": 1250
+    }
+  },
+  "status": "FINAL_CANDIDATE_POOL_READINESS_VERIFIED_NO_PRICING",
+  "sufficiency": {
+    "interior_train": {
+      "accepted_count": 12217,
+      "pool_count": 15000,
+      "required_quota": 8334,
+      "sufficient": true
+    },
+    "wide_valid_train": {
+      "accepted_count": 3371,
+      "pool_count": 5000,
+      "required_quota": 1666,
+      "sufficient": true
+    }
+  },
+  "surface_label": "SURFACES_NOT_GENERATED",
+  "surfaces_generated": false,
+  "training_label": "NOT_YET_TRAINING_DATA",
+  "training_started": false
+}

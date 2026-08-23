@@ -34,6 +34,9 @@ The project is no longer waiting for external mentor approval to continue. G2 is
 | Final G2 representation | **Frozen: R2** (ranked two-expiry central-five, 20 nominal slots + explicit real-market masking) |
 | Canonical R2 representation interface | Formalized: `src/r2_representation/` ([R2_REPRESENTATION_CONTRACT.md](R2_REPRESENTATION_CONTRACT.md)) |
 | G2 | **PASSED_REPRESENTATION_FROZEN_WITH_PRACTICAL_NON_IDENTIFIABILITY** |
+| R2 synthetic-generation contract | Frozen before pilot: [R2_SYNTHETIC_GENERATION_CONTRACT.md](R2_SYNTHETIC_GENERATION_CONTRACT.md) (freeze commit `53aed7b`) |
+| Deterministic R2 development pilot | **Validated**: 240/240 surfaces, exact 200/40 and 180/30/30 quotas, replay `VERIFIED_IDENTICAL` |
+| Final parameter-pool readiness | **Verified without pricing**: 15k/5k pools yield 12,217/3,371 accepted ≥ 8,334/1,666 required |
 | Global ten-parameter ambiguity | Established |
 | Full-108 overnight identifiability diagnostic | Completed; locally full-rank can still be practically non-identifiable at noise scale |
 | Final 10,000-surface research dataset | Not generated |
@@ -133,8 +136,15 @@ G2_FINAL_REPRESENTATION = FROZEN_R2_RANKED_TWO_EXPIRY_CENTRAL_FIVE
 G2 = PASSED_REPRESENTATION_FROZEN_WITH_PRACTICAL_NON_IDENTIFIABILITY
 PRACTICAL_NON_IDENTIFIABILITY = RETAINED_RESEARCH_FINDING
 GLOBAL_AMBIGUITY = ESTABLISHED
+R2_INTERFACE = FROZEN
+R2_SYNTHETIC_GENERATION_CONTRACT = FROZEN
+R2_PILOT = VALIDATED
+FINAL_PARAMETER_POOL_READINESS = VERIFIED
 FINAL_10K = NOT_GENERATED
 ANN_RESEARCH_TRAINING = NOT_STARTED
+MODEL2_RESEARCH_TRAINING = NOT_STARTED
+CHALLENGE_OOD_FINAL_GENERATION = NOT_STARTED
+G8 = NOT_STARTED
 PINN_INFRASTRUCTURE = IMPLEMENTED_NOT_RESEARCH_TRAINED
 PINN_RESEARCH_MILESTONE = NOT_VALIDATED_OR_TRAINED
 FROZEN_REAL_MARKET_EVALUATION = NOT_STARTED
@@ -142,10 +152,16 @@ FROZEN_REAL_MARKET_EVALUATION = NOT_STARTED
 
 ## Exact next action
 
-`REGENERATE / REVALIDATE THE FINAL SYNTHETIC SURFACE CONTRACT ON THE FROZEN R2 INTERFACE`
+`MERGE THE R2 CONTRACT + PILOT MILESTONE, THEN AUTHORIZE THE FINAL 10K SEPARATELY`
 
-The frozen R2 representation interface is formalized as the canonical
-post-G2 representation contract (`src/r2_representation/`,
+The final R2 synthetic-generation contract is frozen (`53aed7b`, before any
+pilot output), the contracted 240-surface development pilot is validated with
+a `VERIFIED_IDENTICAL` deterministic replay (evidence:
+`evidence/final_r2_synthetic_pilot_20260822/`), and the fixed final 15k/5k
+candidate pools are verified sufficient without pricing
+(`evidence/final_r2_candidate_pool_readiness_20260822/`). The frozen R2
+representation interface remains the canonical post-G2 representation
+contract (`src/r2_representation/`,
 [R2_REPRESENTATION_CONTRACT.md](R2_REPRESENTATION_CONTRACT.md)): 20 nominal
 slots in one deterministic tested order, explicit mask semantics (never
 impute a missing real quote), synthetic construction through the unchanged

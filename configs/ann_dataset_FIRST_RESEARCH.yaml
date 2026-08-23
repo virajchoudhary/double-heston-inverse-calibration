@@ -1,5 +1,11 @@
 schema_version: "1.0"
-status: PREPARED_NOT_EXECUTED
+status: HISTORICAL_DEPRECATED_SUPERSEDED_BY_R2_FINAL_CONTRACT
+
+superseded_by:
+  active_config: configs/r2_synthetic_generation_FINAL.yaml
+  representation: FROZEN_R2_RANKED_TWO_EXPIRY_CENTRAL_FIVE
+  reason: legacy_fixed_calendar_108_grid_is_not_the_active_final_representation
+  historical_note: retained_verbatim_as_evidence_that_108_was_once_planned
 
 readiness:
   core_dataset_ready: true
