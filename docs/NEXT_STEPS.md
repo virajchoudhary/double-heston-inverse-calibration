@@ -34,7 +34,7 @@ serialization, structural rejection of legacy-108 and rejected-R3 data, and
 a full focused test suite. The canonical parameter order, pricer,
 constraints, and target semantics are unchanged.
 
-### 3. Generate final synthetic truth data — PILOT AND READINESS COMPLETE; FINAL 10K GENERATION AUTHORIZED
+### 3. Generate final synthetic truth data — COMPLETE (generated, validated, full-replay verified)
 
 Only after representation freeze (done) and interface formalization (done,
 `src/r2_representation/`):
@@ -42,14 +42,20 @@ Only after representation freeze (done) and interface formalization (done,
 1. final sampling/generation contract frozen (`configs/r2_synthetic_generation_FINAL.yaml`, commit `53aed7b`);
 2. contracted 240-surface development pilot executed and validated with a `VERIFIED_IDENTICAL` deterministic replay (0 pricing failures);
 3. fixed final 15k/5k candidate pools verified sufficient (12,217 ≥ 8,334 interior; 3,371 ≥ 1,666 wide) without pricing the final core — merged PR #28 / Issue #27 closed;
-4. the frozen 10,000-row parameter panel is sealed as
+4. the frozen 10,000-row parameter panel was sealed as
    `evidence/final_r2_candidate_pool_readiness_20260822/final_parameter_panel.csv`
-   (FINAL_PARAMETER_PANEL_ONLY / SURFACES_NOT_GENERATED / NOT_YET_TRAINING_DATA); and
-5. the separate explicit final-generation gate is implemented
-   (`src/r2_final_generation.py`): an explicit `generate-final` command
-   requiring the committed authorization marker
-   `evidence/R2_FINAL_10K_GENERATION_AUTHORIZED.txt`, with no-pricing
-   preflight, no replacement/refill on failure, and no training.
+   (FINAL_PARAMETER_PANEL_ONLY / SURFACES_NOT_GENERATED / NOT_YET_TRAINING_DATA);
+5. the separate explicit final-generation gate (`src/r2_final_generation.py`) authorized
+   final generation via committed, remote-verified authorization markers
+   (`evidence/R2_FINAL_10K_GENERATION_AUTHORIZED.txt`; authorization SHAs recorded on
+   Issue #30: v1 `2cbf0fc`, v2 `bfbed9d`, v3 `b13caf0`); and
+6. the final dataset was generated from the exact frozen panel (10,000 surfaces,
+   0 pricing failures, 0 retained failures, noise 0, no replacement/refill, no
+   real-market inputs, no training), validated against the full frozen contract,
+   and verified byte-identical by a full deterministic re-pricing replay of all
+   10,000 surfaces. Canonical output: `data/final_r2_clean_10000/`
+   (dataset status `FINAL_R2_CLEAN_10000_RESEARCH_SYNTHETIC_TRUTH_DATASET_FROZEN_BEFORE_MODEL_TRAINING`;
+   surfaces.jsonl SHA-256 `148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6`).
 
 ### 4. Run the primary comparison
 
@@ -92,13 +98,17 @@ PRACTICAL_NON_IDENTIFIABILITY = RETAINED_RESEARCH_FINDING
 R2_GENERATION_CONTRACT = FROZEN_AND_PILOT_VALIDATED_MERGED_PR28
 FINAL_CANDIDATE_POOL_READINESS = VERIFIED_NO_PRICING_MERGED_PR28
 ARCHIVE2_REAL_MARKET_WEIGHT_UPDATES = QUARANTINED_MERGED_PR29
-FINAL_PARAMETER_PANEL = SEALED_10000_ROWS_SURFACES_NOT_GENERATED
-FINAL_10K = NOT_GENERATED_AUTHORIZED_GENERATION_IS_NEXT_ACTION
+FINAL_PARAMETER_PANEL = SEALED_10000_ROWS_CONSUMED_BY_FINAL_GENERATION
+FINAL_10K = GENERATED_AND_VALIDATED_FULL_REPLAY_VERIFIED
 ANN_RESEARCH_TRAINING = NOT_STARTED
 PINN_INFRASTRUCTURE = IMPLEMENTED_NOT_RESEARCH_TRAINED
 PINN_RESEARCH_MILESTONE = NOT_VALIDATED_OR_TRAINED
+NOISE_COHORT = NOT_GENERATED
+BOUNDARY_CHALLENGE = NOT_GENERATED
+OOD = NOT_GENERATED
+G8 = NOT_STARTED
 ```
 
 The exact next scientific action is:
 
-`AUTHORIZED FINAL CLEAN 10K R2 GENERATION`
+`PRIMARY MODEL COMPARISON ON THE FROZEN FINAL 10K DATASET (TRADITIONAL CALIBRATION, MODEL 1 ANN, MODEL 2 CONSTRAINT+REPRICING-INFORMED) — SEPARATELY AUTHORIZED, NOT STARTED`

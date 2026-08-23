@@ -1,0 +1,18 @@
+{
+  "authorized_at_commit": "b13caf0747d339c7a6bdf7a0400465bcfaad814f",
+  "byte_identical_payloads": true,
+  "compared": {
+    "mode": "full",
+    "surfaces": 10000
+  },
+  "full_replay_performed": true,
+  "hashes": {
+    "primary_surfaces_jsonl_sha256": "148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6",
+    "surfaces_jsonl_sha256": "148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6"
+  },
+  "mode": "full",
+  "primary_output": "C:\\ann_inverse_calibration\\data\\final_r2_clean_10000",
+  "replay_output": "C:\\ann_inverse_calibration\\data\\final_r2_clean_10000_replay",
+  "replayed_at_utc": "2026-08-23T06:46:36.237617+00:00",
+  "schema_version": "1.0"
+}

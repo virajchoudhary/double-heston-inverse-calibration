@@ -1,0 +1,314 @@
+{
+  "authorization": {
+    "authorization_commit_remote_verified": true,
+    "authorization_commit_sha": "b13caf0747d339c7a6bdf7a0400465bcfaad814f",
+    "canonical_main_base_git_sha": "bfbed9dfda9df4fc39948fd46f7d0b9399ad0107",
+    "marker_path": "C:\\ann_inverse_calibration\\evidence\\R2_FINAL_10K_GENERATION_AUTHORIZED.txt",
+    "marker_sha256": "e159332ead09e3a176df5331c752c2c53865d5e7de7262bb1853078da5bd1723",
+    "statement": "NO FINAL R2 10K SURFACE OUTPUT EXISTED WHEN THIS AUTHORIZATION SHA WAS COMMITTED."
+  },
+  "cohort": "final",
+  "command": "python -m src.r2_final_generation generate-final",
+  "conditioning_policy": {
+    "classification": "SYNTHETIC_ONLY_ENGINEERING_RESEARCH_DESIGN_NOT_REAL_MARKET_DISTRIBUTION_CLAIM",
+    "lattice": {
+      "carry_offsets": [
+        -0.02,
+        -0.01,
+        0.0,
+        0.01,
+        0.02,
+        0.03
+      ],
+      "combination_count": 2016,
+      "rank1_dte_days": [
+        7,
+        14,
+        21,
+        30,
+        45,
+        60,
+        75,
+        90
+      ],
+      "rank2_gap_dte_days": [
+        7,
+        14,
+        21,
+        30,
+        45,
+        60,
+        90
+      ],
+      "rates": [
+        0.01,
+        0.02,
+        0.03,
+        0.04,
+        0.05,
+        0.06
+      ]
+    },
+    "real_market_inputs_used": false,
+    "seed": 20260807,
+    "stride": 1103
+  },
+  "contract_name": "R2_SYNTHETIC_GENERATION_FINAL",
+  "dataset_labels": [
+    "FINAL_R2_CLEAN_10000",
+    "RESEARCH_SYNTHETIC_TRUTH_DATASET",
+    "FROZEN_BEFORE_MODEL_TRAINING"
+  ],
+  "dataset_status": "FINAL_R2_CLEAN_10000_RESEARCH_SYNTHETIC_TRUTH_DATASET_FROZEN_BEFORE_MODEL_TRAINING",
+  "environment": {
+    "numpy_version": "2.2.6",
+    "pandas_version": "2.3.2",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python_version": "3.13.4",
+    "scipy_version": "1.16.2"
+  },
+  "failure_count": 0,
+  "final_10k_generated": true,
+  "final_generator_version": "r2-final-generation-v1",
+  "g8_started": false,
+  "generated_at_utc": "2026-08-23T06:42:19.405137+00:00",
+  "generation_git_sha": "b13caf0747d339c7a6bdf7a0400465bcfaad814f",
+  "generator_version": "r2-synthetic-generation-v1",
+  "noise_level": 0.0,
+  "numerical_sanity": {
+    "all_passed": true,
+    "failed_surface_count": 0,
+    "normalized_price_max": 0.21895219449960238,
+    "normalized_price_min": 1.68059879437606e-07,
+    "put_call_parity_max_abs_error": 3.469446951953614e-16,
+    "surface_count": 10000
+  },
+  "parameter_panel": {
+    "float_parsing": "pandas read_csv float_precision=round_trip (exact float64)",
+    "readiness_reference": "selected_panel_csv_sha256 in evidence/final_r2_candidate_pool_readiness_20260822/readiness_manifest.json",
+    "row_count": 10000,
+    "sha256": "9e11842842d919490611afc519ab21db98474af674f38bc49a3b9f26f49037c7",
+    "source": "C:\\ann_inverse_calibration\\evidence\\final_r2_candidate_pool_readiness_20260822\\final_parameter_panel.csv"
+  },
+  "pricing": {
+    "entrypoint": "price_double_heston_surface",
+    "node_count": 64,
+    "noise_level": 0.0,
+    "replacement_on_failure": false,
+    "source": "src/double_heston.py"
+  },
+  "provenance_hashes": {
+    "authorization_marker_sha256": "e159332ead09e3a176df5331c752c2c53865d5e7de7262bb1853078da5bd1723",
+    "conditioning_jsonl_sha256": "e956ade26f64dfea619bb3344461855bada64806d632755ee4ed2b514d227074",
+    "deterministic_content_sha256": "148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6",
+    "final_generation_module_sha256": "c0c9c9288fb6e3c7f87b188cff99f5ef6119673ea3c0e823688bf4d4db5052f7",
+    "generation_config_sha256": "d8e705cd424c56189b01c14723df0e24f750543d904d5a4593a171483aef0393",
+    "generator_source_sha256": "8afdbdc870252e186c708f5f3cfbdfbb2d05800994d2875d404af4728d284c45",
+    "integrity_report_json_sha256": "4d7a9b3e9dde481eda2665bd0fe716a88d040c0dc65f12e7131803aa0ff4e6e8",
+    "numerical_sanity_jsonl_sha256": "114a7d8f195282c383c69e71946721b6e0fa815f7da217e56a7388bfb5826d40",
+    "production_pricer_sha256": "154d53fba17caddcb4d5a8d72001a43aa3cbb90cb1d6d9177c07ddefc5414b0a",
+    "r2_synthetic_interface_sha256": "a0f49feb97981d27cefd25d918f7d90cbcf928609549cdfe511d4dd64ddd643d",
+    "reviewed_sampler_source_sha256": "1a451c864e0997e7ff9e52c1270fb1d8f28f5d539eede759612e842e1da44611",
+    "reviewed_sampling_config_sha256": "2634446a3e11db8a620d24a4974ca9fc190d29271bef2a8965c10c01453fd29a",
+    "surfaces_jsonl_sha256": "148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6"
+  },
+  "quotas": {
+    "distributions": {
+      "interior_train": 8334,
+      "wide_valid_train": 1666
+    },
+    "splits": {
+      "test": {
+        "interior_train": 1042,
+        "total": 1250,
+        "wide_valid_train": 208
+      },
+      "train": {
+        "interior_train": 6250,
+        "total": 7500,
+        "wide_valid_train": 1250
+      },
+      "validation": {
+        "interior_train": 1042,
+        "total": 1250,
+        "wide_valid_train": 208
+      }
+    },
+    "total_surfaces": 10000
+  },
+  "real_market_inputs_used": false,
+  "replay_report": {
+    "authorized_at_commit": "b13caf0747d339c7a6bdf7a0400465bcfaad814f",
+    "byte_identical_payloads": true,
+    "compared": {
+      "mode": "full",
+      "surfaces": 10000
+    },
+    "full_replay_performed": true,
+    "hashes": {
+      "primary_surfaces_jsonl_sha256": "148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6",
+      "surfaces_jsonl_sha256": "148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6"
+    },
+    "mode": "full",
+    "primary_output": "C:\\ann_inverse_calibration\\data\\final_r2_clean_10000",
+    "replay_output": "C:\\ann_inverse_calibration\\data\\final_r2_clean_10000_replay",
+    "replayed_at_utc": "2026-08-23T06:46:36.237617+00:00",
+    "schema_version": "1.0"
+  },
+  "replay_status": "VERIFIED_IDENTICAL_FULL_REPLAY",
+  "representation_name": "FROZEN_R2_RANKED_TWO_EXPIRY_CENTRAL_FIVE",
+  "representation_version": "1.0",
+  "sampling": {
+    "policy": "PANEL_REUSED_FROM_SEALED_READINESS_NO_RESAMPLING",
+    "seeds": {
+      "interior_train": 20260807,
+      "wide_valid_train": 20260808
+    }
+  },
+  "schema_version": "1.0",
+  "slot_keys": [
+    [
+      1,
+      -0.1,
+      "call"
+    ],
+    [
+      1,
+      -0.05,
+      "call"
+    ],
+    [
+      1,
+      0.0,
+      "call"
+    ],
+    [
+      1,
+      0.05,
+      "call"
+    ],
+    [
+      1,
+      0.1,
+      "call"
+    ],
+    [
+      2,
+      -0.1,
+      "call"
+    ],
+    [
+      2,
+      -0.05,
+      "call"
+    ],
+    [
+      2,
+      0.0,
+      "call"
+    ],
+    [
+      2,
+      0.05,
+      "call"
+    ],
+    [
+      2,
+      0.1,
+      "call"
+    ],
+    [
+      1,
+      -0.1,
+      "put"
+    ],
+    [
+      1,
+      -0.05,
+      "put"
+    ],
+    [
+      1,
+      0.0,
+      "put"
+    ],
+    [
+      1,
+      0.05,
+      "put"
+    ],
+    [
+      1,
+      0.1,
+      "put"
+    ],
+    [
+      2,
+      -0.1,
+      "put"
+    ],
+    [
+      2,
+      -0.05,
+      "put"
+    ],
+    [
+      2,
+      0.0,
+      "put"
+    ],
+    [
+      2,
+      0.05,
+      "put"
+    ],
+    [
+      2,
+      0.1,
+      "put"
+    ]
+  ],
+  "split_summary": {
+    "by_distribution": {
+      "interior_train": {
+        "test": 1042,
+        "train": 6250,
+        "validation": 1042
+      },
+      "wide_valid_train": {
+        "test": 208,
+        "train": 1250,
+        "validation": 208
+      }
+    },
+    "matches_frozen_quota": true,
+    "totals": {
+      "test": 1250,
+      "train": 7500,
+      "validation": 1250
+    }
+  },
+  "surface_count": 10000,
+  "timestamp_is_rng_input": false,
+  "training_started": false,
+  "validation_report": {
+    "checks": {
+      "all_dataset_status_final": true,
+      "all_masks_true": true,
+      "canonical_slot_order": true,
+      "conditioning_contract_valid": true,
+      "count_matches_expected": true,
+      "distribution_quotas_exact": true,
+      "no_cross_split_overlap": true,
+      "panel_correspondence_exact": true,
+      "parameter_constraints_valid": true,
+      "prices_finite_strictly_positive": true,
+      "serialization_round_trip": true,
+      "split_quotas_exact": true,
+      "unique_parameter_vectors": true,
+      "unique_surface_ids": true
+    },
+    "surface_count": 10000,
+    "validated": true
+  }
+}

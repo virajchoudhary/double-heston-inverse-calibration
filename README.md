@@ -2,7 +2,7 @@
 
 This private B.Tech capstone repository contains an ordinary ANN inverse-calibration baseline, an independently implemented canonical Double Heston European-option pricing engine, and a completed deterministic official-NSE Stage A market-support screen. The production engine has been benchmarked against a separately coded adaptive-quadrature reference. The unavailable teammate engine is being replaced by this reimplementation; equivalence to the unavailable source is not claimed.
 
-> The pricing benchmark passed, the normal reviewed synthetic core is ready under the existing contract, and official-NSE Stage A candidate selection is complete. The selected primaries are NTPC, CIPLA, INFY, and HDFCBANK; NTPC was selected at moderate confidence after a predeclared five-Wednesday Power extension resolved the original three-date tie. G2 established a market-supported near/middle, central-five, calls-and-puts geometry, but reduced-grid, third-expiry, multi-date, and independent CIR-path replication diagnostics did not demonstrate stable recovery of the canonical ten parameters. A bounded clean multi-start diagnostic subsequently established global ambiguity in all four predeclared representative cases: 40 near-equivalent solutions formed 39 separated scaled-parameter clusters despite median normalized price RMSE `4.708e-8` and median range-scaled parameter RMSE `0.1485`. The final representation is not frozen and `G2 = NOT_PASSED`. The historical challenge-stress decision remains `NEEDS_SAMPLER_CORRECTION`. No final 10k dataset or ANN/PINN research result exists.
+> The pricing benchmark passed, the normal reviewed synthetic core is ready under the existing contract, and official-NSE Stage A candidate selection is complete. The selected primaries are NTPC, CIPLA, INFY, and HDFCBANK; NTPC was selected at moderate confidence after a predeclared five-Wednesday Power extension resolved the original three-date tie. G2 established a market-supported near/middle, central-five, calls-and-puts geometry, but reduced-grid, third-expiry, multi-date, and independent CIR-path replication diagnostics did not demonstrate stable recovery of the canonical ten parameters. A bounded clean multi-start diagnostic subsequently established global ambiguity in all four predeclared representative cases: 40 near-equivalent solutions formed 39 separated scaled-parameter clusters despite median normalized price RMSE `4.708e-8` and median range-scaled parameter RMSE `0.1485`. The self-governed G2 protocol subsequently froze R2 with practical non-identifiability retained as a research finding (`G2 = PASSED_REPRESENTATION_FROZEN_WITH_PRACTICAL_NON_IDENTIFIABILITY`; see `docs/G2_R2_R3_REPRESENTATION_SELECTION_RESULTS.md`). The historical challenge-stress decision remains `NEEDS_SAMPLER_CORRECTION`. The final clean 10,000-surface R2 synthetic truth dataset has been generated and validated (frozen before model training); no ANN/PINN research training result exists.
 
 | Component | Status |
 |---|---|
@@ -19,9 +19,9 @@ This private B.Tech capstone repository contains an ordinary ANN inverse-calibra
 | Candidate selection | Complete: NTPC, CIPLA, INFY, and HDFCBANK; NTPC confidence moderate |
 | G2 market-supported geometry | Established: near + middle, central-five, calls + puts |
 | G2 global ambiguity | Established in 4/4 predeclared representative cases |
-| Surface-representation G2 gate | Not passed; stable canonical ten-parameter recovery was not demonstrated |
-| G2 final representation | Not frozen |
-| Final 10,000-surface research dataset | Not generated |
+| Surface-representation G2 gate | Not passed at the original gate; superseded by the sealed self-governed R2-vs-R3 protocol |
+| G2 final representation | Frozen: `FROZEN_R2_RANKED_TWO_EXPIRY_CENTRAL_FIVE` (20 slots) |
+| Final 10,000-surface research dataset | Generated, validated, and full-replay verified (clean core, noise 0, frozen before training) |
 | Full ANN research training | Not started |
 | PINN infrastructure | Implemented; not research-trained |
 | Frozen real-market evaluation | Not started |

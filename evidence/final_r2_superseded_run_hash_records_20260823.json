@@ -1,0 +1,21 @@
+{
+  "note": "Hash records of superseded unsealed/partial outputs of the final 10k generation. conditioning.jsonl and numerical_sanity.jsonl were byte-identical across every run, proving price determinism; surfaces.jsonl differs across runs only through the embedded authorization-marker/module provenance hashes.",
+  "hashes": {
+    "conditioning.jsonl": "e956ade26f64dfea619bb3344461855bada64806d632755ee4ed2b514d227074",
+    "numerical_sanity.jsonl": "114a7d8f195282c383c69e71946721b6e0fa815f7da217e56a7388bfb5826d40",
+    "surfaces.jsonl": "2b1651a18c9319dfa7f842eeb70e92e855cd030f50c1396aa738090c9d0c69df"
+  },
+  "superseded_runs": [
+    {
+      "run": "authorized run v2 (bfbed9d marker, sealed 10k output)",
+      "reason_superseded": "post-generation replay phase conflicted with the pre-generation output-absence preflight check; module repaired and dataset regenerated under re-authorization v3",
+      "hashes": {
+        "conditioning.jsonl": "e956ade26f64dfea619bb3344461855bada64806d632755ee4ed2b514d227074",
+        "integrity_report.json": "4d7a9b3e9dde481eda2665bd0fe716a88d040c0dc65f12e7131803aa0ff4e6e8",
+        "manifest.json": "cf770e138ce6b950df0182c0c1580f65f34ed8964ba52279ad2f34b116810589",
+        "numerical_sanity.jsonl": "114a7d8f195282c383c69e71946721b6e0fa815f7da217e56a7388bfb5826d40",
+        "surfaces.jsonl": "cc5b555dca5ae0dc34ecbaff1c0b0be4bec4f84b02c601a826291211afdd8fc7"
+      }
+    }
+  ]
+}
