@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import os
 import subprocess
 import time
 from pathlib import Path
@@ -594,6 +595,12 @@ def main() -> int:
         help="tiny DEVELOPMENT_SMOKE_NOT_RESEARCH_RESULT pipeline run",
     )
     args = parser.parse_args()
+
+    # Wall-clock scheduling only (never numerics): allow capping torch's
+    # intra-op threads when sharing the machine with calibration workers.
+    thread_cap = os.environ.get("R2_TORCH_THREADS")
+    if thread_cap:
+        torch.set_num_threads(max(1, int(thread_cap)))
 
     dataset = R2PrimaryDataset.from_jsonl(args.dataset)
     output = args.output or (
