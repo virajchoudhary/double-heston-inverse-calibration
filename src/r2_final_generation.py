@@ -99,9 +99,19 @@ REPLAY_SUBSET_PER_GROUP_ROW_LIMIT = 3
 # could write its evidence.  That branch is unreachable from final
 # generation (the final cohort reads the committed readiness panel directly
 # and never calls ``run_final_readiness``), and no sampling, selection,
-# conditioning, pricing, validation, or serialization logic changed.  This
-# is the sole classified difference; every other scientific-dependency hash
-# must match readiness/pilot provenance exactly.
+# conditioning, pricing, validation, or serialization logic changed.
+# These two immutable identities are the ONLY permitted generator state:
+# the readiness evidence must record READINESS_GENERATOR_SHA256, and the
+# current generator must be exactly EXPECTED_CLASSIFIED_GENERATOR_SHA256
+# (the reviewed post-65aab62 generator that produced the final dataset).
+# Any other generator hash fails preflight closed; the narrative constant
+# below is documentation only and is never a decision condition.
+READINESS_GENERATOR_SHA256 = (
+    "7152a4cfd820802afda4cb1a15c546428f835a0cc0929dbfde1388aa7c20dfc4"
+)
+EXPECTED_CLASSIFIED_GENERATOR_SHA256 = (
+    "8afdbdc870252e186c708f5f3cfbdfbb2d05800994d2875d404af4728d284c45"
+)
 GENERATOR_SOURCE_DRIFT_CLASSIFICATION = (
     "readiness-recorded generator_source_sha256 7152a4cfd820802afda4cb1a15c5"
     "46428f835a0cc0929dbfde1388aa7c20dfc4 differs from canonical main via "
@@ -368,10 +378,12 @@ def run_preflight(require_final_output_absent: bool = True) -> dict[str, Any]:
     )
     require(
         "generator_source_drift_classified",
-        hashes["generator_source"] != readiness["generator_source_sha256"]
-        and GENERATOR_SOURCE_DRIFT_CLASSIFICATION.startswith("readiness-recorded"),
-        "generator source differs from readiness provenance only via the "
-        "pre-classified 65aab62 failure-path repair",
+        readiness["generator_source_sha256"] == READINESS_GENERATOR_SHA256
+        and hashes["generator_source"] == EXPECTED_CLASSIFIED_GENERATOR_SHA256,
+        "the ONLY permitted generator state is the readiness-recorded "
+        f"{READINESS_GENERATOR_SHA256[:12]}... paired with the reviewed "
+        f"post-65aab62 {EXPECTED_CLASSIFIED_GENERATOR_SHA256[:12]}...; "
+        "any other generator identity fails closed",
     )
 
     panel = load_final_panel()

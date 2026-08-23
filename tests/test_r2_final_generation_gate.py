@@ -616,3 +616,125 @@ def test_replay_refuses_overwrite_and_unknown_mode(
         rfg.run_final_replay(primary, existing, mode="full")
     with pytest.raises(rfg.FinalDatasetValidationError, match="mode"):
         rfg.run_final_replay(primary, tmp_path / "replay3", mode="subset-of-my-choosing")
+
+
+# Generator-drift identity pinning (post-evidence safety hardening) ---------
+
+def _patched_dependency_hashes(generator_sha: str):
+    real = rfg.scientific_dependency_hashes
+
+    def patched():
+        hashes = dict(real())
+        hashes["generator_source"] = generator_sha
+        return hashes
+
+    return patched
+
+
+def test_generator_identity_constants_pin_the_reviewed_hashes() -> None:
+    assert (
+        rfg.READINESS_GENERATOR_SHA256
+        == "7152a4cfd820802afda4cb1a15c546428f835a0cc0929dbfde1388aa7c20dfc4"
+    )
+    assert (
+        rfg.EXPECTED_CLASSIFIED_GENERATOR_SHA256
+        == "8afdbdc870252e186c708f5f3cfbdfbb2d05800994d2875d404af4728d284c45"
+    )
+    # The real generator at HEAD must be exactly the reviewed post-65aab62
+    # generator that produced the final dataset.
+    assert (
+        rfg.frozen.sha256_file(rfg.frozen.__file__)
+        == rfg.EXPECTED_CLASSIFIED_GENERATOR_SHA256
+    )
+
+
+def test_expected_classified_generator_hash_passes_preflight(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(
+        rfg,
+        "scientific_dependency_hashes",
+        _patched_dependency_hashes(rfg.EXPECTED_CLASSIFIED_GENERATOR_SHA256),
+    )
+    report = rfg.run_preflight(require_final_output_absent=False)
+    assert report["passed"] is True
+
+
+def test_readiness_generator_hash_as_current_is_rejected(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # The old readiness hash itself must NOT be silently treated as the
+    # classified drift: only the reviewed post-65aab62 generator passes.
+    monkeypatch.setattr(
+        rfg,
+        "scientific_dependency_hashes",
+        _patched_dependency_hashes(rfg.READINESS_GENERATOR_SHA256),
+    )
+    with pytest.raises(
+        rfg.FinalDatasetValidationError, match="generator_source_drift_classified"
+    ):
+        rfg.run_preflight(require_final_output_absent=False)
+
+
+def test_arbitrary_third_generator_hash_is_rejected(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(
+        rfg,
+        "scientific_dependency_hashes",
+        _patched_dependency_hashes("e" * 64),
+    )
+    with pytest.raises(
+        rfg.FinalDatasetValidationError, match="generator_source_drift_classified"
+    ):
+        rfg.run_preflight(require_final_output_absent=False)
+
+
+def test_unexpected_readiness_generator_record_is_rejected(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # BOTH identities are pinned: a readiness manifest recording an unknown
+    # generator hash must fail even when the current generator is expected.
+    tampered = dict(rfg.load_readiness_manifest())
+    tampered["generator_source_sha256"] = "f" * 64
+    monkeypatch.setattr(rfg, "load_readiness_manifest", lambda path=None: tampered)
+    with pytest.raises(
+        rfg.FinalDatasetValidationError, match="generator_source_drift_classified"
+    ):
+        rfg.run_preflight(require_final_output_absent=False)
+
+
+def test_generator_drift_cannot_reach_marker_creation(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    monkeypatch.setattr(
+        rfg,
+        "scientific_dependency_hashes",
+        _patched_dependency_hashes("e" * 64),
+    )
+    marker = tmp_path / "marker.txt"
+    with pytest.raises(rfg.FinalDatasetValidationError):
+        rfg.write_authorization_marker(marker)
+    assert not marker.exists()
+
+
+def test_generator_drift_rejection_performs_no_pricing(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from src import double_heston
+    from src import r2_representation
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError("generator drift rejection must never price a surface")
+
+    monkeypatch.setattr(double_heston, "price_double_heston_surface", forbidden)
+    monkeypatch.setattr(r2_representation, "build_synthetic_surface", forbidden)
+    monkeypatch.setattr(
+        rfg,
+        "scientific_dependency_hashes",
+        _patched_dependency_hashes("e" * 64),
+    )
+    with pytest.raises(
+        rfg.FinalDatasetValidationError, match="generator_source_drift_classified"
+    ):
+        rfg.run_preflight(require_final_output_absent=False)
