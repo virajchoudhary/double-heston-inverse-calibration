@@ -98,7 +98,7 @@ Archive-2 / `src/dheston` is experimental/donor code only. Selected patterns may
 
 Cross-stack positional parameter passing is prohibited. Any interoperability requires an explicitly verified named adapter because the stacks differ in both factor placement and within-factor parameter order.
 
-Archive-2 `real_finetune` / `--continuous` real-market weight updating is outside the canonical primary protocol and must be removed or hard-quarantined from canonical entry points before any future training milestone.
+Archive-2 `real_finetune` / `--continuous` real-market weight updating is outside the canonical primary protocol. It is hard-quarantined (fail-closed) in `train_double_heston.py` via `src/dheston/real_market_policy.py`: any resolved `training.real_epochs > 0` or continuous real re-entry raises before training begins unless the explicit, disabled-by-default `--allow-noncanonical-real-weight-updates` opt-in is passed. `--continuous` alone now only performs auto-resume orchestration and never authorizes real-market weight updates. The live default/smoke configs are synthetic-only (`real_epochs: 0`); the archived `archive2_*` configs are preserved unchanged as historical records and are rejected without the opt-in.
 
 ## 7. Current pipeline state
 
