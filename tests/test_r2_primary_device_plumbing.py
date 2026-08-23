@@ -242,10 +242,14 @@ def test_repricing_loss_keeps_every_pricing_tensor_on_prediction_device(
         call = observed_calls[0]
         for name in ("spots", "strikes", "maturities", "rates", "carries"):
             tensor = call[name]
-            assert tensor.device == prediction_device, name
+            # compare against the authoritative RESOLVED device: after
+            # allocation, predicted.device resolves a bare "cuda" alias to
+            # its concrete index (e.g. cuda:0)
+            assert tensor.device == predicted.device, name
             assert tensor.dtype == torch.float64, name
         assert call["node_count"] == 64
-        assert loss.device == prediction_device
+        assert loss.device == predicted.device
+        assert loss.device.type == device_name
         assert torch.isfinite(loss)
 
 
