@@ -1,0 +1,19 @@
+{
+  "cpu": "x86_64",
+  "cuda_available": true,
+  "cuda_compute_capability": "6.0",
+  "cuda_device_name": "Tesla P100-PCIE-16GB",
+  "dataset_sha256": "148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6",
+  "git_sha": "2b5d41cd232241a1f23348411643a9ce58b53b7a",
+  "host": "1d9bdc14e51a",
+  "logical_cores": 4,
+  "numpy_version": "2.0.2",
+  "platform": "Linux-6.12.90+-x86_64-with-glibc2.35",
+  "protocol_config_sha256": "33ca0f763ec10bb2424eefb02448c9c8e50021854b96a948e420f44bdba70781",
+  "protocol_status": "FROZEN_BEFORE_ANY_PRIMARY_RESEARCH_TRAINING",
+  "purpose": "execution_environment_provenance_only_no_scientific_change",
+  "python_version": "3.12.13",
+  "scipy_version": "1.16.3",
+  "torch_cuda_built": "12.6",
+  "torch_version": "2.10.0+cu126"
+}

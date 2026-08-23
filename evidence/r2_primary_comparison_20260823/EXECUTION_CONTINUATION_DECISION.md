@@ -162,3 +162,46 @@ Date: 2026-08-23. Facts only; no scientific change.
   untouched; CPU numerics are proven bitwise unchanged by test.
 - Traditional calibration journal remains untouched at 465/1250; no local or
   cloud training has been started by this repair.
+
+## 10. Addendum — uniform P100 Model-2 cohort imported (factual log)
+
+Date: 2026-08-24. Facts only; no scientific change.
+
+- Intake: four ZIPs + SHA manifest in `incoming_p100_artifacts/` (local,
+  untracked). All four computed SHA-256 values match `P100_ARTIFACT_SHA256.txt`
+  exactly. Source ZIPs remain untouched.
+- Local CPU seed 11 was verified (`device_used=cpu`, `git_sha 3486ca2`,
+  seed 11, run_kind RESEARCH) and moved BEFORE cloud import to
+  `checkpoints/r2_primary_comparison/model2_seed11_local_cpu_replication/`.
+  Status: MODEL2_LOCAL_SEED11 = RETAINED_EXECUTION_ENVIRONMENT_REPLICATION.
+- The uniform P100 cohort (seeds 11/22/33; same accelerator class, same
+  software environment, same git_sha `2b5d41c`, RESEARCH, cuda, validation-
+  only selection, zero test-selection) was staged, fully provenance-checked,
+  checkpoint-load-tested, and imported to
+  `checkpoints/r2_primary_comparison/model2_seed{11,22,33}/`.
+  MODEL2_P100_SEED11 = COMPLETE; MODEL2_P100_SEED22 = COMPLETE;
+  MODEL2_P100_SEED33 = COMPLETE; MODEL2_PRIMARY_COHORT =
+  COMPLETE_UNIFORM_P100. Per-file SHA-256 hashes are recorded in
+  `P100_MODEL2_COHORT_MANIFEST.json` (checkpoints stay untracked per repo
+  `.gitignore` policy; no force-add).
+- Cloud evidence import: the archived journal copy is byte-different from the
+  local canonical journal ONLY by line endings (local CRLF vs cloud LF);
+  normalized SHA-256 identical (`6f95bf44…a993`), 465 lines / 465 distinct
+  surface_ids both, all row values identical. The LOCAL journal remains
+  canonical and was NOT overwritten. Imported new files only:
+  `cloud_benchmark_1d9bdc14e51a.json` (P100 benchmark PASSED before research
+  training) and four `cloud_provenance_1d9bdc14e51a*.json` snapshots
+  (environment history incl. pre-repair f0d2878 / cu128 attempt /
+  post-repair 2b5d41c states). All other archive entries were content-
+  identical modulo EOL to existing files and were not overwritten.
+- Chronology of record: P100 benchmark passed BEFORE any research training;
+  CLI/device plumbing repair (f0d2878, 2b5d41c) occurred BEFORE research
+  training; the earliest cloud seed 11/22 attempts exited at argparse and
+  produced NO research output; the uniform cohort then completed on P100;
+  traditional calibration remained paused at 465/1250 during all cloud
+  training; NO synthetic test metrics were inspected at any point.
+- Validation losses in the cohort are validation-only training/selection
+  evidence with hardware recorded; they are NOT final research performance,
+  and no method winner is declared here.
+- Frozen protocol config SHA-256 and dataset SHA-256 re-verified unchanged
+  after import (values as recorded in section header above).
