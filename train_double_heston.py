@@ -1,3 +1,14 @@
+"""Archive-2 (donor/experimental) Double Heston inverse-model trainer.
+
+NONCANONICAL ENTRYPOINT. This trainer is Archive-2 donor code, not the canonical
+research stack. Canonical policy (docs/OVERNIGHT_SWARM_2026-08-22_DECISION_RECORD.md,
+section 5): primary neural weight learning is SYNTHETIC-ONLY and real market data
+is reserved for frozen-model evaluation. Real-market neural weight updates
+(``training.real_epochs > 0`` or continuous real re-entry) are quarantined
+fail-closed behind the explicit ``--allow-noncanonical-real-weight-updates``
+opt-in and are disabled by default.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -18,6 +29,10 @@ if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
 from dheston.config import load_config
+from dheston.real_market_policy import (
+    ALLOW_NONCANONICAL_REAL_WEIGHT_UPDATES_FLAG,
+    resolve_real_market_epochs,
+)
 from dheston.data.surfaces import SurfaceDataset, build_surface_records, cap_records, pad_surface_batch, read_option_rows, split_records_chronologically
 from dheston.data.synthetic import build_synthetic_records
 from dheston.evaluation.metrics import mae, parameter_summary, rmse
@@ -43,7 +58,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--symbols", nargs="*", default=None, help="Optional symbol subset")
     parser.add_argument("--run-dir", type=str, default=None, help="Stable experiment directory to save checkpoints and resume from")
     parser.add_argument("--resume", action="store_true", help="Resume from the latest checkpoint inside --run-dir")
-    parser.add_argument("--continuous", action="store_true", help="Train continuously on real data until manually stopped (Ctrl+C). Auto-resumes from checkpoint if one exists. Checkpoints are saved every epoch.")
+    parser.add_argument("--continuous", action="store_true", help="Auto-resume orchestration: resume from the latest checkpoint inside --run-dir if one exists and keep saving per-epoch checkpoints. This flag does NOT authorize real-market neural weight updates; real fine-tuning additionally requires --allow-noncanonical-real-weight-updates.")
+    parser.add_argument(
+        "--allow-noncanonical-real-weight-updates",
+        action="store_true",
+        help=(
+            "NONCANONICAL EXPERIMENTAL opt-in: allow REAL-MARKET neural WEIGHT UPDATES "
+            "(the real_finetune stage: training.real_epochs > 0, or --continuous real training). "
+            "Disabled by default. Real-market weight updating conflicts with the canonical "
+            "synthetic-only research protocol (docs/OVERNIGHT_SWARM_2026-08-22_DECISION_RECORD.md, "
+            "section 5) and is not part of the research baseline."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -460,8 +486,20 @@ def main() -> None:
             config["dataset_path"] = args.dataset
         if args.symbols:
             config["filters"]["symbols"] = args.symbols
-        write_json(config_snapshot_path(run_dir), config)
         resume_state = None
+
+    # Fail-closed quarantine: resolve real-market weight-update authorization before
+    # any config snapshot write, dataloader, model, optimizer, or training loop runs.
+    allow_noncanonical_real_weight_updates = bool(args.allow_noncanonical_real_weight_updates)
+    real_epochs = resolve_real_market_epochs(
+        config_real_epochs=int(config["training"].get("real_epochs", 0)),
+        continuous_requested=bool(args.continuous),
+        allow_noncanonical_real_weight_updates=allow_noncanonical_real_weight_updates,
+        continuous_epoch_limit=CONTINUOUS_EPOCH_LIMIT,
+    )
+
+    if not args.resume:
+        write_json(config_snapshot_path(run_dir), config)
 
     set_seed(int(config["random_seed"]))
 
@@ -482,22 +520,28 @@ def main() -> None:
     if resume_state is not None:
         model.load_state_dict(resume_state["model_state_dict"])
         stage_logs = dict(resume_state.get("stage_logs", {}))
-        if resume_state.get("status") == "completed" and not args.continuous:
-            print(
-                json.dumps(
-                    {
-                        "status": "already_completed",
-                        "run_dir": str(run_dir),
-                        "metrics_file": str(metrics_path(run_dir)),
-                        "marker_file": str(marker_path(run_dir)),
-                    },
-                    indent=2,
+        if resume_state.get("status") == "completed":
+            if not args.continuous or not allow_noncanonical_real_weight_updates:
+                print(
+                    json.dumps(
+                        {
+                            "status": "already_completed",
+                            "run_dir": str(run_dir),
+                            "metrics_file": str(metrics_path(run_dir)),
+                            "marker_file": str(marker_path(run_dir)),
+                            **(
+                                {"continuous_real_reentry": "blocked_by_real_market_weight_update_quarantine"}
+                                if args.continuous
+                                else {}
+                            ),
+                        },
+                        indent=2,
+                    )
                 )
-            )
-            return
-        if resume_state.get("status") == "completed" and args.continuous:
-            # Re-enter continuous real training from the completed model
-            # Carry forward the old real_finetune history and continue epoch count
+                return
+            # Explicit NONCANONICAL opt-in: re-enter continuous real training from the
+            # completed model. Carry forward the old real_finetune history and
+            # continue epoch count.
             old_real_log = stage_logs.get("real_finetune", {})
             old_history = old_real_log.get("history", [])
             old_best = old_real_log.get("best_validation_total", float("inf"))
@@ -515,9 +559,6 @@ def main() -> None:
         synthetic_resume = resume_state if resume_state is not None and resume_state.get("stage_name") == "synthetic" else None
         real_resume = resume_state if resume_state is not None and resume_state.get("stage_name") == "real_finetune" else None
         synthetic_loss_weights = config["losses"][args.mode]
-        real_epochs = CONTINUOUS_EPOCH_LIMIT if args.continuous else int(training_cfg.get("real_epochs", 0))
-        if args.continuous and real_epochs == 0:
-            real_epochs = CONTINUOUS_EPOCH_LIMIT
 
         if real_resume is None:
             synthetic_optimizer = torch.optim.Adam(model.parameters(), lr=float(training_cfg["learning_rate"]))
@@ -558,6 +599,17 @@ def main() -> None:
                 )
 
         if real_epochs > 0:
+            print(
+                json.dumps(
+                    {
+                        "status": "NONCANONICAL_EXPERIMENTAL_REAL_MARKET_WEIGHT_UPDATES",
+                        "opt_in_flag": ALLOW_NONCANONICAL_REAL_WEIGHT_UPDATES_FLAG,
+                        "real_epochs": real_epochs,
+                        "note": "Real-market neural weight updating is not part of the canonical synthetic-only research baseline.",
+                    },
+                    indent=2,
+                )
+            )
             real_optimizer = torch.optim.Adam(model.parameters(), lr=float(training_cfg["learning_rate"]) * 0.5)
             if real_resume is not None and real_resume.get("optimizer_state_dict") is not None:
                 real_optimizer.load_state_dict(real_resume["optimizer_state_dict"])
@@ -599,7 +651,7 @@ def main() -> None:
                     "run_dir": str(run_dir),
                     "checkpoint_file": str(checkpoint_path(run_dir)),
                     "marker_file": str(marker_path(run_dir)),
-                    "resume_command_hint": f"python3 train_double_heston.py --mode {args.mode} --run-dir '{run_dir}' --continuous",
+                    "resume_command_hint": f"python3 train_double_heston.py --mode {args.mode} --run-dir '{run_dir}' --continuous (real-stage resume additionally requires {ALLOW_NONCANONICAL_REAL_WEIGHT_UPDATES_FLAG})",
                 },
                 indent=2,
             )

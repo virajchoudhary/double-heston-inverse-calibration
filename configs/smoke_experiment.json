@@ -15,7 +15,7 @@
   "training": {
     "batch_size": 8,
     "epochs": 1,
-    "real_epochs": 1,
+    "real_epochs": 0,
     "pde_points_per_batch": 3
   },
   "pricing": {

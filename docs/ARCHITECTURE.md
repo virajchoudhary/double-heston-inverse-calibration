@@ -101,7 +101,7 @@ Do not adopt directly:
 - Archive-2 parameter constraints as canonical semantics;
 - negative-only rho box semantics;
 - its current PDE loss;
-- its real-market fine-tuning / continuous-training path.
+- its real-market fine-tuning / continuous-training path (now hard-quarantined in `train_double_heston.py`: fail-closed unless the explicit `--allow-noncanonical-real-weight-updates` opt-in is passed).
 
 The two stacks use different parameter layouts. Any interoperability must use an explicitly verified named adapter; positional tensor passing is forbidden.
 
