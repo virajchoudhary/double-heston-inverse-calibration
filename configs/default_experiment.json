@@ -39,7 +39,7 @@
     "device": "cpu",
     "batch_size": 16,
     "epochs": 4,
-    "real_epochs": 1,
+    "real_epochs": 0,
     "learning_rate": 0.001,
     "hidden_dim": 128,
     "dropout": 0.1,
