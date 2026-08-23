@@ -1,0 +1,9 @@
+{
+  "all_masks_true": true,
+  "all_slot_counts_20": true,
+  "manifest_complete": true,
+  "representation_validated": true,
+  "serialization_round_trip": true,
+  "unique_parameter_vectors": true,
+  "unique_surface_ids": true
+}

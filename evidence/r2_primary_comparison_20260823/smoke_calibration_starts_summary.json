@@ -1,0 +1,26 @@
+{
+  "frozen_settings": {
+    "bounds_path": "configs/parameter_bounds_PROVISIONAL.yaml",
+    "diff_step": 2e-05,
+    "ftol": 1e-10,
+    "gtol": 1e-10,
+    "max_nfev": 300,
+    "module": "src/calibrate_double_heston.py",
+    "node_count": 64,
+    "optimizer": "trf",
+    "pricer": "production pricer src/double_heston.py (unchanged)",
+    "representative_rule": "lowest final objective; ties by lowest start_index",
+    "residual_scale": "max(observed_dollar_price, 1.0)",
+    "start_count": 3,
+    "start_seed": 42,
+    "xtol": 1e-10
+  },
+  "output_csv": "evidence\\r2_primary_comparison_20260823\\smoke_calibration_starts.csv",
+  "run_kind": "DEVELOPMENT_SMOKE_NOT_RESEARCH_RESULT",
+  "split": "train",
+  "starts_failed": 7,
+  "starts_flagged_success": 2,
+  "starts_recorded": 9,
+  "surfaces_calibrated": 3,
+  "total_wall_seconds": 1855.1466756000027
+}
