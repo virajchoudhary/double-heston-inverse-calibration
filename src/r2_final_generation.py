@@ -944,7 +944,7 @@ def validate_final_dataset(
     checks["count_matches_expected"] = len(payloads) == expected_total
     checks["serialization_round_trip"] = all(
         json.loads(json.dumps(payload, allow_nan=False)) == payload
-        and frozen.deterministic_json_bytes(payload) == line.encode("utf-8")
+        and frozen.deterministic_json_bytes(payload) == line.encode("utf-8") + b"\n"
         for payload, line in zip(payloads, nonempty_lines, strict=True)
     )
     seen_ids: set[str] = set()
@@ -1019,10 +1019,19 @@ def validate_final_dataset(
             len(carry_values) == 1
             and all(math.isfinite(value) for value in carry_values)
         )
-        offset = (
-            next(iter(carry_values)) - next(iter(rate_values))
-            if rates_finite_single and carries_finite_single
-            else None
+        # The lattice carry is rate + offset computed in float64; recovering
+        # the offset by subtraction is only exact to rounding, so compare
+        # against the allowed offsets within a tight tolerance.
+        offset_ok = (
+            rates_finite_single
+            and carries_finite_single
+            and any(
+                abs(
+                    next(iter(carry_values)) - next(iter(rate_values)) - allowed
+                )
+                <= 1e-12
+                for allowed in (-0.02, -0.01, 0.0, 0.01, 0.02, 0.03)
+            )
         )
         if (
             dte1 not in allowed_dte1
@@ -1030,7 +1039,7 @@ def validate_final_dataset(
             or dte2 <= dte1
             or not rates_finite_single
             or not carries_finite_single
-            or offset not in {-0.02, -0.01, 0.0, 0.01, 0.02, 0.03}
+            or not offset_ok
             or payload["spot"] != 100.0
             or payload["metadata"]["synthetic"] is not True
             or payload["source"] != SOURCE_SYNTHETIC
