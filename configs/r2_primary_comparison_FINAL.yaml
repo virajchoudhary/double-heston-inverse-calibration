@@ -1,0 +1,259 @@
+# =============================================================================
+# FROZEN PRIMARY COMPARISON PROTOCOL — R2 FINAL 10K
+# =============================================================================
+# status: FROZEN_BEFORE_ANY_PRIMARY_RESEARCH_TRAINING
+# frozen_at_utc: 2026-08-23
+# base_main: fdbdc35313adc7f4350ebc3bdb3495fc51425ad5
+# branch: research/primary-r2-model-comparison
+#
+# This file and docs/R2_PRIMARY_COMPARISON_PROTOCOL.md are committed BEFORE
+# any research training/calibration run exists (see the pre-training audit:
+# docs/R2_PRIMARY_COMPARISON_PRE_TRAINING_AUDIT.md). Nothing in this protocol
+# may be changed after research results are observed. Implementation repair
+# (docs/R2_PRIMARY_COMPARISON_PROTOCOL.md section 11) must not alter any
+# frozen scientific choice recorded here.
+# =============================================================================
+
+protocol:
+  name: R2_PRIMARY_DOUBLE_HESTON_COMPARISON
+  version: "1.0"
+  status: FROZEN_BEFORE_ANY_PRIMARY_RESEARCH_TRAINING
+  scientific_question: >-
+    Given an inherently ill-conditioned Double Heston inverse problem, does a
+    constraint + differentiable-repricing-informed inverse network produce
+    more stable, structurally valid, and useful parameter representatives
+    than traditional numerical calibration and an ordinary ANN inverse model?
+  primary_question_disclaimer: >-
+    Practical non-identifiability is a retained research finding. Repricing
+    quality is NEVER treated as equivalent to unique parameter recovery.
+    No claim of unique identifiability is permitted from this comparison.
+  method2_description: >-
+    CONSTRAINT-INFORMED + DIFFERENTIABLE-REPRICING-INFORMED inverse model.
+    NOT a PDE-informed PINN; no learned forward-PDE residual is used.
+    Archive-2 PDE behavior is not imported (Issue #20 quarantine active).
+  out_of_scope:
+    - G8_real_market_evaluation
+    - real_market_training_or_finetuning_or_hyperparameter_selection
+    - noise_cohort_generation_or_evaluation
+    - boundary_or_ood_cohort_generation
+    - optional_pde_model_3
+    - changing_r2_representation
+    - changing_production_pricer
+    - changing_canonical_parameter_order
+    - changing_final_10k_dataset
+    - reopening_g2
+
+dataset:
+  path: data/final_r2_clean_10000/surfaces.jsonl
+  surfaces_sha256: 148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6
+  dataset_status_marker: FINAL_R2_CLEAN_10000_RESEARCH_SYNTHETIC_TRUTH_DATASET_FROZEN_BEFORE_MODEL_TRAINING
+  representation: FROZEN_R2_RANKED_TWO_EXPIRY_CENTRAL_FIVE
+  representation_version: "1.0"
+  nominal_slot_count: 20
+  total_surfaces: 10000
+  split_source: STORED_PER_SURFACE_metadata.user_metadata.split
+  split_counts: {train: 7500, validation: 1250, test: 1250}
+  split_integrity:
+    no_surface_id_overlap_across_splits: true
+    no_parameter_vector_hash_overlap_across_splits: true
+    test_used_for_training_or_hyperparameter_choice: false
+    fit_all_normalization_statistics_on_train_split_only: true
+
+input_representation:
+  canonical_r2_only: true
+  legacy_108_forbidden: true
+  rejected_r3_forbidden: true
+  input_size: 100
+  feature_blocks: [prices_masked, mask, maturities_years, rates, carries]
+  feature_block_definitions:
+    prices_masked: >-
+      20 spot-normalized prices in canonical slot order; masked slots carry
+      exactly 0.0 (MASKED_PRICE_PLACEHOLDER); synthetic surfaces are complete
+      by construction (all masks true).
+    mask: "20 booleans encoded 1.0/0.0 in canonical slot order."
+    maturities_years: "20 per-slot actual times to maturity in years (dte/365)."
+    rates: "20 per-slot risk-free rates (rank-constant within final-dataset surfaces)."
+    carries: >-
+      20 per-slot carries passed to the pricer in the dividend-yield slot
+      (generation identity carry = rate + carry_offset; rank-constant within
+      final-dataset surfaces).
+  feature_normalization: NONE_raw_values_all_small_range
+  dtype: float32
+  shared_by_model1_and_model2: ONE_SHARED_FEATURE_BUILDER
+  targets: canonical ten-parameter order from metadata.parameters_canonical_order
+  target_standardization: >-
+    Train-split-fitted per-parameter mean/std (TargetStandardizer), fit once
+    per training run on train rows only; identical fitted statistics used by
+    both neural methods' parameter supervision.
+
+output:
+  parameter_order: [kappa_slow, theta_slow, sigma_slow, rho_slow, v0_slow,
+                    kappa_fast, theta_fast, sigma_fast, rho_fast, v0_fast]
+  model1_head: unconstrained ten-vector interpreted in standardized-target space
+  model2_head: >-
+    raw ten-vector mapped by DoubleHestonConstraintMap: strict positivity
+    (softplus + 1e-6), kappa_fast = kappa_slow + softplus (strict ordering),
+    sigma_f <= sqrt(2*kappa*theta)*0.995 per factor, joint correlation disk
+    radius <= 0.995 (polar map); outputs are physical parameters.
+
+model1_ordinary_ann:
+  class: models.ann_model.ANNInverseCalibrator
+  hidden_sizes: [512, 256, 128, 64]
+  activation: relu
+  dropout: 0.10
+  layer_normalization: none
+  optimizer: Adam
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  batch_size: 256
+  max_epochs: 200
+  early_stopping: {monitor: validation_mse_standardized, patience: 20, mode: min}
+  checkpoint_rule: best_validation_only
+  loss: MSE on standardized targets
+  structural_constraints: none_enforced_validity_measured_instead
+  provenance: pre-existing implemented default (configs/ann_baseline.yaml model/training sections)
+
+model2_constraint_repricing_informed:
+  class: models.pinn_model.PhysicsInformedInverseCalibrator
+  hidden_sizes: [512, 512, 256, 256, 128]
+  activation: gelu
+  dropout: 0.05
+  block: LayerNorm + activation + dropout, residual when widths match
+  constraint_map: models.pinn_model.DoubleHestonConstraintMap
+  optimizer: Adam
+  learning_rate: 0.0005
+  weight_decay: 0.00001
+  batch_size: 64
+  max_epochs: 200
+  early_stopping: {monitor: validation_total_loss, patience: 20, mode: min}
+  checkpoint_rule: best_validation_only
+  loss_formula: >-
+    total = parameter_loss_weight * MSE(standardized(predicted_params),
+    standardized(true_params)) + repricing_loss_weight *
+    masked_MSE(repriced_normalized_prices, observed_normalized_prices)
+  loss_weights: {parameter_loss_weight: 1.0, repricing_loss_weight: 1.0}
+  repricing_term:
+    pricer: src/torch_double_heston.py formulation (differentiable mirror)
+    node_count: 64
+    compute_dtype: float64
+    prices: spot-normalized, masked slots excluded by the same mask
+    vectorization: >-
+      batch-vectorized evaluation of the identical formulation (numerics
+      pinned by equivalence tests vs the existing loop implementation and vs
+      the production pricer); a feasibility-required implementation repair
+      documented in the pre-training audit, not a scientific change.
+    observation_information: identical R2 20-price observation as Model 1
+  structural_constraints: enforced_by_constraint_map_by_construction
+  provenance: pre-existing implemented default (configs/pinn_baseline.yaml model/training sections)
+
+traditional_calibration:
+  module: src/calibrate_double_heston.py
+  pricer: production pricer src/double_heston.py (unchanged)
+  node_count: 64
+  objective: least_squares residuals (predicted - observed) / max(observed, 1.0) on DOLLAR prices (normalized price * spot)
+  optimizer: scipy least_squares method=trf
+  tolerances: {ftol: 1.0e-10, xtol: 1.0e-10, gtol: 1.0e-10}
+  diff_step: 2.0e-5
+  max_nfev: 300
+  parameterization: unconstrained_to_parameters (constraint-satisfying transform)
+  bounds: configs/parameter_bounds_PROVISIONAL.yaml hard_numerical_safety_bounds
+  starts:
+    count: 3
+    policy: module deterministic_initial_starts (seed 42)
+    disclosure: >-
+      one start is a DISCLOSED truth-informed perturbation
+      (unconstrained truth coordinate + N(0, 0.35^2)); this favors the
+      traditional baseline and is retained from the existing canonical module
+      without change; per-start outcomes are retained and reported.
+  representative_selection_rule: >-
+    per surface, the start with the lowest final objective (mean squared
+    residual) among all recorded starts, regardless of optimizer success flag;
+    ties broken by lower start_index; failures retained and reported.
+  failure_handling: every failed start is recorded; no silent reruns with new settings
+  parallelization: surface-level worker processes (implementation only; per-surface budget unchanged)
+  evaluation_split: test (1250 surfaces)
+  runtime_note: >-
+    pre-protocol timing on train-split surfaces measured 124-170 s per
+    surface at these exact settings (see pre-training audit); frozen as-is.
+
+seeds:
+  neural_research_seeds: [11, 22, 33]
+  provenance: first three of the pre-existing evaluation.repeated_seeds list in configs/ann_baseline.yaml
+  rule: all seeds trained, all seeds retained and reported; no seed discarded or cherry-picked
+  traditional_calibration_start_seed: 42
+  multi_seed_aggregation: per-seed rows plus cross-seed mean and standard deviation
+
+hyperparameter_policy:
+  frozen_single_configuration: true
+  configuration_provenance: pre-existing implemented defaults (ann_baseline.yaml / pinn_baseline.yaml), not tuned on any split of the final dataset
+  selection_data: validation only (early stopping and best checkpoint)
+  synthetic_test_optimization: ABSOLUTELY_FORBIDDEN
+  smoke_runs: pipeline validation only; no scientific tuning from smoke metrics
+
+metrics:
+  frozen_before_results: true
+  parameter_recovery:
+    - per-parameter mean absolute error
+    - per-parameter median absolute error
+    - per-parameter RMSE
+    - per-parameter range-scaled error (scaled by train-split parameter range)
+    - aggregate standardized-unit parameter RMSE (train-standardizer units)
+    - factorwise aggregate errors where scientifically valid: v0_total = v0_slow + v0_fast; theta_total = theta_slow + theta_fast; per-factor half-life ln(2)/kappa
+    - cross_factor_addition_forbidden: never add kappa/sigma/rho across factors
+    - factor_swap_confusion_rate (prediction closer to factor-swapped truth than to truth)
+  constraint_validity:
+    - fraction of predicted vectors satisfying validate_parameters (all structural constraints)
+    - per-constraint violation rates (positivity, ordering, per-factor Feller, correlation disk)
+  repricing:
+    engine: production pricer node_count 64 on predicted representatives
+    items:
+      - normalized-price RMSE (price/spot units)
+      - normalized-price MAE
+      - normalized-price max absolute error
+    implied_volatility_error: NOT_REPORTED_numerical_validity_not_established
+  identifiability_aware:
+    - repricing-tolerance-conditioned parameter error: success rates at normalized-price RMSE <= 1.0e-4 and <= 1.0e-3
+    - parameter-tolerance-conditioned recovery: range-scaled parameter RMSE <= 0.10 and <= 0.25
+    - explicit reporting of near-equivalent repricing with materially different parameters (no equivalence of repricing success and truth recovery)
+  stability:
+    - neural: cross-seed standard deviation of every headline test metric; mean per-surface cross-seed prediction dispersion per parameter
+    - traditional: per-surface multi-start dispersion of predicted parameters; per-surface start disagreement rate
+    - constraint validity rate per seed / per start
+  runtime:
+    - neural per-surface amortized inference milliseconds (full test split, one batch, eval mode, no grad, CPU)
+    - traditional per-surface calibration wall seconds (all three starts included)
+    - neural training wall time reported separately per run
+    - hardware documented (CPU-only, core count)
+
+fairness_rules:
+  same_frozen_test_split_for_all_three_methods: true
+  model1_model2_share: [split, input_representation, parameter_targets, primary_metrics, evaluation_pricer]
+  method2_extra_market_information: none_available
+  traditional_receives_same_r2_surface: true
+  ranking_on_repricing_rmse_alone: forbidden
+
+evaluation_order:
+  1: train all neural seeds for both models (no test metrics computed)
+  2: freeze neural models (best-validation checkpoints loaded)
+  3: run traditional calibration on the test split
+  4: evaluate all methods on the untouched 1250-surface test split
+  5: produce one unified comparison table and per-family reports
+
+output_protection:
+  checkpoint_root: checkpoints/r2_primary_comparison/
+  layout: model1_seed{seed}/ and model2_seed{seed}/ subdirectories
+  must_be_absent_before_research_training: true
+  large_artifacts_policy: "*.pt checkpoints stay untracked (repo .gitignore); commit training histories, summaries, metrics, and hashes"
+  evidence_directory: evidence/r2_primary_comparison_20260823/
+  smoke_marker: DEVELOPMENT_SMOKE_NOT_RESEARCH_RESULT
+
+claim_discipline:
+  allowed: >-
+    Method 2 improves structural validity / stability / repricing under the
+    tested synthetic protocol (if supported); Method 2 improves parameter
+    recovery on some metrics (if supported).
+  forbidden:
+    - Double Heston parameters are uniquely recovered
+    - low repricing error proves correct parameters
+    - PINN solves identifiability
+  practical_non_identifiability: RETAINED_RESEARCH_FINDING
