@@ -314,7 +314,7 @@ def test_generation_refuses_existing_output_directory(
     output.mkdir()
     (output / "stale.txt").write_text("stale", encoding="utf-8")
     monkeypatch.setattr(rfg, "verify_authorization", lambda marker=None: _fake_authorization())
-    monkeypatch.setattr(rfg, "run_preflight", lambda: {"passed": True})
+    monkeypatch.setattr(rfg, "run_preflight", lambda *args, **kwargs: {"passed": True})
     with pytest.raises(rfg.FinalGenerationAuthorizationError, match="refusing to overwrite"):
         rfg.run_final_generation(output)
     assert (output / "stale.txt").read_text(encoding="utf-8") == "stale"
@@ -333,7 +333,9 @@ def test_preflight_performs_no_price_calls(
 
     monkeypatch.setattr(double_heston, "price_double_heston_surface", forbidden)
     monkeypatch.setattr(r2_representation, "build_synthetic_surface", forbidden)
-    report = rfg.run_preflight()
+    # Post-generation the sealed output exists, so the no-price-call proof uses
+    # the post-generation phase; pre-generation the default behaves the same.
+    report = rfg.run_preflight(require_final_output_absent=False)
     assert report["passed"] is True
     assert report["no_price_calls"] is True
 
@@ -367,7 +369,7 @@ def test_final_generation_starts_no_training(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     monkeypatch.setattr(rfg, "verify_authorization", lambda marker=None: _fake_authorization())
-    monkeypatch.setattr(rfg, "run_preflight", lambda: {"passed": True})
+    monkeypatch.setattr(rfg, "run_preflight", lambda *args, **kwargs: {"passed": True})
     monkeypatch.setattr(rfg, "load_final_panel", lambda path=None: real_panel_slice)
     monkeypatch.setattr(
         rfg,
@@ -396,7 +398,7 @@ def test_final_generation_accesses_no_real_market_data(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     monkeypatch.setattr(rfg, "verify_authorization", lambda marker=None: _fake_authorization())
-    monkeypatch.setattr(rfg, "run_preflight", lambda: {"passed": True})
+    monkeypatch.setattr(rfg, "run_preflight", lambda *args, **kwargs: {"passed": True})
     monkeypatch.setattr(rfg, "load_final_panel", lambda path=None: real_panel_slice)
     monkeypatch.setattr(
         rfg,
@@ -437,7 +439,7 @@ def test_pricing_failures_are_retained_and_never_replaced(
         raise RuntimeError("controlled final pricing failure")
 
     monkeypatch.setattr(rfg, "verify_authorization", lambda marker=None: _fake_authorization())
-    monkeypatch.setattr(rfg, "run_preflight", lambda: {"passed": True})
+    monkeypatch.setattr(rfg, "run_preflight", lambda *args, **kwargs: {"passed": True})
     monkeypatch.setattr(rfg, "load_final_panel", counted_panel_load)
     monkeypatch.setattr(r2_representation, "build_synthetic_surface", fail_every_surface)
 
@@ -531,7 +533,7 @@ def test_generation_output_metadata_carries_required_provenance(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     monkeypatch.setattr(rfg, "verify_authorization", lambda marker=None: _fake_authorization())
-    monkeypatch.setattr(rfg, "run_preflight", lambda: {"passed": True})
+    monkeypatch.setattr(rfg, "run_preflight", lambda *args, **kwargs: {"passed": True})
     monkeypatch.setattr(rfg, "load_final_panel", lambda path=None: real_panel_slice)
     monkeypatch.setattr(
         rfg,
@@ -569,7 +571,7 @@ def test_replay_subset_comparison_detects_tampering(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     monkeypatch.setattr(rfg, "verify_authorization", lambda marker=None: _fake_authorization())
-    monkeypatch.setattr(rfg, "run_preflight", lambda: {"passed": True})
+    monkeypatch.setattr(rfg, "run_preflight", lambda *args, **kwargs: {"passed": True})
     monkeypatch.setattr(rfg, "load_final_panel", lambda path=None: real_panel_slice)
     monkeypatch.setattr(
         rfg,
@@ -604,7 +606,7 @@ def test_replay_refuses_overwrite_and_unknown_mode(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     monkeypatch.setattr(rfg, "verify_authorization", lambda marker=None: _fake_authorization())
-    monkeypatch.setattr(rfg, "run_preflight", lambda: {"passed": True})
+    monkeypatch.setattr(rfg, "run_preflight", lambda *args, **kwargs: {"passed": True})
     existing = tmp_path / "replay"
     existing.mkdir()
     primary = tmp_path / "final"

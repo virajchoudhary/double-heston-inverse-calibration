@@ -292,11 +292,14 @@ def _quadratic_gcd_ok(config: Mapping[str, Any]) -> bool:
     )
 
 
-def run_preflight() -> dict[str, Any]:
+def run_preflight(require_final_output_absent: bool = True) -> dict[str, Any]:
     """Run every non-pricing pre-generation check; raise on any failure.
 
     This function must never price a surface: it touches no pricing
     entrypoint (tests enforce this by making any price call raise).
+    Post-generation phases (deterministic replay) pass
+    ``require_final_output_absent=False`` so the sealed output's existence
+    is recorded informationally instead of failing the absence check.
     """
     from src.constraints import validate_parameters
 
@@ -449,8 +452,18 @@ def run_preflight() -> dict[str, Any]:
             require("conditioning_contract_unchanged", False, f"index {index}")
     require("conditioning_contract_unchanged", True)
 
-    require("final_output_directory_absent", not FINAL_OUTPUT.exists())
-    require("final_replay_directory_absent", not FINAL_REPLAY_OUTPUT.exists())
+    if require_final_output_absent:
+        require("final_output_directory_absent", not FINAL_OUTPUT.exists())
+        require("final_replay_directory_absent", not FINAL_REPLAY_OUTPUT.exists())
+    else:
+        report["checks"]["final_output_directory_absent"] = {
+            "skipped_for_post_generation_phase": True,
+            "observed_exists": bool(FINAL_OUTPUT.exists()),
+        }
+        report["checks"]["final_replay_directory_absent"] = {
+            "skipped_for_post_generation_phase": True,
+            "observed_exists": bool(FINAL_REPLAY_OUTPUT.exists()),
+        }
 
     try:
         resolve_real_market_epochs(
@@ -1101,7 +1114,7 @@ def run_final_replay(
             "replay mode must be 'full' or 'predeclared-subset'"
         )
     authorization = verify_authorization()
-    run_preflight()
+    run_preflight(require_final_output_absent=False)
     primary = Path(primary_output)
     replay_path = Path(replay_output)
     if not (primary / "surfaces.jsonl").is_file():
