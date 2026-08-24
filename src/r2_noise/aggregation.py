@@ -25,7 +25,12 @@ from .execution import (
     assert_clean_dataset_identity,
     load_frozen_protocol,
 )
-from .neural_evaluation import _headline_row, _run_metrics, safe_level_label
+from .neural_evaluation import (
+    _headline_row,
+    _run_metrics,
+    json_safe_metrics,
+    safe_level_label,
+)
 
 TRADITIONAL_ROOT = EVIDENCE_ROOT / "traditional"
 NEURAL_ROOT = EVIDENCE_ROOT / "neural"
@@ -114,7 +119,7 @@ def evaluate_traditional_levels(
             }
         )
         per_surface.to_csv(run_dir / "per_surface_metrics.csv", index=False)
-        write_json(run_dir / "representative_metrics.json", metrics)
+        write_json(run_dir / "representative_metrics.json", json_safe_metrics(metrics))
         stability[label] = _traditional_multi_start_dispersion(starts, scaling)
         generated[f"{run_dir.name}/per_surface_metrics.csv"] = str(
             (run_dir / "per_surface_metrics.csv").resolve()

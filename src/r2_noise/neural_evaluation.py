@@ -42,6 +42,9 @@ CHECKPOINT_ROOT = REPO_ROOT / "checkpoints" / "r2_primary_comparison"
 CANONICAL_PRIMARY_EVIDENCE = (
     REPO_ROOT / "evidence" / "r2_primary_comparison_20260823"
 )
+CANONICAL_PRIMARY_MERGE_COMMIT = (
+    "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+)
 
 
 def safe_level_label(label: str) -> str:
@@ -221,6 +224,19 @@ def _load_checkpoint_run(model_kind: str, seed: int) -> dict[str, Any]:
     return {**run, "training_summary": training}
 
 
+def json_safe_metrics(value: Any) -> Any:
+    """Convert NumPy metric containers to JSON-safe builtins recursively."""
+    if isinstance(value, np.ndarray):
+        return value.tolist()
+    if isinstance(value, np.generic):
+        return value.item()
+    if isinstance(value, dict):
+        return {key: json_safe_metrics(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [json_safe_metrics(item) for item in value]
+    return value
+
+
 def _seed_mean_metrics(
     *,
     dataset: R2PrimaryDataset,
@@ -273,7 +289,11 @@ def _compare_zero_percent_gate(neural_root: Path) -> dict[str, Any]:
     }
     report = {
         "artifact_kind": "R2_NOISE_ROBUSTNESS_ZERO_PERCENT_NEURAL_GATE",
-        "canonical_evidence": canonical.as_posix(),
+        "canonical_evidence_commit": CANONICAL_PRIMARY_MERGE_COMMIT,
+        "comparison_note": (
+            "prediction CSV values are compared bitwise; frozen headline "
+            "metrics are compared exactly with runtime excluded"
+        ),
         "checks": checks,
         "prediction_csv_bitwise_checks": prediction_checks,
         "runtime_column_excluded_from_metric_check": "per_surface_inference_ms",
@@ -360,7 +380,7 @@ def evaluate_neural_levels(
 
         per_seed_predictions: dict[int, np.ndarray] = {}
         per_seed_repriced: dict[int, np.ndarray] = {}
-        per_seed_headline: dict[int, dict[str, Any]] = {}
+        per_seed_headline: dict[tuple[str, int], dict[str, Any]] = {}
         per_surface_rows: list[dict[str, Any]] = []
         level_dir = root / f"level_{safe_level_label(label)}"
         level_dir.mkdir(exist_ok=True)
@@ -388,7 +408,7 @@ def evaluate_neural_levels(
                     scaling=scaling,
                 )
                 per_seed_predictions[seed] = predicted
-                per_seed_headline[seed] = _headline_row(
+                per_seed_headline[(model_kind, seed)] = _headline_row(
                     model_kind, seed, label, metrics
                 )
                 parameter_rmse = np.sqrt(
@@ -445,7 +465,9 @@ def evaluate_neural_levels(
                 {
                     seed: {
                         key: value
-                        for key, value in per_seed_headline[seed].items()
+                        for key, value in per_seed_headline[
+                            (model_kind, seed)
+                        ].items()
                         if isinstance(value, (int, float))
                     }
                     for seed in NEURAL_SEEDS
@@ -482,3 +504,22 @@ def evaluate_neural_levels(
     }
     write_json(root / "MANIFEST.json", manifest)
     return manifest
+
+
+def recheck_zero_percent_gate(
+    output_root: str | Path = EVIDENCE_ROOT / "zero_percent_neural",
+) -> dict[str, Any]:
+    """Recheck existing complete 0% evidence without rerunning models."""
+    root = Path(output_root)
+    required = [root / "level_0pct" / "seed_headline.csv", root / "checkpoint_provenance.json"]
+    for model_kind in ("model1", "model2"):
+        for seed in NEURAL_SEEDS:
+            required.append(
+                root
+                / "level_0pct"
+                / f"{model_kind}_seed{seed}_test_predictions.csv"
+            )
+    missing = [path for path in required if not path.exists()]
+    if missing:
+        raise FileNotFoundError(f"incomplete 0% neural evidence: {missing}")
+    return _compare_zero_percent_gate(root)
