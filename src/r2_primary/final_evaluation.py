@@ -15,6 +15,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import yaml
 
 from ..constants import PARAMETER_NAMES
 from ..utils import write_json
@@ -92,6 +93,16 @@ def _traditional_multi_start_dispersion(
     }
 
 
+def _protocol_identity() -> dict[str, object]:
+    """Frozen-protocol identity for the evidence bundle (YAML config)."""
+    return {
+        "protocol_config": yaml.safe_load(
+            PROTOCOL_CONFIG_PATH.read_text(encoding="utf-8")
+        ),
+        "protocol_config_sha256": _sha256(PROTOCOL_CONFIG_PATH),
+    }
+
+
 def main() -> int:
     EVIDENCE_ROOT.mkdir(parents=True, exist_ok=True)
     dataset = R2PrimaryDataset.from_jsonl(DATASET_PATH)
@@ -115,12 +126,7 @@ def main() -> int:
     )
     write_json(
         EVIDENCE_ROOT / "protocol.json",
-        {
-            "protocol_config": json.loads(
-                PROTOCOL_CONFIG_PATH.read_text(encoding="utf-8")
-            ),
-            "protocol_config_sha256": _sha256(PROTOCOL_CONFIG_PATH),
-        },
+        _protocol_identity(),
     )
 
     # ------------------------------------------------------- neural methods

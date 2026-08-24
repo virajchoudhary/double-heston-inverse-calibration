@@ -392,6 +392,26 @@ def test_representative_selection_rule_is_frozen_rule() -> None:
     assert by_surface.loc["s2", "start_index"] == 0  # all-NaN: lowest start index kept
 
 
+def test_final_evaluation_protocol_identity_parses_frozen_yaml() -> None:
+    """Regression: protocol.json must parse the YAML config, not JSON.
+
+    The final evaluator crashed before any test metric existed because the
+    YAML protocol config was fed through json.loads; this pins the fix and
+    the frozen config identity.
+    """
+    from src.r2_primary.final_evaluation import _protocol_identity
+
+    identity = _protocol_identity()
+    config = identity["protocol_config"]
+    assert config["protocol"]["name"] == "R2_PRIMARY_DOUBLE_HESTON_COMPARISON"
+    assert (
+        config["protocol"]["status"] == "FROZEN_BEFORE_ANY_PRIMARY_RESEARCH_TRAINING"
+    )
+    assert identity["protocol_config_sha256"] == (
+        "33ca0f763ec10bb2424eefb02448c9c8e50021854b96a948e420f44bdba70781"
+    )
+
+
 def test_metric_families_on_known_values() -> None:
     truth = np.array(
         [
