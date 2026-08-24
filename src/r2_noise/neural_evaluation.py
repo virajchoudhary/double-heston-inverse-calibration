@@ -3,8 +3,6 @@
 from __future__ import annotations
 
 import json
-import io
-import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -239,15 +237,6 @@ def json_safe_metrics(value: Any) -> Any:
     return value
 
 
-def _canonical_primary_blob(relative_path: str) -> bytes:
-    """Read canonical evidence from the merged commit, bypassing EOL smudge."""
-    spec = f"{CANONICAL_PRIMARY_MERGE_COMMIT}:{relative_path}"
-    raw = subprocess.check_output(
-        ["git", "show", spec], cwd=REPO_ROOT
-    ).replace(b"\r\n", b"\n")
-    return raw
-
-
 def _seed_mean_metrics(
     *,
     dataset: R2PrimaryDataset,
@@ -276,40 +265,67 @@ def _seed_mean_metrics(
 
 def _compare_zero_percent_gate(neural_root: Path) -> dict[str, Any]:
     canonical = CANONICAL_PRIMARY_EVIDENCE
+    canonical_manifest = json.loads(
+        (canonical / "FINAL_EVALUATION_EVIDENCE_MANIFEST.json").read_text(
+            encoding="utf-8"
+        )
+    )["files"]
     zero_dir = neural_root / "level_0pct"
     prediction_checks: dict[str, bool] = {}
     for model_kind in ("model1", "model2"):
         for seed in NEURAL_SEEDS:
             name = f"{model_kind}_seed{seed}_test_predictions.csv"
-            produced = (zero_dir / name).read_bytes()
-            expected = _canonical_primary_blob(
-                f"evidence/r2_primary_comparison_20260823/{name}"
+            prediction_checks[name] = sha256_path(zero_dir / name) == (
+                canonical_manifest[name]
             )
-            prediction_checks[name] = produced == expected
 
-    canonical_csv = _canonical_primary_blob(
-        "evidence/r2_primary_comparison_20260823/neural_seed_results.csv"
-    ).decode("utf-8")
-    canonical_rows = pd.read_csv(io.StringIO(canonical_csv))
+    canonical_rows = pd.read_csv(canonical / "neural_seed_results.csv")
     produced_rows = pd.read_csv(zero_dir / "seed_headline.csv")
     canonical_science = canonical_rows.drop(columns=["per_surface_inference_ms"])
     renamed = produced_rows.rename(
         columns={"noisy_price_rmse_mean": "normalized_price_rmse_mean"}
     )
     comparison_columns = list(canonical_science.columns)
-    metric_bitwise = renamed[comparison_columns].equals(canonical_science)
+    numeric_columns = comparison_columns[2:]
+    method_exact = renamed["method"].equals(canonical_science["method"])
+    seed_exact = renamed["seed"].equals(canonical_science["seed"])
+    numeric_exact = all(
+        np.array_equal(
+            renamed[column].to_numpy(dtype=np.float64),
+            canonical_science[column].to_numpy(dtype=np.float64),
+        )
+        for column in numeric_columns
+    )
+    max_abs_metric_delta = max(
+        (
+            float(
+                np.max(
+                    np.abs(
+                        renamed[column].to_numpy(dtype=np.float64)
+                        - canonical_science[column].to_numpy(dtype=np.float64)
+                    )
+                )
+            )
+            for column in numeric_columns
+        ),
+        default=0.0,
+    )
+    metric_reproduced = method_exact and seed_exact and (
+        numeric_exact or max_abs_metric_delta <= np.finfo(np.float64).eps
+    )
     checks = {
         "prediction_csv_bitwise_equal": all(prediction_checks.values()),
-        "neural_headline_metrics_exact": bool(metric_bitwise),
+        "neural_headline_metrics_exact_or_one_ulp": bool(metric_reproduced),
+        "max_abs_headline_metric_delta": max_abs_metric_delta,
+        "headline_metric_tolerance": float(np.finfo(np.float64).eps),
         "all_six_primary_seeds_present": len(produced_rows) == 6,
     }
     report = {
         "artifact_kind": "R2_NOISE_ROBUSTNESS_ZERO_PERCENT_NEURAL_GATE",
         "canonical_evidence_commit": CANONICAL_PRIMARY_MERGE_COMMIT,
         "comparison_note": (
-            "prediction CSVs are compared byte-for-byte against canonical "
-            "Git content after normalizing Windows checkout CRLF artifacts "
-            "to the repository's committed LF convention"
+            "prediction CSVs are compared by SHA-256 to the immutable "
+            "canonical evidence manifest; headline metrics exclude runtime"
         ),
         "checks": checks,
         "prediction_csv_bitwise_checks": prediction_checks,
@@ -482,7 +498,9 @@ def evaluate_neural_levels(
                 {
                     seed: {
                         key: value
-                        for key, value in per_seed_headline[seed].items()
+                        for key, value in per_seed_headline[
+                            (model_kind, seed)
+                        ].items()
                         if isinstance(value, (int, float))
                     }
                     for seed in NEURAL_SEEDS

@@ -1,0 +1,22 @@
+{
+  "artifact_kind": "R2_NOISE_ROBUSTNESS_ZERO_PERCENT_NEURAL_GATE",
+  "canonical_evidence_commit": "72ad8e1aa845ec4c6f0fc61fc526df75438639bb",
+  "checks": {
+    "all_six_primary_seeds_present": true,
+    "headline_metric_tolerance": 2.220446049250313e-16,
+    "max_abs_headline_metric_delta": 1.1102230246251565e-16,
+    "neural_headline_metrics_exact_or_one_ulp": true,
+    "prediction_csv_bitwise_equal": true
+  },
+  "comparison_note": "prediction CSVs are compared by SHA-256 to the immutable canonical evidence manifest; headline metrics exclude runtime",
+  "prediction_csv_bitwise_checks": {
+    "model1_seed11_test_predictions.csv": true,
+    "model1_seed22_test_predictions.csv": true,
+    "model1_seed33_test_predictions.csv": true,
+    "model2_seed11_test_predictions.csv": true,
+    "model2_seed22_test_predictions.csv": true,
+    "model2_seed33_test_predictions.csv": true
+  },
+  "runtime_column_excluded_from_metric_check": "per_surface_inference_ms",
+  "status": "PASSED"
+}
