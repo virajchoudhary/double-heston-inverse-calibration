@@ -205,3 +205,28 @@ Date: 2026-08-24. Facts only; no scientific change.
   and no method winner is declared here.
 - Frozen protocol config SHA-256 and dataset SHA-256 re-verified unchanged
   after import (values as recorded in section header above).
+
+## 11. Addendum — traditional calibration resumed and completed (factual log)
+
+Date: 2026-08-24. Facts only; no scientific change; no aggregate performance
+used for any model choice.
+
+- Pre-resume journal state: 465 lines / 465 distinct surface_ids / exactly 3
+  starts each, SHA-256 `4ea667199e95af4b9ee18607da268185c1d0096438371d426032d5dd9c8272e3`.
+- Resume command: `python -m src.r2_primary.calibration --workers 10`
+  (frozen settings untouched). Runner printed `resuming: 465 surfaces already
+  complete` on first launch and `resuming: 553 surfaces already complete` on
+  the second launch after one externally-terminated session at 553/1250
+  (empty stderr; crash-safe journal lost nothing).
+- Completion: `calibrated 697/697 pending surfaces (1250/1250 total)`;
+  runner reported `calibrated 1250 surfaces (3750 starts, 3192 non-success)`.
+- Post-run integrity: journal = 1250 lines / 1250 distinct ids / start
+  indices {0,1,2} per surface; all 465 pre-resume surface ids retained with
+  their original rows; final CSV rebuilt from the journal only at completion
+  (3750 rows); representatives metadata present for all 1250 surfaces under
+  the frozen rule. Final journal SHA-256:
+  `fe73e696028234534e10cad5967e77cf76c289271ead2ccbd41f0a2e8760ce51`.
+- TRADITIONAL_CALIBRATION = COMPLETE_1250_OF_1250. Failed starts are retained
+  in the record per frozen failure-handling policy.
+- STOPPING POINT per protocol: NO final synthetic test evaluation has been
+  run (`final_evaluation` not executed); TEST_METRICS_INSPECTED = NONE.
