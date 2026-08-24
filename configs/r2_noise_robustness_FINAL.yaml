@@ -1,0 +1,217 @@
+# =============================================================================
+# FROZEN PROTOCOL - R2 OBSERVATION-NOISE ROBUSTNESS STUDY
+# =============================================================================
+# status: FROZEN_BEFORE_ANY_NOISY_RESEARCH_RESULT
+# frozen_at_utc: 2026-08-24
+# canonical_main_base: 72ad8e1aa845ec4c6f0fc61fc526df75438639bb
+# branch: research/r2-noise-robustness
+# issue: #34
+#
+# This file and docs/R2_NOISE_ROBUSTNESS_PROTOCOL.md are committed BEFORE any
+# positive-noise research result exists. Nothing below may change after noisy
+# outcomes are observed. The completed primary comparison (main @ 72ad8e1,
+# Issue #32) is immutable prior evidence; this study evaluates the SAME frozen
+# primary checkpoints under controlled observation noise.
+# =============================================================================
+
+protocol:
+  name: R2_OBSERVATION_NOISE_ROBUSTNESS
+  version: "1.0"
+  status: FROZEN_BEFORE_ANY_NOISY_RESEARCH_RESULT
+  scientific_question: >-
+    How do the already-frozen primary Double Heston inverse methods degrade
+    when R2 option-price observations are perturbed by controlled market-scale
+    noise, while the true parameter vectors remain known and unchanged?
+  central_hypothesis_under_test: >-
+    Parameter recovery deteriorates substantially faster than repricing
+    quality as observation noise increases. The experiment must be able to
+    REFUTE this hypothesis; the wording is not a conclusion and no result is
+    presumed.
+  model2_description: >-
+    CONSTRAINT + DIFFERENTIABLE-REPRICING-INFORMED inverse model. NOT a
+    PDE-informed PINN.
+  out_of_scope:
+    - retraining_or_fine_tuning_of_any_primary_model
+    - new_neural_seeds_or_checkpoint_reselection
+    - hyperparameter_search
+    - modification_of_primary_protocol_primary_evidence_or_clean_dataset
+    - G8_real_market_evaluation
+    - boundary_or_ood_cohorts
+    - optional_pde_model_3
+    - real_market_data_of_any_kind
+
+canonical_baseline:
+  primary_merge_commit: 72ad8e1aa845ec4c6f0fc61fc526df75438639bb
+  frozen_r2_dataset: data/final_r2_clean_10000/surfaces.jsonl
+  frozen_r2_dataset_sha256: 148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6
+  frozen_primary_protocol_sha256: 33ca0f763ec10bb2424eefb02448c9c8e50021854b96a948e420f44bdba70781
+  clean_0pct_result: IMMUTABLE_CANONICAL_BASELINE_EVIDENCE_NEVER_OVERWRITTEN
+
+checkpoints:
+  source_root: checkpoints/r2_primary_comparison
+  model1_seeds: [11, 22, 33]
+  model2_primary_seeds: [11, 22, 33]
+  model2_provenance_requirement: cuda_P100_git_sha_2b5d41cd232241a1f23348411643a9ce58b53b7a
+  excluded_from_all_metrics:
+    - checkpoints/r2_primary_comparison/model2_seed11_local_cpu_replication
+  checkpoint_files_must_not_be_modified: true
+
+evaluation_population:
+  split: test_only
+  test_surface_count: 1250
+  train_validation_surfaces_used_in_this_study: false
+  rationale: >-
+    The primary evaluation population was the untouched test split; robustness
+    is measured on exactly that population with identical surface ordering.
+
+noise_semantics:
+  type: multiplicative_keyed
+  formula: observed_price = clean_price * (1.0 + level * z)
+  z_distribution: standard_normal_via_numpy_default_rng_single_draw
+  provenance_lineage: >-
+    Same documented contract as the G2 R2-vs-R3 donor study
+    (src/g2_r2r3/noise.py): multiplicative keyed per-slot factors, SHA-256
+    slot seeding, bit-replayable. This study re-derives the contract in a new
+    module (src/r2_noise/perturbation.py) with its own base seed so
+    realizations are independent of all historical studies; no historical
+    scientific assumption is imported beyond the functional form.
+  base_seed: 20260825
+  slot_key_fields: [surface_id, expiry_rank, moneyness_k, option_type, level]
+  key_format: "{base}|{surface_id}|rank{expiry_rank}|k{moneyness:+.2f}|{option_type}|level{level:.4f}"
+  seed_derivation: sha256_of_utf8_key_first_8_bytes_big_endian_masked_to_63_bits
+  calls_puts_independent: true
+  realization_sharing: >-
+    Keys contain NO method/model/seed component: every method and every neural
+    seed observes byte-identical noisy cohorts at each level.
+  unchanged_fields: [spot, rates, carries, maturities, mask, slot_keys,
+                     metadata.parameters_canonical_order, source_surface_id]
+  truth_parameters: UNCHANGED_AND_KNOWN
+  price_floor_policy: >-
+    Positivity asserted on every slot. A negative draw requires z < -1/level
+    (probability effectively zero at the frozen levels); if it ever occurs,
+    the key is extended with a deterministic counter suffix ('#r{counter}',
+    counter starting at 1, cap 64) and redrawn; counter exhaustion raises.
+    No silent clamping of prices or factors.
+  static_arbitrage_policy: retain_and_flag
+  arbitrage_detail: >-
+    Raw independent per-slot noise is RETAINED (never clipped, smoothed, or
+    projected to a no-arbitrage manifold; projection would redefine the
+    estimation problem). Put-call parity breaks and vertical-spread violations
+    are counted per surface as separate diagnostics only.
+  namespace_note: >-
+    Derived records carry observation-noise fields under an 'observation_noise'
+    namespace; the generator's pre-existing user_metadata.noise_level field
+    (0.0 for every clean surface) is never modified or reused.
+
+noise_levels: [0.0, 0.001, 0.0025, 0.005, 0.01]
+noise_level_labels: ["0%", "0.10%", "0.25%", "0.50%", "1.00%"]
+level_selection_rationale: >-
+  Fine low levels expose degradation onset; 0.50% and 1.00% anchor to the
+  project's historically validated market-scale levels (G2 studies used
+  0.5%/1%/2%; NOISE_LEVELS in src/g2_r2r3/frozen.py).
+
+traditional_calibration_compute:
+  strategy: B_hybrid_full_neural_plus_predeclared_stratified_traditional_subset
+  neural_evaluation: full 1250-surface test split at EVERY level (both models, all seeds)
+  traditional_subset_size: 250
+  subset_selection:
+    frozen_before_results: true
+    population: test_split_only_1250_surfaces
+    strata_dimensions:
+      - v0_total = v0_slow + v0_fast (terciles computed on test-split truths)
+      - kappa_slow (terciles computed on test-split truths)
+    cell_count: 9
+    allocation: proportional_by_largest_remainder_to_reach_exactly_250
+    within_cell_ordering: ascending_sha256_hex_of_surface_id
+    determinism: pure function of clean dataset truths and ids; no RNG, no outcome
+    selected_ids_artifact: evidence/r2_noise_robustness/traditional_subset_ids.json
+    leakage_statement: >
+      Selection uses only clean-dataset known truths and ids BEFORE any noisy
+      result exists. Model/calibration outcomes play no role.
+  subset_sufficiency_rationale: >-
+    N=250 gives ~+/-6.2% two-sigma precision on 90%-scale success rates and
+    resolves degradation deltas an order of magnitude larger than sampling
+    error; 20% of the population keeps cost at ~130 CPU-hours across all
+    levels (~13 h at 10 workers).
+  traditional_levels_run: ALL levels including 0% (subset reproduction gate)
+  traditional_settings: EXACTLY the frozen primary settings (3 starts,
+    start_seed 42, max_nfev 300, ftol/xtol/gtol 1e-10, diff_step 2e-05,
+    node_count 64, production pricer, same bounds, same representative rule)
+  comparison_populations:
+    three_way_method_comparisons: SUBSET_ONLY_clearly_labeled
+    neural_only_robustness_curves: FULL_TEST_1250
+    paired_degradation_deltas: always_within_identical_surface_sets
+  forbidden_comparisons:
+    - full_set_neural_vs_subset_traditional_as_if_identical_populations
+
+metrics:
+  reuse: src/r2_primary/evaluation.py families reused unchanged wherever possible
+  parameter_recovery:
+    - range_scaled_parameter_rmse
+    - standardized_parameter_rmse
+    - per_parameter mae/median_ae/rmse/range_scaled/bias
+    - v0_total_mae, theta_total_mae
+    - half_life_slow/fast MAE years
+    - factor_swap_confusion_rate
+  repricing_two_distinct_quantities:
+    fit_to_noisy_observation:
+      definition: normalized-price errors vs NOISY observed prices
+      interpretation: what the calibration objective / training-style loss sees
+    clean_latent_repricing:
+      definition: normalized-price errors vs ORIGINAL CLEAN latent prices
+      interpretation: parameter-fidelity-facing distance to the true surface
+    conflation_forbidden: true
+  constraint_validity: full existing validate_parameters DH structural contract
+  stability:
+    neural: cross-seed dispersion per level (seeds 11/22/33 per model)
+    traditional: per-surface multi-start dispersion and disagreement rate per level
+  identifiability_aware:
+    - tolerance-conditioned rates for BOTH repricing quantities (<=1e-4, <=1e-3)
+    - parameter recovery conditioned on noisy-fit repricing
+    - parameter recovery conditioned on clean-latent repricing
+    - fraction of surfaces where repricing stays acceptable while parameter
+      recovery degrades materially vs the 0% level
+  robustness_degradation:
+    delta_definition: metric(level) - metric(0%) computed PAIRED on identical surfaces
+    relative_definition: metric(level) / metric(0%) where defined and nonzero
+    failure_rate_curves: rate(metric worse than threshold) as function of level
+    thresholds_frozen: repricing nRMSE {1e-4, 1e-3}; range-scaled param RMSE {0.10, 0.25}
+
+zero_percent_reproduction_gate:
+  gate_status: MANDATORY_BEFORE_ANY_POSITIVE_NOISE_INTERPRETATION
+  neural_gate: >-
+    The 0% evaluation through THIS pipeline must reproduce the merged canonical
+    primary headline metrics exactly (identical code path, checkpoints, seeds;
+    bitwise-equal CSV values required).
+  traditional_gate: >-
+    Subset-level 0% rows must match the canonical journal rows for the same
+    surface ids to documented floating-point equality (expected bitwise;
+    investigate before proceeding if not).
+  on_failure: STOP; understand discrepancy; NEVER overwrite canonical evidence.
+
+cohort_identity:
+  storage_root: data/r2_noise_robustness
+  layout: levels/{level_label}/noisy_surfaces.jsonl
+  tracked_in_git: true
+  record_requirements:
+    - source clean surface_id preserved
+    - true canonical parameter vector preserved
+    - original clean prices preserved
+    - noisy prices per slot
+    - observation_noise.level
+    - observation_noise.base_seed and per-slot realization identity
+    - all original R2 metadata (unmodified)
+    - derivation module sha256 + config sha256
+  manifest: data/r2_noise_robustness/MANIFEST.json with per-file sha256,
+    record counts, level list, base seed, derivation provenance
+  replayability: byte-for-byte regeneration from clean dataset + frozen module
+  immutability: cohorts are append-only derived artifacts; never edited
+
+execution_order:
+  1: freeze protocol (this commit)
+  2: build + verify 0% reproduction gate
+  3: generate positive-noise cohorts (deterministic)
+  4: run neural evaluations all levels
+  5: run traditional calibration on frozen subset all levels
+  6: aggregate metrics + degradation curves
+  7: reconcile findings into a results document
