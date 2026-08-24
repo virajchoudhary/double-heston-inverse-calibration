@@ -1,0 +1,15 @@
+{
+  "artifact_kind": "R2_NOISE_ROBUSTNESS_TRADITIONAL_SUBSET_RUN",
+  "failed_starts_retained": 624,
+  "noise_level": 0.0,
+  "noise_level_label": "0%",
+  "population": "THREE_WAY_FROZEN_SUBSET_N250",
+  "representative_count": 250,
+  "source_sha256": "148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6",
+  "starts_failed": 624,
+  "starts_flagged_success": 126,
+  "starts_recorded": 750,
+  "status": "COMPLETE_FAILED_STARTS_RETAINED",
+  "surfaces_calibrated": 250,
+  "total_wall_seconds_all_starts": 220211.26682009996
+}

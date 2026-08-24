@@ -1,0 +1,13 @@
+{
+  "artifact_kind": "R2_NOISE_ROBUSTNESS_ZERO_PERCENT_TRADITIONAL_GATE",
+  "canonical_rows_compared": 750,
+  "checks": {
+    "exactly_750_frozen_subset_starts": true,
+    "scientific_start_rows_bitwise_after_pandas_round_trip": true
+  },
+  "runtime_columns_excluded": [
+    "runtime_seconds",
+    "wall_seconds_all_starts"
+  ],
+  "status": "PASSED"
+}
