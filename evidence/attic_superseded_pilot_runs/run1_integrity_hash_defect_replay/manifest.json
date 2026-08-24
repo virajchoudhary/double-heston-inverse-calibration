@@ -1,0 +1,283 @@
+{
+  "cohort": "pilot",
+  "command": "python -m src.r2_synthetic_generation pilot --output C:\\ann_inverse_calibration\\evidence\\final_r2_synthetic_pilot_20260822_replay [INTERNAL_REPLAY_AFTER_PRIMARY_GATE]",
+  "conditioning_policy": {
+    "classification": "SYNTHETIC_ONLY_ENGINEERING_RESEARCH_DESIGN_NOT_REAL_MARKET_DISTRIBUTION_CLAIM",
+    "lattice": {
+      "carry_offsets": [
+        -0.02,
+        -0.01,
+        0.0,
+        0.01,
+        0.02,
+        0.03
+      ],
+      "combination_count": 2016,
+      "rank1_dte_days": [
+        7,
+        14,
+        21,
+        30,
+        45,
+        60,
+        75,
+        90
+      ],
+      "rank2_gap_dte_days": [
+        7,
+        14,
+        21,
+        30,
+        45,
+        60,
+        90
+      ],
+      "rates": [
+        0.01,
+        0.02,
+        0.03,
+        0.04,
+        0.05,
+        0.06
+      ]
+    },
+    "real_market_inputs_used": false,
+    "seed": 20260822,
+    "stride": 997
+  },
+  "contract_name": "R2_SYNTHETIC_GENERATION_FINAL",
+  "dataset_status": "DEVELOPMENT_PILOT_NOT_FINAL_RESEARCH_DATASET",
+  "environment": {
+    "numpy_version": "2.2.6",
+    "pandas_version": "2.3.2",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python_version": "3.13.4",
+    "scipy_version": "1.16.2"
+  },
+  "exclusions": {
+    "boundary_challenge_status": "SEPARATE_EVALUATION_COHORT_NOT_GENERATED_HERE",
+    "challenge_stress_ready": false,
+    "clean_core_excludes": [
+      "boundary_challenge",
+      "ood_test",
+      "noisy_copies",
+      "real_market_data"
+    ],
+    "global_sampler_status_preserved": "NEEDS_SAMPLER_CORRECTION",
+    "ood_status": "EVALUATION_ONLY_NOT_GENERATED_HERE"
+  },
+  "failure_retention": {
+    "pricing_failure_policy": "retain_candidate_surface_id_parameters_conditioning_and_error_then_fail_closed",
+    "rejection_policy": "retain_every_candidate_and_all_rejection_reasons",
+    "silent_replacement_or_refill_forbidden": true
+  },
+  "final_10k_generated": false,
+  "generated_at_utc": "2026-08-23T04:44:21.429383+00:00",
+  "generator_version": "r2-synthetic-generation-v1",
+  "git_commit_sha": "df1a30b4c233b65b6d8d250f3a937bc64b32020c",
+  "numerical_sanity": {
+    "all_passed": true,
+    "failed_surface_count": 0,
+    "surface_count": 240
+  },
+  "pricing": {
+    "dummy_mapping_used": false,
+    "entrypoint": "price_double_heston_surface",
+    "node_count": 64,
+    "noise_level": 0.0,
+    "source": "src/double_heston.py"
+  },
+  "provenance_hashes": {
+    "candidates_csv_sha256": "4fb5d87368717d8ea99b25eccfce8fe3a21245e7a415acb7b3f1063da3af2a6a",
+    "conditioning_jsonl_sha256": "cde26493a0cdc02a14d67932f8d23e355bd6682215960e35bd5cf115a3a465d5",
+    "deterministic_content_sha256": "5bb92f2009c412d393875540b1894e7dd6bb19047e4f6c0783d5e81fc06231ee",
+    "generation_config_sha256": "d8e705cd424c56189b01c14723df0e24f750543d904d5a4593a171483aef0393",
+    "generator_source_sha256": "fa83e2a0f76a1ad28d4bb9b4399b7ae5a4ecbd303349c14829871dccf14a05fb",
+    "integrity_report_json_sha256": "1427bae7a2fae0f20e275727e79fe79a329a9851f14771bf31efe5b4da11e37c",
+    "numerical_sanity_jsonl_sha256": "2f72aa6b3d0779ee0943b8919bf5ec866b54fc68f8d10d0a627200dc1e687d48",
+    "production_pricer_sha256": "154d53fba17caddcb4d5a8d72001a43aa3cbb90cb1d6d9177c07ddefc5414b0a",
+    "r2_synthetic_interface_sha256": "a0f49feb97981d27cefd25d918f7d90cbcf928609549cdfe511d4dd64ddd643d",
+    "rejections_jsonl_sha256": "7a47124b7952f9455673c8842573146347c4648f0764d6a2a27e6f27198a9e92",
+    "reviewed_sampler_source_sha256": "1a451c864e0997e7ff9e52c1270fb1d8f28f5d539eede759612e842e1da44611",
+    "selected_parameters_csv_sha256": "1cfaf477d5f5811b0a46a96c915a205368b5ecbce9e4bd6f60eb8873eed608d8",
+    "split_assignment_sha256": "691ff577009f2accef3531ac54796a255d1bb6aed125f2e4d124fb328a5c241f",
+    "surfaces_jsonl_sha256": "5bb92f2009c412d393875540b1894e7dd6bb19047e4f6c0783d5e81fc06231ee"
+  },
+  "quotas": {
+    "distributions": {
+      "interior_train": 200,
+      "wide_valid_train": 40
+    },
+    "splits": {
+      "test": {
+        "interior_train": 25,
+        "total": 30,
+        "wide_valid_train": 5
+      },
+      "train": {
+        "interior_train": 150,
+        "total": 180,
+        "wide_valid_train": 30
+      },
+      "validation": {
+        "interior_train": 25,
+        "total": 30,
+        "wide_valid_train": 5
+      }
+    },
+    "total_surfaces": 240
+  },
+  "replay_status": "PENDING",
+  "representation_name": "FROZEN_R2_RANKED_TWO_EXPIRY_CENTRAL_FIVE",
+  "representation_version": "1.0",
+  "sampling": {
+    "acceptance_by_distribution": {
+      "interior_train": {
+        "accepted_count": 328,
+        "pool_count": 400,
+        "required_quota": 200,
+        "selected_count": 200
+      },
+      "wide_valid_train": {
+        "accepted_count": 137,
+        "pool_count": 200,
+        "required_quota": 40,
+        "selected_count": 40
+      }
+    },
+    "insufficient_pool_behavior": "HARD_FAIL",
+    "policy": "generate_entire_pool_retain_all_candidates_and_rejections_no_refill_no_reseed",
+    "seeds": {
+      "interior_train": 20260822,
+      "wide_valid_train": 20260823
+    }
+  },
+  "schema_version": "1.0",
+  "selection_order": "distribution_then_candidate_id_ascending",
+  "slot_keys": [
+    [
+      1,
+      -0.1,
+      "call"
+    ],
+    [
+      1,
+      -0.05,
+      "call"
+    ],
+    [
+      1,
+      0.0,
+      "call"
+    ],
+    [
+      1,
+      0.05,
+      "call"
+    ],
+    [
+      1,
+      0.1,
+      "call"
+    ],
+    [
+      2,
+      -0.1,
+      "call"
+    ],
+    [
+      2,
+      -0.05,
+      "call"
+    ],
+    [
+      2,
+      0.0,
+      "call"
+    ],
+    [
+      2,
+      0.05,
+      "call"
+    ],
+    [
+      2,
+      0.1,
+      "call"
+    ],
+    [
+      1,
+      -0.1,
+      "put"
+    ],
+    [
+      1,
+      -0.05,
+      "put"
+    ],
+    [
+      1,
+      0.0,
+      "put"
+    ],
+    [
+      1,
+      0.05,
+      "put"
+    ],
+    [
+      1,
+      0.1,
+      "put"
+    ],
+    [
+      2,
+      -0.1,
+      "put"
+    ],
+    [
+      2,
+      -0.05,
+      "put"
+    ],
+    [
+      2,
+      0.0,
+      "put"
+    ],
+    [
+      2,
+      0.05,
+      "put"
+    ],
+    [
+      2,
+      0.1,
+      "put"
+    ]
+  ],
+  "split_algorithm": "accepted_candidates_sorted_by_candidate_id_exact_nonoverlapping_slices_per_distribution",
+  "split_summary": {
+    "by_distribution": {
+      "interior_train": {
+        "test": 25,
+        "train": 150,
+        "validation": 25
+      },
+      "wide_valid_train": {
+        "test": 5,
+        "train": 30,
+        "validation": 5
+      }
+    },
+    "matches_frozen_quota": true,
+    "totals": {
+      "test": 30,
+      "train": 180,
+      "validation": 30
+    }
+  },
+  "surface_count": 240,
+  "timestamp_is_rng_input": false,
+  "training_started": false
+}

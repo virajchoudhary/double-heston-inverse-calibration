@@ -1,0 +1,29 @@
+{
+  "manifest_kind": "FINAL_R2_PRIMARY_COMPARISON_EVIDENCE_MANIFEST",
+  "generated_after_commit": "285a7247eed5096756caec0d561f2f69be140d52",
+  "first_synthetic_test_read": true,
+  "dataset_sha256": "148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6",
+  "protocol_config_sha256": "33ca0f763ec10bb2424eefb02448c9c8e50021854b96a948e420f44bdba70781",
+  "files": {
+    "dataset_identity.json": "d805ea37490e95ee93f41b2930ecb00e8edf91aa926312473f7e19b12e2ede53",
+    "protocol.json": "96f375511489d4769cd4d66589a0a91fbbe3432983b001eae73584dd7f6189ad",
+    "model1_seed11_test_predictions.csv": "5e62ef15cc2db47bac8af27d037579a3920e05465335e231fcf0465c0ca3b6b4",
+    "model1_seed22_test_predictions.csv": "4284f21b111071dab74049e81398660f0b5a4503aa12f21644c1bb173b0b6d33",
+    "model1_seed33_test_predictions.csv": "de42b3e09cb322a73db68a669ea3f5515b08a345696b1a8d5959f3cf2bfea1b7",
+    "model2_seed11_test_predictions.csv": "4be7b6313ae1124624416dafc204f14e0409714dba2c6e1ce7e3dd74a376c53c",
+    "model2_seed22_test_predictions.csv": "1dcab76d2b892b622329650d52493a652165e0c307bfb879029214d7450dde43",
+    "model2_seed33_test_predictions.csv": "c0546e28c8c929d023f1c70f93b0724af838b62cf8cc006a660b5a5841ec8976",
+    "neural_seed_results.csv": "dc7f6eebf55abb8194be15e976f0d0c6edbd8d44dfe0429c037cbf67fd07af67",
+    "model1_seed_results.csv": "a894778d901ee18a45031be616a908d9949fdb77c03311cae874a1da81e7a6a7",
+    "model2_seed_results.csv": "60eed99ab0582faa8fa2fbdd7df8208cb928775c0b83875ca17d76d994ea9dd9",
+    "traditional_calibration_results.csv": "cc4bdc1f49bc2f9d929f3ce4791eef08c73bd63a7b996ec42e4302141e98c389",
+    "parameter_metrics.json": "8913769613a473852b87c48288ac64c640c208f4f13e1b0279fc3c283cf1817a",
+    "repricing_metrics.json": "71276809ec36608f27469727664db3768ab790bc3c5991a027bf47233fa7bac2",
+    "validity_metrics.json": "9457871c2140d46749d6b37381c2d4a4d7acb35adf8cb0e8ee9bba60efb099ca",
+    "identifiability_metrics.json": "5a061e7f27a7acc544269605a8f0cedf76a8663efad45166436ad2d8cc8147e2",
+    "stability_metrics.json": "a91736b8a6c3daee304c8ae92cd3c409237bf4a65cfbdf8540d4a69e918b23d5",
+    "runtime_metrics.json": "61dfc5a6ace4d8ff60d6484caad8215a07ea9077e421fc0919db6e4ac2c96ceb",
+    "training_run_manifest.json": "3b0efd80cbfc2ead15f64f810ed1f16295a42949f1e318d5ac78c51f357665db",
+    "synthetic_test_comparison.csv": "01efecfd4a792c0e5e534d41c2d4a99e9f7e70d2da3fa8a0c3906dd8f47fc391"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "cpu": "AMD64 Family 23 Model 96 Stepping 1, AuthenticAMD",
+  "cuda_available": false,
+  "cuda_compute_capability": null,
+  "cuda_device_name": null,
+  "dataset_sha256": "148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6",
+  "git_sha": "3486ca2afba74d0d9ea64eee9de4974aac91e7d5",
+  "host": "LenLaptop",
+  "logical_cores": 12,
+  "numpy_version": "2.4.3",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "protocol_config_sha256": "33ca0f763ec10bb2424eefb02448c9c8e50021854b96a948e420f44bdba70781",
+  "protocol_status": "FROZEN_BEFORE_ANY_PRIMARY_RESEARCH_TRAINING",
+  "purpose": "execution_environment_provenance_only_no_scientific_change",
+  "python_version": "3.13.9",
+  "scipy_version": "1.16.2",
+  "torch_cuda_built": "None",
+  "torch_version": "2.11.0+cpu"
+}

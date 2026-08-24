@@ -1,0 +1,25 @@
+{
+  "hash_comparisons": {
+    "candidates_csv_sha256": true,
+    "conditioning_jsonl_sha256": true,
+    "deterministic_content_sha256": true,
+    "generation_config_sha256": true,
+    "generator_source_sha256": true,
+    "integrity_report_json_sha256": true,
+    "numerical_sanity_jsonl_sha256": true,
+    "production_pricer_sha256": true,
+    "r2_synthetic_interface_sha256": true,
+    "rejections_jsonl_sha256": true,
+    "reviewed_sampler_source_sha256": true,
+    "selected_parameters_csv_sha256": true,
+    "split_assignment_sha256": true,
+    "surfaces_jsonl_sha256": true
+  },
+  "identical": true,
+  "primary_output": "C:\\ann_inverse_calibration\\evidence\\final_r2_synthetic_pilot_20260822",
+  "replay_output": "C:\\ann_inverse_calibration\\evidence\\final_r2_synthetic_pilot_20260822_replay",
+  "sampling_identical": true,
+  "split_summary_identical": true,
+  "timestamps_excluded": true,
+  "verified_at_utc": "2026-08-23T04:47:59.846234+00:00"
+}

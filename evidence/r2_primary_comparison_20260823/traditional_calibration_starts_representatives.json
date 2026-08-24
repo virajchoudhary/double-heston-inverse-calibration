@@ -1,0 +1,4 @@
+{
+  "representative_count": 1250,
+  "rule": "lowest final objective; ties by lowest start_index"
+}

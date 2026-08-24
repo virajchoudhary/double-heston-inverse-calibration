@@ -1,0 +1,12 @@
+{
+  "cross_split_overlap": "NONE_ASSERTED",
+  "path": "data\\final_r2_clean_10000\\surfaces.jsonl",
+  "sha256": "148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6",
+  "split_counts": {
+    "test": 1250,
+    "train": 7500,
+    "validation": 1250
+  },
+  "test_surface_count": 1250,
+  "total_surfaces": 10000
+}

@@ -1,0 +1,149 @@
+{
+  "manifest_kind": "P100_MODEL2_PRIMARY_COHORT_IMPORT_MANIFEST",
+  "recorded_utc": "2026-08-24",
+  "import_commit_context": "post 2b5d41cd232241a1f23348411643a9ce58b53b7a",
+  "state_markers": {
+    "MODEL2_P100_SEED11": "COMPLETE",
+    "MODEL2_P100_SEED22": "COMPLETE",
+    "MODEL2_P100_SEED33": "COMPLETE",
+    "MODEL2_PRIMARY_COHORT": "COMPLETE_UNIFORM_P100",
+    "MODEL2_LOCAL_CPU_SEED11": "RETAINED_EXECUTION_ENVIRONMENT_REPLICATION",
+    "TRADITIONAL_CALIBRATION": "PAUSED_465_OF_1250",
+    "SYNTHETIC_TEST_FINAL_EVALUATION": "NOT_STARTED",
+    "TEST_METRICS_INSPECTED": "NONE"
+  },
+  "cohort_uniformity": {
+    "accelerator_class": "Tesla P100-PCIE-16GB (CUDA compute capability 6.0)",
+    "software_environment": {
+      "torch": "2.10.0+cu126",
+      "python": "3.12.13",
+      "numpy": "2.0.2",
+      "scipy": "1.16.3"
+    },
+    "git_sha_all_runs": "2b5d41cd232241a1f23348411643a9ce58b53b7a",
+    "run_kind_all": "RESEARCH",
+    "device_used_all": "cuda",
+    "train_surfaces": 7500,
+    "validation_surfaces": 1250,
+    "test_set_used_for_selection": false,
+    "selection_data": "validation_only",
+    "pricing_node_count": 64,
+    "loss": "parameter_supervised_mse_plus_repricing_mse",
+    "repricing_loss": "differentiable_double_heston_repricing_float64_vectorized",
+    "loss_weights": {
+      "parameter_loss_weight": 1.0,
+      "repricing_loss_weight": 1.0
+    },
+    "cohort_decision_basis": "predeclared execution uniformity + hardware/numerical feasibility gate; NOT result quality; validation losses below are selection evidence only"
+  },
+  "primary_runs": {
+    "seed11": {
+      "location_on_disk": "checkpoints/r2_primary_comparison/model2_seed11/",
+      "best_epoch": 46,
+      "epochs_completed": 66,
+      "best_validation_total_loss": 0.8155438783565006,
+      "runtime_seconds": 463.0515988019997
+    },
+    "seed22": {
+      "location_on_disk": "checkpoints/r2_primary_comparison/model2_seed22/",
+      "best_epoch": 60,
+      "epochs_completed": 80,
+      "best_validation_total_loss": 0.8154648507204553,
+      "runtime_seconds": 553.3156083089998
+    },
+    "seed33": {
+      "location_on_disk": "checkpoints/r2_primary_comparison/model2_seed33/",
+      "best_epoch": 62,
+      "epochs_completed": 82,
+      "best_validation_total_loss": 0.8089543721537085,
+      "runtime_seconds": 590.8600454010002
+    }
+  },
+  "intake_artifact_sha256_verified": {
+    "model2_seed11_P100.zip": "1f7ec227c31a3976e67dc28ecc381f162d2e3c88561b62a62063505a555de4a7",
+    "model2_seed22_P100.zip": "5b3bb43a3c2fe92567200f295c997f0e9486c440ca30872bbcee44f4babc5b10",
+    "model2_seed33_P100.zip": "f0ea72f8b08720c08a8e648704f3099c11b4348013b9dc872b6005ed2cb90ba4",
+    "r2_cloud_evidence_P100.zip": "af69f54167e0c33ed056488ef0ba400af23064d63b540f8d18eea6b7446adbad"
+  },
+  "checkpoint_file_sha256": {
+    "seed11": {
+      "best_validation_checkpoint.pt": {
+        "sha256": "812723995bcbba7e5b3d2690fffea7063798a518c0824c5c6d9c756ad4a06eef",
+        "bytes": 2207637
+      },
+      "final_checkpoint.pt": {
+        "sha256": "5fbbc49b77793a4c9af20db495220b0f89cbc08bca6d1a9185479571718a1a71",
+        "bytes": 2207337
+      },
+      "training_history.csv": {
+        "sha256": "60e5caf382e00089279d30a729f48aadbe27f3468187fad0335adcf7fdf5db54",
+        "bytes": 5494
+      },
+      "training_summary.json": {
+        "sha256": "415e804fcae54583553e39cd0290a61acaa8e105efc04c383341e3d3c93af8af",
+        "bytes": 1145
+      }
+    },
+    "seed22": {
+      "best_validation_checkpoint.pt": {
+        "sha256": "a9fad9673a4e8e4b5d79a5a4478d56c3884d8ad03c6247bf7318ef8bf0f5b098",
+        "bytes": 2207637
+      },
+      "final_checkpoint.pt": {
+        "sha256": "de1e3594fa442e0acfdaf96e2d8ae0e78d7bf677e6be3dfb8be2c5edfa5ac595",
+        "bytes": 2207337
+      },
+      "training_history.csv": {
+        "sha256": "39604d11b5219495c74fe53dce785f6343d66d6bd3c6c3bbc81c26dc878117f0",
+        "bytes": 6653
+      },
+      "training_summary.json": {
+        "sha256": "299afaa4004e2c119bd959df4d3dc734bd8e80152221c6950101228e444b19d8",
+        "bytes": 1145
+      }
+    },
+    "seed33": {
+      "best_validation_checkpoint.pt": {
+        "sha256": "ead822abb5e35a76940bc9ece510090430dc071475800cc4f673ffd25bb02730",
+        "bytes": 2207637
+      },
+      "final_checkpoint.pt": {
+        "sha256": "10e67a8300620dc46e79ea99481a86ef34910fd150e1745a5dcac841b94f8fa8",
+        "bytes": 2207337
+      },
+      "training_history.csv": {
+        "sha256": "fe6e62ea7393ac5cbdb405aac7f1fecdf9c9b33e4e40c6c02f420ae5fbf6bd6f",
+        "bytes": 6816
+      },
+      "training_summary.json": {
+        "sha256": "968fed9cf3e299b59cbc817a35c0c731fc7160111de5cc70a1e5d84398d68f57",
+        "bytes": 1145
+      }
+    }
+  },
+  "replication_run": {
+    "marker": "MODEL2_LOCAL_SEED11_EXECUTION_ENVIRONMENT_REPLICATION",
+    "original_location_before_import": "checkpoints/r2_primary_comparison/model2_seed11/",
+    "preserved_location": "checkpoints/r2_primary_comparison/model2_seed11_local_cpu_replication/",
+    "device_used": "cpu",
+    "git_sha": "3486ca2afba74d0d9ea64eee9de4974aac91e7d5",
+    "best_validation_total_loss": 0.8181150549672982,
+    "note": "retained permanently; not comparable to P100 cohort for retention decisions; no winner declared",
+    "file_sha256": {
+      "best_validation_checkpoint.pt": "3a6018a42d3b067d2a3debfcd33e9dc42f3c37972aeb8b221ac838ed96c9840f",
+      "final_checkpoint.pt": "c304b3fdf33b50fcfd69bc4cdf3932a46a47b723e6f4c959a9c237d820632f8a",
+      "training_history.csv": "ab1e0bc9b9731f56d3bb4d1c4a55fbdfc9c52be8371cc9194113e2ecc80e8a8c",
+      "training_summary.json": "9d266a5f3dfa4ec6aecf2f1a19b90369b2f356175f9e95312377be36fcfd2db6"
+    }
+  },
+  "calibration_journal_comparison": {
+    "local_canonical_retained": true,
+    "cloud_copy_identical_modulo_eol": true,
+    "local_line_endings": "CRLF",
+    "cloud_line_endings": "LF",
+    "normalized_sha256_both": "6f95bf445f5d591e417971d043d178dd7a6fb9d8331a7253d45c5c93840a4993",
+    "lines_both": 465,
+    "distinct_surface_ids_both": 465,
+    "row_values_identical": true
+  }
+}

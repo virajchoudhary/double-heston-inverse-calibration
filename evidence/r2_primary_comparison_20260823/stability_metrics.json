@@ -1,0 +1,75 @@
+{
+  "neural_cross_seed": {
+    "model1": {
+      "headline_metric_cross_seed_std": {
+        "constraint_validity_rate": 0.0,
+        "normalized_price_rmse_mean": 6.735162170327081e-05,
+        "per_surface_inference_ms": 0.0003646052162564724,
+        "range_scaled_parameter_rmse": 6.17093322626937e-05,
+        "standardized_parameter_rmse": 0.00028895362205891214
+      },
+      "mean_overall_cross_seed_prediction_std": 0.006907409524886604,
+      "mean_per_surface_cross_seed_prediction_std": {
+        "kappa_fast": 0.040154620231023,
+        "kappa_slow": 0.00845452733625178,
+        "rho_fast": 0.003920670811940225,
+        "rho_slow": 0.00521686346994645,
+        "sigma_fast": 0.004618365389046959,
+        "sigma_slow": 0.0019906674021353842,
+        "theta_fast": 0.0007326044188417968,
+        "theta_slow": 0.0006196562666513801,
+        "v0_fast": 0.0015033963946183,
+        "v0_slow": 0.0018627235284107645
+      },
+      "seeds": [
+        11,
+        22,
+        33
+      ]
+    },
+    "model2": {
+      "headline_metric_cross_seed_std": {
+        "constraint_validity_rate": 0.0,
+        "normalized_price_rmse_mean": 0.00011227783271206034,
+        "per_surface_inference_ms": 0.00012558015891742149,
+        "range_scaled_parameter_rmse": 0.0005843912156621787,
+        "standardized_parameter_rmse": 0.0029929660377259553
+      },
+      "mean_overall_cross_seed_prediction_std": 0.017442665427435528,
+      "mean_per_surface_cross_seed_prediction_std": {
+        "kappa_fast": 0.08019497222403303,
+        "kappa_slow": 0.013163559041061168,
+        "rho_fast": 0.052241247812870525,
+        "rho_slow": 0.01071051036850276,
+        "sigma_fast": 0.0052265729776522565,
+        "sigma_slow": 0.004300116829869652,
+        "theta_fast": 0.0011282111054235005,
+        "theta_slow": 0.0016215634034839738,
+        "v0_fast": 0.001871409223829071,
+        "v0_slow": 0.003968491287629331
+      },
+      "seeds": [
+        11,
+        22,
+        33
+      ]
+    }
+  },
+  "traditional_multi_start": {
+    "definition": "mean over surfaces of the range-scaled cross-start standard deviation per parameter; disagreement = any pair of starts differs by more than 0.5 range-scaled units on any parameter",
+    "mean_per_parameter_range_scaled_std": {
+      "kappa_fast": 0.32483301394120706,
+      "kappa_slow": 0.2760421278091952,
+      "rho_fast": 0.1383944490336608,
+      "rho_slow": 0.10193692764403424,
+      "sigma_fast": 0.07447106817279131,
+      "sigma_slow": 0.08760242315522135,
+      "theta_fast": 0.1417545425320184,
+      "theta_slow": 0.19435832253221844,
+      "v0_fast": 0.18441673585969087,
+      "v0_slow": 0.14924757396241548
+    },
+    "start_count_per_surface": 3,
+    "start_disagreement_rate": 0.891566265060241
+  }
+}

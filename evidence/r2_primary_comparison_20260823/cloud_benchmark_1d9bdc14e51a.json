@@ -1,0 +1,54 @@
+{
+  "batch_size": 64,
+  "cuda_available": true,
+  "cuda_compute_capability": "6.0",
+  "cuda_device_name": "Tesla P100-PCIE-16GB",
+  "git_sha": "9094399dced54f29a6d96498aedd4ed53dc33641",
+  "host": "1d9bdc14e51a",
+  "marker": "DEVELOPMENT_SMOKE_NOT_RESEARCH_RESULT",
+  "model2_step": [
+    {
+      "device": "cpu",
+      "first_last_loss": [
+        0.01684502192512064,
+        0.000825310483101111
+      ],
+      "losses_finite": true,
+      "model2_estimated_epoch_seconds_at_117_steps": 21.65254334100132,
+      "model2_step_seconds_mean": 0.18506447300001128
+    },
+    {
+      "device": "cuda",
+      "first_last_loss": [
+        0.015109144032967156,
+        0.0005673837263960703
+      ],
+      "losses_finite": true,
+      "model2_estimated_epoch_seconds_at_117_steps": 5.61029837939941,
+      "model2_step_seconds_mean": 0.047951268199994956
+    }
+  ],
+  "platform": "Linux-6.12.90+-x86_64-with-glibc2.35",
+  "pricer_equivalence": [
+    {
+      "device": "cpu",
+      "float64_gradients_finite": true,
+      "max_abs_diff_vs_loop_cpu": 7.105427357601002e-15,
+      "max_abs_diff_vs_production_numpy": 8.526512829121202e-14,
+      "tolerance": 1e-09,
+      "within_tolerance": true
+    },
+    {
+      "device": "cuda",
+      "float64_gradients_finite": true,
+      "max_abs_diff_vs_loop_cpu": 5.684341886080802e-14,
+      "max_abs_diff_vs_production_numpy": 7.105427357601002e-14,
+      "tolerance": 1e-09,
+      "within_tolerance": true
+    }
+  ],
+  "purpose": "execution_environment_benchmark_only",
+  "steps": 5,
+  "torch_cuda_built": "12.6",
+  "torch_version": "2.10.0+cu126"
+}

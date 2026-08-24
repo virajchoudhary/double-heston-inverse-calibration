@@ -1,0 +1,89 @@
+{
+  "model1": {
+    "conditioned_recovery": {
+      "parameter_recovery_given_repricing<=0.0001_param<=0.1": 0.32,
+      "parameter_recovery_given_repricing<=0.0001_param<=0.25": 1.0,
+      "parameter_recovery_given_repricing<=0.001_param<=0.1": 0.07605344295991778,
+      "parameter_recovery_given_repricing<=0.001_param<=0.25": 0.9578622816032888,
+      "repricing<=0.0001_and_parameter<=0.1": 0.0064,
+      "repricing<=0.0001_and_parameter<=0.25": 0.02,
+      "repricing<=0.001_and_parameter<=0.1": 0.0592,
+      "repricing<=0.001_and_parameter<=0.25": 0.7456
+    },
+    "parameter_tolerance_success": {
+      "range_scaled_rmse<=0.1": {
+        "rate": 0.0672
+      },
+      "range_scaled_rmse<=0.25": {
+        "rate": 0.912
+      }
+    },
+    "repricing_tolerance_success": {
+      "rmse<=0.0001": {
+        "rate": 0.02
+      },
+      "rmse<=0.001": {
+        "rate": 0.7784
+      }
+    },
+    "warning": "repricing success is NOT parameter recovery: near-equivalent repricing with materially different parameters is the documented practical non-identifiability finding"
+  },
+  "model2": {
+    "conditioned_recovery": {
+      "parameter_recovery_given_repricing<=0.0001_param<=0.1": 0.25,
+      "parameter_recovery_given_repricing<=0.0001_param<=0.25": 1.0,
+      "parameter_recovery_given_repricing<=0.001_param<=0.1": 0.07581967213114754,
+      "parameter_recovery_given_repricing<=0.001_param<=0.25": 0.9549180327868853,
+      "repricing<=0.0001_and_parameter<=0.1": 0.0024,
+      "repricing<=0.0001_and_parameter<=0.25": 0.0096,
+      "repricing<=0.001_and_parameter<=0.1": 0.0592,
+      "repricing<=0.001_and_parameter<=0.25": 0.7456
+    },
+    "parameter_tolerance_success": {
+      "range_scaled_rmse<=0.1": {
+        "rate": 0.0664
+      },
+      "range_scaled_rmse<=0.25": {
+        "rate": 0.9104
+      }
+    },
+    "repricing_tolerance_success": {
+      "rmse<=0.0001": {
+        "rate": 0.0096
+      },
+      "rmse<=0.001": {
+        "rate": 0.7808
+      }
+    },
+    "warning": "repricing success is NOT parameter recovery: near-equivalent repricing with materially different parameters is the documented practical non-identifiability finding"
+  },
+  "traditional_calibration": {
+    "conditioned_recovery": {
+      "parameter_recovery_given_repricing<=0.0001_param<=0.1": 0.7192,
+      "parameter_recovery_given_repricing<=0.0001_param<=0.25": 0.94,
+      "parameter_recovery_given_repricing<=0.001_param<=0.1": 0.7192,
+      "parameter_recovery_given_repricing<=0.001_param<=0.25": 0.94,
+      "repricing<=0.0001_and_parameter<=0.1": 0.7192,
+      "repricing<=0.0001_and_parameter<=0.25": 0.94,
+      "repricing<=0.001_and_parameter<=0.1": 0.7192,
+      "repricing<=0.001_and_parameter<=0.25": 0.94
+    },
+    "parameter_tolerance_success": {
+      "range_scaled_rmse<=0.1": {
+        "rate": 0.7192
+      },
+      "range_scaled_rmse<=0.25": {
+        "rate": 0.94
+      }
+    },
+    "repricing_tolerance_success": {
+      "rmse<=0.0001": {
+        "rate": 1.0
+      },
+      "rmse<=0.001": {
+        "rate": 1.0
+      }
+    },
+    "warning": "repricing success is NOT parameter recovery: near-equivalent repricing with materially different parameters is the documented practical non-identifiability finding"
+  }
+}
