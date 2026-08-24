@@ -449,7 +449,10 @@ def evaluate_neural_levels(
             clean_observed=clean_observed,
             scaling=scaling,
         )
-        write_json(level_dir / "seed_mean_metrics.json", seed_mean)
+        write_json(
+            level_dir / "seed_mean_metrics.json",
+            json_safe_metrics(seed_mean),
+        )
         generated_files[
             f"level_{safe_level_label(label)}/seed_mean_metrics.json"
         ] = sha256_path(level_dir / "seed_mean_metrics.json")
