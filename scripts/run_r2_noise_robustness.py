@@ -17,7 +17,10 @@ from src.r2_noise.execution import (
     load_frozen_protocol,
 )
 from src.r2_noise.generator import generate_cohorts
-from src.r2_noise.neural_evaluation import evaluate_neural_levels
+from src.r2_noise.neural_evaluation import (
+    evaluate_neural_levels,
+    recheck_zero_percent_gate,
+)
 from src.r2_noise.traditional_runner import (
     compare_zero_percent_traditional_gate,
     run_traditional_subset,
@@ -40,6 +43,7 @@ def main() -> int:
     neural = subparsers.add_parser("evaluate-neural")
     neural.add_argument("--levels", choices=["gate", "all"], required=True)
     neural.add_argument("--output", type=Path, default=None)
+    subparsers.add_parser("recheck-neural-gate")
     traditional = subparsers.add_parser("run-traditional")
     group = traditional.add_mutually_exclusive_group(required=True)
     group.add_argument("--level")
@@ -53,6 +57,8 @@ def main() -> int:
 
     if args.command == "generate-cohorts":
         print(generate_cohorts())
+    elif args.command == "recheck-neural-gate":
+        print(recheck_zero_percent_gate())
     elif args.command == "evaluate-neural":
         output = args.output
         if output is None:

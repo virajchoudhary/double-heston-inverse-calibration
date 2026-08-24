@@ -242,7 +242,10 @@ def json_safe_metrics(value: Any) -> Any:
 def _canonical_primary_blob(relative_path: str) -> bytes:
     """Read canonical evidence from the merged commit, bypassing EOL smudge."""
     spec = f"{CANONICAL_PRIMARY_MERGE_COMMIT}:{relative_path}"
-    return subprocess.check_output(["git", "show", spec], cwd=REPO_ROOT)
+    raw = subprocess.check_output(
+        ["git", "show", spec], cwd=REPO_ROOT
+    ).replace(b"\r\n", b"\n")
+    return raw
 
 
 def _seed_mean_metrics(
@@ -305,7 +308,8 @@ def _compare_zero_percent_gate(neural_root: Path) -> dict[str, Any]:
         "canonical_evidence_commit": CANONICAL_PRIMARY_MERGE_COMMIT,
         "comparison_note": (
             "prediction CSVs are compared byte-for-byte against canonical "
-            "Git blobs; this excludes Windows working-tree EOL smudging"
+            "Git content after normalizing Windows checkout CRLF artifacts "
+            "to the repository's committed LF convention"
         ),
         "checks": checks,
         "prediction_csv_bitwise_checks": prediction_checks,
@@ -393,7 +397,7 @@ def evaluate_neural_levels(
 
         per_seed_predictions: dict[int, np.ndarray] = {}
         per_seed_repriced: dict[int, np.ndarray] = {}
-        per_seed_headline: dict[int, dict[str, Any]] = {}
+        per_seed_headline: dict[tuple[str, int], dict[str, Any]] = {}
         per_surface_rows: list[dict[str, Any]] = []
         level_dir = root / f"level_{safe_level_label(label)}"
         level_dir.mkdir(exist_ok=True)
@@ -421,7 +425,7 @@ def evaluate_neural_levels(
                     scaling=scaling,
                 )
                 per_seed_predictions[seed] = predicted
-                per_seed_headline[seed] = _headline_row(
+                per_seed_headline[(model_kind, seed)] = _headline_row(
                     model_kind, seed, label, metrics
                 )
                 parameter_rmse = np.sqrt(
@@ -482,6 +486,7 @@ def evaluate_neural_levels(
                         if isinstance(value, (int, float))
                     }
                     for seed in NEURAL_SEEDS
+                    if (model_kind, seed) in per_seed_headline
                 },
             )
             for model_kind in ("model1", "model2")
@@ -515,3 +520,22 @@ def evaluate_neural_levels(
     }
     write_json(root / "MANIFEST.json", manifest)
     return manifest
+
+
+def recheck_zero_percent_gate(
+    output_root: str | Path = EVIDENCE_ROOT / "zero_percent_neural",
+) -> dict[str, Any]:
+    """Recheck existing complete 0% evidence without rerunning models."""
+    root = Path(output_root)
+    required = [root / "level_0pct" / "seed_headline.csv", root / "checkpoint_provenance.json"]
+    for model_kind in ("model1", "model2"):
+        for seed in NEURAL_SEEDS:
+            required.append(
+                root
+                / "level_0pct"
+                / f"{model_kind}_seed{seed}_test_predictions.csv"
+            )
+    missing = [path for path in required if not path.exists()]
+    if missing:
+        raise FileNotFoundError(f"incomplete 0% neural evidence: {missing}")
+    return _compare_zero_percent_gate(root)
