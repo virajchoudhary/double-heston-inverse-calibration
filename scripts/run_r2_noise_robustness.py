@@ -47,7 +47,7 @@ def main() -> int:
     traditional = subparsers.add_parser("run-traditional")
     group = traditional.add_mutually_exclusive_group(required=True)
     group.add_argument("--level")
-    group.add_argument("--all-levels", action="store_true")
+    group.add_argument("--levels", choices=["all", "positive"])
     traditional.add_argument("--workers", type=int, default=10)
     traditional.add_argument("--gate-check", action="store_true")
     subparsers.add_parser("aggregate")
@@ -71,9 +71,13 @@ def main() -> int:
     elif args.command == "run-traditional":
         protocol = load_frozen_protocol()
         pairs = list(zip(protocol["noise_levels"], protocol["noise_level_labels"]))
-        if args.all_levels:
+        if args.levels == "all":
             for level, _ in pairs:
                 print(run_traditional_subset(float(level), workers=args.workers))
+        elif args.levels == "positive":
+            for level, _ in pairs:
+                if float(level) > 0.0:
+                    print(run_traditional_subset(float(level), workers=args.workers))
         else:
             matches = [
                 float(level)
