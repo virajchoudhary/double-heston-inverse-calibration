@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import io
+import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -41,6 +43,9 @@ NEURAL_SEEDS = (11, 22, 33)
 CHECKPOINT_ROOT = REPO_ROOT / "checkpoints" / "r2_primary_comparison"
 CANONICAL_PRIMARY_EVIDENCE = (
     REPO_ROOT / "evidence" / "r2_primary_comparison_20260823"
+)
+CANONICAL_PRIMARY_MERGE_COMMIT = (
+    "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
 )
 
 
@@ -221,6 +226,25 @@ def _load_checkpoint_run(model_kind: str, seed: int) -> dict[str, Any]:
     return {**run, "training_summary": training}
 
 
+def json_safe_metrics(value: Any) -> Any:
+    """Convert NumPy metric containers to JSON-safe builtins recursively."""
+    if isinstance(value, np.ndarray):
+        return value.tolist()
+    if isinstance(value, np.generic):
+        return value.item()
+    if isinstance(value, dict):
+        return {key: json_safe_metrics(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [json_safe_metrics(item) for item in value]
+    return value
+
+
+def _canonical_primary_blob(relative_path: str) -> bytes:
+    """Read canonical evidence from the merged commit, bypassing EOL smudge."""
+    spec = f"{CANONICAL_PRIMARY_MERGE_COMMIT}:{relative_path}"
+    return subprocess.check_output(["git", "show", spec], cwd=REPO_ROOT)
+
+
 def _seed_mean_metrics(
     *,
     dataset: R2PrimaryDataset,
@@ -255,10 +279,15 @@ def _compare_zero_percent_gate(neural_root: Path) -> dict[str, Any]:
         for seed in NEURAL_SEEDS:
             name = f"{model_kind}_seed{seed}_test_predictions.csv"
             produced = (zero_dir / name).read_bytes()
-            expected = (canonical / name).read_bytes()
+            expected = _canonical_primary_blob(
+                f"evidence/r2_primary_comparison_20260823/{name}"
+            )
             prediction_checks[name] = produced == expected
 
-    canonical_rows = pd.read_csv(canonical / "neural_seed_results.csv")
+    canonical_csv = _canonical_primary_blob(
+        "evidence/r2_primary_comparison_20260823/neural_seed_results.csv"
+    ).decode("utf-8")
+    canonical_rows = pd.read_csv(io.StringIO(canonical_csv))
     produced_rows = pd.read_csv(zero_dir / "seed_headline.csv")
     canonical_science = canonical_rows.drop(columns=["per_surface_inference_ms"])
     renamed = produced_rows.rename(
@@ -273,7 +302,11 @@ def _compare_zero_percent_gate(neural_root: Path) -> dict[str, Any]:
     }
     report = {
         "artifact_kind": "R2_NOISE_ROBUSTNESS_ZERO_PERCENT_NEURAL_GATE",
-        "canonical_evidence": canonical.as_posix(),
+        "canonical_evidence_commit": CANONICAL_PRIMARY_MERGE_COMMIT,
+        "comparison_note": (
+            "prediction CSVs are compared byte-for-byte against canonical "
+            "Git blobs; this excludes Windows working-tree EOL smudging"
+        ),
         "checks": checks,
         "prediction_csv_bitwise_checks": prediction_checks,
         "runtime_column_excluded_from_metric_check": "per_surface_inference_ms",
@@ -429,7 +462,7 @@ def evaluate_neural_levels(
             clean_observed=clean_observed,
             scaling=scaling,
         )
-        write_json(level_dir / "seed_mean_metrics.json", seed_mean)
+        write_json(level_dir / "seed_mean_metrics.json", json_safe_metrics(seed_mean))
         generated_files[
             f"level_{safe_level_label(label)}/seed_mean_metrics.json"
         ] = sha256_path(level_dir / "seed_mean_metrics.json")
