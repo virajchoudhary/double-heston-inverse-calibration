@@ -1,0 +1,74 @@
+{
+  "0%": {
+    "model1": {
+      "headline_metric_cross_seed_std": {
+        "clean_latent_price_rmse_mean": 6.735162170327081e-05,
+        "clean_latent_price_rmse_p95": 0.00019956967852466844,
+        "clean_repricing_success_le_1e-4": 0.007714920608794365,
+        "constraint_validity_rate": 0.0,
+        "noisy_price_rmse_mean": 6.735162170327081e-05,
+        "noisy_price_rmse_p95": 0.00019956967852466844,
+        "noisy_repricing_success_le_1e-3": 0.03661110942505474,
+        "noisy_repricing_success_le_1e-4": 0.007714920608794365,
+        "parameter_recovery_le_0_10": 0.0013856406460551014,
+        "parameter_recovery_le_0_25": 0.0009237604307034277,
+        "range_scaled_parameter_rmse": 6.17093322626937e-05,
+        "seed": 11.0,
+        "standardized_parameter_rmse": 0.00028895362205891214
+      },
+      "mean_overall_cross_seed_prediction_std": 0.017442665427435528,
+      "mean_per_surface_cross_seed_prediction_std": {
+        "kappa_fast": 0.08019497222403303,
+        "kappa_slow": 0.013163559041061168,
+        "rho_fast": 0.052241247812870525,
+        "rho_slow": 0.01071051036850276,
+        "sigma_fast": 0.0052265729776522565,
+        "sigma_slow": 0.004300116829869652,
+        "theta_fast": 0.0011282111054235005,
+        "theta_slow": 0.0016215634034839738,
+        "v0_fast": 0.001871409223829071,
+        "v0_slow": 0.003968491287629331
+      },
+      "seeds": [
+        11,
+        22,
+        33
+      ]
+    },
+    "model2": {
+      "headline_metric_cross_seed_std": {
+        "clean_latent_price_rmse_mean": 0.00011227783271206034,
+        "clean_latent_price_rmse_p95": 0.0003524905008790889,
+        "clean_repricing_success_le_1e-4": 0.0063498031465550175,
+        "constraint_validity_rate": 0.0,
+        "noisy_price_rmse_mean": 0.00011227783271206034,
+        "noisy_price_rmse_p95": 0.0003524905008790889,
+        "noisy_repricing_success_le_1e-3": 0.09907519030177701,
+        "noisy_repricing_success_le_1e-4": 0.0063498031465550175,
+        "parameter_recovery_le_0_10": 0.001665332799572904,
+        "parameter_recovery_le_0_25": 0.0018475208614067912,
+        "range_scaled_parameter_rmse": 0.0005843912156621787,
+        "seed": 11.0,
+        "standardized_parameter_rmse": 0.0029929660377259553
+      },
+      "mean_overall_cross_seed_prediction_std": 0.017442665427435528,
+      "mean_per_surface_cross_seed_prediction_std": {
+        "kappa_fast": 0.08019497222403303,
+        "kappa_slow": 0.013163559041061168,
+        "rho_fast": 0.052241247812870525,
+        "rho_slow": 0.01071051036850276,
+        "sigma_fast": 0.0052265729776522565,
+        "sigma_slow": 0.004300116829869652,
+        "theta_fast": 0.0011282111054235005,
+        "theta_slow": 0.0016215634034839738,
+        "v0_fast": 0.001871409223829071,
+        "v0_slow": 0.003968491287629331
+      },
+      "seeds": [
+        11,
+        22,
+        33
+      ]
+    }
+  }
+}

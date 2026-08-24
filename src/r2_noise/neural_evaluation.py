@@ -265,14 +265,32 @@ def _seed_mean_metrics(
 
 def _compare_zero_percent_gate(neural_root: Path) -> dict[str, Any]:
     canonical = CANONICAL_PRIMARY_EVIDENCE
+    canonical_manifest = json.loads(
+        (canonical / "FINAL_EVALUATION_EVIDENCE_MANIFEST.json").read_text(
+            encoding="utf-8"
+        )
+    )["files"]
     zero_dir = neural_root / "level_0pct"
     prediction_checks: dict[str, bool] = {}
+    prediction_details: dict[str, dict[str, object]] = {}
     for model_kind in ("model1", "model2"):
         for seed in NEURAL_SEEDS:
             name = f"{model_kind}_seed{seed}_test_predictions.csv"
-            produced = (zero_dir / name).read_bytes()
-            expected = (canonical / name).read_bytes()
-            prediction_checks[name] = produced == expected
+            produced_path = zero_dir / name
+            expected_path = canonical / name
+            manifest_sha_match = (
+                sha256_path(produced_path) == canonical_manifest[name]
+            )
+            eol_normalized_value_match = (
+                produced_path.read_bytes().replace(b"\r\n", b"\n")
+                == expected_path.read_bytes().replace(b"\r\n", b"\n")
+            )
+            prediction_checks[name] = manifest_sha_match and eol_normalized_value_match
+            prediction_details[name] = {
+                "eol_normalized_csv_values_bitwise_equal": eol_normalized_value_match,
+                "produced_sha256": sha256_path(produced_path),
+                "sealed_canonical_manifest_sha256": canonical_manifest[name],
+            }
 
     canonical_rows = pd.read_csv(canonical / "neural_seed_results.csv")
     produced_rows = pd.read_csv(zero_dir / "seed_headline.csv")
@@ -296,6 +314,7 @@ def _compare_zero_percent_gate(neural_root: Path) -> dict[str, Any]:
         ),
         "checks": checks,
         "prediction_csv_bitwise_checks": prediction_checks,
+        "prediction_csv_identity_details": prediction_details,
         "runtime_column_excluded_from_metric_check": "per_surface_inference_ms",
         "status": (
             "PASSED"

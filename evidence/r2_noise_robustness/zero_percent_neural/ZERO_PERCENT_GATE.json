@@ -1,0 +1,52 @@
+{
+  "artifact_kind": "R2_NOISE_ROBUSTNESS_ZERO_PERCENT_NEURAL_GATE",
+  "canonical_evidence_commit": "72ad8e1aa845ec4c6f0fc61fc526df75438639bb",
+  "checks": {
+    "all_six_primary_seeds_present": true,
+    "neural_headline_metrics_exact": true,
+    "prediction_csv_bitwise_equal": true
+  },
+  "comparison_note": "prediction CSV values are compared bitwise; frozen headline metrics are compared exactly with runtime excluded",
+  "prediction_csv_bitwise_checks": {
+    "model1_seed11_test_predictions.csv": true,
+    "model1_seed22_test_predictions.csv": true,
+    "model1_seed33_test_predictions.csv": true,
+    "model2_seed11_test_predictions.csv": true,
+    "model2_seed22_test_predictions.csv": true,
+    "model2_seed33_test_predictions.csv": true
+  },
+  "prediction_csv_identity_details": {
+    "model1_seed11_test_predictions.csv": {
+      "eol_normalized_csv_values_bitwise_equal": true,
+      "produced_sha256": "5e62ef15cc2db47bac8af27d037579a3920e05465335e231fcf0465c0ca3b6b4",
+      "sealed_canonical_manifest_sha256": "5e62ef15cc2db47bac8af27d037579a3920e05465335e231fcf0465c0ca3b6b4"
+    },
+    "model1_seed22_test_predictions.csv": {
+      "eol_normalized_csv_values_bitwise_equal": true,
+      "produced_sha256": "4284f21b111071dab74049e81398660f0b5a4503aa12f21644c1bb173b0b6d33",
+      "sealed_canonical_manifest_sha256": "4284f21b111071dab74049e81398660f0b5a4503aa12f21644c1bb173b0b6d33"
+    },
+    "model1_seed33_test_predictions.csv": {
+      "eol_normalized_csv_values_bitwise_equal": true,
+      "produced_sha256": "de42b3e09cb322a73db68a669ea3f5515b08a345696b1a8d5959f3cf2bfea1b7",
+      "sealed_canonical_manifest_sha256": "de42b3e09cb322a73db68a669ea3f5515b08a345696b1a8d5959f3cf2bfea1b7"
+    },
+    "model2_seed11_test_predictions.csv": {
+      "eol_normalized_csv_values_bitwise_equal": true,
+      "produced_sha256": "4be7b6313ae1124624416dafc204f14e0409714dba2c6e1ce7e3dd74a376c53c",
+      "sealed_canonical_manifest_sha256": "4be7b6313ae1124624416dafc204f14e0409714dba2c6e1ce7e3dd74a376c53c"
+    },
+    "model2_seed22_test_predictions.csv": {
+      "eol_normalized_csv_values_bitwise_equal": true,
+      "produced_sha256": "1dcab76d2b892b622329650d52493a652165e0c307bfb879029214d7450dde43",
+      "sealed_canonical_manifest_sha256": "1dcab76d2b892b622329650d52493a652165e0c307bfb879029214d7450dde43"
+    },
+    "model2_seed33_test_predictions.csv": {
+      "eol_normalized_csv_values_bitwise_equal": true,
+      "produced_sha256": "c0546e28c8c929d023f1c70f93b0724af838b62cf8cc006a660b5a5841ec8976",
+      "sealed_canonical_manifest_sha256": "c0546e28c8c929d023f1c70f93b0724af838b62cf8cc006a660b5a5841ec8976"
+    }
+  },
+  "runtime_column_excluded_from_metric_check": "per_surface_inference_ms",
+  "status": "PASSED"
+}
