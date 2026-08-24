@@ -1,0 +1,57 @@
+{
+  "artifact_kind": "R2_NOISE_ROBUSTNESS_RECOVERY_CONTAINMENT_RECORD",
+  "status": "RECOVERY_READY_STRICT_ZERO_PERCENT_VERIFIED",
+  "canonical_main_commit": "72ad8e1aa845ec4c6f0fc61fc526df75438639bb",
+  "frozen_protocol_commit": "91b66b63af7fbda6ad425fe7beeddf045e6b99c0",
+  "frozen_config_sha256": "2fa49b3eb885d3427c01ab0cfe447fc6ddd7f19957db73c4b4ed782476c57c5a",
+  "frozen_clean_dataset_sha256": "148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6",
+  "protocol_order_deviation": {
+    "classification": "FACTUAL_PROCESS_DEVIATION_PRESERVED_NOT_CANONICAL",
+    "facts": [
+      "The first neural gate implementation weakened exact headline acceptance after observing a one-float64-ULP scalar difference; commit e11fabb is therefore not a canonical passed gate.",
+      "Positive cohorts were committed at 7e25163 and positive neural evaluation at cb7204d before both neural and traditional zero-percent gates had passed.",
+      "Those positive artifacts remain preserved as superseded execution evidence and are not interpreted as canonical research results."
+    ]
+  },
+  "neural_zero_percent_root_cause": {
+    "classification": "NUMERICAL_ENVIRONMENT_DIFFERENCE",
+    "canonical_scalar": 0.16718774309658918,
+    "first_reproduced_scalar": 0.1671877430965892,
+    "delta": 1.1102230246251565e-16,
+    "prediction_csv_identity": "ALL_SIX_SHA256_MATCH_SEALED_MANIFEST",
+    "canonical_metric_path": "src/r2_primary/evaluation.py::parameter_recovery_metrics::range_scaled_parameter_rmse",
+    "recovery_environment": {
+      "python_executable": "C:/Python313/python.exe",
+      "python_version": "3.13.4",
+      "numpy_version": "2.2.6",
+      "torch_version": "2.11.0+cpu"
+    },
+    "resolution": "Use canonical-compatible numerical environment and strict exact comparator with runtime excluded."
+  },
+  "post_freeze_commit_classification": {
+    "9cc13427e84e5bb0927afb4d58a05f2b4d100ebf": "MIXED_REQUIRES_MANUAL_PORT",
+    "81c9256b3cee2667880a85810ebd2ad33406e9b1": "SAFE_EXECUTION_ONLY",
+    "116b85c0e38f3a0f5acd3a3fdb204874f66d7c3e": "MIXED_REQUIRES_MANUAL_PORT",
+    "9bc46bab02ade01ad4e69084dfd317e9a1d8bff8": "SAFE_EXECUTION_ONLY",
+    "e11fabb80a450806d6140667b994c9e75f45c4be": "MIXED_REQUIRES_MANUAL_PORT",
+    "7e2516382060bb9783e04486d58ec401de95a7b7": "RESULT_OR_EVIDENCE_ONLY_NONCANONICAL_POSITIVE",
+    "cb7204dd389b3006b112545e62b3416fd2e4f5bd": "RESULT_OR_EVIDENCE_ONLY_NONCANONICAL_POSITIVE"
+  },
+  "strict_recovery_gates": {
+    "neural": {
+      "status": "PASSED",
+      "population": "six intended checkpoints over N=1250 test surfaces",
+      "prediction_csv_bitwise_equal": true,
+      "headline_metrics_exact_with_runtime_excluded": true
+    },
+    "traditional": {
+      "status": "PASSED",
+      "surfaces_calibrated": 250,
+      "starts_recorded": 750,
+      "failed_starts_retained": 624,
+      "scientific_start_rows_exact_after_runtime_exclusion": true
+    }
+  },
+  "positive_noise_execution_after_containment": "NONE",
+  "positive_noise_interpretation": "FORBIDDEN_AND_NOT_PERFORMED"
+}
