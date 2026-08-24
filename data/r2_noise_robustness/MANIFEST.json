@@ -1,0 +1,36 @@
+{
+  "artifact_kind": "R2_NOISE_ROBUSTNESS_IMMUTABLE_COHORTS",
+  "base_seed": 20260825,
+  "clean_dataset_sha256": "148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6",
+  "files": {
+    "levels/0.10%/noisy_surfaces.jsonl": {
+      "positive_price_resample_events": 0,
+      "record_count": 1250,
+      "sha256": "bdee2dd02fc3333b8bd7900358933b845154db378f568f7be77321d255c68197"
+    },
+    "levels/0.25%/noisy_surfaces.jsonl": {
+      "positive_price_resample_events": 0,
+      "record_count": 1250,
+      "sha256": "67cbb4c2c303e1a4f2cecabdf1625e52f9c39ba35e09fc6665317cba20f49a0c"
+    },
+    "levels/0.50%/noisy_surfaces.jsonl": {
+      "positive_price_resample_events": 0,
+      "record_count": 1250,
+      "sha256": "186400092d016a2e2a305616a035d9b8b72ab624dad653d2560f1fe68149217f"
+    },
+    "levels/1.00%/noisy_surfaces.jsonl": {
+      "positive_price_resample_events": 0,
+      "record_count": 1250,
+      "sha256": "7e0f6f948f1d2b13505b9e147214d5cfc8bc82fe4c82a1942323fa0ac4690368"
+    }
+  },
+  "generation_status": "COMPLETE_BYTE_REPLAYABLE",
+  "levels_in_manifest": [
+    "0.10%",
+    "0.25%",
+    "0.50%",
+    "1.00%"
+  ],
+  "population": "test_split_only_N1250",
+  "protocol_config_sha256": "2fa49b3eb885d3427c01ab0cfe447fc6ddd7f19957db73c4b4ed782476c57c5a"
+}
