@@ -1,0 +1,74 @@
+{
+  "artifact_kind": "R2_NOISE_ROBUSTNESS_NEURAL_FULL_N1250",
+  "files": {
+    "level_0_10pct/model1_seed11_test_predictions.csv": "93be174f08a06d71603640639e4ea9acfee0f495b65d7aa29162a75c594f3ae0",
+    "level_0_10pct/model1_seed22_test_predictions.csv": "c21d5dfe6bcfcd36c4a6c3b24e6a493df9972dc015d1b0a3b33997265fee387a",
+    "level_0_10pct/model1_seed33_test_predictions.csv": "b9066c0cc3e694485ce7a319207438508a0ed4b202259e206e512a27cda5ba48",
+    "level_0_10pct/model2_seed11_test_predictions.csv": "2278bed1c1bcb3b758102ac644c09523cf3c6d05c234e726d8b3c7a5b3d0f98d",
+    "level_0_10pct/model2_seed22_test_predictions.csv": "4d894caec85b3a0e1edf427ec784ffc7254df33d77f56f9eaf2fea178f89dc8f",
+    "level_0_10pct/model2_seed33_test_predictions.csv": "740ec9f0ecac8c2fb1f3c393a528d65808bca90d5b36699afde53f012fea1d07",
+    "level_0_10pct/per_surface_metrics.csv": "89b870b593eac40246c30422092e539d219dd0bb406ea745a29d24b18865fe6e",
+    "level_0_10pct/seed_headline.csv": "7f75bfd58591b0fa64119b50a280a982b6ed7680230da407868bf76aeb19e00e",
+    "level_0_10pct/seed_mean_metrics.json": "83e5eb4b81260fff5299fbb70f19b9ab802c83fcc087800b437590601c9c82e4",
+    "level_0_25pct/model1_seed11_test_predictions.csv": "bdb09754952fff1c385333222d7ddca5c601296030d0cd1f58205d803c12dee7",
+    "level_0_25pct/model1_seed22_test_predictions.csv": "5ac5816efa902398a9f5bbc48adb1fecc9c2a0009e39a97ba9f3beba1ca0dacd",
+    "level_0_25pct/model1_seed33_test_predictions.csv": "12e3c81284bea3030aaa82d1899b89bb8fbe323d1763285120a46dba90427e66",
+    "level_0_25pct/model2_seed11_test_predictions.csv": "bdace0c2445b963915029546a4e4e6917b90627a46e64416dbfca0444ee75140",
+    "level_0_25pct/model2_seed22_test_predictions.csv": "3f62ebe9a1310431e03e3d0112f906e4ee24d7a432b1e03769a3f117c93eb4a6",
+    "level_0_25pct/model2_seed33_test_predictions.csv": "0e93ec47ade57fab881e0866cd636785efc7a9dac7707ec457b5308ac1976ded",
+    "level_0_25pct/per_surface_metrics.csv": "2a12c2548f2c4889a5ddf225cf657fdadb6a00023014b272eeaa6ee7dea9c62a",
+    "level_0_25pct/seed_headline.csv": "e2c7a3f18c70ab76586334012b19e8bacf98c628117e3691a3aa4342a60daf2a",
+    "level_0_25pct/seed_mean_metrics.json": "5aea292edc68e3dd23409e2b1caf438a98164a561f01511f4cc47495af2ba1a5",
+    "level_0_50pct/model1_seed11_test_predictions.csv": "7493de8dc96827f9929dc49b370b9aa95e2ea9f0ec79c8a44043a8e118b1b307",
+    "level_0_50pct/model1_seed22_test_predictions.csv": "00a6c6b48d5e106099fefcc760bb7293982fbb22280c78f8fbc620879c79393b",
+    "level_0_50pct/model1_seed33_test_predictions.csv": "4b4345f4cf7f68ea040abe5b344301243cbf85876fd49ebe7fa9deb2f4cfe4ea",
+    "level_0_50pct/model2_seed11_test_predictions.csv": "81b53c0c416c2ff5297fbe5aa21769348de8a8a05fdcb8443821ba5397e813eb",
+    "level_0_50pct/model2_seed22_test_predictions.csv": "92ac77dfc8407fa3d4c43d283d19d9d21e6ae362e6ec916663081c505ae57f56",
+    "level_0_50pct/model2_seed33_test_predictions.csv": "f5b3c24f45b70ee4833c31aa09e1666aaec68dec70f3495fb00d603fcb635082",
+    "level_0_50pct/per_surface_metrics.csv": "f97b9ecc80bdc37686acdc6bfa275c68c9347dfed4ed1155267025614c486f44",
+    "level_0_50pct/seed_headline.csv": "4b964f2dff2685f98b2419c9b567ae4b8441f8c3aeff9140a28b12b66e51fb14",
+    "level_0_50pct/seed_mean_metrics.json": "d82f1e43ec2897924ddbef0d21f9e3f8c6e3e662acff85b3d5026f9b6103fd73",
+    "level_0pct/model1_seed11_test_predictions.csv": "5e62ef15cc2db47bac8af27d037579a3920e05465335e231fcf0465c0ca3b6b4",
+    "level_0pct/model1_seed22_test_predictions.csv": "4284f21b111071dab74049e81398660f0b5a4503aa12f21644c1bb173b0b6d33",
+    "level_0pct/model1_seed33_test_predictions.csv": "de42b3e09cb322a73db68a669ea3f5515b08a345696b1a8d5959f3cf2bfea1b7",
+    "level_0pct/model2_seed11_test_predictions.csv": "4be7b6313ae1124624416dafc204f14e0409714dba2c6e1ce7e3dd74a376c53c",
+    "level_0pct/model2_seed22_test_predictions.csv": "1dcab76d2b892b622329650d52493a652165e0c307bfb879029214d7450dde43",
+    "level_0pct/model2_seed33_test_predictions.csv": "c0546e28c8c929d023f1c70f93b0724af838b62cf8cc006a660b5a5841ec8976",
+    "level_0pct/per_surface_metrics.csv": "97fe3964f3c98c77c554703794306e2cdaa683a7edbce74f5006bfbb17c2d52e",
+    "level_0pct/seed_headline.csv": "d32ccd84c9e7f79e32c9e507beece625c9764c32f4570d47075c8b6316fd9da1",
+    "level_0pct/seed_mean_metrics.json": "3414b16a364967fb25e230a4faf86c60ae444c2e86524bbb0372e08b29666a01",
+    "level_1_00pct/model1_seed11_test_predictions.csv": "7bab0428690fc02398710ced8e81e45b1dde6594f009cf727f3b86abaef5f122",
+    "level_1_00pct/model1_seed22_test_predictions.csv": "9d4a74e167bef8e2e344deb15a6ad163134dca666aef4f3a8f5519dd673e8016",
+    "level_1_00pct/model1_seed33_test_predictions.csv": "e11f7d2df721457f8a9db591616f6a83750af46efc1c910bed3f9fdbf7a1de6f",
+    "level_1_00pct/model2_seed11_test_predictions.csv": "4649db0d9268117f3708ebff95381803048eb6c7baec58d53df717493075d3f6",
+    "level_1_00pct/model2_seed22_test_predictions.csv": "f973a5d652a5f069c4d20ce6abd9fb0af8f7760c8954a9eb8aea2a6b4d972f47",
+    "level_1_00pct/model2_seed33_test_predictions.csv": "a38b3e3863b3ea44eb9d949e2e15468f4a034f692d7c7cb7c5ec466b2957de7a",
+    "level_1_00pct/per_surface_metrics.csv": "1fa8e00ebe411aa4b935d8206f989c653074931116f8b6135f21d232cdcf8cdb",
+    "level_1_00pct/seed_headline.csv": "a10a1934322796f4aecf1c4ec0e96d4d4683b22df932a12d08ae4f5744399770",
+    "level_1_00pct/seed_mean_metrics.json": "be799b8cd4b9e89468c57b0cf28a82457fdb6ec8a6871a929117e52c000dffc5"
+  },
+  "levels": [
+    "0%",
+    "0.10%",
+    "0.25%",
+    "0.50%",
+    "1.00%"
+  ],
+  "models_and_seeds": {
+    "excluded": [
+      "model2_seed11_local_cpu_replication"
+    ],
+    "model1": [
+      11,
+      22,
+      33
+    ],
+    "model2_primary_P100": [
+      11,
+      22,
+      33
+    ]
+  },
+  "population": "FULL_TEST_NEURAL_N1250",
+  "status": "COMPLETE"
+}
