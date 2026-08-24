@@ -1,0 +1,60 @@
+{
+  "model1": {
+    "11": {
+      "best_epoch": 124,
+      "checkpoint_sha256": "5adc762f7e73e8ab267c72c39b7fde40c36a6301f7ebce64a27eabdd6625a8eb",
+      "epochs_completed": 144,
+      "git_sha": "9bf1d490f679a0479b621167ffc049e501e5de8a",
+      "run_kind": "RESEARCH",
+      "seed": 11,
+      "training_runtime_seconds": 377.51375329999973
+    },
+    "22": {
+      "best_epoch": 90,
+      "checkpoint_sha256": "fa4d18378a1de4e80bcc9decb9ebc830df87ce0bfc0f638f68ba2b939de9f4e7",
+      "epochs_completed": 110,
+      "git_sha": "9b7c921c183cd29b54a4ffae60e79a4d7c00bde2",
+      "run_kind": "RESEARCH",
+      "seed": 22,
+      "training_runtime_seconds": 529.3017586999995
+    },
+    "33": {
+      "best_epoch": 43,
+      "checkpoint_sha256": "815a9dba831d22dc1cf7786c47b4eddfd744b1fbf01fa82efd0c0da98361bf8a",
+      "epochs_completed": 63,
+      "git_sha": "9b7c921c183cd29b54a4ffae60e79a4d7c00bde2",
+      "run_kind": "RESEARCH",
+      "seed": 33,
+      "training_runtime_seconds": 264.44168439999976
+    }
+  },
+  "model2": {
+    "11": {
+      "best_epoch": 46,
+      "checkpoint_sha256": "812723995bcbba7e5b3d2690fffea7063798a518c0824c5c6d9c756ad4a06eef",
+      "epochs_completed": 66,
+      "git_sha": "2b5d41cd232241a1f23348411643a9ce58b53b7a",
+      "run_kind": "RESEARCH",
+      "seed": 11,
+      "training_runtime_seconds": 463.0515988019997
+    },
+    "22": {
+      "best_epoch": 60,
+      "checkpoint_sha256": "a9fad9673a4e8e4b5d79a5a4478d56c3884d8ad03c6247bf7318ef8bf0f5b098",
+      "epochs_completed": 80,
+      "git_sha": "2b5d41cd232241a1f23348411643a9ce58b53b7a",
+      "run_kind": "RESEARCH",
+      "seed": 22,
+      "training_runtime_seconds": 553.3156083089998
+    },
+    "33": {
+      "best_epoch": 62,
+      "checkpoint_sha256": "ead822abb5e35a76940bc9ece510090430dc071475800cc4f673ffd25bb02730",
+      "epochs_completed": 82,
+      "git_sha": "2b5d41cd232241a1f23348411643a9ce58b53b7a",
+      "run_kind": "RESEARCH",
+      "seed": 33,
+      "training_runtime_seconds": 590.8600454010002
+    }
+  }
+}

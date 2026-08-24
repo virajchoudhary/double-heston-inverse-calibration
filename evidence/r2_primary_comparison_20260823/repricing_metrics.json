@@ -1,0 +1,29 @@
+{
+  "model1": {
+    "implied_volatility_error": "NOT_REPORTED_numerical_validity_not_established",
+    "normalized_price_mae_mean": 0.0006394676815626321,
+    "normalized_price_max_abs_error_mean": 0.001138620164507656,
+    "normalized_price_max_abs_error_p95": 0.0028680107176379628,
+    "normalized_price_rmse_mean": 0.000726646342094992,
+    "normalized_price_rmse_median": 0.0005329828518897738,
+    "normalized_price_rmse_p95": 0.001968034412342569
+  },
+  "model2": {
+    "implied_volatility_error": "NOT_REPORTED_numerical_validity_not_established",
+    "normalized_price_mae_mean": 0.0006937900989832544,
+    "normalized_price_max_abs_error_mean": 0.0012349728259613184,
+    "normalized_price_max_abs_error_p95": 0.0031634291954160416,
+    "normalized_price_rmse_mean": 0.0007890046881625992,
+    "normalized_price_rmse_median": 0.0005992436223209874,
+    "normalized_price_rmse_p95": 0.0021060002036458526
+  },
+  "traditional_calibration": {
+    "implied_volatility_error": "NOT_REPORTED_numerical_validity_not_established",
+    "normalized_price_mae_mean": 4.37208742320886e-09,
+    "normalized_price_max_abs_error_mean": 1.1264244630758446e-08,
+    "normalized_price_max_abs_error_p95": 4.902060773692706e-08,
+    "normalized_price_rmse_mean": 5.699418632267577e-09,
+    "normalized_price_rmse_median": 9.706542154301124e-10,
+    "normalized_price_rmse_p95": 2.3654171943254702e-08
+  }
+}

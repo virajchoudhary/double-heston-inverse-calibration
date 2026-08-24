@@ -1,0 +1,26 @@
+{
+  "model1": {
+    "constraint_validity_rate": 1.0,
+    "correlation_disk_violation_rate": 0.0,
+    "fast_feller_violation_rate": 0.0,
+    "ordering_violation_rate": 0.0,
+    "positivity_violation_rate": 0.0,
+    "slow_feller_violation_rate": 0.0
+  },
+  "model2": {
+    "constraint_validity_rate": 1.0,
+    "correlation_disk_violation_rate": 0.0,
+    "fast_feller_violation_rate": 0.0,
+    "ordering_violation_rate": 0.0,
+    "positivity_violation_rate": 0.0,
+    "slow_feller_violation_rate": 0.0
+  },
+  "traditional_calibration": {
+    "constraint_validity_rate": 1.0,
+    "correlation_disk_violation_rate": 0.0,
+    "fast_feller_violation_rate": 0.0,
+    "ordering_violation_rate": 0.0,
+    "positivity_violation_rate": 0.0,
+    "slow_feller_violation_rate": 0.0
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "model1": null,
+  "model2": null,
+  "traditional_calibration": {
+    "budget": "3 starts x max_nfev 300 (frozen; see protocol)",
+    "per_surface_calibration_seconds_mean": 375.96049734216007,
+    "per_surface_calibration_seconds_p95": 614.4631353500005,
+    "starts_per_surface": 3
+  }
+}
