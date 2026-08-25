@@ -292,6 +292,16 @@ def validate_registry(registry: Any) -> list[str]:
     if isinstance(handoff, dict):
         _require(isinstance(handoff.get("first_actions"), list) and bool(handoff.get("first_actions")), "tomorrow_handoff.first_actions must be nonempty", errors)
         _require(isinstance(handoff.get("human_review_gates"), list) and bool(handoff.get("human_review_gates")), "tomorrow_handoff.human_review_gates must be nonempty", errors)
+
+    graph = registry.get("_dependency_graph")
+    if isinstance(graph, dict):
+        registry_ids = set(by_id)
+        graph_ids = {item.get("id") for item in graph.get("nodes", []) if isinstance(item, dict)}
+        _require(
+            registry_ids == graph_ids,
+            f"registry/graph id divergence: registry-only={sorted(registry_ids - graph_ids)}; graph-only={sorted(graph_ids - registry_ids)}",
+            errors,
+        )
     return errors
 
 
@@ -519,6 +529,7 @@ def verify_git_identities(registry: dict[str, Any], root: str | Path = ".") -> t
                 errors.append(f"{experiment_id}: ancestry check failed for {expected_commit}")
 
         identities = [
+            ("protocol", experiment["branch"], experiment["protocol"], experiment.get("protocol_sha256")),
             ("config", experiment["branch"], experiment["config"], experiment.get("config_sha256")),
             ("dataset", experiment["branch"], experiment["dataset"], experiment.get("dataset_sha256")),
         ]

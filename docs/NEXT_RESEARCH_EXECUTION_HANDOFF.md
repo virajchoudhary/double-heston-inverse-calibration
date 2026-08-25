@@ -22,14 +22,12 @@ The live audit found changes beyond `72ad8e1aa845ec4c6f0fc61fc526df75438639bb`. 
 | `model3_genuine_pde` | `research/model3-pde-protocol` | `a01ddc1db854f823eb02b91193eecb4dc6698974` | PENDING / PILOT_READY_AFTER_AUDIT_FIXES_NO_RESULT_EXISTS |
 | `ood_boundary_robustness` | `research/ood-boundary-protocol` | `b6c5e5d0c60d5a99d767ebb3db5175859f310293` | PARTIAL / COHORT_GENERATION_AND_REPLAY_DONE_METHOD_EVALUATION_PENDING |
 | `paper_synthesis` | `research/paper-synthesis` | `1fe18e6650bee29f0c4cd731b45ebd198699dde0` | PARTIAL / DOCUMENTATION_SYNTHESIS_PARTIAL_STALE_BRANCH_POINTERS |
-| `r2_noise_partial_journal` | `codex/r2-noise-recovery` | `e58b36d1ff6cbf39115d46698ad0fb45b1ac1b8b` | PARTIAL / INTERRUPTED_JOURNAL_PRESERVED_NOT_A_LEVEL_RESULT_EXECUTION_TARGET_B94447D |
 | `r2_observation_noise_robustness` | `codex/r2-noise-recovery` | `e58b36d1ff6cbf39115d46698ad0fb45b1ac1b8b` | PARTIAL / NEURAL_AND_ZERO_PERCENT_DONE_POSITIVE_TRADITIONAL_PARTIAL |
 
 ## What is currently partial?
 
 - `ood_boundary_robustness` — COHORT_GENERATION_AND_REPLAY_DONE_METHOD_EVALUATION_PENDING
 - `paper_synthesis` — DOCUMENTATION_SYNTHESIS_PARTIAL_STALE_BRANCH_POINTERS
-- `r2_noise_partial_journal` — INTERRUPTED_JOURNAL_PRESERVED_NOT_A_LEVEL_RESULT_EXECUTION_TARGET_B94447D
 - `r2_observation_noise_robustness` — NEURAL_AND_ZERO_PERCENT_DONE_POSITIVE_TRADITIONAL_PARTIAL
 
 ## What can run immediately tomorrow?
@@ -39,7 +37,7 @@ Nothing scientific may start without the explicit review gate below. Coordinatio
 ## Compute classes
 
 - REQUIRES GPU: `model3_genuine_pde`
-- REQUIRES MULTICORE CPU: `r2_noise_partial_journal`, `r2_observation_noise_robustness`
+- REQUIRES MULTICORE CPU: `r2_observation_noise_robustness`
 - LIGHT LOCAL AFTER AUTHORIZATION: `paper_synthesis`
 - REMAINS BLOCKED: `g8_final_real_market_evaluation`
 

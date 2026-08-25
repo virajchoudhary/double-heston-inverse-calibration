@@ -204,7 +204,6 @@ experiments:
     config_sha256: "D7E85317CB8D8AB2D05AAF21026D32BB620EFAF9F3176465371D2EAC02EA80FD"
     dataset: evidence/final_r2_synthetic_pilot_20260822/surfaces.jsonl
     dataset_sha256: "275C97A80F63C011959E309FE7F70C85AA16175423602D2D2AE96058F17BA942"
-    dataset_sha256: UNKNOWN
     train_population: "240-surface deterministic development pilot"
     validation_population: "Included in the 240/40 pilot boundary as documented"
     test_population: NOT_APPLICABLE_INTERFACE_FREEZE
@@ -344,43 +343,6 @@ experiments:
       - "Interpret a partial journal as a complete level."
     stop_gate: "Exact commit b94447d71d8418a218e0e5f2a91ba807f2dcb687, clean tree, all hashes, checkpoint archive identity, and fresh authorization."
 
-  - id: r2_noise_partial_journal
-    title: Interrupted R2 0.10 percent positive-noise traditional journal
-    classification: PARTIAL_CHECKPOINT
-    scientific_status: PARTIAL
-    branch: codex/r2-noise-recovery
-    commit: "e58b36d1ff6cbf39115d46698ad0fb45b1ac1b8b"
-    base_commit: "91b66b63af7fbda6ad425fe7beeddf045e6b99c0"
-    protocol: docs/R2_NOISE_CLOUD_EXECUTION_HANDOFF.md
-    protocol_sha256: "79F1AC44063C2B2D2FAF129EE40F18036C4A1F33F6B0E25AB919F78CFC6DECE7"
-    config: configs/r2_noise_robustness_FINAL.yaml
-    config_sha256: "2FA49B3EB885D3427C01AB0CFE447FC6DDD7F19957DB73C4B4ED782476C57C5A"
-    dataset: evidence/r2_noise_robustness/traditional/level_0_10pct/traditional_calibration_starts_journal.jsonl
-    dataset_sha256: "79F1AC44063C2B2D2FAF129EE40F18036C4A1F33F6B0E25AB919F78CFC6DECE7"
-    train_population: NOT_USED_TEST_SPLIT_ONLY_N1250
-    validation_population: NOT_USED
-    test_population: "164 of 250 planned surfaces retained; 750 total starts eventually required"
-    test_opened: true
-    seeds:
-      start_seed: 42
-    runner: scripts/run_r2_noise_robustness.py
-    compute_class: MULTICORE_CLOUD_CPU_CALIBRATION
-    execution_location: persistent cloud CPU VM
-    intended_compute_environment: same frozen Python/NumPy/SciPy environment as parent noise lane
-    execution_command: FORBIDDEN_IN_ORCHESTRATION_RUN
-    dependencies: [r2_observation_noise_robustness]
-    required_artifacts: []
-    partial_artifacts:
-      - {ref: codex/r2-noise-recovery, path: evidence/r2_noise_robustness/traditional/level_0_10pct/JOURNAL_PROVENANCE.json, sha256: "FBD73E588B027697B927693285FE540C66A295C12629F6223150ABE1B186C64C"}
-      - {ref: codex/r2-noise-recovery, path: evidence/r2_noise_robustness/traditional/level_0_10pct/traditional_calibration_starts_journal.jsonl, sha256: "79F1AC44063C2B2D2FAF129EE40F18036C4A1F33F6B0E25AB919F78CFC6DECE7"}
-    result_status: INTERRUPTED_JOURNAL_PRESERVED_NOT_A_LEVEL_RESULT_EXECUTION_TARGET_B94447D
-    test_exposure_state: STORED_TEST_SPLIT_OPENED_BY_FROZEN_PARENT_PROTOCOL
-    scientifically_legal_next_action: "No action in this run; tomorrow requires fresh human authorization and exact identity checks."
-    forbidden_actions:
-      - "Edit or truncate the journal."
-      - "Treat 164 completed surfaces as a completed level."
-    stop_gate: "Parent lane stop gate plus journal-preserving resume semantics."
-
   - id: model3_genuine_pde
     title: Genuine PDE-informed Model 3
     classification: IMPLEMENTATION_READY
@@ -389,7 +351,7 @@ experiments:
     commit: "a01ddc1db854f823eb02b91193eecb4dc6698974"
     base_commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
     protocol: docs/MODEL3_PDE_PROTOCOL.md
-    protocol_sha256: "A70055E6C8C53124FD439ABFB52B7F8BF199763A29B49C26267F3756A59E8A26"
+    protocol_sha256: "1C4701B23D363558E75A60171DD8D74AC2546CC1DB28971D3CFA99C3DC5F5021"
     config: configs/model3_pde_protocol.yaml
     config_sha256: "D38482381BD3021BAFF80333B40A0770941A79D80FD5E0DA3B4BC314A4F10361"
     dataset: data/final_r2_clean_10000/surfaces.jsonl
@@ -427,7 +389,7 @@ experiments:
     commit: "b6c5e5d0c60d5a99d767ebb3db5175859f310293"
     base_commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
     protocol: docs/OOD_BOUNDARY_PROTOCOL.md
-    protocol_sha256: "1C4701B23D363558E75A60171DD8D74AC2546CC1DB28971D3CFA99C3DC5F5021"
+    protocol_sha256: "567275554E746EDE8F0F509CA80187E49AFCE12486E6EDD411B5FB1A5351BBD1"
     config: configs/ood_boundary_protocol.yaml
     config_sha256: "948A23E7D30F762D9D6D85BFF79C5C83C51624E943B4F1F5DD94E7038A348E7C"
     dataset: evidence/ood_boundary_protocol_v1/all_research_surfaces.jsonl
@@ -507,7 +469,7 @@ experiments:
     commit: "1fe18e6650bee29f0c4cd731b45ebd198699dde0"
     base_commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
     protocol: paper/README.md
-    protocol_sha256: "567275554E746EDE8F0F509CA80187E49AFCE12486E6EDD411B5FB1A5351BBD1"
+    protocol_sha256: "1A8477D2D260CF74EE3C723CA788D26829A822FC924370F8CFCF4C2A97444ECE"
     config: paper/scripts/generate_results_assets.py
     config_sha256: "C6D78DE0AA85C61E2DE3DF760FEAC788C6C5DAC9A7D969EB40CFB74ED2D817B0"
     dataset: committed evidence referenced by paper/RESULTS_INVENTORY.md

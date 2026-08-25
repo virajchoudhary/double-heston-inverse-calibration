@@ -54,7 +54,7 @@ Generated deterministically from the registry and dependency graph.
 - COMPUTE CLASS: LIGHT_LOCAL_CPU
 - RECOMMENDED LOCATION: local contract validation
 - EXPECTED SCALE: train=240-surface deterministic development pilot; validation=Included in the 240/40 pilot boundary as documented; test=NOT_APPLICABLE_INTERFACE_FREEZE; compute=LIGHT_LOCAL_CPU
-- REQUIRED INPUT IDENTITIES: config=`src/r2_representation/contract.py` (D7E85317CB8D8AB2D05AAF21026D32BB620EFAF9F3176465371D2EAC02EA80FD); dataset=`evidence/final_r2_synthetic_pilot_20260822/surfaces.jsonl` (UNKNOWN)
+- REQUIRED INPUT IDENTITIES: config=`src/r2_representation/contract.py` (D7E85317CB8D8AB2D05AAF21026D32BB620EFAF9F3176465371D2EAC02EA80FD); dataset=`evidence/final_r2_synthetic_pilot_20260822/surfaces.jsonl` (275C97A80F63C011959E309FE7F70C85AA16175423602D2D2AE96058F17BA942)
 - STOP GATE: Interface change requires a new reviewed representation protocol.
 - FORBIDDEN ACTIONS:
   - Introduce legacy-108 or rejected-R3 vectors through the canonical boundary.
