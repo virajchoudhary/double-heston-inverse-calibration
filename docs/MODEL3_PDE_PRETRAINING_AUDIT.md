@@ -1,6 +1,6 @@
 # Model 3 PDE pretraining audit
 
-Status: `MODEL3_PDE_BLOCKED_PILOT_DRIVER_NOT_IMPLEMENTED`. This is a concise
+Status: `MODEL3_PDE_PILOT_READY`. This is a concise
 readiness audit, not a training result or engineering diary.
 
 ## Provenance
@@ -81,10 +81,10 @@ Scientifically ready:
 5. loss weights and experiment budgets are frozen before outcomes;
 6. lightweight mathematical and integration tests pass.
 
-Operational blocker before launching Stage A:
+Remaining pre-launch operational gate:
 
-1. add the thin deterministic pilot driver specified by the cloud plan in a
-   separately reviewed implementation-only commit;
+1. the thin deterministic pilot driver specified by the cloud plan is now
+   implemented and reviewed;
 2. verify cloud Git/config/data identities and rerun focused tests before GPU
    allocation.
 

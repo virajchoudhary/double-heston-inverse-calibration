@@ -1,6 +1,6 @@
 # Model 3 PDE cloud execution plan
 
-Status: `MODEL3_PDE_BLOCKED_PILOT_DRIVER_NOT_IMPLEMENTED`; prepared but not
+Status: `MODEL3_PDE_PILOT_READY`; prepared but not
 executed. This plan defines environment, identity gates, pilot design,
 checkpoint handling, resumability, and artifact return. It does not authorize
 the pilot.
@@ -74,11 +74,11 @@ real-market weight-update paths into the pilot workspace.
 
 ## Pilot execution contract
 
-The reviewed milestone deliberately does not start training. Before Stage A can
-launch, add one thin implementation-only pilot driver in a separately reviewed
-commit. It must load through `src.r2_primary.dataset.R2PrimaryDataset`, fit
-target scaling on train only, instantiate `Model3PDESystem`, use the configured
-AdamW settings and deterministic samplers, and emit diagnostics. It must contain
+The reviewed milestone deliberately does not start training. The thin
+implementation-only pilot driver is now implemented and independently reviewed.
+It loads through `src.r2_primary.dataset.R2PrimaryDataset`, fits
+target scaling on train only, instantiates `Model3PDESystem`, uses the configured
+AdamW settings and deterministic samplers, and emits diagnostics. It contains
 no test-split access and no real-market update path.
 
 The driver command must have this exact public shape:
