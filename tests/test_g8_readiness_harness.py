@@ -5,7 +5,7 @@ import pytest
 
 from src.calibrate_double_heston import load_hard_safety_bounds
 from src.g8_readiness.checkpoints import stage_canonical_checkpoint
-from src.g8_readiness.harness import real_g8_traditional_starts
+from src.g8_readiness.harness import aggregate_pricing_family, real_g8_traditional_starts
 
 
 def test_real_traditional_adapter_has_exactly_two_uninformed_starts() -> None:
@@ -29,3 +29,18 @@ def test_external_checkpoint_staging_refuses_hash_mismatch(tmp_path):
         stage_canonical_checkpoint(expected, source_path=source, approve_expected_hash=True)
     with pytest.raises(Exception, match="hash approval"):
         stage_canonical_checkpoint(expected, source_path=source, approve_expected_hash=False)
+
+
+def test_holdout_iv_failure_counts_as_surface_failure() -> None:
+    failed_run = {
+        "models": {
+            model: {
+                "representative_fit_failed": True,
+                "failure_reason": "REQUIRED_HOLDOUT_MODEL_IV_NOT_FINITE",
+            }
+            for model in ("BLACK_SCHOLES", "STANDARD_HESTON", "DOUBLE_HESTON")
+        }
+    }
+    aggregate = aggregate_pricing_family([failed_run])
+    assert all(item["failure_rate"] == 1.0 for item in aggregate["aggregates"].values())
+    assert aggregate["winner_label"] == "NO_CLEAR_PRICING_FAMILY_WINNER"

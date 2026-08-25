@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+from datetime import date
+from collections import Counter
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
@@ -37,43 +39,80 @@ def build_pre_acquisition_freeze(
     protocol_commit: str,
     config_path: Path | str,
     checkpoint_manifest: Mapping[str, Any],
+    independent_review_verdict: str | None,
     model3_decision: Mapping[str, Any],
     tool_identities: Mapping[str, Mapping[str, Any]],
+    current_date: date,
+    protocol_frozen: bool,
     seal: bool = False,
 ) -> dict[str, Any]:
-    """Never return a sealed manifest while checkpoint prerequisites are absent."""
-    checkpoints_ready = checkpoint_manifest.get("all_checks_passed") is True
-    model3_label = model3_decision.get("label")
-    model3_valid_label = model3_label in {
-        "MODEL3_NOT_FROZEN_NOT_EVALUATED",
-        "MODEL3_INCLUDED",
-    }
-    missing_tools = sorted(set(("acquisition", "surface_builder", "evaluation_harness")) - set(tool_identities))
-    ready = checkpoints_ready and model3_valid_label and not missing_tools
+    """Never seal while any scientific, review, calendar, or identity prerequisite is missing."""
+    checkpoints_ready = checkpoint_manifest.get('all_checks_passed') is True
+    review_approved = independent_review_verdict == 'APPROVED'
+    model3_label = model3_decision.get('label')
+    model3_evidence_bound = (
+        model3_label in {'MODEL3_NOT_FROZEN_NOT_EVALUATED', 'MODEL3_NOT_YET_ELIGIBLE_FOR_G8_INCLUSION'}
+        or (
+            model3_label == 'MODEL3_INCLUDED'
+            and model3_decision.get('decision') == 'MODEL3_INCLUDED'
+            and isinstance(model3_decision.get('checks'), Mapping)
+            and all(model3_decision['checks'].values())
+        )
+    )
+    protocol_identity_ok = (
+        protocol_frozen is True
+        and protocol_commit == '7eecc7188c54f9d4505d32ccf5c51069a4c3a97c'
+    )
+    config_identity_ok = artifact_identity(config_path)['sha256'] == 'd6107bf7c1b5404e59130d99b5e0f12aef4352c1452b83235187caa7628d4f37'
+    date_floor_reached = current_date >= DATE_FLOOR
+    required_tools = {'acquisition', 'surface_builder', 'evaluation_harness'}
+    complete_tools = set(tool_identities) == required_tools and all(
+        isinstance(identity, Mapping)
+        and Path(str(identity.get('path', ''))).is_file()
+        and artifact_identity(identity['path'])['sha256'] == identity.get('sha256')
+        for identity in tool_identities.values()
+    )
+    ready = all((checkpoints_ready, review_approved, model3_evidence_bound, protocol_identity_ok, config_identity_ok, date_floor_reached, complete_tools))
+    waiting: list[str] = []
+    if not checkpoints_ready:
+        waiting.append('WAITING_FOR_CHECKPOINT')
+    if not review_approved:
+        waiting.append('WAITING_FOR_INDEPENDENT_REVIEW')
+    if not model3_evidence_bound:
+        waiting.append('WAITING_FOR_MODEL3_FREEZE_DECISION')
+    if not date_floor_reached:
+        waiting.append('WAITING_FOR_DATE_FLOOR')
+    if not protocol_identity_ok:
+        waiting.append('WAITING_FOR_PROTOCOL_IDENTITY_VERIFICATION')
+    if not config_identity_ok:
+        waiting.append('WAITING_FOR_CONFIG_IDENTITY_VERIFICATION')
+    if not complete_tools:
+        waiting.append('WAITING_FOR_TOOL_IDENTITY_VERIFICATION')
     payload = {
-        "schema_version": "g8.pre_acquisition_freeze/1",
-        "status": (
-            "G8_PRE_ACQUISITION_FREEZE_READY" if ready else "G8_READINESS_PREFLIGHT_NOT_SEALED"
-        ),
-        "sealed": bool(ready and seal),
-        "protocol_commit": protocol_commit,
-        "config": artifact_identity(config_path),
-        "participating_inverse_methods": [
-            "TRADITIONAL",
-            "MODEL1_ANN",
-            "MODEL2_CONSTRAINT_REPRICING_INFORMED",
-        ],
-        "optional_model3": model3_decision,
-        "checkpoint_readiness": checkpoint_manifest,
-        "tool_identities": dict(tool_identities),
-        "date_floor": DATE_FLOOR.isoformat(),
-        "scan_end": SCAN_END.isoformat(),
-        "source_contract": "OFFICIAL_NSE_UDIFF_BHAVCOPY_ONLY_PLUS_OFFICIAL_RBI_91D_TBILL",
-        "real_market_data_acquired": False,
-        "model_output_exists": False,
+        'schema_version': 'g8.pre_acquisition_freeze/1',
+        'status': 'G8_PRE_ACQUISITION_FREEZE_READY' if ready else 'G8_READINESS_PREFLIGHT_NOT_SEALED',
+        'sealed': bool(ready and seal),
+        'protocol_commit': protocol_commit,
+        'protocol_identity_verified': protocol_identity_ok,
+        'config_identity_verified': config_identity_ok,
+        'config': artifact_identity(config_path),
+        'participating_inverse_methods': ['TRADITIONAL', 'MODEL1_ANN', 'MODEL2_CONSTRAINT_REPRICING_INFORMED'],
+        'optional_model3': model3_decision,
+        'model3_evidence_bound': model3_evidence_bound,
+        'checkpoint_readiness': checkpoint_manifest,
+        'independent_review_verdict': independent_review_verdict,
+        'tool_identities': dict(tool_identities),
+        'tool_identities_verified': complete_tools,
+        'date_floor': DATE_FLOOR.isoformat(),
+        'scan_end': SCAN_END.isoformat(),
+        'date_floor_reached': date_floor_reached,
+        'outstanding_prerequisites': waiting,
+        'source_contract': 'OFFICIAL_NSE_UDIFF_BHAVCOPY_ONLY_PLUS_OFFICIAL_RBI_91D_TBILL',
+        'real_market_data_acquired': False,
+        'model_output_exists': False,
     }
-    if payload["sealed"]:
-        payload["manifest_sha256"] = sha256_payload({**payload, "manifest_sha256": ""})
+    if payload['sealed']:
+        payload['manifest_sha256'] = sha256_payload({**payload, 'manifest_sha256': ''})
     return payload
 
 
@@ -129,11 +168,83 @@ def build_selected_data_freeze(
         }
         for item in backup_decisions
     ]
-    if not surface_list or len(surface_list) > 8:
-        raise ValueError("selected-data freeze requires one through eight surfaces")
+    if scan_result.reached_target is not True:
+        raise ValueError("selected-data freeze requires a completed deterministic scan that reached target")
+    if len(scan_result.selected_dates) != 2:
+        raise ValueError("selected-data freeze requires exactly two common dates")
+    if len(surface_list) != 8:
+        raise ValueError("selected-data freeze requires four surfaces on each of two dates")
     selected_dates = sorted({surface.metadata["valuation_date"] for surface in surface_list})
     if [value.isoformat() for value in scan_result.selected_dates] != selected_dates:
         raise ValueError("surface dates do not match deterministic scan result")
+    identities = [(str(surface.metadata["valuation_date"]), str(surface.metadata["symbol"])) for surface in surface_list]
+    if len(identities) != len(set(identities)):
+        raise ValueError("duplicate symbol/date surface in selected-data freeze")
+    date_counts = Counter(date_value for date_value, _symbol in identities)
+    if set(date_counts.values()) != {4}:
+        raise ValueError("selected-data freeze requires exactly four surfaces per common date")
+    replacements = {item.primary_symbol: item.backup_symbol for item in backup_decisions}
+    sector_backups = {"NTPC": "POWERGRID", "CIPLA": "SUNPHARMA", "INFY": "TCS", "HDFCBANK": "ICICIBANK"}
+    if any(sector_backups.get(primary) != backup for primary, backup in replacements.items()):
+        raise ValueError("invalid fixed-order backup replacement")
+    expected_symbols = {
+        sector_backups[primary] if primary in replacements else primary
+        for primary in ("NTPC", "CIPLA", "INFY", "HDFCBANK")
+    }
+    expected_source = (
+        "REAL_G8_OFFICIAL_NSE_R2"
+        if data_classification == "REAL_G8_SELECTED_DATA"
+        else "SYNTHETIC_G8_PIPELINE_FIXTURE_R2"
+    )
+    archive_list = list(archives)
+    rate_list = list(rates)
+    for selected_date in selected_dates:
+        symbols_on_date = {symbol for date_value, symbol in identities if date_value == selected_date}
+        if symbols_on_date != expected_symbols:
+            raise ValueError(f"unexpected symbol composition on {selected_date}")
+        date_archives = [record for record in archive_list if record["trading_date"] == selected_date]
+        markets = sorted({record["market"] for record in date_archives})
+        if markets != ["CM", "FO"]:
+            raise ValueError(f"selected-data freeze requires CM and FO archives on {selected_date}")
+        for archive in date_archives:
+            if sum(item["market"] == archive["market"] for item in date_archives) != 1:
+                raise ValueError(f"duplicate {archive['market']} archive for {selected_date}")
+            expected_name = (
+                f"BhavCopy_NSE_{archive['market']}_0_0_0_{selected_date.replace('-', '')}_F_0000.csv.zip"
+            )
+            if archive["original_filename"] != expected_name or not str(archive["official_url"]).endswith(expected_name):
+                raise ValueError(f"official archive identity mismatch: {expected_name}")
+        surface_rate_ids = {
+            str(surface.metadata.get("rate_record", {}).get("release_identifier"))
+            for surface in surface_list
+            if surface.metadata["valuation_date"] == selected_date
+        }
+        eligible_rates = [
+            rate for rate in rate_list
+            if date.fromisoformat(rate["observation_date"]) <= date.fromisoformat(selected_date)
+        ]
+        rate_identities = Counter(
+            (rate["release_identifier"], rate["observation_date"], rate["source_sha256"], rate["normalized_extract_sha256"])
+            for rate in rate_list
+        )
+        if any(count != 1 for count in rate_identities.values()):
+            raise ValueError("conflicting duplicate RBI release records")
+        if not eligible_rates:
+            raise ValueError(f"missing eligible RBI observation for {selected_date}")
+        latest_rate = max(eligible_rates, key=lambda rate: rate["observation_date"])
+        if surface_rate_ids != {latest_rate["release_identifier"]}:
+            raise ValueError(f"surface RBI chronology mismatch on {selected_date}")
+        for surface in surface_list:
+            if surface.metadata["valuation_date"] != selected_date:
+                continue
+            if surface.metadata.get("data_classification") != data_classification:
+                raise ValueError(f"surface classification does not match seal for {surface.surface_id}")
+            if surface.source != expected_source:
+                raise ValueError(f"surface source does not match seal for {surface.surface_id}")
+    if backups and scan_result.complete_window_scanned is not True:
+        raise ValueError("backup decisions require a proven complete-window scan")
+    if not scan_result.complete_window_scanned and (not scan_result.reached_target or backups):
+        raise ValueError("incomplete-window seal requires target success and no backup decisions")
     surface_hashes = []
     for surface in surface_list:
         payload = surface_to_payload(surface)
@@ -178,6 +289,11 @@ def build_selected_data_freeze(
         "scan_reached_target": scan_result.reached_target,
         "complete_window_scanned_for_backup_policy": scan_result.complete_window_scanned,
         "backup_decisions": backups,
+        "backup_policy_resolution": (
+            "COMPLETE_WINDOW_BACKUP_SCAN_COMPLETE"
+            if scan_result.complete_window_scanned
+            else "NOT_REQUIRED_TWO_COMMON_DATES_REACHED_WITHOUT_SUBSTITUTION"
+        ),
         "observation_role_mappings": {key: list(value) for key, value in observation_role_mappings.items()},
         "model_prediction_or_calibration_present": False,
     }

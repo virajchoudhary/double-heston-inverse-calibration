@@ -29,17 +29,30 @@ def scan_common_dates(
     *,
     active_symbols: tuple[str, ...] = PRIMARY_SYMBOLS,
     target_common_dates: int = 2,
+    expected_calendar_dates: tuple[date | str, ...] | None = None,
 ) -> ScanResult:
     """Scan ascending dates and stop after two common dates without model access."""
-    if tuple(active_symbols) != PRIMARY_SYMBOLS and not set(PRIMARY_SYMBOLS).issuperset(active_symbols):
-        raise G8ReadinessError("active symbols must remain within the frozen universe")
+    allowed = PRIMARY_SYMBOLS + tuple(BACKUP_SYMBOLS_BY_PRIMARY.values())
+    if len(active_symbols) != 4 or len(set(active_symbols)) != 4 or not set(active_symbols).issubset(allowed):
+        raise G8ReadinessError("active symbols must be four unique primary-or-fixed-backup symbols")
     normalized: dict[date, Mapping[str, bool]] = {}
     for raw_date, supports in structural_support.items():
         value = validate_g8_valuation_date(raw_date)
         normalized[value] = supports
+    calendar: tuple[date, ...] | None = None
+    if expected_calendar_dates is not None:
+        calendar = tuple(sorted({validate_g8_valuation_date(value) for value in expected_calendar_dates}))
+        missing_from_support = [value.isoformat() for value in calendar if value not in normalized]
+        unexpected_support = [value.isoformat() for value in sorted(normalized) if value not in calendar]
+        if missing_from_support or unexpected_support:
+            raise G8ReadinessError(
+                "calendar/support mismatch:"
+                f"missing={missing_from_support},unexpected={unexpected_support}"
+            )
     selected: list[date] = []
     failures: list[ScanFailure] = []
-    ordered_dates = sorted(normalized)
+    reached_target = False
+    ordered_dates = sorted(calendar or normalized)
     for value in ordered_dates:
         date_failures: list[ScanFailure] = []
         for symbol in active_symbols:
@@ -54,11 +67,12 @@ def scan_common_dates(
             if len(selected) >= target_common_dates:
                 break
     reached_target = len(selected) >= target_common_dates
+    complete_window_scanned = calendar is not None and not reached_target
     return ScanResult(
         selected_dates=tuple(selected),
         failures=tuple(failures),
         reached_target=reached_target,
-        complete_window_scanned=not reached_target,
+        complete_window_scanned=complete_window_scanned,
     )
 
 
@@ -72,8 +86,22 @@ class BackupDecision:
 
 def full_window_backup_replacements(
     structural_support: Mapping[date | str, Mapping[str, bool]],
+    *,
+    expected_scanned_dates: tuple[date | str, ...],
 ) -> tuple[tuple[BackupDecision, ...], dict[str, str]]:
     """Replace a primary only after zero eligible surfaces across the full window."""
+    expected = {validate_g8_valuation_date(value) for value in expected_scanned_dates}
+    supplied = {
+        validate_g8_valuation_date(value)
+        for value in structural_support
+    }
+    missing = sorted(expected.difference(supplied))
+    unexpected = sorted(supplied.difference(expected))
+    if missing or unexpected:
+        raise G8ReadinessError(
+            "backup scan lacks complete official-calendar coverage:"
+            f"missing={missing},unexpected={unexpected}"
+        )
     counts = {symbol: 0 for symbol in PRIMARY_SYMBOLS}
     for raw_date, supports in structural_support.items():
         value = validate_g8_valuation_date(raw_date)

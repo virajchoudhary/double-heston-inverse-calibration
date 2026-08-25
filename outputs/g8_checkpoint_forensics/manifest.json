@@ -1,0 +1,139 @@
+{
+  "schema_version": "g8.checkpoint.forensics/1",
+  "classification": "PROVENANCE_METADATA_ONLY_NO_CHECKPOINT_BYTES_IN_GIT",
+  "recorded_utc": "2026-08-25T20:30:55Z",
+  "readiness_commit": "746060bc32a79d4d1a15ba2de1c27e7334fc8103",
+  "dataset_identity": {
+    "path": "data/final_r2_clean_10000/surfaces.jsonl",
+    "sha256": "148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6"
+  },
+  "manifest_sources": {
+    "training_run_manifest": {
+      "path": "evidence/r2_primary_comparison_20260823/training_run_manifest.json",
+      "sha256": "5554a0edea009e6c55e1ae8020352dbb39ff7d503c93db1b451974f680ed1ade"
+    },
+    "model2_cohort_manifest": {
+      "path": "evidence/r2_primary_comparison_20260823/P100_MODEL2_COHORT_MANIFEST.json",
+      "sha256": "53fc1440b7d7e592c4a496b2d30ad5c3e9a1fc0184345879c8ea54193aa70c5c"
+    },
+    "final_evaluation_evidence_manifest": {
+      "path": "evidence/r2_primary_comparison_20260823/FINAL_EVALUATION_EVIDENCE_MANIFEST.json",
+      "sha256": "5601e0748f8ecf05ddc3986f81a13dcc4f600d0e1172ba636571da622912a0c9"
+    }
+  },
+  "architecture_identities": {
+    "MODEL1_ANN": {
+      "spec_sha256": "1c35aabf8bdc324fe8d18bb18553d52c6ad8f15f95ff3178aaf8101e98fa56c4",
+      "parameter_order_sha256_source": "canonical payload parameter_order"
+    },
+    "MODEL2_CONSTRAINT_REPRICING_INFORMED": {
+      "spec_sha256": "a1a19b04349bd4e6b4c176bcfe0c57afd739f35aae6cdd72d0b20e5b4c3fe490",
+      "parameter_order_sha256_source": "canonical payload parameter_order"
+    }
+  },
+  "standardizer_identity": {
+    "note": "Canonical mean/scale JSON hash is identical across all six primary runs because all models were trained on the same train-split target distribution.",
+    "mean_scale_canonical_sha256": "134e2436dfc32ed1f7e0508c6ccf69dba197e3ff730272a1fdf4af20e1622d2a"
+  },
+  "checkpoint_intake": [
+    {
+      "model": "MODEL1_ANN",
+      "seed": 11,
+      "expected_sha256": "5adc762f7e73e8ab267c72c39b7fde40c36a6301f7ebce64a27eabdd6625a8eb",
+      "source_path": "C:/ann_inverse_calibration/checkpoints/r2_primary_comparison/model1_seed11/best_validation_checkpoint.pt",
+      "destination_path": "checkpoints/r2_primary_comparison/model1_seed11/best_validation_checkpoint.pt",
+      "byte_size": 905941,
+      "training_git_sha": "9bf1d490f679a0479b621167ffc049e501e5de8a",
+      "run_kind": "RESEARCH",
+      "best_validation_epoch": 124,
+      "epochs_completed": 144,
+      "manifest_source": "training_run_manifest",
+      "verification_status": "CANONICAL_CHECKPOINT_STAGED",
+      "transfer_mode": "byte_copy_no_reserialization"
+    },
+    {
+      "model": "MODEL1_ANN",
+      "seed": 22,
+      "expected_sha256": "fa4d18378a1de4e80bcc9decb9ebc830df87ce0bfc0f638f68ba2b939de9f4e7",
+      "source_path": "C:/ann_inverse_calibration/checkpoints/r2_primary_comparison/model1_seed22/best_validation_checkpoint.pt",
+      "destination_path": "checkpoints/r2_primary_comparison/model1_seed22/best_validation_checkpoint.pt",
+      "byte_size": 905941,
+      "training_git_sha": "9b7c921c183cd29b54a4ffae60e79a4d7c00bde2",
+      "run_kind": "RESEARCH",
+      "best_validation_epoch": 90,
+      "epochs_completed": 110,
+      "manifest_source": "training_run_manifest",
+      "verification_status": "CANONICAL_CHECKPOINT_STAGED",
+      "transfer_mode": "byte_copy_no_reserialization"
+    },
+    {
+      "model": "MODEL1_ANN",
+      "seed": 33,
+      "expected_sha256": "815a9dba831d22dc1cf7786c47b4eddfd744b1fbf01fa82efd0c0da98361bf8a",
+      "source_path": "C:/ann_inverse_calibration/checkpoints/r2_primary_comparison/model1_seed33/best_validation_checkpoint.pt",
+      "destination_path": "checkpoints/r2_primary_comparison/model1_seed33/best_validation_checkpoint.pt",
+      "byte_size": 905941,
+      "training_git_sha": "9b7c921c183cd29b54a4ffae60e79a4d7c00bde2",
+      "run_kind": "RESEARCH",
+      "best_validation_epoch": 43,
+      "epochs_completed": 63,
+      "manifest_source": "training_run_manifest",
+      "verification_status": "CANONICAL_CHECKPOINT_STAGED",
+      "transfer_mode": "byte_copy_no_reserialization"
+    },
+    {
+      "model": "MODEL2_CONSTRAINT_REPRICING_INFORMED",
+      "seed": 11,
+      "expected_sha256": "812723995bcbba7e5b3d2690fffea7063798a518c0824c5c6d9c756ad4a06eef",
+      "source_path": "C:/ann_inverse_calibration/checkpoints/r2_primary_comparison/model2_seed11/best_validation_checkpoint.pt",
+      "destination_path": "checkpoints/r2_primary_comparison/model2_seed11/best_validation_checkpoint.pt",
+      "byte_size": 2207637,
+      "training_git_sha": "2b5d41cd232241a1f23348411643a9ce58b53b7a",
+      "run_kind": "RESEARCH",
+      "best_validation_epoch": 46,
+      "epochs_completed": 66,
+      "manifest_source": "training_run_manifest_plus_model2_cohort_manifest",
+      "verification_status": "CANONICAL_CHECKPOINT_STAGED",
+      "transfer_mode": "byte_copy_no_reserialization"
+    },
+    {
+      "model": "MODEL2_CONSTRAINT_REPRICING_INFORMED",
+      "seed": 22,
+      "expected_sha256": "a9fad9673a4e8e4b5d79a5a4478d56c3884d8ad03c6247bf7318ef8bf0f5b098",
+      "source_path": "C:/ann_inverse_calibration/checkpoints/r2_primary_comparison/model2_seed22/best_validation_checkpoint.pt",
+      "destination_path": "checkpoints/r2_primary_comparison/model2_seed22/best_validation_checkpoint.pt",
+      "byte_size": 2207637,
+      "training_git_sha": "2b5d41cd232241a1f23348411643a9ce58b53b7a",
+      "run_kind": "RESEARCH",
+      "best_validation_epoch": 60,
+      "epochs_completed": 80,
+      "manifest_source": "training_run_manifest_plus_model2_cohort_manifest",
+      "verification_status": "CANONICAL_CHECKPOINT_STAGED",
+      "transfer_mode": "byte_copy_no_reserialization"
+    },
+    {
+      "model": "MODEL2_CONSTRAINT_REPRICING_INFORMED",
+      "seed": 33,
+      "expected_sha256": "ead822abb5e35a76940bc9ece510090430dc071475800cc4f673ffd25bb02730",
+      "source_path": "C:/ann_inverse_calibration/checkpoints/r2_primary_comparison/model2_seed33/best_validation_checkpoint.pt",
+      "destination_path": "checkpoints/r2_primary_comparison/model2_seed33/best_validation_checkpoint.pt",
+      "byte_size": 2207637,
+      "training_git_sha": "2b5d41cd232241a1f23348411643a9ce58b53b7a",
+      "run_kind": "RESEARCH",
+      "best_validation_epoch": 62,
+      "epochs_completed": 82,
+      "manifest_source": "training_run_manifest_plus_model2_cohort_manifest",
+      "verification_status": "CANONICAL_CHECKPOINT_STAGED",
+      "transfer_mode": "byte_copy_no_reserialization"
+    }
+  ],
+  "real_gate_result": {
+    "command": "python scripts/validate_g8_protocol.py check-checkpoints",
+    "status": "CHECKPOINT_GATE_PASS",
+    "all_checks_passed": true,
+    "pricing_executed": false,
+    "calibration_executed": false,
+    "evaluation_executed": false
+  },
+  "search_scope_note": "Exact filename/hash search was limited to registered Double-Heston worktrees; AtlasOps and unrelated repositories were not traversed."
+}

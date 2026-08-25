@@ -1,0 +1,20 @@
+{
+  "schema_version": "g8.blocker.matrix/1",
+  "generated_utc": "2026-08-25T20:30:55Z",
+  "overall_status": "G8_PREACQUISITION_BLOCKED_INDEPENDENT_REVIEW",
+  "items": [
+    {"name": "G8_PROTOCOL_FROZEN", "state": "PASS", "evidence": "origin/research/g8-final-eval-protocol == 7eecc7188c54f9d4505d32ccf5c51069a4c3a97c; validate-config passes"},
+    {"name": "READINESS_ENGINEERING", "state": "PASS", "evidence": "75 relevant G8/R2 tests pass on current tree; four review rounds' engineering findings have targeted fixes"},
+    {"name": "MODEL1_SEED11", "state": "PASS", "evidence": "CANONICAL_CHECKPOINT_STAGED sha256=5adc762f7e73e8ab267c72c39b7fde40c36a6301f7ebce64a27eabdd6625a8eb"},
+    {"name": "MODEL1_SEED22", "state": "PASS", "evidence": "CANONICAL_CHECKPOINT_STAGED sha256=fa4d18378a1de4e80bcc9decb9ebc830df87ce0bfc0f638f68ba2b939de9f4e7"},
+    {"name": "MODEL1_SEED33", "state": "PASS", "evidence": "CANONICAL_CHECKPOINT_STAGED sha256=815a9dba831d22dc1cf7786c47b4eddfd744b1fbf01fa82efd0c0da98361bf8a"},
+    {"name": "MODEL2_SEED11", "state": "PASS", "evidence": "CANONICAL_CHECKPOINT_STAGED sha256=812723995bcbba7e5b3d2690fffea7063798a518c0824c5c6d9c756ad4a06eef"},
+    {"name": "MODEL2_SEED22", "state": "PASS", "evidence": "CANONICAL_CHECKPOINT_STAGED sha256=a9fad9673a4e8e4b5d79a5a4478d56c3884d8ad03c6247bf7318ef8bf0f5b098"},
+    {"name": "MODEL2_SEED33", "state": "PASS", "evidence": "CANONICAL_CHECKPOINT_STAGED sha256=ead822abb5e35a76940bc9ece510090430dc071475800cc4f673ffd25bb02730"},
+    {"name": "MODEL3_PREACQUISITION_STATUS", "state": "WAITING", "evidence": "MODEL3_NOT_YET_ELIGIBLE_FOR_G8_INCLUSION; no final frozen research artifact evidence"},
+    {"name": "INDEPENDENT_REVIEW", "state": "BLOCKED", "evidence": "fifth substantive bounded review returned BLOCKED_FAIL_CLOSED_DEFECTS; its three findings are remediated but require another fresh read-only review"},
+    {"name": "DATE_FLOOR", "state": "WAITING", "evidence": "current UTC date 2026-08-25 precedes 2026-09-30"},
+    {"name": "PREACQUISITION_FREEZE", "state": "WAITING", "evidence": "requires independent review plus later Model3/date readiness; not sealed"},
+    {"name": "ACQUISITION_AUTHORIZATION", "state": "NOT_YET_APPLICABLE", "evidence": "explicit human authorization is intentionally deferred until prior prerequisites resolve"}
+  ]
+}

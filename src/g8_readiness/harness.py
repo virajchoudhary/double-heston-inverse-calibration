@@ -36,9 +36,10 @@ MAX_NFEV = 300
 
 def pricing_rows_from_surface(surface: R2Surface) -> pd.DataFrame:
     selected = {(int(row["rank"]), float(row["target"]), str(row["option_type"])): row for row in surface.metadata["selected_contracts"]}
-    roles = canonical_slot_roles()
     rows: list[dict[str, Any]] = []
     for index, key in enumerate(surface.slot_keys):
+        if not surface.mask[index]:
+            continue
         row = selected[(key.expiry_rank, key.target_log_moneyness, key.option_type)]
         role = "CALIBRATION" if key.target_log_moneyness in CALIBRATION_MONEYNESS else "HOLDOUT"
         maturity = float(surface.maturities[index])
@@ -63,13 +64,15 @@ def pricing_rows_from_surface(surface: R2Surface) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def _price_metrics(frame: pd.DataFrame, predicted: np.ndarray) -> dict[str, float]:
+def _price_metrics(frame: pd.DataFrame, predicted: np.ndarray) -> dict[str, Any]:
     errors = predicted - frame["observed_price"].to_numpy(float)
+    finite_inputs = bool(np.isfinite(errors).all())
     normalized_errors = errors / np.maximum(frame["observed_price"].to_numpy(float), 1.0)
     return {
         "price_rmse_dollar": float(np.sqrt(np.mean(errors ** 2))),
         "price_mae_dollar": float(np.mean(np.abs(errors))),
         "price_rmse_normalized": float(np.sqrt(np.mean(normalized_errors ** 2))),
+        "required_prices_finite": finite_inputs,
     }
 
 
@@ -95,6 +98,21 @@ def _iv_metrics(frame: pd.DataFrame, predicted_prices: np.ndarray) -> dict[str, 
     return {"iv_rmse_annualized": rmse, "iv_failure_count": failures, "failure_reasons": sorted(reasons)}
 
 
+def _mark_holdout_iv_failure(summary: dict[str, Any]) -> None:
+    if int(summary["holdout_iv_failure_count"]) > 0:
+        summary["representative_fit_failed"] = True
+        summary["failure_reason"] = "REQUIRED_HOLDOUT_MODEL_IV_NOT_FINITE"
+
+
+def _mark_nonfinite_required_price_failure(summary: dict[str, Any]) -> None:
+    if not summary.get("calibration_required_prices_finite", True) or not summary.get(
+        "holdout_required_prices_finite", True
+    ):
+        if not summary.get("representative_fit_failed"):
+            summary["representative_fit_failed"] = True
+            summary["failure_reason"] = "REQUIRED_MODEL_PRICE_NOT_FINITE"
+
+
 def _standard_heston_parameters(raw: Sequence[float]) -> np.ndarray:
     values = np.asarray(raw, dtype=float)
     unit = 1.0 / (1.0 + np.exp(-np.clip(values, -35.0, 35.0)))
@@ -113,11 +131,36 @@ PricingFunction = Callable[[pd.DataFrame, np.ndarray], np.ndarray]
 def fit_pricing_family_surface(
     rows: pd.DataFrame,
     *,
+    source_surface: R2Surface,
     pricing_functions: Mapping[str, PricingFunction] | None = None,
     node_count: int = NODE_COUNT,
     max_nfev: int = MAX_NFEV,
 ) -> dict[str, Any]:
     """Fit BS/Heston/DH on inner slots only; wings are held out identically."""
+    data_classification = str(source_surface.metadata.get("data_classification"))
+    expected_source = (
+        "REAL_G8_OFFICIAL_NSE_R2"
+        if data_classification == "REAL_G8_SELECTED_DATA"
+        else "SYNTHETIC_G8_PIPELINE_FIXTURE_R2"
+    )
+    if (
+        data_classification not in {"SYNTHETIC_G8_PIPELINE_FIXTURE", "REAL_G8_SELECTED_DATA"}
+        or source_surface.source != expected_source
+    ):
+        raise ValueError("pricing-family result classification is unresolved")
+    expected_indices = [index for index, valid in enumerate(source_surface.mask) if valid]
+    supplied_indices = rows["slot_index"].astype(int).tolist()
+    selected = {
+        (int(row["rank"]), float(row["target"]), str(row["option_type"])): row
+        for row in source_surface.metadata["selected_contracts"]
+    }
+    if supplied_indices != expected_indices or len(rows) != len(expected_indices):
+        raise ValueError("pricing rows do not originate from the supplied surface")
+    for row in rows.to_dict(orient="records"):
+        key = source_surface.slot_keys[int(row["slot_index"])]
+        contract = selected[(key.expiry_rank, key.target_log_moneyness, key.option_type)]
+        if float(row["strike"]) != float(contract["strike"]) or float(row["observed_price"]) != float(contract["price"]) * source_surface.spot:
+            raise ValueError("pricing-row quote does not match the supplied surface")
     calibration_mask = rows["target_log_moneyness"].isin(CALIBRATION_MONEYNESS)
     holdout_mask = rows["target_log_moneyness"].isin(HOLDOUT_MONEYNESS)
     calibration = rows.loc[calibration_mask].copy()
@@ -147,7 +190,9 @@ def fit_pricing_family_surface(
         summary = {"parameters": {"sigma": float(parameter[0])}, "optimizer_success": bool(result.success)}
         summary.update({"calibration_" + key: value for key, value in _price_metrics(calibration, cal_prices).items()})
         summary.update({"holdout_" + key: value for key, value in _price_metrics(holdout, hold_prices).items()})
+        _mark_nonfinite_required_price_failure(summary)
         summary.update({"holdout_" + key: value for key, value in _iv_metrics(holdout, hold_prices).items()})
+        _mark_holdout_iv_failure(summary)
         summary["objective"] = float(summary["calibration_price_rmse_dollar"] ** 2)
         summaries["BLACK_SCHOLES"] = summary
 
@@ -218,7 +263,9 @@ def fit_pricing_family_surface(
         }
         summary.update({"calibration_" + key: value for key, value in _price_metrics(calibration, cal_prices).items()})
         summary.update({"holdout_" + key: value for key, value in _price_metrics(holdout, hold_prices).items()})
+        _mark_nonfinite_required_price_failure(summary)
         summary.update({"holdout_" + key: value for key, value in _iv_metrics(holdout, hold_prices).items()})
+        _mark_holdout_iv_failure(summary)
         summary["objective"] = representative["objective"]
         summaries[model] = summary
 
@@ -228,7 +275,8 @@ def fit_pricing_family_surface(
     runtime = time.perf_counter() - started
     return {
         "schema_version": "g8.pricing_family_surface_run/1",
-        "data_classification": "SYNTHETIC_G8_PIPELINE_FIXTURE",
+        "data_classification": data_classification,
+        "source_surface_id": source_surface.surface_id,
         "models": summaries,
         "runtime_seconds": runtime,
         "node_count": node_count,

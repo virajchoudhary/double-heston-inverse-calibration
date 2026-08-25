@@ -63,6 +63,23 @@ def evaluate_model3_inclusion(
             capture_output=True,
         )
         checks["commit_exists"] = True
+        subprocess.run(
+            ["git", "cat-file", "-e", f"{evidence.commit_sha}:{evidence.artifact_path}"],
+            cwd=root,
+            check=True,
+            capture_output=True,
+        )
+        committed_bytes = subprocess.run(
+            ["git", "show", f"{evidence.commit_sha}:{evidence.artifact_path}"],
+            cwd=root,
+            check=True,
+            capture_output=True,
+        ).stdout
+        checks["artifact_existed_in_commit"] = True
+        checks["artifact_commit_hash_matches"] = (
+            hashlib.sha256(committed_bytes).hexdigest()
+            == evidence.artifact_sha256.lower()
+        )
         checks["commit_ancestor_of_execution_head"] = subprocess.run(
             ["git", "merge-base", "--is-ancestor", evidence.commit_sha, "HEAD"],
             cwd=root,
@@ -71,6 +88,8 @@ def evaluate_model3_inclusion(
         ).returncode == 0
     except (OSError, subprocess.CalledProcessError):
         checks["commit_exists"] = False
+        checks["artifact_existed_in_commit"] = False
+        checks["artifact_commit_hash_matches"] = False
         checks["commit_ancestor_of_execution_head"] = False
     included = all(checks.values())
     return {

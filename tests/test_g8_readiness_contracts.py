@@ -30,6 +30,7 @@ from src.g8_readiness.contracts import (
 from src.g8_readiness.model3 import evaluate_model3_inclusion
 from src.g8_readiness.pipeline import assert_final_evaluation_gate, assert_future_acquisition_gate
 from src.g8_readiness.pipeline import run_synthetic_end_to_end_replay
+from src.g8_readiness.state_machine import assess_pre_acquisition_freeze
 
 
 def test_date_floor_and_window_are_hard() -> None:
@@ -153,12 +154,12 @@ def test_future_rbi_observation_is_rejected() -> None:
         )
 
 
-def test_checkpoint_manifest_reports_absent_not_failed() -> None:
+def test_checkpoint_manifest_reports_canonical_staging() -> None:
     manifest = checkpoint_readiness_manifest()
-    assert manifest["overall_status"] == "CHECKPOINT_ARTIFACTS_NOT_STAGED"
-    assert manifest["all_checks_passed"] is False
+    assert manifest["overall_status"] == "CHECKPOINT_ARTIFACTS_STAGED_AND_VERIFIED"
+    assert manifest["all_checks_passed"] is True
     assert len(manifest["results"]) == 6
-    assert all(item["status"] == "MISSING" for item in manifest["results"])
+    assert all(item["status"] == "PASS" for item in manifest["results"])
 
 
 def test_model3_remote_state_is_not_frozen() -> None:
@@ -190,8 +191,23 @@ def test_synthetic_end_to_end_replay_stays_fixture_only(tmp_path: Path) -> None:
     assert result["traditional_start_strategies"] == [
         "neutral_transform_midpoint", "deterministic_broad_start"
     ]
-    assert result["checkpoint_overall_status"] == "CHECKPOINT_ARTIFACTS_NOT_STAGED"
+    assert result["checkpoint_overall_status"] == "CHECKPOINT_ARTIFACTS_STAGED_AND_VERIFIED"
     assert result["model3_label"] == "MODEL3_NOT_FROZEN_NOT_EVALUATED"
     assert result["pre_acquisition_freeze_status"] == "G8_READINESS_PREFLIGHT_NOT_SEALED"
     assert result["real_market_data_accessed"] is False
     assert result["research_result_computed"] is False
+
+
+def test_pre_acquisition_freeze_requires_independent_review_approval() -> None:
+    result = assess_pre_acquisition_freeze(
+        protocol_frozen=True,
+        protocol_identity_verified=True,
+        config_identity_verified=True,
+        tool_identities_verified=True,
+        checkpoint_gate_passed=True,
+        independent_review_verdict="REVIEW_INCOMPLETE_TIMEOUT",
+        model3_decision={"label": "MODEL3_NOT_YET_ELIGIBLE_FOR_G8_INCLUSION"},
+        current_date=date(2027, 1, 1),
+    )
+    assert result["status"] == "WAITING_FOR_INDEPENDENT_REVIEW"
+    assert result["explicit_acquisition_authorized"] is False

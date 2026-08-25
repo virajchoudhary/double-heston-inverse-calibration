@@ -161,14 +161,14 @@ def test_winner_aggregation_and_mask_shift_are_frozen() -> None:
     assert disclosure["report_by_expiry_rank_and_option_type"] is True
 
 
-def test_absent_checkpoint_gate_fails_closed_without_model_execution() -> None:
+def test_staged_checkpoint_gate_passes_without_model_execution() -> None:
     report = verify_checkpoint_registry(
         validate_config(Path("configs/g8_final_real_market.yaml"))
     )
     assert report["checkpoint_count"] == 6
     assert len(report["results"]) == 6
-    assert all(item["status"] == "MISSING" for item in report["results"])
-    assert report["all_checks_passed"] is False
+    assert all(item["status"] == "PASS" for item in report["results"])
+    assert report["all_checks_passed"] is True
     assert report["pricing_executed"] is False
     assert report["calibration_executed"] is False
     assert report["evaluation_executed"] is False

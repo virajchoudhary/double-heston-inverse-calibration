@@ -7,6 +7,7 @@ import hashlib
 import io
 import json
 import os
+import re
 import tempfile
 import zipfile
 from dataclasses import dataclass
@@ -144,7 +145,14 @@ def _retain_failed_archive(root: Path, identity: dict[str, Any], reason: str) ->
         "retained": True,
     }
     target = rejected_root / safe_name
-    if not target.exists():
+    if target.exists():
+        try:
+            stored = json.loads(target.read_text(encoding="utf-8"))
+        except Exception as exc:
+            raise G8ReadinessError(f"invalid retained failed-archive record: {target}") from exc
+        if stored.get("archive_sha256") != payload["archive_sha256"] or stored.get("failure_reason") != reason:
+            raise G8ReadinessError(f"conflicting retained failed-archive record: {target}")
+    else:
         _atomic_new(target, (json.dumps(payload, sort_keys=True, indent=2) + "\n").encode())
     return target
 
@@ -359,12 +367,38 @@ def intake_official_rbi(
         official_url=official_url,
         latest_permitted_observation_date=latest_permitted_observation_date,
     )
+    if re.fullmatch(r"[A-Za-z0-9._-]+", record.release_identifier) is None:
+        raise G8ReadinessError("RBI release identifier contains unsafe path characters")
     directory = Path(store_root) / "official_rbi"
     source_path = directory / f"{record.release_identifier}.html"
     normalized_path = directory / f"{record.release_identifier}.normalized.json"
-    if not source_path.exists():
+    if source_path.exists():
+        existing_hash = _sha256_bytes(source_path.read_bytes())
+        if existing_hash != record.source_sha256:
+            raise G8AcquisitionLocked(f"immutable RBI source conflict: {source_path}")
+    else:
         _atomic_new(source_path, html.encode())
-    if not normalized_path.exists():
+    normalized_payload = {
+        "official_url": record.official_url,
+        "release_identifier": record.release_identifier,
+        "observation_date": record.observation_date,
+        "cutoff_price": record.cutoff_price,
+        "yield_percent": record.yield_percent,
+        "source_sha256": record.source_sha256,
+        "normalized_extract_sha256": record.normalized_extract_sha256,
+        "latest_permitted_observation_date": str(latest_permitted_observation_date),
+    }
+    if normalized_path.exists():
+        try:
+            stored = json.loads(normalized_path.read_text(encoding="utf-8"))
+        except Exception as exc:
+            raise G8ReadinessError(f"invalid immutable RBI normalized artifact: {normalized_path}") from exc
+        for key in ("official_url", "release_identifier", "observation_date", "cutoff_price", "yield_percent", "source_sha256", "normalized_extract_sha256"):
+            if key not in ("cutoff_price", "yield_percent") and stored.get(key) != normalized_payload[key]:
+                raise G8ReadinessError(f"immutable RBI normalized conflict: {key}")
+            if key in ("cutoff_price", "yield_percent") and float(stored.get(key)) != normalized_payload[key]:
+                raise G8ReadinessError(f"immutable RBI normalized conflict: {key}")
+    else:
         payload = {
             "official_url": record.official_url,
             "release_identifier": record.release_identifier,
