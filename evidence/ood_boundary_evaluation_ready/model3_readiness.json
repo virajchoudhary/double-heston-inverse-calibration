@@ -1,0 +1,1 @@
+{"blockers":["manifest_absent"],"current_repository_truth":"No Stage-A execution, Stage-B training, or frozen Model3 research checkpoint exists. Pilot/smoke weights are ineligible.","fake_predictions_allowed":false,"schema_version":"1.0","status":"WAITING_FOR_FROZEN_RESEARCH_CHECKPOINTS"}

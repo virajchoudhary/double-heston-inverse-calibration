@@ -1,0 +1,78 @@
+schema_version: "1.0"
+contract_name: OOD_BOUNDARY_EVALUATION_READY
+status: EVALUATION_INFRASTRUCTURE_SEALED_NO_RESULTS
+frozen_date_utc: 2026-08-25
+
+frozen_protocol:
+  config_path: configs/ood_boundary_protocol.yaml
+  config_sha256: 948a23e7d30f762d9d6d85bff79c5c83c51624e943b4f1f5dd94e7038a348e7c
+  cohort_manifest_path: evidence/ood_boundary_protocol_v1/manifest.json
+  cohort_manifest_sha256: ea3e19f19d809b07caac9c7d75f2514d7f20801ac7fd746287111189414612f1
+  all_research_surfaces_sha256: e8b117ac93f6319e634fa28d6dd5ed884e86e130cf420e65eb8ef8da0276b7e4
+  primary_training_manifest_sha256: 5554a0edea009e6c55e1ae8020352dbb39ff7d503c93db1b451974f680ed1ade
+
+research_execution_lock:
+  default_cohort: development_fixture_only
+  research_requires_all_of:
+    - command: run
+    - flag: --cohort research
+    - flag: --authorize-frozen-evaluation
+    - exact_confirmation: AUTHORIZE_FROZEN_OOD_RESEARCH_EVALUATION_V1
+  hidden_environment_variable_sufficient: false
+  accidental_research_loading_allowed: false
+  authorization_recorded_in_result_manifest: true
+
+methods:
+  model1:
+    adapter_status: IMPLEMENTED_IDENTITY_GATED
+    required_seeds: [11, 22, 33]
+    checkpoint_root: checkpoints/r2_primary_comparison/model1_seed{seed}
+    current_local_status: BLOCKED_CHECKPOINTS_NOT_AVAILABLE_LOCALLY
+  model2:
+    adapter_status: IMPLEMENTED_IDENTITY_GATED
+    required_seeds: [11, 22, 33]
+    checkpoint_root: checkpoints/r2_primary_comparison/model2_seed{seed}
+    current_local_status: BLOCKED_CHECKPOINTS_NOT_AVAILABLE_LOCALLY
+  model3:
+    adapter_status: CONTRACT_ONLY_NO_WEIGHTS_OR_FAKE_PREDICTIONS
+    manifest_path: checkpoints/model3_research/manifest.json
+    current_status: WAITING_FOR_FROZEN_RESEARCH_CHECKPOINTS
+  traditional_calibration:
+    adapter_status: IMPLEMENTED_LOCKED_UNTIL_AUTHORIZED_RESEARCH_RUN
+    subset_manifest: evidence/ood_boundary_evaluation_ready/traditional_subset_manifest.json
+    selected_surface_count: 60
+
+development_fixture_policy:
+  purpose: checkpoint_adapter_pricing_mask_metric_and_intake_wiring_only
+  scientific_result_allowed: false
+  frozen_research_surfaces_used: false
+  frozen_development_parameter_panel_used_for_model_inference: false
+  reason: existing_panel_has_no_surfaces_and_truths_overlap_research_candidates
+  minimum_nonresearch_surfaces: 3
+
+metric_sources_of_truth:
+  features: src.r2_primary.dataset.build_r2_features
+  parameter_recovery: src.r2_primary.evaluation.parameter_recovery_metrics
+  constraint_validity: src.r2_primary.evaluation.constraint_validity_metrics
+  repricing: src.r2_primary.evaluation.repricing_metrics
+  identifiability_aware: src.r2_primary.evaluation.identifiability_aware_metrics
+  production_repricer: src.double_heston.price_double_heston_surface
+  traditional_starts: src.calibrate_double_heston.calibrate_double_heston
+  representative_rule: src.r2_primary.calibration.select_representatives
+  reference_scaling: train_split_only_frozen_r2_truth_panel_no_outcomes
+
+result_status_contract:
+  complete: all_requested_methods_complete_and_no_inconclusive_condition
+  partial_or_blocked: any_requested_method_missing_blocked_or_failed
+  inconclusive_bootstrap_materiality: any_required_bootstrap_interval_spans_materiality
+  inconclusive_traditional_failure_rate: traditional_start_failure_rate_greater_than_0p05
+  partial_results_accepted_as_complete: false
+
+future_execution:
+  neural_compute_recommendation: LOCAL_CPU_SUFFICIENT_FOR_INFERENCE
+  model3_compute_recommendation: WAITING_FOR_FROZEN_RESEARCH_CHECKPOINTS
+  traditional_estimate_source: docs/R2_PRIMARY_COMPARISON_PRE_TRAINING_AUDIT.md measured_124_to_170_seconds_per_surface
+  traditional_selected_surfaces: 60
+  traditional_single_core_wall_estimate_hours: [2.1, 2.8]
+  traditional_ten_worker_wall_estimate_minutes: [13, 17]
+  cloud_required_now: false
