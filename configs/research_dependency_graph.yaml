@@ -83,8 +83,8 @@ nodes:
     depends_on: [traditional_ann_model2_primary_comparison]
     status_source: g8_final_real_market_evaluation
     runnable_now: false
-    runnable_reason: "Blocked: no protocol, runner, dates, or approved evaluation design exists."
-    required_evidence: []
+    runnable_reason: "Protocol is frozen, but data acquisition and evaluation require frozen participating methods, checkpoint/data gates, and separate authorization."
+    required_evidence: ["configs/g8_final_real_market.yaml", "docs/G8_FINAL_REAL_MARKET_PROTOCOL.md"]
 
   - id: paper_synthesis
     depends_on:

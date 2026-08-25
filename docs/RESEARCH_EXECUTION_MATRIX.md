@@ -62,23 +62,24 @@ Generated deterministically from the registry and dependency graph.
 
 ## g8_final_real_market_evaluation
 
-- CURRENT STATUS: BLOCKED / NOT_STARTED / NO_PROTOCOL_NO_DATES_NO_RESULT
-- TEST EXPOSURE: UNTOUCHED_BY_CONSTRUCTION (`test_opened=false`)
+- CURRENT STATUS: PROTOCOL_FROZEN / NOT_STARTED / PROTOCOL_FROZEN_NO_DATA_NO_MODEL_OUTPUTS
+- TEST EXPOSURE: NO_G8_DATA_ACQUIRED_OR_INSPECTED (`test_opened=false`)
 - CAN RUN NOW? NO
-- WHY / WHY NOT? Blocked: no protocol, runner, dates, or approved evaluation design exists.
+- WHY / WHY NOT? Protocol is frozen, but data acquisition and evaluation require frozen participating methods, checkpoint/data gates, and separate authorization.
 - DEPENDENCIES: traditional_ann_model2_primary_comparison
-- WORKTREE / BRANCH: `research/g8-final-eval-protocol` at `MISSING_REF`; base `72ad8e1aa845ec4c6f0fc61fc526df75438639bb`
-- RUNNER: `MISSING_RUNNER`
-- COMPUTE CLASS: TO_BE_DETERMINED_BY_FROZEN_PROTOCOL
-- RECOMMENDED LOCATION: TO_BE_DETERMINED_BY_FROZEN_PROTOCOL
-- EXPECTED SCALE: train=NO_REAL_MARKET_WEIGHT_UPDATE; validation=NOT_DEFINED_PENDING_PROTOCOL; test=NOT_SELECTED_PENDING_PROTOCOL; compute=TO_BE_DETERMINED_BY_FROZEN_PROTOCOL
-- REQUIRED INPUT IDENTITIES: config=`MISSING_CONFIG` (NOT_APPLICABLE); dataset=`future untouched official-NSE observations` (NOT_YET_SELECTED)
-- STOP GATE: Reviewed frozen protocol, reserved untouched cohort, implementation readiness, and explicit human authorization.
+- WORKTREE / BRANCH: `research/g8-final-eval-protocol` at `7eecc7188c54f9d4505d32ccf5c51069a4c3a97c`; base `72ad8e1aa845ec4c6f0fc61fc526df75438639bb`
+- RUNNER: `scripts/validate_g8_protocol.py check-checkpoints`
+- COMPUTE CLASS: LIGHT_LOCAL_PRE_ACQUISITION_THEN_METHOD_DEPENDENT_EVALUATION
+- RECOMMENDED LOCATION: light checkpoint/data-contract checks locally; later evaluation location determined by frozen method requirements
+- EXPECTED SCALE: train=NO_REAL_MARKET_WEIGHT_UPDATE; validation=NOT_DEFINED_PENDING_PROTOCOL; test=Up to eight symbol-date surfaces on at least two common dates from 2026-09-30 through 2026-12-31; not acquired or known; compute=LIGHT_LOCAL_PRE_ACQUISITION_THEN_METHOD_DEPENDENT_EVALUATION
+- REQUIRED INPUT IDENTITIES: config=`configs/g8_final_real_market.yaml` (D6107BF7C1B5404E59130D99B5E0F12AEF4352C1452B83235187CAA7628D4F37); dataset=`future untouched official-NSE observations` (NOT_YET_SELECTED)
+- STOP GATE: All participating methods frozen and committed; six neural checkpoints pass exact load/hash gates; compliant untouched-data manifest hash-frozen; then fresh human authorization.
 - FORBIDDEN ACTIONS:
   - Select G8 dates using model performance.
   - Reuse 2026-07-01, 07-08, 07-15, 07-22, or 07-29.
   - Update primary neural weights with real-market data.
   - Run final evaluation without a pushed frozen protocol.
+  - Acquire G8 data before all participating inverse methods are frozen.
 
 ## identifiability_research
 

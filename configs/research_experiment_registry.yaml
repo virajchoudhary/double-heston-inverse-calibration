@@ -427,39 +427,44 @@ experiments:
 
   - id: g8_final_real_market_evaluation
     title: Final unseen chronological real-market G8 evaluation
-    classification: BLOCKED
+    classification: PROTOCOL_FROZEN
     scientific_status: NOT_STARTED
     branch: research/g8-final-eval-protocol
-    commit: MISSING_REF
+    commit: "7eecc7188c54f9d4505d32ccf5c51069a4c3a97c"
     base_commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
-    protocol: MISSING_PROTOCOL
-    protocol_sha256: NOT_APPLICABLE
-    config: MISSING_CONFIG
-    config_sha256: NOT_APPLICABLE
+    protocol: docs/G8_FINAL_REAL_MARKET_PROTOCOL.md
+    protocol_sha256: "77ABA97D25520ED5B105B595CADA0E03A9038CCF8CA87738C7A2D3E8C70B9B7F"
+    config: configs/g8_final_real_market.yaml
+    config_sha256: "D6107BF7C1B5404E59130D99B5E0F12AEF4352C1452B83235187CAA7628D4F37"
     dataset: future untouched official-NSE observations
     dataset_sha256: NOT_YET_SELECTED
     train_population: NO_REAL_MARKET_WEIGHT_UPDATE
     validation_population: NOT_DEFINED_PENDING_PROTOCOL
-    test_population: NOT_SELECTED_PENDING_PROTOCOL
+    test_population: "Up to eight symbol-date surfaces on at least two common dates from 2026-09-30 through 2026-12-31; not acquired or known"
     test_opened: false
-    seeds: NOT_DEFINED_PENDING_PROTOCOL
-    runner: MISSING_RUNNER
-    compute_class: TO_BE_DETERMINED_BY_FROZEN_PROTOCOL
-    execution_location: TO_BE_DETERMINED_BY_FROZEN_PROTOCOL
-    intended_compute_environment: TO_BE_DETERMINED_BY_FROZEN_PROTOCOL
-    execution_command: FORBIDDEN_UNTIL_PROTOCOL_EXISTS
+    seeds: {pricing_family_standard_heston_starts: 20260912, pricing_family_double_heston_starts: 20260922, inverse_traditional_start_seed: 42}
+    runner: scripts/validate_g8_protocol.py check-checkpoints
+    compute_class: LIGHT_LOCAL_PRE_ACQUISITION_THEN_METHOD_DEPENDENT_EVALUATION
+    execution_location: light checkpoint/data-contract checks locally; later evaluation location determined by frozen method requirements
+    intended_compute_environment: "Python 3.13 repository runtime for pre-acquisition gate; later environment recorded per method"
+    execution_command: FORBIDDEN_UNTIL_ALL_PARTICIPATING_METHODS_ARE_FROZEN_AND_DATA_IS_SEPARATELY_AUTHORIZED
     dependencies: [traditional_ann_model2_primary_comparison]
-    required_artifacts: []
+    required_artifacts:
+      - {ref: research/g8-final-eval-protocol, path: configs/g8_final_real_market.yaml, sha256: "D6107BF7C1B5404E59130D99B5E0F12AEF4352C1452B83235187CAA7628D4F37"}
+      - {ref: research/g8-final-eval-protocol, path: docs/G8_FINAL_REAL_MARKET_PROTOCOL.md, sha256: "77ABA97D25520ED5B105B595CADA0E03A9038CCF8CA87738C7A2D3E8C70B9B7F"}
+      - {ref: research/g8-final-eval-protocol, path: docs/G8_PREEXECUTION_AUDIT.md, sha256: "D6C47D527424F6BDE6E3ED07513DE74A6D7CC519C8A2631C1EBB47304FF80CE4"}
+      - {ref: research/g8-final-eval-protocol, path: scripts/validate_g8_protocol.py, sha256: "368558B8ED466415FB185B253ECCD57DADE07C97381FB4CA880310DFB0D098A9"}
     partial_artifacts: []
-    result_status: NO_PROTOCOL_NO_DATES_NO_RESULT
-    test_exposure_state: UNTOUCHED_BY_CONSTRUCTION
-    scientifically_legal_next_action: "Author and independently review a frozen G8 protocol before selecting or touching any date."
+    result_status: PROTOCOL_FROZEN_NO_DATA_NO_MODEL_OUTPUTS
+    test_exposure_state: NO_G8_DATA_ACQUIRED_OR_INSPECTED
+    scientifically_legal_next_action: "No acquisition/evaluation in this run. Tomorrow may run only the lightweight pre-acquisition contract/checkpoint checks after explicit human authorization."
     forbidden_actions:
       - "Select G8 dates using model performance."
       - "Reuse 2026-07-01, 07-08, 07-15, 07-22, or 07-29."
       - "Update primary neural weights with real-market data."
       - "Run final evaluation without a pushed frozen protocol."
-    stop_gate: "Reviewed frozen protocol, reserved untouched cohort, implementation readiness, and explicit human authorization."
+      - "Acquire G8 data before all participating inverse methods are frozen."
+    stop_gate: "All participating methods frozen and committed; six neural checkpoints pass exact load/hash gates; compliant untouched-data manifest hash-frozen; then fresh human authorization."
 
   - id: paper_synthesis
     title: Evidence-bound paper synthesis
@@ -513,6 +518,7 @@ stale_rules:
   - id: paper_pins_superseded_model3_ref
     file: paper/RESULTS_INVENTORY.md
     pattern: "MODEL3=f34a4d334f1703ed6e31fa60782c43ac7290ef3d"
+    source_experiment: paper_synthesis
     expected_current_experiment_commit:
       experiment: model3_genuine_pde
       commit: "a01ddc1db854f823eb02b91193eecb4dc6698974"

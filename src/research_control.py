@@ -293,15 +293,6 @@ def validate_registry(registry: Any) -> list[str]:
         _require(isinstance(handoff.get("first_actions"), list) and bool(handoff.get("first_actions")), "tomorrow_handoff.first_actions must be nonempty", errors)
         _require(isinstance(handoff.get("human_review_gates"), list) and bool(handoff.get("human_review_gates")), "tomorrow_handoff.human_review_gates must be nonempty", errors)
 
-    graph = registry.get("_dependency_graph")
-    if isinstance(graph, dict):
-        registry_ids = set(by_id)
-        graph_ids = {item.get("id") for item in graph.get("nodes", []) if isinstance(item, dict)}
-        _require(
-            registry_ids == graph_ids,
-            f"registry/graph id divergence: registry-only={sorted(registry_ids - graph_ids)}; graph-only={sorted(graph_ids - registry_ids)}",
-            errors,
-        )
     return errors
 
 
@@ -384,6 +375,18 @@ def validate_graph(graph: Any, registry: dict[str, Any]) -> list[str]:
     return errors
 
 
+def validate_control_inputs(registry: dict[str, Any], graph: dict[str, Any]) -> list[str]:
+    errors = [*validate_registry(registry), *validate_graph(graph, registry)]
+    registry_ids = {item["id"] for item in registry.get("experiments", []) if isinstance(item, dict)}
+    graph_ids = {item["id"] for item in graph.get("nodes", []) if isinstance(item, dict)}
+    if registry_ids != graph_ids:
+        errors.append(
+            "registry/graph id divergence: "
+            f"registry-only={sorted(registry_ids - graph_ids)}; graph-only={sorted(graph_ids - registry_ids)}"
+        )
+    return sorted(set(errors))
+
+
 def validate_result_intake(record: Any) -> list[str]:
     errors: list[str] = []
     _require(isinstance(record, dict), "result-intake record must be an object", errors)
@@ -436,11 +439,22 @@ def detect_stale_documents(registry: dict[str, Any], root: str | Path = ".") -> 
     experiments = {item.get("id"): item for item in registry.get("experiments", []) if isinstance(item, dict)}
     base = Path(root)
     for rule in registry.get("stale_rules", []):
-        path = base / rule["file"]
         try:
-            text = path.read_text(encoding="utf-8")
+            text = (base / rule["file"]).read_text(encoding="utf-8")
         except OSError:
-            continue
+            expected = rule.get("expected_current_experiment_commit")
+            expected_experiment_id = (
+                expected.get("experiment") if isinstance(expected, dict) else rule.get("when_complete_experiment")
+            )
+            source_experiment = experiments.get(rule.get("source_experiment", expected_experiment_id))
+            experiment = experiments.get(expected_experiment_id)
+            branch = source_experiment.get("branch") if source_experiment else None
+            if not branch or branch.startswith("MISSING_"):
+                continue
+            try:
+                text = read_git_blob(branch, rule["file"], root).decode("utf-8")
+            except (ResearchControlError, UnicodeDecodeError):
+                continue
         triggered = rule["pattern"] in text
         expected = rule.get("expected_current_experiment_commit")
         if isinstance(expected, dict):
@@ -716,10 +730,7 @@ def build_tomorrow_handoff(registry: dict[str, Any]) -> str:
 
 def build_report(registry: dict[str, Any], graph: dict[str, Any], root: str | Path = ".") -> tuple[dict[str, Any], list[str]]:
     errors: list[str] = []
-    registry_errors = validate_registry(registry)
-    graph_errors = validate_graph(graph, registry)
-    errors.extend(registry_errors)
-    errors.extend(graph_errors)
+    errors.extend(validate_control_inputs(registry, graph))
     git_errors, git_details = verify_git_identities(registry, root)
     protected_errors, protected_details = verify_protected_scientific_state(root)
     errors.extend(git_errors)
@@ -783,8 +794,7 @@ def preflight_lane(
     experiment_ids = {item["id"] for item in registry.get("experiments", []) if isinstance(item, dict)}
     if lane_id not in experiment_ids:
         raise ResearchControlError(f"unknown experiment id {lane_id}")
-    errors.extend(validate_registry(registry))
-    errors.extend(validate_graph(graph, registry))
+    errors.extend(validate_control_inputs(registry, graph))
     experiment = next(item for item in registry["experiments"] if item["id"] == lane_id)
     node = next((item for item in graph.get("nodes", []) if item.get("id") == lane_id), None)
 

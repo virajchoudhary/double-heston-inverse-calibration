@@ -19,6 +19,7 @@ The live audit found changes beyond `72ad8e1aa845ec4c6f0fc61fc526df75438639bb`. 
 
 | Lane | Remote branch | Observed tip | Status |
 |---|---|---|---|
+| `g8_final_real_market_evaluation` | `research/g8-final-eval-protocol` | `7eecc7188c54f9d4505d32ccf5c51069a4c3a97c` | NOT_STARTED / PROTOCOL_FROZEN_NO_DATA_NO_MODEL_OUTPUTS |
 | `model3_genuine_pde` | `research/model3-pde-protocol` | `a01ddc1db854f823eb02b91193eecb4dc6698974` | PENDING / PILOT_READY_AFTER_AUDIT_FIXES_NO_RESULT_EXISTS |
 | `ood_boundary_robustness` | `research/ood-boundary-protocol` | `b6c5e5d0c60d5a99d767ebb3db5175859f310293` | PARTIAL / COHORT_GENERATION_AND_REPLAY_DONE_METHOD_EVALUATION_PENDING |
 | `paper_synthesis` | `research/paper-synthesis` | `1fe18e6650bee29f0c4cd731b45ebd198699dde0` | PARTIAL / DOCUMENTATION_SYNTHESIS_PARTIAL_STALE_BRANCH_POINTERS |
@@ -38,7 +39,7 @@ Nothing scientific may start without the explicit review gate below. Coordinatio
 
 - REQUIRES GPU: `model3_genuine_pde`
 - REQUIRES MULTICORE CPU: `r2_observation_noise_robustness`
-- LIGHT LOCAL AFTER AUTHORIZATION: `paper_synthesis`
+- LIGHT LOCAL AFTER AUTHORIZATION: `g8_final_real_market_evaluation`, `paper_synthesis`
 - REMAINS BLOCKED: `g8_final_real_market_evaluation`
 
 ## Review gates before each experiment

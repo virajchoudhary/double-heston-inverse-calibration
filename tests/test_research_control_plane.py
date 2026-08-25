@@ -13,6 +13,7 @@ from src.research_control import (
     build_tomorrow_handoff,
     detect_stale_documents,
     preflight_lane,
+    validate_control_inputs,
     validate_graph,
     validate_registry,
     validate_result_intake,
@@ -304,3 +305,31 @@ def test_preflight_blocks_wrong_branch_and_authorization_gate(monkeypatch: pytes
     assert checks["authorization_gate"] == "needs review"
     assert any("preflight must run from feature" in error for error in errors)
     assert any("authorization gate" in error for error in errors)
+
+
+def test_control_pair_detects_registry_graph_id_divergence() -> None:
+    registry = _minimal_registry()
+    registry["experiments"] = registry["experiments"][:1]
+    graph = _minimal_graph()
+    assert any("registry/graph id divergence" in error for error in validate_control_inputs(registry, graph))
+
+
+def test_stale_scanner_reads_branch_only_document(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    from src import research_control as rc
+
+    registry = _minimal_registry()
+    rule = {
+        "id": "branch_only_stale",
+        "file": "remote/status.md",
+        "pattern": "old branch claim",
+        "expected_current_experiment_commit": {"experiment": "child_lane", "commit": "c" * 40},
+        "reason": "remote document is stale",
+    }
+    registry["stale_rules"] = [rule]
+    monkeypatch.setattr(
+        rc,
+        "read_git_blob",
+        lambda branch, path, root=b".": b"old branch claim\n" if branch == "feature" and path == rule["file"] else b"",
+    )
+    findings = detect_stale_documents(registry, tmp_path)
+    assert [item["rule"] for item in findings] == ["branch_only_stale"]
