@@ -363,10 +363,16 @@ def test_canonical_training_files_do_not_depend_on_archive2() -> None:
 
 def test_pde_residual_loss_remains_confined_to_archive2() -> None:
     offenders: list[str] = []
+    model3_pde_root = SRC_ROOT / "model3_pde"
     for root in (SRC_ROOT, PROJECT_ROOT / "scripts"):
         for path in sorted(root.rglob("*.py")):
-            if "__pycache__" in path.parts or "dheston" in path.parts:
+            if (
+                "__pycache__" in path.parts
+                or "dheston" in path.parts
+                or model3_pde_root in path.parents
+            ):
                 continue
             if "pde_residual_loss" in path.read_text(encoding="utf-8"):
                 offenders.append(str(path.relative_to(PROJECT_ROOT)))
     assert offenders == []
+    assert model3_pde_root.is_dir()

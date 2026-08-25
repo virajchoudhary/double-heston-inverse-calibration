@@ -1,0 +1,102 @@
+# Pre-training architecture freeze for genuine PDE-informed Double Heston Model 3.
+# No research training result may alter these scientific choices.
+protocol:
+  name: MODEL3_GENUINE_PDE_DOUBLE_HESTON
+  version: "1.0"
+  status: PRE_TRAINING_DESIGN_FREEZE
+  base_main_git_sha: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+  branch: research/model3-pde-protocol
+
+model3_definition:
+  qualifies_as_pde_informed_only_if: explicit_canonical_double_heston_pde_residual_by_autograd_at_collocation_points
+  repricing_loss_alone_qualifies: false
+  constraints_alone_qualify: false
+  characteristic_function_consistency_alone_qualifies: false
+  architecture:
+    kind: CONDITIONAL_FORWARD_PRICING_PINN_PLUS_INVERSE_ENCODER
+    inverse_inputs: FROZEN_R2_100_FEATURE_VECTOR
+    inverse_outputs: canonical_ten_parameter_vector_through_model2_constraint_map
+    forward_state: [log_spot, variance_slow, variance_fast]
+    forward_contract: [log_strike, tau_years, risk_free_rate, dividend_yield, is_call]
+    forward_conditioning: eight_structural_parameters_only_v0_supplied_by_state
+    observed_reconstruction_state_coupling: variance_states_equal_inverse_predicted_v0_pair
+    forward_output: dollar_option_price_convex_blended_between_hard_no_arbitrage_base_and_exact_expiry_payoff
+
+dynamics:
+  source_of_truth: src/double_heston.py
+  parameter_order: [kappa_slow, theta_slow, sigma_slow, rho_slow, v0_slow,
+                    kappa_fast, theta_fast, sigma_fast, rho_fast, v0_fast]
+  time_convention: tau_years_equals_T_minus_t
+  variance_factors_independent: true
+  variance_variance_cross_derivative: false
+  terminal_condition: undiscounted_call_or_put_payoff_at_tau_zero
+
+data:
+  dataset_path: data/final_r2_clean_10000/surfaces.jsonl
+  frozen_dataset_sha256: "148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6"
+  split_source: stored_per_surface_user_metadata_split
+  allowed_training_splits: [train]
+  selection_split: validation
+  untouched_test_used_for_selection_or_weights: false
+  real_market_weight_updates: forbidden
+  issue34_positive_noise_results_are_training_or_selection_inputs: false
+
+collocation:
+  dtype: float64
+  pilot_points_per_surface_batch: 16
+  research_points_per_surface_batch: 32
+  spot_domain_multiple_of_observed_spot: [0.50, 1.50]
+  variance_slow_domain_multiple_of_theta_capped_at_hard_ceiling: [0.05, 2.00]
+  variance_fast_domain_multiple_of_theta_capped_at_hard_ceiling: [0.05, 2.00]
+  tau_domain_years: [0.0191780821917808, 0.493150684931507]
+  terminal_support_cutoff_years: 0.0191780821917808
+  terminal_blend: c2_polynomial_below_seven_days_zero_at_or_above_support
+  terminal_samples_per_surface_batch: 8
+  deterministic_generator_seed: 3407
+
+losses:
+  supervised_parameter_mse_train_standardized: 1.0
+  masked_normalized_price_reconstruction_mse: 1.0
+  scaled_double_heston_pde_residual_mse: 0.10
+  terminal_payoff_mse: 0.0
+  hard_no_arbitrage_boundary_penalty: 0.0
+  structural_constraint_penalty: none_enforced_by_constraint_map
+  boundary_policy: c2_terminal_blend_below_support_full_bounded_base_at_or_above_support
+  weight_tuning_on_validation_or_test: forbidden
+
+pilot:
+  purpose: implementation_and_numerical_trainability_only_not_research_result
+  deterministic_train_subset: first_240_train_surfaces_after_frozen_order
+  deterministic_validation_subset: first_40_validation_surfaces_after_frozen_order
+  development_seeds: [4207]
+  max_epochs: 3
+  batch_size: 16
+  optimizer: adamw
+  learning_rate: 0.0002
+  weight_decay: 0.00001
+  required_diagnostics: [finite_loss, finite_gradients, residual_summary, gradient_norm_summary]
+  success_gate: numerical_only_no_accuracy_claim
+
+research_run_design:
+  status: FROZEN_BEFORE_PILOT_EXECUTION
+  seeds: [11, 22, 33]
+  max_epochs: 120
+  early_stopping_patience: 15
+  checkpoint_rule: minimum_validation_total_loss_only
+  optimizer: adamw
+  learning_rate: 0.0002
+  weight_decay: 0.00001
+  batch_size: 32
+  failure_criteria:
+    - nonfinite_loss_or_gradient
+    - no_validation_improvement_for_15_evaluations
+    - unrecoverable_checkpoint_or_data_identity_failure
+  interpretation_allowed: [improves_recovery, improves_robustness_not_clean_accuracy, improves_structure_or_stability, no_benefit, too_expensive]
+  forced_superiority_requirement: forbidden
+
+anti_leakage:
+  untouched_test_labels_forward_pass_before_freeze: forbidden
+  test_metrics_for_architecture_loss_seed_or_checkpoint_choice: forbidden
+  issue34_positive_noise_numeric_outcomes_as_selection_signal: forbidden
+  real_market_weight_update: forbidden
+  new_development_noise_if_needed: deterministic_train_validation_keys_only
