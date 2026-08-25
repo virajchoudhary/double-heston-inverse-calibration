@@ -955,9 +955,9 @@ def run_generation(
         "unique_surface_ids": len(
             {payload["surface_id"] for payload in all_payloads}
         ) == len(all_payloads),
-        "unique_selected_parameter_vectors": not selected[
-            "parameter_vector_hash"
-        ].duplicated(),
+        "unique_selected_parameter_vectors": bool(
+            not selected["parameter_vector_hash"].duplicated().any()
+        ),
         "no_frozen_r2_parameter_overlap": not bool(
             set(selected["parameter_vector_hash"]) & _load_frozen_parameter_hashes()
         ),
