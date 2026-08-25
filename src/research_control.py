@@ -377,8 +377,8 @@ def validate_graph(graph: Any, registry: dict[str, Any]) -> list[str]:
 
 def validate_control_inputs(registry: dict[str, Any], graph: dict[str, Any]) -> list[str]:
     errors = [*validate_registry(registry), *validate_graph(graph, registry)]
-    registry_ids = {item["id"] for item in registry.get("experiments", []) if isinstance(item, dict)}
-    graph_ids = {item["id"] for item in graph.get("nodes", []) if isinstance(item, dict)}
+    registry_ids = {item.get("id") for item in registry.get("experiments", []) if isinstance(item, dict)}
+    graph_ids = {item.get("id") for item in graph.get("nodes", []) if isinstance(item, dict)}
     if registry_ids != graph_ids:
         errors.append(
             "registry/graph id divergence: "

@@ -314,6 +314,16 @@ def test_control_pair_detects_registry_graph_id_divergence() -> None:
     assert any("registry/graph id divergence" in error for error in validate_control_inputs(registry, graph))
 
 
+def test_control_pair_handles_malformed_id_entries_without_crashing() -> None:
+    registry = _minimal_registry()
+    graph = _minimal_graph()
+    registry["experiments"].append({"title": "missing id"})
+    graph["nodes"].append({"depends_on": []})
+    errors = validate_control_inputs(registry, graph)
+    assert any("experiments[2].id must be" in error for error in errors)
+    assert any("nodes[2].id is invalid" in error for error in errors)
+
+
 def test_stale_scanner_reads_branch_only_document(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
     from src import research_control as rc
 
