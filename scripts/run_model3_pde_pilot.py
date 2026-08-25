@@ -97,6 +97,9 @@ REQUIRED_ARTIFACTS = (
     "environment_provenance.json",
 )
 
+STAGE_A_RUN_KIND = "MODEL3_STAGE_A_DEVELOPMENT_PILOT_NOT_RESEARCH_RESULT"
+STAGE_B_RUN_KIND = "MODEL3_STAGE_B_RESEARCH_FROZEN"
+
 
 @dataclass(frozen=True)
 class PilotSettings:
@@ -115,6 +118,8 @@ class PilotSettings:
     weight_decay: float = 0.00001
     device: str = "cpu"
     smoke_mode: bool = False
+    patience: int | None = None
+    run_kind: str = STAGE_A_RUN_KIND
 
     def __post_init__(self) -> None:
         positive_integers = {
@@ -133,6 +138,53 @@ class PilotSettings:
             raise ValueError("weight decay must be finite and non-negative")
         if self.device not in {"cpu", "cuda"}:
             raise ValueError("device must be cpu or cuda")
+        if self.patience is not None and self.patience <= 0:
+            raise ValueError("patience must be strictly positive when enabled")
+        if self.run_kind == STAGE_A_RUN_KIND:
+            if self.smoke_mode:
+                expected_stage_a = {}
+            else:
+                expected_stage_a = {
+                    "train_limit": 240,
+                    "validation_limit": 40,
+                    "seed": 4207,
+                    "epochs": 3,
+                    "batch_size": 16,
+                    "interior_points": 16,
+                    "terminal_points": 8,
+                    "learning_rate": 0.0002,
+                    "weight_decay": 0.00001,
+                    "patience": None,
+                }
+            actual_stage_a = {
+                key: getattr(self, key) for key in expected_stage_a
+            }
+            if actual_stage_a != expected_stage_a:
+                raise ValueError("real Stage-A settings differ from frozen values")
+        elif self.run_kind == STAGE_B_RUN_KIND:
+            if self.smoke_mode:
+                raise ValueError("Stage B cannot use smoke mode")
+            expected_stage_b = {
+                "train_limit": 7500,
+                "validation_limit": 1250,
+                "epochs": 120,
+                "batch_size": 32,
+                "interior_points": 32,
+                "terminal_points": 8,
+                "learning_rate": 0.0002,
+                "weight_decay": 0.00001,
+                "device": "cuda",
+                "patience": 15,
+            }
+            actual_stage_b = {
+                key: getattr(self, key) for key in expected_stage_b
+            }
+            if actual_stage_b != expected_stage_b:
+                raise ValueError("Stage-B settings differ from frozen values")
+            if self.seed not in {11, 22, 33}:
+                raise ValueError("Stage B seed must be 11, 22, or 33")
+        else:
+            raise ValueError("run kind must be Stage A or Stage B")
 
 
 @dataclass(frozen=True)
@@ -290,7 +342,7 @@ def checkpoint_metadata(
         "run_kind": (
             "DEVELOPMENT_SMOKE_NOT_RESEARCH_RESULT"
             if settings.smoke_mode
-            else "MODEL3_STAGE_A_DEVELOPMENT_PILOT_NOT_RESEARCH_RESULT"
+            else settings.run_kind
         ),
         "settings": {**asdict(settings), "dataset": settings.dataset.as_posix()},
         "loss_weights": LOSS_WEIGHTS,
@@ -827,6 +879,8 @@ def run_pilot(
     start_epoch = 1
     best_validation_loss = float("inf")
     best_epoch = 0
+    last_completed_epoch = 0
+    best_checkpoint: dict[str, Any] | None = None
     if checkpoint_path.exists():
         stored_checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
         validate_resume_identity(stored_checkpoint["metadata"], expected_metadata)
@@ -840,8 +894,34 @@ def run_pilot(
         optimizer.load_state_dict(stored_checkpoint["optimizer_state_dict"])
         restore_rng_states(stored_checkpoint["rng_states"])
         start_epoch = int(stored_checkpoint["completed_epoch"]) + 1
+        last_completed_epoch = int(stored_checkpoint["completed_epoch"])
         best_validation_loss = float(stored_checkpoint["best_validation_loss"])
         best_epoch = int(stored_checkpoint["best_epoch"])
+        if best_validation_loss != float("inf"):
+            required_best_keys = (
+                "best_model_state_dict",
+                "best_optimizer_state_dict",
+                "best_target_standardizer",
+                "best_rng_states",
+            )
+            missing_best_keys = [
+                key for key in required_best_keys if key not in stored_checkpoint
+            ]
+            if missing_best_keys:
+                raise RuntimeError(
+                    "checkpoint lacks historical best-state fields: "
+                    + ", ".join(missing_best_keys)
+                )
+            best_checkpoint = {
+                "completed_epoch": best_epoch,
+                "model_state_dict": stored_checkpoint["best_model_state_dict"],
+                "optimizer_state_dict": stored_checkpoint["best_optimizer_state_dict"],
+                "target_standardizer": stored_checkpoint["best_target_standardizer"],
+                "rng_states": stored_checkpoint["best_rng_states"],
+                "best_validation_loss": best_validation_loss,
+                "best_epoch": best_epoch,
+                "metadata": expected_metadata,
+            }
     elif any(path.name != "environment_provenance.json" and path.exists() for path in output_root.iterdir()):
         raise RuntimeError("refusing to resume incomplete output without checkpoint.pt")
 
@@ -964,6 +1044,16 @@ def run_pilot(
         completed_model = {key: value.detach().cpu() for key, value in system.state_dict().items()}
         completed_standardizer = standardizer.state_dict()
         completed_optimizer = optimizer.state_dict()
+        if best_checkpoint is None:
+            best_model_state_dict = completed_model
+            best_optimizer_state_dict = completed_optimizer
+            best_target_standardizer = completed_standardizer
+            best_rng_states_value = rng_states
+        else:
+            best_model_state_dict = best_checkpoint["model_state_dict"]
+            best_optimizer_state_dict = best_checkpoint["optimizer_state_dict"]
+            best_target_standardizer = best_checkpoint["target_standardizer"]
+            best_rng_states_value = best_checkpoint["rng_states"]
         checkpoint_payload = {
             "completed_epoch": epoch,
             "model_state_dict": completed_model,
@@ -972,6 +1062,10 @@ def run_pilot(
             "best_validation_loss": best_validation_loss,
             "best_epoch": best_epoch,
             "rng_states": rng_states,
+            "best_model_state_dict": best_model_state_dict,
+            "best_optimizer_state_dict": best_optimizer_state_dict,
+            "best_target_standardizer": best_target_standardizer,
+            "best_rng_states": best_rng_states_value,
             "metadata": expected_metadata,
         }
         optimizer_payload = {
@@ -1001,12 +1095,52 @@ def run_pilot(
             best_epoch = epoch
             checkpoint_payload["best_validation_loss"] = best_validation_loss
             checkpoint_payload["best_epoch"] = best_epoch
+            checkpoint_payload["best_model_state_dict"] = completed_model
+            checkpoint_payload["best_optimizer_state_dict"] = completed_optimizer
+            checkpoint_payload["best_target_standardizer"] = completed_standardizer
+            checkpoint_payload["best_rng_states"] = rng_states
+            best_checkpoint = checkpoint_payload
             _atomic_torch_save(checkpoint_payload, checkpoint_path)
 
+        last_completed_epoch = epoch
+        if settings.patience is not None and epoch - best_epoch >= settings.patience:
+            break
+
+    if settings.patience is not None and best_checkpoint is not None:
+        selected = dict(best_checkpoint)
+        selected["model_state_dict"] = {
+            key: value.detach().cpu()
+            for key, value in selected["model_state_dict"].items()
+        }
+        _atomic_torch_save(selected, checkpoint_path)
+        _atomic_torch_save(
+            {
+                "completed_epoch": selected["completed_epoch"],
+                "optimizer_state_dict": selected["optimizer_state_dict"],
+                "metadata": selected["metadata"],
+            },
+            optimizer_path,
+        )
+        _atomic_json(
+            metadata_path,
+            {**expected_metadata, "completed_epoch": selected["completed_epoch"]},
+        )
+        selected_checkpoint_epoch = int(selected["completed_epoch"])
+    else:
+        selected_checkpoint_epoch = None
+
     return {
-        "status": "PASSED" if settings.smoke_mode else "STAGE_A_EPOCHS_COMPLETE",
+        "status": (
+            "PASSED"
+            if settings.smoke_mode
+            else "MODEL3_TRAINING_EARLY_STOPPED"
+            if selected_checkpoint_epoch is not None
+            else "STAGE_A_EPOCHS_COMPLETE"
+        ),
         "run_kind": expected_metadata["run_kind"],
-        "completed_epoch": final_epoch,
+        "completed_epoch": last_completed_epoch,
+        "requested_final_epoch": final_epoch,
+        "selected_checkpoint_epoch": selected_checkpoint_epoch,
         "best_epoch": best_epoch,
         "best_validation_loss": best_validation_loss,
         "output_root": output_root,
@@ -1051,6 +1185,16 @@ def build_argument_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="tiny wiring-only CPU smoke; never a Stage-A or scientific result",
     )
+    parser.add_argument(
+        "--patience",
+        type=int,
+        help="engineering support reserved for frozen Stage B",
+    )
+    parser.add_argument(
+        "--run-kind",
+        choices=[STAGE_A_RUN_KIND, STAGE_B_RUN_KIND],
+        default=STAGE_A_RUN_KIND,
+    )
     return parser
 
 
@@ -1070,6 +1214,8 @@ def main(argv: list[str] | None = None) -> int:
         weight_decay=arguments.weight_decay,
         device=arguments.device,
         smoke_mode=arguments.smoke,
+        patience=arguments.patience,
+        run_kind=arguments.run_kind,
     )
     if settings.smoke_mode:
         settings = replace(

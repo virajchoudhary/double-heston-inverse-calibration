@@ -1,0 +1,25 @@
+{
+  "schema": "MODEL3_STAGE_A_CLOUD_DISCOVERY_V1",
+  "purpose": "PROVENANCE_ONLY_NOT_A_RESEARCH_RESULT",
+  "inherited_git_sha": "a01ddc1db854f823eb02b91193eecb4dc6698974",
+  "branch": "research/model3-stage-a",
+  "stage_a_executed": false,
+  "gpu_allocated": false,
+  "test_split_accessed": false,
+  "cloud_routes_checked": [
+    {
+      "provider": "Kaggle",
+      "cli_on_path": false,
+      "python_package_importable": false,
+      "kagglehub_package_importable": false,
+      "environment_credential_names_present": [],
+      "conventional_credential_files_present": false,
+      "authentication_result": "ABSENT_NOT_AUTHENTICATED"
+    }
+  ],
+  "historical_p100_evidence_reused_as_authorization": false,
+  "secrets_or_credential_values_printed": false,
+  "local_training_used": false,
+  "outcome": "MODEL3_STAGE_A_BLOCKED_CLOUD_AUTH_PREPARATION_READY",
+  "recorded_date_local": "2026-08-26"
+}

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import copy
+import json
 from dataclasses import asdict
 import random
 import numpy as np
@@ -112,6 +113,31 @@ def test_settings_reject_invalid_execution_values(tmp_path):
         make_settings(tmp_path, epochs=0)
 
 
+def test_run_kinds_enforce_frozen_execution_settings(tmp_path):
+    driver = load_driver()
+    settings, _ = make_settings(
+        tmp_path,
+        train_limit=7500,
+        validation_limit=1250,
+        seed=11,
+        epochs=120,
+        batch_size=32,
+        interior_points=32,
+        terminal_points=8,
+        device="cuda",
+        patience=15,
+        run_kind=driver.STAGE_B_RUN_KIND,
+    )
+    assert settings.patience == 15
+    assert settings.run_kind == "MODEL3_STAGE_B_RESEARCH_FROZEN"
+    with pytest.raises(ValueError, match="real Stage-A settings differ"):
+        make_settings(tmp_path, patience=15)
+    with pytest.raises(ValueError, match="Stage-B settings differ"):
+        make_settings(tmp_path, patience=15, run_kind=driver.STAGE_B_RUN_KIND)
+    with pytest.raises(ValueError, match="patience must be strictly positive"):
+        make_settings(tmp_path, patience=0)
+
+
 def test_loader_rejects_test_split(monkeypatch):
     driver = load_driver()
     forbidden = SimpleNamespace(indices_for_split=lambda split: [0], items=[])
@@ -178,6 +204,7 @@ def test_loss_component_wiring_and_optimizer_step_are_finite(tmp_path):
         batch_size=2,
         interior_points=1,
         terminal_points=1,
+        smoke_mode=True,
     )
     dataset = fake_dataset(4)
     system = driver.build_system()
@@ -287,6 +314,7 @@ def test_interior_and_terminal_contracts_use_surface_slot_matrix_indexing(tmp_pa
         batch_size=2,
         interior_points=5,
         terminal_points=3,
+        smoke_mode=True,
     )
     dataset = fake_dataset(4)
     system = driver.build_system()
@@ -515,6 +543,113 @@ def test_multi_batch_resume_restores_rng_and_matches_uninterrupted_run(monkeypat
         driver.run_pilot(continued_settings)
 
 
+def test_stage_b_seed_commands_are_isolated_and_frozen():
+    driver = load_driver()
+    parser = driver.build_argument_parser()
+    commands = []
+    for seed in (11, 22, 33):
+        arguments = parser.parse_args(
+            [
+                "--dataset", "data/final_r2_clean_10000/surfaces.jsonl",
+                "--output-root", f"outputs/model3_stage_b_seed_{seed}",
+                "--train-limit", "7500",
+                "--validation-limit", "1250",
+                "--seed", str(seed),
+                "--epochs", "120",
+                "--batch-size", "32",
+                "--interior-points", "32",
+                "--terminal-points", "8",
+                "--learning-rate", "0.0002",
+                "--weight-decay", "0.00001",
+                "--device", "cuda",
+                "--patience", "15",
+                "--run-kind", driver.STAGE_B_RUN_KIND,
+            ]
+        )
+        commands.append(arguments)
+    assert [arguments.seed for arguments in commands] == [11, 22, 33]
+    assert len({arguments.output_root for arguments in commands}) == 3
+    shared_keys = (
+        "run_kind", "train_limit", "validation_limit", "epochs", "batch_size",
+        "interior_points", "terminal_points", "learning_rate",
+        "weight_decay", "device", "patience",
+    )
+    for key in shared_keys:
+        values = {getattr(arguments, key) for arguments in commands}
+        assert len(values) == 1
+
+
+def test_patience_stops_and_restores_best_checkpoint(monkeypatch, tmp_path):
+    driver = load_driver()
+    dataset = fake_dataset(4)
+
+    def four_row_loader(dataset_path, *, train_limit, validation_limit):
+        return dataset, [0, 1, 2, 3], [2, 3]
+
+    def high_dropout_system():
+        system = driver.Model3PDESystem()
+        for module in system.modules():
+            if isinstance(module, torch.nn.Dropout):
+                module.p = 0.5
+        system.train()
+        return system
+
+    monkeypatch.setattr(
+        driver,
+        "build_run_identity",
+        lambda dataset_path, *, smoke_mode: driver.RunIdentity(
+            git_sha="test-sha",
+            config_sha256="test-config",
+            dataset_sha256="test-data",
+            tracked_git_dirty=True,
+            tracked_git_status=("M tests/example.py",),
+        ),
+    )
+    monkeypatch.setattr(driver, "load_pilot_dataset", four_row_loader)
+    monkeypatch.setattr(driver, "build_system", high_dropout_system)
+    original_validation_epoch = driver.run_validation_epoch
+    validation_losses = iter([0.30, 0.20, 0.25, 0.26])
+    observed_validation_losses = []
+
+    def deterministic_validation_loss(*args, **kwargs):
+        metrics = original_validation_epoch(*args, **kwargs)
+        observed_value = next(validation_losses)
+        observed_validation_losses.append(observed_value)
+        metrics["validation_total_loss"] = observed_value
+        return metrics
+
+    monkeypatch.setattr(driver, "run_validation_epoch", deterministic_validation_loss)
+    common = {
+        "dataset": tmp_path / "surfaces.jsonl",
+        "train_limit": 4,
+        "validation_limit": 2,
+        "seed": 4207,
+        "batch_size": 2,
+        "interior_points": 1,
+        "terminal_points": 1,
+        "device": "cpu",
+        "smoke_mode": True,
+    }
+    result = driver.run_pilot(
+        driver.PilotSettings(output_root=tmp_path / "run", epochs=5, patience=1, **common)
+    )
+    checkpoint = torch.load(
+        tmp_path / "run" / "checkpoint.pt", map_location="cpu", weights_only=False
+    )
+    optimizer_export = torch.load(
+        tmp_path / "run" / "optimizer.pt", map_location="cpu", weights_only=False
+    )
+    metadata = json.loads((tmp_path / "run" / "epoch_metadata.json").read_text())
+    assert result["completed_epoch"] == 3
+    assert result["requested_final_epoch"] == 5
+    assert result["selected_checkpoint_epoch"] == 2
+    assert observed_validation_losses == [0.30, 0.20, 0.25]
+    assert result["best_epoch"] == checkpoint["best_epoch"] == 2
+    assert checkpoint["completed_epoch"] == optimizer_export["completed_epoch"] == 2
+    assert metadata["completed_epoch"] == 2
+    assert all(value.device.type == "cpu" for value in checkpoint["model_state_dict"].values())
+
+
 def test_driver_has_no_real_market_or_issue34_dependency():
     source = (Path(__file__).resolve().parents[1] / "scripts" / "run_model3_pde_pilot.py").read_text(encoding="utf-8")
     assert "issue34_numeric_outcomes_used\": False".replace('\\"', '"') in source
@@ -522,6 +657,7 @@ def test_driver_has_no_real_market_or_issue34_dependency():
     assert "evidence/r2_noise_robustness" not in source
     assert "positive_noise" not in source.lower()
     assert "test-noise" not in source.lower()
+    assert 'FORBIDDEN_SPLIT = "test"' in source
     assert driver_allowed_splits_source(source)
 
 

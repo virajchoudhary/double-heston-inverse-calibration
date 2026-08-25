@@ -429,6 +429,14 @@ def test_pretraining_protocol_freeze_matches_selected_architecture() -> None:
     )
     assert config["collocation"]["deterministic_generator_seed"] == 3407
     assert config["research_run_design"]["seeds"] == [11, 22, 33]
+    research = config["research_run_design"]
+    assert research["max_epochs"] == 120
+    assert research["early_stopping_patience"] == 15
+    assert research["checkpoint_rule"] == "minimum_validation_total_loss_only"
+    assert research["optimizer"] == "adamw"
+    assert research["learning_rate"] == pytest.approx(0.0002)
+    assert research["weight_decay"] == pytest.approx(0.00001)
+    assert research["batch_size"] == 32
     assert config["anti_leakage"]["real_market_weight_update"] == "forbidden"
 
 
