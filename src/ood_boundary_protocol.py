@@ -872,8 +872,16 @@ def run_generation(
 
     pools, selected = build_parameter_pools(config)
     development = build_development_panel(selected)
-    clean_surfaces, sanity_rows, failures = generate_clean_surfaces(selected, config)
     output.mkdir(parents=True)
+    # Retain panels before pricing so an unexpected exception cannot discard
+    # the fixed candidate provenance.
+    _write_csv(development, output / "development_sanity_panel.csv")
+    for cohort in COHORT_ORDER:
+        filename = f"{cohort}_candidates.csv"
+        _write_csv(pools[cohort], output / filename)
+    _write_csv(selected, output / "selected_parameters.csv")
+    _write_bytes(output / "pricing_failures.jsonl", b"")
+    clean_surfaces, sanity_rows, failures = generate_clean_surfaces(selected, config)
     failure_bytes = _jsonl_bytes(failures)
     _write_bytes(output / "pricing_failures.jsonl", failure_bytes)
     if failures:
@@ -895,16 +903,16 @@ def run_generation(
     all_payloads = clean_payloads + incomplete_payloads
 
     artifact_hashes: dict[str, str] = {}
-    artifact_hashes["development_sanity_panel_csv_sha256"] = _write_csv(
-        development, output / "development_sanity_panel.csv"
+    artifact_hashes["development_sanity_panel_csv_sha256"] = sha256_file(
+        output / "development_sanity_panel.csv"
     )
     for cohort in COHORT_ORDER:
         filename = f"{cohort}_candidates.csv"
-        artifact_hashes[f"{filename.replace('.', '_')}_sha256"] = _write_csv(
-            pools[cohort], output / filename
+        artifact_hashes[f"{filename.replace('.', '_')}_sha256"] = sha256_file(
+            output / filename
         )
-    artifact_hashes["selected_parameters_csv_sha256"] = _write_csv(
-        selected, output / "selected_parameters.csv"
+    artifact_hashes["selected_parameters_csv_sha256"] = sha256_file(
+        output / "selected_parameters.csv"
     )
     clean_bytes = _jsonl_bytes(clean_payloads)
     incomplete_bytes = _jsonl_bytes(incomplete_payloads)
