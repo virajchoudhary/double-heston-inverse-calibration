@@ -29,7 +29,7 @@ R2_DIAGNOSTICS = ROOT / "evidence" / "g2_r2_r3_20260822"
 
 BASE_COMMIT = "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
 NOISE_COMMIT = "e58b36d1ff6cbf39115d46698ad0fb45b1ac1b8b"
-MODEL3_PROTOCOL_COMMIT = "02c2a2cbc2498d5c4ce1e914e7c3d22693a55fc9"
+MODEL3_PROTOCOL_COMMIT = "f34a4d334f1703ed6e31fa60782c43ac7290ef3d"
 
 
 def write_text(path: Path, text: str) -> None:

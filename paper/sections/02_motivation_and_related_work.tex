@@ -1,40 +1,143 @@
 \section{Motivation and Literature Position}
 \label{sec:motivation}
 
-Fast inverse calibration is useful when many surfaces must be mapped to model
+Fast inverse calibration is useful when many option surfaces must be mapped to model
 parameters repeatedly. Neural surrogates can reduce inference cost, but their value
-cannot be assessed by speed alone. A valid comparison must preserve the same
-dynamics, observation contract, constraints, split boundary, and metric families.
-It must also distinguish structural validity from economic correctness and pricing
-fit from parameter recovery.
+cannot be assessed by speed alone. A valid comparison must preserve the same dynamics,
+observation contract, constraints, split boundary, and metric families. It must also
+distinguish structural validity from economic correctness and pricing fit from
+parameter recovery.
 
 The project's earlier development work sharpened these requirements. Official-NSE
 screening rejected unsupported fixed maturities and extreme wings. Local Jacobian,
 multi-start recovery, global-ambiguity, and complementary-observable studies showed
 that low repricing error could coexist with materially displaced canonical vectors.
-A subsequent R2/R3 experiment found that a third expiry improves conditioning on
-clean synthetic data, but the predeclared stopping rule selected R2 because the
-clean advantage disappeared at realistic noise levels. These studies are development
-or historical context for the frozen benchmark; they do not establish unique
+A subsequent R2/R3 experiment found that a third expiry improves conditioning on clean
+synthetic data, but the predeclared stopping rule selected R2 because the clean
+advantage disappeared at realistic noise levels. These studies are development or
+historical context for the frozen benchmark; they do not establish unique
 identification.
 
-\subsection{Literature-position placeholders}
-\label{subsec:literature-placeholders}
+\subsection{Stochastic-volatility and affine pricing foundations}
+\label{subsec:literature-stochastic-volatility}
 
-\placeholder{Position relative to affine characteristic-function pricing.}
-Summarize Heston and multifactor affine pricing literature here without citations
-until verified bibliographic entries are supplied.
+Heston's stochastic-variance formulation provides a tractable alternative to a
+constant-volatility Black--Scholes model by deriving closed-form option values with
+applications across asset classes \citep{heston1993closed}. Affine transform methods
+generalize this route to broader jump-diffusion classes and make factor-based
+characteristic functions analytically useful \citep{duffie2000transform}. Stable
+numerical evaluation of the square-root variance process remains important; the
+Little-Heston-Trap representation is used for that reason in the production
+implementation \citep{albrecher2007little}.
 
-\placeholder{Position relative to option-calibration and identifiability.}
-Place this work among calibration, regularization, and practical-identifiability
-literature after source verification.
+Richer volatility structure can improve observable fit in ways that one-factor models
+cannot. Christoffersen, Heston, and Jacobs show that a two-factor specification can
+represent independent movements in the level and slope of the index-option smirk and
+report improved in-sample/out-of-sample fit relative to their benchmark
+\citep{christoffersen2009shape}. Broader empirical comparisons motivate looking beyond
+Black--Scholes without treating any single fitted model as economic truth
+\citep{bakshi1997empirical}. Work comparing alternative stock-price dynamics likewise
+separates model selection from parameter estimation \citep{chernov2003alternative}.
 
-\placeholder{Position relative to machine-learning inverse pricing.}
-Compare ordinary ANN inverse mappings, physics-informed training, amortized
-calibration, and hybrid differentiable-pricing objectives after citation review.
+These observations support this paper's choice of a canonical two-factor Double Heston
+model. The added factors are useful only if the inverse mapping remains scientifically
+interpretable; improved observable fit alone does not establish recovery of ten latent
+parameters.
 
-\placeholder{Position relative to market microstructure and quote selection.}
-Explain activity filtering, missing-data masking, and official exchange-source
-provenance once external references are approved.
+\subsection{Calibration as an inverse problem}
+\label{subsec:literature-calibration-identifiability}
 
-No citation in this draft should be inferred from these placeholder headings.
+Classical estimation treats option prices or integrated-variance summaries as data from
+which latent dynamics must be inferred. Maximum likelihood has been applied to
+stochastic-volatility diffusions \citep{aitsahalia2007maximum}, while conditional
+moments of integrated volatility provide another estimator family
+\citep{bollerslev2002estimating}. Such approaches address parameter inference but do not
+remove finite-sample ambiguity: two parameterizations may imply nearly identical
+observations while differing materially in individual components.
+
+That distinction drives the evaluation design here. A low forward residual says that a
+candidate reprices an observation vector under a chosen norm. It does not say that the
+candidate equals the generating vector. The paper therefore reports range-scaled known-
+truth RMSE separately from normalized repricing error, retains optimizer starts, and
+conditions recovery statements on explicit tolerances.
+
+\subsection{Neural acceleration and amortized calibration}
+\label{subsec:literature-neural-calibration}
+
+A recurring motivation for neural methods is computational cost. Liu et al.\ propose a
+neural framework in which offline learning over model settings supports faster online
+financial-model calibration, including high-dimensional stochastic-volatility cases
+\citep{liu2019neural}. Bayer et al.\ learn a fast rough-stochastic-volatility price map
+and then use conventional calibration in a second step \citep{bayer2019deep}. The
+journal treatment of deep-learning volatility similarly couples learned pricing maps
+with calibration \citep{horvath2021deep}.
+
+Recent work refines these designs for speed, stability, and input representation. Sridi
+and Bilokon apply differential machine learning to Heston calibration and study
+regularization/generalization \citep{sridi2023applying}. Baschetti et al.\ combine
+random grids with pointwise calibration for Heston and rough Bergomi, targeting grid
+robustness without interpolation/extrapolation \citep{baschetti2024deep}. Biagini et
+al.\ establish approximation rates for neural option-price maps, separating forward-map
+approximation from finite-sample inversion \citep{biagini2024approximation}. Zhang et
+al.\ learn prices and parameter sensitivities for gradient-based Heston calibration
+\citep{zhang2025calibrating}, and Wu et al.\ preserve Fourier structure while using a
+small network to accelerate a jump/rough-volatility calibration
+\citep{wu2025efficient}. Methodological critiques also warn against equating neural fit
+quality with valid calibrated behavior \citep{itkin2019deep}.
+
+This literature motivates Model1 and Model2 but does not define their scientific claim.
+Model1 is ordinary supervised inverse regression. Model2 adds hard constraints and a
+differentiable Fourier-repricing loss; it remains repricing-informed, not PDE-informed.
+The present synthetic protocol evaluates both against traditional calibration using
+stored truth, frozen splits, failed-start retention, seed dispersion, runtime, and
+conditioned recovery metrics.
+
+\subsection{Physics-informed learning and option pricing}
+\label{subsec:literature-pinn}
+
+Equation-residual neural networks have a long history in ODE/PDE computation
+\citep{lagaris1998artificial} and modern deep PDE solvers
+\citep{sirignano2018dgm}. Physics-informed neural networks formalize the combination of
+data fit and PDE residuals for forward and inverse problems
+\citep{raissi2019physics}; reviews describe their uses and limitations across scientific
+machine learning \citep{karniadakis2021physics,cuomo2022scientific}. Training failures
+can arise even when a residual is mathematically well posed \citep{wang2022when}.
+
+Finance applications include physics-informed Black--Scholes pricing
+\citep{dhiman2023physics} and physics-informed volatility-surface prediction
+\citep{kim2022physics}. Such work differs from Model2: a differentiable pricer or
+repricing objective is not a Double Heston PDE residual. Genuine PDE-informed learning
+must differentiate through state variables in the specified operator, verify terminal
+and boundary conventions, and report stability and cost. This distinction is why Model3
+is treated as separate pre-registered methodology rather than a renamed or tuned version
+of Model2.
+
+\subsection{Noise, incomplete observations, and evaluation scope}
+\label{subsec:literature-noise-robustness}
+
+Real surfaces are noisy, masked by activity/support rules, and economically redundant
+across calls and puts once carry is fixed. Neural-calibration critiques therefore
+emphasize accuracy and validity pitfalls rather than training loss alone
+\citep{itkin2019deep}. Random-grid calibration explicitly targets interpolation and
+extrapolation concerns \citep{baschetti2024deep}, while Bayesian neural-SDE calibration
+uses posterior uncertainty and historical plus option information to express robustness
+rather than a single point estimate \citep{cuchiero2025robust}.
+
+These studies support controlled noise testing but do not supply this project's frozen
+boundary. Completed evidence covers deterministic cohorts, strict zero-noise gates,
+full-population neural evaluations through 1\% noise, and the clean traditional subset
+gate. Positive-level traditional subset calibration remains pending; therefore no
+three-way noise conclusion, OOD conclusion, G8 result, or Model3 result is made here.
+
+\subsection{Position of this study}
+\label{subsec:this-work-position}
+
+Against this background, this work studies a narrowly scoped question: how do
+traditional calibration, an ordinary ANN, and a constraint/repricing-informed inverse
+network compare on a frozen two-factor Heston representation when generating vectors are
+known? It separates forward-pricing correctness, observable fit, structural validity,
+speed, seed/multi-start stability, and tolerance-conditioned parameter recovery. It does
+not infer novelty from missing citations and does not claim that practical
+non-identifiability is absent from prior literature. Instead, it reports where retained
+ambiguity appears under a fixed DH contract and preserves a genuine PDE protocol as
+future work.

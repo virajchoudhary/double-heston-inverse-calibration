@@ -7,7 +7,7 @@ by explicit Git refs:
 
 - `NOISE=e58b36d1ff6cbf39115d46698ad0fb45b1ac1b8b`
   (`origin/codex/r2-noise-recovery`);
-- `MODEL3=02c2a2cbc2498d5c4ce1e914e7c3d22693a55fc9`
+- `MODEL3=f34a4d334f1703ed6e31fa60782c43ac7290ef3d`
   (`origin/research/model3-pde-protocol`).
 
 The branches are not merged into this worktree. Tables live under
@@ -32,7 +32,7 @@ rerunning science.
 | Noise cohorts and strict 0% gates | Completed protocol subsets | `origin/codex/r2-noise-recovery:evidence/r2_noise_robustness/**`; protocol at `91b66b63af7fbda6ad425fe7beeddf045e6b99c0` | commits through `NOISE` |
 | Full-population neural noise evaluations (0%-1%) | Completed neural-only result | `origin/codex/r2-noise-recovery:evidence/r2_noise_robustness/neural/all_neural_seed_headline.csv`; `neural/MANIFEST.json` | neural evaluation `4ffddc2b9170ba494f75cedb2f5740cb806558c9`; inventory ref `NOISE` |
 | Traditional positive-noise subset | Active/pending | `origin/codex/r2-noise-recovery:docs/R2_NOISE_CLOUD_EXECUTION_HANDOFF.md`; interrupted 0.10% journal | preparation/handoff `NOISE`; execution target `b94447d71d8418a218e0e5f2a91ba807f2dcb687` |
-| Genuine PDE-informed Model3 | Active/pending methodology only | `origin/research/model3-pde-protocol:docs/MODEL3_PDE_PROTOCOL.md`; `configs/model3_pde_protocol.yaml` | `MODEL3` |
+| Genuine PDE-informed Model3 | Active/pending methodology/readiness provenance only | `origin/research/model3-pde-protocol:docs/MODEL3_PDE_PROTOCOL.md`; `docs/MODEL3_PDE_PRETRAINING_AUDIT.md`; `configs/model3_pde_protocol.yaml` | protocol `02c2a2cbc2498d5c4ce1e914e7c3d22693a55fc9`; readiness/driver `MODEL3` |
 | OOD/boundary robustness | Pending; no result | No completed OOD result artifact exists in audited current evidence | Not applicable |
 | G8 real-market evaluation | Not started; no result | R2 contract marks five NTPC dates development-only and excluded from G8 | `BASE` |
 
