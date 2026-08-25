@@ -1,0 +1,98 @@
+schema_version: "1.0"
+graph_kind: RESEARCH_DEPENDENCY_GRAPH
+nodes:
+  - id: canonical_double_heston_engine
+    depends_on: []
+    status_source: canonical_double_heston_engine
+    runnable_now: false
+    runnable_reason: "Sealed; read-only maintenance only."
+    required_evidence: ["outputs/engine_freeze/engine_manifest.json", "outputs/double_heston_benchmark/benchmark_summary.json"]
+
+  - id: nse_stage_a_development_selection
+    depends_on: [canonical_double_heston_engine]
+    status_source: nse_stage_a_development_selection
+    runnable_now: false
+    runnable_reason: "Completed development screen; historical/provenance use only."
+    required_evidence: ["docs/STAGE_A_CANDIDATE_SELECTION.md"]
+
+  - id: ntpc_bs_heston_dh_pilot
+    depends_on: [nse_stage_a_development_selection]
+    status_source: ntpc_bs_heston_dh_pilot
+    runnable_now: false
+    runnable_reason: "Completed development result; NO_CLEAR_WINNER is final for this lane."
+    required_evidence: ["docs/evidence/NTPC_SINGLE_STOCK_PILOT_MANIFEST.json"]
+
+  - id: identifiability_research
+    depends_on: [ntpc_bs_heston_dh_pilot]
+    status_source: identifiability_research
+    runnable_now: false
+    runnable_reason: "Superseded historical diagnostics; retained finding only."
+    required_evidence: ["docs/evidence/G2_GLOBAL_AMBIGUITY_MANIFEST.json"]
+
+  - id: r2_r3_representation_selection
+    depends_on: [identifiability_research]
+    status_source: r2_r3_representation_selection
+    runnable_now: false
+    runnable_reason: "Sealed once; R2 selected and frozen."
+    required_evidence: ["evidence/g2_r2_r3_20260822/final_decision.json"]
+
+  - id: frozen_r2_representation
+    depends_on: [r2_r3_representation_selection]
+    status_source: frozen_r2_representation
+    runnable_now: false
+    runnable_reason: "Frozen interface; consumers must adapt to it, not change it."
+    required_evidence: ["docs/R2_REPRESENTATION_CONTRACT.md", "evidence/final_r2_synthetic_pilot_20260822/manifest.json"]
+
+  - id: final_r2_10k_dataset
+    depends_on: [frozen_r2_representation]
+    status_source: final_r2_10k_dataset
+    runnable_now: false
+    runnable_reason: "Immutable input; regeneration would be a scientific mutation."
+    required_evidence: ["data/final_r2_clean_10000/surfaces.jsonl", "data/final_r2_clean_10000/replay_report.json"]
+
+  - id: traditional_ann_model2_primary_comparison
+    depends_on: [final_r2_10k_dataset]
+    status_source: traditional_ann_model2_primary_comparison
+    runnable_now: false
+    runnable_reason: "Sealed baseline; rerunning cannot alter the accepted result."
+    required_evidence: ["evidence/r2_primary_comparison_20260823/FINAL_EVALUATION_EVIDENCE_MANIFEST.json"]
+
+  - id: r2_observation_noise_robustness
+    depends_on: [traditional_ann_model2_primary_comparison]
+    status_source: r2_observation_noise_robustness
+    runnable_now: false
+    runnable_reason: "Prepared multicore CPU continuation is outside this coordination run and needs fresh authorization."
+    required_evidence: ["evidence/r2_noise_robustness/neural/MANIFEST.json", "data/r2_noise_robustness/MANIFEST.json"]
+    partial_evidence: ["evidence/r2_noise_robustness/traditional/level_0_10pct/JOURNAL_PROVENANCE.json"]
+
+  - id: model3_genuine_pde
+    depends_on: [final_r2_10k_dataset, traditional_ann_model2_primary_comparison]
+    status_source: model3_genuine_pde
+    runnable_now: false
+    runnable_reason: "Implementation-ready but launch requires fresh human authorization and the GPU identity gate."
+    required_evidence: ["configs/model3_pde_protocol.yaml", "docs/MODEL3_PDE_PROTOCOL.md"]
+
+  - id: ood_boundary_robustness
+    depends_on: [traditional_ann_model2_primary_comparison]
+    status_source: ood_boundary_robustness
+    runnable_now: false
+    runnable_reason: "Cohort generation/replay is complete; expensive method evaluations need fresh authorization and a reviewed aligned harness."
+    required_evidence: ["configs/ood_boundary_protocol.yaml", "docs/OOD_BOUNDARY_PROTOCOL.md"]
+
+  - id: g8_final_real_market_evaluation
+    depends_on: [traditional_ann_model2_primary_comparison]
+    status_source: g8_final_real_market_evaluation
+    runnable_now: false
+    runnable_reason: "Blocked: no protocol, runner, dates, or approved evaluation design exists."
+    required_evidence: []
+
+  - id: paper_synthesis
+    depends_on:
+      - traditional_ann_model2_primary_comparison
+      - r2_observation_noise_robustness
+      - model3_genuine_pde
+      - ood_boundary_robustness
+    status_source: paper_synthesis
+    runnable_now: false
+    runnable_reason: "Partial synthesis can continue only as scoped documentation after live lanes settle; it may never create science."
+    required_evidence: ["paper/RESULTS_INVENTORY.md"]

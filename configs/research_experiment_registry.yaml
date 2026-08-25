@@ -1,0 +1,573 @@
+schema_version: "1.0"
+registry_kind: RESEARCH_EXPERIMENT_REGISTRY
+snapshot:
+  observed_at_utc: "2026-08-25T17:35:00+00:00"
+  repository: double-heston-inverse-calibration
+  audit_base_commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+  control_branch: research/repro-orchestration
+  remote_namespace: origin
+  tracked_tree_required_clean: true
+
+experiments:
+  - id: canonical_double_heston_engine
+    title: Canonical Double Heston production engine
+    classification: SEALED_RESULT
+    scientific_status: COMPLETE
+    branch: main
+    commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+    base_commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+    protocol: docs/DOUBLE_HESTON_ENGINE.md
+    protocol_sha256: "C691FCA5B86EB5FB86A7DBDFAF9BF6F3C146074469810F67443D0E512679C7B2"
+    config: configs/parameter_bounds_PROVISIONAL.yaml
+    config_sha256: "3E30429A3B69A98C6DDAFDD3276E4E0A3EDEBD113CDACFFFEE9D7A2C032C274C"
+    dataset: tests/fixtures/double_heston_benchmark_cases.json
+    dataset_sha256: "5EE9F07D4250F9661164E7B370F5572E043670BC3E20F0A6FC065F0F75C8688B"
+    train_population: NOT_APPLICABLE
+    validation_population: NOT_APPLICABLE
+    test_population: "36 controlled benchmark cases"
+    test_opened: false
+    seeds: NOT_APPLICABLE
+    runner: src/run_independent_pricing_benchmark.py
+    compute_class: LIGHT_LOCAL_CPU
+    execution_location: local Windows Python 3.13
+    intended_compute_environment: local validation host
+    execution_command: NOT_APPLICABLE_HISTORICAL_SEALED_RUN
+    dependencies: []
+    required_artifacts:
+      - {ref: main, path: outputs/engine_freeze/decision.json, sha256: "03CBCF5F32312A62F3D799C8DE032693605028E53E88725F72996600F25C55F8"}
+      - {ref: main, path: outputs/engine_freeze/engine_manifest.json, sha256: "4B214A0CDB6D92EA8C37BF0564DC57EC7AB5B6281D7BDED9F6DDA1446CE6D6EA"}
+      - {ref: main, path: outputs/double_heston_benchmark/benchmark_summary.json, sha256: "9CB27D71C95D01A748A17FC74BC9ADEEF666E1F30BD44AF563BBC7368FE1483C"}
+    partial_artifacts: []
+    result_status: SEALED_AND_FROZEN
+    test_exposure_state: NOT_APPLICABLE_CONTROLLED_BENCHMARK
+    scientifically_legal_next_action: "Read-only maintenance and focused engine tests only."
+    forbidden_actions:
+      - "Change the frozen pricer without a new reviewed protocol."
+      - "Use repricing quality as unique-parameter-recovery evidence."
+    stop_gate: "Any engine semantic change requires a new predeclared protocol and independent review."
+
+  - id: nse_stage_a_development_selection
+    title: Official-NSE Stage A development market screen and candidate selection
+    classification: DEVELOPMENT_RESULT
+    scientific_status: COMPLETE
+    branch: main
+    commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+    base_commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+    protocol: docs/market_data_availability_audit.md
+    protocol_sha256: "EA92C902BD0876255E537F1A8CFB1A82728C7C91A1D070D8C613F72587FD22CA"
+    config: configs/market_data_audit_stage_a.yaml
+    config_sha256: "D91D1C0164E6CF70BF6D17850DBA97470F9471D1F4DD20D63F9CD317368C3523"
+    dataset: market_data_audit/stage_a/raw/nse
+    dataset_sha256: UNKNOWN_LOCAL_RAW_DATA
+    train_population: "NTPC, CIPLA, INFY, HDFCBANK; 2026-07-01, 2026-07-08, 2026-07-15, 2026-07-22, 2026-07-29"
+    validation_population: NOT_APPLICABLE_DEVELOPMENT_SCREEN
+    test_population: NOT_APPLICABLE_DEVELOPMENT_SCREEN
+    test_opened: false
+    seeds: NOT_APPLICABLE
+    runner: scripts/run_nse_stage_a_screen.py
+    compute_class: LIGHT_LOCAL_CPU
+    execution_location: local Windows Python 3.13
+    intended_compute_environment: local provenance-validation host
+    execution_command: NOT_APPLICABLE_HISTORICAL_SEALED_RUN
+    dependencies: [canonical_double_heston_engine]
+    required_artifacts:
+      - {ref: main, path: docs/STAGE_A_NSE_RESULTS.md, sha256: "1171DF40A90BD2659945FC1FAD428FA24A9FB3B50D0B45434824F6923DF123EB"}
+      - {ref: main, path: docs/STAGE_A_CANDIDATE_SELECTION.md, sha256: "DDF510A0D00370226AA859CE9A56DFDFB4E3DC3D1E8A5729DF642736B199457E"}
+    partial_artifacts: []
+    result_status: COMPLETE_DEVELOPMENT_PROVENANCE
+    test_exposure_state: NOT_APPLICABLE_DEVELOPMENT_SCREEN
+    scientifically_legal_next_action: "Retain as development/provenance context only."
+    forbidden_actions:
+      - "Use any of the five dates in final G8 evaluation."
+      - "Claim real-market model performance from this screen."
+    stop_gate: "Historical lane is closed except for read-only maintenance."
+
+  - id: ntpc_bs_heston_dh_pilot
+    title: NTPC Black-Scholes/Heston/Double-Heston development pilot
+    classification: DEVELOPMENT_RESULT
+    scientific_status: COMPLETE
+    branch: main
+    commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+    base_commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+    protocol: docs/NTPC_SINGLE_STOCK_CALIBRATION.md
+    protocol_sha256: "6519F5AB4A0DEF071E86FF00883CF5EF0D9B2757473489BA72FD52DC60A14BC5"
+    config: configs/parameter_bounds_PROVISIONAL.yaml
+    config_sha256: "3E30429A3B69A98C6DDAFDD3276E4E0A3EDEBD113CDACFFFEE9D7A2C032C274C"
+    dataset: official NSE CM/FO records for NTPC on 2026-07-15
+    dataset_sha256: UNKNOWN_LOCAL_RAW_DATA
+    train_population: "12 calibration targets on 2026-07-15"
+    validation_population: "7 holdout targets on 2026-07-15"
+    test_population: NOT_APPLICABLE_DEVELOPMENT_PILOT
+    test_opened: false
+    seeds: {analysis: 20260812, double_heston_starts: 12, heston_starts: 8}
+    runner: scripts/run_ntpc_single_stock_pilot.py
+    compute_class: LIGHT_LOCAL_CPU
+    execution_location: local Windows Python 3.13.4
+    intended_compute_environment: local calibration pilot host
+    execution_command: NOT_APPLICABLE_HISTORICAL_SEALED_RUN
+    dependencies: [nse_stage_a_development_selection]
+    required_artifacts:
+      - {ref: main, path: docs/evidence/NTPC_SINGLE_STOCK_PILOT_MANIFEST.json, sha256: "A19800FBEDBF00F8226A3F413A17D861420E82064D94384C9BA521FD2F1B9ADC"}
+      - {ref: main, path: docs/NTPC_SINGLE_STOCK_CALIBRATION.md, sha256: "6519F5AB4A0DEF071E86FF00883CF5EF0D9B2757473489BA72FD52DC60A14BC5"}
+    partial_artifacts: []
+    result_status: COMPLETE_NO_CLEAR_WINNER
+    test_exposure_state: NOT_APPLICABLE_DEVELOPMENT_PILOT
+    scientifically_legal_next_action: "Retain as development context with NO_CLEAR_WINNER."
+    forbidden_actions:
+      - "Interpret fitted parameters as ground truth."
+      - "Promote this pilot to a final real-market performance claim."
+    stop_gate: "Closed pending a separately reviewed multi-date or real-market protocol."
+
+  - id: identifiability_research
+    title: Pre-R2 practical-identifiability and global-ambiguity diagnostics
+    classification: SUPERSEDED_HISTORICAL
+    scientific_status: COMPLETE
+    branch: main
+    commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+    base_commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+    protocol: docs/G2_IDENTIFIABILITY_CHECKPOINT.md
+    protocol_sha256: "10EE99725E97A4ECDA244709DB111D0FEDB4890C5CF757149AD01425E1BC3731"
+    config: configs/parameter_sampling_REVIEWED.yaml
+    config_sha256: "2634446A3E11DB8A620D24A4974CA9FC190D29271BEF2A8965C10C01453FD29A"
+    dataset: synthetic truth panels and official-NSE Stage A support
+    dataset_sha256: UNKNOWN_MULTI_ARTIFACT_PANELS
+    train_population: "Synthetic truths and four primary-stock market support; not research training"
+    validation_population: NOT_APPLICABLE_DIAGNOSTIC
+    test_population: NOT_APPLICABLE_DIAGNOSTIC
+    test_opened: false
+    seeds: "Multiple fixed diagnostic seeds recorded in manifests"
+    runner: scripts/run_g2_global_ambiguity_analysis.py
+    compute_class: MODERATE_LOCAL_CPU_DIAGNOSTIC
+    execution_location: local Windows Python 3.13
+    intended_compute_environment: local diagnostic host
+    execution_command: "python -B scripts/run_g2_global_ambiguity_analysis.py --render-only"
+    dependencies: [ntpc_bs_heston_dh_pilot]
+    required_artifacts:
+      - {ref: main, path: docs/evidence/G2_GLOBAL_AMBIGUITY_MANIFEST.json, sha256: "C498162C1A6ECE0ACC8F1DAE3B206EA5988DC9E9C7AFE0880AE9FB01F1AA9D57"}
+      - {ref: main, path: docs/evidence/G2_COMPLEMENTARY_OBSERVABLE_MANIFEST.json, sha256: "4B734D9F37DE54982B44BA758E2E92AD8D56EE9E6AD0873C712C37F1593DB1A5"}
+    partial_artifacts: []
+    result_status: HISTORICAL_PRACTICAL_NONIDENTIFIABILITY_RETAINED
+    test_exposure_state: NOT_APPLICABLE_SYNTHETIC_DIAGNOSTIC
+    scientifically_legal_next_action: "Read as historical motivation; retain the non-identifiability finding."
+    forbidden_actions:
+      - "Reopen the superseded 108-grid representation as current."
+      - "Treat price fit as parameter recovery."
+    stop_gate: "Superseded by R2/R3 selection; no new runs without a new protocol."
+
+  - id: r2_r3_representation_selection
+    title: Frozen R2 versus R3 representation selection
+    classification: SEALED_RESULT
+    scientific_status: COMPLETE
+    branch: main
+    commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+    base_commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+    protocol: docs/G2_SELF_GOVERNED_REPRESENTATION_PROTOCOL.md
+    protocol_sha256: "81B03029661E7B9A2A6418D26F9FEB67CE278F79BEBD59FAAAB5CCD00FD19404"
+    config: configs/parameter_sampling_REVIEWED.yaml
+    config_sha256: "2634446A3E11DB8A620D24A4974CA9FC190D29271BEF2A8965C10C01453FD29A"
+    dataset: five designated NTPC development dates plus sealed synthetic truth panel
+    dataset_sha256: "UNKNOWN_SEE_REQUIRED_ARTIFACT_HASHES"
+    train_population: "Market-support diagnostics; 20 truths x 2 representations x 4 noise levels x 12 starts"
+    validation_population: NOT_APPLICABLE_REPRESENTATION_SELECTION
+    test_population: NOT_APPLICABLE_REPRESENTATION_SELECTION
+    test_opened: false
+    seeds: "Fixed randomization recorded in evidence/g2_r2_r3_20260822/manifest.json"
+    runner: scripts/run_g2_r2r3_matrix.py
+    compute_class: MODERATE_LOCAL_CPU_DIAGNOSTIC
+    execution_location: local Windows Python 3.13
+    intended_compute_environment: local sealed-run host
+    execution_command: NOT_APPLICABLE_HISTORICAL_SEALED_RUN
+    dependencies: [identifiability_research]
+    required_artifacts:
+      - {ref: main, path: evidence/g2_r2_r3_20260822/final_decision.json, sha256: "194D3046BBC4B959B50C4553FE8F9CE72BE5358D6927FD52FBACC5743BA09289"}
+      - {ref: main, path: evidence/g2_r2_r3_20260822/manifest.json, sha256: "F3FF66F8D2556523EA404322F7790F6E4BD860B315B6B10D4C392E52E0998666"}
+      - {ref: main, path: docs/G2_R2_R3_REPRESENTATION_SELECTION_RESULTS.md, sha256: "9F03CA0869FB24279DB4BDCF0513B1133490EBEE1EE487394662352CD840B2FF"}
+    partial_artifacts: []
+    result_status: R2_SELECTED_AND_FROZEN_WITH_NONIDENTIFIABILITY_RETAINED
+    test_exposure_state: NOT_APPLICABLE_REPRESENTATION_SELECTION
+    scientifically_legal_next_action: "Preserve the sealed decision; downstream work must use R2."
+    forbidden_actions:
+      - "Reopen R2 versus R3."
+      - "Claim unique ten-parameter recovery."
+    stop_gate: "Representation changes require a new reviewed protocol."
+
+  - id: frozen_r2_representation
+    title: Frozen R2 ranked two-expiry central-five interface
+    classification: SEALED_RESULT
+    scientific_status: COMPLETE
+    branch: main
+    commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+    base_commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+    protocol: docs/R2_REPRESENTATION_CONTRACT.md
+    protocol_sha256: "1AF3B12FC840592CA053EE77B01A3296B6815B5C34DE8E742955B40EC98447E4"
+    config: src/r2_representation/contract.py
+    config_sha256: "D7E85317CB8D8AB2D05AAF21026D32BB620EFAF9F3176465371D2EAC02EA80FD"
+    dataset: evidence/final_r2_synthetic_pilot_20260822/surfaces.jsonl
+    dataset_sha256: "275C97A80F63C011959E309FE7F70C85AA16175423602D2D2AE96058F17BA942"
+    dataset_sha256: UNKNOWN
+    train_population: "240-surface deterministic development pilot"
+    validation_population: "Included in the 240/40 pilot boundary as documented"
+    test_population: NOT_APPLICABLE_INTERFACE_FREEZE
+    test_opened: false
+    seeds: "Recorded in the frozen generation/pilot evidence"
+    runner: src/r2_representation/contract.py
+    compute_class: LIGHT_LOCAL_CPU
+    execution_location: local contract validation
+    intended_compute_environment: local repository runtime
+    execution_command: "python -m pytest -q tests/test_r2_representation.py"
+    dependencies: [r2_r3_representation_selection]
+    required_artifacts:
+      - {ref: main, path: docs/R2_REPRESENTATION_CONTRACT.md, sha256: "1AF3B12FC840592CA053EE77B01A3296B6815B5C34DE8E742955B40EC98447E4"}
+      - {ref: main, path: evidence/final_r2_synthetic_pilot_20260822/manifest.json, sha256: "EFD0F63896CD16AFD18BBAEDB30FCF47DF09FF0A97D0324CDADD4291EDE8382E"}
+      - {ref: main, path: evidence/final_r2_candidate_pool_readiness_20260822/readiness_manifest.json, sha256: "DACF4B0D05B982ED8885163A121838D52EEC17E6138B7194D1EE3CBC4A3B2BEE"}
+    partial_artifacts: []
+    result_status: FROZEN_INTERFACE
+    test_exposure_state: NOT_APPLICABLE_INTERFACE_FREEZE
+    scientifically_legal_next_action: "Consume R2 through the existing canonical contract."
+    forbidden_actions:
+      - "Introduce legacy-108 or rejected-R3 vectors through the canonical boundary."
+      - "Impute masked real quotes."
+    stop_gate: "Interface change requires a new reviewed representation protocol."
+
+  - id: final_r2_10k_dataset
+    title: Final clean 10,000-surface R2 synthetic-truth dataset
+    classification: SEALED_RESULT
+    scientific_status: COMPLETE
+    branch: main
+    commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+    base_commit: "b13caf0747d339c7a6bdf7a0400465bcfaad814f"
+    protocol: docs/R2_SYNTHETIC_GENERATION_CONTRACT.md
+    protocol_sha256: "139FAC93398848559319EED30C674084F3A08609476E12BAC8003D98AA31051A"
+    config: configs/r2_synthetic_generation_FINAL.yaml
+    config_sha256: "D8E705CD424C56189B01C14723DF0E24F750543D904D5A4593A171483AEF0393"
+    dataset: data/final_r2_clean_10000/surfaces.jsonl
+    dataset_sha256: "148B579A4F6CE572E34796E872479C4C016C89BBCD20438C2BB62D6B6960F1F6"
+    train_population: "7,500 surfaces (6,250 interior + 1,250 wide-valid)"
+    validation_population: "1,250 surfaces (1,042 interior + 208 wide-valid)"
+    test_population: "1,250 untouched surfaces (1,042 interior + 208 wide-valid)"
+    test_opened: true
+    seeds: {interior_train: 20260807, wide_valid_train: 20260808}
+    runner: src/r2_final_generation.py
+    compute_class: LIGHT_TO_MODERATE_LOCAL_CPU_GENERATION
+    execution_location: local Windows Python 3.13.4
+    intended_compute_environment: sealed generation host
+    execution_command: "python -m src.r2_final_generation generate-final"
+    dependencies: [frozen_r2_representation]
+    required_artifacts:
+      - {ref: main, path: data/final_r2_clean_10000/surfaces.jsonl, sha256: "148B579A4F6CE572E34796E872479C4C016C89BBCD20438C2BB62D6B6960F1F6"}
+      - {ref: main, path: data/final_r2_clean_10000/manifest.json, sha256: "B832DB73EBCB976B9BBAE1C36220590DAA0330C7F05F2F584B76EC59DF49B471"}
+      - {ref: main, path: data/final_r2_clean_10000/integrity_report.json, sha256: "4D7A9B3E9DDE481EDA2665BD0FE716A88D040C0DC65F12E7131803AA0FF4E6E8"}
+      - {ref: main, path: data/final_r2_clean_10000/replay_report.json, sha256: "217256235141886E6393E8DB442FCFBBB01290EB10CEAF15952E22E31C3D7B66"}
+    partial_artifacts: []
+    result_status: FINAL_DATASET_FROZEN_BYTE_IDENTICAL_FULL_REPLAY
+    test_exposure_state: OPENED_ONLY_AFTER_PRIMARY_MODEL_FREEZE_PER_PROTOCOL
+    scientifically_legal_next_action: "Freeze and read as immutable input for registered downstream lanes."
+    forbidden_actions:
+      - "Regenerate, edit, refill, re-split, or reinterpret the dataset."
+      - "Start G8 using these synthetic rows."
+    stop_gate: "Any identity mismatch stops all downstream consumption."
+
+  - id: traditional_ann_model2_primary_comparison
+    title: Traditional calibration versus ANN versus Model 2 primary comparison
+    classification: SEALED_RESULT
+    scientific_status: COMPLETE
+    branch: main
+    commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+    base_commit: "285a7247eed5096756caec0d561f2f69be140d52"
+    protocol: docs/R2_PRIMARY_COMPARISON_PROTOCOL.md
+    protocol_sha256: "68ED443F857A9490F9990B07E2B214B5B9E1F30D2ACD5B1BD5239C760BB54AAA"
+    config: configs/r2_primary_comparison_FINAL.yaml
+    config_sha256: "33CA0F763EC10BB2424EEFB02448C9C8E50021854B96A948E420F44BDBA70781"
+    dataset: data/final_r2_clean_10000/surfaces.jsonl
+    dataset_sha256: "148B579A4F6CE572E34796E872479C4C016C89BBCD20438C2BB62D6B6960F1F6"
+    train_population: "7,500 stored train surfaces"
+    validation_population: "1,250 stored validation surfaces"
+    test_population: "1,250 stored untouched test surfaces"
+    test_opened: true
+    seeds: [11, 22, 33]
+    runner: src/r2_primary/final_evaluation.py
+    compute_class: MIXED_LOCAL_CPU_AND_GPU_TRAINING
+    execution_location: completed local and P100 cloud sessions
+    intended_compute_environment: recorded per-seed environment manifests
+    execution_command: NOT_APPLICABLE_HISTORICAL_SEALED_RUN
+    dependencies: [final_r2_10k_dataset]
+    required_artifacts:
+      - {ref: main, path: evidence/r2_primary_comparison_20260823/FINAL_EVALUATION_EVIDENCE_MANIFEST.json, sha256: "5601E0748F8ECF05DDC3986F81A13DCC4F600D0E1172BA636571DA622912A0C9"}
+      - {ref: main, path: evidence/r2_primary_comparison_20260823/synthetic_test_comparison.csv, sha256: "72443AEE24F434904592074FE339DE80A4B49DA1703E58F965F835193FA01F39"}
+      - {ref: main, path: evidence/r2_primary_comparison_20260823/training_run_manifest.json, sha256: "5554A0EDEA009E6C55E1AE8020352DBB39FF7D503C93DB1B451974F680ED1ADE"}
+    partial_artifacts: []
+    result_status: CANONICAL_COMPLETED_COMPARISON
+    test_exposure_state: TEST_OPENED_ONCE_AFTER_FREEZE
+    scientifically_legal_next_action: "Use immutable metrics as baselines; do not rerun to improve them."
+    forbidden_actions:
+      - "Alter completed evidence or thresholds."
+      - "Claim unique parameter recovery from repricing quality."
+    stop_gate: "Changes require a new protocol and cannot rewrite this sealed comparison."
+
+  - id: r2_observation_noise_robustness
+    title: R2 observation-noise robustness (Issue #34)
+    classification: PARTIAL_CHECKPOINT
+    scientific_status: PARTIAL
+    branch: codex/r2-noise-recovery
+    commit: "e58b36d1ff6cbf39115d46698ad0fb45b1ac1b8b"
+    base_commit: "91b66b63af7fbda6ad425fe7beeddf045e6b99c0"
+    protocol: docs/R2_NOISE_ROBUSTNESS_PROTOCOL.md
+    protocol_sha256: "5BBCDA8E88AEDE31CE14F54DCDF3860F239B988A9E46495B680A2FE59CCE2733"
+    config: configs/r2_noise_robustness_FINAL.yaml
+    config_sha256: "2FA49B3EB885D3427C01AB0CFE447FC6DDD7F19957DB73C4B4ED782476C57C5A"
+    dataset: data/r2_noise_robustness/levels/*/noisy_surfaces.jsonl plus frozen clean dataset
+    dataset_sha256: MULTIPLE_LEVEL_IDENTITIES_IN_REQUIRED_DATA_MANIFEST
+    train_population: NOT_USED_TEST_SPLIT_ONLY_N1250_PER_LEVEL
+    validation_population: NOT_USED
+    test_population: "1,250 stored test surfaces per level; traditional subset exactly 250"
+    test_opened: true
+    seeds: "Protocol seed family begins at 20260825; exact values are in the frozen config"
+    runner: scripts/run_r2_noise_robustness.py
+    compute_class: MULTICORE_CLOUD_CPU_CALIBRATION
+    execution_location: persistent Linux or Windows x86-64 cloud VM
+    intended_compute_environment: "Python 3.13.4, NumPy 2.2.6, pandas 2.3.2, SciPy 1.16.2, CPU PyTorch 2.11.0; >=16 dedicated vCPUs recommended"
+    execution_command: "python scripts/run_r2_noise_robustness.py run-traditional --levels positive --workers 16"
+    dependencies: [traditional_ann_model2_primary_comparison]
+    required_artifacts:
+      - {ref: codex/r2-noise-recovery, path: evidence/r2_noise_robustness/RECOVERY_CONTAINMENT_RECORD.json, sha256: "D0142FBF5B664B077E5B6B51D4EB8470010B6DB98D74CD1A9541C99DECD7A53F"}
+      - {ref: codex/r2-noise-recovery, path: evidence/r2_noise_robustness/neural/MANIFEST.json, sha256: "50E1C46E515374421050C9E77E20176ABA854B0386B56BF171AFB92C07881D6A"}
+      - {ref: codex/r2-noise-recovery, path: data/r2_noise_robustness/MANIFEST.json, sha256: "EEACBF5FC510D550B32A26B707305E71232D9D1F53FAA712C525C16935F71136"}
+    partial_artifacts:
+      - {ref: codex/r2-noise-recovery, path: evidence/r2_noise_robustness/traditional/level_0_10pct/JOURNAL_PROVENANCE.json, sha256: "FBD73E588B027697B927693285FE540C66A295C12629F6223150ABE1B186C64C"}
+      - {ref: codex/r2-noise-recovery, path: evidence/r2_noise_robustness/traditional/level_0_10pct/traditional_calibration_starts_journal.jsonl, sha256: "79F1AC44063C2B2D2FAF129EE40F18036C4A1F33F6B0E25AB919F78CFC6DECE7"}
+    result_status: NEURAL_AND_ZERO_PERCENT_DONE_POSITIVE_TRADITIONAL_PARTIAL
+    test_exposure_state: STORED_TEST_SPLIT_OPENED_BY_FROZEN_PROTOCOL
+    scientifically_legal_next_action: "No action in this orchestration run; tomorrow requires explicit human authorization to resume the prepared cloud handoff."
+    forbidden_actions:
+      - "Resume heavy Issue #34 calibration during this sprint."
+      - "Edit journals, thresholds, subsets, cohorts, checkpoints, or optimizer settings."
+      - "Interpret a partial journal as a complete level."
+    stop_gate: "Exact commit b94447d71d8418a218e0e5f2a91ba807f2dcb687, clean tree, all hashes, checkpoint archive identity, and fresh authorization."
+
+  - id: r2_noise_partial_journal
+    title: Interrupted R2 0.10 percent positive-noise traditional journal
+    classification: PARTIAL_CHECKPOINT
+    scientific_status: PARTIAL
+    branch: codex/r2-noise-recovery
+    commit: "e58b36d1ff6cbf39115d46698ad0fb45b1ac1b8b"
+    base_commit: "91b66b63af7fbda6ad425fe7beeddf045e6b99c0"
+    protocol: docs/R2_NOISE_CLOUD_EXECUTION_HANDOFF.md
+    protocol_sha256: "79F1AC44063C2B2D2FAF129EE40F18036C4A1F33F6B0E25AB919F78CFC6DECE7"
+    config: configs/r2_noise_robustness_FINAL.yaml
+    config_sha256: "2FA49B3EB885D3427C01AB0CFE447FC6DDD7F19957DB73C4B4ED782476C57C5A"
+    dataset: evidence/r2_noise_robustness/traditional/level_0_10pct/traditional_calibration_starts_journal.jsonl
+    dataset_sha256: "79F1AC44063C2B2D2FAF129EE40F18036C4A1F33F6B0E25AB919F78CFC6DECE7"
+    train_population: NOT_USED_TEST_SPLIT_ONLY_N1250
+    validation_population: NOT_USED
+    test_population: "164 of 250 planned surfaces retained; 750 total starts eventually required"
+    test_opened: true
+    seeds:
+      start_seed: 42
+    runner: scripts/run_r2_noise_robustness.py
+    compute_class: MULTICORE_CLOUD_CPU_CALIBRATION
+    execution_location: persistent cloud CPU VM
+    intended_compute_environment: same frozen Python/NumPy/SciPy environment as parent noise lane
+    execution_command: FORBIDDEN_IN_ORCHESTRATION_RUN
+    dependencies: [r2_observation_noise_robustness]
+    required_artifacts: []
+    partial_artifacts:
+      - {ref: codex/r2-noise-recovery, path: evidence/r2_noise_robustness/traditional/level_0_10pct/JOURNAL_PROVENANCE.json, sha256: "FBD73E588B027697B927693285FE540C66A295C12629F6223150ABE1B186C64C"}
+      - {ref: codex/r2-noise-recovery, path: evidence/r2_noise_robustness/traditional/level_0_10pct/traditional_calibration_starts_journal.jsonl, sha256: "79F1AC44063C2B2D2FAF129EE40F18036C4A1F33F6B0E25AB919F78CFC6DECE7"}
+    result_status: INTERRUPTED_JOURNAL_PRESERVED_NOT_A_LEVEL_RESULT_EXECUTION_TARGET_B94447D
+    test_exposure_state: STORED_TEST_SPLIT_OPENED_BY_FROZEN_PARENT_PROTOCOL
+    scientifically_legal_next_action: "No action in this run; tomorrow requires fresh human authorization and exact identity checks."
+    forbidden_actions:
+      - "Edit or truncate the journal."
+      - "Treat 164 completed surfaces as a completed level."
+    stop_gate: "Parent lane stop gate plus journal-preserving resume semantics."
+
+  - id: model3_genuine_pde
+    title: Genuine PDE-informed Model 3
+    classification: IMPLEMENTATION_READY
+    scientific_status: PENDING
+    branch: research/model3-pde-protocol
+    commit: "a01ddc1db854f823eb02b91193eecb4dc6698974"
+    base_commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+    protocol: docs/MODEL3_PDE_PROTOCOL.md
+    protocol_sha256: "A70055E6C8C53124FD439ABFB52B7F8BF199763A29B49C26267F3756A59E8A26"
+    config: configs/model3_pde_protocol.yaml
+    config_sha256: "D38482381BD3021BAFF80333B40A0770941A79D80FD5E0DA3B4BC314A4F10361"
+    dataset: data/final_r2_clean_10000/surfaces.jsonl
+    dataset_sha256: "148B579A4F6CE572E34796E872479C4C016C89BBCD20438C2BB62D6B6960F1F6"
+    train_population: "Stage A first 240 train surfaces; Stage B all 7,500 train surfaces"
+    validation_population: "Stage A first 40 validation surfaces; Stage B all 1,250 validation surfaces"
+    test_population: "1,250 untouched test surfaces, closed until all final checkpoints are verified"
+    test_opened: false
+    seeds: "Stage A 4207; Stage B [11,22,33]; collocation generator 3407"
+    runner: scripts/run_model3_pde_pilot.py
+    compute_class: SINGLE_GPU_FLOAT64
+    execution_location: Kaggle T4/P100 pilot, then isolated single-GPU sessions for Stage B
+    intended_compute_environment: "Python 3.13.4, NumPy 2.2.6, pandas 2.3.2, SciPy 1.16.2, PyYAML 6.0.2, PyTorch 2.11.0 CUDA build"
+    execution_command: "See docs/MODEL3_PDE_CLOUD_EXECUTION_PLAN.md; exact public driver shape is pinned there"
+    dependencies: [final_r2_10k_dataset, traditional_ann_model2_primary_comparison]
+    required_artifacts:
+      - {ref: research/model3-pde-protocol, path: configs/model3_pde_protocol.yaml, sha256: "D38482381BD3021BAFF80333B40A0770941A79D80FD5E0DA3B4BC314A4F10361"}
+      - {ref: research/model3-pde-protocol, path: docs/MODEL3_PDE_PROTOCOL.md, sha256: "1C4701B23D363558E75A60171DD8D74AC2546CC1DB28971D3CFA99C3DC5F5021"}
+      - {ref: research/model3-pde-protocol, path: docs/MODEL3_PDE_PRETRAINING_AUDIT.md, sha256: "9B01C13F1F32A8B871AE69D36D7AD361BC174057F5080FA086672A5F619F985F"}
+    partial_artifacts: []
+    result_status: PILOT_READY_AFTER_AUDIT_FIXES_NO_RESULT_EXISTS
+    test_exposure_state: TEST_CLOSED
+    scientifically_legal_next_action: "No Model 3 training in this run. Tomorrow requires explicit human launch authorization followed by the pinned GPU identity gate."
+    forbidden_actions:
+      - "Run Stage A or Stage B during this orchestration sprint."
+      - "Open the test split before all three final checkpoints are frozen."
+      - "Change architecture, losses, seeds, epochs, collocation policy, or optimizer settings after results."
+    stop_gate: "Fresh human authorization; exact HEAD/config/data checks; clean tracked tree; focused foundation tests; smoke diagnostics; then isolated GPU pilot."
+
+  - id: ood_boundary_robustness
+    title: OOD and boundary robustness evaluation
+    classification: PARTIAL_CHECKPOINT
+    scientific_status: PARTIAL
+    branch: research/ood-boundary-protocol
+    commit: "b6c5e5d0c60d5a99d767ebb3db5175859f310293"
+    base_commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+    protocol: docs/OOD_BOUNDARY_PROTOCOL.md
+    protocol_sha256: "1C4701B23D363558E75A60171DD8D74AC2546CC1DB28971D3CFA99C3DC5F5021"
+    config: configs/ood_boundary_protocol.yaml
+    config_sha256: "948A23E7D30F762D9D6D85BFF79C5C83C51624E943B4F1F5DD94E7038A348E7C"
+    dataset: evidence/ood_boundary_protocol_v1/all_research_surfaces.jsonl
+    dataset_sha256: "E8B117AC93F6319E634FA28D6DD5ED884E86E130CF420E65EB8EF8DA0276B7E4"
+    train_population: NOT_USED_EVALUATION_ONLY
+    validation_population: NOT_USED_EVALUATION_ONLY
+    test_population: "420 evaluation-only research records; 360 clean pricing calls; no model predictions yet"
+    test_opened: false
+    seeds: {boundary_parameters: 20260825, distribution_shift: 20260826, maturity_parameters: 20260827, maturity_conditioning: 20260828, uncertainty_bootstrap: 20260829, shared_conditioning: 20260830}
+    runner: python -m src.ood_boundary_protocol
+    compute_class: METHOD_DEPENDENT_EVALUATION_AFTER_FROZEN_HARNESS
+    execution_location: local light generation/replay; later bounded method evaluations separately authorized
+    intended_compute_environment: local Windows/Linux Python 3.13 with repository requirements
+    execution_command: NEXT_ALIGNED_PREDICTION_HARNESS_REQUIRES_SEPARATE_FROZEN_REVIEW
+    dependencies: [traditional_ann_model2_primary_comparison]
+    required_artifacts:
+      - {ref: research/ood-boundary-protocol, path: configs/ood_boundary_protocol.yaml, sha256: "948A23E7D30F762D9D6D85BFF79C5C83C51624E943B4F1F5DD94E7038A348E7C"}
+      - {ref: research/ood-boundary-protocol, path: docs/OOD_BOUNDARY_PROTOCOL.md, sha256: "567275554E746EDE8F0F509CA80187E49AFCE12486E6EDD411B5FB1A5351BBD1"}
+      - {ref: research/ood-boundary-protocol, path: evidence/OOD_BOUNDARY_PROTOCOL_FROZEN.txt, sha256: "5EE3E53218A44320EED67BE4353BC23F221916883C7856C583F88001549C9977"}
+      - {ref: research/ood-boundary-protocol, path: docs/OOD_BOUNDARY_PREEXECUTION_AUDIT.md, sha256: "5D6B7A1D7704D90661AAA9A81B904E0E347F93C13E1E627044C6F4A92C5099A6"}
+      - {ref: research/ood-boundary-protocol, path: evidence/ood_boundary_protocol_v1/all_research_surfaces.jsonl, sha256: "E8B117AC93F6319E634FA28D6DD5ED884E86E130CF420E65EB8EF8DA0276B7E4"}
+      - {ref: research/ood-boundary-protocol, path: evidence/ood_boundary_protocol_v1/manifest.json, sha256: "EA3E19F19D809B07CAAC9C7D75F2514D7F20801AC7FD746287111189414612F1"}
+      - {ref: research/ood-boundary-protocol, path: evidence/ood_boundary_protocol_v1/replay_report.json, sha256: "91E2328BEA9FA78514017142D359C203FF1ABAEA83B8DDF082B156E25F84E6CB"}
+    partial_artifacts:
+      - {ref: research/ood-boundary-protocol, path: evidence/ood_boundary_protocol_v1/all_research_surfaces.jsonl, sha256: "E8B117AC93F6319E634FA28D6DD5ED884E86E130CF420E65EB8EF8DA0276B7E4"}
+      - {ref: research/ood-boundary-protocol, path: evidence/ood_boundary_protocol_v1/manifest.json, sha256: "EA3E19F19D809B07CAAC9C7D75F2514D7F20801AC7FD746287111189414612F1"}
+      - {ref: research/ood-boundary-protocol, path: evidence/ood_boundary_protocol_v1/replay_report.json, sha256: "91E2328BEA9FA78514017142D359C203FF1ABAEA83B8DDF082B156E25F84E6CB"}
+    result_status: COHORT_GENERATION_AND_REPLAY_DONE_METHOD_EVALUATION_PENDING
+    test_exposure_state: PRIMARY_BASELINE_HASHES_RECORDED_VALUES_NOT_INSPECTED_FOR_TUNING
+    scientifically_legal_next_action: "No method-prediction work in this run. Tomorrow requires explicit human authorization and an aligned prediction harness before any OOD interpretation."
+    forbidden_actions:
+      - "Run expensive method evaluations or reinterpret cohort generation as a model-performance result."
+      - "Use primary metric values to tune cohorts or thresholds."
+    stop_gate: "Fresh human authorization; reviewed aligned adapter/harness; unchanged cohort/config/threshold identities; no threshold tuning."
+
+  - id: g8_final_real_market_evaluation
+    title: Final unseen chronological real-market G8 evaluation
+    classification: BLOCKED
+    scientific_status: NOT_STARTED
+    branch: research/g8-final-eval-protocol
+    commit: MISSING_REF
+    base_commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+    protocol: MISSING_PROTOCOL
+    protocol_sha256: NOT_APPLICABLE
+    config: MISSING_CONFIG
+    config_sha256: NOT_APPLICABLE
+    dataset: future untouched official-NSE observations
+    dataset_sha256: NOT_YET_SELECTED
+    train_population: NO_REAL_MARKET_WEIGHT_UPDATE
+    validation_population: NOT_DEFINED_PENDING_PROTOCOL
+    test_population: NOT_SELECTED_PENDING_PROTOCOL
+    test_opened: false
+    seeds: NOT_DEFINED_PENDING_PROTOCOL
+    runner: MISSING_RUNNER
+    compute_class: TO_BE_DETERMINED_BY_FROZEN_PROTOCOL
+    execution_location: TO_BE_DETERMINED_BY_FROZEN_PROTOCOL
+    intended_compute_environment: TO_BE_DETERMINED_BY_FROZEN_PROTOCOL
+    execution_command: FORBIDDEN_UNTIL_PROTOCOL_EXISTS
+    dependencies: [traditional_ann_model2_primary_comparison]
+    required_artifacts: []
+    partial_artifacts: []
+    result_status: NO_PROTOCOL_NO_DATES_NO_RESULT
+    test_exposure_state: UNTOUCHED_BY_CONSTRUCTION
+    scientifically_legal_next_action: "Author and independently review a frozen G8 protocol before selecting or touching any date."
+    forbidden_actions:
+      - "Select G8 dates using model performance."
+      - "Reuse 2026-07-01, 07-08, 07-15, 07-22, or 07-29."
+      - "Update primary neural weights with real-market data."
+      - "Run final evaluation without a pushed frozen protocol."
+    stop_gate: "Reviewed frozen protocol, reserved untouched cohort, implementation readiness, and explicit human authorization."
+
+  - id: paper_synthesis
+    title: Evidence-bound paper synthesis
+    classification: PARTIAL_CHECKPOINT
+    scientific_status: PARTIAL
+    branch: research/paper-synthesis
+    commit: "1fe18e6650bee29f0c4cd731b45ebd198699dde0"
+    base_commit: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
+    protocol: paper/README.md
+    protocol_sha256: "567275554E746EDE8F0F509CA80187E49AFCE12486E6EDD411B5FB1A5351BBD1"
+    config: paper/scripts/generate_results_assets.py
+    config_sha256: "C6D78DE0AA85C61E2DE3DF760FEAC788C6C5DAC9A7D969EB40CFB74ED2D817B0"
+    dataset: committed evidence referenced by paper/RESULTS_INVENTORY.md
+    dataset_sha256: UNKNOWN_MULTI_SOURCE_INVENTORY
+    train_population: NOT_APPLICABLE_SYNTHESIS
+    validation_population: NOT_APPLICABLE_SYNTHESIS
+    test_population: NOT_APPLICABLE_SYNTHESIS
+    test_opened: false
+    seeds: NOT_APPLICABLE_SYNTHESIS
+    runner: paper/scripts/generate_results_assets.py
+    compute_class: LIGHT_LOCAL_CPU
+    execution_location: local documentation host
+    intended_compute_environment: Python 3.13 with repository requirements
+    execution_command: "python paper/scripts/generate_results_assets.py"
+    dependencies: [traditional_ann_model2_primary_comparison, r2_observation_noise_robustness, model3_genuine_pde, ood_boundary_robustness]
+    required_artifacts:
+      - {ref: research/paper-synthesis, path: paper/RESULTS_INVENTORY.md, sha256: "E21CC68BFF5EF55A7FD9AFC53FBEBE3B6CF4B85EF542E9193E194E393681DA97"}
+      - {ref: research/paper-synthesis, path: paper/generated/tables/evidence_classification.tex, sha256: "46259F0635E04D9FA6CB07FB5F469BAF05B9A17B3EDDACEF7F3F88BC60F40A23"}
+    partial_artifacts:
+      - {ref: research/paper-synthesis, path: paper/sections/13_limitations_and_pending_work.tex, sha256: "D16900922C203144C06342C23C1FC31EB2BAD0794A773F66EAF3C4221C6A05BF"}
+    result_status: DOCUMENTATION_SYNTHESIS_PARTIAL_STALE_BRANCH_POINTERS
+    test_exposure_state: READ_ONLY_EVIDENCE_USE
+    scientifically_legal_next_action: "Refresh inventory pins to current protocol refs only after those lanes settle; regenerate assets and validate structure."
+    forbidden_actions:
+      - "Claim completed positive-noise three-way robustness, OOD, G8, or Model 3 results."
+      - "Edit source scientific evidence to fit prose."
+      - "Compile claims from stale refs without disclosure."
+    stop_gate: "Every manuscript claim must map to an immutable artifact hash/ref and pass structural validation."
+
+stale_rules:
+  - id: current_status_says_final_10k_absent
+    file: docs/CURRENT_STATUS.md
+    pattern: "FINAL_10K = NOT_GENERATED"
+    when_complete_experiment: final_r2_10k_dataset
+    reason: "Canonical high-level status predates the sealed final dataset and must not be used as current state."
+  - id: research_control_says_final_10k_absent
+    file: docs/RESEARCH_CONTROL_AND_CURRENT_STATUS.md
+    pattern: "FINAL_10K = ABSENT"
+    when_complete_experiment: final_r2_10k_dataset
+    reason: "Control document predates the sealed final dataset and must not be used as current state."
+  - id: paper_pins_superseded_model3_ref
+    file: paper/RESULTS_INVENTORY.md
+    pattern: "MODEL3=f34a4d334f1703ed6e31fa60782c43ac7290ef3d"
+    expected_current_experiment_commit:
+      experiment: model3_genuine_pde
+      commit: "a01ddc1db854f823eb02b91193eecb4dc6698974"
+    reason: "Paper synthesis still points to the earlier Model 3 readiness commit rather than the hardened tip."
+
+tomorrow_handoff:
+  remote_snapshot_utc: "2026-08-25T17:35:00+00:00"
+  changed_since_starting_base: true
+  first_actions:
+    - "Run this verifier after a fresh git fetch origin and resolve any ref drift."
+    - "Obtain explicit human authorization before any Model 3 pilot, OOD method evaluation, or Issue #34 resume."
+    - "If Model 3 is authorized, execute its pinned identity gate on one isolated GPU session."
+    - "If OOD is authorized, review/freeze the aligned prediction harness before evaluating the existing byte-replayable cohorts; do not regenerate them."
+    - "If Issue #34 is authorized, resume only from b94447d with unchanged hashes/checkpoints and serial positive-level commands."
+  human_review_gates:
+    - "Model 3 launch authorization and post-pilot numerical-diagnostic review."
+    - "OOD aligned prediction-harness acceptance before expensive method evaluation and interpretation."
+    - "Issue #34 resumption and each completed level's fail-closed verification."
+    - "G8 protocol design and untouched-date reservation."
+    - "Paper synthesis ref refresh and claim-boundary review."
