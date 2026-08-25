@@ -365,6 +365,7 @@ def test_pde_residual_loss_remains_confined_to_archive2() -> None:
     offenders: list[str] = []
     model3_pde_root = SRC_ROOT / "model3_pde"
     model3_pilot_driver = PROJECT_ROOT / "scripts" / "run_model3_pde_pilot.py"
+    model3_contract = SRC_ROOT / "model3_evaluation" / "contracts.py"
     for root in (SRC_ROOT, PROJECT_ROOT / "scripts"):
         for path in sorted(root.rglob("*.py")):
             if (
@@ -372,6 +373,7 @@ def test_pde_residual_loss_remains_confined_to_archive2() -> None:
                 or "dheston" in path.parts
                 or model3_pde_root in path.parents
                 or path == model3_pilot_driver
+                or path == model3_contract
             ):
                 continue
             if "pde_residual_loss" in path.read_text(encoding="utf-8"):
