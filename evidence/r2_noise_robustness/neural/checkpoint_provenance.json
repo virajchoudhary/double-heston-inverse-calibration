@@ -1,0 +1,249 @@
+{
+  "model1": {
+    "11": {
+      "best_epoch": 124,
+      "best_validation_mse_standardized": 0.8064906734765073,
+      "checkpoint_directory": "C:/ann_inverse_calibration/checkpoints/r2_primary_comparison/model1_seed11",
+      "device_used": "cpu",
+      "environment": {
+        "cuda_available": false,
+        "numpy_version": "2.2.6",
+        "python_version": "3.13.4",
+        "torch_threads": 6,
+        "torch_version": "2.11.0+cpu"
+      },
+      "epochs_completed": 144,
+      "git_sha": "9bf1d490f679a0479b621167ffc049e501e5de8a",
+      "loss": "parameter_supervised_mse",
+      "model": "model1_ordinary_ann",
+      "parameter_order": [
+        "kappa_slow",
+        "theta_slow",
+        "sigma_slow",
+        "rho_slow",
+        "v0_slow",
+        "kappa_fast",
+        "theta_fast",
+        "sigma_fast",
+        "rho_fast",
+        "v0_fast"
+      ],
+      "protocol_config": "configs\\r2_primary_comparison_FINAL.yaml",
+      "repricing_loss": false,
+      "run_kind": "RESEARCH",
+      "runtime_seconds": 377.51375329999973,
+      "seed": 11,
+      "selection_data": "validation_only",
+      "test_set_used_for_selection": false,
+      "train_surfaces": 7500,
+      "validation_surfaces": 1250
+    },
+    "22": {
+      "best_epoch": 90,
+      "best_validation_mse_standardized": 0.8075382831400731,
+      "checkpoint_directory": "C:/ann_inverse_calibration/checkpoints/r2_primary_comparison/model1_seed22",
+      "device_used": "cpu",
+      "environment": {
+        "cuda_available": false,
+        "numpy_version": "2.2.6",
+        "python_version": "3.13.4",
+        "torch_threads": 6,
+        "torch_version": "2.11.0+cpu"
+      },
+      "epochs_completed": 110,
+      "git_sha": "9b7c921c183cd29b54a4ffae60e79a4d7c00bde2",
+      "loss": "parameter_supervised_mse",
+      "model": "model1_ordinary_ann",
+      "parameter_order": [
+        "kappa_slow",
+        "theta_slow",
+        "sigma_slow",
+        "rho_slow",
+        "v0_slow",
+        "kappa_fast",
+        "theta_fast",
+        "sigma_fast",
+        "rho_fast",
+        "v0_fast"
+      ],
+      "protocol_config": "configs\\r2_primary_comparison_FINAL.yaml",
+      "repricing_loss": false,
+      "run_kind": "RESEARCH",
+      "runtime_seconds": 529.3017586999995,
+      "seed": 22,
+      "selection_data": "validation_only",
+      "test_set_used_for_selection": false,
+      "train_surfaces": 7500,
+      "validation_surfaces": 1250
+    },
+    "33": {
+      "best_epoch": 43,
+      "best_validation_mse_standardized": 0.80989043123412,
+      "checkpoint_directory": "C:/ann_inverse_calibration/checkpoints/r2_primary_comparison/model1_seed33",
+      "device_used": "cpu",
+      "environment": {
+        "cuda_available": false,
+        "numpy_version": "2.2.6",
+        "python_version": "3.13.4",
+        "torch_threads": 6,
+        "torch_version": "2.11.0+cpu"
+      },
+      "epochs_completed": 63,
+      "git_sha": "9b7c921c183cd29b54a4ffae60e79a4d7c00bde2",
+      "loss": "parameter_supervised_mse",
+      "model": "model1_ordinary_ann",
+      "parameter_order": [
+        "kappa_slow",
+        "theta_slow",
+        "sigma_slow",
+        "rho_slow",
+        "v0_slow",
+        "kappa_fast",
+        "theta_fast",
+        "sigma_fast",
+        "rho_fast",
+        "v0_fast"
+      ],
+      "protocol_config": "configs\\r2_primary_comparison_FINAL.yaml",
+      "repricing_loss": false,
+      "run_kind": "RESEARCH",
+      "runtime_seconds": 264.44168439999976,
+      "seed": 33,
+      "selection_data": "validation_only",
+      "test_set_used_for_selection": false,
+      "train_surfaces": 7500,
+      "validation_surfaces": 1250
+    }
+  },
+  "model2": {
+    "11": {
+      "best_epoch": 46,
+      "best_validation_total_loss": 0.8155438783565006,
+      "checkpoint_directory": "C:/ann_inverse_calibration/checkpoints/r2_primary_comparison/model2_seed11",
+      "device_used": "cuda",
+      "environment": {
+        "cuda_available": true,
+        "numpy_version": "2.0.2",
+        "python_version": "3.12.13",
+        "torch_threads": 2,
+        "torch_version": "2.10.0+cu126"
+      },
+      "epochs_completed": 66,
+      "git_sha": "2b5d41cd232241a1f23348411643a9ce58b53b7a",
+      "loss": "parameter_supervised_mse_plus_repricing_mse",
+      "loss_weights": {
+        "parameter_loss_weight": 1.0,
+        "repricing_loss_weight": 1.0
+      },
+      "model": "model2_constraint_repricing_informed",
+      "parameter_order": [
+        "kappa_slow",
+        "theta_slow",
+        "sigma_slow",
+        "rho_slow",
+        "v0_slow",
+        "kappa_fast",
+        "theta_fast",
+        "sigma_fast",
+        "rho_fast",
+        "v0_fast"
+      ],
+      "pricing_node_count": 64,
+      "protocol_config": "configs/r2_primary_comparison_FINAL.yaml",
+      "repricing_loss": "differentiable_double_heston_repricing_float64_vectorized",
+      "run_kind": "RESEARCH",
+      "runtime_seconds": 463.0515988019997,
+      "seed": 11,
+      "selection_data": "validation_only",
+      "test_set_used_for_selection": false,
+      "train_surfaces": 7500,
+      "validation_surfaces": 1250
+    },
+    "22": {
+      "best_epoch": 60,
+      "best_validation_total_loss": 0.8154648507204553,
+      "checkpoint_directory": "C:/ann_inverse_calibration/checkpoints/r2_primary_comparison/model2_seed22",
+      "device_used": "cuda",
+      "environment": {
+        "cuda_available": true,
+        "numpy_version": "2.0.2",
+        "python_version": "3.12.13",
+        "torch_threads": 2,
+        "torch_version": "2.10.0+cu126"
+      },
+      "epochs_completed": 80,
+      "git_sha": "2b5d41cd232241a1f23348411643a9ce58b53b7a",
+      "loss": "parameter_supervised_mse_plus_repricing_mse",
+      "loss_weights": {
+        "parameter_loss_weight": 1.0,
+        "repricing_loss_weight": 1.0
+      },
+      "model": "model2_constraint_repricing_informed",
+      "parameter_order": [
+        "kappa_slow",
+        "theta_slow",
+        "sigma_slow",
+        "rho_slow",
+        "v0_slow",
+        "kappa_fast",
+        "theta_fast",
+        "sigma_fast",
+        "rho_fast",
+        "v0_fast"
+      ],
+      "pricing_node_count": 64,
+      "protocol_config": "configs/r2_primary_comparison_FINAL.yaml",
+      "repricing_loss": "differentiable_double_heston_repricing_float64_vectorized",
+      "run_kind": "RESEARCH",
+      "runtime_seconds": 553.3156083089998,
+      "seed": 22,
+      "selection_data": "validation_only",
+      "test_set_used_for_selection": false,
+      "train_surfaces": 7500,
+      "validation_surfaces": 1250
+    },
+    "33": {
+      "best_epoch": 62,
+      "best_validation_total_loss": 0.8089543721537085,
+      "checkpoint_directory": "C:/ann_inverse_calibration/checkpoints/r2_primary_comparison/model2_seed33",
+      "device_used": "cuda",
+      "environment": {
+        "cuda_available": true,
+        "numpy_version": "2.0.2",
+        "python_version": "3.12.13",
+        "torch_threads": 2,
+        "torch_version": "2.10.0+cu126"
+      },
+      "epochs_completed": 82,
+      "git_sha": "2b5d41cd232241a1f23348411643a9ce58b53b7a",
+      "loss": "parameter_supervised_mse_plus_repricing_mse",
+      "loss_weights": {
+        "parameter_loss_weight": 1.0,
+        "repricing_loss_weight": 1.0
+      },
+      "model": "model2_constraint_repricing_informed",
+      "parameter_order": [
+        "kappa_slow",
+        "theta_slow",
+        "sigma_slow",
+        "rho_slow",
+        "v0_slow",
+        "kappa_fast",
+        "theta_fast",
+        "sigma_fast",
+        "rho_fast",
+        "v0_fast"
+      ],
+      "pricing_node_count": 64,
+      "protocol_config": "configs/r2_primary_comparison_FINAL.yaml",
+      "repricing_loss": "differentiable_double_heston_repricing_float64_vectorized",
+      "run_kind": "RESEARCH",
+      "runtime_seconds": 590.8600454010002,
+      "seed": 33,
+      "selection_data": "validation_only",
+      "test_set_used_for_selection": false,
+      "train_surfaces": 7500,
+      "validation_surfaces": 1250
+    }
+  }
+}
