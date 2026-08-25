@@ -1,11 +1,13 @@
 # Model 3 genuine PDE-informed Double Heston protocol
 
-Status: `MODEL3_PDE_BLOCKED_PILOT_DRIVER_NOT_IMPLEMENTED`. The scientific
-architecture, canonical PDE, data boundary, loss, experiment stages, metrics,
-and interpretation rules are frozen before any Model 3 training result exists.
-The separately reviewed Stage-A driver required by the cloud plan is not part of
-this milestone and has not been implemented; therefore the pilot is not
-launch-ready.
+Status: `MODEL3_PDE_PILOT_READY_AFTER_AUDIT_FIXES`. The scientific architecture,
+canonical PDE, data boundary, loss, experiment stages, metrics, and
+interpretation rules remain frozen before any Model 3 training result exists.
+Commit `f34a4d3` had been marked pilot-ready, but an adversarial pre-pilot audit
+found blocking execution defects; readiness was revoked before any Stage-A or
+scientific execution. The execution-layer corrections are a pre-result repair.
+A fresh adversarial review marked all six execution blockers and both follow-up
+findings resolved. This status authorizes no pilot execution.
 
 ## 1. Motivation and claim boundary
 
@@ -123,6 +125,14 @@ conditioning. Otherwise the network could ignore the state variables and reduce
 the physics term to repricing. At other collocation points, the state variances
 are sampled independently subject to the conditioned domain.
 
+Graph caveat: those observed-state values are detached before becoming PDE
+coordinate leaves because the reverse-mode operator differentiates with respect
+to independent state coordinates. Structural parameter heads therefore receive
+PDE/reconstruction coupling through conditioning and coefficients, while `v0`
+heads are directly trained by supervised parameter loss under this architecture.
+This is not a claim that PDE physics directly regularizes the `v0` heads; any
+architecture change requires a separately reviewed pre-research decision.
+
 The skeleton constructs float64 smooth MLPs with widths `128,128,64`, tanh
 activation, and a hard bounded output map. The shared R2 builder's float32
 features are explicitly upcast at the Model 3 inverse boundary. These choices
@@ -189,10 +199,18 @@ For each observed spot `S0` and conditioned long-run variance `theta_i`:
 | fast variance | `[0.05*theta_f,min(2*theta_f,fast hard ceiling)]` |
 | maturity | uniform `[7/365,180/365]` years |
 
-Strike, rate, carry, and option type are expanded from their source surface
-without silent broadcasting. Pilot batches use 16 interior and 8 terminal points
-per surface; research runs use 32 interior and 8 terminal points. CPU generator
-seed is 3407.
+For every interior or terminal point, its source index identifies only a
+surface. A separate seeded draw selects one slot from that surface's full set of
+observed/unmasked canonical R2 slots; strike and call/put are read as
+`contract[surface_index, canonical_slot_index]`, never as a flattened-contract
+index. Rates and carries remain surface-level as represented by the frozen R2
+loader. Observed slots are used so physics diagnostics stay aligned with the
+eligible observation geometry; masked quotes remain excluded and are never
+imputed. This v1.1 clarification was made before any Stage-A result existed and
+does not change populations, epochs, optimizer settings, point counts, seeds,
+loss weights, or the canonical PDE. Pilot batches use 16 interior and 8 terminal
+points per surface; research runs use 32 interior and 8 terminal points. CPU
+generator seed is 3407.
 
 Below seven days, a C2 polynomial blends the bounded base to exact expiry
 payoff. At or above seven days, the shortest supported tenor, terminal weight is
@@ -284,3 +302,6 @@ A valid run records Git commit, dirty-state declaration, config SHA-256, dataset
 SHA-256, Python/package versions, hardware, seeds, complete command, stdout and
 stderr transcripts, checkpoint hashes, and metric manifests. Any identity
 mismatch stops the run; it is never repaired by changing scientific settings.
+Real Stage A additionally requires a clean tracked working tree before startup
+and resume. Development smoke may run from a truthfully recorded dirty tree,
+but is never represented as Stage A or a research result.

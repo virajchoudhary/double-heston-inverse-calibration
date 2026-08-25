@@ -6,7 +6,10 @@ import pytest
 import torch
 import yaml
 
-from src.model3_pde.collocation import sample_collocation_states
+from src.model3_pde.collocation import (
+    sample_collocation_states,
+    sample_eligible_contract_slot_indices,
+)
 from src.model3_pde.losses import (
     arbitrage_boundary_loss,
     pde_residual_loss,
@@ -45,6 +48,87 @@ def rates(state: PDEState, value: float) -> tuple[torch.Tensor, torch.Tensor]:
         torch.full_like(state.spot, value),
         torch.full_like(state.spot, value / 2.0),
     )
+
+
+def test_quadratic_artificial_solution_matches_manual_pde_coefficients() -> None:
+    state = make_state(3)
+    risk_free, dividend = rates(state, 0.06)
+    parameters = valid_parameters(3)
+    kappa_s, theta_s, sigma_s, rho_s, _ = (parameters[:, i] for i in range(5))
+    kappa_f, theta_f, sigma_f, rho_f, _ = (parameters[:, i] for i in range(5, 10))
+
+    coefficients = {
+        "spot": 0.37,
+        "spot_squared": -0.11,
+        "variance_slow": 0.83,
+        "variance_slow_squared": -0.29,
+        "variance_fast": -0.41,
+        "variance_fast_squared": 0.23,
+        "mixed_spot_slow": 0.57,
+        "mixed_spot_fast": -0.67,
+        "tau": 1.19,
+    }
+    prices = (
+        coefficients["spot"] * state.spot
+        + coefficients["spot_squared"] * state.spot.square()
+        + coefficients["variance_slow"] * state.variance_slow
+        + coefficients["variance_slow_squared"] * state.variance_slow.square()
+        + coefficients["variance_fast"] * state.variance_fast
+        + coefficients["variance_fast_squared"] * state.variance_fast.square()
+        + coefficients["mixed_spot_slow"] * state.spot * state.variance_slow
+        + coefficients["mixed_spot_fast"] * state.spot * state.variance_fast
+        + coefficients["tau"] * state.maturity
+    )
+    v_s_derivative = (
+        coefficients["variance_slow"]
+        + 2 * coefficients["variance_slow_squared"] * state.variance_slow
+        + coefficients["mixed_spot_slow"] * state.spot
+    )
+    v_f_derivative = (
+        coefficients["variance_fast"]
+        + 2 * coefficients["variance_fast_squared"] * state.variance_fast
+        + coefficients["mixed_spot_fast"] * state.spot
+    )
+    spot_derivative = (
+        coefficients["spot"]
+        + 2 * coefficients["spot_squared"] * state.spot
+        + coefficients["mixed_spot_slow"] * state.variance_slow
+        + coefficients["mixed_spot_fast"] * state.variance_fast
+    )
+    expected = coefficients["tau"] - (
+        (risk_free - dividend)
+        * state.spot
+        * spot_derivative
+        + kappa_s * (theta_s - state.variance_slow) * v_s_derivative
+        + kappa_f * (theta_f - state.variance_fast) * v_f_derivative
+        + (state.variance_slow + state.variance_fast)
+        * state.spot.square()
+        * coefficients["spot_squared"]
+        + rho_s
+        * sigma_s
+        * state.variance_slow
+        * state.spot
+        * coefficients["mixed_spot_slow"]
+        + rho_f
+        * sigma_f
+        * state.variance_fast
+        * state.spot
+        * coefficients["mixed_spot_fast"]
+        + sigma_s.square()
+        * state.variance_slow
+        * coefficients["variance_slow_squared"]
+        + sigma_f.square()
+        * state.variance_fast
+        * coefficients["variance_fast_squared"]
+    ) + risk_free * prices
+    actual = double_heston_pde_residual(
+        prices,
+        state,
+        parameters,
+        risk_free_rate=risk_free,
+        dividend_yield=dividend,
+    )
+    torch.testing.assert_close(actual, expected, rtol=0.0, atol=2e-12)
 
 
 def test_affine_forward_solution_has_zero_pde_residual() -> None:
@@ -278,15 +362,33 @@ def test_conditioned_collocations_are_deterministic_surface_major_and_in_domain(
         variance_fast_ceiling=1.5,
         points_per_surface=3,
         seed=3407,
+        contract_masks=torch.ones((2, 6), dtype=torch.bool),
     )
-    left, left_sources = sample_conditioned_collocation_states(**kwargs)
-    right, right_sources = sample_conditioned_collocation_states(**kwargs)
+    left, left_sources, left_slots = sample_conditioned_collocation_states(**kwargs)
+    right, right_sources, right_slots = sample_conditioned_collocation_states(**kwargs)
     assert torch.equal(left_sources, right_sources)
     assert torch.equal(left_sources, torch.tensor([0, 0, 0, 1, 1, 1], dtype=torch.int64))
     for field in ("spot", "variance_slow", "variance_fast", "maturity"):
         assert torch.equal(getattr(left, field), getattr(right, field))
     assert bool(torch.all(left.variance_slow >= 0.05 * slow_theta.repeat_interleave(3)))
     assert bool(torch.all(left.variance_fast <= 2.0 * fast_theta.repeat_interleave(3)))
+    assert torch.equal(left_slots, right_slots)
+    assert bool(torch.all(left_slots >= 0)) and bool(torch.all(left_slots < 6))
+
+
+def test_contract_slots_use_only_each_surfaces_eligible_canonical_slots() -> None:
+    masks = torch.tensor(
+        [
+            [True, False, True, False, True, False],
+            [False, True, False, True, False, False],
+        ],
+        dtype=torch.bool,
+    )
+    slots = sample_eligible_contract_slot_indices(
+        masks, points_per_surface=64, seed=3407
+    ).reshape(2, 64)
+    assert torch.equal(torch.unique(slots[0]), torch.tensor([0, 2, 4]))
+    assert torch.equal(torch.unique(slots[1]), torch.tensor([1, 3]))
 
 
 def test_pretraining_protocol_freeze_matches_selected_architecture() -> None:
@@ -302,6 +404,13 @@ def test_pretraining_protocol_freeze_matches_selected_architecture() -> None:
         "148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6"
     )
     assert config["losses"]["scaled_double_heston_pde_residual_mse"] == 0.10
+    assert config["protocol"]["version"] == "1.1"
+    assert config["collocation"]["contract_slot_policy"]["eligible_slots"] == (
+        "observed_unmasked_canonical_r2_slots"
+    )
+    assert config["collocation"]["contract_slot_policy"]["indexing"] == (
+        "contract[surface_index, canonical_slot_index]"
+    )
     assert config["losses"]["terminal_payoff_mse"] == 0.0
     assert config["losses"]["hard_no_arbitrage_boundary_penalty"] == 0.0
     assert config["collocation"]["terminal_blend"] == (
@@ -318,6 +427,7 @@ def test_pretraining_protocol_freeze_matches_selected_architecture() -> None:
     assert config["collocation"]["terminal_support_cutoff_years"] == pytest.approx(
         7.0 / 365.0
     )
+    assert config["collocation"]["deterministic_generator_seed"] == 3407
     assert config["research_run_design"]["seeds"] == [11, 22, 33]
     assert config["anti_leakage"]["real_market_weight_update"] == "forbidden"
 

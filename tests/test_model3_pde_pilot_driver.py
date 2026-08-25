@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 import importlib.util
+import copy
 from dataclasses import asdict
+import random
+import numpy as np
 import tempfile
 from pathlib import Path
 import sys
@@ -56,7 +59,14 @@ def fake_dataset(surface_count: int = 4):
                 for row in range(surface_count)
             ]
         ),
-        masks=torch.ones((surface_count, 20), dtype=torch.bool),
+        masks=torch.stack(
+            [
+                torch.tensor(
+                    [row % 2 == slot % 2 for slot in range(20)], dtype=torch.bool
+                )
+                for row in range(surface_count)
+            ]
+        ),
         items=[
             SimpleNamespace(
                 surface_id=f"surface_{row}",
@@ -255,6 +265,254 @@ def test_smoke_mode_has_one_batch_at_most_one_step():
         assert settings.interior_points == 1
         assert settings.terminal_points == 1
         assert settings.smoke_mode is True
+
+
+def test_device_leaf_creation_keeps_target_coordinates_as_leaves():
+    driver = load_driver()
+    source = torch.tensor([80.0, 100.0], dtype=torch.float64, requires_grad=True)
+    moved_without_leaf_pattern = source.to(device=torch.device("meta"))
+    leaf = driver._device_leaf(source.detach().cpu(), torch.device("meta"))
+    assert moved_without_leaf_pattern.is_leaf is False
+    assert leaf.device.type == "meta"
+    assert leaf.is_leaf is True
+    assert leaf.requires_grad is True
+    assert leaf.dtype == torch.float64
+
+
+def test_interior_and_terminal_contracts_use_surface_slot_matrix_indexing(tmp_path):
+    settings, driver = make_settings(
+        tmp_path,
+        train_limit=2,
+        validation_limit=2,
+        batch_size=2,
+        interior_points=5,
+        terminal_points=3,
+    )
+    dataset = fake_dataset(4)
+    system = driver.build_system()
+    standardizer = driver.fit_train_only_standardizer(dataset, [0, 2])
+    original_predict_prices = system.predict_prices
+    calls = []
+
+    def record_predict_prices(state, *, strike, risk_free_rate, dividend_yield, is_call, parameters):
+        calls.append(
+            {
+                "strike": strike.detach().cpu().clone(),
+                "is_call": is_call.detach().cpu().clone(),
+            }
+        )
+        return original_predict_prices(
+            state,
+            strike=strike,
+            risk_free_rate=risk_free_rate,
+            dividend_yield=dividend_yield,
+            is_call=is_call,
+            parameters=parameters,
+        )
+
+    system.predict_prices = record_predict_prices
+    metrics = driver.evaluate_batch(
+        system,
+        dataset,
+        [0, 1],
+        standardizer,
+        settings,
+        epoch=7,
+        optimizer=None,
+    )
+    assert len(calls) == 3
+    assert all(torch.isfinite(torch.tensor(metrics[key])) for key in ("total_loss", "pde_residual_rms"))
+    interior_sources = torch.repeat_interleave(torch.tensor([0, 1]), settings.interior_points)
+    # The exact seeded slots are checked structurally against the two matrices:
+    # every selected strike/type pair must exist on its originating surface.
+    for call_index, point_count in ((1, settings.interior_points), (2, settings.terminal_points)):
+        sources = torch.repeat_interleave(torch.tensor([0, 1]), point_count)
+        for row in range(point_count * 2):
+            surface = int(sources[row])
+            eligible_strikes = np.asarray(dataset.items[surface].strikes)[dataset.masks[surface]]
+            eligible_calls = np.asarray(dataset.items[surface].option_types)[dataset.masks[surface]]
+            strike_matches = torch.isclose(
+                calls[call_index]["strike"][row],
+                torch.as_tensor(eligible_strikes, dtype=torch.float64),
+            )
+            assert bool(strike_matches.any())
+            selected_type = "call" if bool(calls[call_index]["is_call"][row]) else "put"
+            assert selected_type in eligible_calls.tolist()
+
+
+def test_rng_states_round_trip_exactly():
+    driver = load_driver()
+    torch.manual_seed(11)
+    random.seed(13)
+    np.random.seed(17)
+    states = driver.capture_rng_states()
+    torch.rand(8)
+    random.random()
+    np.random.random()
+    driver.restore_rng_states(copy.deepcopy(states))
+    left = torch.rand(8, dtype=torch.float64)
+    right_random = random.random()
+    right_numpy = np.random.random()
+    driver.restore_rng_states(states)
+    assert torch.equal(left, torch.rand(8, dtype=torch.float64))
+    assert right_random == random.random()
+    assert right_numpy == np.random.random()
+
+
+def test_history_validation_accepts_multi_batch_and_rejects_cardinality_errors():
+    driver = load_driver()
+    epoch_rows = [{"epoch": epoch} for epoch in range(1, 4)]
+    batch_rows = [
+        {"epoch": epoch, "batch_index": batch}
+        for epoch in range(1, 4)
+        for batch in range(3)
+    ]
+    driver.validate_history_consistency(
+        {"train": copy.deepcopy(epoch_rows), "validation": copy.deepcopy(epoch_rows)},
+        {"physics": copy.deepcopy(batch_rows), "gradient": copy.deepcopy(batch_rows)},
+        next_epoch=4,
+        expected_batch_counts={"physics": 3, "gradient": 3},
+    )
+    duplicate = copy.deepcopy(batch_rows)
+    duplicate.append({"epoch": 3, "batch_index": 2})
+    with pytest.raises(RuntimeError, match="cardinality"):
+        driver.validate_history_consistency(
+            {"train": epoch_rows, "validation": epoch_rows},
+            {"physics": duplicate},
+            next_epoch=4,
+            expected_batch_counts={"physics": 3},
+        )
+
+
+def test_checkpoint_pair_rejects_epoch_and_identity_mismatch():
+    driver = load_driver()
+    metadata = {"identity": "fixed"}
+    optimizer_state = {
+        "state": {},
+        "param_groups": [{"lr": 0.0002, "weight_decay": 0.00001}],
+    }
+    checkpoint = {
+        "completed_epoch": 2,
+        "metadata": metadata,
+        "optimizer_state_dict": copy.deepcopy(optimizer_state),
+    }
+    export = {
+        "completed_epoch": 2,
+        "metadata": metadata,
+        "optimizer_state_dict": copy.deepcopy(optimizer_state),
+    }
+    driver.validate_checkpoint_pair(checkpoint, export)
+    stale_export = {**export, "completed_epoch": 1}
+    with pytest.raises(RuntimeError, match="epoch mismatch"):
+        driver.validate_checkpoint_pair(checkpoint, stale_export)
+    other_identity = {**export, "metadata": {"identity": "changed"}}
+    with pytest.raises(RuntimeError, match="identity mismatch"):
+        driver.validate_checkpoint_pair(checkpoint, other_identity)
+    changed_export = copy.deepcopy(export)
+    changed_export["optimizer_state_dict"]["param_groups"][0]["lr"] = 999.0
+    with pytest.raises(RuntimeError, match="state mismatch"):
+        driver.validate_checkpoint_pair(checkpoint, changed_export)
+
+
+def test_real_stage_a_rejects_dirty_tree_but_smoke_records_it(monkeypatch):
+    driver = load_driver()
+    monkeypatch.setattr(driver, "current_git_sha", lambda: "fixed-sha")
+    monkeypatch.setattr(
+        driver,
+        "sha256_file",
+        lambda path: driver.FROZEN_DATASET_SHA256,
+    )
+    monkeypatch.setattr(
+        driver,
+        "current_git_dirty_state",
+        lambda: {"git_dirty": True, "git_status_tracked": ("M scripts/example.py",)},
+    )
+    with pytest.raises(RuntimeError, match="clean tracked working tree"):
+        driver.build_run_identity(Path("unused.jsonl"), smoke_mode=False)
+    smoke_identity = driver.build_run_identity(Path("unused.jsonl"), smoke_mode=True)
+    payload = smoke_identity.payload()
+    assert payload["tracked_git_dirty"] is True
+    assert payload["tracked_git_status"] == ["M scripts/example.py"]
+
+
+def test_multi_batch_resume_restores_rng_and_matches_uninterrupted_run(monkeypatch, tmp_path):
+    driver = load_driver()
+    dataset = fake_dataset(4)
+
+    def four_row_loader(dataset_path, *, train_limit, validation_limit):
+        return dataset, [0, 1, 2, 3], [2, 3]
+
+    def high_dropout_system():
+        system = driver.Model3PDESystem()
+        for module in system.modules():
+            if isinstance(module, torch.nn.Dropout):
+                module.p = 0.5
+        system.train()
+        return system
+
+    monkeypatch.setattr(
+        driver,
+        "build_run_identity",
+        lambda dataset_path, *, smoke_mode: driver.RunIdentity(
+            git_sha="test-sha",
+            config_sha256="test-config",
+            dataset_sha256="test-data",
+            tracked_git_dirty=True,
+            tracked_git_status=("M tests/example.py",),
+        ),
+    )
+    monkeypatch.setattr(driver, "load_pilot_dataset", four_row_loader)
+    monkeypatch.setattr(driver, "build_system", high_dropout_system)
+    common = {
+        "dataset": tmp_path / "surfaces.jsonl",
+        "train_limit": 4,
+        "validation_limit": 2,
+        "seed": 4207,
+        "batch_size": 2,
+        "interior_points": 1,
+        "terminal_points": 1,
+        "device": "cpu",
+        "smoke_mode": True,
+    }
+    uninterrupted = driver.run_pilot(
+        driver.PilotSettings(output_root=tmp_path / "uninterrupted", epochs=2, **common)
+    )
+    resumed_settings = driver.PilotSettings(
+        output_root=tmp_path / "resumed", epochs=2, **common
+    )
+    driver.run_pilot(resumed_settings, _end_epoch_override=1)
+    torch.rand(128)
+    np.random.random()
+    random.random()
+    continued_settings = driver.PilotSettings(
+        output_root=tmp_path / "resumed", epochs=2, **common
+    )
+    resumed = driver.run_pilot(continued_settings)
+    uninterrupted_state = torch.load(
+        tmp_path / "uninterrupted" / "checkpoint.pt",
+        map_location="cpu",
+        weights_only=False,
+    )
+    resumed_state = torch.load(
+        tmp_path / "resumed" / "checkpoint.pt", map_location="cpu", weights_only=False
+    )
+    assert uninterrupted["completed_epoch"] == resumed["completed_epoch"] == 2
+    for key, value in uninterrupted_state["model_state_dict"].items():
+        torch.testing.assert_close(
+            resumed_state["model_state_dict"][key],
+            value,
+            rtol=0.0,
+            atol=0.0,
+            check_dtype=True,
+        )
+    assert resumed_state["completed_epoch"] == 2
+    stale_export = torch.load(
+        tmp_path / "resumed" / "optimizer.pt", map_location="cpu", weights_only=False
+    )
+    stale_export["completed_epoch"] = 1
+    torch.save(stale_export, tmp_path / "resumed" / "optimizer.pt")
+    with pytest.raises(RuntimeError, match="epoch mismatch"):
+        driver.run_pilot(continued_settings)
 
 
 def test_driver_has_no_real_market_or_issue34_dependency():

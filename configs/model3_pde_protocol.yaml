@@ -2,7 +2,7 @@
 # No research training result may alter these scientific choices.
 protocol:
   name: MODEL3_GENUINE_PDE_DOUBLE_HESTON
-  version: "1.0"
+  version: "1.1"
   status: PRE_TRAINING_DESIGN_FREEZE
   base_main_git_sha: "72ad8e1aa845ec4c6f0fc61fc526df75438639bb"
   branch: research/model3-pde-protocol
@@ -43,6 +43,11 @@ data:
 
 collocation:
   dtype: float64
+  contract_slot_policy:
+    eligible_slots: observed_unmasked_canonical_r2_slots
+    selection: seeded_uniform_over_each_surfaces_eligible_slot_set
+    indexing: contract[surface_index, canonical_slot_index]
+    clarification: PRE_RESULT_V1_1_NO_STAGE_A_RESULT_EXISTS
   pilot_points_per_surface_batch: 16
   research_points_per_surface_batch: 32
   spot_domain_multiple_of_observed_spot: [0.50, 1.50]

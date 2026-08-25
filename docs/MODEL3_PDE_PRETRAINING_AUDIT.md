@@ -1,7 +1,11 @@
 # Model 3 PDE pretraining audit
 
-Status: `MODEL3_PDE_PILOT_READY`. This is a concise
-readiness audit, not a training result or engineering diary.
+Status: `MODEL3_PDE_PILOT_READY_AFTER_AUDIT_FIXES`. This is a concise readiness
+audit, not a training result or engineering diary. Commit `f34a4d3` had been
+marked pilot-ready although no Stage-A training had occurred. An adversarial
+pre-pilot review found blocking execution defects, so readiness was revoked
+before scientific execution; the repairs are pre-result corrections, not tuning
+after outcomes. A fresh adversarial review marked every blocker resolved.
 
 ## Provenance
 
@@ -52,6 +56,10 @@ rather than importing Archive-2 or renaming Model 2.
 - `tests/test_model3_pde_foundation.py`: focused mathematical and schema tests.
 - `tests/test_real_market_weight_update_quarantine.py`: explicit exception for
   the new genuine-PDE namespace while preserving the Archive-2 quarantine.
+- `scripts/run_model3_pde_pilot.py`: thin deterministic Stage-A driver with
+  train/validation isolation, atomic primary checkpoints, optimizer export,
+  RNG restoration, history gates, and clean-tracked-tree enforcement for real
+  execution.
 
 ## Verification performed
 
@@ -68,6 +76,16 @@ rather than importing Archive-2 or renaming Model 2.
   float64 model conversion, and overstated leaf enforcement. Launch-readiness is
   correctly reported as blocked because adding the training driver was outside
   this approval; the other three issues were fixed and reverified locally.
+- A later adversarial pre-pilot audit invalidated commit `f34a4d3`'s
+  `MODEL3_PDE_PILOT_READY` claim after finding CUDA leaf construction,
+  surface/slot contract alignment, RNG restoration, multi-batch history,
+  checkpoint pairing, and dirty-tree identity defects. No Stage-A training had
+  been run when readiness was revoked.
+- Pre-result repair coverage includes device-aware leaf creation, seeded
+  `(surface, eligible canonical slot)` contract selection, complete CPU/CUDA/
+  NumPy/Python RNG checkpoint restoration, multi-batch history validation,
+  authoritative in-checkpoint optimizer state with export-pair rejection, and
+  clean-tracked-tree gates for real Stage A.
 
 ## Readiness assessment
 
@@ -81,11 +99,11 @@ Scientifically ready:
 5. loss weights and experiment budgets are frozen before outcomes;
 6. lightweight mathematical and integration tests pass.
 
-Remaining pre-launch operational gate:
+Pre-launch operational condition:
 
-1. the thin deterministic pilot driver specified by the cloud plan is now
-   implemented and reviewed;
-2. verify cloud Git/config/data identities and rerun focused tests before GPU
-   allocation.
+1. all identified execution defects were fixed and independently reviewed;
+2. focused tests and tiny CPU smoke passed;
+3. cloud Git/config/data identities and focused tests must still be verified in
+   the execution session before GPU allocation.
 
 No training, large calibration, long multiprocessing, or GPU workload was run.

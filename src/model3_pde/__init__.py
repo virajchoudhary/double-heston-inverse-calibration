@@ -4,6 +4,7 @@ from .collocation import (
     CollocationDomain,
     sample_collocation_states,
     sample_conditioned_collocation_states,
+    sample_eligible_contract_slot_indices,
 )
 from .losses import (
     arbitrage_boundary_loss,
@@ -25,5 +26,6 @@ __all__ = [
     "pde_residual_loss",
     "sample_collocation_states",
     "sample_conditioned_collocation_states",
+    "sample_eligible_contract_slot_indices",
     "terminal_payoff_loss",
 ]

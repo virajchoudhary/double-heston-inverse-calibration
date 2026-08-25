@@ -1,9 +1,10 @@
 # Model 3 PDE cloud execution plan
 
-Status: `MODEL3_PDE_PILOT_READY`; prepared but not
-executed. This plan defines environment, identity gates, pilot design,
-checkpoint handling, resumability, and artifact return. It does not authorize
-the pilot.
+Status: `MODEL3_PDE_PILOT_READY_AFTER_AUDIT_FIXES`; prepared but not executed.
+Commit `f34a4d3` had been marked ready, but adversarial pre-pilot review found
+blocking execution defects before any Stage-A training. Readiness was revoked
+before scientific execution; a later independent review approved the pre-result
+corrections. This plan still does not authorize pilot execution.
 
 ## Execution decision
 
@@ -47,7 +48,7 @@ Run before GPU allocation:
 
 ```bash
 test "$(git rev-parse HEAD)" = "<REVIEWED_MODEL3_COMMIT_SHA>"
-test -z "$(git status --porcelain -- configs/model3_pde_protocol.yaml data/final_r2_clean_10000/surfaces.jsonl src/double_heston.py)"
+test -z "$(git status --porcelain --untracked-files=no)"
 sha256sum configs/model3_pde_protocol.yaml
 sha256sum data/final_r2_clean_10000/surfaces.jsonl
 sha256sum configs/r2_primary_comparison_FINAL.yaml

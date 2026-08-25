@@ -68,21 +68,49 @@ def sample_collocation_states(
     return domain.sample(point_count, generator), generator
 
 
+def sample_eligible_contract_slot_indices(
+    contract_masks: torch.Tensor,
+    *,
+    points_per_surface: int,
+    seed: int,
+) -> torch.Tensor:
+    """Draw canonical observed-slot indices independently for every point."""
+    if contract_masks.ndim != 2 or contract_masks.dtype != torch.bool:
+        raise ValueError("contract_masks must be a boolean (surface, slot) matrix")
+    if points_per_surface <= 0:
+        raise ValueError("points_per_surface must be strictly positive")
+    counts = contract_masks.cpu().sum(dim=1)
+    if bool(torch.any(counts == 0)):
+        raise ValueError("every surface requires at least one observed contract slot")
+    surface_count = contract_masks.shape[0]
+    generator = torch.Generator(device="cpu").manual_seed(seed)
+    draws = torch.rand((surface_count, points_per_surface), generator=generator, dtype=torch.float64)
+    local_indices = (draws * counts.unsqueeze(1)).to(dtype=torch.int64)
+    local_indices = torch.minimum(local_indices, (counts - 1).unsqueeze(1))
+    ordered_observed_slots = torch.argsort(
+        (~contract_masks.cpu()).to(dtype=torch.uint8), dim=1, stable=True
+    )
+    row_indices = torch.arange(surface_count, dtype=torch.int64).unsqueeze(1)
+    return ordered_observed_slots[row_indices, local_indices]
+
+
 def sample_conditioned_collocation_states(
     *,
     observed_spots: torch.Tensor,
     theta_slow: torch.Tensor,
     theta_fast: torch.Tensor,
+    contract_masks: torch.Tensor,
     variance_slow_ceiling: float,
     variance_fast_ceiling: float,
     points_per_surface: int,
     seed: int,
-) -> tuple[PDEState, torch.Tensor]:
+) -> tuple[PDEState, torch.Tensor, torch.Tensor]:
     """Sample a deterministic interior box around each observed surface.
 
     Variance lower/upper multiples follow the frozen protocol.  The result is
-    flattened surface-major, and ``source_indices`` maps every point back to
-    its surface so contract fields can be expanded without silent broadcasting.
+    flattened surface-major.  ``source_indices`` maps every point back to its
+    surface, while ``contract_slot_indices`` maps that point to one eligible
+    observed ``(surface, slot)`` contract in canonical R2 order.
     """
     if observed_spots.ndim != 1 or theta_slow.shape != observed_spots.shape or theta_fast.shape != observed_spots.shape:
         raise ValueError("observed_spots, theta_slow, and theta_fast must have equal one-dimensional shapes")
@@ -103,23 +131,33 @@ def sample_conditioned_collocation_states(
         raise ValueError("theta values must be finite and strictly positive")
 
     surface_count = observed_spots.shape[0]
+    spots_cpu = observed_spots.detach().cpu()
+    theta_slow_cpu = theta_slow.detach().cpu()
+    theta_fast_cpu = theta_fast.detach().cpu()
+    contract_masks_cpu = contract_masks.detach().cpu()
     generator = torch.Generator(device="cpu").manual_seed(seed)
 
     def uniform(minimum: torch.Tensor, maximum: torch.Tensor) -> torch.Tensor:
         draw = torch.rand((surface_count, points_per_surface), generator=generator, dtype=torch.float64)
         return (minimum.unsqueeze(1) + (maximum - minimum).unsqueeze(1) * draw).reshape(-1)
 
-    slow_minimum = 0.05 * theta_slow
-    slow_maximum = torch.minimum(2.0 * theta_slow, torch.full_like(theta_slow, variance_slow_ceiling))
-    fast_minimum = 0.05 * theta_fast
-    fast_maximum = torch.minimum(2.0 * theta_fast, torch.full_like(theta_fast, variance_fast_ceiling))
+    slow_minimum = 0.05 * theta_slow_cpu
+    slow_maximum = torch.minimum(
+        2.0 * theta_slow_cpu,
+        torch.full_like(theta_slow_cpu, variance_slow_ceiling),
+    )
+    fast_minimum = 0.05 * theta_fast_cpu
+    fast_maximum = torch.minimum(
+        2.0 * theta_fast_cpu,
+        torch.full_like(theta_fast_cpu, variance_fast_ceiling),
+    )
     if bool(torch.any(slow_maximum <= slow_minimum)) or bool(torch.any(fast_maximum <= fast_minimum)):
         raise ValueError("conditioned variance domains must have positive width")
 
-    spot_minimum = 0.5 * observed_spots
-    spot_maximum = 1.5 * observed_spots
-    maturity_minimum = torch.full_like(observed_spots, 7.0 / 365.0)
-    maturity_maximum = torch.full_like(observed_spots, 180.0 / 365.0)
+    spot_minimum = 0.5 * spots_cpu
+    spot_maximum = 1.5 * spots_cpu
+    maturity_minimum = torch.full_like(spots_cpu, 7.0 / 365.0)
+    maturity_maximum = torch.full_like(spots_cpu, 180.0 / 365.0)
     state = PDEState(
         spot=uniform(spot_minimum, spot_maximum).requires_grad_(True),
         variance_slow=uniform(slow_minimum, slow_maximum).requires_grad_(True),
@@ -127,4 +165,9 @@ def sample_conditioned_collocation_states(
         maturity=uniform(maturity_minimum, maturity_maximum).requires_grad_(True),
     )
     source_indices = torch.arange(surface_count, dtype=torch.int64).repeat_interleave(points_per_surface)
-    return state, source_indices
+    contract_slot_indices = sample_eligible_contract_slot_indices(
+        contract_masks_cpu,
+        points_per_surface=points_per_surface,
+        seed=seed + 6151,
+    ).reshape(-1)
+    return state, source_indices, contract_slot_indices

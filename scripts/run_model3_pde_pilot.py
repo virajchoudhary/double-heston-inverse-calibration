@@ -9,6 +9,7 @@ import json
 import math
 import os
 import platform
+import random
 import subprocess
 import tempfile
 import time
@@ -22,7 +23,10 @@ import torch
 from torch.optim import AdamW
 
 from models.parameter_transform import TargetStandardizer
-from src.model3_pde.collocation import sample_conditioned_collocation_states
+from src.model3_pde.collocation import (
+    sample_conditioned_collocation_states,
+    sample_eligible_contract_slot_indices,
+)
 from src.model3_pde.losses import masked_normalized_price_loss, pde_residual_loss
 from src.model3_pde.model import Model3PDESystem
 from src.r2_primary.dataset import R2PrimaryDataset
@@ -34,6 +38,7 @@ PROTOCOL_CONFIG_PATH = REPO_ROOT / "configs" / "model3_pde_protocol.yaml"
 FROZEN_DATASET_SHA256 = (
     "148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6"
 )
+PROTOCOL_VERSION = "1.1"
 ALLOWED_SPLITS = frozenset({"train", "validation"})
 FORBIDDEN_SPLIT = "test"
 LOSS_WEIGHTS = {
@@ -135,6 +140,8 @@ class RunIdentity:
     git_sha: str
     config_sha256: str
     dataset_sha256: str
+    tracked_git_dirty: bool
+    tracked_git_status: tuple[str, ...]
 
     def payload(self) -> dict[str, Any]:
         return {
@@ -142,9 +149,11 @@ class RunIdentity:
             "config_sha256": self.config_sha256,
             "dataset_sha256": self.dataset_sha256,
             "protocol_name": "MODEL3_GENUINE_PDE_DOUBLE_HESTON",
-            "protocol_version": "1.0",
+            "protocol_version": PROTOCOL_VERSION,
             "allowed_splits": sorted(ALLOWED_SPLITS),
             "forbidden_split": FORBIDDEN_SPLIT,
+            "tracked_git_dirty": self.tracked_git_dirty,
+            "tracked_git_status": list(self.tracked_git_status),
         }
 
 
@@ -181,17 +190,27 @@ def current_git_dirty_state() -> dict[str, Any]:
     except (OSError, subprocess.CalledProcessError) as error:
         raise RuntimeError("Git dirty-state declaration is required") from error
     lines = completed.stdout.splitlines()
-    return {"git_dirty": bool(lines), "git_status_tracked": lines}
+    return {
+        "git_dirty": bool(lines),
+        "git_status_tracked": tuple(lines),
+    }
 
 
-def build_run_identity(dataset_path: Path) -> RunIdentity:
+def build_run_identity(dataset_path: Path, *, smoke_mode: bool) -> RunIdentity:
     dataset_sha256 = sha256_file(dataset_path)
     if dataset_sha256 != FROZEN_DATASET_SHA256:
         raise RuntimeError(f"frozen R2 dataset identity mismatch: {dataset_sha256}")
+    dirty_state = current_git_dirty_state()
+    if not smoke_mode and dirty_state["git_dirty"]:
+        raise RuntimeError(
+            "real Stage-A requires a clean tracked working tree; untracked outputs are ignored"
+        )
     return RunIdentity(
         git_sha=current_git_sha(),
         config_sha256=sha256_file(PROTOCOL_CONFIG_PATH),
         dataset_sha256=dataset_sha256,
+        tracked_git_dirty=dirty_state["git_dirty"],
+        tracked_git_status=dirty_state["git_status_tracked"],
     )
 
 
@@ -294,10 +313,78 @@ def validate_resume_identity(
         "protocol_version",
         "allowed_splits",
         "forbidden_split",
+        "tracked_git_dirty",
+        "tracked_git_status",
     )
     mismatches = [key for key in identity_keys if stored.get(key) != expected.get(key)]
     if mismatches:
         raise RuntimeError(f"resume identity mismatch for {', '.join(mismatches)}")
+
+
+def capture_rng_states() -> dict[str, Any]:
+    states: dict[str, Any] = {
+        "python_random": random.getstate(),
+        "numpy_random": np.random.get_state(),
+        "cpu": torch.get_rng_state().detach().cpu(),
+    }
+    if torch.cuda.is_available():
+        states["cuda"] = [state.detach().cpu() for state in torch.cuda.get_rng_state_all()]
+    return states
+
+
+def restore_rng_states(states: dict[str, Any]) -> None:
+    required = {"python_random", "numpy_random", "cpu"}
+    if not required.issubset(states):
+        raise RuntimeError("checkpoint lacks a complete CPU/NumPy/Python RNG state")
+    if ("cuda" in states) != torch.cuda.is_available():
+        raise RuntimeError("checkpoint CUDA RNG availability does not match this process")
+    random.setstate(states["python_random"])
+    np.random.set_state(states["numpy_random"])
+    torch.set_rng_state(states["cpu"].detach().cpu().to(dtype=torch.uint8))
+    if "cuda" in states:
+        torch.cuda.set_rng_state_all(
+            [state.detach().cpu().to(dtype=torch.uint8) for state in states["cuda"]]
+        )
+
+
+def validate_checkpoint_pair(
+    checkpoint: dict[str, Any], optimizer_export: dict[str, Any]
+) -> None:
+    if int(checkpoint["completed_epoch"]) != int(optimizer_export["completed_epoch"]):
+        raise RuntimeError(
+            "checkpoint/optimizer epoch mismatch; refusing mixed-state resume"
+        )
+    if checkpoint["metadata"] != optimizer_export["metadata"]:
+        raise RuntimeError("checkpoint/optimizer identity mismatch")
+    if "optimizer_state_dict" not in checkpoint:
+        raise RuntimeError("primary checkpoint lacks the authoritative optimizer state")
+    if "optimizer_state_dict" not in optimizer_export:
+        raise RuntimeError("optimizer audit artifact lacks optimizer state")
+    if not _values_exactly_equal(
+        checkpoint["optimizer_state_dict"], optimizer_export["optimizer_state_dict"]
+    ):
+        raise RuntimeError("checkpoint/optimizer state mismatch")
+
+
+def _values_exactly_equal(left: Any, right: Any) -> bool:
+    if isinstance(left, torch.Tensor) or isinstance(right, torch.Tensor):
+        if not isinstance(left, torch.Tensor) or not isinstance(right, torch.Tensor):
+            return False
+        return (
+            left.shape == right.shape
+            and left.dtype == right.dtype
+            and bool(torch.equal(left.detach().cpu(), right.detach().cpu()))
+        )
+    if isinstance(left, dict) and isinstance(right, dict):
+        return left.keys() == right.keys() and all(
+            _values_exactly_equal(left[key], right[key]) for key in left
+        )
+    if isinstance(left, (list, tuple)) and isinstance(right, (list, tuple)):
+        return len(left) == len(right) and all(
+            _values_exactly_equal(left_item, right_item)
+            for left_item, right_item in zip(left, right)
+        )
+    return type(left) is type(right) and left == right
 
 
 def _atomic_json(path: Path, payload: dict[str, Any]) -> None:
@@ -369,14 +456,35 @@ def read_history(path: Path, fields: tuple[str, ...]) -> list[dict[str, Any]]:
 
 
 def validate_history_consistency(
-    histories: dict[str, list[dict[str, Any]]], *, next_epoch: int
+    epoch_histories: dict[str, list[dict[str, Any]]],
+    batch_histories: dict[str, list[dict[str, Any]]],
+    *,
+    next_epoch: int,
+    expected_batch_counts: dict[str, int],
 ) -> None:
-    for name, rows in histories.items():
+    expected_epochs = set(range(1, next_epoch))
+    for name, rows in epoch_histories.items():
         epochs = [int(row["epoch"]) for row in rows]
-        if any(epoch >= next_epoch for epoch in epochs):
-            raise RuntimeError(f"{name} contains epochs at or beyond the resume point")
-        if epochs and epochs != list(range(1, next_epoch)):
-            raise RuntimeError(f"{name} is not a contiguous completed-epoch history")
+        if len(epochs) != len(set(epochs)) or set(epochs) != expected_epochs:
+            raise RuntimeError(f"{name} must contain exactly one row per completed epoch")
+    for name, rows in batch_histories.items():
+        if name not in expected_batch_counts:
+            raise RuntimeError(f"no expected batch count was supplied for {name}")
+        expected_count = expected_batch_counts[name]
+        grouped: dict[int, list[int]] = {}
+        for row in rows:
+            epoch = int(row["epoch"])
+            batch_index = int(row["batch_index"])
+            if epoch not in expected_epochs:
+                raise RuntimeError(f"{name} contains an invalid completed epoch {epoch}")
+            grouped.setdefault(epoch, []).append(batch_index)
+        if set(grouped) != expected_epochs:
+            raise RuntimeError(f"{name} does not cover every completed epoch exactly once")
+        for epoch, batch_indices in grouped.items():
+            if len(batch_indices) != len(set(batch_indices)) or len(batch_indices) != expected_count:
+                raise RuntimeError(f"{name} has invalid batch cardinality at epoch {epoch}")
+            if sorted(batch_indices) != list(range(expected_count)):
+                raise RuntimeError(f"{name} has invalid batch indices at epoch {epoch}")
 
 
 def environment_provenance(settings: PilotSettings, identity: RunIdentity) -> dict[str, Any]:
@@ -394,8 +502,17 @@ def environment_provenance(settings: PilotSettings, identity: RunIdentity) -> di
         "issue34_numeric_outcomes_used": False,
         **identity.payload(),
     }
-    payload.update(current_git_dirty_state())
     return payload
+
+
+def _device_leaf(values: torch.Tensor | np.ndarray, device: torch.device) -> torch.Tensor:
+    """Move numeric values first so the target tensor remains an autograd leaf."""
+    return (
+        torch.as_tensor(values, dtype=torch.float64, device=device)
+        .detach()
+        .clone()
+        .requires_grad_(True)
+    )
 
 
 def _terminal_state(
@@ -403,25 +520,39 @@ def _terminal_state(
     spots: torch.Tensor,
     variance_slow: torch.Tensor,
     variance_fast: torch.Tensor,
+    contract_masks: torch.Tensor,
     repeats: int,
     seed: int,
     device: torch.device,
 ) -> tuple[Any, torch.Tensor, torch.Tensor]:
     generator = torch.Generator(device="cpu").manual_seed(seed)
-    draw_slow = torch.rand((spots.numel(), repeats), generator=generator, dtype=torch.float64)
-    draw_fast = torch.rand((spots.numel(), repeats), generator=generator, dtype=torch.float64)
-    slow = (variance_slow.unsqueeze(1) * draw_slow).reshape(-1).to(device)
-    fast = (variance_fast.unsqueeze(1) * draw_fast).reshape(-1).to(device)
+    spots_cpu = spots.detach().cpu()
+    variance_slow_cpu = variance_slow.detach().cpu()
+    variance_fast_cpu = variance_fast.detach().cpu()
+    contract_masks_cpu = contract_masks.detach().cpu()
+    draw_slow = torch.rand(
+        (spots_cpu.numel(), repeats), generator=generator, dtype=torch.float64
+    )
+    draw_fast = torch.rand(
+        (spots_cpu.numel(), repeats), generator=generator, dtype=torch.float64
+    )
+    slow_values = (variance_slow_cpu.unsqueeze(1) * draw_slow).reshape(-1)
+    fast_values = (variance_fast_cpu.unsqueeze(1) * draw_fast).reshape(-1)
     source_indices = torch.arange(spots.numel(), dtype=torch.int64).repeat_interleave(repeats)
+    slot_indices = sample_eligible_contract_slot_indices(
+        contract_masks_cpu,
+        points_per_surface=repeats,
+        seed=seed + 104729,
+    ).reshape(-1)
     from src.model3_pde.operator import PDEState
 
     state = PDEState(
-        spot=spots.repeat_interleave(repeats).to(device=device, dtype=torch.float64).requires_grad_(True),
-        variance_slow=slow.requires_grad_(True),
-        variance_fast=fast.requires_grad_(True),
-        maturity=torch.zeros_like(slow).requires_grad_(True),
+        spot=_device_leaf(spots_cpu.repeat_interleave(repeats), device),
+        variance_slow=_device_leaf(slow_values, device),
+        variance_fast=_device_leaf(fast_values, device),
+        maturity=_device_leaf(torch.zeros_like(slow_values), device),
     )
-    return state, source_indices, torch.zeros_like(slow)
+    return state, source_indices, slot_indices
 
 
 def evaluate_batch(
@@ -467,21 +598,20 @@ def evaluate_batch(
     from src.model3_pde.operator import PDEState
 
     observed_state = PDEState(
-        spot=spots.repeat_interleave(observed_maturities.shape[1])
-        .detach()
-        .clone()
-        .requires_grad_(True),
-        variance_slow=parameters[:, 4]
-        .detach()
-        .clone()
-        .repeat_interleave(observed_maturities.shape[1])
-        .requires_grad_(True),
-        variance_fast=parameters[:, 9]
-        .detach()
-        .clone()
-        .repeat_interleave(observed_maturities.shape[1])
-        .requires_grad_(True),
-        maturity=observed_maturities.reshape(-1).detach().clone().requires_grad_(True),
+        spot=_device_leaf(
+            spots.repeat_interleave(observed_maturities.shape[1]), resolved_device
+        ),
+        variance_slow=_device_leaf(
+            parameters[:, 4].detach().repeat_interleave(observed_maturities.shape[1]),
+            resolved_device,
+        ),
+        variance_fast=_device_leaf(
+            parameters[:, 9].detach().repeat_interleave(observed_maturities.shape[1]),
+            resolved_device,
+        ),
+        maturity=_device_leaf(
+            observed_maturities.reshape(-1), resolved_device
+        ),
     )
     observed_prices = system.predict_prices(
         observed_state,
@@ -503,25 +633,33 @@ def evaluate_batch(
 
     theta_slow = parameters[:, 1].detach()
     theta_fast = parameters[:, 6].detach()
-    state, source_indices = sample_conditioned_collocation_states(
+    batch_contract_masks = torch.stack(
+        [dataset.masks[index] for index in indices], dim=0
+    ).cpu()
+    state, source_indices, contract_slot_indices = sample_conditioned_collocation_states(
         observed_spots=spots,
         theta_slow=theta_slow,
         theta_fast=theta_fast,
+        contract_masks=batch_contract_masks,
         variance_slow_ceiling=0.30,
         variance_fast_ceiling=0.25,
         points_per_surface=settings.interior_points,
         seed=settings.seed + 100003 * epoch + batch_index,
     )
     state = PDEState(
-        spot=state.spot.to(device=resolved_device),
-        variance_slow=state.variance_slow.to(device=resolved_device),
-        variance_fast=state.variance_fast.to(device=resolved_device),
-        maturity=state.maturity.to(device=resolved_device),
+        spot=_device_leaf(state.spot.detach().cpu(), resolved_device),
+        variance_slow=_device_leaf(state.variance_slow.detach().cpu(), resolved_device),
+        variance_fast=_device_leaf(state.variance_fast.detach().cpu(), resolved_device),
+        maturity=_device_leaf(state.maturity.detach().cpu(), resolved_device),
     )
-    physics_rates = observed_rates[source_indices]
-    physics_carries = observed_carries[source_indices]
-    physics_strikes = observed_strikes.reshape(-1)[source_indices]
-    physics_is_call = observed_is_call.reshape(-1)[source_indices]
+    surface_select = source_indices.to(device=resolved_device)
+    slot_select = contract_slot_indices.to(device=resolved_device)
+    physics_rates = observed_rates[surface_select]
+    physics_carries = observed_carries[surface_select]
+    physics_strikes = observed_strikes[source_indices, contract_slot_indices.to(resolved_device)]
+    physics_is_call = observed_is_call[
+        source_indices, contract_slot_indices.to(resolved_device)
+    ]
     physics_prices = system.predict_prices(
         state,
         strike=physics_strikes,
@@ -539,26 +677,35 @@ def evaluate_batch(
     )
     residual_values = physics_loss.detach().sqrt().cpu().numpy()
 
-    terminal_state, terminal_sources, _ = _terminal_state(
+    terminal_state, terminal_sources_cpu, terminal_slots_cpu = _terminal_state(
         spots=spots,
         variance_slow=parameters[:, 4].detach(),
         variance_fast=parameters[:, 9].detach(),
+        contract_masks=batch_contract_masks,
         repeats=settings.terminal_points,
         seed=settings.seed + 257 * epoch + 7919 * batch_index,
         device=resolved_device,
     )
+    terminal_sources = terminal_sources_cpu.to(device=resolved_device)
+    terminal_slots = terminal_slots_cpu.to(device=resolved_device)
     terminal_prices = system.predict_prices(
         terminal_state,
-        strike=observed_strikes.reshape(-1)[terminal_sources],
+        strike=observed_strikes[terminal_sources, terminal_slots.to(resolved_device)],
         risk_free_rate=observed_rates[terminal_sources],
         dividend_yield=observed_carries[terminal_sources],
-        is_call=observed_is_call.reshape(-1)[terminal_sources],
+        is_call=observed_is_call[terminal_sources, terminal_slots.to(resolved_device)],
         parameters=parameters[terminal_sources],
     )
     terminal_payoff = torch.where(
-        observed_is_call.reshape(-1)[terminal_sources],
-        torch.clamp(terminal_state.spot - observed_strikes.reshape(-1)[terminal_sources], min=0.0),
-        torch.clamp(observed_strikes.reshape(-1)[terminal_sources] - terminal_state.spot, min=0.0),
+        observed_is_call[terminal_sources, terminal_slots.to(resolved_device)],
+        torch.clamp(
+            terminal_state.spot - observed_strikes[terminal_sources, terminal_slots.to(resolved_device)],
+            min=0.0,
+        ),
+        torch.clamp(
+            observed_strikes[terminal_sources, terminal_slots.to(resolved_device)] - terminal_state.spot,
+            min=0.0,
+        ),
     )
     terminal_error = float(
         (terminal_prices.detach() - terminal_payoff.detach()).abs().max()
@@ -652,10 +799,12 @@ def run_validation_epoch(
     }
 
 
-def run_pilot(settings: PilotSettings) -> dict[str, Any]:
+def run_pilot(
+    settings: PilotSettings, *, _end_epoch_override: int | None = None
+) -> dict[str, Any]:
     """Run or resume Stage A; never access the untouched test split."""
     set_deterministic_seed(settings.seed)
-    identity = build_run_identity(settings.dataset)
+    identity = build_run_identity(settings.dataset, smoke_mode=settings.smoke_mode)
     dataset, train_indices, validation_indices = load_pilot_dataset(
         settings.dataset,
         train_limit=settings.train_limit,
@@ -681,11 +830,15 @@ def run_pilot(settings: PilotSettings) -> dict[str, Any]:
     if checkpoint_path.exists():
         stored_checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
         validate_resume_identity(stored_checkpoint["metadata"], expected_metadata)
-        stored_optimizer = torch.load(optimizer_path, map_location="cpu", weights_only=False)
+        if not optimizer_path.exists():
+            raise RuntimeError("checkpoint exists without its required optimizer audit artifact")
+        optimizer_export = torch.load(optimizer_path, map_location="cpu", weights_only=False)
+        validate_checkpoint_pair(stored_checkpoint, optimizer_export)
         system.load_state_dict(stored_checkpoint["model_state_dict"])
         standardizer.mean = stored_checkpoint["target_standardizer"]["mean"]
         standardizer.scale = stored_checkpoint["target_standardizer"]["scale"]
-        optimizer.load_state_dict(stored_optimizer["optimizer_state_dict"])
+        optimizer.load_state_dict(stored_checkpoint["optimizer_state_dict"])
+        restore_rng_states(stored_checkpoint["rng_states"])
         start_epoch = int(stored_checkpoint["completed_epoch"]) + 1
         best_validation_loss = float(stored_checkpoint["best_validation_loss"])
         best_epoch = int(stored_checkpoint["best_epoch"])
@@ -704,17 +857,33 @@ def run_pilot(settings: PilotSettings) -> dict[str, Any]:
     gradient_history: list[dict[str, Any]] = read_history(
         output_root / "gradient_diagnostics.csv", GRADIENT_FIELDS
     )
+    train_batch_count = len(
+        make_batches(
+            train_indices,
+            settings.batch_size,
+            torch.Generator().manual_seed(settings.seed),
+        )
+    )
     validate_history_consistency(
-        {
+        epoch_histories={
             "train_history": train_history,
             "validation_history": validation_history,
+        },
+        batch_histories={
             "physics_diagnostics": physics_history,
             "gradient_diagnostics": gradient_history,
         },
         next_epoch=start_epoch,
+        expected_batch_counts={
+            "physics_diagnostics": train_batch_count,
+            "gradient_diagnostics": train_batch_count,
+        },
     )
 
-    for epoch in range(start_epoch, settings.epochs + 1):
+    final_epoch = (
+        settings.epochs if _end_epoch_override is None else _end_epoch_override
+    )
+    for epoch in range(start_epoch, final_epoch + 1):
         started = time.perf_counter()
         train_generator = torch.Generator().manual_seed(settings.seed + epoch)
         batch_metrics: list[dict[str, Any]] = []
@@ -791,15 +960,14 @@ def run_pilot(settings: PilotSettings) -> dict[str, Any]:
             for metrics in batch_metrics
         )
 
-        rng_states: dict[str, list[int]] = {"cpu": torch.get_rng_state().tolist()}
-        if torch.cuda.is_available():
-            rng_states["cuda"] = torch.cuda.get_rng_state_all().tolist()
+        rng_states = capture_rng_states()
         completed_model = {key: value.detach().cpu() for key, value in system.state_dict().items()}
         completed_standardizer = standardizer.state_dict()
         completed_optimizer = optimizer.state_dict()
         checkpoint_payload = {
             "completed_epoch": epoch,
             "model_state_dict": completed_model,
+            "optimizer_state_dict": completed_optimizer,
             "target_standardizer": completed_standardizer,
             "best_validation_loss": best_validation_loss,
             "best_epoch": best_epoch,
@@ -838,7 +1006,7 @@ def run_pilot(settings: PilotSettings) -> dict[str, Any]:
     return {
         "status": "PASSED" if settings.smoke_mode else "STAGE_A_EPOCHS_COMPLETE",
         "run_kind": expected_metadata["run_kind"],
-        "completed_epoch": settings.epochs,
+        "completed_epoch": final_epoch,
         "best_epoch": best_epoch,
         "best_validation_loss": best_validation_loss,
         "output_root": output_root,
