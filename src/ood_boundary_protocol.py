@@ -619,21 +619,25 @@ def _arbitrage_and_shape_checks(payload: Mapping[str, Any]) -> dict[str, Any]:
     errors = prices[valid]
     low = lower[valid]
     high = upper[valid]
-    call_indices = np.flatnonzero(valid & calls)
-    put_indices = np.flatnonzero(valid & ~calls)
-    call_prices = prices[call_indices]
-    put_prices = prices[put_indices]
+    call_prices = prices[valid & calls]
+    put_prices = prices[valid & ~calls]
+    # The clean generator supplies complete surfaces. Keep the shape guard so
+    # this numerical validator cannot silently reinterpret a partial input.
     call_monotonic = bool(
-        np.all(np.diff(call_prices.reshape(2, 5), axis=1) <= 1e-9)
+        len(call_prices) == 10
+        and np.all(np.diff(call_prices.reshape(2, 5), axis=1) <= 1e-9)
     )
     put_monotonic = bool(
-        np.all(np.diff(put_prices.reshape(2, 5), axis=1) >= -1e-9)
+        len(put_prices) == 10
+        and np.all(np.diff(put_prices.reshape(2, 5), axis=1) >= -1e-9)
     )
     call_convex = bool(
-        np.all(np.diff(call_prices.reshape(2, 5), n=2, axis=1) >= -1e-8)
+        len(call_prices) == 10
+        and np.all(np.diff(call_prices.reshape(2, 5), n=2, axis=1) >= -1e-8)
     )
     put_convex = bool(
-        np.all(np.diff(put_prices.reshape(2, 5), n=2, axis=1) >= -1e-8)
+        len(put_prices) == 10
+        and np.all(np.diff(put_prices.reshape(2, 5), n=2, axis=1) >= -1e-8)
     )
     return {
         "finite_prices": bool(np.isfinite(prices).all()),
@@ -654,6 +658,27 @@ def generate_clean_surfaces(
     surfaces: list[R2Surface] = []
     sanity_rows: list[dict[str, Any]] = []
     failures: list[dict[str, Any]] = []
+    def retained_failure(
+        row: Mapping[str, Any],
+        surface_id: str,
+        conditioning_provenance: Mapping[str, Any],
+        error_type: str,
+        error_message: str,
+    ) -> dict[str, Any]:
+        return {
+            "surface_id": surface_id,
+            "candidate_id": int(row["candidate_id"]),
+            "cohort": str(row["cohort"]),
+            "regime": str(row["regime"]),
+            "parameter_vector_hash": str(row["parameter_vector_hash"]),
+            "parameters": {
+                name: float(row[name]) for name in PARAMETER_NAMES
+            },
+            "conditioning": dict(conditioning_provenance),
+            "error_type": error_type,
+            "error_message": error_message,
+        }
+
     for generation_index, (_, row) in enumerate(selected.iterrows()):
         cohort = str(row["cohort"])
         surface_id = f"OODV1_{cohort.upper()}_{generation_index:06d}"
@@ -679,23 +704,26 @@ def generate_clean_surfaces(
             sanity["passed"] = passed
             if not passed:
                 failures.append(
-                    {
-                        "surface_id": surface_id,
-                        "error_type": "NUMERICAL_SANITY_FAILURE",
-                        "error_message": json.dumps(sanity, sort_keys=True),
-                    }
+                    retained_failure(
+                        row,
+                        surface_id,
+                        conditioning_provenance,
+                        "NUMERICAL_SANITY_FAILURE",
+                        json.dumps(sanity, sort_keys=True),
+                    )
                 )
-            surfaces.append(surface)
+            else:
+                surfaces.append(surface)
             sanity_rows.append(sanity)
         except Exception as error:
             failures.append(
-                {
-                    "surface_id": surface_id,
-                    "candidate_id": int(row["candidate_id"]),
-                    "cohort": cohort,
-                    "error_type": type(error).__name__,
-                    "error_message": str(error),
-                }
+                retained_failure(
+                    row,
+                    surface_id,
+                    conditioning_provenance,
+                    type(error).__name__,
+                    str(error),
+                )
             )
     if len(surfaces) + len(failures) != 360 or len(sanity_rows) + len(
         failures
