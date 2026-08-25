@@ -1,0 +1,28 @@
+\section{Frozen R2 Representation}
+\label{sec:r2-representation}
+
+The canonical interface is
+\texttt{FROZEN\_R2\_RANKED\_TWO\_EXPIRY\_CENTRAL\_FIVE}, abbreviated R2. It has 20
+nominal slots: the first two eligible listed expiry ranks, five central target
+log-moneyness nodes $k\in\{-0.10,-0.05,0,+0.05,+0.10\}$, and calls and puts. The
+slot order is calls first, then puts; within each option type it proceeds by expiry
+rank and ascending moneyness.
+
+Prices are spot-normalized. Maturity is actual listed DTE divided by 365, never a
+fixed calendar grid. Rate and carry conditioning are constant within an expiry rank;
+carry is futures-implied on real surfaces. A missing real quote is represented by
+\texttt{mask=false} with price exactly zero. Interpolation, extrapolation, and model
+imputation of missing quotes are prohibited.
+
+The representation was selected by a predeclared R2/R3 experiment rather than after
+inspecting the final benchmark. R3 added a third eligible expiry and improved clean-
+data local conditioning, but the frozen decision rule selected R2 because its simpler
+market-supported design showed no material improvement at 0.5\%, 1\%, or 2\% noise.
+Table~\ref{tab:r2-selection} reports the sealed diagnostics. Thus
+\begin{equation}
+    \texttt{G2} =
+    \texttt{PASSED\_REPRESENTATION\_FROZEN\_WITH\_PRACTICAL\_NON\_IDENTIFIABILITY}.
+\end{equation}
+This is not a claim that ten parameters are uniquely identified.
+
+\input{generated/tables/r2_representation_selection}

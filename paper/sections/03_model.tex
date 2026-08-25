@@ -1,0 +1,41 @@
+\section{Canonical Double Heston Model}
+\label{sec:model}
+
+Let $S_t$ be the spot price, $r$ the continuously compounded risk-free rate, and
+$q$ the futures-implied carry. The canonical implementation uses slow and fast
+variance factors $v^s_t$ and $v^f_t$ satisfying
+\begin{equation}
+    \frac{dS_t}{S_t} = (r-q)\,dt
+        + \sqrt{v^s_t}\,dW^{0s}_t
+        + \sqrt{v^f_t}\,dW^{0f}_t,
+\end{equation}
+\begin{align}
+    dv^s_t &= \kappa_s(\theta_s-v^s_t)\,dt
+              + \sigma_s\sqrt{v^s_t}\,dW^s_t, \\
+    dv^f_t &= \kappa_f(\theta_f-v^f_t)\,dt
+              + \sigma_f\sqrt{v^f_t}\,dW^f_t.
+\end{align}
+The correlations are
+\begin{equation}
+    E[dW^{0s}_t dW^s_t]=\rho_s\,dt,\qquad
+    E[dW^{0f}_t dW^f_t]=\rho_f\,dt,\qquad
+    E[dW^s_t dW^f_t]=0.
+\end{equation}
+
+The frozen parameter order is
+\begin{equation}
+\bm{\theta}_{\mathrm{DH}}
+= (\kappa_s,\theta_s,\sigma_s,\rho_s,v^s_0,
+   \kappa_f,\theta_f,\sigma_f,\rho_f,v^f_0).
+\end{equation}
+Structural validity requires strictly positive $\kappa_i$, $\theta_i$, $\sigma_i$,
+and $v^i_0$; $\kappa_s<\kappa_f$; a positive Feller gap
+$2\kappa_i\theta_i-\sigma_i^2$ in each factor; $|\rho_i|<1$; and
+$\rho_s^2+\rho_f^2<1$. Provisional hard numerical bounds are separate from these
+structural constraints. No silent clamping is permitted.
+
+European prices are obtained from the production characteristic function with one
+deterministic log-spot drift and additive variance-factor exponents. The default
+production integration uses 64 Gauss--Laguerre nodes; a 96-node refinement is used
+as an internal convergence diagnostic. The independent validation reference instead
+uses adaptive SciPy quadrature and does not import the production pricing module.

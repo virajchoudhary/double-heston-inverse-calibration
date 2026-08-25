@@ -1,0 +1,19 @@
+\begin{table}[htbp]
+\centering
+\caption{Independent adaptive-quadrature validation of the production Double Heston pricer.}
+\label{tab:canonical-engine-benchmark}
+\begin{tabular}{lrr}
+\toprule
+Diagnostic & 64-node production & 96-node production \\
+\midrule
+Controlled cases passing & 36/36 & 36/36 \\
+RMSE versus reference & $5.458 \times 10^{-13}$ & $4.223 \times 10^{-12}$ \\
+MAE versus reference & $5.184 \times 10^{-13}$ & $4.064 \times 10^{-12}$ \\
+Maximum absolute difference & $8.100 \times 10^{-13}$ & $5.699 \times 10^{-12}$ \\
+No-arbitrage failures & 0 & 0 \\
+Parity maximum error & $7.11 \times 10^{-15}$ & $7.11 \times 10^{-15}$ \\
+\bottomrule
+\end{tabular}
+\par\vspace{0.35em}
+\begin{minipage}{0.94\linewidth}\small The reference independently implements the affine characteristic function and uses adaptive SciPy quadrature; it does not import the production pricer.\end{minipage}
+\end{table}

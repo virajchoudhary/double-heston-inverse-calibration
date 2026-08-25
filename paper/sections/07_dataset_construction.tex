@@ -1,0 +1,28 @@
+\section{Known-Truth Dataset Construction}
+\label{sec:dataset-construction}
+
+The final dataset is \texttt{FINAL\_R2\_CLEAN\_10000}. It reuses a sealed parameter
+panel without resampling, then prices every surface with the unchanged production
+pricer at 64 nodes. Conditioning is synthetic engineering research design, explicitly
+not a claim that the conditioning lattice follows a real-market distribution. No
+real-market input enters the final dataset.
+
+The manifest records:
+\begin{itemize}
+    \item 10{,}000 complete synthetic surfaces;
+    \item deterministic splits of 7{,}500 train, 1{,}250 validation, and 1{,}250 test
+          surfaces;
+    \item interior/wide-valid quotas preserved atomically across splits;
+    \item unique surface IDs and unique parameter vectors;
+    \item train-only target normalization for neural consumers;
+    \item strict positivity, finite prices, valid constraints, canonical slot order,
+          and no cross-split overlap; and
+    \item full byte-identical replay verification.
+\end{itemize}
+
+The deterministic content SHA-256 is
+\begin{verbatim}
+148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6
+\end{verbatim}
+Generation occurred before model training. Numerical sanity reported maximum
+put-call parity error $3.469446951953614\times10^{-16}$ and zero failed surfaces.

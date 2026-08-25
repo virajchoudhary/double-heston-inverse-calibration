@@ -1,0 +1,18 @@
+\begin{table}[htbp]
+\centering
+\caption{Completed neural full-test-population observation-noise evaluations.}
+\label{tab:completed-neural-noise}
+\begin{tabular}{lccccc}
+\toprule
+Noise & M1 parameter RMSE & M1 clean-latent nRMSE & M2 parameter RMSE & M2 clean-latent nRMSE & Mean recovery $\leq0.25$ \\
+\midrule
+0\% & 0.165991 & 0.000789 & 0.166914 & 0.001027 & 91.00\% \\
+0.10\% & 0.165992 & 0.000789 & 0.166915 & 0.001027 & 91.00\% \\
+0.25\% & 0.16599 & 0.000789 & 0.166913 & 0.001027 & 90.99\% \\
+0.50\% & 0.166 & 0.000791 & 0.166923 & 0.001029 & 91.00\% \\
+1.00\% & 0.166028 & 0.000797 & 0.166948 & 0.001033 & 90.99\% \\
+\bottomrule
+\end{tabular}
+\par\vspace{0.35em}
+\begin{minipage}{0.94\linewidth}\small Seed-mean values over seeds 11, 22, and 33 for all 1,250 test surfaces at each level, read from pinned commit e58b36d1ff6c. Positive-level traditional subset completion remains pending and is excluded here.\end{minipage}
+\end{table}

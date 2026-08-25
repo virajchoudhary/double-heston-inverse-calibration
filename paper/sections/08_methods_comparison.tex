@@ -1,0 +1,27 @@
+\section{Traditional, ANN, and Model2 Methods}
+\label{sec:methods-comparison}
+
+\subsection{Model 1: ordinary ANN}
+Model 1 consumes the frozen 100-feature R2 vector and predicts the ten canonical
+parameters through a hard output map. It uses seeds 11, 22, and 33. Validation-only
+checkpoint selection is recorded for each seed; the test split is not used for
+selection.
+
+\subsection{Model 2: constraint- and repricing-informed inverse model}
+Model 2 adds structural output enforcement and a differentiable Fourier-repricing
+loss to the inverse mapping. It is not PDE-informed. Its primary cohort comprises the
+same three seeds trained uniformly on Tesla P100 hardware. A local CPU replication of
+seed 11 is retained as execution provenance but excluded from primary inference.
+
+\subsection{Traditional numerical calibration}
+The traditional baseline uses the frozen production pricer, trust-region reflective
+least squares, three starts per surface, start seed 42, at most 300 function
+evaluations per start, tight tolerances, and reviewed provisional bounds. The frozen
+representative rule selects the start with lowest final objective, breaking ties by
+lowest start index. Every start, including failures and budget stops, remains in the
+journal.
+
+The traditional run received a disclosed truth-informed start favoring it by protocol.
+This makes it a strong accuracy reference rather than a claim that arbitrary starts
+identify the truth. Runtime and training environments are not compared as scientific
+quality.

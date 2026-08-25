@@ -1,0 +1,17 @@
+\begin{table}[htbp]
+\centering
+\caption{Predeclared R2/R3 representation-selection diagnostics across 20 truths.}
+\label{tab:r2-selection}
+\begin{tabular}{lccccc}
+\toprule
+Noise & R2 parameter RMSE & R3 parameter RMSE & R2 repricing & R3 repricing & Decision band \\
+\midrule
+0\% & 0.15408 & 0.046352 & $8.172 \times 10^{-7}$ & $1.690 \times 10^{-6}$ & STRONG\_IMPROVEMENT \\
+0.50\% & 0.383074 & 0.356146 & 0.008839 & 0.007351 & NO\_MATERIAL\_IMPROVEMENT \\
+1.00\% & 0.437582 & 0.339549 & 0.019825 & 0.014558 & NO\_MATERIAL\_IMPROVEMENT \\
+2.00\% & 0.477884 & 0.388721 & 0.025919 & 0.029455 & NO\_MATERIAL\_IMPROVEMENT \\
+\bottomrule
+\end{tabular}
+\par\vspace{0.35em}
+\begin{minipage}{0.94\linewidth}\small Parameter errors are range-scaled best-start medians; repricing entries are relative-RMSE medians. The frozen stopping rule selected R2 because R3's clean advantage was absent under realistic noise.\end{minipage}
+\end{table}

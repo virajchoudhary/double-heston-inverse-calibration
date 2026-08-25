@@ -1,0 +1,16 @@
+\begin{table}[htbp]
+\centering
+\caption{Development-market BS/Heston/DH calibration pilot for NTPC on 2026-07-15.}
+\label{tab:real-market-development}
+\begin{tabular}{lcccccc}
+\toprule
+Model & Parameters & Calibration price RMSE & Holdout price RMSE & Calibration IV RMSE & Holdout IV RMSE & Runtime (s) \\
+\midrule
+BLACK\_SCHOLES & 1 & 0.326902 & 1.05334 & 0.0118538 & 0.0804675 & 0.0118729 \\
+HESTON & 5 & 0.238578 & 0.910569 & 0.00790466 & 0.0729962 & 41.2127 \\
+DOUBLE\_HESTON & 10 & 0.234321 & 0.926825 & 0.00778971 & 0.0725916 & 228.607 \\
+\bottomrule
+\end{tabular}
+\par\vspace{0.35em}
+\begin{minipage}{0.94\linewidth}\small This is a development diagnostic, not a final real-market result. The declared winner rule returned NO\_CLEAR\_WINNER; fitted DH parameters are not claimed to be true market parameters.\end{minipage}
+\end{table}

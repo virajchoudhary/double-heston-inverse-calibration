@@ -1,0 +1,23 @@
+\begin{table}[htbp]
+\centering
+\caption{Central classification of manuscript evidence at the synthesis boundary.}
+\label{tab:evidence-classification}
+\begin{tabular}{p{0.20\linewidth}p{0.13\linewidth}p{0.08\linewidth}p{0.27\linewidth}p{0.19\linewidth}}
+\toprule
+Item & Classification & Commit & Artifact & Boundary \\
+\midrule
+Canonical engine validation & Canonical & 72ad8e1aa845 & \texttt{outputs/double\_heston\_benchmark/benchmark\_summary.json} & Independent adaptive-quadrature agreement \\
+Development NTPC model pilot & Development & 72ad8e1aa845 & \texttt{docs/evidence/NTPC\_SINGLE\_STOCK\_PILOT\_MANIFEST.json} & NO\_CLEAR\_WINNER \\
+Frozen R2 representation & Canonical & 72ad8e1aa845 & \texttt{docs/R2\_REPRESENTATION\_CONTRACT.md} & Selected by sealed R2/R3 rule \\
+Final 10k synthetic dataset & Canonical & b13caf0747d3 & \texttt{data/final\_r2\_clean\_10000/manifest.json} & Full replay: VERIFIED\_IDENTICAL\_FULL\_REPLAY \\
+Primary method comparison & Canonical & 72ad8e1aa845 & \texttt{evidence/r2\_primary\_comparison\_20260823/FINAL\_EVALUATION\_EVIDENCE\_MANIFEST.json} & First test read: true \\
+Neural positive-noise evaluations & Complete subset of noise protocol & e58b36d1ff6c & \texttt{origin/codex/r2-noise-recovery:evidence/r2\_noise\_robustness/neural/MANIFEST.json} & Full neural population; traditional positives pending \\
+Positive-noise traditional calibration & Active/pending & e58b36d1ff6c & \texttt{origin/codex/r2-noise-recovery:docs/R2\_NOISE\_CLOUD\_EXECUTION\_HANDOFF.md} & No positive-level final CSV exists \\
+Model3 PDE methodology & Frozen protocol only & 02c2a2cbc249 & \texttt{origin/research/model3-pde-protocol:docs/MODEL3\_PDE\_PROTOCOL.md} & No Model3 training result exists \\
+Pre-R2 G2 diagnostics and 108 grid & Superseded/historical & 72ad8e1aa845 & \texttt{docs/RESULTS\_TO\_DATE.md}; \texttt{docs/G2\_R2\_R3...} & Motivation and method development only \\
+Model2 local CPU seed-11 replication & Non-primary execution replica & 72ad8e1aa845 & \texttt{evidence/r2\_primary\_comparison\_20260823/training\_run\_manifest.json} & Excluded from primary cohort \\
+\bottomrule
+\end{tabular}
+\par\vspace{0.35em}
+\begin{minipage}{0.94\linewidth}\small The complete claim-to-artifact mapping is maintained in \texttt{paper/RESULTS\_INVENTORY.md}; this appendix table is a compact audit view.\end{minipage}
+\end{table}

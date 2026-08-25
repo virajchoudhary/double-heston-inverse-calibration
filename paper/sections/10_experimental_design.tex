@@ -1,0 +1,32 @@
+\section{Experimental Design}
+\label{sec:experimental-design}
+
+\subsection{Primary synthetic benchmark}
+The primary evaluation uses only the untouched 1{,}250-surface test split of
+\texttt{FINAL\_R2\_CLEAN\_10000}. Neural methods use all six primary checkpoint runs:
+Model1 seeds 11/22/33 and Model2 seeds 11/22/33. Traditional calibration uses three
+frozen starts per surface and one representative per surface. The first test read was
+the final read.
+
+Metrics are grouped into parameter recovery, repricing, structural validity,
+identifiability-conditioned recovery, cross-seed or multi-start stability, and runtime.
+No metric family is allowed to stand in for another.
+
+\subsection{Development-market pilot}
+The real-market diagnostic uses official NSE UDiFF closes for NTPC on 2026-07-15,
+official RBI short-rate evidence, matched active futures carry, deterministic strike
+assignment, and a fixed calibration/holdout split. It compares Black--Scholes, Heston,
+and canonical Double Heston. It is bounded to development evidence and makes no claim
+that calibrated parameters are true NTPC parameters.
+
+\subsection{Observation-noise protocol}
+A later protocol freezes multiplicative Gaussian quote noise at 0\%, 0.10\%, 0.25\%,
+0.50\%, and 1.00\%. Realizations are shared across methods and neural seeds through
+deterministic slot keys. Neural methods evaluate all five levels on all 1{,}250 test
+surfaces. Traditional calibration evaluates a predeclared stratified subset of 250
+surfaces at every level.
+
+Completed to date: cohort generation, strict 0\% neural/traditional gates, full-
+population neural evaluations at every positive level, and the clean traditional subset
+gate. Not complete: positive-level traditional subset calibration and its aggregate.
+The protocol distinguishes fit-to-noisy observations from clean-latent repricing.

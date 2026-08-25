@@ -1,0 +1,24 @@
+\begin{table}[htbp]
+\centering
+\caption{Frozen synthetic-test comparison on 1{,}250 untouched known-truth surfaces.}
+\label{tab:primary-comparison}
+\begin{tabular}{lccc}
+\toprule
+Metric & Model 1 ANN & Model 2 informed & Traditional \\
+\midrule
+Range-scaled parameter RMSE & 0.165896 & 0.166443 & 0.115122 \\
+Standardized parameter RMSE & 0.901305 & 0.904044 & 0.600244 \\
+v0 total MAE & 0.010059 & 0.010367 & 0.00056 \\
+theta total MAE & 0.033022 & 0.033017 & 0.014561 \\
+Constraint validity & 100.00\% & 100.00\% & 100.00\% \\
+Mean repricing nRMSE & 0.000727 & 0.000789 & $5.699 \times 10^{-9}$ \\
+Repricing p95 nRMSE & 0.001968 & 0.002106 & $2.365 \times 10^{-8}$ \\
+Repricing $\leq 10^{-4}$ & 2.00\% & 0.96\% & 100.00\% \\
+Repricing $\leq 10^{-3}$ & 77.84\% & 78.08\% & 100.00\% \\
+Parameter RMSE $\leq 0.25$ & 91.20\% & 91.04\% & 94.00\% \\
+Mean evaluation seconds per surface & $3.708 \times 10^{-6}$ & $8.142 \times 10^{-6}$ & 375.96 \\
+\bottomrule
+\end{tabular}
+\par\vspace{0.35em}
+\begin{minipage}{0.94\linewidth}\small Neural values are means over seeds 11, 22, and 33. Traditional uses its frozen representative start. Inference and calibration runtimes are hardware-specific provenance and are not a quality score.\end{minipage}
+\end{table}

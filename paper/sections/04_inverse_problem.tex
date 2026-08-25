@@ -1,0 +1,30 @@
+\section{Inverse-Calibration Problem}
+\label{sec:inverse-problem}
+
+For an observation vector $y\in\mathbb{R}^{20}$ of spot-normalized call and put
+prices, the inverse problem is
+\begin{equation}
+    \hat{\bm{\theta}}(y)
+    \in \arg\min_{\bm{\theta}\in\Theta}
+    L\!\left(y, F(\bm{\theta};c)\right),
+    \label{eq:inverse-calibration}
+\end{equation}
+where $F$ is the Double Heston pricer, $c$ contains maturity, rate, and carry
+conditioning, and $\Theta$ enforces structural constraints and provisional bounds.
+Traditional calibration minimizes a scale-normalized dollar-price residual with a
+constrained optimizer. Neural models approximate $\hat{\bm{\theta}}(y)$ directly,
+subject to their respective output maps and training losses.
+
+The distinction between the forward map and its inverse is central. A small residual
+\[
+    \|y-F(\hat{\bm{\theta}};c)\|
+\]
+says that $\hat{\bm{\theta}}$ reproduces the observed surface under the selected norm.
+It does not imply that $\hat{\bm{\theta}}$ equals the generating vector when multiple
+near-equivalent vectors exist in $\Theta$. Consequently, all recovery statements in
+this paper are tolerance-conditioned and use known synthetic truth.
+
+Two error scales are used. Range-scaled errors divide each canonical coordinate by
+the width of its reviewed hard-bound interval before computing an RMSE. Standardized
+errors use training-split target statistics only. Both are reported without replacing
+per-parameter diagnostics.

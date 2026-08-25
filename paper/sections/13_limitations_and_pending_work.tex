@@ -1,0 +1,60 @@
+\section{Limitations}
+\label{sec:limitations}
+
+\subsection{Scope limitations}
+The primary benchmark is synthetic with complete surfaces and zero observation noise.
+It establishes controlled method behavior under known truth, not real-market profit,
+forecasting skill, or universal pricing correctness. The real NTPC pilot is one stock,
+one valuation date, short-dated development data, and a small active-quote domain.
+
+\subsection{Protocol limitations}
+Traditional calibration receives a disclosed truth-informed start by frozen design.
+Its runtime comes from one recorded environment and cannot be compared to neural
+training environments as model quality. Model2 uses a single frozen loss configuration;
+its repricing weight was not tuned. Neural hardware cohorts differ across Model1 and
+Model2 and are provenance only.
+
+\subsection{Identifiers and inference limitations}
+Range-scaled and standardized summaries do not replace per-parameter distributions.
+Constraint validity means structural legality, not economic truth. Factor ordering is a
+declared convention. No posterior, confidence interval, or unique-recovery claim is made.
+
+\section{Pending Experiments}
+\label{sec:pending-experiments}
+
+Table~\ref{tab:result-status} separates current completed evidence from work that must
+not be inferred from this draft.
+
+\begin{table}[htbp]
+\centering
+\caption{Result status at the August 25, 2026 synthesis boundary.}
+\label{tab:result-status}
+\begin{tabular}{p{0.31\linewidth}p{0.20\linewidth}p{0.34\linewidth}}
+\toprule
+Item & Status & Boundary \\
+\midrule
+Canonical engine validation & Complete & Controlled implementation evidence only \\
+Frozen R2 representation & Complete & Practical non-identifiability retained \\
+Final 10k known-truth dataset & Complete & Synthetic engineering conditioning \\
+Primary Traditional/ANN/Model2 test & Complete & One frozen synthetic-test evaluation \\
+Neural noise through 1\% & Complete & Full neural population only \\
+Positive-noise traditional subset & Pending & Required before three-way noise claims \\
+OOD/boundary robustness & Not done & Separate protocol required \\
+G8 real-market evaluation & Not started & Development dates remain excluded \\
+Model3 PDE training & Protocol only & Stage A/B results do not exist \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\pending{No positive-noise traditional completion is claimed.} The pinned handoff
+records a preserved interrupted 0.10\% journal and explicitly states that no final CSV
+exists at that level.
+
+\pending{No OOD result is claimed.} Existing boundary/challenge sampling audits are
+development readiness evidence, not completed final OOD robustness.
+
+\pending{No G8 result is claimed.} All five NTPC dates used so far are development/
+diagnostic dates and are excluded from final real-market evaluation.
+
+\pending{No Model3 result is claimed.} Only the frozen protocol and foundation tests
+exist; neither pilot nor research-run outcomes exist here.

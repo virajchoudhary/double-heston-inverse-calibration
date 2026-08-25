@@ -1,0 +1,79 @@
+\section{Completed Results}
+\label{sec:completed-results}
+
+\subsection{Canonical implementation validation}
+Table~\ref{tab:canonical-engine-benchmark} summarizes the independent pricing check.
+All 36 controlled cases pass at both node counts, with no integration warnings,
+no-arbitrage failures, or parity failures. Agreement supports implementation validity
+on the controlled domain; it does not prove universal correctness or equivalence to
+unavailable teammate code.
+
+\input{generated/tables/canonical_engine_benchmark}
+
+\subsection{Development-market BS/Heston/DH comparison}
+Table~\ref{tab:real-market-development} reports the NTPC development pilot. Heston has
+a slightly better holdout price RMSE than Double Heston, while Double Heston has a
+slightly better holdout IV RMSE. Under the predeclared 5\%-improvement rule the result
+is \texttt{NO\_CLEAR\_WINNER}. Both Heston and Double Heston selected capped iterates;
+the DH multi-start classification is materially unstable. This is development context,
+not final market performance.
+
+\input{generated/tables/real_market_development_comparison}
+
+\subsection{Frozen synthetic benchmark}
+Table~\ref{tab:primary-comparison} presents seed-mean neural metrics and the frozen
+traditional representatives. Traditional calibration attains the best parameter RMSE
+and essentially exact repricing, but averages about 376 seconds per surface in the
+recorded environment. Both networks evaluate orders of magnitude faster and emit valid
+vectors on all surfaces, but have range-scaled parameter RMSE near 0.166.
+Figure~\ref{fig:speed-accuracy} visualizes this tradeoff without treating hardware
+runtime as quality.
+
+\input{generated/tables/primary_comparison}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.78\linewidth]{speed_accuracy_tradeoff.pdf}
+\caption{Speed/accuracy position of each method on the untouched synthetic test split.
+Runtime axes are hardware-specific provenance.}
+\label{fig:speed-accuracy}
+\end{figure}
+
+\subsection{Pricing fit does not certify parameters}
+Traditional calibration reprices within $10^{-4}$ on 100\% of test surfaces, yet only
+$71.92\%$ also have range-scaled parameter RMSE $\leq0.10$ and $94.00\%$ have RMSE
+$\leq0.25$. Among neural predictions with repricing nRMSE $\leq10^{-3}$, only about
+$7.6\%$ additionally satisfy parameter RMSE $\leq0.10$, although roughly $95\%$ remain
+within the looser 0.25 threshold. Figure~\ref{fig:fit-not-recovery} shows why the two
+metrics must remain separate.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.70\linewidth]{fit_is_not_recovery.pdf}
+\caption{Mean repricing error versus known-truth parameter error. Distance along the
+repricing axis does not determine distance along the recovery axis.}
+\label{fig:fit-not-recovery}
+\end{figure}
+
+\subsection{Stability}
+Neural headline metrics are stable across seeds, but per-surface prediction dispersion
+is larger for Model2 than Model1; adding differentiable repricing did not reduce seed
+dispersion in the completed primary evidence. Traditional multi-start behavior is much
+more dispersed: the per-surface start-disagreement rate is $89.16\%$, and 3{,}192 of
+3{,}750 starts reach the frozen function-evaluation cap.
+
+\subsection{Observation-noise status}
+Table~\ref{tab:completed-neural-noise} and Figure~\ref{fig:neural-noise} report only
+the completed neural full-population evaluations. They do not imply that the three-way
+positive-noise comparison is finished. Positive-level traditional subset calibration
+remains active/pending, so no three-way noise conclusion is drawn here.
+
+\input{generated/tables/completed_neural_noise}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.76\linewidth]{completed_neural_noise.pdf}
+\caption{Completed seed-mean neural recovery rates across observation-noise levels.
+Traditional positive-noise results are omitted because they are incomplete.}
+\label{fig:neural-noise}
+\end{figure}

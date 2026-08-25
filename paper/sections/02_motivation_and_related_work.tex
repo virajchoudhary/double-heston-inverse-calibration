@@ -1,0 +1,40 @@
+\section{Motivation and Literature Position}
+\label{sec:motivation}
+
+Fast inverse calibration is useful when many surfaces must be mapped to model
+parameters repeatedly. Neural surrogates can reduce inference cost, but their value
+cannot be assessed by speed alone. A valid comparison must preserve the same
+dynamics, observation contract, constraints, split boundary, and metric families.
+It must also distinguish structural validity from economic correctness and pricing
+fit from parameter recovery.
+
+The project's earlier development work sharpened these requirements. Official-NSE
+screening rejected unsupported fixed maturities and extreme wings. Local Jacobian,
+multi-start recovery, global-ambiguity, and complementary-observable studies showed
+that low repricing error could coexist with materially displaced canonical vectors.
+A subsequent R2/R3 experiment found that a third expiry improves conditioning on
+clean synthetic data, but the predeclared stopping rule selected R2 because the
+clean advantage disappeared at realistic noise levels. These studies are development
+or historical context for the frozen benchmark; they do not establish unique
+identification.
+
+\subsection{Literature-position placeholders}
+\label{subsec:literature-placeholders}
+
+\placeholder{Position relative to affine characteristic-function pricing.}
+Summarize Heston and multifactor affine pricing literature here without citations
+until verified bibliographic entries are supplied.
+
+\placeholder{Position relative to option-calibration and identifiability.}
+Place this work among calibration, regularization, and practical-identifiability
+literature after source verification.
+
+\placeholder{Position relative to machine-learning inverse pricing.}
+Compare ordinary ANN inverse mappings, physics-informed training, amortized
+calibration, and hybrid differentiable-pricing objectives after citation review.
+
+\placeholder{Position relative to market microstructure and quote selection.}
+Explain activity filtering, missing-data masking, and official exchange-source
+provenance once external references are approved.
+
+No citation in this draft should be inferred from these placeholder headings.

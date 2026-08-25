@@ -1,0 +1,38 @@
+\section{Identifiability Discussion}
+\label{sec:identifiability}
+
+The completed evidence supports practical non-identifiability, not a claim of global
+mathematical non-identifiability over all parameter space. Three independent lines are
+relevant.
+
+\paragraph{Development diagnostics.}
+Earlier market-supported G2 studies found full algebraic rank in many cases while
+failing target-blind recovery under clean and noisy observations. A bounded four-case
+global study produced 40 clean near-equivalent solutions forming 39 complete-linkage
+clusters; median repricing RMSE was $4.708\times10^{-8}$ while median range-scaled
+parameter RMSE was 0.1485. These are historical diagnostics relative to R2, but they
+motivate the retained finding.
+
+\paragraph{Representation selection.}
+R3 improved local conditioning and clean best-start recovery, yet lost under the frozen
+realistic-noise rule. At the primary 0.5\% level, selected-R2 best-start displacement
+was approximately 0.383 range-scaled RMSE while fitted-surface error was about 0.884\%
+relative RMSE. The third expiry adds clean information but does not resolve ambiguity
+at observation scale.
+
+\paragraph{Known-truth benchmark.}
+On the final synthetic test split, traditional calibration achieves essentially exact
+repricing on every surface; $94.00\%$ have range-scaled parameter RMSE $\leq0.25$, so
+$6.00\%$ remain above that coarse threshold. This lower-bounds rather than exhausts the
+ambiguity problem.
+
+Compensated directions are visible in aggregate metrics. Total initial variance
+$v^s_0+v^f_0$ and total long-run variance $\theta_s+\theta_f$ are estimated much better
+than individual factors, while kappa or half-life parameters remain difficult for all
+methods. Canonical slow/fast ordering is a declared tie-breaker, not evidence that an
+unordered factor swap is economically identified.
+
+The correct scientific statement is therefore:
+\begin{center}
+\texttt{PRACTICAL\_NON\_IDENTIFIABILITY = RETAINED\_RESEARCH\_FINDING}.
+\end{center}

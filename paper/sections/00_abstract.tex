@@ -1,0 +1,24 @@
+We study inverse calibration of a canonical ten-parameter Double Heston model
+using a frozen, market-supported observation representation and a known-truth
+synthetic evaluation. The production pricer is validated against an independent
+adaptive-quadrature reference on 36 controlled cases. A predeclared representation
+study selects a two-expiry, central-five call/put interface, denoted R2; the final
+dataset contains 10{,}000 complete synthetic surfaces with stored train,
+validation, and test splits.
+
+On the untouched 1{,}250-surface test set, traditional numerical calibration is
+the accuracy frontier but costs hundreds of seconds per surface. Two neural
+inverse models evaluate orders of magnitude faster and always emit structurally
+valid parameters, yet have materially larger parameter errors. Most importantly,
+near-perfect repricing does not certify parameter recovery: traditional fits can
+reprice to approximately nine significant digits while remaining materially wrong
+in range-scaled parameter distance. This practical non-identifiability is retained
+rather than resolved by the learned models.
+
+A separately frozen observation-noise protocol has completed deterministic cohort
+generation, strict 0\% gates, full-population neural evaluations through 1\%
+noise, and the clean-gate traditional subset. Positive-noise traditional
+calibration remains incomplete and is not reported as complete. A genuine PDE-
+informed Model3 protocol is frozen as future active methodology; no Model3 result,
+OOD result, G8 result, or positive-noise traditional completion exists in this
+draft.

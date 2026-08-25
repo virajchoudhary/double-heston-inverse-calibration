@@ -1,0 +1,63 @@
+\section{Genuine Model3 PDE Protocol}
+\label{sec:model3-protocol}
+
+Model3 is a future active methodology, not a completed result. Its architecture,
+canonical PDE, data boundary, loss, collocation design, leakage rules, and
+interpretation rules were frozen at commit
+\sourcecommit{02c2a2cbc2498d5c4ce1e914e7c3d22693a55fc9} before any Model3 training
+result exists.
+
+\subsection{Forward state and conditioning}
+The inverse encoder receives the frozen 100-feature R2 vector and predicts ten
+canonical parameters through the existing constraint map. The conditional forward
+network takes log spot and two variance states. It is conditioned on log strike,
+time to maturity, rate, carry, and a call/put indicator, but only on eight structural
+parameters. Predicted initial variances define the PDE state at observed quotes; they
+are not also supplied as forward conditioning.
+
+\subsection{Canonical pricing residual}
+Let $V(\tau,S,v_s,v_f)$ be written in time to maturity $\tau$. The frozen residual is
+\begin{align}
+R ={}& V_\tau
+- \Big[
+      (r-q)SV_S
+      + \kappa_s(\theta_s-v_s)V_{v_s}
+      + \kappa_f(\theta_f-v_f)V_{v_f} \nonumber\\
+&\quad
+      + \tfrac12(v_s+v_f)S^2V_{SS}
+      + \rho_s\sigma_sv_sSV_{Sv_s}
+      + \rho_f\sigma_fv_fSV_{Sv_f} \nonumber\\
+&\quad
+      + \tfrac12\sigma_s^2v_sV_{v_sv_s}
+      + \tfrac12\sigma_f^2v_fV_{v_fv_f}
+      - rV
+    \Big].
+\label{eq:model3-pde}
+\end{align}
+There is no $V_{v_sv_f}$ term because the implemented variance factors are independent.
+At zero variance, diffusion and mixed coefficients degenerate naturally while CIR mean
+reversion remains; no artificial Dirichlet condition is invented.
+
+\subsection{Frozen loss}
+For weights fixed before any result,
+\begin{equation}
+L =
+1.00L_{\mathrm{parameter}}
++1.00L_{\mathrm{reconstruction}}
++0.10L_{\mathrm{PDE}}
++0.00L_{\mathrm{terminal}}
++0.00L_{\mathrm{boundary}}.
+\end{equation}
+Terminal payoff and discounted no-arbitrage bounds are enforced by construction, so
+their diagnostic weights are zero. Structural constraints are not added as penalties.
+
+\subsection{Experiment boundary}
+Stage A is an implementation and numerical-trainability pilot on the first 240 train
+and 40 validation surfaces. Stage B would use all 7{,}500 train and 1{,}250 validation
+surfaces with seeds 11, 22, and 33, leaving the test split closed until all checkpoints
+are final. No local Model3 training was performed. Consequently, this section contains
+no accuracy, robustness, stability, or cost result for Model3.
+
+A positive, negative, mixed, or excessive-cost outcome would be valid under the frozen
+interpretation rules. Explicit physics cannot manufacture identification absent from
+ambiguous observations.

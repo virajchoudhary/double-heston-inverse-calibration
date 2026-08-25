@@ -1,0 +1,32 @@
+\section{Appendix Structure and Reproducibility}
+\label{app:provenance}
+
+\subsection{Artifact map}
+\input{generated/tables/evidence_classification}
+
+\subsection{Reproducibility commands}
+\begin{verbatim}
+C:\Python313\python.exe paper\scripts\generate_results_assets.py
+C:\Python313\python.exe paper\scripts\validate_paper.py
+git show e58b36d1ff6cbf39115d46698ad0fb45b1ac1b8b:evidence/r2_noise_robustness/neural/all_neural_seed_headline.csv
+\end{verbatim}
+
+\subsection{Environment and validation record}
+Asset generation used Python 3.13.4, pandas 2.3.2, and matplotlib 3.10.6 on the audit
+host. PDF compilation could not be run because no LaTeX executable was installed there;
+\texttt{pdflatex}, \texttt{latexmk}, and Tectonic were absent. Structural validation
+covers required sections, generated assets, inventory coverage, balanced common LaTeX
+environments, pinned commits, placeholder-only citations, and ASCII source/output.
+
+\subsection{Future appendix placeholders}
+\placeholder{Detailed metric definitions.} Insert exact formulas from the frozen
+evaluation module after final writing review.
+
+\placeholder{Per-seed and per-parameter tables.} Add only after selecting tables from
+the immutable evidence bundle; do not recompute experiments.
+
+\placeholder{Data-selection audit.} Summarize official-source hashes and exclusions
+without printing confidential row-level data.
+
+\placeholder{Model3 pre-registration excerpt.} Quote the frozen protocol commit and
+config hash when the experiment becomes active.

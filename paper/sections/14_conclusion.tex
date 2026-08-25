@@ -1,0 +1,26 @@
+\section{Conclusion Draft}
+\label{sec:conclusion}
+
+This synthesis organizes completed Double Heston inverse-calibration evidence around a
+single defensible message: a validated forward engine and a frozen known-truth dataset
+make it possible to compare fast learned inverses against a strong traditional frontier
+without conflating speed, structural validity, repricing fit, and parameter recovery.
+
+Under that discipline, traditional numerical calibration remains the accuracy reference
+but is computationally expensive. Ordinary ANN and constraint/repricing-informed neural
+mappings are dramatically faster and structurally valid, with moderate aggregate errors
+and excellent seed stability, but materially larger known-truth errors. Their similar
+performance indicates that the differentiable repricing term did not solve the central
+inverse problem in the frozen configuration.
+
+The most important conclusion is negative and constructive: low repricing error can
+coexist with material parameter displacement. Any useful calibration methodology should
+therefore report tolerance-conditioned parameter recovery separately from fit-to-
+observations, retain failed starts, disclose constraints and starts, and avoid claiming
+unique identification from optimizer success.
+
+The next evidentiary steps are already bounded: finish positive-noise traditional subset
+calibration under its frozen protocol, evaluate genuine PDE-informed Model3 only after
+the frozen Stage A/B sequence, and reserve OOD and final real-market conclusions for their
+separately authorized experiments. Until then, the canonical claim is a frozen
+representation plus retained practical non-identifiability, not a solved inverse problem.

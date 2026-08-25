@@ -1,0 +1,52 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\newcommand{\placeholder}[1]{\textcolor{gray}{\textit{[#1]}}}
+\newcommand{\pending}[1]{\textcolor{gray}{\textsc{Pending:} #1}}
+\newcommand{\sourcecommit}[1]{\texttt{#1}}
+
+\graphicspath{{figures/}}
+\InputIfFileExists{generated/table_paths.tex}{}{}
+
+\title{Inverse Calibration and Practical Non-Identifiability\\
+in a Canonical Double Heston Framework:\\
+A Frozen-Representation Synthetic Benchmark}
+\author{\placeholder{Author list}}
+\date{Draft synthesis status: August 25, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\input{sections/00_abstract}
+\end{abstract}
+
+\input{sections/01_introduction}
+\input{sections/02_motivation_and_related_work}
+\input{sections/03_model}
+\input{sections/04_inverse_problem}
+\input{sections/05_methodology}
+\input{sections/06_r2_representation}
+\input{sections/07_dataset_construction}
+\input{sections/08_methods_comparison}
+\input{sections/09_model3_protocol}
+\input{sections/10_experimental_design}
+\input{sections/11_completed_results}
+\input{sections/12_identifiability_discussion}
+\input{sections/13_limitations_and_pending_work}
+\input{sections/14_conclusion}
+\appendix
+\input{sections/90_appendix}
+
+\end{document}

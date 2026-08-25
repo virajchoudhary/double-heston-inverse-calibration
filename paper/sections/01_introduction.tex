@@ -1,0 +1,35 @@
+\section{Introduction}
+\label{sec:introduction}
+
+Double Heston calibration maps observed option prices to ten risk-neutral
+parameters governing slow and fast stochastic-variance factors. The mapping is
+attractive because it preserves an affine pricing structure while permitting two
+volatility timescales. It is also difficult: many economically distinct parameter
+vectors can fit the same finite option surface nearly equally well.
+
+This paper builds a reproducible research foundation around three facts established
+by completed project evidence. First, a canonical Double Heston implementation is
+validated independently at numerical-pricing tolerance. Second, a frozen R2
+representation and 10{,}000-surface known-truth dataset permit a controlled,
+target-blind comparison of traditional calibration and two neural inverse methods.
+Third, that comparison separates pricing fit from parameter recovery and therefore
+quantifies practical non-identifiability rather than hiding it behind low loss.
+
+The manuscript is intentionally conservative about claim scope. Real-market BS,
+Heston, and Double Heston comparisons appear only as development diagnostics for a
+single NTPC valuation date. Earlier G2 experiments are used as motivation and
+method-development history. Observation noise is discussed only through its frozen
+protocol and already-completed evaluations. Genuine PDE-informed Model3 is presented
+as active methodology, not as a completed result.
+
+The contributions of this draft are:
+\begin{enumerate}
+    \item a modular paper structure that separates canonical, development,
+          superseded/historical, and pending results;
+    \item publication-ready tables and figures generated directly from committed
+          CSV/JSON artifacts or pinned Git references;
+    \item a central inventory mapping every generated asset to its source artifact
+          and commit; and
+    \item explicit boundaries for unfinished positive-noise, OOD, real-market, and
+          Model3 experiments.
+\end{enumerate}
