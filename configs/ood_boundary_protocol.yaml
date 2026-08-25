@@ -267,7 +267,7 @@ manifests:
   require_parameter_hash_provenance: true
   required_artifacts:
     - development_sanity_panel.csv
-    - boundary_candidates.csv
+    - boundary_challenge_candidates.csv
     - distribution_shift_candidates.csv
     - maturity_conditioning_shift_candidates.csv
     - selected_parameters.csv

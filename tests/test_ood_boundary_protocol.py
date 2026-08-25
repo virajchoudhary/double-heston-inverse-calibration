@@ -55,7 +55,9 @@ def test_protocol_config_is_frozen_and_additive() -> None:
         "expensive_method_evaluations_this_milestone"
     ] == "FORBIDDEN"
     assert "pricing_failures.jsonl" in config["manifests"]["required_artifacts"]
-    assert "boundary_candidates.csv" in config["manifests"]["required_artifacts"]
+    assert "boundary_challenge_candidates.csv" in config["manifests"][
+        "required_artifacts"
+    ]
 
 
 def test_frozen_dataset_and_primary_baseline_hashes_are_exact() -> None:

@@ -72,7 +72,6 @@ MISSING_PATTERNS = (
 )
 REQUIRED_ARTIFACTS = (
     "development_sanity_panel.csv",
-    "boundary_candidates.csv",
     "distribution_shift_candidates.csv",
     "maturity_conditioning_shift_candidates.csv",
     "selected_parameters.csv",
@@ -1034,7 +1033,7 @@ def validate_generated_output(output_directory: str | Path) -> dict[str, Any]:
     manifest = json.loads((output / "manifest.json").read_text(encoding="utf-8"))
     artifact_files = {
         "development_sanity_panel_csv_sha256": "development_sanity_panel.csv",
-        "boundary_candidates_csv_sha256": "boundary_candidates.csv",
+        "boundary_challenge_candidates_csv_sha256": "boundary_challenge_candidates.csv",
         "distribution_shift_candidates_csv_sha256": "distribution_shift_candidates.csv",
         "maturity_conditioning_shift_candidates_csv_sha256": (
             "maturity_conditioning_shift_candidates.csv"
