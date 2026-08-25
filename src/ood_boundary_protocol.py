@@ -681,6 +681,7 @@ def generate_clean_surfaces(
 
     for generation_index, (_, row) in enumerate(selected.iterrows()):
         cohort = str(row["cohort"])
+        row = dict(row)
         surface_id = f"OODV1_{cohort.upper()}_{generation_index:06d}"
         conditioning, conditioning_provenance = _conditioning_for(
             cohort, generation_index, config
