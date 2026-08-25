@@ -109,6 +109,9 @@ frozen_cohorts:
     conditioning:
       seed: 20260830
       stride: 2027
+      lattice: TYPICAL_R2_TRAINING_SUPPORT
+      rank1_minimum_dte_days: 21
+      numerical_stability_floor: short_expiry_near_zero_v0_cases_are_excluded_not_clamped
       real_market_inputs_used: false
     train_validation_eligible: false
   distribution_shift:
@@ -120,6 +123,9 @@ frozen_cohorts:
     conditioning:
       seed: 20260831
       stride: 2029
+      lattice: TYPICAL_R2_TRAINING_SUPPORT
+      rank1_minimum_dte_days: 21
+      numerical_stability_floor: short_expiry_near_zero_v0_cases_are_excluded_not_clamped
       real_market_inputs_used: false
     regimes:
       slow_low_mean_reversion_high_variance:

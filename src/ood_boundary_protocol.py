@@ -477,11 +477,15 @@ def _standard_conditioning(
     cohort: str, generation_index: int, config: dict[str, Any]
 ) -> tuple[R2Conditioning, dict[str, Any]]:
     spec = config["frozen_cohorts"][cohort]["conditioning"]
-    rank1_values = [7, 14, 21, 30, 45, 60, 75, 90]
+    if spec["lattice"] != "TYPICAL_R2_TRAINING_SUPPORT":
+        raise OODProtocolError("standard-conditioning lattice drift")
+    rank1_values = [21, 30, 45, 60, 75, 90]
     gap_values = [7, 14, 21, 30, 45, 60, 90]
     rate_values = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06]
     offset_values = [-0.02, -0.01, 0.00, 0.01, 0.02, 0.03]
-    lattice_size = 2016
+    lattice_size = len(rank1_values) * len(gap_values) * len(rate_values) * len(
+        offset_values
+    )
     return _mixed_radix_conditioning(
         cohort,
         generation_index,
@@ -616,7 +620,7 @@ def _arbitrage_and_shape_checks(payload: Mapping[str, Any]) -> dict[str, Any]:
         )
         calls[index] = key.option_type == "call"
     valid = mask
-    errors = prices[valid]
+    dollar_prices = prices * spot
     low = lower[valid]
     high = upper[valid]
     call_prices = prices[valid & calls]
@@ -644,7 +648,8 @@ def _arbitrage_and_shape_checks(payload: Mapping[str, Any]) -> dict[str, Any]:
         "all_clean_masks_true": bool(mask.all()),
         "all_clean_prices_positive": bool(np.all(prices > 0.0)),
         "no_arbitrage_valid": bool(
-            np.all(errors >= low - 1e-8) and np.all(errors <= high + 1e-8)
+    np.all(dollar_prices[valid] >= low - 1e-8)
+    and np.all(dollar_prices[valid] <= high + 1e-8)
         ),
         "strike_monotonicity_valid": bool(call_monotonic and put_monotonic),
         "strike_convexity_valid": bool(call_convex and put_convex),

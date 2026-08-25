@@ -64,6 +64,11 @@ Use the existing reviewed four-regime latent-LHS challenge algorithm with pool
 near Feller, weak slow/fast separation, near hard bound, near correlation disk.
 Canonical validity and regime labels are checked. Proximity is intentional but
 every vector remains inside the hard bounds and strict canonical admissible set.
+Boundary and distribution-shift cohorts use the typical R2 training-conditioning
+lattice with a 21-day minimum rank-1 maturity. The floor excludes—not clamps or
+replaces—short-expiry cases where a valid near-zero-v0 boundary truth can produce
+a tiny negative deep-ITM pricer value. It isolates parameter effects from the
+separate maturity-shift cohort while preserving strict positive-price validity.
 
 ### 4.2 Distribution shift
 
