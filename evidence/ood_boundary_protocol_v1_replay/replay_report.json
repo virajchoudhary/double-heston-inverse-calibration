@@ -1,0 +1,21 @@
+{
+  "counts_identical": true,
+  "hash_comparisons": {
+    "all_research_surfaces_jsonl_sha256": true,
+    "boundary_challenge_candidates_csv_sha256": true,
+    "clean_surfaces_jsonl_sha256": true,
+    "development_sanity_panel_csv_sha256": true,
+    "distribution_shift_candidates_csv_sha256": true,
+    "incomplete_surfaces_jsonl_sha256": true,
+    "integrity_report_json_sha256": true,
+    "maturity_conditioning_shift_candidates_csv_sha256": true,
+    "numerical_sanity_jsonl_sha256": true,
+    "pricing_failures_jsonl_sha256": true,
+    "selected_parameters_csv_sha256": true
+  },
+  "identical": true,
+  "primary_output": "evidence\\ood_boundary_protocol_v1",
+  "replay_output": "evidence\\ood_boundary_protocol_v1_replay",
+  "timestamps_excluded": true,
+  "verified_at_utc": "2026-08-25T17:31:56.272445+00:00"
+}

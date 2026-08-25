@@ -1,0 +1,161 @@
+{
+  "artifact_hashes": {
+    "all_research_surfaces_jsonl_sha256": "e8b117ac93f6319e634fa28d6dd5ed884e86e130cf420e65eb8ef8da0276b7e4",
+    "boundary_challenge_candidates_csv_sha256": "c167e148ba18e92f4a685ac83f852f894a07daffa7cfcb8eef4a8f53cc83ae70",
+    "clean_surfaces_jsonl_sha256": "4ae0c3f9e1f945818139d586600ce02c4451d1c05d85620fcc2cb482e48e7ccf",
+    "development_sanity_panel_csv_sha256": "d0a0a2b19719b2b548a89f764600c3126827d1e3cb7236c7705b3c3fd022b087",
+    "distribution_shift_candidates_csv_sha256": "ec6dc8197ce4a58a19a8fc80fee0c1c7474bf1a6ac284950b7a423f9e9be88f5",
+    "incomplete_surfaces_jsonl_sha256": "88b54b889dbffe992a9b2c4e0abfdd4d025e140c2f0716eea6d901be80a0d8bd",
+    "integrity_report_json_sha256": "0bcc93ee6ff93f8d130e86c9b512dd469a0156724c613d26ab4875d9387cb449",
+    "maturity_conditioning_shift_candidates_csv_sha256": "7d6885b001aca5f0cb4a3657b352cd5039aafb4c6c0fcf5a5ab82e5578fcdb86",
+    "numerical_sanity_jsonl_sha256": "a524192f37131f8d6433948988ba331badf9195b9425772c55344051f0851c87",
+    "pricing_failures_jsonl_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "selected_parameters_csv_sha256": "7565d88c6684e66eb74e6c1c3268ce2d69c9e4a70f7f99082b1051b774168db6"
+  },
+  "command": "python -m src.ood_boundary_protocol generate --output evidence\\ood_boundary_protocol_v1 --remote-checkpoint-confirmed",
+  "counts": {
+    "boundary_challenge": 120,
+    "clean_pricing_calls": 360,
+    "development_sanity_rows": 12,
+    "distribution_shift": 120,
+    "incomplete_observation": 60,
+    "maturity_conditioning_shift": 120,
+    "pricing_failure_count": 0,
+    "serialized_research_total": 420
+  },
+  "deterministic_content_sha256": "e8b117ac93f6319e634fa28d6dd5ed884e86e130cf420e65eb8ef8da0276b7e4",
+  "environment": {
+    "numpy_version": "2.4.3",
+    "pandas_version": "2.3.2",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python_version": "3.13.9"
+  },
+  "evaluation_only": true,
+  "expensive_method_evaluation_performed": false,
+  "generated_at_utc": "2026-08-25T17:23:08.456683+00:00",
+  "generator_source_sha256": "cae1a5bfe9f019a8690fa4624a431cb19e56a07f22eb961b252602ed42f6eb75",
+  "git_commit_sha": "200f4aec3a03f4eef5bbbe4a8f489c98accd9721",
+  "numerical_sanity": {
+    "all_passed": true,
+    "failed_surface_count": 0,
+    "surface_count": 360
+  },
+  "production_pricer_source_sha256": "154d53fba17caddcb4d5a8d72001a43aa3cbb90cb1d6d9177c07ddefc5414b0a",
+  "protocol_config_sha256": "8f3a550d0d1dd002304c33c38708c1f8142462c4dc4d754b1a489bb1705054ba",
+  "protocol_name": "DOUBLE_HESTON_OOD_BOUNDARY_ROBUSTNESS_V1",
+  "protocol_status": "FROZEN_BEFORE_MODEL3_RESEARCH_RESULTS",
+  "r2_dataset_sha256": "148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6",
+  "real_market_inputs_used": false,
+  "remote_checkpoint_confirmed": true,
+  "replay_status": "PENDING",
+  "representation": {
+    "name": "FROZEN_R2_RANKED_TWO_EXPIRY_CENTRAL_FIVE",
+    "slot_keys": [
+      [
+        1,
+        -0.1,
+        "call"
+      ],
+      [
+        1,
+        -0.05,
+        "call"
+      ],
+      [
+        1,
+        0.0,
+        "call"
+      ],
+      [
+        1,
+        0.05,
+        "call"
+      ],
+      [
+        1,
+        0.1,
+        "call"
+      ],
+      [
+        2,
+        -0.1,
+        "call"
+      ],
+      [
+        2,
+        -0.05,
+        "call"
+      ],
+      [
+        2,
+        0.0,
+        "call"
+      ],
+      [
+        2,
+        0.05,
+        "call"
+      ],
+      [
+        2,
+        0.1,
+        "call"
+      ],
+      [
+        1,
+        -0.1,
+        "put"
+      ],
+      [
+        1,
+        -0.05,
+        "put"
+      ],
+      [
+        1,
+        0.0,
+        "put"
+      ],
+      [
+        1,
+        0.05,
+        "put"
+      ],
+      [
+        1,
+        0.1,
+        "put"
+      ],
+      [
+        2,
+        -0.1,
+        "put"
+      ],
+      [
+        2,
+        -0.05,
+        "put"
+      ],
+      [
+        2,
+        0.0,
+        "put"
+      ],
+      [
+        2,
+        0.05,
+        "put"
+      ],
+      [
+        2,
+        0.1,
+        "put"
+      ]
+    ],
+    "version": "1.0"
+  },
+  "reviewed_sampling_config_sha256": "2634446a3e11db8a620d24a4974ca9fc190d29271bef2a8965c10c01453fd29a",
+  "schema_version": "1.0",
+  "timestamp_is_rng_input": false,
+  "training_or_fine_tuning_started": false
+}
