@@ -1,0 +1,423 @@
+schema_version: "1.0"
+contract_name: G8_FINAL_REAL_MARKET_PROTOCOL
+protocol_version: "1.0"
+status: FROZEN_PENDING_UNTOUCHED_DATA_ACQUISITION
+frozen_date_local: "2026-08-25"
+base_commit: 72ad8e1aa845ec4c6f0fc61fc526df75438639bb
+branch: research/g8-final-eval-protocol
+
+execution:
+  authorized_now: false
+  data_acquisition_authorized_now: false
+  final_evaluation_started: false
+  neural_weight_updates_on_real_data: false
+  architecture_or_hyperparameter_tuning_on_g8: false
+  protocol_changes_after_first_g8_model_output: false
+
+preconditions:
+  all_participating_inverse_methods_frozen_before_acquisition: true
+  model3_optional_if_not_frozen: true
+  missing_model3_reporting_label: MODEL3_NOT_FROZEN_NOT_EVALUATED
+  data_must_be_absent_until_models_are_frozen: true
+  selection_uses_structural_support_only: true
+  no_neural_or_traditional_result_may_enter_selection: true
+
+development_exclusions:
+  rule: EXCLUDE_EVERY_OBSERVATION_OR_DERIVED_SUMMARY_USED_BEFORE_G8
+  stage_a_original:
+    valuation_dates: ["2026-07-01", "2026-07-15", "2026-07-22"]
+    symbols: [NTPC, POWERGRID, SUNPHARMA, CIPLA, INFY, TCS, ICICIBANK, HDFCBANK]
+    scope: [official_nse_cm_eq_spot, official_nse_fo_stock_options, official_nse_fo_stock_futures]
+    nifty_reference_only_excluded_from_g8: true
+  power_tiebreak_extension:
+    valuation_dates: ["2026-07-08", "2026-07-29"]
+    symbols: [NTPC, POWERGRID]
+    scope: [official_nse_cm_eq_spot, official_nse_fo_stock_options, official_nse_fo_stock_futures]
+  ntpc_single_stock_pilot:
+    valuation_date: "2026-07-15"
+    realized_close_window: {symbol: NTPC, first_date: "2026-07-15", last_date_inclusive: "2026-07-28"}
+    corporate_action_query_window: {symbol: NTPC, first_date: "2026-07-15", last_date_inclusive: "2026-07-28"}
+    classification: DEVELOPMENT_PILOT_NEVER_FINAL_EVALUATION
+  ntpc_multi_date_calibration:
+    valuation_dates: ["2026-07-01", "2026-07-15", "2026-07-22"]
+    symbol: NTPC
+    rate_observation_dates: ["2026-07-01", "2026-07-15"]
+  g2_r2r3_market_support:
+    valuation_dates: ["2026-07-01", "2026-07-08", "2026-07-15", "2026-07-22", "2026-07-29"]
+    symbol: NTPC
+  hard_floor_for_all_g8_valuation_dates: "2026-09-30"
+  overlap_policy: FAIL_CLOSED_ON_SYMBOL_DATE_OR_CONTRACT_PROVENANCE_OVERLAP
+
+eligible_universe:
+  primary_symbols: [NTPC, CIPLA, INFY, HDFCBANK]
+  sectors:
+    NTPC: power
+    CIPLA: healthcare_pharma
+    INFY: information_technology
+    HDFCBANK: financial_banking
+  backups_by_sector:
+    power: [POWERGRID]
+    healthcare_pharma: [SUNPHARMA]
+    information_technology: [TCS]
+    financial_banking: [ICICIBANK]
+  backup_use:
+    allowed_only_before_any_g8_model_output: true
+    trigger: PRIMARY_PERMANENTLY_UNAVAILABLE_FOR_ENTIRE_ACQUISITION_WINDOW
+    permanent_unavailability_determination: >
+      Scan every official trading date through 2026-12-31 before declaring a
+      primary permanently unavailable. A declaration requires zero eligible
+      surfaces for that primary across the complete window, must be recorded
+      before any model result exists, and is followed by one fixed-order
+      replacement and a fresh deterministic scan.
+    order_is_fixed_and_recorded: true
+    support_failure_on_one_date_does_not_substitute_a_backup: true
+
+deterministic_selection:
+  calendar_source: OFFICIAL_NSE_TRADING_DATES_IMPLIED_BY_OFFICIAL_UDIFF_ARCHIVES
+  scan_order: valuation_date_ascending_then_primary_symbol_repository_order
+  search_start_inclusive: "2026-09-30"
+  search_end_inclusive: "2026-12-31"
+  target_common_dates: 2
+  surfaces_per_common_date: 4
+  maximum_surfaces: 8
+  accept_date_when: ALL_FOUR_PRIMARY_SYMBOLS_PASS_STRUCTURAL_ELIGIBILITY
+  stop_after_target_common_dates_without_inspecting_model_results: true
+  record_every_scanned_failed_date_and_reason: true
+  insufficient_dates_result: G8_BLOCKED_INSUFFICIENT_ELIGIBLE_DATES
+  selected_data_status_before_acquisition: NOT_ACQUIRED_AND_NOT_KNOWN
+
+source_contract:
+  primary_source: OFFICIAL_NSE_UDIFF_BHAVCOPY_ONLY
+  cm_filename: BhavCopy_NSE_CM_0_0_0_YYYYMMDD_F_0000.csv.zip
+  fo_filename: BhavCopy_NSE_FO_0_0_0_YYYYMMDD_F_0000.csv.zip
+  third_party_or_bloomberg_allowed: false
+  historical_bid_ask_imputation_allowed: false
+  raw_archive_retention: immutable_local_chain_of_custody_required
+  required_provenance_per_archive:
+    - official_url
+    - retrieval_timestamp_utc
+    - original_filename
+    - byte_size
+    - zip_sha256
+    - zip_integrity_result
+    - member_name
+    - extracted_csv_sha256
+    - encoding
+    - delimiter
+    - trading_date
+
+surface_construction:
+  representation: FROZEN_R2_RANKED_TWO_EXPIRY_CENTRAL_FIVE
+  representation_version: "1.0"
+  nominal_slot_count: 20
+  slot_targets: [-0.10, -0.05, 0.00, 0.05, 0.10]
+  option_types: [call, put]
+  expiry_rule: FIRST_TWO_LISTED_EXPIRIES_WITH_ONE_ACTIVE_MATCHED_STOCK_FUTURE
+  dte_basis: calendar_days_actual_expiry_minus_valuation_over_365
+  fixed_dte_grid_used: false
+  interpolation_or_extrapolation_allowed: false
+  spot_rule: OFFICIAL_NSE_CM_EQ_CLS_PRICE_MUST_EQUAL_FO_UNDRLYGPRIC_EXACTLY
+  futures_activity_rule: CLSPRIC_TTLTRADGVOL_OPNINTRST_TTLNBTOFXSCTD_ALL_STRICTLY_POSITIVE
+  option_price_field: ClsPric
+  option_activity_rule: CLSPRIC_TTLTRADGVOL_OPNINTRST_TTLNBTOFXSCTD_ALL_STRICTLY_POSITIVE
+  moneyness_rule: abs(log(strike / spot)) <= 0.10 + 1e-12
+  assignment: hungarian_minimum_total_absolute_distance_separately_by_expiry_and_option_type
+  maximum_target_distance: 0.05 + 1e-12
+  candidate_tie_break: ascending_strike_then_FinInstrmId
+  black_iv_eligibility: FINITE_BRACKETED_FORWARD_BLACK_IV_REQUIRED
+  impossible_price_handling: REJECT_NEVER_CLIP
+  minimum_usable_slots_total: 12
+  minimum_pricing_family_calibration_slots: 6
+  minimum_pricing_family_holdout_slots: 3
+  require_at_least_one_valid_slot_per_expiry_rank: true
+  require_at_least_one_valid_call_and_put_per_surface: true
+  masked_slots: explicit_false_with_zero_placeholder_no_imputation
+  rejected_row_report: REQUIRED_FOR_EVERY_NONSELECTED_RAW_ROW_REASON
+
+rate_carry_contract:
+  rate_source: LATEST_OFFICIAL_RBI_91_DAY_TBILL_AUCTION_RESULT_ON_OR_BEFORE_VALUATION
+  applicable_artifact_must_be_acquired_and_hash_sealed: true
+  future_rate_observation_forbidden: true
+  simple_yield_flat_across_selected_expiries: true
+  discount_formula: D(T) = 1 / (1 + y * T)
+  continuous_rate_formula: r = -log(D(T)) / T
+  carry_source: MATCHED_ACTIVE_STOCK_FUTURE_CLSPRIC_BY_ACTUAL_EXPIRY
+  carry_formula: q = r - log(F / S) / T
+  carry_interpretation: FUTURES_IMPLIED_CARRY_NOT_OBSERVED_DIVIDEND_YIELD
+  exact_zero_curve_required: false
+  missing_rate_behavior: HARD_FAIL_SURFACE
+  required_rate_provenance: [official_url, release_identifier, observation_date, cutoff_price, yield, html_sha256, normalized_extract_sha256]
+
+observation_roles:
+  pricing_model_family_calibration:
+    target_log_moneyness: [-0.05, 0.00, 0.05]
+    scope: BOTH_R2_EXPIRY_RANKS_CALLS_AND_PUTS_NOMINAL_12_SLOTS
+    purpose: FIT_BLACK_SCHOLES_STANDARD_HESTON_DOUBLE_HESTON
+  pricing_model_family_holdout:
+    target_log_moneyness: [-0.10, 0.10]
+    scope: BOTH_R2_EXPIRY_RANKS_CALLS_AND_PUTS_NOMINAL_8_SLOTS
+    purpose: UNFITTED_WING_GENERALIZATION
+  inverse_method_observation:
+    scope: FULL_VALID_R2_MASK
+    includes_outer_wings: true
+    shared_identically_by_all_INVERSE_METHODS: true
+  metric_slots_are_always_mask_gated: true
+
+pricing_model_family_comparison:
+  models:
+    BLACK_SCHOLES:
+      parameters: [sigma]
+      pricing_engine: forward_black_same_iv_routine_as_market_inputs
+      bounds: {sigma: [0.01, 2.0]}
+      optimizer_for_one_parameter: scipy_minimize_scalar_bounded_xatol_1e-12
+    STANDARD_HESTON:
+      parameters: [kappa, theta, sigma, rho, v0]
+      pricing_interface: src.double_heston.heston_log_characteristic_exponent_with_pilot_put_call_parity_wrapper
+      reviewed_wrapper_reference: scripts.run_ntpc_single_stock_pilot.price_heston_option
+      parameter_mapping: pilot_order_kappa_theta_sigma_rho_v0
+      gauss_laguerre_node_count: 64
+      bounds:
+        kappa: [0.05, 12.0]
+        theta: [0.002, 0.30]
+        v0: [0.002, 0.35]
+        sigma_lower: 0.005
+        sigma_upper: min(1.5, sqrt(2 * kappa * theta) * (1 - 1e-7))
+        rho_transform: tanh_unconstrained_to_open_interval_with_0.95_operational_limit
+      optimizer_coordinate_map:
+        clip_unconstrained_to: [-35.0, 35.0]
+        unit_transform: logistic_sigmoid
+        kappa: "0.05 + unit[0] * (12.0 - 0.05)"
+        theta: "0.002 + unit[1] * (0.30 - 0.002)"
+        v0: "0.002 + unit[2] * (0.35 - 0.002)"
+        sigma_upper: "min(1.5, sqrt(2 * kappa * theta) * (1 - 1e-7))"
+        sigma: "0.005 + unit[3] * (sigma_upper - 0.005)"
+        rho: "0.95 * tanh(raw_coordinate[4])"
+      deterministic_start_generator:
+        random_source: numpy_default_rng_PCG64
+        seed: 20260912
+        vector_count: 8
+        vector_dimension: 5
+        first_vector: zeros_5
+        remaining_vectors: sequential_rng_normal_mean_0_std_1.25
+    DOUBLE_HESTON:
+      parameters: canonical_ten_parameter_order
+      production_interface: src.double_heston.price_double_heston_surface
+      bounds_source: configs/parameter_bounds_PROVISIONAL.yaml.hard_numerical_safety_bounds
+      constraints: canonical_positivity_slow_fast_ordering_factorwise_feller_joint_correlation_disk
+      optimizer_coordinate_map: src.calibrate_double_heston.unconstrained_to_parameters
+      coordinate_map_bounds: configs/parameter_bounds_PROVISIONAL.yaml.hard_numerical_safety_bounds
+      deterministic_start_generator:
+        random_source: numpy_default_rng_PCG64
+        seed: 20260922
+        vector_count: 12
+        vector_dimension: 10
+        first_vector: zeros_10
+        remaining_vectors: sequential_rng_normal_mean_0_std_1.25
+  common_fit_rules:
+    objective_residual: (model_price - observed_dollar_price) / max(observed_dollar_price, 1.0)
+    optimizer: scipy_least_squares_trf
+    tolerances: {ftol: 1.0e-10, xtol: 1.0e-10, gtol: 1.0e-10}
+    diff_step: 2.0e-5
+    max_nfev: 300
+    representative_start: lowest_final_objective_ties_by_lowest_start_index
+    starts: {BLACK_SCHOLES: 1, STANDARD_HESTON: 8, DOUBLE_HESTON: 12}
+    bounds_and_constraints: existing_provisional_canonical_bounds_applicable_to_each_family
+  node_count_double_heston: 64
+  winner_rule:
+    default_label: NO_CLEAR_PRICING_FAMILY_WINNER
+    aggregation_unit: ONE_UNWEIGHTED_OBSERVATION_PER_ELIGIBLE_SURFACE
+    price_statistic: median_across_surfaces_of_per_surface_holdout_normalized_price_rmse_over_valid_holdout_slots
+    iv_statistic: median_across_surfaces_of_per_surface_holdout_annualized_iv_rmse_over_valid_holdout_slots_with_finite_market_and_model_iv
+    failure_definition: >
+      A method-surface failure means the representative fit is absent/nonfinite,
+      a required valid calibration or holdout price is nonfinite, or a valid
+      holdout market/model IV pair cannot be produced. Reached-cap alone is
+      reported as optimizer diagnostics, not automatically a failure.
+    failure_denominator: all_eligible_surfaces_assigned_to_the_family_test
+    secondary_reporting: slot_level_metrics_are_reported_but_do_not_replace_surface_level_ranking
+    preferred_requires_all:
+      - at_least_5_percent_lower_median_holdout_normalized_price_rmse_than_every_comparator
+      - at_least_5_percent_lower_median_holdout_annualized_iv_rmse_than_every_comparator
+      - optimizer_or_pricing_failure_rate_not_more_than_10_percentage_points_worse_than_best_comparator
+    price_fit_alone_never_selects_winner: true
+
+inverse_method_comparison:
+  methods:
+    TRADITIONAL:
+      module: src.r2_primary.calibration
+      settings_provenance: configs/r2_primary_comparison_FINAL.yaml
+      historical_synthetic_start_count: 3
+      real_g8_effective_start_count: 2
+      start_seed: 42
+      permitted_start_strategies: [neutral_transform_midpoint, deterministic_broad_start]
+      forbidden_start_strategy: disclosed_target_perturbation
+      adapter_requirement: >
+        Do not call deterministic_initial_starts unchanged on G8: it emits a
+        truth-informed third start. Before acquisition, add and review an
+        adapter returning only the neutral midpoint and seeded broad start;
+        this changes no scientific setting other than removing the impossible
+        truth-informed start.
+      max_nfev: 300
+      real_data_truth_informed_start: FORBIDDEN_USE_ONLY_TWO_UNINFORMED_STARTS
+      representative_rule: lowest_objective_amortized_over_two_starts_ties_lowest_index
+    MODEL1_ANN:
+      checkpoint_provenance: evidence/r2_primary_comparison_20260823/training_run_manifest.json
+      seeds: [11, 22, 33]
+    MODEL2_CONSTRAINT_REPRICING_INFORMED:
+      checkpoint_provenance: evidence/r2_primary_comparison_20260823/training_run_manifest.json
+      seeds: [11, 22, 33]
+    MODEL3_PDE_INFORMED_OPTIONAL:
+      inclusion_condition: FROZEN_AND_COMMITTED_BEFORE_G8_ACQUISITION
+      absent_label: MODEL3_NOT_FROZEN_NOT_EVALUATED
+  shared_rules:
+    input: IDENTICAL_FULL_VALID_R2_MASK_AND_CONDITIONING
+    output_parameters: canonical_ten_parameter_order
+    repricer: src.double_heston.price_double_heston_surface
+    repricing_node_count: 64
+    no_real_weight_updates: true
+    no_checkpoint_selection_on_g8: true
+    no_seed_discarding: true
+    failed_methods_reported_not_replaced: true
+    checkpoint_restore_contract:
+      loader: src.r2_primary.training.load_run
+      executable_preacquisition_command: python scripts/validate_g8_protocol.py check-checkpoints
+      required_before_data_acquisition: true
+      dataset_path: data/final_r2_clean_10000/surfaces.jsonl
+      dataset_sha256: 148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6
+      required_checks:
+        - dataset_file_exists_and_sha256_matches
+        - file_exists_and_sha256_matches_registry
+        - best_validation_checkpoint_loads_after_hash_approval
+        - target_standardizer_state_present
+        - run_kind_is_RESEARCH
+        - model_and_seed_match_path
+        - recorded_git_sha_matches_registry
+        - architecture_spec_is_present
+        - canonical_parameter_order_matches
+        - test_set_used_for_selection_is_false
+        - selection_data_is_validation_only
+      checkout_status: CHECKPOINTS_IGNORED_AND_ABSENT_HERE_HASHES_SEALED_BELOW
+      required_best_validation_checkpoints:
+        - method: MODEL1_ANN
+          seed: 11
+          path: checkpoints/r2_primary_comparison/model1_seed11/best_validation_checkpoint.pt
+          sha256: 5adc762f7e73e8ab267c72c39b7fde40c36a6301f7ebce64a27eabdd6625a8eb
+          git_sha: 9bf1d490f679a0479b621167ffc049e501e5de8a
+        - method: MODEL1_ANN
+          seed: 22
+          path: checkpoints/r2_primary_comparison/model1_seed22/best_validation_checkpoint.pt
+          sha256: fa4d18378a1de4e80bcc9decb9ebc830df87ce0bfc0f638f68ba2b939de9f4e7
+          git_sha: 9b7c921c183cd29b54a4ffae60e79a4d7c00bde2
+        - method: MODEL1_ANN
+          seed: 33
+          path: checkpoints/r2_primary_comparison/model1_seed33/best_validation_checkpoint.pt
+          sha256: 815a9dba831d22dc1cf7786c47b4eddfd744b1fbf01fa82efd0c0da98361bf8a
+          git_sha: 9b7c921c183cd29b54a4ffae60e79a4d7c00bde2
+        - method: MODEL2_CONSTRAINT_REPRICING_INFORMED
+          seed: 11
+          path: checkpoints/r2_primary_comparison/model2_seed11/best_validation_checkpoint.pt
+          sha256: 812723995bcbba7e5b3d2690fffea7063798a518c0824c5c6d9c756ad4a06eef
+          git_sha: 2b5d41cd232241a1f23348411643a9ce58b53b7a
+        - method: MODEL2_CONSTRAINT_REPRICING_INFORMED
+          seed: 22
+          path: checkpoints/r2_primary_comparison/model2_seed22/best_validation_checkpoint.pt
+          sha256: a9fad9673a4e8e4b5d79a5a4478d56c3884d8ad03c6247bf7318ef8bf0f5b098
+          git_sha: 2b5d41cd232241a1f23348411643a9ce58b53b7a
+        - method: MODEL2_CONSTRAINT_REPRICING_INFORMED
+          seed: 33
+          path: checkpoints/r2_primary_comparison/model2_seed33/best_validation_checkpoint.pt
+          sha256: ead822abb5e35a76940bc9ece510090430dc071475800cc4f673ffd25bb02730
+          git_sha: 2b5d41cd232241a1f23348411643a9ce58b53b7a
+  interpretation:
+    parameter_truth_available: false
+    real_parameter_recovery_metric: NOT_APPLICABLE_NO_REAL_TRUTH
+    real_parameter_winner_permitted: false
+    descriptive_performance_ranking_allowed: true
+    unique_parameter_recovery_claim_forbidden: true
+    low_repricing_equals_correct_parameters_forbidden: true
+
+metrics:
+  mask_support_disclosure:
+    report_per_surface_usable_count: true
+    report_by_expiry_rank_and_option_type: true
+    distribution_shift_warning: >
+      Model 1 and Model 2 were trained on complete synthetic masks. Real G8
+      surfaces use the observed partial mask. Report support explicitly and do
+      not interpret G8 as ordinary in-distribution generalization.
+  pricing_errors:
+    normalized_price_rmse: true
+    normalized_price_mae: true
+    normalized_price_max_absolute_error: true
+    dollar_price_rmse: true
+    dollar_price_mae: true
+    relative_price_error_mean: true
+    percentiles: [median, p95]
+    subsets: [pricing_family_calibration, pricing_family_holdout, inverse_full_valid_r2]
+  implied_volatility_errors:
+    market_iv_source: robust_bracketed_forward_black_solution
+    model_iv_rule: invert_each_model_or_repriced_price_with_same_bracketed_routine
+    annualized_rmse: true
+    annualized_mae: true
+    annualized_bias: true
+    annualized_max_absolute_error: true
+    success_rate_and_failure_reasons: true
+    clipping_or_replacement_allowed: false
+  stability:
+    traditional_cross_start_range_scaled_std_per_parameter: true
+    traditional_complete_linkage_cluster_cutoff: 0.10
+    traditional_disagreement_any_pair_gt_range_scaled_distance: 0.50
+    material_parameter_displacement_rmse_threshold: 0.05
+    boundary_near_fraction_threshold: 0.02
+    neural_cross_seed_parameter_dispersion: true
+    neural_cross_seed_headline_metric_std: true
+    constraint_validity_rate: true
+    per_constraint_violation_rates: true
+    optimizer_success_cap_and_exception_rates: true
+    iv_inversion_failure_rate: true
+  runtime:
+    wall_seconds_per_surface_by_model: true
+    total_wall_seconds_by_model: true
+    neural_batched_eval_mode_no_grad_cpu_ms_per_surface: true
+    traditional_seconds_include_all_starts: true
+    hardware_python_library_versions_recorded: true
+
+failure_reporting:
+  atomic_evidence_bundle_required: true
+  manifest_sha256_for_every_input_output_and_report: true
+  retain_failed_starts_predictions_and_iv_failures: true
+  no_silent_rerun_with_changed_settings: true
+  archive_hash_or_schema_mismatch_behavior: ABORT_BEFORE_MODEL_EXECUTION
+  selection_failure_behavior: RECORD_AND_CONTINUE_SCAN_UNTIL_RULE_RESOLVES
+  evaluation_failure_behavior: REPORT_METHOD_SURFACE_FAILURE_AND_DO_NOT_IMPUTE
+
+interpretation_criteria:
+  primary_outputs: predeclared_tables_and_json_not_narrative_selection
+  family_classification_default: NO_CLEAR_PRICING_FAMILY_WINNER
+  inverse_real_truth_classification: NO_REAL_PARAMETER_TRUTH_WINNER
+  practical_non_identifiability: RETAINED_RESEARCH_FINDING
+  separate_conceptual_comparisons_required: true
+  forbidden_post_hoc_actions:
+    - change thresholds seeds starts budgets or masks after any G8 result
+    - tune architectures hyperparameters loss weights or checkpoints on G8
+    - train or fine-tune neural weights on G8
+    - select a seed start date or symbol from model outcomes
+    - relabel the NTPC 2026-07-15 pilot as final evaluation
+    - claim Double Heston or Model3 superiority without the frozen joint rule
+
+data_blocker:
+  status: BLOCKED_PENDING_PROTOCOL_COMPLIANT_ACQUISITION
+  reason: >
+    The repository contains provenance only for development July 2026 NSE/RBI
+    observations and synthetic R2 research data. No tracked or documented G8
+    archive establishes untouched post-2026-09-30 observations for the eligible
+    universe, so none may be invented or acquired during this protocol freeze.
+  acquisition_requirements:
+    execute_only_after_all_participating_inverse_methods_are_frozen: true
+    acquire_official_udiff_cm_and_fo_for_each_scanned_candidate_date: true
+    preserve_official_urls_and_utc_retrieval_times: true
+    preserve_zip_and_extracted_csv_sha256_hashes: true
+    validate_zip_members_encoding_delimiters_and_trading_dates: true
+    preserve_latest_prior_rbi_91_day_auction_artifact_and_normalized_extract: true
+    compare_candidate_contract_keys_against_development_registry_fail_closed: true
+    write_support_counts_masks_and_rejection_reasons_but_no_model_outcome: true
+    hash_freeze_data_manifest_before_any_evaluation_command: true
