@@ -1,0 +1,287 @@
+schema_version: "1.0"
+protocol_name: DOUBLE_HESTON_OOD_BOUNDARY_ROBUSTNESS_V1
+status: FROZEN_BEFORE_MODEL3_RESEARCH_RESULTS
+frozen_date_utc: 2026-08-25
+worktree: C:\dh_ood_protocol
+branch: research/ood-boundary-protocol
+base_commit_sha256: 72ad8e1aa845ec4c6f0fc61fc526df75438639bb
+
+authority:
+  r2_dataset:
+    path: data/final_r2_clean_10000/surfaces.jsonl
+    sha256: 148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6
+    status: FINAL_R2_CLEAN_10000_RESEARCH_SYNTHETIC_TRUTH_DATASET_FROZEN_BEFORE_MODEL_TRAINING
+  representation_contract: docs/R2_REPRESENTATION_CONTRACT.md
+  primary_comparison_config:
+    path: configs/r2_primary_comparison_FINAL.yaml
+    sha256: 33CA0F763EC10BB2424EEFB02448C9C8E50021854B96A948E420F44BDBA70781
+  primary_baseline_artifacts:
+    comparison_table:
+      path: evidence/r2_primary_comparison_20260823/synthetic_test_comparison.csv
+      sha256: 72443AEE24F434904592074FE339DE80A4B49DA1703E58F965F835193FA01F39
+    parameter_metrics:
+      path: evidence/r2_primary_comparison_20260823/parameter_metrics.json
+      sha256: 3A9F1FAAA95CCD2A592667BB26F5214979FB07139DFB89DF5682C09E48C40C55
+    repricing_metrics:
+      path: evidence/r2_primary_comparison_20260823/repricing_metrics.json
+      sha256: 8F54725AF168F05F0A14F4F2F5DC33C27D4EB4BB31E7481C96EC5E89324B3526
+    validity_metrics:
+      path: evidence/r2_primary_comparison_20260823/validity_metrics.json
+      sha256: 57799C0C065F4E2DAD7C15BF06B1091D83536D909D88831B3102F0813A3D2D68
+    identifiability_metrics:
+      path: evidence/r2_primary_comparison_20260823/identifiability_metrics.json
+      sha256: 71A276D3ECEB82FF3CB470F78B9E85BDA217BB349FDFDB40B3FDB72C2167E178
+    model1_seed_results:
+      path: evidence/r2_primary_comparison_20260823/model1_seed_results.csv
+      sha256: 8A102DB603B131DBBECB6CA0E30CF0F76A499223322E0E5E94DDDE32BE1A48E8
+    model2_seed_results:
+      path: evidence/r2_primary_comparison_20260823/model2_seed_results.csv
+      sha256: 3EBCDF876C77C5D6ABEAD83A1F3B95F3F4DC9B8B7BD9296F8D5D9098D2219E3D
+    traditional_results:
+      path: evidence/r2_primary_comparison_20260823/traditional_calibration_results.csv
+      sha256: E5D7FDAB7E1400DA9240728C3F2364E6CD1ABFC49F3B20B5C10FB30E0D748BDC
+
+leakage_controls:
+  model3_results_used_in_design: false
+  real_market_inputs_allowed: false
+  real_market_weight_updates_allowed: false
+  frozen_primary_test_metrics_opened_during_design: false
+  frozen_primary_test_metrics_may_tune_thresholds: false
+  primary_baseline_use: POST_HOC_RATIO_DENOMINATOR_ONLY
+  completed_primary_files_modifiable: false
+
+representation:
+  name: FROZEN_R2_RANKED_TWO_EXPIRY_CENTRAL_FIVE
+  version: "1.0"
+  nominal_slot_count: 20
+  input_size: 100
+  feature_blocks: [prices_masked, mask, maturities_years, rates, carries]
+  masked_price_placeholder: 0.0
+  missingness_encoding: mask_false_and_exact_zero_no_nan_or_imputation
+  synthetic_complete_surfaces_all_masks_true: true
+
+parameter_contract:
+  order:
+    - kappa_slow
+    - theta_slow
+    - sigma_slow
+    - rho_slow
+    - v0_slow
+    - kappa_fast
+    - theta_fast
+    - sigma_fast
+    - rho_fast
+    - v0_fast
+  reviewed_sampling_config: configs/parameter_sampling_REVIEWED.yaml
+  hard_bounds_source: configs/parameter_bounds_PROVISIONAL.yaml
+  canonical_validation: src.constraints.validate_parameters
+  no_clamping_or_replacement: true
+
+sampling_policy:
+  method: scipy_stats_qmc_LatinHypercube_latent_coordinates
+  pool_policy: fixed_pool_retain_all_candidates_no_refill_no_reseed
+  selection_order: eligible_candidate_id_ascending_within_regime
+  insufficient_pool_behavior: HARD_FAIL
+  duplicate_parameter_vectors_allowed: false
+  overlap_with_frozen_r2_parameter_vectors_allowed: false
+
+development_sanity:
+  label: DEVELOPMENT_SANITY_NOT_RESEARCH_RESULT
+  surface_count: 0
+  parameter_panel_count: 12
+  pricing_performed: false
+  purpose: sampler_shape_constraint_hash_and_manifest_smoke_only
+  selection: first_four_eligible_selected_rows_from_each_active_parameter_cohort
+
+frozen_cohorts:
+  boundary_challenge:
+    evaluation_role: parameter_boundary_challenge
+    surface_count: 120
+    regimes:
+      near_feller: {count: 30}
+      weak_separation: {count: 30}
+      near_hard_bound: {count: 30}
+      near_correlation_disk: {count: 30}
+    candidate_pool_count: 160
+    required_quota: 120
+    parameter_seed: 20260825
+    algorithm: reuse_existing_sample_challenge_four_regime_latent_lhs
+    conditioning:
+      seed: 20260830
+      stride: 2027
+      real_market_inputs_used: false
+    train_validation_eligible: false
+  distribution_shift:
+    evaluation_role: admissible_parameter_distribution_shift
+    surface_count: 120
+    candidate_pool_count: 300
+    required_quota: 120
+    parameter_seed: 20260826
+    conditioning:
+      seed: 20260831
+      stride: 2029
+      real_market_inputs_used: false
+    regimes:
+      slow_low_mean_reversion_high_variance:
+        count: 60
+        overrides:
+          kappa_slow: [0.20, 0.29]
+          theta_slow: [0.205, 0.2325]
+          v0_slow: [0.255, 0.2775]
+          gap: [1.25, 2.50]
+          feller_fraction: [0.15, 0.75]
+          correlation_radius: [0.10, 0.80]
+        disjoint_claim: below_interior_kappa_central_support_with_theta_and_v0_above_observed_r2_maxima
+      fast_high_mean_reversion:
+        count: 60
+        overrides:
+          kappa_slow: [0.12, 0.80]
+          gap: 10.25
+          kappa_fast_upper: 11.35
+          feller_fraction: [0.15, 0.80]
+          correlation_radius: [0.10, 0.80]
+        disjoint_claim: kappa_fast_strictly_above_frozen_r2_support_and_below_hard_upper
+    margin_gate: wide_valid_exclude_any_boundary_near
+    train_validation_eligible: false
+  maturity_conditioning_shift:
+    evaluation_role: within_model_conditioning_shift
+    surface_count: 120
+    candidate_pool_count: 300
+    required_quota: 120
+    parameter_seed: 20260827
+    parameter_distribution: accepted_wide_valid_margin_screen
+    conditioning:
+      seed: 20260828
+      stride: 179
+      rank1_dte_days: [105, 120, 135, 150, 165, 180]
+      rank2_gap_dte_days: [105, 120, 135, 150, 165, 180]
+      rates: [0.065, 0.075, 0.085]
+      carry_offsets: [-0.055, -0.040, -0.025]
+      combination_count: 324
+      carry_identity: carry_equals_rate_plus_offset
+      disjoint_from_typical_training_lattice: true
+      real_market_inputs_used: false
+    train_validation_eligible: false
+  incomplete_observation:
+    evaluation_role: frozen_mask_missingness_challenge
+    derived_surface_count: 60
+    parent_surface_count: 60
+    parent_selection: round_robin_boundary_shift_maturity_then_repeat
+    patterns_cycle:
+      - rank1_only
+      - rank2_only
+      - central_three_moneyness
+      - calls_only
+      - even_slot_checkerboard
+    minimum_usable_slots: 10
+    price_at_parent_masked_slots: exact_zero
+    retain_parent_clean_counterpart_for_clean_repricing: true
+    imputation_allowed: false
+    train_validation_eligible: false
+
+pricing:
+  source: src/double_heston.py
+  entrypoint: price_double_heston_surface
+  node_count: 64
+  spot: 100.0
+  target_strike_rule: spot_exp_canonical_target_log_moneyness
+  clean_noise_level: 0.0
+  failure_policy: retain_identity_vector_conditioning_error_then_fail_closed
+  clipping_imputation_or_silent_retry_allowed: false
+
+metrics:
+  frozen_before_model3_results: true
+  parameter_recovery:
+    - per_parameter_mae_median_ae_rmse_bias
+    - range_scaled_error_using_frozen_train_split_ranges
+    - standardized_rmse_using_frozen_train_split_statistics
+    - v0_total_and_theta_total_factorwise_errors
+    - per_factor_half_life_errors
+    - factor_swap_confusion_rate
+  clean_repricing:
+    engine: production_pricer_node_64
+    normalized_price_metrics: rmse_mae_max_abs_error
+    incomplete_counterfactual: compare_prediction_to_parent_complete_prices_without_using_parent_as_input
+  validity_failure:
+    - finite_prediction_rate
+    - shape_alignment_rate
+    - canonical_constraint_validity_rate
+    - positivity_ordering_feller_disk_violation_rates
+    - method_execution_failure_rate
+    - traditional_start_success_and_failure_rates
+  degradation:
+    id_baseline_source: frozen_primary_test_artifacts
+    ratio_denominator_floor: 1.0e-8
+    material_relative_degradation_ratio: 1.25
+    material_validity_failure_increase_absolute: 0.05
+    missing_vs_clean_comparison: paired_by_parent_surface_and_method
+    ood_vs_id_comparison: post_hoc_aggregate_ratio_only_not_threshold_tuning
+  uncertainty:
+    bootstrap_resamples: 2000
+    bootstrap_seed: 20260829
+    confidence_level: 0.95
+  comparison_scope:
+    methods: [model1_ann, model2_constraint_repricing_informed, traditional_calibration, future_model3_if_interface_ready]
+    neural_evaluation_surfaces: all_420_research_records
+    traditional_minimum_feasible_subset:
+      boundary_challenge: 15
+      distribution_shift: 15
+      maturity_conditioning_shift: 15
+      incomplete_observation: 15
+      selection_rule: evenly_spaced_indices_starting_at_zero_per_cohort
+    paired_claim_requirements:
+      same_surfaces: true
+      same_truths: true
+      same_masks_where_applicable: true
+      same_production_repricer: true
+      no_ranking_on_repricing_alone: true
+
+interpretation:
+  robust_pass:
+    rule: no_material_degradation_on_any_headline_family_across_any_active_cohort_and_generation_replay_verified
+  ood_sensitive_negative:
+    rule: any_material_parameter_recovery_repricing_or_validity_failure_degradation_after_predeclared_floor_and_ratio_rule
+  inconclusive:
+    any_of:
+      - generation_or_bit_identical_replay_failed
+      - more_than_one_percent_required_predictions_missing_nonfinite_or_misaligned
+      - bootstrap_decision_interval_spans_materiality_boundary
+      - future_model3_adapter_cannot_produce_aligned_complete_predictions
+      - traditional_feasible_subset_has_execution_failure_exceeding_five_percent
+  forbidden_claims:
+    - low_repricing_error_implies_unique_correct_parameters
+    - OOD_result_reopens_or_changes_R2
+    - real_market_performance_claim
+    - model3_superiority_without_aligned_paired_predictions_and_uncertainty
+  practical_non_identifiability: RETAINED
+
+manifests:
+  output_root_default: evidence/ood_boundary_protocol_v1
+  require_unique_surface_ids: true
+  require_parameter_hash_provenance: true
+  required_artifacts:
+    - development_sanity_panel.csv
+    - boundary_candidates.csv
+    - distribution_shift_candidates.csv
+    - maturity_conditioning_shift_candidates.csv
+    - selected_parameters.csv
+    - clean_surfaces.jsonl
+    - incomplete_surfaces.jsonl
+    - all_research_surfaces.jsonl
+    - numerical_sanity.jsonl
+    - pricing_failures.jsonl
+    - integrity_report.json
+    - manifest.json
+  deterministic_content_hash_source: concatenated_clean_then_incomplete_surfaces_jsonl_bytes
+  replay_policy: independent_second_generation_and_artifact_byte_hash_equality
+
+execution_gates:
+  protocol_freeze_before_cohort_output: REQUIRED
+  protocol_commit_push_and_remote_verification_before_generation: REQUIRED
+  remote_checkpoint_confirmation_flag: --remote-checkpoint-confirmed
+  cohort_generation_command: python -m src.ood_boundary_protocol generate --output evidence/ood_boundary_protocol_v1 --remote-checkpoint-confirmed
+  replay_command: python -m src.ood_boundary_protocol replay --output evidence/ood_boundary_protocol_v1 --replay-output evidence/ood_boundary_protocol_v1_replay
+  expensive_method_evaluations_this_milestone: FORBIDDEN
+  neural_training_or_fine_tuning: FORBIDDEN
+  long_multiprocessing: FORBIDDEN
+  completed_primary_experiment_writes: FORBIDDEN

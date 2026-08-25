@@ -1,0 +1,9 @@
+OOD_BOUNDARY_PROTOCOL_FROZEN_BEFORE_MODEL3_RESEARCH_RESULTS
+
+Date: 2026-08-25
+Branch: research/ood-boundary-protocol
+Base: 72ad8e1aa845ec4c6f0fc61fc526df75438639bb
+
+NO OOD RESEARCH SURFACE, SELECTED PANEL, COHORT MANIFEST, OR MODEL3 PREDICTION
+EXISTED WHEN THESE PROTOCOL SETTINGS WERE COMMITTED. Generation remains locked
+until commit/push/remote verification is explicitly confirmed.
