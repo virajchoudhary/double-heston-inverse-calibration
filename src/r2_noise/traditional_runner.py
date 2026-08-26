@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 import json
+import posixpath
 from pathlib import Path
+from pathlib import PurePosixPath
+from typing import Mapping
 
 import pandas as pd
 
@@ -22,6 +25,7 @@ from .execution import (
     sha256_path,
 )
 from .neural_evaluation import safe_level_label
+from .provenance_intake import CANONICAL_SUBSET_SHA256, ensure_canonical_subset
 
 SUBSET_PATH = (
     REPO_ROOT / "evidence" / "r2_noise_robustness" / "traditional_subset_ids.json"
@@ -32,9 +36,24 @@ CANONICAL_TRADITIONAL_STARTS = (
     / "r2_primary_comparison_20260823"
     / "traditional_calibration_starts.csv"
 )
+KNOWN_SOURCE_ROOTS = (
+    REPO_ROOT.resolve().as_posix(),
+    "C:/ann_inverse_calibration",
+)
 
 
 def _subset_dataset(source_path: Path) -> tuple[R2PrimaryDataset, list[str]]:
+    intake_result = ensure_canonical_subset()
+    if intake_result["status"] not in {
+        "ALREADY_CANONICAL",
+        "MATERIALIZED_FROM_KNOWN_HISTORICAL_VARIANT",
+    }:
+        raise ValueError("unexpected traditional-subset intake result")
+    actual_subset_hash = sha256_path(SUBSET_PATH)
+    if actual_subset_hash != CANONICAL_SUBSET_SHA256:
+        raise ValueError(
+            f"frozen traditional subset hash mismatch: {actual_subset_hash}"
+        )
     subset_payload = json.loads(SUBSET_PATH.read_text(encoding="utf-8"))
     selected_ids = subset_payload["selected_ids"]
     if len(selected_ids) != 250 or len(set(selected_ids)) != 250:
@@ -65,6 +84,53 @@ def _provenance(
         "source_sha256": sha256_path(source_path),
         "subset_artifact_sha256": sha256_path(SUBSET_PATH),
     }
+
+
+def _is_documented_worktree_relocation(
+    stored_path: str,
+    current_path: str,
+) -> bool:
+    normalized_stored = posixpath.normpath(stored_path.replace("\\", "/"))
+    normalized_current = posixpath.normpath(current_path.replace("\\", "/"))
+    if normalized_stored != stored_path or normalized_current != current_path:
+        return False
+    stored_parts = PurePosixPath(normalized_stored).parts
+    current_parts = PurePosixPath(normalized_current).parts
+    current_root_allowed = any(
+        normalized_current.casefold().startswith(f"{root}/".casefold())
+        for root in KNOWN_SOURCE_ROOTS
+    )
+    if not current_root_allowed:
+        return False
+    return (
+        len(stored_parts) >= 5
+        and stored_parts[-5:] == current_parts[-5:]
+        and any(
+            normalized_stored.casefold().startswith(f"{root}/".casefold())
+            for root in KNOWN_SOURCE_ROOTS
+        )
+    )
+
+
+def _assert_resume_provenance_compatible(
+    stored: Mapping[str, object],
+    current: Mapping[str, object],
+) -> None:
+    """Allow only relocation metadata to differ; all identities must match."""
+    ignored_for_equality = {"source_path"}
+    mismatches = [
+        key
+        for key in sorted(set(stored) | set(current))
+        if key not in ignored_for_equality and stored.get(key) != current.get(key)
+    ]
+    if mismatches:
+        raise ValueError(f"journal provenance identity mismatch: {mismatches}")
+    stored_source = str(stored["source_path"])
+    current_source = str(current["source_path"])
+    if not _is_documented_worktree_relocation(
+        stored_source, current_source
+    ):
+        raise ValueError("journal source path is not a documented worktree relocation")
 
 
 def run_traditional_subset(
@@ -99,8 +165,7 @@ def run_traditional_subset(
     current_provenance = _provenance(label=label, source_path=source_path, selected_ids=selected_ids)
     if provenance_path.exists():
         stored = json.loads(provenance_path.read_text(encoding="utf-8"))
-        if stored != current_provenance:
-            raise ValueError(f"journal provenance mismatch at {output_root}")
+        _assert_resume_provenance_compatible(stored, current_provenance)
     else:
         if journal_path.exists():
             raise ValueError("orphan calibration journal found without provenance")

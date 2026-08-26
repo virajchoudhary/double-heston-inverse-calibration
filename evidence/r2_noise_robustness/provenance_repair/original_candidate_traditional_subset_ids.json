@@ -1,0 +1,1538 @@
+{
+  "artifact_kind": "R2_NOISE_ROBUSTNESS_TRADITIONAL_SUBSET",
+  "subset_size": 250,
+  "population": "test_split_only_1250_surfaces",
+  "strata_dimensions": [
+    "v0_total",
+    "kappa_slow"
+  ],
+  "tercile_edges": {
+    "v0_total": [
+      0.12432985928475873,
+      0.17458738458154488
+    ],
+    "kappa_slow": [
+      0.7116439483475973,
+      1.0769175684470815
+    ]
+  },
+  "within_cell_ordering": "ascending_sha256_hex_of_surface_id",
+  "allocation_proportional_largest_remainder": true,
+  "selection_uses_outcomes": false,
+  "selected_ids": [
+    "R2_FINAL_interior_train_009952",
+    "R2_FINAL_interior_train_009900",
+    "R2_FINAL_interior_train_009369",
+    "R2_FINAL_interior_train_009444",
+    "R2_FINAL_interior_train_010052",
+    "R2_FINAL_interior_train_009413",
+    "R2_FINAL_interior_train_009063",
+    "R2_FINAL_interior_train_009858",
+    "R2_FINAL_interior_train_009296",
+    "R2_FINAL_interior_train_010053",
+    "R2_FINAL_interior_train_009323",
+    "R2_FINAL_interior_train_010046",
+    "R2_FINAL_interior_train_010251",
+    "R2_FINAL_interior_train_009423",
+    "R2_FINAL_interior_train_009158",
+    "R2_FINAL_interior_train_010080",
+    "R2_FINAL_interior_train_009088",
+    "R2_FINAL_wide_valid_train_002165",
+    "R2_FINAL_interior_train_010152",
+    "R2_FINAL_interior_train_010149",
+    "R2_FINAL_interior_train_009317",
+    "R2_FINAL_interior_train_009146",
+    "R2_FINAL_interior_train_009907",
+    "R2_FINAL_interior_train_009938",
+    "R2_FINAL_interior_train_009684",
+    "R2_FINAL_interior_train_010125",
+    "R2_FINAL_interior_train_009876",
+    "R2_FINAL_interior_train_010206",
+    "R2_FINAL_interior_train_009443",
+    "R2_FINAL_interior_train_009241",
+    "R2_FINAL_interior_train_009159",
+    "R2_FINAL_interior_train_009161",
+    "R2_FINAL_interior_train_009568",
+    "R2_FINAL_interior_train_010050",
+    "R2_FINAL_interior_train_009116",
+    "R2_FINAL_interior_train_009703",
+    "R2_FINAL_interior_train_009491",
+    "R2_FINAL_interior_train_009486",
+    "R2_FINAL_interior_train_009204",
+    "R2_FINAL_interior_train_010056",
+    "R2_FINAL_interior_train_010084",
+    "R2_FINAL_interior_train_009667",
+    "R2_FINAL_interior_train_009251",
+    "R2_FINAL_interior_train_009082",
+    "R2_FINAL_interior_train_009821",
+    "R2_FINAL_interior_train_009880",
+    "R2_FINAL_interior_train_009239",
+    "R2_FINAL_interior_train_009774",
+    "R2_FINAL_interior_train_010059",
+    "R2_FINAL_interior_train_009170",
+    "R2_FINAL_interior_train_010213",
+    "R2_FINAL_interior_train_009211",
+    "R2_FINAL_wide_valid_train_002173",
+    "R2_FINAL_interior_train_009909",
+    "R2_FINAL_interior_train_009719",
+    "R2_FINAL_interior_train_009772",
+    "R2_FINAL_interior_train_009969",
+    "R2_FINAL_wide_valid_train_002420",
+    "R2_FINAL_wide_valid_train_002370",
+    "R2_FINAL_interior_train_009335",
+    "R2_FINAL_interior_train_009908",
+    "R2_FINAL_interior_train_009654",
+    "R2_FINAL_interior_train_009531",
+    "R2_FINAL_wide_valid_train_002422",
+    "R2_FINAL_interior_train_010164",
+    "R2_FINAL_interior_train_009666",
+    "R2_FINAL_interior_train_009819",
+    "R2_FINAL_interior_train_009174",
+    "R2_FINAL_interior_train_009711",
+    "R2_FINAL_interior_train_009823",
+    "R2_FINAL_interior_train_009373",
+    "R2_FINAL_interior_train_009591",
+    "R2_FINAL_interior_train_009387",
+    "R2_FINAL_interior_train_010216",
+    "R2_FINAL_interior_train_009009",
+    "R2_FINAL_interior_train_009368",
+    "R2_FINAL_interior_train_009925",
+    "R2_FINAL_interior_train_009147",
+    "R2_FINAL_interior_train_010191",
+    "R2_FINAL_interior_train_010117",
+    "R2_FINAL_interior_train_009054",
+    "R2_FINAL_interior_train_009503",
+    "R2_FINAL_interior_train_009179",
+    "R2_FINAL_interior_train_009346",
+    "R2_FINAL_interior_train_009895",
+    "R2_FINAL_interior_train_009107",
+    "R2_FINAL_interior_train_009313",
+    "R2_FINAL_interior_train_009132",
+    "R2_FINAL_interior_train_009689",
+    "R2_FINAL_interior_train_009087",
+    "R2_FINAL_interior_train_009868",
+    "R2_FINAL_interior_train_009861",
+    "R2_FINAL_interior_train_009695",
+    "R2_FINAL_interior_train_010185",
+    "R2_FINAL_interior_train_010138",
+    "R2_FINAL_interior_train_009955",
+    "R2_FINAL_interior_train_010061",
+    "R2_FINAL_interior_train_009977",
+    "R2_FINAL_interior_train_010221",
+    "R2_FINAL_interior_train_009433",
+    "R2_FINAL_wide_valid_train_002259",
+    "R2_FINAL_interior_train_009643",
+    "R2_FINAL_interior_train_009163",
+    "R2_FINAL_interior_train_009273",
+    "R2_FINAL_interior_train_010101",
+    "R2_FINAL_interior_train_009743",
+    "R2_FINAL_interior_train_009165",
+    "R2_FINAL_interior_train_009297",
+    "R2_FINAL_interior_train_010255",
+    "R2_FINAL_interior_train_009611",
+    "R2_FINAL_interior_train_010243",
+    "R2_FINAL_interior_train_010140",
+    "R2_FINAL_interior_train_010202",
+    "R2_FINAL_interior_train_010190",
+    "R2_FINAL_interior_train_009352",
+    "R2_FINAL_interior_train_009451",
+    "R2_FINAL_interior_train_009439",
+    "R2_FINAL_interior_train_009640",
+    "R2_FINAL_interior_train_009232",
+    "R2_FINAL_interior_train_010163",
+    "R2_FINAL_interior_train_009805",
+    "R2_FINAL_interior_train_009156",
+    "R2_FINAL_interior_train_009559",
+    "R2_FINAL_wide_valid_train_002244",
+    "R2_FINAL_interior_train_009185",
+    "R2_FINAL_interior_train_009882",
+    "R2_FINAL_interior_train_009664",
+    "R2_FINAL_interior_train_009355",
+    "R2_FINAL_interior_train_010228",
+    "R2_FINAL_interior_train_009658",
+    "R2_FINAL_interior_train_009848",
+    "R2_FINAL_interior_train_009863",
+    "R2_FINAL_wide_valid_train_002208",
+    "R2_FINAL_interior_train_009935",
+    "R2_FINAL_interior_train_009366",
+    "R2_FINAL_interior_train_010126",
+    "R2_FINAL_interior_train_008991",
+    "R2_FINAL_interior_train_009792",
+    "R2_FINAL_interior_train_010133",
+    "R2_FINAL_interior_train_009064",
+    "R2_FINAL_interior_train_010142",
+    "R2_FINAL_interior_train_009575",
+    "R2_FINAL_interior_train_009072",
+    "R2_FINAL_interior_train_009679",
+    "R2_FINAL_interior_train_009074",
+    "R2_FINAL_interior_train_009797",
+    "R2_FINAL_interior_train_009224",
+    "R2_FINAL_interior_train_009416",
+    "R2_FINAL_interior_train_010198",
+    "R2_FINAL_interior_train_009725",
+    "R2_FINAL_interior_train_010252",
+    "R2_FINAL_interior_train_009414",
+    "R2_FINAL_interior_train_009328",
+    "R2_FINAL_wide_valid_train_002348",
+    "R2_FINAL_wide_valid_train_002297",
+    "R2_FINAL_interior_train_010057",
+    "R2_FINAL_interior_train_009477",
+    "R2_FINAL_wide_valid_train_002180",
+    "R2_FINAL_interior_train_009718",
+    "R2_FINAL_interior_train_009923",
+    "R2_FINAL_wide_valid_train_002417",
+    "R2_FINAL_interior_train_009731",
+    "R2_FINAL_interior_train_009943",
+    "R2_FINAL_interior_train_010079",
+    "R2_FINAL_interior_train_009196",
+    "R2_FINAL_interior_train_009039",
+    "R2_FINAL_interior_train_010091",
+    "R2_FINAL_interior_train_009104",
+    "R2_FINAL_interior_train_009859",
+    "R2_FINAL_interior_train_010219",
+    "R2_FINAL_wide_valid_train_002334",
+    "R2_FINAL_interior_train_009334",
+    "R2_FINAL_interior_train_009372",
+    "R2_FINAL_wide_valid_train_002315",
+    "R2_FINAL_interior_train_009417",
+    "R2_FINAL_wide_valid_train_002254",
+    "R2_FINAL_wide_valid_train_002229",
+    "R2_FINAL_interior_train_009264",
+    "R2_FINAL_interior_train_009764",
+    "R2_FINAL_wide_valid_train_002291",
+    "R2_FINAL_interior_train_010153",
+    "R2_FINAL_wide_valid_train_002186",
+    "R2_FINAL_interior_train_009452",
+    "R2_FINAL_interior_train_009958",
+    "R2_FINAL_interior_train_010139",
+    "R2_FINAL_interior_train_010210",
+    "R2_FINAL_interior_train_009517",
+    "R2_FINAL_interior_train_009126",
+    "R2_FINAL_wide_valid_train_002317",
+    "R2_FINAL_interior_train_009973",
+    "R2_FINAL_wide_valid_train_002167",
+    "R2_FINAL_interior_train_009782",
+    "R2_FINAL_wide_valid_train_002412",
+    "R2_FINAL_interior_train_009538",
+    "R2_FINAL_wide_valid_train_002346",
+    "R2_FINAL_interior_train_009791",
+    "R2_FINAL_interior_train_009874",
+    "R2_FINAL_wide_valid_train_002386",
+    "R2_FINAL_wide_valid_train_002271",
+    "R2_FINAL_interior_train_009499",
+    "R2_FINAL_wide_valid_train_002409",
+    "R2_FINAL_wide_valid_train_002240",
+    "R2_FINAL_wide_valid_train_002436",
+    "R2_FINAL_interior_train_009004",
+    "R2_FINAL_interior_train_009950",
+    "R2_FINAL_wide_valid_train_002414",
+    "R2_FINAL_wide_valid_train_002267",
+    "R2_FINAL_interior_train_009739",
+    "R2_FINAL_interior_train_009948",
+    "R2_FINAL_interior_train_009138",
+    "R2_FINAL_interior_train_010113",
+    "R2_FINAL_interior_train_009190",
+    "R2_FINAL_interior_train_010227",
+    "R2_FINAL_wide_valid_train_002442",
+    "R2_FINAL_wide_valid_train_002159",
+    "R2_FINAL_interior_train_009370",
+    "R2_FINAL_interior_train_009460",
+    "R2_FINAL_interior_train_010150",
+    "R2_FINAL_wide_valid_train_002166",
+    "R2_FINAL_wide_valid_train_002385",
+    "R2_FINAL_interior_train_009287",
+    "R2_FINAL_interior_train_009628",
+    "R2_FINAL_wide_valid_train_002185",
+    "R2_FINAL_wide_valid_train_002311",
+    "R2_FINAL_wide_valid_train_002450",
+    "R2_FINAL_wide_valid_train_002360",
+    "R2_FINAL_wide_valid_train_002231",
+    "R2_FINAL_interior_train_010093",
+    "R2_FINAL_interior_train_009406",
+    "R2_FINAL_interior_train_009589",
+    "R2_FINAL_wide_valid_train_002358",
+    "R2_FINAL_wide_valid_train_002445",
+    "R2_FINAL_wide_valid_train_002309",
+    "R2_FINAL_interior_train_009523",
+    "R2_FINAL_wide_valid_train_002188",
+    "R2_FINAL_interior_train_010048",
+    "R2_FINAL_interior_train_010212",
+    "R2_FINAL_wide_valid_train_002398",
+    "R2_FINAL_wide_valid_train_002209",
+    "R2_FINAL_interior_train_010032",
+    "R2_FINAL_wide_valid_train_002427",
+    "R2_FINAL_interior_train_009012",
+    "R2_FINAL_wide_valid_train_002448",
+    "R2_FINAL_wide_valid_train_002379",
+    "R2_FINAL_wide_valid_train_002210",
+    "R2_FINAL_wide_valid_train_002275",
+    "R2_FINAL_wide_valid_train_002411",
+    "R2_FINAL_wide_valid_train_002206",
+    "R2_FINAL_interior_train_009438",
+    "R2_FINAL_interior_train_009137"
+  ],
+  "selected_detail": [
+    {
+      "surface_id": "R2_FINAL_interior_train_009952",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009900",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009369",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009444",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010052",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009413",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009063",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009858",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009296",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010053",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009323",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010046",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010251",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009423",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009158",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010080",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009088",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002165",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010152",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010149",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009317",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009146",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009907",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009938",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009684",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010125",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009876",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010206",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009443",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009241",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009159",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009161",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009568",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010050",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009116",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009703",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009491",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009486",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009204",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010056",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010084",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009667",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009251",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009082",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009821",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009880",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009239",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009774",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010059",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009170",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010213",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009211",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002173",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009909",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009719",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009772",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009969",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002420",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002370",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009335",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009908",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009654",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009531",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002422",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010164",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009666",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009819",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009174",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009711",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009823",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009373",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009591",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009387",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010216",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009009",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009368",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009925",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009147",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010191",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010117",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009054",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009503",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009179",
+      "v0_total_cell": 0,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009346",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009895",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009107",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009313",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009132",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009689",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009087",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009868",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009861",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009695",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010185",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010138",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009955",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010061",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009977",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010221",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009433",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002259",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009643",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009163",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009273",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010101",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009743",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009165",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009297",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010255",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009611",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010243",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010140",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010202",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010190",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009352",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009451",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009439",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009640",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009232",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010163",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009805",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009156",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009559",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002244",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009185",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009882",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009664",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009355",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010228",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009658",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009848",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009863",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002208",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009935",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009366",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010126",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_008991",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009792",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010133",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009064",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010142",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009575",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009072",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009679",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009074",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009797",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009224",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009416",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010198",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009725",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010252",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009414",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009328",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002348",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002297",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010057",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009477",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002180",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009718",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009923",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002417",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009731",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009943",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010079",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009196",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009039",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010091",
+      "v0_total_cell": 1,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009104",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009859",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010219",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002334",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009334",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009372",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002315",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009417",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002254",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002229",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009264",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009764",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002291",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010153",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002186",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009452",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009958",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010139",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010210",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009517",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009126",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002317",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009973",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002167",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009782",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002412",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 0
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009538",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002346",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009791",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009874",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002386",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002271",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009499",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002409",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002240",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002436",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009004",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009950",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002414",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002267",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009739",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009948",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009138",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010113",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009190",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010227",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002442",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002159",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009370",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009460",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010150",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002166",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 1
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002385",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009287",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009628",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002185",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002311",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002450",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002360",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002231",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010093",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009406",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009589",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002358",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002445",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002309",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009523",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002188",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010048",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010212",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002398",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002209",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_010032",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002427",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009012",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002448",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002379",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002210",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002275",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002411",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_wide_valid_train_002206",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009438",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    },
+    {
+      "surface_id": "R2_FINAL_interior_train_009137",
+      "v0_total_cell": 2,
+      "kappa_slow_cell": 2
+    }
+  ],
+  "cell_sizes": {
+    "v0_k0": 132,
+    "v0_k1": 143,
+    "v0_k2": 142,
+    "v1_k0": 155,
+    "v1_k1": 143,
+    "v1_k2": 118,
+    "v2_k0": 130,
+    "v2_k1": 130,
+    "v2_k2": 157
+  },
+  "config_source": "configs/r2_noise_robustness_FINAL.yaml"
+}

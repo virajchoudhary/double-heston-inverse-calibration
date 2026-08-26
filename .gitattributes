@@ -10,3 +10,6 @@
 *.npy binary
 *.npz binary
 *.parquet binary
+evidence/r2_noise_robustness/traditional_subset_ids.json -text
+evidence/r2_noise_robustness/traditional_subset_ids.json whitespace=cr-at-eol
+evidence/r2_noise_robustness/provenance_repair/original_candidate_traditional_subset_ids.json -text

@@ -1,0 +1,36 @@
+{
+  "artifact_kind": "R2_NOISE_TRADITIONAL_SUBSET_PROVENANCE_INTAKE",
+  "candidate_sha256": "db3a4917dcbf4b26a5e9bfa8103b8a3beffe439c8ad6f232330908f615d18880",
+  "candidate_source_path": "C:/dh_noise_overnight/evidence/r2_noise_robustness/traditional_subset_ids.json",
+  "candidate_timestamp_utc": "2026-08-25T20:22:41.430374+00:00",
+  "canonical_sha256": "f856ef5ffcc33782a115180ca7cb7b1f4cfa4ebeb8fd1af45c7cde242c85aba7",
+  "frozen_expected_hash_preserved": true,
+  "intake_version": "r2-traditional-subset-intake-v1",
+  "original_backup_path": "C:/dh_noise_overnight/evidence/r2_noise_robustness/provenance_repair/original_candidate_traditional_subset_ids.json",
+  "proof": {
+    "input": {
+      "byte_size": 40532,
+      "crlf_count": 0,
+      "has_final_trailing_newline": true,
+      "has_utf8_bom": false,
+      "lf_count": 1538,
+      "line_ending_form": "LF",
+      "sha256": "db3a4917dcbf4b26a5e9bfa8103b8a3beffe439c8ad6f232330908f615d18880"
+    },
+    "output": {
+      "byte_size": 42070,
+      "crlf_count": 1538,
+      "has_final_trailing_newline": true,
+      "has_utf8_bom": false,
+      "lf_count": 1538,
+      "line_ending_form": "CRLF",
+      "sha256": "f856ef5ffcc33782a115180ca7cb7b1f4cfa4ebeb8fd1af45c7cde242c85aba7"
+    },
+    "semantic_payload_sha256": "77a5b333a3e6affab18272e44fce9dfe34be8dde39dc8c35507eb5beb6a616bc",
+    "transformation": "replace_each_LF_with_CRLF_after_removing_any_CRLF"
+  },
+  "repair_status": "CANONICALIZED",
+  "scientific_fields_changed": false,
+  "tool": "src/r2_noise/provenance_intake.py",
+  "transformation": "replace_each_LF_with_CRLF_after_removing_any_CRLF"
+}
