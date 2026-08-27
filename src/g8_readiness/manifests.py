@@ -12,7 +12,7 @@ from typing import Any, Iterable, Mapping
 from ..r2_representation.serialization import surface_to_payload
 from ..r2_representation.surface import R2Surface
 from .acquisition import NSEArchiveRecord, RbiRateRecord
-from .contracts import DATE_FLOOR, SCAN_END
+from .contracts import BACKUP_SYMBOLS_BY_PRIMARY, DATE_FLOOR, PRIMARY_SYMBOLS, SCAN_END
 from .scanner import BackupDecision, ScanResult
 
 
@@ -150,12 +150,37 @@ def build_selected_data_freeze(
     archive_records: Iterable[NSEArchiveRecord],
     rate_records: Iterable[RbiRateRecord],
     scan_result: ScanResult,
-    backup_decisions: Iterable[BackupDecision],
+    backup_decisions: Iterable[BackupDecision] = (),
     observation_role_mappings: Mapping[str, list[int]],
     data_classification: str = "SYNTHETIC_G8_PIPELINE_FIXTURE",
     authorize_real_selected_data_seal: bool = False,
+    protocol_commit: str = "7eecc7188c54f9d4505d32ccf5c51069a4c3a97c",
+    config_sha256: str = "d6107bf7c1b5404e59130d99b5e0f12aef4352c1452b83235187caa7628d4f37",
+    pre_acquisition_freeze_sha256: str | None = None,
+    pre_acquisition_freeze: Mapping[str, Any] | None = None,
+    primary_scan_result: ScanResult | None = None,
+    scan_mode: str | None = None,
+    search_window: Mapping[str, str] | None = None,
 ) -> dict[str, Any]:
     """Second seal after deterministic structural selection and before models."""
+    if protocol_commit != "7eecc7188c54f9d4505d32ccf5c51069a4c3a97c":
+        raise ValueError("selected-data freeze protocol commit mismatch")
+    if config_sha256 != "d6107bf7c1b5404e59130d99b5e0f12aef4352c1452b83235187caa7628d4f37":
+        raise ValueError("selected-data freeze config SHA-256 mismatch")
+
+    predecessor_hash = pre_acquisition_freeze_sha256 or ""
+    if pre_acquisition_freeze is not None:
+        if not isinstance(pre_acquisition_freeze, Mapping):
+            raise ValueError("pre_acquisition_freeze must be a mapping")
+        if pre_acquisition_freeze.get("schema_version") != "g8.pre_acquisition_freeze/1":
+            raise ValueError("invalid pre-acquisition freeze schema version")
+        if pre_acquisition_freeze.get("status") != "G8_PRE_ACQUISITION_FREEZE_READY":
+            raise ValueError(f"pre-acquisition freeze status not ready: {pre_acquisition_freeze.get('status')}")
+        predecessor_hash = (
+            pre_acquisition_freeze.get("manifest_sha256")
+            or sha256_payload({**pre_acquisition_freeze, "manifest_sha256": ""})
+        )
+
     surface_list = list(surfaces)
     archives = [_archive_identity(record) for record in archive_records]
     rates = [_rate_identity(record) for record in rate_records]
@@ -168,6 +193,55 @@ def build_selected_data_freeze(
         }
         for item in backup_decisions
     ]
+
+    effective_scan_mode = scan_mode or ("BACKUP_RESCAN" if backups else "PRIMARY_SCAN")
+    if effective_scan_mode not in ("PRIMARY_SCAN", "BACKUP_RESCAN"):
+        raise ValueError(f"unknown scan mode {effective_scan_mode}")
+
+    if effective_scan_mode == "PRIMARY_SCAN":
+        if backups:
+            raise ValueError("primary scan freeze cannot contain backup decisions")
+        if scan_result.scan_mode not in ("PRIMARY_SCAN", None):
+            raise ValueError("scan_result mode mismatch for primary scan")
+        backup_activation_reason = "NONE_PRIMARY_SCAN"
+        primary_scan_provenance = None
+    else:
+        if not backups:
+            raise ValueError("backup rescan freeze requires non-empty backup decisions")
+        if any(b["primary_support_count"] != 0 or b["trigger"] != "PRIMARY_ZERO_ELIGIBLE_SURFACES_COMPLETE_WINDOW" for b in backups):
+            raise ValueError("backup decisions require zero eligible surfaces across complete window")
+        if primary_scan_result is not None:
+            if primary_scan_result.scan_mode != "PRIMARY_SCAN":
+                raise ValueError("primary_scan_result must have scan_mode == 'PRIMARY_SCAN'")
+            if not primary_scan_result.complete_window_scanned:
+                raise ValueError("primary scan must have covered the complete window")
+            if primary_scan_result.reached_target:
+                raise ValueError("primary scan reached target; backup rescan is forbidden")
+            primary_scan_provenance = {
+                "scan_mode": "PRIMARY_SCAN",
+                "complete_window_scanned": True,
+                "reached_target": False,
+                "failure_count": len(primary_scan_result.failures),
+                "failures": [
+                    {
+                        "valuation_date": f.valuation_date.isoformat(),
+                        "symbol": f.symbol,
+                        "reason": f.reason,
+                    }
+                    for f in primary_scan_result.failures
+                ],
+            }
+        else:
+            primary_scan_provenance = {
+                "scan_mode": "PRIMARY_SCAN",
+                "complete_window_scanned": True,
+                "reached_target": False,
+            }
+        backup_activation_reason = "; ".join(
+            f"{b['primary_symbol']}->{b['backup_symbol']}:{b['trigger']}"
+            for b in backups
+        )
+
     if scan_result.reached_target is not True:
         raise ValueError("selected-data freeze requires a completed deterministic scan that reached target")
     if len(scan_result.selected_dates) != 2:
@@ -183,7 +257,8 @@ def build_selected_data_freeze(
     date_counts = Counter(date_value for date_value, _symbol in identities)
     if set(date_counts.values()) != {4}:
         raise ValueError("selected-data freeze requires exactly four surfaces per common date")
-    replacements = {item.primary_symbol: item.backup_symbol for item in backup_decisions}
+
+    replacements = {item["primary_symbol"]: item["backup_symbol"] for item in backups}
     sector_backups = {"NTPC": "POWERGRID", "CIPLA": "SUNPHARMA", "INFY": "TCS", "HDFCBANK": "ICICIBANK"}
     if any(sector_backups.get(primary) != backup for primary, backup in replacements.items()):
         raise ValueError("invalid fixed-order backup replacement")
@@ -241,10 +316,7 @@ def build_selected_data_freeze(
                 raise ValueError(f"surface classification does not match seal for {surface.surface_id}")
             if surface.source != expected_source:
                 raise ValueError(f"surface source does not match seal for {surface.surface_id}")
-    if backups and scan_result.complete_window_scanned is not True:
-        raise ValueError("backup decisions require a proven complete-window scan")
-    if not scan_result.complete_window_scanned and (not scan_result.reached_target or backups):
-        raise ValueError("incomplete-window seal requires target success and no backup decisions")
+
     surface_hashes = []
     for surface in surface_list:
         payload = surface_to_payload(surface)
@@ -268,13 +340,22 @@ def build_selected_data_freeze(
         not_real_market_data = False
     else:
         raise ValueError("real selected-data seal requires explicit separate authorization")
+
+    window = search_window or {"search_start": DATE_FLOOR.isoformat(), "search_end": SCAN_END.isoformat()}
     payload = {
         "schema_version": "g8.selected_data_freeze/1",
         "classification": data_classification,
         "status": status,
+        "scan_mode": effective_scan_mode,
+        "protocol_commit": protocol_commit,
+        "config_sha256": config_sha256,
+        "pre_acquisition_freeze_sha256": predecessor_hash,
+        "search_window": dict(window),
         "not_real_market_data": not_real_market_data,
         "selected_dates": selected_dates,
         "selected_symbols": sorted({str(surface.metadata["symbol"]) for surface in surface_list}),
+        "primary_symbols": list(PRIMARY_SYMBOLS),
+        "active_symbols": sorted(expected_symbols),
         "raw_archive_hashes": archives,
         "rate_hashes": rates,
         "surface_hashes": surface_hashes,
@@ -287,11 +368,15 @@ def build_selected_data_freeze(
             for item in scan_result.failures
         ],
         "scan_reached_target": scan_result.reached_target,
-        "complete_window_scanned_for_backup_policy": scan_result.complete_window_scanned,
+        "complete_window_scanned_for_backup_policy": (
+            True if effective_scan_mode == "BACKUP_RESCAN" else scan_result.complete_window_scanned
+        ),
         "backup_decisions": backups,
+        "backup_activation_reason": backup_activation_reason,
+        "primary_scan_provenance": primary_scan_provenance,
         "backup_policy_resolution": (
             "COMPLETE_WINDOW_BACKUP_SCAN_COMPLETE"
-            if scan_result.complete_window_scanned
+            if effective_scan_mode == "BACKUP_RESCAN"
             else "NOT_REQUIRED_TWO_COMMON_DATES_REACHED_WITHOUT_SUBSTITUTION"
         ),
         "observation_role_mappings": {key: list(value) for key, value in observation_role_mappings.items()},

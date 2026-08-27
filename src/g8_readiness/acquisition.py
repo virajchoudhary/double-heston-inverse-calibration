@@ -13,19 +13,140 @@ import zipfile
 from dataclasses import dataclass
 from datetime import date, datetime, timezone
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any, Callable, Mapping
 
 import pandas as pd
 
 from ..nse_stage_a import UDIFF_COLUMNS
-from .contracts import G8ReadinessError, validate_g8_valuation_date
+from .contracts import DATE_FLOOR, SCAN_END, G8ReadinessError, validate_g8_valuation_date
 
 OFFICIAL_NSE_ARCHIVE_ROOT = "https://nsearchives.nseindia.com/content"
 OFFICIAL_RBI_ROOT = "https://www.rbi.org.in/"
+FROZEN_PROTOCOL_COMMIT = "7eecc7188c54f9d4505d32ccf5c51069a4c3a97c"
+FROZEN_CONFIG_SHA256 = "d6107bf7c1b5404e59130d99b5e0f12aef4352c1452b83235187caa7628d4f37"
+REQUIRED_TOOLS = {"acquisition", "surface_builder", "evaluation_harness"}
 
 
-class G8AcquisitionLocked(G8ReadinessError):
+class G8AcquisitionLocked(G8ReadinessError, RuntimeError):
     """Raised unless the caller supplies an explicit future authorization flag."""
+
+
+class CurrentDateAcquisitionLocked(G8AcquisitionLocked):
+    """Raised when calendar floor 2026-09-30 has not been reached or future valuation is requested."""
+
+
+def verify_acquisition_gate(
+    *,
+    valuation_date: date | str,
+    authorize_acquisition: bool,
+    current_date: date | None = None,
+    protocol_commit: str = FROZEN_PROTOCOL_COMMIT,
+    config_path: Path | str = Path("configs/g8_final_real_market.yaml"),
+    pre_acquisition_freeze: Mapping[str, Any] | None = None,
+    independent_review_verdict: str | None = None,
+    checkpoint_manifest: Mapping[str, Any] | None = None,
+    model3_decision: Mapping[str, Any] | None = None,
+    tool_identities: Mapping[str, Mapping[str, Any]] | None = None,
+    protocol_frozen: bool = True,
+) -> date:
+    """Authoritative fail-closed acquisition gate enforcing all required preconditions."""
+    if authorize_acquisition is not True:
+        raise G8AcquisitionLocked(
+            "default invocation cannot acquire G8 market data; explicit future authorization is required"
+        )
+    val_date = validate_g8_valuation_date(valuation_date)
+    today = current_date or date.today()
+    if today < DATE_FLOOR:
+        raise CurrentDateAcquisitionLocked(
+            f"calendar blocker remains: current date {today.isoformat()} precedes {DATE_FLOOR.isoformat()}"
+        )
+    if val_date > today:
+        raise CurrentDateAcquisitionLocked(
+            f"future valuation evidence is unavailable: requested {val_date.isoformat()}, current {today.isoformat()}"
+        )
+
+    if pre_acquisition_freeze is not None:
+        if not isinstance(pre_acquisition_freeze, Mapping):
+            raise G8AcquisitionLocked("pre_acquisition_freeze must be a mapping")
+        if pre_acquisition_freeze.get("schema_version") != "g8.pre_acquisition_freeze/1":
+            raise G8AcquisitionLocked("invalid pre-acquisition freeze schema version")
+        if pre_acquisition_freeze.get("status") != "G8_PRE_ACQUISITION_FREEZE_READY":
+            raise G8AcquisitionLocked(
+                f"pre-acquisition freeze status is not ready: {pre_acquisition_freeze.get('status')}"
+            )
+        if pre_acquisition_freeze.get("protocol_commit") != FROZEN_PROTOCOL_COMMIT:
+            raise G8AcquisitionLocked("pre-acquisition freeze protocol commit mismatch")
+        if pre_acquisition_freeze.get("protocol_identity_verified") is not True:
+            raise G8AcquisitionLocked("pre-acquisition freeze protocol identity not verified")
+        if pre_acquisition_freeze.get("config_identity_verified") is not True:
+            raise G8AcquisitionLocked("pre-acquisition freeze config identity not verified")
+        if pre_acquisition_freeze.get("config", {}).get("sha256") != FROZEN_CONFIG_SHA256:
+            raise G8AcquisitionLocked("pre-acquisition freeze config hash mismatch")
+        if pre_acquisition_freeze.get("checkpoint_readiness", {}).get("all_checks_passed") is not True:
+            raise G8AcquisitionLocked("pre-acquisition freeze checkpoint gate not passed")
+        if pre_acquisition_freeze.get("independent_review_verdict") != "APPROVED":
+            raise G8AcquisitionLocked("pre-acquisition freeze independent review not approved")
+        if pre_acquisition_freeze.get("model3_evidence_bound") is not True:
+            raise G8AcquisitionLocked("pre-acquisition freeze Model3 evidence not bound")
+        if pre_acquisition_freeze.get("tool_identities_verified") is not True:
+            raise G8AcquisitionLocked("pre-acquisition freeze tool identities not verified")
+        if pre_acquisition_freeze.get("sealed"):
+            from .manifests import sha256_payload
+            computed_hash = sha256_payload({**pre_acquisition_freeze, "manifest_sha256": ""})
+            if pre_acquisition_freeze.get("manifest_sha256") != computed_hash:
+                raise G8AcquisitionLocked("pre-acquisition freeze manifest SHA-256 mismatch")
+        return val_date
+
+    if protocol_commit != FROZEN_PROTOCOL_COMMIT or protocol_frozen is not True:
+        raise G8AcquisitionLocked(
+            f"protocol identity mismatch: expected {FROZEN_PROTOCOL_COMMIT}, got {protocol_commit}"
+        )
+    cfg_file = Path(config_path)
+    if not cfg_file.is_file():
+        raise G8AcquisitionLocked(f"G8 config file missing: {cfg_file}")
+    from .manifests import artifact_identity
+    cfg_hash = artifact_identity(cfg_file)["sha256"]
+    if cfg_hash != FROZEN_CONFIG_SHA256:
+        raise G8AcquisitionLocked(
+            f"config hash mismatch: expected {FROZEN_CONFIG_SHA256}, got {cfg_hash}"
+        )
+    from .checkpoints import checkpoint_readiness_manifest
+    checkpoints = checkpoint_manifest or checkpoint_readiness_manifest(config_path=cfg_file)
+    if (
+        checkpoints.get("all_checks_passed") is not True
+        or checkpoints.get("overall_status") != "CHECKPOINT_ARTIFACTS_STAGED_AND_VERIFIED"
+    ):
+        raise G8AcquisitionLocked("checkpoint readiness gate failed: 6 canonical checkpoints must pass")
+    if independent_review_verdict != "APPROVED":
+        raise G8AcquisitionLocked(
+            f"independent review verdict must be 'APPROVED', got {independent_review_verdict!r}"
+        )
+    from .model3 import evaluate_model3_inclusion
+    m3_dec = model3_decision or evaluate_model3_inclusion(None, acquisition_has_begun=False)
+    m3_label = m3_dec.get("label")
+    m3_ok = (
+        m3_label in {"MODEL3_NOT_FROZEN_NOT_EVALUATED", "MODEL3_NOT_YET_ELIGIBLE_FOR_G8_INCLUSION"}
+        or (
+            m3_label == "MODEL3_INCLUDED"
+            and m3_dec.get("decision") == "MODEL3_INCLUDED"
+            and isinstance(m3_dec.get("checks"), Mapping)
+            and all(m3_dec["checks"].values())
+        )
+    )
+    if not m3_ok:
+        raise G8AcquisitionLocked(
+            f"model3 participation decision incomplete or unbound: label={m3_label}"
+        )
+    if tool_identities is not None:
+        tools_ok = set(tool_identities) == REQUIRED_TOOLS and all(
+            isinstance(ident, Mapping)
+            and Path(str(ident.get("path", ""))).is_file()
+            and artifact_identity(ident["path"])["sha256"] == ident.get("sha256")
+            for ident in tool_identities.values()
+        )
+        if not tools_ok:
+            raise G8AcquisitionLocked("tool identity verification failed")
+    return val_date
 
 
 @dataclass(frozen=True)
@@ -175,12 +296,30 @@ def intake_official_nse(
     authorize_acquisition: bool,
     downloader: Downloader | None = None,
     retrieval_timestamp_utc: str | None = None,
+    current_date: date | None = None,
+    protocol_commit: str = FROZEN_PROTOCOL_COMMIT,
+    config_path: Path | str = Path("configs/g8_final_real_market.yaml"),
+    pre_acquisition_freeze: Mapping[str, Any] | None = None,
+    independent_review_verdict: str | None = None,
+    checkpoint_manifest: Mapping[str, Any] | None = None,
+    model3_decision: Mapping[str, Any] | None = None,
+    tool_identities: Mapping[str, Mapping[str, Any]] | None = None,
+    protocol_frozen: bool = True,
 ) -> NSEArchiveRecord:
-    """Acquire one authorized CM/FO archive later; tonight callers use fixtures only."""
-    if authorize_acquisition is not True:
-        raise G8AcquisitionLocked(
-            "current run lacks --authorize-g8-acquisition; real network acquisition is forbidden"
-        )
+    """Acquire one authorized CM/FO archive; enforces the central fail-closed acquisition gate first."""
+    verify_acquisition_gate(
+        valuation_date=valuation_date,
+        authorize_acquisition=authorize_acquisition,
+        current_date=current_date,
+        protocol_commit=protocol_commit,
+        config_path=config_path,
+        pre_acquisition_freeze=pre_acquisition_freeze,
+        independent_review_verdict=independent_review_verdict,
+        checkpoint_manifest=checkpoint_manifest,
+        model3_decision=model3_decision,
+        tool_identities=tool_identities,
+        protocol_frozen=protocol_frozen,
+    )
     trading_date, market_code, filename, url = nse_archive_identity(market, valuation_date)
     directory = Path(store_root) / "official_nse" / trading_date
     archive_path = directory / filename
@@ -359,9 +498,29 @@ def intake_official_rbi(
     official_url: str,
     latest_permitted_observation_date: date | str,
     authorize_acquisition: bool,
+    current_date: date | None = None,
+    protocol_commit: str = FROZEN_PROTOCOL_COMMIT,
+    config_path: Path | str = Path("configs/g8_final_real_market.yaml"),
+    pre_acquisition_freeze: Mapping[str, Any] | None = None,
+    independent_review_verdict: str | None = None,
+    checkpoint_manifest: Mapping[str, Any] | None = None,
+    model3_decision: Mapping[str, Any] | None = None,
+    tool_identities: Mapping[str, Mapping[str, Any]] | None = None,
+    protocol_frozen: bool = True,
 ) -> RbiRateRecord:
-    if authorize_acquisition is not True:
-        raise G8AcquisitionLocked("RBI acquisition requires --authorize-g8-acquisition")
+    verify_acquisition_gate(
+        valuation_date=latest_permitted_observation_date,
+        authorize_acquisition=authorize_acquisition,
+        current_date=current_date,
+        protocol_commit=protocol_commit,
+        config_path=config_path,
+        pre_acquisition_freeze=pre_acquisition_freeze,
+        independent_review_verdict=independent_review_verdict,
+        checkpoint_manifest=checkpoint_manifest,
+        model3_decision=model3_decision,
+        tool_identities=tool_identities,
+        protocol_frozen=protocol_frozen,
+    )
     record = normalize_rbi_auction(
         html,
         official_url=official_url,

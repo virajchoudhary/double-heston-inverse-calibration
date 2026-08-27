@@ -13,14 +13,17 @@ from .contracts import (
     validate_g8_valuation_date,
 )
 from .acquisition import (
+    CurrentDateAcquisitionLocked,
     G8AcquisitionLocked,
     NSEArchiveRecord,
     RbiRateRecord,
     intake_official_nse,
     normalize_rbi_auction,
+    verify_acquisition_gate,
 )
 
 __all__ = [
+    "CurrentDateAcquisitionLocked",
     "DATE_FLOOR",
     "G8AcquisitionLocked",
     "G8ReadinessError",
@@ -36,4 +39,5 @@ __all__ = [
     "intake_official_nse",
     "normalize_rbi_auction",
     "validate_g8_valuation_date",
+    "verify_acquisition_gate",
 ]

@@ -13,6 +13,7 @@ import pytest
 from src.g8_readiness.acquisition import (
     G8AcquisitionLocked,
     intake_official_nse,
+    intake_official_rbi,
     normalize_rbi_auction,
 )
 from src.g8_readiness.checkpoints import checkpoint_readiness_manifest
@@ -116,10 +117,12 @@ def test_fixture_intake_preserves_provenance_and_duplicate_identity(tmp_path: Pa
     first = intake_official_nse(
         "FO", "2026-10-01", store_root=tmp_path, authorize_acquisition=True,
         downloader=downloader, retrieval_timestamp_utc=timestamp,
+        current_date=date(2026, 10, 1), independent_review_verdict="APPROVED",
     )
     second = intake_official_nse(
         "FO", "2026-10-01", store_root=tmp_path, authorize_acquisition=True,
         downloader=lambda _url: (_ for _ in ()).throw(AssertionError("network retry forbidden")),
+        current_date=date(2026, 10, 1), independent_review_verdict="APPROVED",
     )
     assert first.csv_sha256 == second.csv_sha256
     assert first.retrieval_timestamp_utc == second.retrieval_timestamp_utc == timestamp
@@ -133,6 +136,7 @@ def test_corrupt_archive_fails_closed_and_is_retained(tmp_path: Path) -> None:
         intake_official_nse(
             "CM", "2026-10-02", store_root=tmp_path, authorize_acquisition=True,
             downloader=lambda _url: corrupt, retrieval_timestamp_utc="fixed",
+            current_date=date(2026, 10, 2), independent_review_verdict="APPROVED",
         )
     rejected = list((tmp_path / "rejected").glob("*.json"))
     assert len(rejected) == 1
@@ -176,6 +180,120 @@ def test_default_gates_cannot_be_crossed() -> None:
         assert_final_evaluation_gate(authorize_g8_final_evaluation=False, selected_data_manifest={}, current_date=date(2026, 12, 1))
     with pytest.raises(Exception, match="real selected-data seal"):
         assert_final_evaluation_gate(authorize_g8_final_evaluation=True, selected_data_manifest={"classification": "SYNTHETIC_G8_PIPELINE_FIXTURE"}, current_date=date(2027, 1, 1))
+
+
+def test_central_acquisition_gate_enforces_all_preconditions(tmp_path: Path) -> None:
+    # 1. Missing authorization
+    with pytest.raises(G8AcquisitionLocked, match="default invocation"):
+        assert_future_acquisition_gate(
+            authorize_g8_acquisition=False,
+            valuation_date="2026-10-01",
+            current_date=date(2026, 10, 1),
+            independent_review_verdict="APPROVED",
+        )
+
+    # 2. Pre-floor valuation date
+    with pytest.raises(Exception, match="precedes frozen floor"):
+        assert_future_acquisition_gate(
+            authorize_g8_acquisition=True,
+            valuation_date="2026-09-29",
+            current_date=date(2026, 10, 1),
+            independent_review_verdict="APPROVED",
+        )
+
+    # 3. Current date before floor
+    with pytest.raises(Exception, match="calendar blocker"):
+        assert_future_acquisition_gate(
+            authorize_g8_acquisition=True,
+            valuation_date="2026-10-01",
+            current_date=date(2026, 8, 27),
+            independent_review_verdict="APPROVED",
+        )
+
+    # 4. Future valuation date relative to current date
+    with pytest.raises(Exception, match="future valuation evidence is unavailable"):
+        assert_future_acquisition_gate(
+            authorize_g8_acquisition=True,
+            valuation_date="2026-10-15",
+            current_date=date(2026, 10, 1),
+            independent_review_verdict="APPROVED",
+        )
+
+    # 5. Protocol commit mismatch
+    with pytest.raises(G8AcquisitionLocked, match="protocol identity mismatch"):
+        assert_future_acquisition_gate(
+            authorize_g8_acquisition=True,
+            valuation_date="2026-10-01",
+            current_date=date(2026, 10, 1),
+            protocol_commit="0000000000000000000000000000000000000000",
+            independent_review_verdict="APPROVED",
+        )
+
+    # 6. Checkpoint readiness gate failure
+    with pytest.raises(G8AcquisitionLocked, match="checkpoint readiness gate failed"):
+        assert_future_acquisition_gate(
+            authorize_g8_acquisition=True,
+            valuation_date="2026-10-01",
+            current_date=date(2026, 10, 1),
+            checkpoint_manifest={"all_checks_passed": False, "overall_status": "MISSING"},
+            independent_review_verdict="APPROVED",
+        )
+
+    # 7. Independent review not approved
+    with pytest.raises(G8AcquisitionLocked, match="independent review verdict must be 'APPROVED'"):
+        assert_future_acquisition_gate(
+            authorize_g8_acquisition=True,
+            valuation_date="2026-10-01",
+            current_date=date(2026, 10, 1),
+            independent_review_verdict="BLOCKED_FAIL_CLOSED",
+        )
+
+    # 8. Unbound / invalid Model3 decision
+    with pytest.raises(G8AcquisitionLocked, match="model3 participation decision incomplete"):
+        assert_future_acquisition_gate(
+            authorize_g8_acquisition=True,
+            valuation_date="2026-10-01",
+            current_date=date(2026, 10, 1),
+            model3_decision={"label": "MODEL3_INCLUDED", "decision": "MODEL3_INCLUDED", "checks": {"commit_exists": False}},
+            independent_review_verdict="APPROVED",
+        )
+
+    # 9. Tool identity failure
+    with pytest.raises(G8AcquisitionLocked, match="tool identity"):
+        assert_future_acquisition_gate(
+            authorize_g8_acquisition=True,
+            valuation_date="2026-10-01",
+            current_date=date(2026, 10, 1),
+            tool_identities={"acquisition": {"path": "nonexistent", "sha256": "wrong"}},
+            independent_review_verdict="APPROVED",
+        )
+
+    # 10. Valid state passes cleanly
+    result_date = assert_future_acquisition_gate(
+        authorize_g8_acquisition=True,
+        valuation_date="2026-10-01",
+        current_date=date(2026, 10, 1),
+        independent_review_verdict="APPROVED",
+    )
+    assert result_date == date(2026, 10, 1)
+
+
+def test_direct_nse_and_rbi_intake_fail_closed_without_gate_satisfaction(tmp_path: Path) -> None:
+    # Direct intake_official_nse fails before floor without future simulation
+    with pytest.raises(Exception, match="calendar blocker"):
+        intake_official_nse(
+            "FO", "2026-10-01", store_root=tmp_path, authorize_acquisition=True,
+            downloader=lambda url: b"",
+        )
+    # Direct intake_official_rbi fails without authorization
+    with pytest.raises(G8AcquisitionLocked):
+        intake_official_rbi(
+            '<div data-release-id="R" data-observation-date="2026-10-01" data-cutoff-price="99" data-yield-percent="5"></div>',
+            store_root=tmp_path,
+            official_url="https://www.rbi.org.in/press",
+            latest_permitted_observation_date="2026-10-01",
+            authorize_acquisition=False,
+        )
 
 
 def test_synthetic_end_to_end_replay_stays_fixture_only(tmp_path: Path) -> None:

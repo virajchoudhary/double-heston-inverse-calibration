@@ -17,7 +17,13 @@ import pandas as pd
 
 from ..nse_stage_a import UDIFF_COLUMNS
 from ..r2_representation.surface import R2Surface
-from .acquisition import NSEArchiveRecord, RbiRateRecord, normalize_rbi_auction
+from .acquisition import (
+    CurrentDateAcquisitionLocked,
+    NSEArchiveRecord,
+    RbiRateRecord,
+    normalize_rbi_auction,
+    verify_acquisition_gate,
+)
 from .checkpoints import checkpoint_readiness_manifest
 from .contracts import DATE_FLOOR, PRIMARY_SYMBOLS, SCAN_END, discount_factor, forward_black_price
 from .contracts import canonical_slot_roles
@@ -33,10 +39,6 @@ from .scanner import full_window_backup_replacements, scan_common_dates
 from .surfaces import build_g8_r2_surface
 
 
-class CurrentDateAcquisitionLocked(RuntimeError):
-    pass
-
-
 class FinalEvaluationLocked(RuntimeError):
     pass
 
@@ -46,22 +48,28 @@ def assert_future_acquisition_gate(
     authorize_g8_acquisition: bool,
     valuation_date: date | str,
     current_date: date | None = None,
+    protocol_commit: str = "7eecc7188c54f9d4505d32ccf5c51069a4c3a97c",
+    config_path: Path | str = Path("configs/g8_final_real_market.yaml"),
+    pre_acquisition_freeze: dict[str, Any] | None = None,
+    independent_review_verdict: str | None = None,
+    checkpoint_manifest: dict[str, Any] | None = None,
+    model3_decision: dict[str, Any] | None = None,
+    tool_identities: dict[str, Any] | None = None,
+    protocol_frozen: bool = True,
 ) -> date:
-    value = valuation_date if type(valuation_date) is date else date.fromisoformat(str(valuation_date))
-    today = current_date or date.today()
-    if not authorize_g8_acquisition:
-        raise RuntimeError("default invocation cannot acquire G8 market data")
-    if value < DATE_FLOOR:
-        raise RuntimeError(f"valuation {value.isoformat()} precedes frozen floor")
-    if today < DATE_FLOOR:
-        raise CurrentDateAcquisitionLocked(
-            f"calendar blocker remains: current date {today.isoformat()} precedes {DATE_FLOOR.isoformat()}"
-        )
-    if value > today:
-        raise CurrentDateAcquisitionLocked(
-            f"future valuation evidence is unavailable: requested {value.isoformat()}, current {today.isoformat()}"
-        )
-    return value
+    return verify_acquisition_gate(
+        valuation_date=valuation_date,
+        authorize_acquisition=authorize_g8_acquisition,
+        current_date=current_date,
+        protocol_commit=protocol_commit,
+        config_path=config_path,
+        pre_acquisition_freeze=pre_acquisition_freeze,
+        independent_review_verdict=independent_review_verdict,
+        checkpoint_manifest=checkpoint_manifest,
+        model3_decision=model3_decision,
+        tool_identities=tool_identities,
+        protocol_frozen=protocol_frozen,
+    )
 
 
 def assert_final_evaluation_gate(

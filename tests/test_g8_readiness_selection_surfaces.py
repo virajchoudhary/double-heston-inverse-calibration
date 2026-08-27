@@ -247,6 +247,10 @@ def test_extra_distance_candidate_is_explicitly_rejected() -> None:
     assert reasons & {"NOT_ASSIGNED_HUNGARIAN", "TARGET_DISTANCE_REJECTED"}
 
 
+from src.g8_readiness.acquisition import NSEArchiveRecord, RbiRateRecord
+from src.g8_readiness.manifests import build_selected_data_freeze, sha256_payload
+
+
 def test_real_surface_overlap_check_fails_closed_without_authorization() -> None:
     valuation = date(2026, 10, 1)
     cm, fo = _market_frames(100.0, valuation)
@@ -262,3 +266,217 @@ def test_real_surface_overlap_check_fails_closed_without_authorization() -> None
             official_release_calendar=_release_calendar(rates),
             development_contract_keys={"call|2026-10-01|2026-10-31|90|X"},
         )
+
+
+def _synthetic_dataset(symbols: tuple[str, ...], dates: tuple[date, date]) -> tuple[list[R2Surface], list[NSEArchiveRecord], list[RbiRateRecord], dict[str, list[int]]]:
+    surfaces: list[R2Surface] = []
+    archives: list[NSEArchiveRecord] = []
+    rates: list[RbiRateRecord] = []
+    roles = {
+        name: [int(index) for index, valid in enumerate(mask_array) if valid]
+        for name, mask_array in canonical_slot_roles().items()
+    }
+    for date_idx, val_date in enumerate(dates):
+        rate_record = RbiRateRecord(
+            official_url=f"https://www.rbi.org.in/release-{date_idx}",
+            release_identifier=f"RBI-{val_date:%Y%m%d}",
+            observation_date=val_date.isoformat(),
+            cutoff_price=98.7,
+            yield_percent=5.25,
+            source_sha256="a" * 64,
+            normalized_extract_sha256="b" * 64,
+        )
+        rates.append(rate_record)
+        rates_map = {val_date: rate_record}
+        cal = {rate_record.release_identifier: val_date}
+        for sym_idx, sym in enumerate(symbols):
+            cm, fo = _market_frames(100.0 + sym_idx, val_date)
+            cm.loc[cm.TckrSymb.eq("TEST"), "TckrSymb"] = sym
+            fo.loc[fo.TckrSymb.eq("TEST"), "TckrSymb"] = sym
+            surface, _ = build_g8_r2_surface(
+                sym, val_date, cm, fo, rates_map,
+                official_release_calendar=cal,
+                development_contract_keys=set(),
+            )
+            surfaces.append(surface)
+        for market in ("CM", "FO"):
+            fn = f"BhavCopy_NSE_{market}_0_0_0_{val_date:%Y%m%d}_F_0000.csv.zip"
+            archives.append(
+                NSEArchiveRecord(
+                    market=market,
+                    trading_date=val_date.isoformat(),
+                    official_url=f"https://nsearchives.nseindia.com/content/{market.lower()}/{fn}",
+                    retrieval_timestamp_utc="2026-10-01T00:00:00Z",
+                    original_filename=fn,
+                    byte_size=1000,
+                    zip_sha256="c" * 64,
+                    zip_integrity_result=True,
+                    member_filename=fn.removesuffix(".zip"),
+                    csv_sha256="d" * 64,
+                    encoding="UTF-8",
+                    delimiter=",",
+                    archive_path=Path(fn),
+                    extracted_csv_path=Path(fn.removesuffix(".zip")),
+                )
+            )
+    return surfaces, archives, rates, roles
+
+
+def test_primary_scan_sealing_and_backup_rescan_share_canonical_schema() -> None:
+    dates = (date(2026, 10, 1), date(2026, 10, 2))
+    primary_symbols = ("NTPC", "CIPLA", "INFY", "HDFCBANK")
+
+    # 1. Primary Scan Seal
+    surfaces_p, archives_p, rates_p, roles = _synthetic_dataset(primary_symbols, dates)
+    support_p = {d: dict.fromkeys(primary_symbols, True) for d in dates}
+    scan_p = scan_common_dates(support_p, expected_calendar_dates=dates)
+    primary_seal = build_selected_data_freeze(
+        surfaces=surfaces_p,
+        archive_records=archives_p,
+        rate_records=rates_p,
+        scan_result=scan_p,
+        backup_decisions=(),
+        observation_role_mappings=roles,
+    )
+    assert primary_seal["schema_version"] == "g8.selected_data_freeze/1"
+    assert primary_seal["scan_mode"] == "PRIMARY_SCAN"
+    assert primary_seal["status"] == "SYNTHETIC_G8_SELECTED_DATA_FIXTURE_SEALED"
+    assert primary_seal["backup_decisions"] == []
+    assert primary_seal["backup_activation_reason"] == "NONE_PRIMARY_SCAN"
+    assert primary_seal["selected_symbols"] == sorted(primary_symbols)
+    assert primary_seal["manifest_sha256"] == sha256_payload({**primary_seal, "manifest_sha256": ""})
+
+    # 2. Backup Rescan Seal
+    failed_primary_support = {d: {"NTPC": False, "CIPLA": True, "INFY": True, "HDFCBANK": True} for d in dates}
+    failed_primary_scan = scan_common_dates(failed_primary_support, expected_calendar_dates=dates)
+    decisions, replacements = full_window_backup_replacements(
+        failed_primary_support,
+        expected_scanned_dates=dates,
+        primary_scan_result=failed_primary_scan,
+    )
+    assert replacements == {"NTPC": "POWERGRID"}
+    backup_symbols = ("POWERGRID", "CIPLA", "INFY", "HDFCBANK")
+    backup_support = {d: dict.fromkeys(backup_symbols, True) for d in dates}
+    backup_scan = scan_common_dates(
+        backup_support,
+        active_symbols=backup_symbols,
+        expected_calendar_dates=dates,
+    )
+    surfaces_b, archives_b, rates_b, _ = _synthetic_dataset(backup_symbols, dates)
+    backup_seal = build_selected_data_freeze(
+        surfaces=surfaces_b,
+        archive_records=archives_b,
+        rate_records=rates_b,
+        scan_result=backup_scan,
+        backup_decisions=decisions,
+        observation_role_mappings=roles,
+        primary_scan_result=failed_primary_scan,
+    )
+    assert backup_seal["schema_version"] == "g8.selected_data_freeze/1"
+    assert backup_seal["scan_mode"] == "BACKUP_RESCAN"
+    assert backup_seal["status"] == "SYNTHETIC_G8_SELECTED_DATA_FIXTURE_SEALED"
+    assert len(backup_seal["backup_decisions"]) == 1
+    assert backup_seal["selected_symbols"] == sorted(backup_symbols)
+    assert backup_seal["primary_scan_provenance"]["complete_window_scanned"] is True
+    assert backup_seal["manifest_sha256"] == sha256_payload({**backup_seal, "manifest_sha256": ""})
+
+    # 3. Both share identical top-level schema keys
+    assert set(primary_seal.keys()) == set(backup_seal.keys())
+
+    # 4. Different content produces different deterministic hashes
+    assert primary_seal["manifest_sha256"] != backup_seal["manifest_sha256"]
+
+    # 5. Deterministic replay yields identical hash
+    replay_seal = build_selected_data_freeze(
+        surfaces=surfaces_b,
+        archive_records=archives_b,
+        rate_records=rates_b,
+        scan_result=backup_scan,
+        backup_decisions=decisions,
+        observation_role_mappings=roles,
+        primary_scan_result=failed_primary_scan,
+    )
+    assert replay_seal["manifest_sha256"] == backup_seal["manifest_sha256"]
+
+
+def test_backup_seal_invariants_and_masquerade_prevention() -> None:
+    dates = (date(2026, 10, 1), date(2026, 10, 2))
+    primary_symbols = ("NTPC", "CIPLA", "INFY", "HDFCBANK")
+    backup_symbols = ("POWERGRID", "CIPLA", "INFY", "HDFCBANK")
+    surfaces_p, archives, rates, roles = _synthetic_dataset(primary_symbols, dates)
+    support = {d: dict.fromkeys(primary_symbols, True) for d in dates}
+    scan_p = scan_common_dates(support, expected_calendar_dates=dates)
+
+    # Cannot mix primary surfaces with backup decisions
+    decisions, _ = full_window_backup_replacements(
+        {d: {"NTPC": False, "CIPLA": True, "INFY": True, "HDFCBANK": True} for d in dates},
+        expected_scanned_dates=dates,
+    )
+    with pytest.raises(ValueError, match="unexpected symbol composition"):
+        build_selected_data_freeze(
+            surfaces=surfaces_p,
+            archive_records=archives,
+            rate_records=rates,
+            scan_result=scan_p,
+            backup_decisions=decisions,
+            observation_role_mappings=roles,
+        )
+
+    # Primary scan mode cannot have backup decisions
+    with pytest.raises(ValueError, match="cannot contain backup decisions"):
+        build_selected_data_freeze(
+            surfaces=surfaces_p,
+            archive_records=archives,
+            rate_records=rates,
+            scan_result=scan_p,
+            backup_decisions=decisions,
+            scan_mode="PRIMARY_SCAN",
+            observation_role_mappings=roles,
+        )
+
+    # Backup rescan mode cannot have empty backup decisions
+    surfaces_b, _, _, _ = _synthetic_dataset(backup_symbols, dates)
+    scan_b = scan_common_dates(
+        {d: dict.fromkeys(backup_symbols, True) for d in dates},
+        active_symbols=backup_symbols,
+        expected_calendar_dates=dates,
+    )
+    with pytest.raises(ValueError, match="requires non-empty backup decisions"):
+        build_selected_data_freeze(
+            surfaces=surfaces_b,
+            archive_records=archives,
+            rate_records=rates,
+            scan_result=scan_b,
+            backup_decisions=(),
+            scan_mode="BACKUP_RESCAN",
+            observation_role_mappings=roles,
+        )
+
+
+def test_sealed_state_cannot_be_mutated_in_place() -> None:
+    dates = (date(2026, 10, 1), date(2026, 10, 2))
+    symbols = ("NTPC", "CIPLA", "INFY", "HDFCBANK")
+    surfaces, archives, rates, roles = _synthetic_dataset(symbols, dates)
+    support = {d: dict.fromkeys(symbols, True) for d in dates}
+    scan = scan_common_dates(support, expected_calendar_dates=dates)
+    seal = build_selected_data_freeze(
+        surfaces=surfaces,
+        archive_records=archives,
+        rate_records=rates,
+        scan_result=scan,
+        backup_decisions=(),
+        observation_role_mappings=roles,
+    )
+    original_hash = seal["manifest_sha256"]
+
+    # Tampering with symbols
+    tampered = dict(seal)
+    tampered["selected_symbols"] = ["TAMPERED"]
+    computed_tampered = sha256_payload({**tampered, "manifest_sha256": ""})
+    assert computed_tampered != original_hash
+
+    # Tampering with classification
+    tampered2 = dict(seal)
+    tampered2["classification"] = "REAL_G8_SELECTED_DATA"
+    computed_tampered2 = sha256_payload({**tampered2, "manifest_sha256": ""})
+    assert computed_tampered2 != original_hash
