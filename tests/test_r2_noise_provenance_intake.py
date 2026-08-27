@@ -4,10 +4,12 @@ from __future__ import annotations
 
 import hashlib
 import json
+from copy import deepcopy
 from pathlib import Path
 
 import pytest
 
+import src.r2_noise.provenance_intake as provenance_intake
 from src.r2_noise.provenance_intake import (
     CANONICAL_SUBSET_SHA256,
     HISTORICAL_LF_SUBSET_SHA256,
@@ -15,9 +17,18 @@ from src.r2_noise.provenance_intake import (
     canonicalize_known_subset_representation,
     ensure_canonical_subset,
 )
+from src.r2_noise.execution import (
+    REPO_ROOT as EXECUTION_REPO_ROOT,
+    serialize_record,
+)
+from src.r2_noise.path_compatibility import (
+    documented_repo_relative_path,
+    is_documented_worktree_relocation,
+)
 from src.r2_noise.traditional_runner import (
     _assert_resume_provenance_compatible,
 )
+from src.r2_noise.validation import _serialize_expected_with_documented_relocation
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CLEAN_DATASET_PATH = REPO_ROOT / "data" / "final_r2_clean_10000" / "surfaces.jsonl"
@@ -136,7 +147,9 @@ def test_transformation_that_cannot_reach_frozen_hash_fails() -> None:
         )
 
 
-def test_materialization_preserves_candidate_and_writes_intake_record() -> None:
+def test_materialization_preserves_candidate_and_writes_intake_record(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     base = REPO_ROOT / ".tmp_intake_test"
     if base.exists():
         raise RuntimeError(f"unexpected stale test directory: {base}")
@@ -144,6 +157,17 @@ def test_materialization_preserves_candidate_and_writes_intake_record() -> None:
     target = base / "traditional_subset_ids.json"
     repair_dir = base / "provenance_repair"
     target.write_bytes(_historical_bytes())
+
+    with monkeypatch.context() as frozen:
+        frozen.setattr(provenance_intake, "DEFAULT_SUBSET_PATH", target)
+        frozen.setattr(provenance_intake, "DEFAULT_REPAIR_DIR", repair_dir)
+        with pytest.raises(ValueError, match="candidate timestamp mismatch"):
+            ensure_canonical_subset(
+                target,
+                clean_dataset_path=CLEAN_DATASET_PATH,
+                repair_dir=repair_dir,
+            )
+    assert not repair_dir.exists()
 
     first = ensure_canonical_subset(
         target,
@@ -167,6 +191,39 @@ def test_materialization_preserves_candidate_and_writes_intake_record() -> None:
         repair_dir=repair_dir,
     )
     assert second["status"] == "ALREADY_CANONICAL"
+
+    original_record = record_path.read_text(encoding="utf-8")
+    tampered = json.loads(original_record)
+    tampered["proof"]["semantic_payload_sha256"] = "0" * 64
+    record_path.write_text(json.dumps(tampered), encoding="utf-8")
+    with pytest.raises(ValueError, match="intake record mismatch"):
+        ensure_canonical_subset(
+            target,
+            clean_dataset_path=CLEAN_DATASET_PATH,
+            repair_dir=repair_dir,
+        )
+    record_path.write_text(original_record, encoding="utf-8")
+
+    tampered = json.loads(original_record)
+    tampered["candidate_timestamp_utc"] = "2099-01-01T00:00:00+00:00"
+    record_path.write_text(json.dumps(tampered), encoding="utf-8")
+    with pytest.raises(ValueError, match="candidate_timestamp_utc"):
+        ensure_canonical_subset(
+            target,
+            clean_dataset_path=CLEAN_DATASET_PATH,
+            repair_dir=repair_dir,
+        )
+    record_path.write_text(original_record, encoding="utf-8")
+
+    backup_bytes = backup.read_bytes()
+    backup.unlink()
+    with pytest.raises(ValueError, match="repair evidence is incomplete"):
+        ensure_canonical_subset(
+            target,
+            clean_dataset_path=CLEAN_DATASET_PATH,
+            repair_dir=repair_dir,
+        )
+    backup.write_bytes(backup_bytes)
 
     record_path.unlink()
     backup.unlink()
@@ -225,3 +282,113 @@ def test_resume_gate_accepts_only_documented_worktree_relocation() -> None:
     )
     with pytest.raises(ValueError):
         _assert_resume_provenance_compatible(traversal_same_root, traversal_same_root)
+
+    inserted_directory = dict(current)
+    inserted_directory["source_path"] = (
+        "C:/dh_noise_overnight/rogue/data/r2_noise_robustness/"
+        "levels/0.10%/noisy_surfaces.jsonl"
+    )
+    with pytest.raises(ValueError):
+        _assert_resume_provenance_compatible(stored, inserted_directory)
+
+    clean_stored = {
+        "source_path": (
+            "C:/ann_inverse_calibration/data/final_r2_clean_10000/surfaces.jsonl"
+        ),
+        "source_sha256": "same",
+    }
+    clean_current = {
+        "source_path": (
+            "C:/dh_noise_overnight/data/final_r2_clean_10000/surfaces.jsonl"
+        ),
+        "source_sha256": "same",
+    }
+    _assert_resume_provenance_compatible(clean_stored, clean_current)
+
+    extra_null = dict(stored)
+    extra_null["unexpected"] = None
+    with pytest.raises(ValueError, match="key mismatch"):
+        _assert_resume_provenance_compatible(extra_null, current)
+
+
+def test_documented_repo_paths_require_exact_root_and_relative_identity() -> None:
+    current_root = EXECUTION_REPO_ROOT.resolve().as_posix()
+    relative = "data/r2_noise_robustness/levels/0.25%/noisy_surfaces.jsonl"
+    assert documented_repo_relative_path(f"{current_root}/{relative}") == relative
+    assert documented_repo_relative_path(
+        f"C:/ann_inverse_calibration/{relative}"
+    ) == relative
+    assert is_documented_worktree_relocation(
+        f"C:/ann_inverse_calibration/{relative}",
+        f"{current_root}/{relative}",
+    )
+    assert not is_documented_worktree_relocation(
+        f"C:/ann_inverse_calibration/{relative}",
+        f"{current_root}/rogue/{relative}",
+    )
+    assert documented_repo_relative_path(
+        f"{current_root}/data/../{relative}"
+    ) is None
+    assert documented_repo_relative_path(f"C:/unapproved/{relative}") is None
+    assert documented_repo_relative_path(
+        "C:\\ann_inverse_calibration\\data\\r2_noise_robustness"
+        "\\levels\\0.25%\\noisy_surfaces.jsonl"
+    ) is None
+    assert not is_documented_worktree_relocation(
+        f"C:/ann_inverse_calibration/{relative}",
+        f"{current_root}/DATA/r2_noise_robustness/levels/0.25%/"
+        "noisy_surfaces.jsonl",
+    )
+
+
+def test_cohort_replay_allows_only_four_exact_provenance_path_moves() -> None:
+    current_root = EXECUTION_REPO_ROOT.resolve().as_posix()
+    paths = {
+        "clean_dataset_path": (
+            f"{current_root}/data/final_r2_clean_10000/surfaces.jsonl"
+        ),
+        "config_path": f"{current_root}/configs/r2_noise_robustness_FINAL.yaml",
+        "module_path": f"{current_root}/src/r2_noise/execution.py",
+        "perturbation_module_path": (
+            f"{current_root}/src/r2_noise/perturbation.py"
+        ),
+    }
+    expected = {
+        "surface_id": "synthetic",
+        "prices": [1.0],
+        "observation_noise": {
+            "derivation": {
+                **paths,
+                "config_sha256": "sealed",
+            }
+        },
+    }
+    actual = deepcopy(expected)
+    actual_derivation = actual["observation_noise"]["derivation"]
+    for field in paths:
+        actual_derivation[field] = actual_derivation[field].replace(
+            current_root, "C:/ann_inverse_calibration"
+        )
+    replay = _serialize_expected_with_documented_relocation(actual, expected)
+    assert replay == serialize_record(actual)
+
+    scientific_change = deepcopy(actual)
+    scientific_change["prices"] = [2.0]
+    assert (
+        _serialize_expected_with_documented_relocation(
+            scientific_change, expected
+        )
+        != serialize_record(scientific_change)
+    )
+
+    wrong_path = deepcopy(actual)
+    wrong_path["observation_noise"]["derivation"]["module_path"] = (
+        "C:/ann_inverse_calibration/src/r2_noise/wrong.py"
+    )
+    with pytest.raises(ValueError, match="undocumented cohort provenance"):
+        _serialize_expected_with_documented_relocation(wrong_path, expected)
+
+    extra_null = deepcopy(actual)
+    extra_null["observation_noise"]["derivation"]["unexpected"] = None
+    with pytest.raises(ValueError, match="key mismatch"):
+        _serialize_expected_with_documented_relocation(extra_null, expected)

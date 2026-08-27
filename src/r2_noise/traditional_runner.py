@@ -3,9 +3,7 @@
 from __future__ import annotations
 
 import json
-import posixpath
 from pathlib import Path
-from pathlib import PurePosixPath
 from typing import Mapping
 
 import pandas as pd
@@ -25,6 +23,7 @@ from .execution import (
     sha256_path,
 )
 from .neural_evaluation import safe_level_label
+from .path_compatibility import is_documented_worktree_relocation
 from .provenance_intake import CANONICAL_SUBSET_SHA256, ensure_canonical_subset
 
 SUBSET_PATH = (
@@ -35,10 +34,6 @@ CANONICAL_TRADITIONAL_STARTS = (
     / "evidence"
     / "r2_primary_comparison_20260823"
     / "traditional_calibration_starts.csv"
-)
-KNOWN_SOURCE_ROOTS = (
-    REPO_ROOT.resolve().as_posix(),
-    "C:/ann_inverse_calibration",
 )
 
 
@@ -90,26 +85,7 @@ def _is_documented_worktree_relocation(
     stored_path: str,
     current_path: str,
 ) -> bool:
-    normalized_stored = posixpath.normpath(stored_path.replace("\\", "/"))
-    normalized_current = posixpath.normpath(current_path.replace("\\", "/"))
-    if normalized_stored != stored_path or normalized_current != current_path:
-        return False
-    stored_parts = PurePosixPath(normalized_stored).parts
-    current_parts = PurePosixPath(normalized_current).parts
-    current_root_allowed = any(
-        normalized_current.casefold().startswith(f"{root}/".casefold())
-        for root in KNOWN_SOURCE_ROOTS
-    )
-    if not current_root_allowed:
-        return False
-    return (
-        len(stored_parts) >= 5
-        and stored_parts[-5:] == current_parts[-5:]
-        and any(
-            normalized_stored.casefold().startswith(f"{root}/".casefold())
-            for root in KNOWN_SOURCE_ROOTS
-        )
-    )
+    return is_documented_worktree_relocation(stored_path, current_path)
 
 
 def _assert_resume_provenance_compatible(
@@ -117,11 +93,13 @@ def _assert_resume_provenance_compatible(
     current: Mapping[str, object],
 ) -> None:
     """Allow only relocation metadata to differ; all identities must match."""
+    if set(stored) != set(current):
+        raise ValueError("journal provenance identity key mismatch")
     ignored_for_equality = {"source_path"}
     mismatches = [
         key
-        for key in sorted(set(stored) | set(current))
-        if key not in ignored_for_equality and stored.get(key) != current.get(key)
+        for key in sorted(stored)
+        if key not in ignored_for_equality and stored[key] != current[key]
     ]
     if mismatches:
         raise ValueError(f"journal provenance identity mismatch: {mismatches}")
@@ -207,7 +185,15 @@ def compare_zero_percent_traditional_gate() -> dict[str, object]:
     """Compare scientific start-row values for the same 250 canonical IDs."""
     zero_dir = EVIDENCE_ROOT / "traditional" / "level_0pct"
     produced = pd.read_csv(zero_dir / "traditional_calibration_starts.csv")
-    subset_ids = set(json.loads(SUBSET_PATH.read_text())["selected_ids"])
+    ensure_canonical_subset()
+    if sha256_path(SUBSET_PATH) != CANONICAL_SUBSET_SHA256:
+        raise ValueError("0% gate requires the exact canonical subset artifact")
+    ordered_subset_ids = json.loads(SUBSET_PATH.read_text(encoding="utf-8"))[
+        "selected_ids"
+    ]
+    if len(ordered_subset_ids) != 250 or len(set(ordered_subset_ids)) != 250:
+        raise ValueError("0% gate requires 250 ordered unique subset IDs")
+    subset_ids = set(ordered_subset_ids)
     canonical = pd.read_csv(CANONICAL_TRADITIONAL_STARTS)
     canonical_subset = canonical[canonical["surface_id"].isin(subset_ids)].copy()
     runtime_columns = ["runtime_seconds", "wall_seconds_all_starts"]

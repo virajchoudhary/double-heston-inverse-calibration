@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
@@ -18,10 +19,50 @@ from .execution import (
     sha256_path,
 )
 from .neural_evaluation import NEURAL_SEEDS
+from .path_compatibility import documented_repo_relative_path
 
 
 def _read_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+_RELOCATABLE_DERIVATION_PATHS = {
+    "clean_dataset_path": "data/final_r2_clean_10000/surfaces.jsonl",
+    "config_path": "configs/r2_noise_robustness_FINAL.yaml",
+    "module_path": "src/r2_noise/execution.py",
+    "perturbation_module_path": "src/r2_noise/perturbation.py",
+}
+
+
+def _serialize_expected_with_documented_relocation(
+    actual: dict[str, Any],
+    expected: dict[str, Any],
+) -> str:
+    """Recreate sealed bytes after validating only four absolute path moves."""
+    adjusted = deepcopy(expected)
+    try:
+        actual_derivation = actual["observation_noise"]["derivation"]
+        adjusted_derivation = adjusted["observation_noise"]["derivation"]
+    except (KeyError, TypeError) as error:
+        raise ValueError("cohort derivation provenance structure mismatch") from error
+    if set(actual_derivation) != set(adjusted_derivation):
+        raise ValueError("cohort derivation provenance key mismatch")
+    for field, expected_relative in _RELOCATABLE_DERIVATION_PATHS.items():
+        actual_path = actual_derivation.get(field)
+        expected_path = adjusted_derivation.get(field)
+        if not isinstance(actual_path, str) or not isinstance(expected_path, str):
+            raise ValueError(f"cohort derivation path is not text: {field}")
+        actual_relative = documented_repo_relative_path(actual_path)
+        current_relative = documented_repo_relative_path(expected_path)
+        if (
+            actual_relative is None
+            or current_relative is None
+            or actual_relative != expected_relative
+            or current_relative != expected_relative
+        ):
+            raise ValueError(f"undocumented cohort provenance relocation: {field}")
+        adjusted_derivation[field] = actual_path
+    return serialize_record(adjusted)
 
 
 def validate_cohorts() -> dict[str, Any]:
@@ -53,7 +94,10 @@ def validate_cohorts() -> dict[str, Any]:
                     label=label,
                     clean_sha256=clean_hash,
                 )
-                if line != serialize_record(expected):
+                replay = _serialize_expected_with_documented_relocation(
+                    derived, expected
+                )
+                if line != replay:
                     raise ValueError(f"non-replayable cohort line {path}:{line_number}")
                 if derived["surface_id"] != clean["surface_id"]:
                     raise ValueError("cohort population/order mismatch")

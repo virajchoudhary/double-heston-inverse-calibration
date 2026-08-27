@@ -15,6 +15,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Mapping
 
+from .path_compatibility import documented_repo_relative_path
 from .subset import select_traditional_subset
 
 CANONICAL_SUBSET_SHA256 = (
@@ -24,6 +25,7 @@ HISTORICAL_LF_SUBSET_SHA256 = (
     "db3a4917dcbf4b26a5e9bfa8103b8a3beffe439c8ad6f232330908f615d18880"
 )
 INTAKE_VERSION = "r2-traditional-subset-intake-v1"
+HISTORICAL_CANDIDATE_TIMESTAMP_UTC = "2026-08-25T20:22:41.430374+00:00"
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CLEAN_DATASET_PATH = (
@@ -156,22 +158,90 @@ def canonicalize_known_subset_representation(
 def _validate_existing_intake_evidence(
     record: Mapping[str, Any],
     *,
-    input_identity: Mapping[str, Any],
-    output_identity: Mapping[str, Any],
+    proof: Mapping[str, Any],
+    target_path: Path,
+    backup_path: Path,
 ) -> None:
+    expected_keys = {
+        "artifact_kind",
+        "candidate_sha256",
+        "candidate_source_path",
+        "candidate_timestamp_utc",
+        "canonical_sha256",
+        "frozen_expected_hash_preserved",
+        "intake_version",
+        "original_backup_path",
+        "proof",
+        "repair_status",
+        "scientific_fields_changed",
+        "tool",
+        "transformation",
+    }
+    if set(record) != expected_keys:
+        raise ValueError("existing subset intake record key mismatch")
     expected_pairs = (
-        ("candidate_sha256", input_identity["sha256"]),
-        ("canonical_sha256", output_identity["sha256"]),
+        ("artifact_kind", "R2_NOISE_TRADITIONAL_SUBSET_PROVENANCE_INTAKE"),
+        ("candidate_sha256", proof["input"]["sha256"]),
+        ("canonical_sha256", proof["output"]["sha256"]),
+        ("frozen_expected_hash_preserved", True),
+        ("intake_version", INTAKE_VERSION),
         ("transformation", "replace_each_LF_with_CRLF_after_removing_any_CRLF"),
         ("repair_status", "CANONICALIZED"),
+        ("scientific_fields_changed", False),
+        ("tool", "src/r2_noise/provenance_intake.py"),
     )
     mismatches = [
         f"{key}: {record.get(key)!r} != {expected!r}"
         for key, expected in expected_pairs
-        if record.get(key) != expected
+        if record[key] != expected
     ]
+    if record["proof"] != proof:
+        mismatches.append("proof")
+    expected_paths = (
+        ("candidate_source_path", target_path),
+        ("original_backup_path", backup_path),
+    )
+    for key, expected_path in expected_paths:
+        recorded_relative = documented_repo_relative_path(str(record[key]))
+        expected_relative = documented_repo_relative_path(
+            expected_path.resolve().as_posix()
+        )
+        if (
+            recorded_relative is None
+            or expected_relative is None
+            or recorded_relative != expected_relative
+        ):
+            mismatches.append(key)
+    timestamp = record["candidate_timestamp_utc"]
+    is_frozen_default = (
+        target_path.resolve() == DEFAULT_SUBSET_PATH.resolve()
+        and backup_path.resolve()
+        == (
+            DEFAULT_REPAIR_DIR
+            / "original_candidate_traditional_subset_ids.json"
+        ).resolve()
+    )
+    expected_timestamp = (
+        HISTORICAL_CANDIDATE_TIMESTAMP_UTC
+        if is_frozen_default
+        else datetime.fromtimestamp(
+            backup_path.stat().st_mtime, timezone.utc
+        ).isoformat()
+    )
+    if timestamp != expected_timestamp:
+        mismatches.append("candidate_timestamp_utc")
     if mismatches:
         raise ValueError(f"existing subset intake record mismatch: {mismatches}")
+
+
+def _candidate_timestamp_utc(target: Path) -> str:
+    timestamp = datetime.fromtimestamp(target.stat().st_mtime, timezone.utc).isoformat()
+    if (
+        target.resolve() == DEFAULT_SUBSET_PATH.resolve()
+        and timestamp != HISTORICAL_CANDIDATE_TIMESTAMP_UTC
+    ):
+        raise ValueError("frozen historical candidate timestamp mismatch")
+    return timestamp
 
 
 def ensure_canonical_subset(
@@ -190,24 +260,53 @@ def ensure_canonical_subset(
         data, clean_dataset_path=clean_dataset_path
     )
     if proof["transformation"] == "none_exact_canonical":
+        backup_exists = backup_path.exists()
+        record_exists = record_path.exists()
+        if backup_exists != record_exists:
+            raise ValueError("subset repair evidence is incomplete")
+        if backup_exists:
+            backup_data = backup_path.read_bytes()
+            if _sha256(backup_data) != HISTORICAL_LF_SUBSET_SHA256:
+                raise ValueError("historical subset backup identity mismatch")
+            reconstructed, repair_proof = canonicalize_known_subset_representation(
+                backup_data, clean_dataset_path=clean_dataset_path
+            )
+            if reconstructed != data:
+                raise ValueError("historical subset backup does not reconstruct target")
+            record = json.loads(record_path.read_text(encoding="utf-8"))
+            _validate_existing_intake_evidence(
+                record,
+                proof=repair_proof,
+                target_path=target,
+                backup_path=backup_path,
+            )
         return {"status": "ALREADY_CANONICAL", **proof}
 
+    candidate_timestamp_utc = _candidate_timestamp_utc(target)
     evidence_dir.mkdir(parents=True, exist_ok=True)
+    record_exists = record_path.exists()
+    if backup_path.exists() != record_exists:
+        raise ValueError("subset repair evidence is incomplete")
     if backup_path.exists():
         backup_data = backup_path.read_bytes()
         if _sha256(backup_data) != proof["input"]["sha256"]:
             raise ValueError("existing historical subset backup identity mismatch")
     else:
+        candidate_stat = target.stat()
         backup_path.write_bytes(data)
+        os.utime(
+            backup_path,
+            ns=(candidate_stat.st_atime_ns, candidate_stat.st_mtime_ns),
+        )
 
-    record_exists = record_path.exists()
     record: dict[str, Any] = {}
     if record_exists:
         record = json.loads(record_path.read_text(encoding="utf-8"))
         _validate_existing_intake_evidence(
             record,
-            input_identity=proof["input"],
-            output_identity=proof["output"],
+            proof=proof,
+            target_path=target,
+            backup_path=backup_path,
         )
     else:
         record = {
@@ -215,9 +314,7 @@ def ensure_canonical_subset(
             "canonical_sha256": CANONICAL_SUBSET_SHA256,
             "candidate_sha256": HISTORICAL_LF_SUBSET_SHA256,
             "candidate_source_path": target.resolve().as_posix(),
-            "candidate_timestamp_utc": datetime.fromtimestamp(
-                target.stat().st_mtime, timezone.utc
-            ).isoformat(),
+            "candidate_timestamp_utc": candidate_timestamp_utc,
             "frozen_expected_hash_preserved": True,
             "intake_version": INTAKE_VERSION,
             "original_backup_path": backup_path.resolve().as_posix(),
