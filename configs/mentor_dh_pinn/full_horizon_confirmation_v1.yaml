@@ -1,0 +1,23 @@
+schema_version: mentor_dh_pinn_full_horizon_confirmation_v1
+base_config_path: configs/mentor_dh_pinn/baseline_v1.yaml
+phase1_output_dir: outputs/mentor_dh_pinn_baseline_v1
+phase1_checkpoint_path: outputs/mentor_dh_pinn_baseline_v1/checkpoint.pt
+output_root: outputs/mentor_dh_pinn_full_horizon_confirmation
+comparison_summary_filename: full_horizon_comparison.csv
+seed: 3407
+max_epochs: 1000
+patience: 100
+candidate:
+  run_id: C1
+  lambda_pde: 0.1
+  lambda_boundary: 0.1
+  lambda_terminal: 1.0
+  lambda_data: 1.0
+phase1_reference:
+  run_id: phase1_equal_weight
+  lambda_pde: 1.0
+  lambda_boundary: 1.0
+  lambda_terminal: 1.0
+  lambda_data: 1.0
+  best_epoch: 909
+  best_validation_nrmse: 0.0012545129490993494
