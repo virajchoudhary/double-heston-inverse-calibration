@@ -1,0 +1,22 @@
+schema_version: mentor_dh_pinn_multiseed_confirmation_v1
+base_config_path: configs/mentor_dh_pinn/baseline_v1.yaml
+phase1_output_dir: outputs/mentor_dh_pinn_baseline_v1
+phase1_checkpoint_path: outputs/mentor_dh_pinn_baseline_v1/checkpoint.pt
+expected_cohort_dataset_sha256: 35a813036fe50eddcfe66db132b86d2dbfba01b4c99e341b8e5518c04d0f1ad4
+output_root: outputs/mentor_dh_pinn_multiseed_confirmation
+run_summary_filename: multiseed_run_summary.csv
+pair_summary_filename: multiseed_pair_summary.csv
+aggregate_summary_filename: multiseed_aggregate_summary.json
+max_epochs: 1000
+patience: 100
+phase1_reference:
+  best_epoch: 909
+  best_validation_nrmse: 0.0012545129490993494
+seeds: [11, 22, 33]
+runs:
+  - {run_id: EQ11, variant: equal, seed: 11, lambda_pde: 1.0, lambda_boundary: 1.0, lambda_terminal: 1.0, lambda_data: 1.0}
+  - {run_id: OPT11, variant: optimized, seed: 11, lambda_pde: 0.1, lambda_boundary: 0.1, lambda_terminal: 1.0, lambda_data: 1.0}
+  - {run_id: EQ22, variant: equal, seed: 22, lambda_pde: 1.0, lambda_boundary: 1.0, lambda_terminal: 1.0, lambda_data: 1.0}
+  - {run_id: OPT22, variant: optimized, seed: 22, lambda_pde: 0.1, lambda_boundary: 0.1, lambda_terminal: 1.0, lambda_data: 1.0}
+  - {run_id: EQ33, variant: equal, seed: 33, lambda_pde: 1.0, lambda_boundary: 1.0, lambda_terminal: 1.0, lambda_data: 1.0}
+  - {run_id: OPT33, variant: optimized, seed: 33, lambda_pde: 0.1, lambda_boundary: 0.1, lambda_terminal: 1.0, lambda_data: 1.0}
