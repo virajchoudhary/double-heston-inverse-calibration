@@ -244,12 +244,13 @@ def train_baseline(
     output_dir: str | Path,
     *,
     config: BaselineConfig,
+    cohort_config: BaselineConfig | None = None,
     repo_root: str | Path | None = None,
     device: str | torch.device = "cpu",
 ) -> TrainingResult:
     """Train the forward PINN and persist histories plus the best checkpoint."""
     config.validate()
-    validate_dataset_identity(dataset, config)
+    validate_dataset_identity(dataset, cohort_config or config)
     if dataset.size == 0:
         raise ValueError("dataset must not be empty")
     train_indices = dataset.indices("train")
