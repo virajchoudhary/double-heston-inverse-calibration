@@ -79,6 +79,7 @@ outputs/predictions/*
 outputs/figures/*
 !outputs/figures/.gitkeep
 outputs/**/*.tmp
+outputs/mentor_dh_pinn_*/**
 
 # Keep only the selected lightweight smoke-test milestone evidence
 outputs/metrics/smoke_test/data/

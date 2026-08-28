@@ -1,0 +1,124 @@
+# Mentor-aligned Double Heston forward PINN baseline V1.
+# The smoke CLI may override split counts and epoch controls; these defaults are frozen.
+experiment_id: mentor_dh_pinn_baseline_v1
+seed: 3407
+option_type: call
+pricing_node_count: 64
+parameter_source_record: first_eligible_stored_train_record
+expected_parameter_hash: b262584d6c2e76f7b46d635f580a5a00c7cb195e28a3536f18303e856704e8cd
+canonical_parameter_order:
+  - kappa_slow
+  - theta_slow
+  - sigma_slow
+  - rho_slow
+  - v0_slow
+  - kappa_fast
+  - theta_fast
+  - sigma_fast
+  - rho_fast
+  - v0_fast
+feature_order:
+  - spot
+  - v_slow
+  - v_fast
+  - tau
+  - strike
+  - r
+  - q
+scientific_contract:
+  frozen_surfaces_sha256: 148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6
+  pde_operator: src.model3_pde.operator.double_heston_pde_residual
+  pde_cross_derivatives: spot-v_slow and spot-v_fast only; no v_slow-v_fast term
+  parameter_state_rule: keep eight structural parameters fixed and substitute current v_slow/v_fast into v0_slow/v0_fast for pricing
+  test_policy: evaluate once through the explicit evaluator after training
+  test_isolation_declaration: test rows are forbidden in training, lambda selection, and checkpoint selection
+
+data:
+  sampling_method: seeded deterministic pseudo-random with independent split streams
+  frozen_surfaces_path: data/final_r2_clean_10000/surfaces.jsonl
+  frozen_surfaces_sha256: 148b579a4f6ce572e34796e872479c4c016c89bbcd20438c2bb62d6b6960f1f6
+  train_count: 4096
+  validation_count: 1024
+  test_count: 1024
+  split_id_prefix: mentor_dh_pinn_v1
+  dataset_filename: dataset.npz
+  manifest_filename: dataset_manifest.json
+  parameter_provenance_filename: parameter_provenance.json
+
+domain:
+  spot_min: 0.70
+  spot_max: 1.30
+  moneyness_min: 0.70
+  moneyness_max: 1.30
+  tau_min: 0.01917808219178082
+  tau_max: 0.4931506849315068
+  rate_min: 0.01
+  rate_max: 0.08
+  carry_min: 0.0
+  carry_max: 0.03
+  variance_floor: 0.0001
+  variance_ceiling: 0.30
+  variance_theta_min_multiplier: 0.25
+  variance_theta_max_multiplier: 2.0
+  boundary_spot_low: 0.0001
+  boundary_spot_high: 2.00
+  terminal_tau: 0.0
+  variance_state_rule: max(floor, min_multiplier * theta) to min(ceiling, max_multiplier * theta)
+
+network:
+  input_size: 7
+  input_order: [S, v_slow, v_fast, tau, K, r, q]
+  hidden_layers: 5
+  hidden_width: 128
+  activation: tanh
+  dtype: float64
+  output_kind: raw_call_price
+  input_normalization: affine map using frozen full loss-domain bounds
+
+losses:
+  data_lambda: 1.0
+  pde_lambda: 1.0
+  boundary_lambda: 1.0
+  terminal_lambda: 1.0
+  pde_scale_floor: 1.0
+  relative_error_epsilon: 0.00000001
+  data_formula: mean(((predicted - reference) / S)^2)
+  pde_formula: residual / max(abs(raw_price), pde_scale_floor)
+
+training:
+  device_policy: operator-selected cpu or cuda; Kaggle P100 uses cuda
+  optimizer: AdamW
+  learning_rate: 0.001
+  weight_decay: 0.000001
+  batch_size: 256
+  pde_batch_size: 256
+  terminal_batch_size: 128
+  boundary_batch_size: 128
+  max_epochs: 1000
+  patience: 100
+  validation_frequency: 1
+  checkpoint_metric: validation_nrmse
+  checkpoint_rule: minimum validation_nrmse only; test metrics forbidden
+  determinism_policy: "deterministic algorithms; CUBLAS_WORKSPACE_CONFIG=:4096:8 on CUDA"
+  gradient_clip_norm: null
+  collocation_seed_offset: 100003
+  terminal_seed_offset: 200003
+  low_boundary_seed_offset: 300003
+  high_boundary_seed_offset: 400003
+  epoch_seed_stride: 1009
+  evaluation_seed_offset: 999983
+
+evaluation:
+  test_evaluation_mode: explicit_operator_invocation_once
+  metrics_filename: test_metrics.json
+  summary_filename: MENTOR_SUMMARY.md
+  figures_subdirectory: figures
+  figure_dpi: 300
+  figure_color: grayscale
+  slice_spot: 1.0
+  slice_rate: 0.04
+  slice_carry: 0.01
+  slice_maturity_days: [30, 90, 180]
+  marker_maturity_days: [7, 30, 60, 90, 120, 180]
+  dense_grid_count: 61
+  marker_strike_count: 13
