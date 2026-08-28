@@ -1,0 +1,23 @@
+schema_version: mentor_dh_pinn_lambda_refinement_v1
+base_config_path: configs/mentor_dh_pinn/baseline_v1.yaml
+phase1_output_dir: outputs/mentor_dh_pinn_baseline_v1
+phase2a_winner:
+  run_id: A9
+  lambda_pde: 0.1
+  lambda_boundary: 0.1
+  lambda_terminal: 1.0
+  lambda_data: 1.0
+output_root: outputs/mentor_dh_pinn_lambda_refinement
+seed: 3407
+max_epochs: 300
+patience: 50
+runs:
+  - {run_id: B0, lambda_pde: 0.1, lambda_boundary: 0.1, lambda_terminal: 1.0, lambda_data: 1.0}
+  - {run_id: B1, lambda_pde: 0.05, lambda_boundary: 0.1, lambda_terminal: 1.0, lambda_data: 1.0}
+  - {run_id: B2, lambda_pde: 0.2, lambda_boundary: 0.1, lambda_terminal: 1.0, lambda_data: 1.0}
+  - {run_id: B3, lambda_pde: 0.1, lambda_boundary: 0.05, lambda_terminal: 1.0, lambda_data: 1.0}
+  - {run_id: B4, lambda_pde: 0.1, lambda_boundary: 0.2, lambda_terminal: 1.0, lambda_data: 1.0}
+  - {run_id: B5, lambda_pde: 0.05, lambda_boundary: 0.05, lambda_terminal: 1.0, lambda_data: 1.0}
+  - {run_id: B6, lambda_pde: 0.05, lambda_boundary: 0.2, lambda_terminal: 1.0, lambda_data: 1.0}
+  - {run_id: B7, lambda_pde: 0.2, lambda_boundary: 0.05, lambda_terminal: 1.0, lambda_data: 1.0}
+  - {run_id: B8, lambda_pde: 0.2, lambda_boundary: 0.2, lambda_terminal: 1.0, lambda_data: 1.0}
