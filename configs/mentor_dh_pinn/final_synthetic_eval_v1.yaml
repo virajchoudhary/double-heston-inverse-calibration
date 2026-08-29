@@ -1,0 +1,36 @@
+schema_version: mentor_dh_pinn_final_synthetic_eval_v1
+base_config_path: configs/mentor_dh_pinn/baseline_v1.yaml
+phase1_output_dir: outputs/mentor_dh_pinn_baseline_v1
+phase1_checkpoint_path: outputs/mentor_dh_pinn_baseline_v1/checkpoint.pt
+phase2d_config_path: configs/mentor_dh_pinn/multiseed_confirmation_v1.yaml
+phase2d_output_dir: outputs/mentor_dh_pinn_multiseed_confirmation
+output_root: outputs/mentor_dh_pinn_final_synthetic_eval
+expected_phase1_dataset_sha256: 35a813036fe50eddcfe66db132b86d2dbfba01b4c99e341b8e5518c04d0f1ad4
+expected_phase1_best_epoch: 909
+expected_phase1_best_validation_nrmse: 0.0012545129490993494
+final_eval_seed: 73129
+final_eval_count: 4096
+dataset_filename: final_synthetic_dataset.npz
+dataset_manifest_filename: final_synthetic_dataset_manifest.json
+claim_filename: final_evaluation_claim.json
+metrics_subdirectory: checkpoint_metrics
+run_summary_filename: final_synthetic_run_summary.csv
+primary_aggregate_filename: final_synthetic_primary_aggregate.json
+secondary_ablation_filename: final_synthetic_secondary_ablation.csv
+evaluation_manifest_filename: final_synthetic_eval_manifest.json
+diagnostics:
+  pde_count: 256
+  terminal_count: 128
+  boundary_count: 128
+  pde_seed_offset: 510001
+  terminal_seed_offset: 510002
+  low_boundary_seed_offset: 510003
+  high_boundary_seed_offset: 510004
+checkpoints:
+  - {run_id: EQ3407, role: primary, variant: equal, seed: 3407, path: outputs/mentor_dh_pinn_baseline_v1/checkpoint.pt, lambda_pde: 1.0, lambda_boundary: 1.0, lambda_terminal: 1.0, lambda_data: 1.0}
+  - {run_id: EQ11, role: primary, variant: equal, seed: 11, path: outputs/mentor_dh_pinn_multiseed_confirmation/EQ11/checkpoint.pt, lambda_pde: 1.0, lambda_boundary: 1.0, lambda_terminal: 1.0, lambda_data: 1.0}
+  - {run_id: EQ22, role: primary, variant: equal, seed: 22, path: outputs/mentor_dh_pinn_multiseed_confirmation/EQ22/checkpoint.pt, lambda_pde: 1.0, lambda_boundary: 1.0, lambda_terminal: 1.0, lambda_data: 1.0}
+  - {run_id: EQ33, role: primary, variant: equal, seed: 33, path: outputs/mentor_dh_pinn_multiseed_confirmation/EQ33/checkpoint.pt, lambda_pde: 1.0, lambda_boundary: 1.0, lambda_terminal: 1.0, lambda_data: 1.0}
+  - {run_id: OPT11, role: secondary_ablation, variant: optimized, seed: 11, path: outputs/mentor_dh_pinn_multiseed_confirmation/OPT11/checkpoint.pt, lambda_pde: 0.1, lambda_boundary: 0.1, lambda_terminal: 1.0, lambda_data: 1.0}
+  - {run_id: OPT22, role: secondary_ablation, variant: optimized, seed: 22, path: outputs/mentor_dh_pinn_multiseed_confirmation/OPT22/checkpoint.pt, lambda_pde: 0.1, lambda_boundary: 0.1, lambda_terminal: 1.0, lambda_data: 1.0}
+  - {run_id: OPT33, role: secondary_ablation, variant: optimized, seed: 33, path: outputs/mentor_dh_pinn_multiseed_confirmation/OPT33/checkpoint.pt, lambda_pde: 0.1, lambda_boundary: 0.1, lambda_terminal: 1.0, lambda_data: 1.0}
