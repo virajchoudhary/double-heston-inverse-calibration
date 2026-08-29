@@ -1,0 +1,39 @@
+schema_version: mentor_dh_pinn_volatile_stock_selection_v1
+history_start: 2021-01-01
+history_end: 2026-07-21
+option_dates: [2026-07-01, 2026-07-15, 2026-07-22]
+symbols: [ADANIENT, ADANIPOWER, NTPC, POWERGRID, SUNPHARMA, CIPLA, INFY, TCS, ICICIBANK, HDFCBANK]
+series: EQ
+calendar_months: 3
+minimum_returns: 50
+annualization_days: 252
+official_report_url_template: https://nsearchives.nseindia.com/products/content/sec_bhavdata_full_{date_ddmmyyyy}.csv
+raw_root: C:/ann_inverse_calibration/market_data_audit/stage_a/raw/nse/underlying_history
+derived_root: C:/ann_inverse_calibration/market_data_audit/stage_a/derived/volatile_stock_selection
+stage_a_raw_root: C:/ann_inverse_calibration/market_data_audit/stage_a/raw/nse
+rate_observations:
+  '2026-07-15': C:/ann_inverse_calibration/market_data_audit/stage_a/derived/ntpc_single_stock_pilot/raw/rbi_91_day_tbill_observation_20260715.json
+  '2026-07-22': C:/ann_inverse_calibration/market_data_audit/stage_a/derived/ntpc_single_stock_pilot/raw/rbi_91_day_tbill_observation_20260715.json
+domain:
+  spot_min: 0.70
+  spot_max: 1.30
+  moneyness_min: 0.70
+  moneyness_max: 1.30
+  tau_min: 0.01917808219178082
+  tau_max: 0.4931506849315068
+  rate_min: 0.01
+  rate_max: 0.08
+  carry_min: 0.0
+  carry_max: 0.03
+  variance_floor: 0.0001
+  variance_ceiling: 0.30
+  variance_theta_min_multiplier: 0.25
+  variance_theta_max_multiplier: 2.0
+surface_gate:
+  minimum_active_calls: 10
+  minimum_distinct_strikes: 5
+  minimum_eligible_expiries: 2
+  split_quantiles: [0.00, 0.25, 0.50, 0.75, 1.00]
+parameter_source:
+  theta_slow: 0.11602756036897444
+  theta_fast: 0.07208681877078564
