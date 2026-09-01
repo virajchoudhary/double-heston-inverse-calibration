@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+
+# Retain only the audited final run in version control.
+outputs/trained_run/
+outputs/strict_refinement_run/
