@@ -216,6 +216,54 @@ Search terms: `practical identifiability stochastic volatility`, `Fisher informa
 Heston calibration`, `ill-posed inverse problem regularization option pricing`,
 `profile likelihood identifiability`.
 
+## 5.1 D2 TESTED: projection fine-tuning works on multi-expiry, not on single-expiry
+
+Implemented and run. `src/mentor_dh_pinn/finetune_projection.py`,
+`scripts/mentor_dh_pinn/{build_real_corpus,run_finetune,evaluate_finetune,evaluate_panel_test}.py`.
+
+**Setup.** 1,401 real surfaces / 27,949 quotes for self-supervised fine-tuning, assembled
+from the stock panel's `split == "train"` plus 60 NIFTY dates, with all 20 NIFTY test and
+validation dates and the whole panel test split withheld. Objective triad: supervised
+recovery anchor on synthetic, vega-weighted projection loss on unlabelled real quotes, and
+a variance-based Bayesian self-consistency term. All three standardised by a running EMA of
+their own scale -- raw magnitudes were 10, 8e-4 and 12.5, so a fixed weighted sum would have
+handed the entire gradient to self-consistency.
+
+**Result on the real validation corpus:** IV RMSE 0.03081 -> 0.02516, **18.3% better**, with
+synthetic 90% coverage holding at 0.906 and latent z-MAE drifting only 0.8%. Minimal
+forgetting, 20 minutes of fine-tuning.
+
+**Result on the frozen test sets:**
+
+| evaluation | geometry | n | base | fine-tuned | classical DH | verdict |
+|---|---|---:|---:|---:|---:|---|
+| NIFTY | 10-11 expiries | 10 dates, 1,750 quotes | 0.02902 | **0.02478** | 0.02523 | **beats classical** |
+| stock panel test | 1-2 expiries | 140 surfaces, 820 quotes | 0.01920 | 0.01760 | **0.00690** | no effect |
+
+* **NIFTY: the fix works.** Better than base on **9 of 10 dates (Wilcoxon p = 0.006)**, and it
+  now beats classical Double Heston on 7 of 10 dates (p = 0.064) while running in 1.16 s
+  against 25.26 s -- **21.7x faster and more accurate**. This is the first configuration in
+  the project that wins on real data without giving away the speed advantage.
+* **Single expiry: no effect.** 8.3% median improvement, but better on only 74 of 140
+  surfaces, **Wilcoxon p = 0.55**. Indistinguishable from noise. Both base and fine-tuned
+  remain about 2.6x behind classical (p = 2.5e-23).
+
+**The important negative.** The fine-tuning corpus was already **96% single- and two-expiry**
+(1,341 of 1,401 surfaces came from the stock panel). Single-expiry failure therefore is *not*
+a data-volume problem, and more single-expiry fine-tuning data will not fix it. Projection
+training repairs the misspecification gap **only where the surface identifies the parameters
+well enough for a projection to be well defined.** On one expiry, theta and kappa are not
+identified, the fit-error landscape is a ridge rather than a basin, and moving the training
+objective does not create information that the quotes do not contain.
+
+This narrows the remaining problem sharply: **D3 (posteriors that can represent a ridge) and
+D5 (report a set, not a point, when the surface cannot identify one)** are now the live
+directions for single-expiry surfaces. D1 remains relevant to both regimes.
+
+Note on measurement: the ADANIPOWER test set has a median of **four** holdout quotes per
+date, and shows no significant effect either way (6/11, p = 1.000). It is too small to guide
+anything. The 140-surface panel test split is the evaluation to use for single-expiry work.
+
 ## 6. Already ruled out -- do not spend effort here
 
 * **More refinement steps.** ADANIPOWER plateaus by 10-30 steps.

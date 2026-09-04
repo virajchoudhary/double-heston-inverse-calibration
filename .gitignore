@@ -98,3 +98,5 @@ outputs/metrics/smoke_test/parameter_evaluation/parameter_predictions_and_errors
 !single_heston_pinn/outputs/*.safetensors
 !single_heston_pinn/outputs/*.npz
 !single_heston_pinn/outputs/*.parquet
+
+!outputs/real_corpus/real_validation.npz

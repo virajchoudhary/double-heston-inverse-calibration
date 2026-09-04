@@ -1,0 +1,18 @@
+{
+  "surfaces": 140,
+  "holdout_quotes": 820,
+  "expiry_mix": {
+    "1": 125,
+    "2": 15
+  },
+  "median_iv_rmse": {
+    "sh": 0.00710115288259451,
+    "dh_cold": 0.006897218747439227,
+    "base": 0.019197059061859277,
+    "ft": 0.017604296708285734
+  },
+  "ft_beats_base": "74/140",
+  "wilcoxon_ft_vs_base": 0.549131906409912,
+  "wilcoxon_ft_vs_dh": 2.5473951435955833e-23,
+  "improvement_pct": 8.296908127651925
+}

@@ -7,9 +7,20 @@ Everything here is **ready to load**. No retraining is required for any result i
 | model | checkpoint | what it does |
 |---|---|---|
 | **Unified Double Heston calibrator** | `outputs/unified_v6/unified.pt` | arbitrary quote set -> 10 parameters + full covariance + OOD status, with the exact Fourier engine refined inside `forward()` |
+| **Projection fine-tuned** | `outputs/unified_v6/unified_ft.pt` | **best on multi-expiry real data** — beats classical Double Heston on NIFTY at 21.7x the speed. Identical architecture; load it exactly like `unified.pt` |
 | Unified, second run | `outputs/unified_v6/unified_v2.pt` | retained for comparison only — **it is the worse model**, see below |
 | Single Heston PINN | `single_heston_pinn/outputs/pinn_model_round1.safetensors` | forward pricing PINN; `physics_only` and `physics_and_anchor` ablations alongside |
 | Dual PINN (previous architecture) | `outputs/dual_pinn_legacy/dual_{aware,independent}.pt` | the two-specialist design the unified model replaces |
+
+### Which checkpoint to use
+
+* **Multi-expiry surfaces (index options, several expiries):** `unified_ft.pt`. On NIFTY it
+  reaches 0.02478 holdout IV RMSE against classical Double Heston's 0.02523, better than the
+  base model on 9 of 10 dates (Wilcoxon p = 0.006), in 1.16 s against 25.26 s.
+* **Single-expiry surfaces:** either checkpoint; the fine-tune has no measurable effect there
+  (74/140 surfaces, p = 0.55) and both remain about 2.6x behind classical calibration. Use
+  classical multi-start if accuracy matters more than latency.
+* **Synthetic / parameter-recovery work:** `unified.pt`, which the reported metrics use.
 
 **Use `unified.pt`, not `unified_v2.pt`.** v2 was trained later and through a corrected
 physics layer, and I expected it to be better. It is not. On the held-out test split:
