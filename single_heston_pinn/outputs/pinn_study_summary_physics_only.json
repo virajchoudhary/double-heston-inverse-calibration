@@ -1,0 +1,175 @@
+{
+  "tag": "physics_only",
+  "box": {
+    "x_half_width": 3.5,
+    "variance_low": 0.005,
+    "variance_high": 1.1,
+    "maturity_low_days": 2.0,
+    "maturity_high_days": 92.0,
+    "kappa_low": 0.1,
+    "kappa_high": 15.0,
+    "theta_low": 0.005,
+    "theta_high": 1.0,
+    "feller_ratio_low": 0.05,
+    "feller_ratio_high": 2.0,
+    "sigma_floor": 0.02,
+    "sigma_ceiling": 5.0,
+    "rho_low": -0.95,
+    "rho_high": 0.6,
+    "rate_low": -0.1,
+    "rate_high": 0.25,
+    "dividend_low": -0.27,
+    "dividend_high": 0.5,
+    "maturity_low_years": 0.005479452054794521,
+    "maturity_high_years": 0.25205479452054796,
+    "sigma_rule": "sigma = eta * sqrt(2 kappa theta), eta in [feller_ratio_low, feller_ratio_high]"
+  },
+  "collocation_points": 18000,
+  "spot_domain_rule": "S in [0, 1.5 x ten-year maximum traded price] per symbol",
+  "maturity_rule": {
+    "definition": "T = (expiry_date - trade_date) / 365, expressed in years",
+    "unit": "years (1.0 = one year)",
+    "observed_days_min": 7,
+    "observed_days_max": 61,
+    "observed_years_min": 0.019178082191780823,
+    "observed_years_max": 0.16712328767123288,
+    "contract_cycle": "NSE lists three serial monthly stock-option expiries",
+    "month_slices_days": [
+      30,
+      60,
+      90
+    ],
+    "month_slices_years": [
+      0.0821917808219178,
+      0.1643835616438356,
+      0.2465753424657534
+    ],
+    "pinn_maturity_low_days": 1,
+    "pinn_maturity_high_days": 92,
+    "pinn_maturity_low_years": 0.0027397260273972603,
+    "pinn_maturity_high_years": 0.25205479452054796
+  },
+  "variance_rule": {
+    "source": "v = (inverse Black-Scholes implied volatility)^2 on paired NSE quotes",
+    "observed_min": 0.013272608730098858,
+    "observed_q001": 0.019105950517135567,
+    "observed_q01": 0.026215735564190597,
+    "observed_q25": 0.060470801428085016,
+    "observed_median": 0.08802595559396793,
+    "observed_q75": 0.13905833635788373,
+    "observed_q99": 0.4221651801463272,
+    "observed_q999": 0.5928382856023092,
+    "observed_max": 1.103105237693959,
+    "pinn_variance_low": 0.009552975258567784,
+    "pinn_variance_high": 0.9485412569636948,
+    "pinn_vol_low": 0.09773932299012401,
+    "pinn_vol_high": 0.9739308276072253
+  },
+  "network_versus_exact_heston": {
+    "traded_region": {
+      "points": 39707,
+      "iv_rmse": 0.004703362838551859,
+      "iv_mae": 0.0005353629473789924,
+      "iv_max": 0.727616613935094,
+      "iv_p99": 0.005933422349145806,
+      "price_rmse_per_strike": 7.982607134860452e-05,
+      "price_max_per_strike": 0.0035887954404984213
+    },
+    "full_box": {
+      "points": 59951,
+      "iv_rmse": 0.02239790528440999,
+      "iv_mae": 0.0018355804970209121,
+      "iv_max": 0.9112730542064489,
+      "iv_p99": 0.01523455204689056,
+      "price_rmse_per_strike": 7.119481361749554e-05,
+      "price_max_per_strike": 0.0035887954404984213
+    },
+    "usable_fraction": 0.9991833333333333
+  },
+  "pde_residual_on_training_collocation_set": {
+    "collocation_points": 18000,
+    "residual_rms_vega_weighted": 0.005327960467030173,
+    "residual_rms_price_relevant_core": 0.0016703635818183398,
+    "price_relevant_core_points": 8200,
+    "residual_rms_unweighted": 0.029580168798962386,
+    "residual_median_abs": 0.001746463414747268,
+    "residual_p99_abs": 0.09534826293587667,
+    "calendar_violation_fraction": 0.0,
+    "butterfly_violation_fraction": 0.0
+  },
+  "pde_residual_on_independent_collocation_set": {
+    "collocation_points": 18000,
+    "residual_rms_vega_weighted": 15.164423636288108,
+    "residual_rms_price_relevant_core": 0.012864055966967576,
+    "price_relevant_core_points": 8112,
+    "residual_rms_unweighted": 88.78534080913481,
+    "residual_median_abs": 0.002192690735682845,
+    "residual_p99_abs": 1.29929548859594,
+    "calendar_violation_fraction": 0.0,
+    "butterfly_violation_fraction": 5.555555555555556e-05
+  },
+  "collocation_generalisation_ratio": 7.7013508358245595,
+  "no_arbitrage_audit": {
+    "points": 40000,
+    "violations": 0,
+    "tolerance_rule": "1e-6 x max(spot, strike), the float32 representation floor",
+    "worst_lower_breach_relative": 1.358055335174413e-07,
+    "worst_upper_breach_relative": -0.09209126375500375,
+    "violations_at_absolute_1e-8": 350
+  },
+  "engine_comparison": [
+    {
+      "engine": "published classical (repository baseline)",
+      "rows": 1547,
+      "iv_rmse": 0.028111645708325115,
+      "iv_mae": 0.015564141189260732,
+      "iv_bias": -0.0011745786539804398,
+      "iv_r2": 0.9042257476135556,
+      "raw_price_rmse": 1.1090869136776875,
+      "raw_price_mae": 0.4734209291767705
+    },
+    {
+      "engine": "pinn",
+      "rows": 1547,
+      "iv_rmse": 0.023497403000831335,
+      "iv_mae": 0.015278139879048707,
+      "iv_bias": 0.0037753581877457048,
+      "iv_r2": 0.9330861590081437,
+      "raw_price_rmse": 1.6501212867811137,
+      "raw_price_mae": 0.6856356565204258
+    },
+    {
+      "engine": "fourier",
+      "rows": 1547,
+      "iv_rmse": 0.02709525215668813,
+      "iv_mae": 0.017572859809964574,
+      "iv_bias": 0.006377443556950615,
+      "iv_r2": 0.9110261008851711,
+      "raw_price_rmse": 2.419493110053973,
+      "raw_price_mae": 0.9447200234681203
+    }
+  ],
+  "engine_attribution": {
+    "network_iv_bias_vs_exact": -0.0009873218781458518,
+    "network_iv_rmse_vs_exact": 0.003539313433711984,
+    "market_iv_rmse_network_priced": 0.024236409688176964,
+    "market_iv_rmse_exactly_priced": 0.023571923070524112
+  },
+  "quotes_with_variance_above_box": 1,
+  "quote_panel_rows": 31617,
+  "strict_checks_passed": 16,
+  "strict_checks_total": 18,
+  "failed_checks": [
+    "pinn_matches_exact_heston_in_traded_region",
+    "all_training_acceptance_gates_passed"
+  ],
+  "reference_pricer_audit": {
+    "points": 1500,
+    "max_gap": 0.00026729047000673134,
+    "p99_gap": 8.198289307046285e-05,
+    "median_gap": 6.494804694057166e-15,
+    "max_gap_at_or_beyond_7_days": 9.561496010435447e-05,
+    "max_gap_under_7_days": 0.00026729047000673134,
+    "note": "The two engines agree to float64 noise over the tenor range the study calibrates on. They separate only below about three days to expiry with variance at the floor of the box, where the Gauss-Laguerre P1/P2 integrand decays too slowly for 64 nodes. The repository's own pipeline requires at least seven days to expiry, so it never prices in that corner."
+  }
+}

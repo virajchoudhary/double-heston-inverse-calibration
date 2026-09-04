@@ -1,0 +1,90 @@
+{
+  "nifty": {
+    "market": "NIFTY",
+    "dates": 10,
+    "holdout_quotes": 1750,
+    "median_iv_rmse": {
+      "bs_iv": 0.029824952405443854,
+      "sh_iv": 0.02625054027686438,
+      "dh_iv": 0.025231205851178745,
+      "unified_pre_iv": 0.0317853693727997,
+      "unified_post_iv": 0.029018125965827465
+    },
+    "dates_best": {
+      "bs_iv": 2,
+      "sh_iv": 2,
+      "dh_iv": 2,
+      "unified_pre_iv": 0,
+      "unified_post_iv": 4
+    },
+    "ood": {
+      "severe_extrapolation": 10
+    },
+    "median_latency_s": {
+      "encoder": 0.03748168750098557,
+      "encoder_plus_physics": 0.8539599790019565,
+      "double_heston_cold": 17.873521187000733
+    },
+    "uncertainty_by_expiry_count": {
+      "10": {
+        "n": 9,
+        "sd_theta": 0.7951622774356777,
+        "sd_kappa": 1.3488775700380564,
+        "sd_v0": 0.6790128115743478
+      },
+      "11": {
+        "n": 1,
+        "sd_theta": 0.800252182881212,
+        "sd_kappa": 1.348362601241302,
+        "sd_v0": 0.6762121995624535
+      }
+    }
+  },
+  "adanipower": {
+    "market": "ADANIPOWER",
+    "dates": 11,
+    "holdout_quotes": 51,
+    "median_iv_rmse": {
+      "bs_iv": 0.025794813471632826,
+      "sh_iv": 0.005027709155675866,
+      "dh_iv": 0.003984809163789937,
+      "unified_pre_iv": 0.02918099643260082,
+      "unified_post_iv": 0.0175363619527323
+    },
+    "dates_best": {
+      "bs_iv": 0,
+      "sh_iv": 3,
+      "dh_iv": 6,
+      "unified_pre_iv": 1,
+      "unified_post_iv": 1
+    },
+    "ood": {
+      "in_distribution": 9,
+      "mild_extrapolation": 1,
+      "severe_extrapolation": 1
+    },
+    "median_latency_s": {
+      "encoder": 0.005653041000186931,
+      "encoder_plus_physics": 0.5090821249978035,
+      "double_heston_cold": 1.6089140830008546
+    },
+    "uncertainty_by_expiry_count": {
+      "1": {
+        "n": 10,
+        "sd_theta": 0.9593669953575468,
+        "sd_kappa": 1.3500660749301616,
+        "sd_v0": 0.7668096857546509
+      },
+      "2": {
+        "n": 1,
+        "sd_theta": 0.9792456668062153,
+        "sd_kappa": 1.3307419373931761,
+        "sd_v0": 0.745373985608943
+      }
+    }
+  },
+  "checkpoint": {
+    "epoch": 14,
+    "phase": "D_refinement"
+  }
+}

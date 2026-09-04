@@ -1,0 +1,19 @@
+check,passed,observed
+collocation_budget_inside_14000_to_20000,True,18000
+every_collocation_spot_inside_zero_to_1p5x_ten_year_maximum,True,1.0000000000000002
+maturity_axis_inside_nse_three_month_stock_option_cycle,True,91.95046013976739
+one_two_and_three_month_slices_present,True,"[2070, 1927, 1973]"
+variance_axis_covers_observed_inverse_bsm_range_to_the_99p99th_percentile,True,"{'box': [0.005, 1.1], 'observed_min_q999_max': [0.013272608730098858, 0.5928382856023092, 1.103105237693959], 'quotes_above_box': 1}"
+terminal_condition_exact_by_construction,True,"c = Black76(x, w), w -> 0 as T -> 0"
+pinn_prices_inside_static_no_arbitrage_bounds,True,0
+no_calendar_spread_arbitrage_on_collocation_set,True,0.0
+no_butterfly_arbitrage_on_collocation_set,True,0.0
+pde_residual_below_acceptance_gate,True,0.0018420156981537009
+pinn_matches_exact_heston_in_traded_region,True,0.002036157207809984
+all_training_acceptance_gates_passed,False,['full_box_iv_rmse']
+test_row_keys_absent_from_calibration_fold,True,0
+structural_parameters_fitted_on_train_dates_only,True,0
+every_test_prediction_traces_to_an_official_nse_file,True,0
+all_calibrated_correlations_inside_the_unit_interval,True,0.1462136100088613
+all_calibrated_variance_parameters_positive,True,0.0340085491927466
+synthetic_surfaces_repriced_within_0p25pct_of_spot,True,0.0029891021302628

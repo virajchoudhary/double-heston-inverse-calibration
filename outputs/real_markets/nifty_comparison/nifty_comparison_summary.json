@@ -1,0 +1,49 @@
+{
+  "dates": 10,
+  "lam": 30.0,
+  "holdout_quotes": 1358,
+  "arms": {
+    "Black-Scholes, 1 sigma (1 param)": {
+      "median_holdout_iv_rmse": 0.03039462980021644,
+      "mean_holdout_iv_rmse": 0.031653495393671675,
+      "dates_best": 0,
+      "median_seconds": null
+    },
+    "Black-Scholes, sigma per expiry (5 params)": {
+      "median_holdout_iv_rmse": 0.026368567508780687,
+      "mean_holdout_iv_rmse": 0.026918814670746326,
+      "dates_best": 0,
+      "median_seconds": null
+    },
+    "single Heston (5 params)": {
+      "median_holdout_iv_rmse": 0.023607649000350436,
+      "mean_holdout_iv_rmse": 0.024432387697363344,
+      "dates_best": 1,
+      "median_seconds": 8.871183666502475
+    },
+    "Double Heston, cold 5-start (10 params)": {
+      "median_holdout_iv_rmse": 0.023660590935924722,
+      "mean_holdout_iv_rmse": 0.025177475046153103,
+      "dates_best": 0,
+      "median_seconds": 172.0809773959918
+    },
+    "Double Heston, ridge 30 toward single Heston (10 params)": {
+      "median_holdout_iv_rmse": 0.023783324539777745,
+      "mean_holdout_iv_rmse": 0.024380500349980877,
+      "dates_best": 4,
+      "median_seconds": 5.487828000012087
+    },
+    "dual PINN prior alone (out of distribution)": {
+      "median_holdout_iv_rmse": 0.02573179181436045,
+      "mean_holdout_iv_rmse": 0.025875829975160893,
+      "dates_best": 1,
+      "median_seconds": 5.6619132704799995
+    },
+    "dual PINN + ridge 3 (out of distribution)": {
+      "median_holdout_iv_rmse": 0.0229293538522396,
+      "mean_holdout_iv_rmse": 0.023051583123068074,
+      "dates_best": 4,
+      "median_seconds": null
+    }
+  }
+}

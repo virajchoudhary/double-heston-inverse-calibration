@@ -1,0 +1,23 @@
+{
+  "rule": "the 10 ladder-covering NIFTY dates of 2026 with the highest trailing 21-day realised volatility of the underlying",
+  "model_free": true,
+  "declared_before_any_fit": true,
+  "dates": [
+    "2026-04-08",
+    "2026-04-09",
+    "2026-04-10",
+    "2026-04-13",
+    "2026-04-15",
+    "2026-04-16",
+    "2026-04-17",
+    "2026-04-20",
+    "2026-04-21",
+    "2026-04-22"
+  ],
+  "rv21_range": [
+    0.2695688958315169,
+    0.2900398688873459
+  ],
+  "rv21_median_of_all_2026": 0.13593522022975515,
+  "elevation_vs_median": 2.0867028123347042
+}

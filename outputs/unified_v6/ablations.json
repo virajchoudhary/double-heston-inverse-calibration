@@ -1,0 +1,77 @@
+{
+  "checkpoint": {
+    "epoch": 14,
+    "phase": "D_refinement"
+  },
+  "n_surfaces": 1200,
+  "ablations": {
+    "I_refine_0": {
+      "param_median": 0.1551861071589699,
+      "reprice_median": 0.0012191218248056466,
+      "reprice_mean": 0.0021538770522044437,
+      "seconds_per_surface": 0.0029817964241434917
+    },
+    "I_refine_1": {
+      "param_median": 0.14967217102720154,
+      "reprice_median": 0.000898742716769499,
+      "reprice_mean": 0.0019593732292366027,
+      "seconds_per_surface": 0.018631678749176595
+    },
+    "I_refine_3": {
+      "param_median": 0.14767827498088126,
+      "reprice_median": 0.0006368301821064802,
+      "reprice_mean": 0.0016318301490181406,
+      "seconds_per_surface": 0.049965686111651544
+    },
+    "I_refine_5": {
+      "param_median": 0.14858566609126583,
+      "reprice_median": 0.0005950624555191683,
+      "reprice_mean": 0.0015796244102829681,
+      "seconds_per_surface": 0.08264461034417764
+    },
+    "E_spring_full": {
+      "param_median": 0.14767827498088126,
+      "reprice_median": 0.0006368301821064802,
+      "reprice_mean": 0.0016318301490181406,
+      "seconds_per_surface": 0.051643393438328834
+    },
+    "E_spring_diagonal": {
+      "param_median": 0.15293983427327212,
+      "reprice_median": 0.0006416014825394239,
+      "reprice_mean": 0.0016706440438225322,
+      "seconds_per_surface": 0.051793394375811964
+    },
+    "E_spring_scalar": {
+      "param_median": 0.1676465780567914,
+      "reprice_median": 0.0006713059901101714,
+      "reprice_mean": 0.0018002936079731455,
+      "seconds_per_surface": 0.05285426934166026
+    },
+    "C_rounds_1": {
+      "param_median": 0.19223434076535406,
+      "reprice_median": 0.002060117871508115,
+      "reprice_mean": 0.0038182946396909155,
+      "seconds_per_surface": 0.05391160934166085
+    },
+    "C_rounds_2": {
+      "param_median": 0.16113657796014214,
+      "reprice_median": 0.000759026829418301,
+      "reprice_mean": 0.0017990456996540643,
+      "seconds_per_surface": 0.053635803195011246
+    },
+    "C_rounds_3": {
+      "param_median": 0.14767827498088126,
+      "reprice_median": 0.0006368301821064802,
+      "reprice_mean": 0.0016318301490181406,
+      "seconds_per_surface": 0.05383632027834513
+    }
+  },
+  "not_run": {
+    "A_fixed_vector_encoder": "requires training a separate model",
+    "B_pooled_head_vs_parameter_tokens": "requires training a separate model",
+    "F_iid_noise_vs_correlated": "requires regenerating data and retraining",
+    "G_old_prior_vs_regime_balanced": "requires regenerating data and retraining",
+    "H_surrogate_vs_exact_physics": "requires training a surrogate and a second model",
+    "J_sensitivity_informed_routing": "requires training a separate model"
+  }
+}

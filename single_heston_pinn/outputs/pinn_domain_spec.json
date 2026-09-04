@@ -1,0 +1,146 @@
+{
+  "input_file": "/Users/dhruvaambhaikar/Documents/Options pricing/outputs/019fc8a0/model_input_option_prices.csv",
+  "input_sha256": "a8a56dd7b17074d8fa32f88936c8b404456f22f296d9dc4665faf3b13621f1d3",
+  "quote_rows": 31617,
+  "symbols": 11,
+  "trade_dates": 508,
+  "surfaces": 1918,
+  "split_rows": {
+    "train": 21949,
+    "validation": 5006,
+    "test": 4662
+  },
+  "fold_rows": {
+    "calibration": 21081,
+    "holdout": 10536
+  },
+  "spot_domain": {
+    "definition": "S from 0 to 1.5 x ten-year maximum traded price, per symbol",
+    "per_symbol": {
+      "ADANIENSOL": {
+        "ten_year_price_max": 2000.0,
+        "pinn_spot_low": 0.0,
+        "pinn_spot_high": 3000.0
+      },
+      "ADANIGREEN": {
+        "ten_year_price_max": 1840.0,
+        "pinn_spot_low": 0.0,
+        "pinn_spot_high": 2760.0
+      },
+      "ADANIPOWER": {
+        "ten_year_price_max": 280.0,
+        "pinn_spot_low": 0.0,
+        "pinn_spot_high": 420.0
+      },
+      "CESC": {
+        "ten_year_price_max": 1300.0,
+        "pinn_spot_low": 0.0,
+        "pinn_spot_high": 1950.0
+      },
+      "JSWENERGY": {
+        "ten_year_price_max": 780.0,
+        "pinn_spot_low": 0.0,
+        "pinn_spot_high": 1170.0
+      },
+      "NHPC": {
+        "ten_year_price_max": 102.0,
+        "pinn_spot_low": 0.0,
+        "pinn_spot_high": 153.0
+      },
+      "NTPC": {
+        "ten_year_price_max": 500.0,
+        "pinn_spot_low": 0.0,
+        "pinn_spot_high": 750.0
+      },
+      "POWERGRID": {
+        "ten_year_price_max": 420.0,
+        "pinn_spot_low": 0.0,
+        "pinn_spot_high": 630.0
+      },
+      "PTC": {
+        "ten_year_price_max": 150.0,
+        "pinn_spot_low": 0.0,
+        "pinn_spot_high": 225.0
+      },
+      "RPOWER": {
+        "ten_year_price_max": 75.0,
+        "pinn_spot_low": 0.0,
+        "pinn_spot_high": 112.5
+      },
+      "SJVN": {
+        "ten_year_price_max": 140.0,
+        "pinn_spot_low": 0.0,
+        "pinn_spot_high": 210.0
+      },
+      "TATAPOWER": {
+        "ten_year_price_max": 560.0,
+        "pinn_spot_low": 0.0,
+        "pinn_spot_high": 840.0
+      },
+      "TORNTPOWER": {
+        "ten_year_price_max": 2000.0,
+        "pinn_spot_low": 0.0,
+        "pinn_spot_high": 3000.0
+      }
+    }
+  },
+  "maturity_domain": {
+    "definition": "T = (expiry_date - trade_date) / 365, expressed in years",
+    "unit": "years (1.0 = one year)",
+    "observed_days_min": 7,
+    "observed_days_max": 61,
+    "observed_years_min": 0.019178082191780823,
+    "observed_years_max": 0.16712328767123288,
+    "contract_cycle": "NSE lists three serial monthly stock-option expiries",
+    "month_slices_days": [
+      30,
+      60,
+      90
+    ],
+    "month_slices_years": [
+      0.0821917808219178,
+      0.1643835616438356,
+      0.2465753424657534
+    ],
+    "pinn_maturity_low_days": 1,
+    "pinn_maturity_high_days": 92,
+    "pinn_maturity_low_years": 0.0027397260273972603,
+    "pinn_maturity_high_years": 0.25205479452054796
+  },
+  "variance_domain": {
+    "source": "v = (inverse Black-Scholes implied volatility)^2 on paired NSE quotes",
+    "observed_min": 0.013272608730098858,
+    "observed_q001": 0.019105950517135567,
+    "observed_q01": 0.026215735564190597,
+    "observed_q25": 0.060470801428085016,
+    "observed_median": 0.08802595559396793,
+    "observed_q75": 0.13905833635788373,
+    "observed_q99": 0.4221651801463272,
+    "observed_q999": 0.5928382856023092,
+    "observed_max": 1.103105237693959,
+    "pinn_variance_low": 0.009552975258567784,
+    "pinn_variance_high": 0.9485412569636948,
+    "pinn_vol_low": 0.09773932299012401,
+    "pinn_vol_high": 0.9739308276072253
+  },
+  "carry_domain": {
+    "source": "robust put-call parity regression per (symbol, date, expiry)",
+    "rate_min": -0.09939618993997855,
+    "rate_max": 0.24943395731684317,
+    "rate_median": 0.095082991605424,
+    "dividend_min": -0.2678651971633251,
+    "dividend_max": 0.4976894109501818,
+    "dividend_median": 0.041392874801163354
+  },
+  "prepare_audit": {
+    "authentic_ready_rows_seen": 215636,
+    "clean_quotes_retained": 31617,
+    "date_rejected_insufficient_clean_quotes": 213,
+    "expiry_rejected_fewer_than_six_pairs": 1535,
+    "expiry_rejected_maturity": 689,
+    "expiry_rejected_unreliable_put_call_parity": 1934,
+    "quote_rejected_after_fold_minimums": 0,
+    "quote_rejected_iv_moneyness_or_vega": 29,
+    "unpaired_or_duplicate_rows_excluded": 60656
+  }
+}

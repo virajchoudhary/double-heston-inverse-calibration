@@ -84,3 +84,17 @@ outputs/**/*.tmp
 outputs/metrics/smoke_test/data/
 outputs/metrics/smoke_test/smoke_predictions.csv
 outputs/metrics/smoke_test/parameter_evaluation/parameter_predictions_and_errors.csv
+
+# --- shipped research artefacts -------------------------------------------------
+# The blanket *.pt / *.npz / *.parquet rules above keep scratch output out of the
+# repository. The paths below are deliverables, not scratch: teammates must be able to
+# load the trained networks and reproduce every reported metric WITHOUT retraining.
+# v6_train.npz (64 MB) is deliberately NOT shipped -- it is only needed to retrain, and
+# regenerates exactly from `scripts/mentor_dh_pinn/build_v6_data.py` (seed 101).
+!outputs/unified_v6/*.pt
+!outputs/unified_v6/v6_validation.npz
+!outputs/unified_v6/v6_test.npz
+!outputs/dual_pinn_legacy/*.pt
+!single_heston_pinn/outputs/*.safetensors
+!single_heston_pinn/outputs/*.npz
+!single_heston_pinn/outputs/*.parquet

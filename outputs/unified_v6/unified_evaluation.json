@@ -1,0 +1,218 @@
+{
+  "checkpoint": {
+    "epoch": 14,
+    "phase": "D_refinement"
+  },
+  "n_surfaces": 4000,
+  "range_scale_definition": "training-prior 1st-99th percentile per parameter",
+  "range_scale": [
+    1.8170881213820413,
+    1.3849804555430234,
+    0.8942487457038467,
+    1.439947912538009,
+    0.8878795151074034,
+    46.949475079310076,
+    1.3851778686372997,
+    4.161574935951451,
+    1.4778327017267854,
+    0.899955513080434
+  ],
+  "parameter_recovery": {
+    "pre_refinement_median": 0.15264590180398796,
+    "post_refinement_median": 0.14626378977095422,
+    "post_refinement_mean": 0.16639693658472343,
+    "post_refinement_p90": 0.28160216855835385,
+    "fraction_within_0.05": 0.497175,
+    "fraction_within_0.10": 0.6574249999999999,
+    "per_parameter_median": {
+      "kappa_slow": 0.17620876035963284,
+      "theta_slow": 0.015188602374517909,
+      "sigma_slow": 0.06473220802703503,
+      "rho_slow": 0.12266752746132908,
+      "v0_slow": 0.014426770861080929,
+      "kappa_fast": 0.09858585233165366,
+      "theta_fast": 0.009731829275415393,
+      "sigma_fast": 0.04522147876340152,
+      "rho_fast": 0.1122314493983276,
+      "v0_fast": 0.016502521982135178
+    }
+  },
+  "repricing_exact_engine": {
+    "pre_refinement_median": 0.0012576039243749294,
+    "post_refinement_median": 0.0006437873951739062,
+    "post_refinement_p95": 0.006033403108809764,
+    "post_refinement_worst": 0.035927382701050614
+  },
+  "uncertainty": {
+    "coverage_50": 0.536175,
+    "coverage_50_per_param": [
+      0.38275,
+      0.57025,
+      0.55575,
+      0.51625,
+      0.6595,
+      0.54125,
+      0.4495,
+      0.48925,
+      0.615,
+      0.58225
+    ],
+    "coverage_90": 0.91025,
+    "coverage_90_per_param": [
+      0.93675,
+      0.93775,
+      0.9015,
+      0.913,
+      0.90775,
+      0.917,
+      0.8735,
+      0.89425,
+      0.91475,
+      0.90625
+    ],
+    "coverage_95": 0.952975,
+    "coverage_95_per_param": [
+      0.99725,
+      0.96325,
+      0.951,
+      0.958,
+      0.941,
+      0.9605,
+      0.928,
+      0.94575,
+      0.947,
+      0.938
+    ],
+    "median_interval_width_90": 3.5017106550944996,
+    "spearman_sd_vs_abs_error": 0.04532851427053213
+  },
+  "buckets": [
+    {
+      "name": "D single expiry",
+      "n": 1014,
+      "param_pre": 0.1574623245804853,
+      "param_post": 0.16116190128822083,
+      "reprice_pre": 0.0007439222430771144,
+      "reprice_post": 0.0004691918107305033,
+      "within10": 0.6207100591715976
+    },
+    {
+      "name": "E two expiries",
+      "n": 602,
+      "param_pre": 0.15329835300875758,
+      "param_post": 0.1568095502877921,
+      "reprice_pre": 0.0011963342088713998,
+      "reprice_post": 0.0005439641962080815,
+      "within10": 0.6392026578073089
+    },
+    {
+      "name": "dense expiries",
+      "n": 1593,
+      "param_pre": 0.15000649179482253,
+      "param_post": 0.13510973512187996,
+      "reprice_pre": 0.0014611206425507322,
+      "reprice_post": 0.000781275882149774,
+      "within10": 0.6841180163214061
+    },
+    {
+      "name": "historical 5x9",
+      "n": 407,
+      "param_pre": 0.15344363356290847,
+      "param_post": 0.1412120979415998,
+      "reprice_pre": 0.001245572606668423,
+      "reprice_post": 0.0005932545398252416,
+      "within10": 0.6523341523341524
+    },
+    {
+      "name": "B low-vol index regime",
+      "n": 857,
+      "param_pre": 0.13417736713987016,
+      "param_post": 0.12540190406838322,
+      "reprice_pre": 0.0007563672427607701,
+      "reprice_post": 0.0003179518563753768,
+      "within10": 0.7533255542590432
+    },
+    {
+      "name": "ordinary equity",
+      "n": 1768,
+      "param_pre": 0.13586948457872233,
+      "param_post": 0.12903981373210327,
+      "reprice_pre": 0.0010838371211446558,
+      "reprice_post": 0.0005069340121811862,
+      "within10": 0.7244909502262444
+    },
+    {
+      "name": "C high-vol stock regime",
+      "n": 1375,
+      "param_pre": 0.19097679350388577,
+      "param_post": 0.19198645422928765,
+      "reprice_pre": 0.002299294670646611,
+      "reprice_post": 0.0014389626358684213,
+      "within10": 0.5114181818181819
+    },
+    {
+      "name": "low noise <=0.5%",
+      "n": 1279,
+      "param_pre": 0.14938806827959844,
+      "param_post": 0.13260636853676988,
+      "reprice_pre": 0.0010620255894551755,
+      "reprice_post": 0.0003137683987869771,
+      "within10": 0.6860828772478499
+    },
+    {
+      "name": "moderate noise",
+      "n": 1533,
+      "param_pre": 0.15468369161552703,
+      "param_post": 0.14533932323469612,
+      "reprice_pre": 0.0011939224593402686,
+      "reprice_post": 0.0006547552377700629,
+      "within10": 0.6568819308545336
+    },
+    {
+      "name": "J >2% noise",
+      "n": 1188,
+      "param_pre": 0.15161980830640875,
+      "param_post": 0.1603367202484137,
+      "reprice_pre": 0.0016893264736131263,
+      "reprice_post": 0.0016558608276220517,
+      "within10": 0.6272727272727273
+    },
+    {
+      "name": "H sparse (<=10 quotes)",
+      "n": 775,
+      "param_pre": 0.157444803436371,
+      "param_post": 0.16025917648810112,
+      "reprice_pre": 0.0007826011170371833,
+      "reprice_post": 0.00045834653655375156,
+      "within10": 0.6251612903225806
+    },
+    {
+      "name": "dense (>=50 quotes)",
+      "n": 636,
+      "param_pre": 0.1601566144168216,
+      "param_post": 0.1343473080359789,
+      "reprice_pre": 0.0016379795803341199,
+      "reprice_post": 0.0007839774025279475,
+      "within10": 0.685691823899371
+    }
+  ],
+  "latency_seconds_per_surface": {
+    "neural_encoder_only": 0.002859461812009613,
+    "encoder_plus_3_physics_steps": 0.05052254265599549,
+    "note": "the second number is the latency of the answer actually used"
+  },
+  "baselines_on_100_surfaces": {
+    "black_scholes_reprice_median": 0.0017312944440512435,
+    "single_heston_reprice_median": 0.0008614727682850264,
+    "double_heston_cold_reprice_median": 0.0008756962674558211,
+    "double_heston_cold_param_median": 0.43667090655984075,
+    "unified_reprice_median": 0.0006310160369045991,
+    "unified_param_median": 0.15928347473058369,
+    "seconds": {
+      "black_scholes": 0.009990374997869367,
+      "single_heston": 0.5592448544994113,
+      "double_heston_cold": 2.88800849999825,
+      "unified_total": 0.05052254265599549
+    }
+  }
+}
