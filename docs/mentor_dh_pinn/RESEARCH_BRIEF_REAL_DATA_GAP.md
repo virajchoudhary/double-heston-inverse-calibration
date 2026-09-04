@@ -54,6 +54,31 @@ Uncertainty on synthetic is well calibrated: 50/90/95% intervals cover 0.536/0.9
 
 ## 4. The diagnosis — two different failures
 
+### 4.0 The accuracy gap can be bought with compute -- at a price that removes the point
+
+Before the per-market diagnosis, one result frames everything. The same trained network,
+given a large enough inference-time budget (12 starts drawn from its own `Sigma`, 30
+refinement steps each), reaches:
+
+| market | network 12x30 | classical cold 5-start | accuracy | wall clock |
+|---|---:|---:|---|---|
+| NIFTY | **0.02478** in 107.6 s | 0.02523 in 21.8 s | 1.8% **better** | **4.9x slower** |
+| ADANIPOWER | 0.01477 in 69.7 s | 0.00398 in 1.5 s | 3.7x worse | **48x slower** |
+
+So the NIFTY deficit *is* reachable -- but only by spending about 3,960 exact pricer
+evaluations, which costs five times what classical calibration costs. **The amortised model's
+entire advantage was speed, and any configuration that spends enough compute to fix the
+accuracy gives that advantage away.** In its fast configuration (3 steps, single start:
+0.854 s NIFTY, 0.509 s ADANIPOWER) it is 21x and 3.2x faster than classical but less accurate.
+
+The research question is therefore sharper than "make it more accurate":
+
+> **Make the amortised model land near the projection answer in a small, fixed number of
+> exact-physics steps -- so accuracy is bought by a better starting point, not by search.**
+
+That is a statement about the quality of the network's posterior, not about the optimiser,
+and 4.2 shows exactly how far off that posterior currently is.
+
 ### 4.1 NIFTY is a step-budget problem, and is nearly solved
 
 | configuration | median IV RMSE |
@@ -79,7 +104,7 @@ Each hypothesis was tested and eliminated:
 |---|---|---|
 | too few refinement steps | 3 -> 10 -> 30 steps | plateaus at 0.0167. **Not it.** |
 | prior too stiff | weaken `Sigma` 100x, 10,000x | gets *worse* (0.0178, 0.0242). **Not it.** |
-| bad basin, fixable by search | 4 and 12 starts drawn from the model's own `Sigma` | 0.01610, 0.01477. Helps 12%, still 3.7x off. **Not sufficient.** |
+| bad basin, fixable by search | 4 and 12 starts drawn from the model's own `Sigma` | 0.01610, 0.01477. Helps 12%, still 3.7x off, and 48x slower than classical. **Not sufficient.** |
 
 The last row is the clue. If the good region were inside the predicted posterior, a dozen
 draws would find it. Measuring directly where the classical optimum sits **in the network's
@@ -167,11 +192,13 @@ calibration`, `simulation-based calibration SBC`, `conformal prediction inverse 
 ### D4. Hybrid: network proposes, classical disposes
 
 *Question:* what is the best division of labour between the amortised model and a real
-optimiser?
+optimiser, **under a fixed compute budget**?
 
-Partially tested: 12 starts from `Sigma` improved ADANIPOWER 12%. Worth studying how to
-combine the network's start with *diverse* starts, and how to select among basins using
-the fit residual rather than the prior.
+Tested and quantified: 12 covariance-sampled starts improve ADANIPOWER 12% and NIFTY 4%,
+but at 48x and 4.9x the classical wall clock. Naive search is not the answer. The useful
+version of this question is how to get a *good* start cheaply -- one or two well-chosen
+initialisations rather than twelve sampled ones. Any proposal must be benchmarked on the
+accuracy-per-second frontier, not on accuracy alone.
 
 Search terms: `multi-start global optimization calibration`, `learned initialization
 nonlinear least squares`, `basin hopping`, `neural network warm start optimization`.
@@ -192,6 +219,9 @@ Heston calibration`, `ill-posed inverse problem regularization option pricing`,
 ## 6. Already ruled out -- do not spend effort here
 
 * **More refinement steps.** ADANIPOWER plateaus by 10-30 steps.
+* **Brute-force multi-start from the predicted covariance.** Measured on both markets: it
+  helps 12% on ADANIPOWER and 4% on NIFTY, and costs 48x and 4.9x the classical wall clock
+  respectively. It buys accuracy with compute the amortised design exists to avoid.
 * **Weakening the prior.** Makes ADANIPOWER worse, monotonically.
 * **Retraining with a working physics layer.** Tried (`unified_v2`); it came out worse
   (0.16370 vs 0.14699 parameter, 7.7621e-04 vs 6.4113e-04 reprice). Caveat: n=1 vs n=1,
@@ -223,6 +253,10 @@ coverage survives contact with real data.
 
 A weaker but still valuable result: matching classical accuracy at 20x the speed, with
 honest intervals.
+
+**Any claimed improvement must report wall clock.** The accuracy gap is already closable on
+NIFTY by brute force at 4.9x the classical cost; that is not progress, and a result that
+does not state its compute budget cannot be distinguished from it.
 
 ## 9. Where everything lives
 
