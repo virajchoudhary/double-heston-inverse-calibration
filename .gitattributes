@@ -10,3 +10,7 @@
 *.npy binary
 *.npz binary
 *.parquet binary
+*.safetensors binary
+# Preserve audit hashes byte-for-byte, including original CSV line endings.
+outputs/calibration_repair/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+outputs/regular_pinn_recovery/** -text whitespace=trailing-space,space-before-tab,cr-at-eol

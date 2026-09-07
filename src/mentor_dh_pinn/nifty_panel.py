@@ -26,7 +26,6 @@ module assumes nothing about the repo rate or dividend yield.
 from __future__ import annotations
 
 import math
-import sys
 from pathlib import Path
 
 import numpy as np
@@ -34,11 +33,10 @@ import pandas as pd
 from scipy.optimize import brentq
 from scipy.stats import norm
 
-PROJECT = Path("/Users/dhruvaambhaikar/Documents/Options pricing")
+from single_heston_pinn.src.single_heston import robust_carry
+
+PROJECT = Path(__file__).resolve().parents[2]
 BHAV = PROJECT / "raw" / "nse_fo_bhavcopies"
-if str(PROJECT) not in sys.path:
-    sys.path.insert(0, str(PROJECT))
-from single_heston import robust_carry            # noqa: E402
 
 SIG_LO, SIG_HI = 0.01, 4.0
 MIN_OPEN_INTEREST = 10_000
@@ -64,26 +62,50 @@ def implied_vol(fwd_price, F, K, tau):
         return np.nan
 
 
-def read_quotes(date: str) -> pd.DataFrame:
-    p = BHAV / date[:4] / f"BhavCopy_NSE_FO_0_0_0_{date.replace('-','')}_F_0000.csv.zip"
+def bhav_path(date: str, bhav_dir: Path | None = None) -> Path:
+    date = pd.Timestamp(date).strftime("%Y-%m-%d")
+    return Path(bhav_dir or BHAV) / date[:4] / f"BhavCopy_NSE_FO_0_0_0_{date.replace('-','')}_F_0000.csv.zip"
+
+
+def read_quotes(date: str, *, bhav_dir: Path | None = None) -> pd.DataFrame:
+    p = bhav_path(date, bhav_dir)
     d = pd.read_csv(p, usecols=["TradDt", "XpryDt", "TckrSymb", "OptnTp", "StrkPric",
                                 "SttlmPric", "UndrlygPric", "TtlTradgVol", "OpnIntrst"])
-    d = d[(d.TckrSymb == "NIFTY") & d.OptnTp.notna()].copy()
+    d = d[(d.TckrSymb == "NIFTY") & d.OptnTp.isin(["CE", "PE"])].drop_duplicates().copy()
+    if not pd.to_datetime(d.TradDt).eq(pd.Timestamp(date)).all():
+        raise ValueError(f"Trade-date mismatch in {p}")
+    keys = ["TradDt", "XpryDt", "TckrSymb", "OptnTp", "StrkPric"]
+    if d.duplicated(keys).any():
+        raise ValueError(f"Conflicting duplicate NIFTY contracts in {p}")
     d["dte"] = (pd.to_datetime(d.XpryDt) - pd.to_datetime(d.TradDt)).dt.days
-    return d[(d.dte > 0) & (d.SttlmPric > 0)]
+    return d[(d.dte > 0) & (d.SttlmPric > 0) & (d.StrkPric > 0)
+             & (d.UndrlygPric > 0) & (d.OpnIntrst >= MIN_OPEN_INTEREST)]
 
 
-def surface(date: str, *, moneyness=(0.78, 1.22)) -> pd.DataFrame:
-    """Every live quote on one date, with its expiry's forward, discount and implied vol."""
-    d = read_quotes(date)
-    spot = float(d.UndrlygPric.iloc[0])
+def surface(date: str, *, moneyness=(0.78, 1.22), bhav_dir: Path | None = None,
+            holdout_fold: int | None = None) -> pd.DataFrame:
+    """Liquid OTM quotes; optionally reserve every third strike BEFORE carry fitting.
+
+    ``holdout_fold`` is 0, 1 or 2. Both options at a reserved strike are excluded
+    from parity estimation. The returned ``holdout_mask`` is the same partition;
+    callers must reuse it, rather than splitting again after filtering.
+    """
+    if holdout_fold not in (None, 0, 1, 2):
+        raise ValueError("holdout_fold must be None, 0, 1, or 2")
+    d = read_quotes(date, bhav_dir=bhav_dir)
+    if d.empty:
+        return pd.DataFrame()
+    spot = float(d.UndrlygPric.median())
     out = []
     for dte, g in d.groupby("dte"):
         if g.TtlTradgVol.fillna(0).sum() <= 0 or g.OpnIntrst.fillna(0).sum() < MIN_OPEN_INTEREST:
             continue                                   # exchange-computed series, not market
         c = g[g.OptnTp == "CE"].set_index("StrkPric").SttlmPric
         p = g[g.OptnTp == "PE"].set_index("StrkPric").SttlmPric
-        k = c.index.intersection(p.index)
+        k = c.index.intersection(p.index).sort_values()
+        all_strikes = np.sort(g.StrkPric.unique())
+        held = (set(all_strikes[holdout_fold::3]) if holdout_fold is not None else set())
+        k = k[~k.isin(held)]
         if len(k) < 6:
             continue
         K = k.to_numpy(float)
@@ -106,7 +128,10 @@ def surface(date: str, *, moneyness=(0.78, 1.22)) -> pd.DataFrame:
             "dividend": div, "parity_nrmse": nrmse, "spot": spot, "fwd_call": fwd_call,
             "x": np.log(F / Kq), "iv": iv,
             "volume": q.TtlTradgVol.fillna(0).to_numpy(float),
-            "open_interest": q.OpnIntrst.fillna(0).to_numpy(float)}))
+            "open_interest": q.OpnIntrst.fillna(0).to_numpy(float),
+            "holdout_mask": q.StrkPric.isin(held).to_numpy(),
+            "carry_pair_count": len(k),
+            "carry_fit_scope": "calibration_strikes" if holdout_fold is not None else "all_strikes"}))
     if not out:
         return pd.DataFrame()
     s = pd.concat(out, ignore_index=True)

@@ -171,71 +171,171 @@ class UnifiedCalibrator(nn.Module):
         return mu, L
 
     # ------------------------------------------------------- physics refinement
-    def refine(self, z0, L, batch, steps=None, create_graph=False):
-        """Unrolled damped Gauss-Newton against the exact pricer, with the covariance prior.
+    def _prices(self, z, batch):
+        return price_call(torch.stack(decode(z), dim=-1), batch["spot"], batch["strike"],
+                          batch["tau"], batch["rate"], batch["carry"],
+                          node_count=self.node_count)
 
-            A  = J^T W J + Sigma^-1 + alpha I
-            g  = J^T W r + Sigma^-1 (z - mu)
-            z <- z - solve(A, g)
+    def refinement_objective(self, z, mu, L, batch, prior_weight=1.0):
+        """Per-surface sum of squared quote-noise residuals plus the encoder prior.
 
-        Sigma^-1 = (L L^T)^-1 is applied via the Cholesky factor, never by forming an
-        explicit inverse. The solve is 10x10; cost is dominated by the exact prices and
-        their Jacobian, not by the linear algebra.
+        A failed active quote makes the whole surface objective infinite. No quote is
+        silently removed. Only fields in this calibration batch enter the objective.
         """
+        if not math.isfinite(prior_weight) or prior_weight < 0:
+            raise ValueError("prior_weight must be finite and nonnegative")
+        active = batch["mask"] > 0.5
+        pred = self._prices(z, batch)
+        residual = torch.where(active, (pred - batch["price"]) / quote_scale(batch), 0.0)
+        value = residual.square().sum(-1)
+        if prior_weight:
+            delta = torch.linalg.solve_triangular(L, (z - mu).unsqueeze(-1), upper=False)
+            value = value + prior_weight * delta.square().sum((-2, -1))
+        good = ((~active) | torch.isfinite(pred)).all(-1) & torch.isfinite(value)
+        return torch.where(good, value, torch.full_like(value, float("inf")))
+
+    def refine(self, z0, L, batch, steps=None, create_graph=False, prior_weight=1.0):
+        """Damped Gauss-Newton with per-surface objective acceptance/backtracking.
+
+        The default encoder prior is unchanged. An explicitly requested zero prior is
+        useful for noiseless synthetic calibration, where exact reconstruction is the
+        objective. The returned history contains the actual post-acceptance mean of
+        ``refinement_objective``, including the prior, for every attempted step.
+        """
+        if not math.isfinite(prior_weight) or prior_weight < 0:
+            raise ValueError("prior_weight must be finite and nonnegative")
         steps = self.refine_steps if steps is None else steps
         mu = z0
         z = z0
-        mask, spot = batch["mask"], batch["spot"]
-        # Weight each residual by the RECIPROCAL QUOTE NOISE, not by 1/spot. The Gauss-Newton
-        # normal equations combine a data term J^T W J with a prior precision Sigma^-1, and
-        # the two are only commensurate if W is the noise precision. Weighting by 1/spot
-        # instead left the data term about 3e3 times weaker than the prior, so every step was
-        # ~1e-4 in latent units against a trust region of 1.5 and refinement did nothing.
-        eps_q = torch.clamp(batch["noise_level"].unsqueeze(-1) *
-                            torch.clamp(batch["price"], min=0.0), min=1e-6) \
-            + 1e-6 * torch.clamp(spot, min=1e-12)
-        w = mask / eps_q
+        active = batch["mask"] > 0.5
+        w = active.to(z.dtype) / quote_scale(batch)
         eye = torch.eye(N_PARAMS, dtype=z.dtype, device=z.device)
-        Linv_eye = torch.linalg.solve_triangular(L, eye.expand_as(L), upper=False)
-        Sinv = Linv_eye.transpose(-1, -2) @ Linv_eye                      # (L L^T)^-1, PD
+        if prior_weight:
+            Li = torch.linalg.solve_triangular(L, eye.expand_as(L), upper=False)
+            Sinv = prior_weight * (Li.transpose(-1, -2) @ Li)
+        else:
+            Sinv = torch.zeros_like(L)
         hist = []
-        max_step = 1.5                      # trust region in latent units
+        damping = torch.full((len(z),), 1e-6, dtype=z.dtype, device=z.device)
+        max_step = 1.5
         for _ in range(max(steps, 0)):
-            def f(zz):
-                pp = torch.stack(decode(zz), dim=-1)
-                return price_call(pp, batch["spot"], batch["strike"], batch["tau"],
-                                  batch["rate"], batch["carry"], node_count=self.node_count)
+            f = lambda zz: self._prices(zz, batch)
             J = _batched_jacobian(f, z, create_graph)
             pred = f(z)
-            # A non-finite price or Jacobian is a numerical failure, not a zero. Neutralise
-            # the affected rows so the linear system stays well posed, and leave those
-            # surfaces where they are rather than stepping on corrupt information.
-            good_q = torch.isfinite(pred) & torch.isfinite(J).all(-1)
-            wq = w * good_q.to(w.dtype)
-            pred = torch.where(good_q, pred, batch["price"])
-            J = torch.where(good_q.unsqueeze(-1), J, torch.zeros_like(J))
-            r = (pred - batch["price"]) * wq
-            Jw = J * wq.unsqueeze(-1)
-            A = Jw.transpose(-1, -2) @ Jw + Sinv + 1e-6 * eye
+            good = ((~active) | (torch.isfinite(pred) & torch.isfinite(J).all(-1))).all(-1)
+            # Neutralisation is solely for the batched solve: a bad surface is frozen,
+            # never accepted using a smaller subset of its calibration quotes.
+            usable = active & good.unsqueeze(-1)
+            r = torch.where(usable, pred - batch["price"], 0.0) * w
+            Jw = torch.where(usable.unsqueeze(-1), J, 0.0) * w.unsqueeze(-1)
+            H = Jw.transpose(-1, -2) @ Jw + Sinv
+            scale = torch.diagonal(H, dim1=-2, dim2=-1).mean(-1).detach().clamp(min=1.0)
+            A = H + (damping * scale)[:, None, None] * eye
             g = Jw.transpose(-1, -2) @ r.unsqueeze(-1) + Sinv @ (z - mu).unsqueeze(-1)
-            step = torch.linalg.solve(A, g).squeeze(-1)
+            good = good & torch.isfinite(A).all((-2, -1)) & torch.isfinite(g).all((-2, -1))
+            A = torch.where(good[:, None, None], A, eye)
+            g = torch.where(good[:, None, None], g, 0.0)
+            step, info = torch.linalg.solve_ex(A, g)
+            step = step.squeeze(-1)
+            good = good & (info == 0) & torch.isfinite(step).all(-1)
+            step = torch.where(good[:, None], step, 0.0)
             nrm = step.norm(dim=-1, keepdim=True).clamp(min=1e-30)
-            step = step * torch.clamp(max_step / nrm, max=1.0)      # trust region
-            z_new = z - step
-            ok_row = torch.isfinite(z_new).all(-1, keepdim=True)
-            z = torch.where(ok_row, z_new, z)
-            hist.append(float(torch.sqrt(torch.mean(r[mask > 0.5] ** 2)).detach()))
+            step = step * torch.clamp(max_step / nrm, max=1.0)
+            with torch.no_grad():
+                current = self.refinement_objective(z, mu, L, batch, prior_weight)
+            accepted = torch.zeros_like(good)
+            z_next = z
+            for backtrack in range(10):
+                candidate = z - (0.5 ** backtrack) * step
+                # Acceptance is discrete; keep the accepted candidate's autograd path,
+                # without retaining ten discarded pricer graphs for the line search.
+                with torch.no_grad():
+                    trial = self.refinement_objective(candidate, mu, L, batch, prior_weight)
+                    take = good & ~accepted & torch.isfinite(trial) & (trial <= current)
+                z_next = torch.where(take[:, None], candidate, z_next)
+                current = torch.where(take, trial, current)
+                accepted = accepted | take
+                if bool((accepted | ~good).all()):
+                    break
+            z = z_next
+            damping = torch.where(accepted, damping * 0.3, damping * 10).clamp(1e-10, 1e12)
+            hist.append(float(current.mean().detach()))
         return z, hist
 
-    def forward(self, batch, refine_steps=None, create_graph=False):
+    def local_identifiability(self, z, batch, latent_scale=None, threshold=1e-6):
+        """Local practical sensitivity of the calibration quotes, without an encoder prior.
+
+        SVD avoids squaring the Jacobian's condition number. ``threshold`` applies to
+        relative information (s/s_max)^2; it is a declared diagnostic threshold, not a
+        proof of global uniqueness. Supply training-only latent standard deviations for
+        comparable scaled directions. Basis vectors are in those scaled coordinates.
+        """
+        if not 0 < threshold < 1:
+            raise ValueError("threshold must be between zero and one")
+        scale = torch.ones(N_PARAMS, dtype=z.dtype, device=z.device) if latent_scale is None \
+            else torch.as_tensor(latent_scale, dtype=z.dtype, device=z.device)
+        if scale.shape != (N_PARAMS,) or not bool((torch.isfinite(scale) & (scale > 0)).all()):
+            raise ValueError("latent_scale must contain ten finite positive values")
+        J = _batched_jacobian(lambda zz: self._prices(zz, batch), z, False)
+        pred = self._prices(z, batch)
+        weights = 1.0 / quote_scale(batch)
+        rows = []
+        for i in range(len(z)):
+            active = batch["mask"][i] > 0.5
+            A = J[i, active] * weights[i, active, None] * scale
+            if not bool(torch.isfinite(A).all() & torch.isfinite(pred[i, active]).all()):
+                rows.append({"status": "numerically_unsafe", "rank": None})
+                continue
+            # Full right basis is needed for fewer than ten quotes; avoid forming an
+            # unused quotes-by-quotes left matrix for dense market surfaces.
+            _, singular, vh = torch.linalg.svd(A, full_matrices=A.shape[0] < N_PARAMS)
+            singular = torch.nn.functional.pad(singular, (0, N_PARAMS - len(singular)))
+            relative = (singular / singular[0].clamp(min=1e-300)).square()
+            rank = int((relative > threshold).sum())
+            rows.append({"status": "local_practical_sensitivity", "rank": rank,
+                         "relative_information_threshold": threshold,
+                         "singular_values": singular.detach().cpu().tolist(),
+                         "relative_information": relative.detach().cpu().tolist(),
+                         "identified_basis": vh[:rank].detach().cpu().tolist(),
+                         "weak_basis": vh[rank:].detach().cpu().tolist(),
+                         "latent_scale": scale.detach().cpu().tolist(),
+                         "coordinates": "z = fitted_z + latent_scale * displacement",
+                         "interpretation": "Local sensitivity only; weak directions need profile/set analysis."})
+        return rows
+
+    def forward(self, batch, refine_steps=None, create_graph=False, prior_weight=1.0):
         h, pad = self.encode(batch)
         p, attn = self.tokens_forward(h, pad, batch["mask"].shape[0])
         mu, L = self.gaussian_head(p)
-        z, hist = self.refine(mu, L, batch, steps=refine_steps, create_graph=create_graph)
+        z, hist = self.refine(mu, L, batch, steps=refine_steps, create_graph=create_graph,
+                              prior_weight=prior_weight)
         return {"mu_z": mu, "L": L, "z": z,
                 "params_pre": torch.stack(decode(mu), dim=-1),
                 "params": torch.stack(decode(z), dim=-1),
-                "attn": attn, "residual_history": hist}
+                "attn": attn, "residual_history": hist, "objective_history": hist,
+                "covariance_scope": "L describes the encoder Gaussian around mu_z, before refinement; "
+                                    "it is not a posterior covariance around refined z.",
+                "history_definition": "post-acceptance mean per-surface squared-noise-residual plus prior"}
+
+
+def quote_scale(batch):
+    """Explicit price-unit quote sigma takes precedence over legacy relative-price noise."""
+    active = batch["mask"] > 0.5
+    if not bool(active.any(-1).all()):
+        raise ValueError("each calibration surface must have an active quote")
+    if "quote_sigma" in batch:
+        scale = batch["quote_sigma"]
+        if scale.shape != batch["price"].shape:
+            raise ValueError("quote_sigma must have the same shape as price")
+    else:
+        noise = batch["noise_level"]
+        if not bool((torch.isfinite(noise) & (noise >= 0)).all()):
+            raise ValueError("noise_level must be finite and nonnegative")
+        scale = (noise.unsqueeze(-1) * batch["price"].clamp(min=0.0)).clamp(min=1e-6) \
+            + 1e-6 * batch["spot"].clamp(min=1e-12)
+    if not bool(((~active) | (torch.isfinite(scale) & (scale > 0))).all()):
+        raise ValueError("active quote_sigma values must be finite and positive")
+    return torch.where(active, scale, torch.ones_like(scale))
 
 
 def _batched_jacobian(f, z, create_graph):

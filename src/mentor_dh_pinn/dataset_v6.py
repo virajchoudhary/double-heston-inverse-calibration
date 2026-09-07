@@ -183,7 +183,8 @@ def price_batch(params: np.ndarray, geos: list[dict], node_count: int = 64) -> l
     return [out[i, :len(geos[i]["tau"])] for i in range(n)]
 
 
-def build(n: int, seed: int, *, node_count: int = 64, chunk: int = 256) -> dict:
+def build(n: int, seed: int, *, node_count: int = 64, chunk: int = 256,
+          storage_dtype=np.float32) -> dict:
     """Generate `n` surfaces. Stored padded, with an explicit length and mask."""
     rng = np.random.default_rng(seed)
     params, regime = sample_parameters(rng, n)
@@ -217,7 +218,7 @@ def build(n: int, seed: int, *, node_count: int = 64, chunk: int = 256) -> dict:
             C[j, :q] = c; Y[j, :q] = noisy
             S[j, :q] = g["spot"]; K[j, :q] = g["strike"]; T[j, :q] = g["tau"]
             R[j, :q] = g["rate"]; Q[j, :q] = g["carry"]
-    f32 = lambda a: a.astype(np.float32)      # geometry and prices; params stay float64
+    f32 = lambda a: a.astype(storage_dtype)  # float64 for strict recovery experiments
     return {"params": params, "regime": regime, "clean": f32(C), "noisy": f32(Y),
             "n_quotes": N, "spot": f32(S), "strike": f32(K), "tau": f32(T),
             "rate": f32(R), "carry": f32(Q), "noise_level": L, "ok": ok,

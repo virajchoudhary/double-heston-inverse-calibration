@@ -13,7 +13,7 @@ The objective triad
 -------------------
     L = w_anchor * L_recovery(synthetic)      keeps the physical prior anchored
       + w_proj   * L_projection(real)         the objective real data actually needs
-      + w_sc     * L_self_consistency(real)   stops Sigma collapsing on flat ridges
+      + w_sc     * L_negative_ELBO(real)      explicit likelihood and Gaussian-prior KL
 
 The projection and self-consistency terms use UNLABELLED market quotes. They are possible
 only because the exact Fourier engine is differentiable: fit error is computable without
@@ -22,9 +22,8 @@ knowing any p*.
 Numerical realities of this pricer, all measured, all handled below
 -------------------------------------------------------------------
 * The characteristic function genuinely overflows to NaN for extreme parameters -- the
-  reference NumPy engine raises there. One such surface previously NaN'd a batch loss and
-  silently halted training for six epochs. Non-finite prices are masked per quote and
-  charged separately, never allowed to poison a batch.
+  reference NumPy engine raises there. Non-finite prices on observed quotes reject the
+  batch. Padding is excluded, and rejected losses never update the running loss scales.
 * A finite loss can still produce non-finite gradients through the Fourier integrals, so
   gradients are checked before every optimiser step.
 * Deep-OTM prices reach ~1e-8 of spot. Residuals are vega-weighted, which is the
@@ -115,6 +114,9 @@ class ProjectionFineTuner(_Base):
                        warmup_steps=warmup_steps, max_steps=max_steps,
                        grad_clip=grad_clip, unpriceable_penalty=unpriceable_penalty,
                        node_count=node_count)
+        self.hp["self_consistency_objective"] = "negative_elbo_gaussian_prior"
+        if n_consistency_draws < 1 and w_self_consistency != 0:
+            raise ValueError("negative ELBO requires at least one Monte Carlo draw")
         if _HAS_LIGHTNING:
             self.save_hyperparameters(ignore=["encoder", "bijection", "exact_fourier_pricer"])
         # Fixed affine standardisation of the latent coordinates, from the TRAINING set.
@@ -122,9 +124,8 @@ class ProjectionFineTuner(_Base):
         # full training run earlier in this project.
         self.register_buffer("z_mean", z_mean)
         self.register_buffer("z_sd", z_sd.clamp(min=1e-8))
-        # The training prior, in the SAME latent coordinates. Working entirely in z-space
-        # means the bijection's Jacobian cancels between log p(z) and log q(z|x) and never
-        # has to be computed.
+        # A diagonal Gaussian approximation to the synthetic training prior in latent
+        # coordinates. Its first two moments do not specify the true sampling distribution.
         self.register_buffer("prior_mean", z_mean.clone())
         self.register_buffer("prior_sd", z_sd.clamp(min=1e-8).clone())
         self.skipped = 0
@@ -143,9 +144,13 @@ class ProjectionFineTuner(_Base):
 
     def _price(self, z: Tensor, batch: dict) -> Tensor:
         params = torch.stack(self.bijection(z), dim=-1)
+        active = batch["mask"] > 0
+        # Padding must not enter a logarithm or Fourier integral with invalid geometry.
+        geometry = [torch.where(active, batch[key], batch[key].new_full((), fill))
+                    for key, fill in (("spot", 1.), ("strike", 1.), ("tau", .1),
+                                      ("rate", 0.), ("carry", 0.))]
         return self.exact_fourier_pricer(
-            params, batch["spot"], batch["strike"], batch["tau"],
-            batch["rate"], batch["carry"], node_count=self.hp["node_count"])
+            params, *geometry, node_count=self.hp["node_count"])
 
     # ------------------------------------------------------- 1. anchor (synthetic)
     def recovery_loss(self, batch: dict) -> tuple[Tensor, dict]:
@@ -164,97 +169,112 @@ class ProjectionFineTuner(_Base):
     def projection_loss(self, batch: dict, mu: Tensor) -> tuple[Tensor, dict]:
         """Vega-weighted fit error between exact model prices and observed market quotes.
 
-            L = mean_i [ (C_model,i(p_hat) - C_real,i) / vega_i ]^2  +  gamma * frac_unpriceable
+            L = mean_i [ (C_model,i(p_hat) - C_real,i) / vega_i ]^2
 
         Vega comes from the market quote and is DETACHED: it is a weight, not a quantity to
         differentiate. Dividing by it makes the residual a first-order implied-volatility
         error without putting a non-differentiable root-find in the graph.
         """
-        mask = batch["mask"]
+        active = batch["mask"] > 0
         px = self._price(mu, batch)
-        good = torch.isfinite(px)
-        m = mask * good.to(mask.dtype)
-        resid = (px - batch["price"]) / batch["vega"].clamp(min=1e-8).detach()
-        resid = torch.where(good, resid, torch.zeros_like(resid))
-        denom = m.sum().clamp(min=1.0)
-        loss = ((resid ** 2) * m).sum() / denom
-        frac_bad = (mask * (~good).to(mask.dtype)).sum() / mask.sum().clamp(min=1.0)
-        total = loss + self.hp["unpriceable_penalty"] * frac_bad
-        with torch.no_grad():
-            iv_rmse = torch.sqrt(loss.detach())
-        return total, {"proj_iv_rmse": iv_rmse, "proj_unpriceable": frac_bad.detach()}
+        frac_bad = ((~torch.isfinite(px)) & active).sum() / active.sum().clamp(min=1)
+        price, vega = batch["price"][active], batch["vega"][active].detach()
+        if (not active.any() or not torch.isfinite(px[active]).all()
+                or not torch.isfinite(price).all() or not torch.isfinite(vega).all()
+                or (vega <= 0).any()):
+            loss = mu.new_full((), float("inf"))
+        else:
+            resid = (px[active] - price) / vega.clamp(min=1e-8)
+            loss = resid.square().mean()
+        return loss, {"proj_iv_rmse": torch.sqrt(loss.detach()),
+                      "proj_unpriceable": frac_bad.detach()}
 
     # ----------------------------------------- 5. self-consistency (real, unlabelled)
     def self_consistency_loss(self, batch: dict, mu: Tensor, L: Tensor) -> tuple[Tensor, dict]:
-        """Variance-based Bayesian self-consistency, computed without labels.
+        """Negative ELBO: E_q[-log p(quotes|z)] + KL(q || Gaussian prior).
 
-        Bayes' rule rearranges to an identity that holds for EVERY z:
+        The public name is retained for existing callers; this is no longer variance of
+        log evidence. Gaussian KL is analytic, including the entropy term -log det L.
+        Only the likelihood expectation uses reparameterised Monte Carlo draws. Fixed
+        likelihood normalisers are omitted. The likelihood sums observed quotes per
+        surface, then surfaces are averaged; quote_sigma defines its noise assumption.
 
-            log p(x) = log p(x | z) + log p(z) - log p(z | x)
-
-        The left side does not depend on z. So if q(z|x) = N(mu, Sigma) were the true
-        posterior, then
-
-            Lam(z) = log p(x | z) + log p(z) - log q(z | x)
-
-        would be constant across draws z ~ q, and its variance across draws is a proper
-        self-consistency penalty.
-
-        Why this protects Sigma specifically: on a flat, unidentified ridge -- seven-day
-        options say almost nothing about kappa -- a collapsing Sigma makes log q blow up for
-        off-centre draws while log p(x|z) barely moves, so the variance explodes. Minimising
-        it forces Sigma to stay as wide as the data are genuinely uninformative.
-
-        Terms constant in z, including the likelihood normaliser, cancel out of a variance
-        and are omitted.
+        On a flat likelihood the optimum covariance equals the prior covariance: a
+        narrower posterior widens and a wider one shrinks. Requiring a negative width
+        gradient everywhere would be incorrect, especially on identified directions.
+        The diagonal prior and Gaussian posterior are approximations. Combining this
+        loss with anchor/projection losses and EMA weights is not exact Bayesian inference.
         """
         K = self.hp["n_consistency_draws"]
-        if K < 2:
-            z = mu.new_zeros(()); return z, {"sc_var": z}
-        mask = batch["mask"]
-        sig = batch["quote_sigma"].clamp(min=1e-8).detach()
-        terms = []
+        if K < 1:
+            raise ValueError("negative ELBO requires at least one Monte Carlo draw")
+        active = batch["mask"] > 0
+        sig = batch["quote_sigma"].detach()
+        diag = torch.diagonal(L, dim1=-2, dim2=-1)
+        invalid = mu.new_full((), float("inf"))
+        if (not active.any(-1).all() or not torch.isfinite(mu).all()
+                or not torch.isfinite(L).all() or (diag <= 0).any()
+                or not torch.isfinite(sig[active]).all() or (sig[active] <= 0).any()
+                or not torch.isfinite(batch["price"][active]).all()):
+            return invalid, {"sc_invalid": mu.new_ones(())}
+        # D is diagonal prior covariance; tr(D^-1 L L^T) is a squared row-scaled norm.
+        kl = 0.5 * (((L / self.prior_sd.unsqueeze(-1)).square().sum((-2, -1)))
+                    + ((mu - self.prior_mean) / self.prior_sd).square().sum(-1)
+                    - mu.shape[-1] + 2 * self.prior_sd.log().sum()
+                    - 2 * diag.log().sum(-1))
+        nll = []
         for _ in range(K):
             eps = torch.randn_like(mu)
-            z_k = mu + (L @ eps.unsqueeze(-1)).squeeze(-1)     # reparameterised: grads
-            px = self._price(z_k, batch)                       # reach mu AND Sigma
-            good = torch.isfinite(px)
-            m = mask * good.to(mask.dtype)
-            r = torch.where(good, (px - batch["price"]) / sig, torch.zeros_like(px))
-            log_lik = -0.5 * ((r ** 2) * m).sum(-1)
-            log_prior = -0.5 * (((z_k - self.prior_mean) / self.prior_sd) ** 2).sum(-1)
-            terms.append(log_lik + log_prior - log_gauss_latent(z_k, mu, L))
-        stack = torch.stack(terms, 0)
-        finite = torch.isfinite(stack).all(0)
-        if not finite.any():
-            z = mu.new_zeros(()); return z, {"sc_var": z}
-        var = stack[:, finite].var(0, unbiased=True)
-        # log1p keeps one pathological surface from owning the batch
-        return torch.log1p(var).mean(), {"sc_var": var.detach().mean()}
+            z_k = mu + (L @ eps.unsqueeze(-1)).squeeze(-1)
+            px = self._price(z_k, batch)
+            if not torch.isfinite(px[active]).all():
+                return invalid, {"sc_invalid": mu.new_ones(())}
+            # Index before division: NaNs in padded targets/noise never enter arithmetic.
+            r = torch.zeros_like(px).masked_scatter(
+                active, (px[active] - batch["price"][active]) / sig[active].clamp(min=1e-8))
+            nll.append(0.5 * r.square().sum(-1))
+        expected_nll = torch.stack(nll).mean(0)
+        loss = (kl + expected_nll).mean()
+        if not torch.isfinite(loss):
+            return invalid, {"sc_invalid": mu.new_ones(())}
+        return loss, {"sc_kl": kl.detach().mean(),
+                      "sc_expected_nll": expected_nll.detach().mean(),
+                      "sc_invalid": mu.new_zeros(())}
 
     # ------------------------------------------------------------------- steps
     def _balance(self, key: str, value: Tensor) -> Tensor:
         """Divide each objective by a running estimate of its own scale.
 
-        Measured raw magnitudes on this problem: projection ~8e-4 (a squared implied-vol
-        residual), self-consistency ~12.5 (a log-variance of log-evidence), anchor ~10.
-        A fixed weighted sum therefore hands the entire gradient to whichever term happens
-        to be largest -- the exact loss-domination failure this architecture was redesigned
-        to remove. Standardising first makes the configured weights mean what they say.
+        Use an EMA of absolute magnitude because a density NLL can be negative. Rejected
+        non-finite objectives must not poison the scale for every subsequent training step.
         """
-        x = float(value.detach())
+        if not torch.isfinite(value):
+            return value
+        x = abs(float(value.detach()))
         prev = self._loss_ema.get(key)
         self._loss_ema[key] = x if prev is None else 0.98 * prev + 0.02 * x
-        return value / max(abs(self._loss_ema[key]), 1e-12)
+        return value / max(self._loss_ema[key], 1e-12)
 
     def compute_losses(self, syn: dict, real: dict) -> tuple[Tensor, dict]:
-        anchor, la = self.recovery_loss(syn)
-        mu, L = self._encode(real)
-        proj, lp = self.projection_loss(real, mu)
-        sc, ls = self.self_consistency_loss(real, mu, L)
-        loss = (self.hp["w_anchor"] * self._balance("anchor", anchor)
-                + self.hp["w_projection"] * self._balance("proj", proj)
-                + self.hp["w_self_consistency"] * self._balance("sc", sc))
+        zero = self.z_mean.new_zeros(())
+        anchor = proj = sc = zero
+        la, lp, ls = {}, {}, {}
+        if self.hp["w_anchor"] != 0:
+            anchor, la = self.recovery_loss(syn)
+        if self.hp["w_projection"] != 0 or self.hp["w_self_consistency"] != 0:
+            mu, L = self._encode(real)
+            if self.hp["w_projection"] != 0:
+                proj, lp = self.projection_loss(real, mu)
+            if self.hp["w_self_consistency"] != 0:
+                sc, ls = self.self_consistency_loss(real, mu, L)
+        terms = (("anchor", anchor, self.hp["w_anchor"]),
+                 ("proj", proj, self.hp["w_projection"]),
+                 ("sc", sc, self.hp["w_self_consistency"]))
+        if any(not torch.isfinite(value) for _, value, weight in terms if weight != 0):
+            loss = zero.new_full((), float("inf"))
+        else:
+            loss = sum((weight * self._balance(key, value)
+                        for key, value, weight in terms if weight != 0), zero)
         return loss, {"anchor": anchor.detach(), "projection": proj.detach(),
                       "self_consistency": sc.detach(), **la, **lp, **ls}
 

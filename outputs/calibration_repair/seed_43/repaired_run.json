@@ -1,0 +1,45 @@
+{
+  "arguments": {
+    "ckpt": "outputs/unified_v6/unified.pt",
+    "syn": "outputs/calibration_repair/synthetic",
+    "real": "outputs/calibration_repair/real_corpus",
+    "out": "outputs/calibration_repair/seed_43",
+    "tag": "repaired",
+    "steps": 600,
+    "batch_syn": 48,
+    "batch_real": 16,
+    "lr": 5e-05,
+    "w_proj": 1.0,
+    "w_sc": 0.1,
+    "draws": 4,
+    "val_every": 100,
+    "seed": 43,
+    "threads": 1,
+    "refine": 3,
+    "syn_val_cap": 480
+  },
+  "input_sha256": {
+    "outputs/unified_v6/unified.pt": "52e01e872c838059dd7ff820729bf409a28877a0c28da2f96f8903ac30b9db5b",
+    "outputs/calibration_repair/synthetic/latent_standardisation.json": "57258aef65bac95617f44e916adc447470deaa51d9cef048190bd3834c288736",
+    "outputs/calibration_repair/synthetic/v6_train.npz": "ccdbb6f49db230fed21bcafd6db3043822de95efdc1ebf17512fb3266d3790c2",
+    "outputs/calibration_repair/synthetic/v6_validation.npz": "a42769476db908899e43bcd75f06f72e7cc2b028ca422937a7edf4d0a000238e",
+    "outputs/calibration_repair/real_corpus/real_train.npz": "3c4aa2783b9388fcf95cd11da2d0dfc74e29f6d6230949f83261aa66b7283756",
+    "outputs/calibration_repair/real_corpus/real_validation.npz": "d846cad1a0665c9aad9befe35977f37ee2bddff8d3004e7195da9df1129ea0f0"
+  },
+  "code_sha256": {
+    "scripts/mentor_dh_pinn/run_finetune.py": "c621893d846e62ff75af5f80f99f7ac60ff2b490c144671e051fd7f7d37595d4",
+    "src/mentor_dh_pinn/finetune_projection.py": "9076efa6ae9c576a7460dc286eed2c2a72e360638398cd88f80aa7b2a794f52e",
+    "src/mentor_dh_pinn/unified.py": "41fb1f1cd12ba2a35c814445bf55aacbea266c6cdaea3c154e42e73058562fe0",
+    "src/mentor_dh_pinn/torch_pricer.py": "109ae648fadfd7c89715aca385805ec1dde1a2cc55844f5635245292688c13d7",
+    "src/mentor_dh_pinn/params_v2.py": "496332ba00ff9844240e2aca777398789b796936c097a3832ab1f9e8dc9bf829",
+    "src/mentor_dh_pinn/collate.py": "55a9f243907e2740590ef57a0c29683ac4aa015341ee025924b0e4c02c478a7e"
+  },
+  "runtime": {
+    "python": "3.14.5",
+    "torch": "2.13.0",
+    "numpy": "2.4.6",
+    "platform": "macOS-15.7.7-arm64-arm-64bit-Mach-O"
+  },
+  "selection": "pooled heldout vega-price RMSE after refinement, synthetic gates",
+  "evidence": "development; inherited base-checkpoint exposures remain"
+}

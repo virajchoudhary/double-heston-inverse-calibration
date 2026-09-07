@@ -100,3 +100,11 @@ outputs/metrics/smoke_test/parameter_evaluation/parameter_predictions_and_errors
 !single_heston_pinn/outputs/*.parquet
 
 !outputs/real_corpus/real_validation.npz
+
+# Selected repair checkpoints and small evaluation inputs are handoff artifacts.
+# Training arrays and intermediate optimizer checkpoints remain regenerable.
+!outputs/calibration_repair/seed_17/repaired.pt
+!outputs/calibration_repair/seed_29/repaired.pt
+!outputs/calibration_repair/seed_43/repaired.pt
+!outputs/calibration_repair/real_corpus/real_validation.npz
+!outputs/calibration_repair/synthetic/v6_validation.npz

@@ -1,0 +1,40 @@
+{
+  "checks": {
+    "metric_keys_unique": true,
+    "parameter_keys_unique": true,
+    "observation_keys_unique": true,
+    "expected_metric_rows": true,
+    "expected_parameter_rows": true,
+    "expected_observation_rows": true,
+    "all_model_fits_retained": true,
+    "five_starts_per_fit": true,
+    "frozen_hash_recheck_recorded": true,
+    "current_checkpoint_hashes_match": true,
+    "current_assessment_sources_match": true,
+    "all_parameter_gates_recomputed": true,
+    "fitted_physical_bounds_feller_and_order": true,
+    "minimum_calibration_sse_start_selected": true,
+    "no_exact_assessment_parameter_overlap": true
+  },
+  "parameter_overlap_counts": {
+    "single_train": 0,
+    "single_validation": 0,
+    "double_train": 0,
+    "double_validation": 0,
+    "double_extra_surface_train": 0
+  },
+  "unique_truth_vectors": 24,
+  "model_condition_fits": 192,
+  "optimizer_starts": 960,
+  "optimizer_converged_selected": 191,
+  "input_sha256": {
+    "fits_and_starts.json": "f296124c55f93e20815433d47a998f3faaf318ec7cfe9cf2b39a5e60bc7188fa",
+    "summary.json": "4cf41f7aada6b70ef1abd71ef178467b5a69846d2d2d25d25a7a09cc3dd25af0",
+    "metrics.csv": "829d8e84f3a3e800be777718cc37fa5adcb7e9a488aa35b9bb5b152d0d56012a",
+    "synthetic_truth.json": "d3b80c83c4b3a1c6cbc38c9a30da2a82fec03eeffcbc6bd09d69fd9651ea4320",
+    "manifest.json": "77a5b096ed1faadaeec3fd3469f6f46eb4098fff9400cbcd4d16b9fc298fa120",
+    "observations.csv": "8ab62f7f506d831293699e72c64ab6899277b8ac7b1b6a188df9dc90a8bb99fb",
+    "parameter_recovery.csv": "daf5f0b9076b5b67429bebbca3c5cfbf85519a868ae755d84d2016ecd10925fb"
+  },
+  "report_script_sha256": "e14d015a6dffb8435c0898cd8ca2aea8b62af6e095b3213c0465aa131cde4568"
+}
