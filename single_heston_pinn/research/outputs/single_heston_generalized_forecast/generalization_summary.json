@@ -1,0 +1,30 @@
+{
+  "test_rows": 8818,
+  "test_stock_sessions": 286,
+  "original_locked_heston": {
+    "rows": 8818,
+    "iv_rmse": 0.044469308457102376,
+    "iv_mae": 0.028048318612471593,
+    "iv_bias": -0.004603966340938931,
+    "iv_r2": 0.8148987526411452,
+    "forecast_on_actual_slope": 0.80659815857837
+  },
+  "generalized_heston": {
+    "rows": 8818,
+    "iv_rmse": 0.03658952753363342,
+    "iv_mae": 0.025294547157581917,
+    "iv_bias": 0.0009189552618056748,
+    "iv_r2": 0.8746852485348937,
+    "forecast_on_actual_slope": 0.8789630841361615
+  },
+  "relative_rmse_improvement": 0.17719594023078278,
+  "corrections_accepted_for_symbols": [
+    "NHPC",
+    "NTPC",
+    "POWERGRID",
+    "TATAPOWER"
+  ],
+  "selection_protocol": "candidate on early validation; correction on late validation; >=10 validation sessions and >=5% late-validation daily-RMSE gain; refit on all validation",
+  "evaluation_status": "retrospective historical-test comparison; the original test graph was viewed before the improvement was designed, so future NSE sessions are required for pristine forward confirmation",
+  "all_checks_passed": true
+}

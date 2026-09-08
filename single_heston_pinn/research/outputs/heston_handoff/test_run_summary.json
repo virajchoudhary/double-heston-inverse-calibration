@@ -1,0 +1,37 @@
+{
+  "run_date": "2026-08-06",
+  "interpreter": "system python3",
+  "tests": [
+    {
+      "command": "python3 test_single_heston.py",
+      "exit_code": 0,
+      "result": "passed",
+      "key_evidence": "exact parameter error 3.221947400236205e-10; 1% noise price RMSE 0.022329395251964076"
+    },
+    {
+      "command": "python3 test_heston_overfit_audit.py",
+      "exit_code": 0,
+      "result": "passed",
+      "key_evidence": "overfitting-audit metric checks passed"
+    },
+    {
+      "command": "python3 test_heston_next_day_forecast.py",
+      "exit_code": 0,
+      "result": "passed",
+      "key_evidence": "next-session helper checks passed"
+    },
+    {
+      "command": "python3 test_heston_generalization.py",
+      "exit_code": 0,
+      "result": "passed",
+      "key_evidence": "Heston generalization guard checks passed"
+    },
+    {
+      "command": "python3 test_double_heston.py",
+      "exit_code": 0,
+      "result": "passed",
+      "key_evidence": "exact structural error 1.1886345312058081e-05; 1% noise max structural error 0.28874634698904245"
+    }
+  ],
+  "all_passed": true
+}

@@ -1,0 +1,39 @@
+{
+  "input": "/Users/dhruvaambhaikar/Documents/Options pricing/outputs/019fc8a0/model_input_option_prices.csv",
+  "input_sha256": "a8a56dd7b17074d8fa32f88936c8b404456f22f296d9dc4665faf3b13621f1d3",
+  "parameter_candidates": [
+    "main",
+    "half_a",
+    "half_b"
+  ],
+  "selection": "per symbol, lowest validation IV RMSE; frozen before test",
+  "test_evaluation_rows": 8818,
+  "test_sessions": 286,
+  "selected_heston": {
+    "rows": 8818,
+    "iv_rmse": 0.04446930845710237,
+    "iv_mae": 0.02804831861247159,
+    "iv_bias": -0.004603966340938931,
+    "iv_r2": 0.8148987526411452
+  },
+  "baseline": {
+    "rows": 8818,
+    "iv_rmse": 0.06807920555676318,
+    "iv_mae": 0.042060298639456574,
+    "iv_bias": -0.03158771164442337,
+    "iv_r2": 0.5661720265380428
+  },
+  "winner_by_pooled_test_iv_rmse": "Heston",
+  "symbols_where_heston_beats_baseline": 10,
+  "symbols_where_baseline_beats_or_ties_heston": [
+    "ADANIPOWER"
+  ],
+  "bootstrap": {
+    "daily_clusters": 286,
+    "mean_heston_minus_baseline_rmse": -0.02116014458674667,
+    "bootstrap_95pct_low": -0.023321626553591095,
+    "bootstrap_95pct_high": -0.018820599688530015
+  },
+  "all_integrity_checks_passed": true,
+  "forecast_scope": "next observed NSE session normalized full IV surface; conditional quote scoring uses realized target spot/coordinates"
+}

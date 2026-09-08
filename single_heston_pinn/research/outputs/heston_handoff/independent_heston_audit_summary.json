@@ -1,0 +1,20 @@
+{
+  "audit_date": "2026-08-06",
+  "audit_scope": "Single Heston and Double Heston only",
+  "input_sha256": "a8a56dd7b17074d8fa32f88936c8b404456f22f296d9dc4665faf3b13621f1d3",
+  "checks_total": 60,
+  "checks_passed": 60,
+  "critical_failures": 0,
+  "warnings_recorded": 9,
+  "single_test_rows": 8818,
+  "double_common_rows": 8814,
+  "double_documented_invalid_rows": 4,
+  "verdict": "VALIDATED_WITH_DISCLOSED_LIMITATIONS",
+  "non_negotiable_limitations": [
+    "No finite historical test can prove zero overfitting or a global optimum.",
+    "The historical test period was previously viewed during Single-Heston development; it is not pristine final holdout evidence.",
+    "Next-session scoring is conditional on realized target spot and the target session's listed strike/expiry coordinates.",
+    "Double Heston underperforms Single Heston on the identical historical rows and has severe parameter-boundary/identifiability warnings.",
+    "The retrospective Single-Heston recalibration must be confirmed on future locked NSE dates before being called forward validated."
+  ]
+}
