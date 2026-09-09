@@ -47,6 +47,9 @@ class TorchRegularVariancePINN(nn.Module):
 
     @classmethod
     def from_mlx(cls,model):
+        if hasattr(model, 'residual_blocks'):
+            from .deep_regular_pinn import TorchDeepRegularVariancePINN
+            return TorchDeepRegularVariancePINN.from_mlx(model)
         net=cls(**{k:getattr(model,k) for k in ("factors","width","depth","tau_min","tau_max",
                                                  "x_half_width","correction_limit")})
         with torch.no_grad():

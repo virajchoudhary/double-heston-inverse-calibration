@@ -1,0 +1,5 @@
+{
+  "step": 3000,
+  "score": 0.20465402118069392,
+  "metric": "validation_parameter_rmse"
+}

@@ -1,0 +1,56 @@
+[
+  {
+    "factors": 1,
+    "model": "Single Heston",
+    "cases": 24,
+    "neural_price_rmse": 0.00019727100602169026,
+    "exact_reprice_rmse": 0.00020600307297978857,
+    "parameter_rmse": 0.14968189174933913,
+    "parameter_passes": 8
+  },
+  {
+    "factors": 2,
+    "model": "Single Heston",
+    "cases": 24,
+    "neural_price_rmse": 0.00048524895490165224,
+    "exact_reprice_rmse": 0.0004897547320766919
+  },
+  {
+    "factors": 2,
+    "model": "Original Double Heston",
+    "cases": 24,
+    "neural_price_rmse": 0.00019704547969426296,
+    "exact_reprice_rmse": 0.0001955195177063679,
+    "parameter_rmse": 0.6186523925788606,
+    "parameter_passes": 0
+  },
+  {
+    "factors": 2,
+    "model": "17-layer Double Heston",
+    "cases": 24,
+    "neural_price_rmse": 0.0002006706506452487,
+    "exact_reprice_rmse": 0.00021802758947017168,
+    "parameter_rmse": 0.6509104764359246,
+    "parameter_passes": 0
+  },
+  {
+    "factors": 2,
+    "model": "11-layer Double Heston + GLS",
+    "cases": 24,
+    "neural_price_rmse": 0.00019588285622796598,
+    "exact_reprice_rmse": 0.0002065152262593021,
+    "parameter_rmse": 0.6564320789341204,
+    "bias_corrected_price_rmse": 0.00019504580159641427,
+    "parameter_passes": 0
+  },
+  {
+    "factors": 2,
+    "model": "17-layer Double Heston + GLS",
+    "cases": 24,
+    "neural_price_rmse": 0.00019647349638362863,
+    "exact_reprice_rmse": 0.00019652578609782796,
+    "parameter_rmse": 0.7874633416076976,
+    "bias_corrected_price_rmse": 0.00019921194297801802,
+    "parameter_passes": 0
+  }
+]

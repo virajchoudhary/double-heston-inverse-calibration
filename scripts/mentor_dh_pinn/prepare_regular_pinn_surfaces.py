@@ -36,7 +36,10 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--out',type=Path,required=True);ap.add_argument('--factors',type=int,choices=(1,2),default=2)
     ap.add_argument('--surfaces',type=int,default=1024);ap.add_argument('--seed',type=int,default=907721)
-    ap.add_argument('--singular-floor',type=float,default=1e-6);args=ap.parse_args()
+    ap.add_argument('--singular-floor',type=float,default=1e-6)
+    ap.add_argument('--fit-quotes-only',action='store_true',
+                    help='Build the recovery loss from the same 84 quote positions used by calibration')
+    args=ap.parse_args()
     args.out.mkdir(parents=True,exist_ok=False);torch.set_num_threads(1)
     units=qmc.LatinHypercube(5*args.factors,seed=args.seed).random(args.surfaces)
     x=np.tile(-np.log(np.linspace(.8,1.2,21)),6)
@@ -57,15 +60,19 @@ def main():
     usable &= np.isfinite(jac).all(axis=(1,2)) & (jac_errors<=1e-6).all(axis=1)
     matrices=np.full((args.surfaces,5*args.factors,126),np.nan)
     singular=np.full((args.surfaces,5*args.factors),np.nan);ranks=np.zeros(args.surfaces,dtype=int)
+    fit_mask=np.tile(np.arange(21)%3!=2,6) if args.fit_quotes_only else np.ones(126,dtype=bool)
     for i in np.flatnonzero(usable):
-        matrices[i],singular[i],ranks[i],_=preconditioner(jac[i],units[i],args.factors,args.singular_floor)
+        b,singular[i],ranks[i],_=preconditioner(jac[i,fit_mask],units[i],args.factors,args.singular_floor)
+        matrices[i]=0.
+        matrices[i][:,fit_mask]=b
     data={'q':queries,'iv':iv.reshape(args.surfaces,126),'preconditioner':matrices,
-          'singular_values':singular,'rank':ranks,'usable':usable,'unit':units,
+          'singular_values':singular,'rank':ranks,'usable':usable,'unit':units,'fit_mask':fit_mask,
           'jacobian_quadrature_error':jac_errors,
           'quote_usable':labels['usable'].reshape(args.surfaces,126)}
     path=args.out/'surfaces.npz';np.savez_compressed(path,**data)
     report={'purpose':'Additional synthetic training only; no validation or final-test parameters are used',
             'seed':args.seed,'factors':args.factors,'surfaces':args.surfaces,'quotes_per_surface':126,
+            'recovery_loss_quotes':int(fit_mask.sum()),
             'usable_surfaces':int(usable.sum()),'rejected_surfaces_retained':int((~usable).sum()),
             'data_sha256':hashlib.sha256(path.read_bytes()).hexdigest(),
             'singular_floor_absolute_iv':args.singular_floor,'singular_floor_relative':1e-10,

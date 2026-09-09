@@ -1,0 +1,90 @@
+[
+  {
+    "condition": "Clean",
+    "model": "double_sobolev_s17",
+    "price_reduction_fraction": 0.9730790968804072,
+    "paired_case_wins": 24,
+    "cases": 24,
+    "paired_bootstrap_95_interval": [
+      0.9608597458329166,
+      0.9812103702403924
+    ]
+  },
+  {
+    "condition": "Clean",
+    "model": "deep11_s17",
+    "price_reduction_fraction": 0.9749620383891138,
+    "paired_case_wins": 24,
+    "cases": 24,
+    "paired_bootstrap_95_interval": [
+      0.9639766521160555,
+      0.9822247682822475
+    ]
+  },
+  {
+    "condition": "Clean",
+    "model": "deep17_full_s29",
+    "price_reduction_fraction": 0.9805852230767639,
+    "paired_case_wins": 24,
+    "cases": 24,
+    "paired_bootstrap_95_interval": [
+      0.972709577041072,
+      0.985729295341456
+    ]
+  },
+  {
+    "condition": "Clean",
+    "model": "deep11_balanced_s43",
+    "price_reduction_fraction": 0.975277202183219,
+    "paired_case_wins": 24,
+    "cases": 24,
+    "paired_bootstrap_95_interval": [
+      0.9641893946623294,
+      0.9826176122089887
+    ]
+  },
+  {
+    "condition": "1% time-value noise",
+    "model": "double_sobolev_s17",
+    "price_reduction_fraction": 0.5250540210852315,
+    "paired_case_wins": 21,
+    "cases": 24,
+    "paired_bootstrap_95_interval": [
+      0.3822350388163684,
+      0.6661001838700095
+    ]
+  },
+  {
+    "condition": "1% time-value noise",
+    "model": "deep11_s17",
+    "price_reduction_fraction": 0.5247290713359998,
+    "paired_case_wins": 21,
+    "cases": 24,
+    "paired_bootstrap_95_interval": [
+      0.3824544644618492,
+      0.6653361828606958
+    ]
+  },
+  {
+    "condition": "1% time-value noise",
+    "model": "deep17_full_s29",
+    "price_reduction_fraction": 0.5242358977479735,
+    "paired_case_wins": 20,
+    "cases": 24,
+    "paired_bootstrap_95_interval": [
+      0.38237488058877805,
+      0.6641788131179737
+    ]
+  },
+  {
+    "condition": "1% time-value noise",
+    "model": "deep11_balanced_s43",
+    "price_reduction_fraction": 0.5247874622546833,
+    "paired_case_wins": 21,
+    "cases": 24,
+    "paired_bootstrap_95_interval": [
+      0.38252236212325613,
+      0.6654263690898401
+    ]
+  }
+]

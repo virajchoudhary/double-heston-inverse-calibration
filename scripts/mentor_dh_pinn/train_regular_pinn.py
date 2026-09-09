@@ -61,8 +61,11 @@ def main():
     ap.add_argument("--out",type=Path,required=True);ap.add_argument("--factors",type=int,choices=(1,2),required=True)
     ap.add_argument("--steps",type=int,default=12000);ap.add_argument("--seed",type=int,default=17)
     ap.add_argument("--width",type=int,default=160);ap.add_argument("--depth",type=int,default=5)
+    ap.add_argument('--residual-blocks',type=int,default=0)
+    ap.add_argument('--residual-width',type=int,default=384)
     ap.add_argument("--batch",type=int,default=1024);ap.add_argument("--pde-batch",type=int,default=256)
     ap.add_argument("--sensitivity",type=float,default=0.);ap.add_argument("--weight-pde",type=float,default=.2)
+    ap.add_argument('--geometry-sensitivity',type=float,default=0.)
     ap.add_argument("--weight-decay",type=float,default=1e-6);ap.add_argument("--lr",type=float,default=.001)
     ap.add_argument("--constant-lr",action="store_true",help="Small-LR continuation without another warmup/decay cycle")
     ap.add_argument("--surfaces",type=Path,help="Independent grouped synthetic TRAINING references")
@@ -78,16 +81,38 @@ def main():
          "calibration":"optimize frozen neural IV predictions only; no exact pricing in fit"}
     (args.out/"config.json").write_text(json.dumps(cfg,indent=2))
     rng=np.random.default_rng(args.seed);mx.random.seed(args.seed)
-    model=RegularVariancePINN(args.factors,args.width,args.depth)
-    if args.resume:model.load_weights(str(args.resume))
+    if args.residual_blocks:
+        from src.mentor_dh_pinn.deep_regular_pinn import DeepRegularVariancePINN
+        model=DeepRegularVariancePINN(args.factors,args.width,args.depth,
+                    residual_blocks=args.residual_blocks,residual_width=args.residual_width)
+        cfg['architecture']='one deep residual implied-variance PDE PINN'
+        cfg['hidden_layer_count']=args.depth+2*args.residual_blocks
+    else:
+        model=RegularVariancePINN(args.factors,args.width,args.depth)
+    if args.resume:
+        if args.residual_blocks:
+            initial=mx.load(str(args.resume));current=dict(tree_flatten(model.parameters()))
+            missing=set(current)-set(initial);extra=set(initial)-set(current)
+            if extra or any(not k.startswith('residual_blocks.') for k in missing):
+                raise ValueError('Resume checkpoint must contain every backbone/head weight and no unexpected weights')
+            if any(initial[k].shape!=current[k].shape for k in initial):
+                raise ValueError('Resume layer shape mismatch')
+        model.load_weights(str(args.resume),strict=not bool(args.residual_blocks))
+    cfg['network_parameter_count']=sum(int(value.size) for _,value in tree_flatten(model.parameters()))
+    (args.out/'config.json').write_text(json.dumps(cfg,indent=2))
     mx.eval(model.parameters())
     def read(name):
         d=dict(np.load(args.data/f"{name}.npz"));use=d["usable"]
         return {k:v[use] for k,v in d.items() if k!="usable"}
     train,val=read("train"),read("validation")
     tq,tg,tdg=(array(train[k]) for k in ("q","g","dg_du"))
+    if args.geometry_sensitivity:
+        if 'dg_dq' not in train:raise ValueError('Geometry supervision requires independently generated full derivative labels')
+        tdg=array(train['dg_dq'])
     dq=array(np.load(args.data/"collocation.npz")["q"])
     sens_scale=array(np.maximum(np.sqrt(np.mean(train["dg_du"]**2,axis=0)),.02))
+    if args.geometry_sensitivity:
+        sens_scale=array(np.maximum(np.sqrt(np.mean(train['dg_dq']**2,axis=0)),.02))
     mx.eval(tq,tg,tdg,dq,sens_scale)
     surface_q=surface_iv=surface_b=mx.zeros((1,1));surface_count=1
     if args.surfaces:
@@ -118,11 +143,18 @@ def main():
         constraints=mx.mean(mx.maximum(-diag["convexity"],0)**2)
         constraints=constraints+mx.mean(mx.maximum(-diag["w"]*diag["l_tau"],0)**2)
         sensitivity=mx.array(0.)
-        if args.sensitivity:
+        if args.sensitivity or args.geometry_sensitivity:
             # Pointwise rows: sum-gradient returns every row's parameter gradient.
-            predicted_grad=mx.grad(lambda z:mx.sum(correction(network,z)))(aq)[:,2:]
-            sensitivity=mx.mean(((predicted_grad-adg)/sens_scale)**2)
-        total=anchor+args.weight_pde*physics+args.sensitivity*sensitivity+.05*constraints
+            predicted_grad=mx.grad(lambda z:mx.sum(correction(network,z)))(aq)
+            if args.geometry_sensitivity:
+                scaled=((predicted_grad-adg)/sens_scale)**2
+                sensitivity=mx.mean(scaled[:,2:])
+                geometry=mx.mean(scaled[:,:2])
+            else:
+                sensitivity=mx.mean(((predicted_grad[:,2:]-adg)/sens_scale)**2)
+                geometry=mx.array(0.)
+        else:geometry=mx.array(0.)
+        total=anchor+args.weight_pde*physics+args.sensitivity*sensitivity+.05*constraints+args.geometry_sensitivity*geometry
         group_price=bias=mx.array(0.)
         if args.surfaces:
             c,p=coordinates(sq.reshape(-1,sq.shape[-1]),args.factors,mx)
@@ -132,7 +164,7 @@ def main():
             # A robust local linear training metric, NOT recovered parameters.
             bias=mx.mean(mx.log1p(local_shift*local_shift))
             total=total+.1*group_price+args.surface_weight*bias
-        return total,mx.stack([anchor,physics,sensitivity,constraints,group_price,bias])
+        return total,mx.stack([anchor,physics,sensitivity,constraints,group_price,bias,geometry])
     valuegrad=nn.value_and_grad(model,loss)
     state=[model.state,opt.state,mx.random.state]
     @partial(mx.compile,inputs=state,outputs=state)
@@ -144,6 +176,7 @@ def main():
     start=time.perf_counter();history=[];best=math.inf;skips=0
     sources=[Path(__file__),ROOT/"src/mentor_dh_pinn/regular_pinn.py",ROOT/"src/mentor_dh_pinn/regular_pinn_data.py",
              ROOT/"src/mentor_dh_pinn/regular_pinn_torch.py",ROOT/"scripts/mentor_dh_pinn/assess_regular_pinn.py"]
+    if args.residual_blocks:sources.append(ROOT/'src/mentor_dh_pinn/deep_regular_pinn.py')
     provenance={"config":cfg,"source_sha256":{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sources},
                 "input_sha256":{str(args.data/p):hashlib.file_digest((args.data/p).open("rb"),"sha256").hexdigest() for p in ("train.npz","validation.npz","collocation.npz")},
                 "gradient_label_scales":np.asarray(sens_scale).tolist(),"collocation_pool":18000}
@@ -177,6 +210,8 @@ def main():
             iv_rmse=float(np.sqrt(np.mean((iv-target)**2)))
             rec={"step":i,"loss":float(value),"loss_parts":np.asarray(parts).tolist(),
                  "validation_iv_rmse":iv_rmse,"seconds":time.perf_counter()-start}
+            if args.residual_blocks:
+                rec['residual_output_weight_norm']=float(mx.sqrt(sum(mx.sum(b.down.weight**2) for b in model.residual_blocks)))
             if i%args.save_every==0 or i==args.steps:
                 if validation_surfaces:
                     score,detail=recovery_validation(model,args.factors,validation_surfaces)

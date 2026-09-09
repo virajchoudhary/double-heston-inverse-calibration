@@ -1,0 +1,16 @@
+{
+  "clean": {
+    "model": "DH17",
+    "condition": "clean",
+    "strength": 10.0,
+    "parameter_rmse": 0.12425757723706758,
+    "passes": 0
+  },
+  "noise": {
+    "model": "DH11",
+    "condition": "noise",
+    "strength": 10.0,
+    "parameter_rmse": 0.39568179672673454,
+    "passes": 0
+  }
+}

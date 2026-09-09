@@ -1,0 +1,142 @@
+[
+  {
+    "model": "DH11",
+    "condition": "clean",
+    "strength": 0.0,
+    "parameter_rmse": 0.2063927408226788,
+    "passes": 0
+  },
+  {
+    "model": "DH11",
+    "condition": "clean",
+    "strength": 0.1,
+    "parameter_rmse": 0.20629643723181804,
+    "passes": 0
+  },
+  {
+    "model": "DH11",
+    "condition": "clean",
+    "strength": 1.0,
+    "parameter_rmse": 0.2055319294060283,
+    "passes": 0
+  },
+  {
+    "model": "DH11",
+    "condition": "clean",
+    "strength": 10.0,
+    "parameter_rmse": 0.19743151469600842,
+    "passes": 0
+  },
+  {
+    "model": "DH11",
+    "condition": "clean",
+    "strength": 100.0,
+    "parameter_rmse": 0.18535811053533433,
+    "passes": 0
+  },
+  {
+    "model": "DH11",
+    "condition": "noise",
+    "strength": 0.0,
+    "parameter_rmse": 0.5957174561874777,
+    "passes": 0
+  },
+  {
+    "model": "DH11",
+    "condition": "noise",
+    "strength": 0.1,
+    "parameter_rmse": 0.5928540707747276,
+    "passes": 0
+  },
+  {
+    "model": "DH11",
+    "condition": "noise",
+    "strength": 1.0,
+    "parameter_rmse": 0.5774582611271982,
+    "passes": 0
+  },
+  {
+    "model": "DH11",
+    "condition": "noise",
+    "strength": 10.0,
+    "parameter_rmse": 0.39568179672673454,
+    "passes": 0
+  },
+  {
+    "model": "DH11",
+    "condition": "noise",
+    "strength": 100.0,
+    "parameter_rmse": 0.4624360078663019,
+    "passes": 0
+  },
+  {
+    "model": "DH17",
+    "condition": "clean",
+    "strength": 0.0,
+    "parameter_rmse": 0.14127950051848645,
+    "passes": 0
+  },
+  {
+    "model": "DH17",
+    "condition": "clean",
+    "strength": 0.1,
+    "parameter_rmse": 0.14117292506644055,
+    "passes": 0
+  },
+  {
+    "model": "DH17",
+    "condition": "clean",
+    "strength": 1.0,
+    "parameter_rmse": 0.14030206814099505,
+    "passes": 0
+  },
+  {
+    "model": "DH17",
+    "condition": "clean",
+    "strength": 10.0,
+    "parameter_rmse": 0.12425757723706758,
+    "passes": 0
+  },
+  {
+    "model": "DH17",
+    "condition": "clean",
+    "strength": 100.0,
+    "parameter_rmse": 0.1634906904300142,
+    "passes": 0
+  },
+  {
+    "model": "DH17",
+    "condition": "noise",
+    "strength": 0.0,
+    "parameter_rmse": 0.7993341999260235,
+    "passes": 0
+  },
+  {
+    "model": "DH17",
+    "condition": "noise",
+    "strength": 0.1,
+    "parameter_rmse": 0.6839594619854943,
+    "passes": 0
+  },
+  {
+    "model": "DH17",
+    "condition": "noise",
+    "strength": 1.0,
+    "parameter_rmse": 0.6103434740646458,
+    "passes": 0
+  },
+  {
+    "model": "DH17",
+    "condition": "noise",
+    "strength": 10.0,
+    "parameter_rmse": 0.41740636170365264,
+    "passes": 0
+  },
+  {
+    "model": "DH17",
+    "condition": "noise",
+    "strength": 100.0,
+    "parameter_rmse": 0.46532553377531427,
+    "passes": 0
+  }
+]

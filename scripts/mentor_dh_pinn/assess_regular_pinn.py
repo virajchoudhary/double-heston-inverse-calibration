@@ -28,6 +28,8 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from src.mentor_dh_pinn.regular_pinn import RegularVariancePINN
 from src.mentor_dh_pinn.regular_pinn_torch import TorchRegularVariancePINN
+from src.mentor_dh_pinn.identifiability import canonicalize_parameters
+from src.mentor_dh_pinn.parameter_transforms import to_optimizer,to_unit_and_jacobian
 from src.mentor_dh_pinn.regular_pinn_data import (
     black_call, coordinates, decode_unit, exact_prices, invert_total_variance,
 )
@@ -36,12 +38,17 @@ PARAMETERS = ["kappa", "theta", "sigma", "rho", "v0"]
 
 
 def fit_network(model, x, tau, observed_iv, *, fit_mask=None, starts=5,
-                seed=71, max_nfev=400):
+                seed=71, max_nfev=400, surrogate_error=None,
+                covariance_floor=1e-4, observation_iv_std=None,
+                prior_strength=0., parameterization='unit'):
     """Fit unit parameters with ANN IVs and analytic float64 Jacobians only.
 
     The mask is applied before accessing values, validating quotes, making a
     starting surface or computing an objective. No holdout or true parameter
-    argument exists. Candidate selection is minimum calibration ANN-IV SSE.
+    argument exists. Candidate selection minimizes the recorded objective.
+    Optional ridge regularization penalizes distance from the declared unit
+    domain midpoint, not a truth-dependent starting point. It biases estimates
+    and must be selected on development data, separately from assessment.
     Every attempted start, including failures, is retained.
     """
     x, tau, observed_iv = [np.asarray(a, dtype=float) for a in (x, tau, observed_iv)]
@@ -50,6 +57,13 @@ def fit_network(model, x, tau, observed_iv, *, fit_mask=None, starts=5,
     mask = np.ones(x.shape, dtype=bool) if fit_mask is None else np.asarray(fit_mask, dtype=bool)
     if mask.shape != x.shape:
         raise ValueError("fit_mask shape must equal x shape")
+    if not mask.any():
+        raise ValueError('At least one active quote required')
+    bias, whitening = 0., None
+    if surrogate_error is not None:
+        bias, whitening = surrogate_error.transform(x, tau, mask, covariance_floor, observation_iv_std)
+    elif observation_iv_std is not None:
+        raise ValueError('Observation uncertainty requires surrogate error statistics')
     x, tau, observed_iv = x[mask], tau[mask], observed_iv[mask]
     if not len(x) or not np.isfinite(np.stack([x, tau, observed_iv])).all():
         raise ValueError("all calibration quotes must be finite")
@@ -59,6 +73,14 @@ def fit_network(model, x, tau, observed_iv, *, fit_mask=None, starts=5,
     network = model if isinstance(model, TorchRegularVariancePINN) else TorchRegularVariancePINN.from_mlx(model)
     factors = network.factors
     dimension = 5 * factors
+    if parameterization not in ('unit','logit','timescale') or (factors!=2 and parameterization!='unit'):
+        raise ValueError('Alternative parameterizations require Double Heston')
+    def physical_output(u):
+        p=decode_unit(u,factors)
+        return (canonicalize_parameters(p) if factors==2 else p).tolist()
+    if not np.isfinite(prior_strength) or prior_strength < 0:
+        raise ValueError('prior_strength must be finite and nonnegative')
+    prior_scale=np.sqrt(prior_strength)
     geometry = np.column_stack([x, np.log(tau)])
     cached_u = None
     cached = None
@@ -76,10 +98,21 @@ def fit_network(model, x, tau, observed_iv, *, fit_mask=None, starts=5,
             value, jacobian = value.detach().numpy(), jacobian.detach().numpy()
             if not np.isfinite(value).all() or not np.isfinite(jacobian).all():
                 raise FloatingPointError("nonfinite neural price or analytic parameter derivative")
-            cached_u, cached = unit.copy(), (value - observed_iv, jacobian)
+            error=value-bias-observed_iv
+            if whitening is not None:
+                error,jacobian=whitening@error,whitening@jacobian
+            if prior_strength:
+                error=np.concatenate([error,prior_scale*(unit-.5)])
+                jacobian=np.vstack([jacobian,prior_scale*np.eye(dimension)])
+            cached_u, cached = unit.copy(), (error, jacobian)
         return cached
 
     initial_units = 0.05 + 0.9 * qmc.LatinHypercube(d=dimension, seed=seed).random(starts)
+    def optimizer_evaluate(z):
+        if parameterization=='unit':return residual_and_jacobian(z)
+        unit,chain=to_unit_and_jacobian(z,parameterization)
+        value,jac=residual_and_jacobian(unit)
+        return value,jac@chain
     records = []
     candidates = []
     for index, initial in enumerate(initial_units):
@@ -88,20 +121,24 @@ def fit_network(model, x, tau, observed_iv, *, fit_mask=None, starts=5,
         try:
             initial_residual = residual_and_jacobian(initial)[0]
             record["initial_sse"] = float(initial_residual @ initial_residual)
+            initial_z=to_optimizer(initial,parameterization) if factors==2 else initial
+            bounds=(-np.inf,np.inf) if parameterization=='logit' else (1e-5,1-1e-5)
             result = least_squares(
-                lambda unit: residual_and_jacobian(unit)[0], initial,
-                jac=lambda unit: residual_and_jacobian(unit)[1],
-                bounds=(1e-5, 1.0 - 1e-5), method="trf", x_scale="jac",
+                lambda z: optimizer_evaluate(z)[0], initial_z,
+                jac=lambda z: optimizer_evaluate(z)[1],
+                bounds=bounds, method="trf", x_scale="jac",
                 max_nfev=max_nfev, ftol=1e-12, xtol=1e-8, gtol=1e-12,
             )
-            final_residual = residual_and_jacobian(result.x)[0]
+            final_unit=to_unit_and_jacobian(result.x,parameterization)[0] if factors==2 else result.x
+            final_residual = residual_and_jacobian(final_unit)[0]
             sse = float(final_residual @ final_residual)
-            record.update(unit=result.x.tolist(), physical=decode_unit(result.x, factors).tolist(),
+            record.update(unit=final_unit.tolist(), physical=physical_output(final_unit),
+                          optimization_coordinates=result.x.tolist(),
                           sse=sse, nfev=int(result.nfev), njev=int(result.njev or 0),
                           optimizer_success=bool(result.success), status=int(result.status),
                           message=str(result.message))
             if np.isfinite(sse):
-                candidates.append((sse, index, result.x.copy(), bool(result.success)))
+                candidates.append((sse, index, final_unit.copy(), bool(result.success)))
         except (FloatingPointError, ValueError, RuntimeError) as exc:
             record.update(sse=None, optimizer_success=False, error=f"{type(exc).__name__}: {exc}")
         record["seconds"] = time.perf_counter() - start_time
@@ -111,9 +148,22 @@ def fit_network(model, x, tau, observed_iv, *, fit_mask=None, starts=5,
                 "inference": "identical learned weights evaluated in float64 PyTorch; no retraining or exact pricing",
                 "seconds": time.perf_counter() - started, "fit_quotes": len(x)}
     sse, chosen, unit, success = min(candidates, key=lambda row: row[0])
-    return {"status": "fitted", "unit": unit.tolist(), "physical": decode_unit(unit, factors).tolist(),
+    raw_sse=sse
+    if whitening is not None or prior_strength:
+        raw_error=_network_iv(network,x,tau,unit)-observed_iv
+        raw_sse=float(raw_error@raw_error)
+    singular=np.linalg.svd(residual_and_jacobian(unit)[1][:len(x)],compute_uv=False)
+    prior_penalty=float(prior_strength*np.sum((unit-.5)**2))
+    return {"status": "fitted", "unit": unit.tolist(), "physical": physical_output(unit),
+            "parameterization": parameterization,
             "inference": "identical learned weights evaluated in float64 PyTorch; no retraining or exact pricing",
-            "calibration_iv_sse": sse, "selected_start": chosen,
+            "calibration_iv_sse": raw_sse, "calibration_objective": sse, "selected_start": chosen,
+            "objective_kind": 'training_error_GLS' if whitening is not None else 'raw_IV_SSE',
+            "prior_strength": float(prior_strength), "prior_center": [.5]*dimension,
+            "prior_penalty": prior_penalty, "data_objective": sse-prior_penalty,
+            "local_data_jacobian_singular_values": singular.tolist(),
+            "local_data_condition_number": float(singular[0]/max(singular[-1],1e-300)),
+            "regularization_dominated_directions": int(np.sum(singular**2<prior_strength)),
             "optimizer_success": success, "starts": records,
             "seconds": time.perf_counter() - started, "fit_quotes": len(x),
             "total_nfev": sum(row.get("nfev", 0) for row in records)}
@@ -133,7 +183,12 @@ def load_checkpoint(path):
     weights = directory / "model.safetensors" if path.is_dir() else path
     config = json.loads((directory / "config.json").read_text())
     keys = {"factors", "width", "depth", "tau_min", "tau_max", "x_half_width", "correction_limit"}
-    model = RegularVariancePINN(**{key: value for key, value in config.items() if key in keys})
+    if config.get('residual_blocks', 0):
+        from src.mentor_dh_pinn.deep_regular_pinn import DeepRegularVariancePINN
+        model = DeepRegularVariancePINN(**{key: value for key, value in config.items() if key in keys},
+                                       residual_blocks=config['residual_blocks'], residual_width=config['residual_width'])
+    else:
+        model = RegularVariancePINN(**{key: value for key, value in config.items() if key in keys})
     model.load_weights(str(weights))
     model.eval()
     mx.eval(model.parameters())

@@ -101,7 +101,7 @@ def exact_prices(q,factors,nodes=128):
                   node_count=nodes)[:,0]
 
 
-def teacher_labels(points,factors,*,chunk=512,gradients=True):
+def teacher_labels(points,factors,*,chunk=512,gradients=True,full_gradients=False):
     """Prices and d(g)/du from independent float64 Fourier evaluation.
 
     IV differentiation uses the implicit Black inverse, not finite differences.
@@ -121,12 +121,21 @@ def teacher_labels(points,factors,*,chunk=512,gradients=True):
         block={"q":q.detach().numpy(),"price":price,"w":w,"g":g,"usable":valid,
                "quadrature_difference":np.abs(price-other)}
         if gradients:
-            dprice=torch.autograd.grad(c.sum(),q,retain_graph=True)[0].detach().numpy()[:,2:]
-            dback=torch.autograd.grad(torch.log(total).sum(),q)[0].detach().numpy()[:,2:]
+            dprice_all=torch.autograd.grad(c.sum(),q,retain_graph=True)[0].detach().numpy()
+            dback_all=torch.autograd.grad(torch.log(total).sum(),q)[0].detach().numpy()
+            dprice,dback=dprice_all[:,2:],dback_all[:,2:]
             root=np.sqrt(w);d=q[:,0].detach().numpy()/root-root/2
             cw=np.exp(-d*d/2)/math.sqrt(2*math.pi)/(2*root)
             dg=.5*(dprice/(cw*w)[:,None]-dback)
             block["dg_du"]=dg
             block["usable"] &= np.isfinite(dg).all(axis=1)
+            if full_gradients:
+                # Black has an explicit x derivative at fixed total variance.
+                # Subtract it before implicit inversion to obtain dg/dx.
+                implicit=dprice_all.copy()
+                implicit[:,0]-=np.exp(q[:,0].detach().numpy())*ndtr(d+root)
+                full=.5*(implicit/(cw*w)[:,None]-dback_all)
+                block['dg_dq']=full
+                block['usable'] &= np.isfinite(full).all(axis=1)
         rows.append(block)
     return {key:np.concatenate([r[key] for r in rows]) for key in rows[0]}
