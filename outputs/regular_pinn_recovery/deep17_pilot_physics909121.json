@@ -1,0 +1,432 @@
+{
+  "status": "complete",
+  "purpose": "Fresh collocation PDE and numerical diagnostics; not parameter recovery or a new training objective",
+  "domain": {
+    "tau_years": [
+      0.019178082191780823,
+      2.0
+    ],
+    "single_kappa": [
+      0.2,
+      12.0
+    ],
+    "slow_kappa": [
+      0.2,
+      3.0
+    ],
+    "fast_kappa": "slow + 0.5 + (11.5 - slow) * u; maximum 12",
+    "total_theta_and_v0": [
+      0.03,
+      0.3
+    ],
+    "factor_shares": [
+      0.2,
+      0.8
+    ],
+    "feller_ratio": [
+      0.15,
+      0.9
+    ],
+    "rho_slow": [
+      -0.8,
+      0.3
+    ],
+    "rho_fast": [
+      -0.6,
+      0.5
+    ],
+    "sampling": "Latin hypercube; log scale for speeds and total variances; linear shares, correlations and eta"
+  },
+  "sampling": "LHS parameter/state drivers; half continuous maturities and half monthly/rich slices; every fourth point uses x in [-3,3]",
+  "limitations": "Small sampled residuals do not establish uniqueness, recovery, or global PDE correctness; no recovery-success gate is inferred",
+  "source_sha256": {
+    "scripts/mentor_dh_pinn/check_regular_pinn_physics.py": "90d17e07de06f465d27c97994cf3cdd32af1854081bedccdd541e8410c6299cd",
+    "src/mentor_dh_pinn/regular_pinn.py": "e409148ced31045827f2ec582a10ad572373aa50e456de4e58cb0499453d9316",
+    "src/mentor_dh_pinn/regular_pinn_torch.py": "06a239a91b511cb81e801948c35e438a6a8cf05929cefdc9a7f69b3f771bd15f",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "bb47652e896425d38be8e967269f1e81683cb879c37b9867c1cbde7cf404fb71",
+    "scripts/mentor_dh_pinn/assess_regular_pinn.py": "3d34c6ece0a4b7353b7098cf2a76505037761f4c5663992d9401e4c53745feb9",
+    "scripts/mentor_dh_pinn/train_regular_pinn.py": "ddce011580a4ac98a5a11b18619ba1a81a98f94a94c515519dff2c9aa57e5ab3"
+  },
+  "checks": [
+    {
+      "points": 128,
+      "seconds": 0.04689041699748486,
+      "chunk": 128,
+      "all_diagnostics_finite": true,
+      "nonfinite_rows": 0,
+      "nonfinite_by_quantity": {
+        "residual": 0,
+        "iv_native": 0,
+        "iv_torch64": 0,
+        "terminal_payoff": 0,
+        "terminal_error": 0,
+        "ell": 0,
+        "w": 0,
+        "l_x": 0,
+        "l_tau": 0,
+        "l_xx": 0,
+        "convexity": 0,
+        "scale": 0
+      },
+      "dimensionless_pde_residual": {
+        "all_points": {
+          "count": 128,
+          "nonfinite": 0,
+          "mean_all": 0.0024621378549182075,
+          "rmse_all": 0.04039936526839489,
+          "absolute_quantiles_finite_subset": {
+            "0.5": 0.0022127812948641483,
+            "0.9": 0.036582113613323024,
+            "0.95": 0.05097104136173674,
+            "0.99": 0.13875569944281294,
+            "1.0": 0.3331649993424528
+          }
+        },
+        "smile_region": {
+          "count": 96,
+          "nonfinite": 0,
+          "mean_all": -0.0008927736123223108,
+          "rmse_all": 0.005790228317246213,
+          "absolute_quantiles_finite_subset": {
+            "0.5": 0.0017895135732945815,
+            "0.9": 0.005150949687145688,
+            "0.95": 0.010500450292169533,
+            "0.99": 0.023437041004304448,
+            "1.0": 0.03621051740769695
+          }
+        },
+        "wide_domain": {
+          "count": 32,
+          "nonfinite": 0,
+          "mean_all": 0.012526872256639758,
+          "rmse_all": 0.08017390239011225,
+          "absolute_quantiles_finite_subset": {
+            "0.5": 0.02604214076822894,
+            "0.9": 0.11878906904097723,
+            "0.95": 0.13689566433202985,
+            "0.99": 0.27345413401203805,
+            "1.0": 0.3331649993424528
+          }
+        },
+        "vega_relevance_weighted_rmse_all": 0.00827545307668457,
+        "weight_definition": "max(exp(-d2^2/2), .01); unweighted full distribution is also retained"
+      },
+      "convexity": {
+        "negative_count": 0,
+        "negative_fraction_all_rows": 0.0,
+        "material_negative_count": 0,
+        "material_threshold": -1e-05,
+        "minimum_finite_subset": 0.4806543616171731,
+        "nonfinite_count": 0
+      },
+      "calendar_total_variance_derivative": {
+        "negative_count": 0,
+        "negative_fraction_all_rows": 0.0,
+        "nonfinite_count": 0
+      },
+      "terminal_condition": {
+        "definition": "tau=0, normalized call payoff max(exp(x)-1, 0), imposed analytically",
+        "errors": {
+          "count": 128,
+          "nonfinite": 0,
+          "mean_all": 6.938893903907228e-18,
+          "rmse_all": 7.850462293418876e-17,
+          "absolute_quantiles_finite_subset": {
+            "0.5": 0.0,
+            "0.9": 0.0,
+            "0.95": 0.0,
+            "0.99": 0.0,
+            "1.0": 8.881784197001252e-16
+          }
+        },
+        "max_error_divided_by_one_plus_payoff": 1.764266434619347e-16,
+        "scaled_error_tolerance": 5e-07,
+        "passed_roundoff_tolerance": true
+      },
+      "same_weights_float32_float64_iv_parity": {
+        "status": "not_applicable",
+        "description": "Native float64 checkpoint, including residual blocks; no float32 copy or parity claim"
+      },
+      "native_precision": "float64",
+      "hidden_layers": 17,
+      "largest_absolute_residual_points": [
+        {
+          "index": 40,
+          "q": [
+            2.9344793506376528,
+            -1.4000876832522264,
+            0.010708986179816502,
+            0.49435594789208154,
+            0.016284707286770905,
+            0.11539861365728514,
+            0.19557946479194332,
+            0.9443390918504838,
+            0.16426325934095948,
+            0.3478441476562784,
+            0.9444974309803277,
+            0.16211811342202373
+          ],
+          "wide_domain": true,
+          "residual": 0.3331649993424528,
+          "convexity": 0.6159023895695634
+        },
+        {
+          "index": 84,
+          "q": [
+            1.5908605406214233,
+            -2.498699971920336,
+            0.5723699661527458,
+            0.8857773916923222,
+            0.36693319718493267,
+            0.6552629652932538,
+            0.4251950414790137,
+            0.1358281735539736,
+            0.7327935849994408,
+            0.9789863342148978,
+            0.9189782375117331,
+            0.2523358710926915
+          ],
+          "wide_domain": true,
+          "residual": -0.14054930472821087,
+          "convexity": 0.7098314737225296
+        },
+        {
+          "index": 12,
+          "q": [
+            -1.897929617347941,
+            -2.498699971920336,
+            0.9442877079376606,
+            0.8373616029014891,
+            0.5458731650945632,
+            0.798193904923256,
+            0.44758054680739523,
+            0.39164370720823233,
+            0.7261332616053225,
+            0.10245125342453722,
+            0.6148671689955062,
+            0.8384870061085902
+          ],
+          "wide_domain": true,
+          "residual": 0.13390632218969992,
+          "convexity": 0.5665122238589373
+        },
+        {
+          "index": 0,
+          "q": [
+            -1.1539653911546504,
+            -2.498699971920336,
+            0.44299916039917003,
+            0.05762624622516137,
+            0.09596473502752366,
+            0.1659910643089618,
+            0.07162290883672319,
+            0.17512634634137556,
+            0.8339594276994,
+            0.4027352155260973,
+            0.5208029650617864,
+            0.9381199747132674
+          ],
+          "wide_domain": true,
+          "residual": -0.11931082976653637,
+          "convexity": 0.6866221006619949
+        },
+        {
+          "index": 100,
+          "q": [
+            1.5417767848955946,
+            -1.4000876832522264,
+            0.6725768241023237,
+            0.21297139219492858,
+            0.9275935775200115,
+            0.4956724394648937,
+            0.43410543488853265,
+            0.5335042964577338,
+            0.4564275107214326,
+            0.03498449740624317,
+            0.7575243968584224,
+            0.9589425353050399
+          ],
+          "wide_domain": true,
+          "residual": -0.1140932225109449,
+          "convexity": 0.6985971978719757
+        },
+        {
+          "index": 108,
+          "q": [
+            1.8915598690833424,
+            -2.498699971920336,
+            0.17667599153633604,
+            0.3187373684003857,
+            0.33186025594310614,
+            0.39268713838855135,
+            0.11598533236691502,
+            0.3832041661097051,
+            0.2662712195588066,
+            0.9717400809670592,
+            0.15767594461051646,
+            0.9730447263081897
+          ],
+          "wide_domain": true,
+          "residual": 0.10521122606357278,
+          "convexity": 0.6329689279212228
+        },
+        {
+          "index": 64,
+          "q": [
+            2.0877236102269974,
+            -1.4000876832522264,
+            0.9662730990803515,
+            0.9904500856225644,
+            0.592239096169346,
+            0.9865759428017856,
+            0.6599022969775632,
+            0.29665103711014346,
+            0.4211725668894247,
+            0.931174439186233,
+            0.4770413416018776,
+            0.7377636163129381
+          ],
+          "wide_domain": true,
+          "residual": 0.051811699353857515,
+          "convexity": 0.4806543616171731
+        },
+        {
+          "index": 4,
+          "q": [
+            2.985056626595713,
+            -1.4000876832522264,
+            0.5236536156641507,
+            0.39778629950218447,
+            0.744857176072206,
+            0.4464832407159307,
+            0.5918294693182554,
+            0.8553314364288652,
+            0.30572453521174575,
+            0.1354148154880578,
+            0.9915478252676544,
+            0.7498217688443961
+          ],
+          "wide_domain": true,
+          "residual": 0.049409819376369644,
+          "convexity": 0.6840310882250349
+        },
+        {
+          "index": 36,
+          "q": [
+            -0.9282198683519357,
+            -2.498699971920336,
+            0.2185242497838688,
+            0.8611921418843571,
+            0.38829053444982153,
+            0.3600356985910858,
+            0.7050717693102508,
+            0.35985329309679176,
+            0.011567267738510223,
+            0.6194420296946617,
+            0.8283151349264987,
+            0.6721430821074176
+          ],
+          "wide_domain": true,
+          "residual": 0.04826332331636465,
+          "convexity": 0.6443761086990433
+        },
+        {
+          "index": 16,
+          "q": [
+            -2.719113385646228,
+            -1.4000876832522264,
+            0.3072076545094971,
+            0.2852758925059143,
+            0.035039105874564526,
+            0.26163521277527585,
+            0.04978377401244606,
+            0.21176729665593635,
+            0.24563949441658114,
+            0.33738356402994735,
+            0.1757493532309796,
+            0.6495177866055452
+          ],
+          "wide_domain": true,
+          "residual": 0.04344942339451058,
+          "convexity": 0.5371897392332653
+        }
+      ],
+      "checkpoint": {
+        "label": "deep17_pilot909121",
+        "checkpoint": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/deep17_pilot909121/model.pt",
+        "sha256": "a9fa171311f9d985b71507075c5294dc983bf7f88c51478b9c8eae63734b7075",
+        "config": {
+          "factors": 2,
+          "width": 160,
+          "depth": 5,
+          "tau_min": 0.019178082191780823,
+          "tau_max": 2.0,
+          "x_half_width": 3.5,
+          "correction_limit": 1.8,
+          "residual_blocks": 6,
+          "checkpoint": "outputs/regular_pinn_recovery/double_float64_extended909111",
+          "data": "outputs/regular_pinn_recovery/double_data",
+          "out": "outputs/regular_pinn_recovery/deep17_pilot909121",
+          "steps": 2,
+          "seed": 909121,
+          "batch": 512,
+          "pde_batch": 128,
+          "collocation": 18000,
+          "save_every": 1,
+          "add_residual_blocks": 6,
+          "checkpoint_format": "torch_state_dict_float64",
+          "precision": "float64 weights, values, gradients and AdamW moments; scalar step counter uses backend default",
+          "architecture": "deeper residual regular implied-variance pricing-PDE PINN",
+          "total_hidden_layers": 17,
+          "trainable_parameter_count": 416321,
+          "training_iv_audit": "first 16384 archived training rows; reporting only, not selection",
+          "optimizer": "AdamW",
+          "lr": 1e-05,
+          "min_lr": 2e-07,
+          "weight_decay": 1e-06,
+          "sensitivity": 0.2,
+          "weight_pde": 0.2,
+          "weight_shape": 0.05,
+          "anchor_scale": 0.05,
+          "skip_recovery": true,
+          "selection": "minimum archived validation IV RMSE; initial weights eligible",
+          "resume": "outputs/regular_pinn_recovery/double_float64_extended909111",
+          "gradient_clipping": false
+        },
+        "config_sha256": "de8ee3586fe0dc87dc5d39bd2b408e9acc9bfe72a6fbbad87fc5647377c3f68f"
+      },
+      "collocation_seed": 909141,
+      "collocation_array_sha256": "13513de1c10a43c47992a3e26325087f83867362feb14eddd0236f163a90af9a",
+      "dataset_provenance": {
+        "status": "checked",
+        "datasets": [
+          {
+            "path": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/double_data/train.npz",
+            "sha256": "f18c296f1d0183ac266448830a05e80e8e7cdd3789cca5c6a5434dd09c7fdc28",
+            "points": 131072,
+            "exact_overlap_rows": 0,
+            "status": "checked"
+          },
+          {
+            "path": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/double_data/validation.npz",
+            "sha256": "4b08a5b704d35b04ce47fac2652c5ff69a5d053b3fed5dc5f72fd94622827a3c",
+            "points": 16384,
+            "exact_overlap_rows": 0,
+            "status": "checked"
+          },
+          {
+            "path": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/double_data/collocation.npz",
+            "sha256": "a3820957488f9dacbbcebeb2c3425b766473c7b65ffb76c9a8a763f193c422af",
+            "points": 18000,
+            "exact_overlap_rows": 0,
+            "status": "checked"
+          }
+        ],
+        "resampled_pool_replay": [],
+        "exact_overlap_rows": 0,
+        "exact_overlap_fully_checked": true,
+        "scope": "Exact coordinate rows against saved datasets and replayed configured resampling seeds; not a statistical independence proof"
+      }
+    }
+  ]
+}

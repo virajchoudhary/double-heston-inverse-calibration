@@ -1,0 +1,9 @@
+run,selected_step,case,estimates_available,optimizer_success,parameter_passes,parameter_count,all_parameter_pass,recomputed_training_scaled_rmse
+double_sobolev_s17,12000,0,True,True,5,10,False,0.12908567586142772
+double_sobolev_s17,12000,1,True,True,5,10,False,0.19509045618953613
+double_sobolev_s17,12000,2,True,True,4,10,False,0.06741815642534872
+double_sobolev_s17,12000,3,True,True,6,10,False,0.04991029251723598
+double_lbfgs908021,0,0,True,True,5,10,False,0.12908567586142772
+double_lbfgs908021,0,1,True,True,5,10,False,0.19509045618953613
+double_lbfgs908021,0,2,True,True,4,10,False,0.06741815642534872
+double_lbfgs908021,0,3,True,True,6,10,False,0.04991029251723598

@@ -1,0 +1,54 @@
+{
+  "initial_checkpoint_sha256": "8efd226b98c0233f7da86daff34b0890174357622dc680b00491a50ee9251e0e",
+  "input_sha256": {
+    "train": "cd8283213fcbc52a8de38730282dfbb3c84dfb6b01d3e69ee7a3d782b9cda211",
+    "validation": "c3aed77335ce0dc2201c18f40bc08cd464194ba9e9a11531ee4d4dea5015ab57",
+    "collocation": "51ce6b7ccf718ca95eb8f46943bfe3a398a1e148cdb121c29a8ebc99c2ab05b4"
+  },
+  "source_sha256": {
+    "scripts/mentor_dh_pinn/finetune_factor_prices.py": "1c0f7fd9e30a60082f157f54ec21693b05c141871eef6a2314244f52b5d02c1c",
+    "scripts/mentor_dh_pinn/assess_regular_pinn.py": "358fc16941aac02da94ad4508cd6eec50f4b8138370a8b402f5e78199b03d7d6",
+    "src/mentor_dh_pinn/affine_factor_pinn.py": "fb278842793ec5ae7776658c92f8387305d22aa8befc5d610316643a3a5acb77",
+    "src/mentor_dh_pinn/affine_factor_pricing.py": "4eb0d340507351c17b16c424b4bc52c32036a359eb8fd4b7b6e9fb8956cde9c5",
+    "src/mentor_dh_pinn/conjugate_factor_pinn.py": "55b1714c538ae916b9cc5739c45be8e4463c5c7c2f659083bab35b38e3b620b0",
+    "src/mentor_dh_pinn/integrated_factor_pinn.py": "757911f72bc29835b2777b25074b8c098c044b1d181478ba946db7ab0b1fb406",
+    "src/mentor_dh_pinn/moment_factor_pinn.py": "afc46f7b58c4b0a1b0d39ce0fc1f6b9a4425df64d422276f74eddfadb519dfb4",
+    "src/mentor_dh_pinn/two_moment_factor_pinn.py": "36f28674de42a5b5186343c53bb1b3bb3e8a60ab389f288d960482c33eb6cae7",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "bb47652e896425d38be8e967269f1e81683cb879c37b9867c1cbde7cf404fb71"
+  },
+  "surface_manifest": {
+    "purpose": "Additional synthetic training only; no validation or final-test parameters are used",
+    "seed": 907721,
+    "factors": 2,
+    "surfaces": 1024,
+    "quotes_per_surface": 126,
+    "usable_surfaces": 1024,
+    "rejected_surfaces_retained": 0,
+    "data_sha256": "affcea92146d791213194c6f0420c0367c84f86f5fb325def586318ce48251e8",
+    "singular_floor_absolute_iv": 1e-06,
+    "singular_floor_relative": 1e-10,
+    "rank_counts_usable": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 63,
+      "10": 961
+    },
+    "metric": "B*(neural_IV-reference_IV); B is truncated pseudoinverse of exact IV Jacobian in physical recovery-tolerance coordinates",
+    "limitations": "Local linear training surrogate, not actual recovered parameters. Weak directions below cutoff receive no parameter-aware loss; price/PDE losses remain. No guarantee of identifiability.",
+    "bounds": "Full declared training unit cube, Latin hypercube; 21 fixed strikes .8..1.2; 30/60/90/180/365/730 days",
+    "source_sha256": {
+      "scripts/mentor_dh_pinn/prepare_regular_pinn_surfaces.py": "98aff4f8248565d31d96960a8eb1ce8c5905de97ed1a6cf1a9ec0618d2c7d805",
+      "src/mentor_dh_pinn/regular_pinn_data.py": "bb47652e896425d38be8e967269f1e81683cb879c37b9867c1cbde7cf404fb71",
+      "scripts/mentor_dh_pinn/diagnose_regular_pinn_validation.py": "c7ad0b9eb924330c33a8ee3f99ef37cb6e5eccea1cee64e161a735b8e699acd7",
+      "src/mentor_dh_pinn/torch_pricer.py": "109ae648fadfd7c89715aca385805ec1dde1a2cc55844f5635245292688c13d7"
+    }
+  },
+  "no_recovery_cases": true
+}

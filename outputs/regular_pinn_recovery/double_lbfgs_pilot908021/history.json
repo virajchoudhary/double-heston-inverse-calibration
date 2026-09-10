@@ -1,0 +1,18 @@
+[
+  {
+    "iteration": 0,
+    "objective_calls": 8,
+    "objective": 0.0027600806206464767,
+    "validation_iv_rmse": 0.0003484913555533679,
+    "validation_parameter_rmse": null,
+    "seconds": 0.847594165999908
+  },
+  {
+    "iteration": 5,
+    "objective_calls": 17,
+    "objective": 0.0025272471830248833,
+    "validation_iv_rmse": 0.00034916511045663415,
+    "validation_parameter_rmse": null,
+    "seconds": 1.210564125009114
+  }
+]

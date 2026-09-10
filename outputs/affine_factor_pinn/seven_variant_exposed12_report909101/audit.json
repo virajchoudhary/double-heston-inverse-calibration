@@ -1,0 +1,168 @@
+{
+  "status": "passed",
+  "assessments": [
+    "outputs/affine_factor_pinn/integrated_lbfgs908241_exposed12",
+    "outputs/affine_factor_pinn/conjugate_adam908241_exposed12",
+    "outputs/affine_factor_pinn/moment_adam908241_exposed12",
+    "outputs/affine_factor_pinn/two_moment_adam908241_exposed12",
+    "outputs/affine_factor_pinn/two_moment_lbfgs909091_exposed12",
+    "outputs/affine_factor_pinn/price_aware_adam909101_exposed12",
+    "outputs/affine_factor_pinn/price_aware_batch16_adam909101_exposed12"
+  ],
+  "checks": "snapshot/checkpoint hashes, recomputed parameter gates, counts, quote identity, start selection",
+  "training_split_counts": [
+    {
+      "train": 65536,
+      "validation": 8192,
+      "collocation": 18000
+    },
+    {
+      "train": 65536,
+      "validation": 8192,
+      "collocation": 18000
+    },
+    {
+      "train": 65536,
+      "validation": 8192,
+      "collocation": 18000
+    },
+    {
+      "train": 65536,
+      "validation": 8192,
+      "collocation": 18000
+    },
+    {
+      "train": 65536,
+      "validation": 8192,
+      "collocation": 18000
+    },
+    {
+      "train": 65536,
+      "validation": 8192,
+      "collocation": 18000
+    },
+    {
+      "train": 65536,
+      "validation": 8192,
+      "collocation": 18000
+    }
+  ],
+  "regular_baseline_comparison": {
+    "baseline": "outputs/regular_pinn_recovery/exposed12_lbfgs908021",
+    "model": "double_lbfgs908021",
+    "same_truth_vectors": true,
+    "same_60_start_vectors": true,
+    "input_sha256": {
+      "synthetic_truth.json": "f000bbc0d449d8618779720d90d50bada6a042cc5cdd07d0374eb42e5bfc0c1a",
+      "fits_and_starts.json": "3fdcfb386973a6bff57f96772a6fc255516bb03ed481615ccf19226fc2e1c5d6",
+      "observations.csv": "7861ce35e594a87da19aef800bc902c93e41adc4755ede9c091d4b8bee025fd9"
+    },
+    "same_holdout_masks": true,
+    "max_observed_iv_difference": 2.914335439641036e-14,
+    "max_spot_price_difference": 3.885780586188048e-16,
+    "per_parameter_pass_counts": [
+      4,
+      2,
+      3,
+      5,
+      5,
+      7,
+      4,
+      5,
+      9,
+      4
+    ],
+    "per_case_max_gate_error": [
+      7.849481250642627,
+      27.673606728268936,
+      3.911377636171973,
+      10.040879205877863,
+      5.134560610727536,
+      5.686490952205075,
+      3.7239216289119343,
+      4.901585518724394,
+      2.75117253729549,
+      15.453128174967306,
+      11.085915514694468,
+      47.99547204604581
+    ],
+    "individual_parameter_passes": 48,
+    "all_parameter_passes": 0
+  },
+  "report_source_sha256": "86f1d4702459286da62351c64ebc04843adbb640a80dff7fec8de081b5b4d934",
+  "report_runtime": {
+    "python": "3.14.5",
+    "system": "Darwin",
+    "machine": "arm64",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "torch": "2.13.0",
+    "matplotlib": "3.11.0",
+    "note": "Captured at reporting time, not retrospectively asserted as every historical training environment."
+  },
+  "summaries": [
+    {
+      "cases": 12,
+      "all_parameter_passes": 0,
+      "individual_parameter_passes": 19,
+      "individual_denominator": 120,
+      "joint_passes": 0,
+      "seconds": 445.6686865829979,
+      "evidence_level": "development; previously exposed cases, not unseen assessment"
+    },
+    {
+      "cases": 12,
+      "all_parameter_passes": 0,
+      "individual_parameter_passes": 21,
+      "individual_denominator": 120,
+      "joint_passes": 0,
+      "seconds": 294.63280604200554,
+      "evidence_level": "development; previously exposed cases, not unseen assessment"
+    },
+    {
+      "cases": 12,
+      "all_parameter_passes": 0,
+      "individual_parameter_passes": 30,
+      "individual_denominator": 120,
+      "joint_passes": 0,
+      "seconds": 427.0813942080131,
+      "evidence_level": "development; previously exposed cases, not unseen assessment"
+    },
+    {
+      "cases": 12,
+      "all_parameter_passes": 0,
+      "individual_parameter_passes": 27,
+      "individual_denominator": 120,
+      "joint_passes": 0,
+      "seconds": 457.8819433749886,
+      "evidence_level": "development; previously exposed cases, not unseen assessment"
+    },
+    {
+      "cases": 12,
+      "all_parameter_passes": 0,
+      "individual_parameter_passes": 30,
+      "individual_denominator": 120,
+      "joint_passes": 0,
+      "seconds": 467.704409790982,
+      "evidence_level": "development; previously exposed cases, not unseen assessment"
+    },
+    {
+      "cases": 12,
+      "all_parameter_passes": 0,
+      "individual_parameter_passes": 32,
+      "individual_denominator": 120,
+      "joint_passes": 0,
+      "seconds": 330.3719656249741,
+      "evidence_level": "development; previously exposed cases, not unseen assessment"
+    },
+    {
+      "cases": 12,
+      "all_parameter_passes": 0,
+      "individual_parameter_passes": 32,
+      "individual_denominator": 120,
+      "joint_passes": 0,
+      "seconds": 302.80544841702795,
+      "evidence_level": "development; previously exposed cases, not unseen assessment"
+    }
+  ]
+}

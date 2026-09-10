@@ -1,0 +1,46 @@
+{
+  "artifact_type": "metadata correction; original run artifacts preserved",
+  "run": "double_lbfgs908021",
+  "executed_trainer_sha256": "0a6a3bff5094994a7f346fc165d7459e06cd8c4a1b00184aa2a871a4e7551ded",
+  "evidence": "Settings verified against the executed trainer stored in source_snapshot.json and the recorded CLI arguments in config.json.",
+  "note": "The original config merged parent Adam metadata into this L-BFGS run. Overlay effective_config for reporting this run. Historical config, manifest, source snapshot and history have not been rewritten. No objective, gradients, checkpoint selection or live training behavior was changed.",
+  "effective_config": {
+    "optimizer": "L-BFGS-B on network weights, fixed objective; unbounded neural weights",
+    "precision": "float32 MLX values/gradients, float64 SciPy optimizer vectors",
+    "iterations": 1000,
+    "anchors": 16384,
+    "collocation": 18000,
+    "chunk": 1024,
+    "seed": 908021,
+    "save_every": 100,
+    "skip_recovery": false,
+    "weight_decay": 0.0,
+    "resample_every": 0,
+    "gradient_clipping": false,
+    "sensitivity": 0.2,
+    "weight_pde": 0.2,
+    "weight_shape": 0.05,
+    "weight_anchor": 1.0,
+    "anchor_scale": 0.05,
+    "steps": null,
+    "lr": null,
+    "batch": null,
+    "pde_batch": null,
+    "selection": "original four development recovery surfaces; never exposed-12 truth in optimizer",
+    "optimizer_options": {
+      "maxiter": 1000,
+      "maxls": 40,
+      "maxcor": 20,
+      "ftol": 1e-12,
+      "gtol": 1e-8
+    }
+  },
+  "inapplicable_inherited_fields": {
+    "steps": {"recorded": 12000, "reason": "Parent Adam step count. This run uses an L-BFGS maxiter budget of 1000."},
+    "lr": {"recorded": 0.001, "reason": "Parent Adam learning rate. L-BFGS uses its line search; no Adam learning rate is applied."},
+    "weight_decay": {"recorded": 0.000001, "reason": "Parent AdamW decay. The L-BFGS objective contains no neural-weight decay term."},
+    "resample_every": {"recorded": 1000, "reason": "Parent Adam collocation refresh. This solve uses fixed anchor and physics samples throughout."},
+    "batch": {"recorded": 1024, "reason": "Parent stochastic anchor batch. Every L-BFGS objective evaluates all 16384 fixed anchors, accumulated in chunks."},
+    "pde_batch": {"recorded": 256, "reason": "Parent stochastic PDE batch. Every L-BFGS objective evaluates all 18000 fixed collocation points, accumulated in chunks."}
+  }
+}

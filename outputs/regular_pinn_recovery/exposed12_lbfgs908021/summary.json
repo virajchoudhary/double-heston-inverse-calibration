@@ -1,0 +1,28 @@
+[
+  {
+    "model": "black_scholes_on_double_heston",
+    "factors": 2,
+    "geometry": "rich",
+    "noise": 0.0,
+    "cases": 12,
+    "fitted": 12,
+    "invalid_cases": 0,
+    "all_parameter_passes": 0,
+    "neural_price_passes": 0,
+    "exact_price_passes": 0,
+    "joint_recovery_passes": 0
+  },
+  {
+    "model": "double_lbfgs908021",
+    "factors": 2,
+    "geometry": "rich",
+    "noise": 0.0,
+    "cases": 12,
+    "fitted": 12,
+    "invalid_cases": 0,
+    "all_parameter_passes": 0,
+    "neural_price_passes": 8,
+    "exact_price_passes": 0,
+    "joint_recovery_passes": 0
+  }
+]

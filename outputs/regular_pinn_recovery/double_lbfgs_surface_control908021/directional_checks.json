@@ -1,0 +1,20 @@
+[
+  {
+    "step": 0.001,
+    "finite_difference": 0.16018847236409783,
+    "analytic": 0.1619329777488513,
+    "relative_error": 0.010773008741055117
+  },
+  {
+    "step": 0.0003,
+    "finite_difference": 0.16177638220445564,
+    "analytic": 0.1619329777488513,
+    "relative_error": 0.0009670392440909701
+  },
+  {
+    "step": 0.0001,
+    "finite_difference": 0.16192156181205064,
+    "analytic": 0.1619329777488513,
+    "relative_error": 7.049791190993308e-05
+  }
+]

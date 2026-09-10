@@ -37,13 +37,34 @@ def black_call(x, total_variance):
 
 class TorchRegularVariancePINN(nn.Module):
     def __init__(self,factors=2,width=160,depth=5,tau_min=7/365,tau_max=2.,
-                 x_half_width=3.5,correction_limit=1.8):
+                 x_half_width=3.5,correction_limit=1.8,residual_blocks=0):
         super().__init__();self.factors=factors;self.width=width;self.depth=depth
         self.tau_min=tau_min;self.tau_max=tau_max;self.x_half_width=x_half_width
         self.correction_limit=correction_limit
         sizes=[13 if factors==1 else 24]+[width]*depth
         self.hidden=nn.ModuleList(nn.Linear(a,b) for a,b in zip(sizes[:-1],sizes[1:]))
+        if not isinstance(residual_blocks,int) or residual_blocks<0:
+            raise ValueError('residual_blocks must be a nonnegative integer')
+        self.residual_blocks=residual_blocks
+        self.extra=nn.ModuleList(nn.ModuleList([nn.Linear(width,width),nn.Linear(width,width)])
+                                 for _ in range(residual_blocks))
+        for _,last in self.extra:
+            nn.init.zeros_(last.weight);nn.init.zeros_(last.bias)
         self.head=nn.Linear(width,1);self.double()
+
+    @property
+    def total_hidden_layers(self):return self.depth+2*self.residual_blocks
+
+    def deepened(self,blocks):
+        """Append smooth identity-initialized residual capacity without changing prices."""
+        if self.residual_blocks or blocks<1:
+            raise ValueError('Deepening requires a shallow model and positive block count')
+        config={k:getattr(self,k) for k in ('factors','width','depth','tau_min','tau_max',
+                                          'x_half_width','correction_limit')}
+        result=type(self)(**config,residual_blocks=blocks)
+        result.hidden.load_state_dict(self.hidden.state_dict())
+        result.head.load_state_dict(self.head.state_dict())
+        return result
 
     @classmethod
     def from_mlx(cls,model):
@@ -73,6 +94,8 @@ class TorchRegularVariancePINN(nn.Module):
     def correction(self,coords,structural):
         h=self.features(coords,structural)
         for layer in self.hidden:h=torch.tanh(layer(h))
+        for first,last in self.extra:
+            h=h+torch.tanh(last(torch.tanh(first(h))))/math.sqrt(self.residual_blocks)
         return self.correction_limit*torch.tanh(self.head(h)[...,0])
 
     def iv(self,coords,structural):

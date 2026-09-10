@@ -23,7 +23,7 @@ sys.path.insert(0, str(ROOT))
 from scripts.mentor_dh_pinn.assess_regular_pinn import load_checkpoint, sha256
 from src.mentor_dh_pinn.regular_pinn import residual
 from src.mentor_dh_pinn.regular_pinn_data import DOMAIN, coordinates, draw_points
-from src.mentor_dh_pinn.regular_pinn_torch import TorchRegularVariancePINN
+from src.mentor_dh_pinn.regular_pinn_torch import TorchRegularVariancePINN, residual as torch_residual
 
 
 def array_hash(array):
@@ -50,23 +50,34 @@ def evaluate_points(model, points, chunk=128):
     """Read-only diagnostics, sharing one float64 copy of the same network weights."""
     if chunk < 1 or len(points) < 1:
         raise ValueError("positive chunk and at least one point required")
-    adapter = TorchRegularVariancePINN.from_mlx(model)
+    native_torch = isinstance(model, TorchRegularVariancePINN)
+    adapter = model if native_torch else TorchRegularVariancePINN.from_mlx(model)
     blocks = []
     started = time.perf_counter()
     for start in range(0, len(points), chunk):
         q = points[start:start + chunk]
-        states, structural = coordinates(mx.array(q, dtype=mx.float32), model.factors, mx)
-        value, diag = residual(model, states, structural)
-        iv = model.iv(states, structural)
-        terminal = mx.concatenate([states[..., :-1], mx.zeros_like(states[..., -1:])], axis=-1)
-        terminal_value = model.price(terminal, structural)
-        mx.eval(value, diag, iv, terminal_value)
+        if native_torch:
+            states, structural = coordinates(torch.tensor(q,dtype=torch.float64),model.factors,torch)
+            value, diag = torch_residual(model,states,structural)
+            with torch.no_grad():
+                iv=model.iv(states,structural)
+                terminal=torch.cat([states[...,:-1],torch.zeros_like(states[...,-1:])],dim=-1)
+                terminal_value=model.price(terminal,structural)
+            value,diag=value.detach().numpy(),{k:v.detach().numpy() for k,v in diag.items()}
+            iv,terminal_value,states=iv.numpy(),terminal_value.numpy(),states.numpy()
+        else:
+            states, structural = coordinates(mx.array(q, dtype=mx.float32), model.factors, mx)
+            value, diag = residual(model, states, structural)
+            iv = model.iv(states, structural)
+            terminal = mx.concatenate([states[..., :-1], mx.zeros_like(states[..., -1:])], axis=-1)
+            terminal_value = model.price(terminal, structural)
+            mx.eval(value, diag, iv, terminal_value)
         with torch.no_grad():
             torch_states, torch_structural = coordinates(torch.tensor(q, dtype=torch.float64), model.factors, torch)
             reference_iv = adapter.iv(torch_states, torch_structural).numpy()
         x = np.asarray(states[..., 0], dtype=float)
         payoff = np.maximum(np.expm1(x), 0.0)
-        block = {"residual": np.asarray(value, dtype=float), "iv_mlx": np.asarray(iv, dtype=float),
+        block = {"residual": np.asarray(value, dtype=float), "iv_native": np.asarray(iv, dtype=float),
                  "iv_torch64": reference_iv, "terminal_payoff": payoff,
                  "terminal_error": np.asarray(terminal_value, dtype=float) - payoff,
                  **{name: np.asarray(value, dtype=float) for name, value in diag.items()}}
@@ -78,7 +89,7 @@ def evaluate_points(model, points, chunk=128):
     r, convexity = arrays["residual"], arrays["convexity"]
     d2 = points[:, 0] / np.sqrt(arrays["w"]) - 0.5 * np.sqrt(arrays["w"])
     weight = np.maximum(np.exp(-d2**2 / 2), 0.01)
-    parity_error = arrays["iv_mlx"] - arrays["iv_torch64"]
+    parity_error = arrays["iv_native"] - arrays["iv_torch64"]
     terminal_scaled_error = arrays["terminal_error"] / (1.0 + arrays["terminal_payoff"])
     calendar = arrays["w"] * arrays["l_tau"]
     summary = {
@@ -115,10 +126,15 @@ def evaluate_points(model, points, chunk=128):
         },
         "same_weights_float32_float64_iv_parity": {
             "errors": distribution(parity_error), "atol": 2e-6, "rtol": 2e-6,
-            "passed": bool(np.isfinite(parity_error).all() and np.allclose(arrays["iv_mlx"], arrays["iv_torch64"], atol=2e-6, rtol=2e-6)),
+            "passed": bool(np.isfinite(parity_error).all() and np.allclose(arrays["iv_native"], arrays["iv_torch64"], atol=2e-6, rtol=2e-6)),
             "description": "same learned float32 weights promoted to float64; neither copy is retrained",
         },
     }
+    if native_torch:
+        summary['same_weights_float32_float64_iv_parity']={
+            'status':'not_applicable', 'description':'Native float64 checkpoint, including residual blocks; no float32 copy or parity claim'}
+        summary['native_precision']='float64'
+        summary['hidden_layers']=model.total_hidden_layers
     order = np.argsort(np.where(np.isfinite(r), np.abs(r), np.inf))[::-1][:10]
     summary["largest_absolute_residual_points"] = [
         {"index": int(i), "q": points[i].tolist(), "wide_domain": bool(wide[i]),

@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "assessment": "outputs/affine_factor_pinn/price_aware_adam909101_exposed12",
+  "case": 0,
+  "checkpoint_sha256": "ce30b212c1bcb2d795b729ddc8105f3f0c8bb96a0943607ced78fa6b26d6399b",
+  "assessment_input_sha256": {
+    "manifest.json": "373c49abd0ca14f0d42c7c1505d37254f3a840ed0b040b7f377fbeab021b1b5a",
+    "cases.json": "791bbaf8e271c83704cbcda8cf10b017e6c75e275844b1e9157b83663f4f84d6"
+  },
+  "corrupted_holdout_quotes": 42,
+  "replayed_starts": 5,
+  "all_fit_and_start_fields_identical_except_seconds": true,
+  "weights_unchanged": true,
+  "blocked_reference_entry_points": [
+    "src.mentor_dh_pinn.affine_factor_reference.reference_coefficients",
+    "src.mentor_dh_pinn.torch_pricer.price_call",
+    "src.mentor_dh_pinn.torch_pricer.price_call_single",
+    "src.mentor_dh_pinn.regular_pinn_data.price_call",
+    "src.mentor_dh_pinn.regular_pinn_data.price_call_single",
+    "scripts.mentor_dh_pinn.assess_regular_pinn._exact"
+  ],
+  "source_sha256": "340ef2340d2f928c1d2c0615e97007bf605590f3d80347bc5ebeed6e913bf6db",
+  "limitation": "One actual checkpoint/case runtime check; not an unseen recovery test or universal leakage proof"
+}

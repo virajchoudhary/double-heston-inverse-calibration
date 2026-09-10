@@ -1,0 +1,16 @@
+{
+  "initial_sha256": "978359ed0f2b737dcb858f17d477b299681a80feb2bbf2290a10a2bf4c3536d7",
+  "input_sha256": {
+    "train": "cd8283213fcbc52a8de38730282dfbb3c84dfb6b01d3e69ee7a3d782b9cda211",
+    "validation": "c3aed77335ce0dc2201c18f40bc08cd464194ba9e9a11531ee4d4dea5015ab57",
+    "collocation": "51ce6b7ccf718ca95eb8f46943bfe3a398a1e148cdb121c29a8ebc99c2ab05b4"
+  },
+  "source_sha256": {
+    "scripts/mentor_dh_pinn/finetune_affine_factor_lbfgs.py": "57ef3e22d13773e8ad54244d14af81aea5f91cf75741430ef2e80bb952d79deb",
+    "src/mentor_dh_pinn/affine_factor_pinn.py": "fb278842793ec5ae7776658c92f8387305d22aa8befc5d610316643a3a5acb77",
+    "src/mentor_dh_pinn/integrated_factor_pinn.py": "757911f72bc29835b2777b25074b8c098c044b1d181478ba946db7ab0b1fb406"
+  },
+  "no_resampling": true,
+  "no_clipping": true,
+  "no_case_truths": true
+}

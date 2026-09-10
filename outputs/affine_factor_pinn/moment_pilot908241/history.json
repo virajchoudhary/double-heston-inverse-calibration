@@ -1,0 +1,14 @@
+[
+  {
+    "step": 0,
+    "validation_coefficient_rmse": 0.11850241094773191,
+    "training_loss": null,
+    "seconds": 0.1273759999894537
+  },
+  {
+    "step": 20,
+    "validation_coefficient_rmse": 0.06076469436211639,
+    "training_loss": 0.0038560090738180455,
+    "seconds": 1.6457202089950442
+  }
+]

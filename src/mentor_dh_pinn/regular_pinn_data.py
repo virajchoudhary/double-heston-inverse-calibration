@@ -43,8 +43,8 @@ def decode_unit(u, factors, lib=np):
     return lib.stack(values,**({"dim":-1} if lib is torch else {"axis":-1}))
 
 
-def coordinates(q, factors, lib=np):
-    p=decode_unit(q[...,2:],factors,lib)
+def coordinates(q, factors, lib=np, decoder=decode_unit):
+    p=decoder(q[...,2:],factors,lib)
     stack=lambda v:lib.stack(v,**({"dim":-1} if lib is torch else {"axis":-1}))
     state=stack([q[...,0],*[p[...,5*i+4] for i in range(factors)],lib.exp(q[...,1])])
     structural=lib.stack([p[...,5*i:5*i+4] for i in range(factors)],
@@ -52,8 +52,8 @@ def coordinates(q, factors, lib=np):
     return state,structural
 
 
-def expected_variance(q,factors,lib=np):
-    p=decode_unit(q[...,2:],factors,lib);tau=lib.exp(q[...,1]);total=0.
+def expected_variance(q,factors,lib=np,decoder=decode_unit):
+    p=decoder(q[...,2:],factors,lib);tau=lib.exp(q[...,1]);total=0.
     for i in range(factors):
         k,t,v=p[...,5*i],p[...,5*i+1],p[...,5*i+4]
         a=k*tau
@@ -62,7 +62,7 @@ def expected_variance(q,factors,lib=np):
     return total
 
 
-def draw_points(n,factors,seed,*,collocation=False):
+def draw_points(n,factors,seed,*,collocation=False,decoder=decode_unit):
     u=qmc.LatinHypercube(d=2+5*factors,seed=seed).random(n)
     q=u.copy();q[:,1]=math.log(7/365)+u[:,1]*math.log(2/(7/365))
     tau=np.exp(q[:,1])
@@ -70,7 +70,7 @@ def draw_points(n,factors,seed,*,collocation=False):
     slices=np.array([30,60,90,180,365,730])/365
     on=np.arange(n)%2==0
     tau[on]=slices[np.arange(on.sum())%6];q[:,1]=np.log(tau)
-    vb=expected_variance(q,factors)
+    vb=expected_variance(q,factors,decoder=decoder)
     q[:,0]=(u[:,0]*6-3)*np.sqrt(vb*tau)
     if collocation:
         wide=np.arange(n)%4==0
@@ -93,15 +93,15 @@ def invert_total_variance(price,x):
     return np.where(valid,(lo+hi)/2,np.nan)
 
 
-def exact_prices(q,factors,nodes=128):
-    p=decode_unit(q[...,2:],factors,torch)
+def exact_prices(q,factors,nodes=128,decoder=decode_unit):
+    p=decoder(q[...,2:],factors,torch)
     x,tau=q[...,0],torch.exp(q[...,1]);one=torch.ones_like(x)[:,None]
     engine=price_call if factors==2 else price_call_single
     return engine(p,torch.exp(x)[:,None],one,tau[:,None],one*0,one*0,
                   node_count=nodes)[:,0]
 
 
-def teacher_labels(points,factors,*,chunk=512,gradients=True):
+def teacher_labels(points,factors,*,chunk=512,gradients=True,decoder=decode_unit):
     """Prices and d(g)/du from independent float64 Fourier evaluation.
 
     IV differentiation uses the implicit Black inverse, not finite differences.
@@ -111,10 +111,10 @@ def teacher_labels(points,factors,*,chunk=512,gradients=True):
     rows=[]
     for start in range(0,len(points),chunk):
         q=torch.tensor(points[start:start+chunk],dtype=torch.float64,requires_grad=gradients)
-        c=exact_prices(q,factors);price=c.detach().numpy()
-        with torch.no_grad():other=exact_prices(q,factors,96).numpy()
+        c=exact_prices(q,factors,decoder=decoder);price=c.detach().numpy()
+        with torch.no_grad():other=exact_prices(q,factors,96,decoder=decoder).numpy()
         w=invert_total_variance(price,q[:,0].detach().numpy())
-        vb=expected_variance(q,factors,torch)
+        vb=expected_variance(q,factors,torch,decoder=decoder)
         total=(torch.exp(q[:,1])*vb)
         g=.5*(np.log(w)-np.log(total.detach().numpy()))
         valid=np.isfinite(g)&(np.abs(price-other)<=1e-9)&(np.abs(g)<1.5)

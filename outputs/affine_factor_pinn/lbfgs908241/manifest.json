@@ -1,0 +1,15 @@
+{
+  "initial_sha256": "da2b57a5ccbd64bdc430ffc019481338d864ad604b03ca10710009e363b9e608",
+  "input_sha256": {
+    "train": "c0040426cab42f65354bff07a9a3855248bec7d96fdcca01ba935993ac779b1e",
+    "validation": "e16a3124a3e75f6d5e17d72a8a7994cf928bebcae057007e4a4513d4498183da",
+    "collocation": "51ce6b7ccf718ca95eb8f46943bfe3a398a1e148cdb121c29a8ebc99c2ab05b4"
+  },
+  "source_sha256": {
+    "scripts/mentor_dh_pinn/finetune_affine_factor_lbfgs.py": "f9dcbed7c024e37632a7102ec9c7f2d2c37d6e54b5ab7ff678568976233a5a9d",
+    "src/mentor_dh_pinn/affine_factor_pinn.py": "fb278842793ec5ae7776658c92f8387305d22aa8befc5d610316643a3a5acb77"
+  },
+  "no_resampling": true,
+  "no_clipping": true,
+  "no_case_truths": true
+}

@@ -1,0 +1,47 @@
+{
+  "config": {
+    "out": "outputs/affine_factor_pinn/moment_pilot908241",
+    "steps": 20,
+    "seed": 908241,
+    "train": 65536,
+    "validation": 8192,
+    "collocation": 18000,
+    "batch": 512,
+    "pde_batch": 128,
+    "width": 64,
+    "depth": 4,
+    "lr": 0.0001,
+    "save_every": 20,
+    "resume": "outputs/affine_factor_pinn/conjugate_adam908241/model.pt",
+    "integrated": true,
+    "conjugate": true,
+    "moment": true,
+    "architecture": "factor-structured Riccati PINN; NOT regular price-PDE architecture",
+    "precision": "float64 PyTorch CPU",
+    "optimizer": "AdamW",
+    "weight_decay": 1e-06,
+    "pde_weight": 0.2,
+    "lr_schedule": "cosine from lr to .02*lr across declared steps",
+    "selection": "independent factor-coefficient validation RMSE; not parameter recovery",
+    "resume_policy": "Continue all matching neural weights; enforce shifted/unshifted conjugacy (architecture change); enforce first cumulant (real correction O(u^2))",
+    "coefficient_target_type": "linear amplitude-normalized D/A corrections",
+    "data_policy": "independent synthetic factor-state coefficients; no calibration-case inputs"
+  },
+  "input_sha256": {
+    "train": "cd8283213fcbc52a8de38730282dfbb3c84dfb6b01d3e69ee7a3d782b9cda211",
+    "validation": "c3aed77335ce0dc2201c18f40bc08cd464194ba9e9a11531ee4d4dea5015ab57",
+    "collocation": "51ce6b7ccf718ca95eb8f46943bfe3a398a1e148cdb121c29a8ebc99c2ab05b4"
+  },
+  "source_sha256": {
+    "scripts/mentor_dh_pinn/train_affine_factor_pinn.py": "134c9c65bacb81d204dc420cd37c0ad594134faece95171de577da9d343ed1ff",
+    "src/mentor_dh_pinn/affine_factor_pinn.py": "fb278842793ec5ae7776658c92f8387305d22aa8befc5d610316643a3a5acb77",
+    "src/mentor_dh_pinn/affine_factor_reference.py": "60716dd6e61ba91d541f2d1ff45fe27a19f9542c7a124dddbf15432b937539c1",
+    "src/mentor_dh_pinn/conjugate_factor_pinn.py": "8226110f31aec778659fc8463eab84305edcce8cb494c555dd74eb767a5df524",
+    "src/mentor_dh_pinn/integrated_factor_pinn.py": "757911f72bc29835b2777b25074b8c098c044b1d181478ba946db7ab0b1fb406",
+    "src/mentor_dh_pinn/moment_factor_pinn.py": "afc46f7b58c4b0a1b0d39ce0fc1f6b9a4425df64d422276f74eddfadb519dfb4"
+  },
+  "initial_checkpoint_sha256": "673ad0e53cc56e9b35576077e20059539932a02f1dcfeb6dc155e276c6e2ca66",
+  "sampling": "LHS, half log-frequency and half 128-node Laguerre frequencies; independent split seeds",
+  "collocation_note": "18000 is a fixed factor-state/frequency pool, not regular four-dimensional price collocation",
+  "no_case_truth_labels": true
+}

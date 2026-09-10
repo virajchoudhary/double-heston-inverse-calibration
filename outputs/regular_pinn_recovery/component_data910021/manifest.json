@@ -1,0 +1,54 @@
+{
+  "domain": {
+    "kappa": [
+      0.2,
+      12.0
+    ],
+    "theta_and_v0": [
+      0.006,
+      0.3
+    ],
+    "rho": [
+      -0.8,
+      0.5
+    ],
+    "feller_ratio": [
+      0.15,
+      0.9
+    ],
+    "tau": [
+      0.019178082191780823,
+      2.0
+    ],
+    "purpose": "single-factor building block, not original single-model inverse parameter box"
+  },
+  "component_domain": true,
+  "factors": 1,
+  "seed": 910021,
+  "source": "synthetic only",
+  "teacher": "128-node Fourier; every price checked at 96 nodes, tolerance 1e-9",
+  "training_labels": "g=log(IV/sqrt(expected_variance)), exact implicit parameter sensitivities",
+  "rejections": "All original candidates retained; usability mask explicit",
+  "splits": {
+    "train": {
+      "seed": 910021,
+      "candidates": 131072,
+      "usable": 129840,
+      "sha256": "6ab1cce7b0a8132bc4d66de01474035520b55728938d0aa1ee004539187f68d8"
+    },
+    "validation": {
+      "seed": 910022,
+      "candidates": 16384,
+      "usable": 16239,
+      "sha256": "82c5b9a372680c636ae451fdfd9e476c01191586592d63a4b6ef10cb9ae3c008"
+    }
+  },
+  "collocation_points": 18000,
+  "seconds": 6.878738500003237,
+  "source_sha256": {
+    "scripts/mentor_dh_pinn/prepare_regular_pinn.py": "0d7a3e4ac659211113f5557223501ed4204054b66af1ed1915279f894accd48c",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "c935cc1ca531667e7805d03e1eb1b232ddc77e02fd72bd914157807120773383",
+    "src/mentor_dh_pinn/torch_pricer.py": "109ae648fadfd7c89715aca385805ec1dde1a2cc55844f5635245292688c13d7",
+    "src/mentor_dh_pinn/component_pinn_data.py": "4a801a2c1999302e9eb0820b29d4e1af5a94668e2b8f495dc6fa3cf615fa98e6"
+  }
+}

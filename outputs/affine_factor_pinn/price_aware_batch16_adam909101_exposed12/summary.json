@@ -1,0 +1,9 @@
+{
+  "cases": 12,
+  "all_parameter_passes": 0,
+  "individual_parameter_passes": 32,
+  "individual_denominator": 120,
+  "joint_passes": 0,
+  "seconds": 302.80544841702795,
+  "evidence_level": "development; previously exposed cases, not unseen assessment"
+}

@@ -1,0 +1,213 @@
+{
+  "status": "complete",
+  "evidence": "exposed development cases, not unseen generalization",
+  "truth_seed": 927931,
+  "case_count": 12,
+  "checkpoints": [
+    {
+      "label": "single_sobolev_s17",
+      "checkpoint": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/single_sobolev_s17/model.safetensors",
+      "sha256": "8cfa8299827eb210e70cd1810a8f736c3983c45adc3a5be720070c7e60cc7ac2",
+      "config": {
+        "data": "outputs/regular_pinn_recovery/single_data",
+        "out": "outputs/regular_pinn_recovery/single_sobolev_s17",
+        "factors": 1,
+        "steps": 12000,
+        "seed": 17,
+        "width": 160,
+        "depth": 5,
+        "batch": 1024,
+        "pde_batch": 256,
+        "sensitivity": 0.2,
+        "weight_pde": 0.2,
+        "weight_decay": 1e-06,
+        "lr": 0.001,
+        "resample_every": 1000,
+        "save_every": 2000,
+        "resume": null,
+        "skip_recovery": false,
+        "tau_max": 2.0,
+        "architecture": "regular implied-variance PDE PINN",
+        "selection": "clean synthetic validation parameter recovery RMSE, fixed 4 cases; not final assessment",
+        "calibration": "optimize frozen neural IV predictions only; no exact pricing in fit"
+      },
+      "config_sha256": "d7f0dbea66e98e25c7b1891f1bcea1bd4bfef962aa83df57195368aaffbf3a22"
+    },
+    {
+      "label": "component_adam910031",
+      "checkpoint": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/component_adam910031/model.pt",
+      "sha256": "b339b0acd816fec27fc61e6c292483a65f3cf63754398504280cf7fff93ba9e7",
+      "config": {
+        "factors": 1,
+        "width": 160,
+        "depth": 5,
+        "tau_min": 0.019178082191780823,
+        "tau_max": 2.0,
+        "x_half_width": 3.5,
+        "correction_limit": 1.8,
+        "residual_blocks": 0,
+        "checkpoint": "outputs/regular_pinn_recovery/single_sobolev_s17",
+        "data": "outputs/regular_pinn_recovery/component_data910021",
+        "out": "outputs/regular_pinn_recovery/component_adam910031",
+        "steps": 5000,
+        "seed": 910031,
+        "batch": 512,
+        "pde_batch": 128,
+        "collocation": 18000,
+        "save_every": 500,
+        "component_domain": true,
+        "add_residual_blocks": 0,
+        "checkpoint_format": "torch_state_dict_float64",
+        "precision": "float64 weights, values, gradients and AdamW moments; scalar step counter uses backend default",
+        "architecture": "unchanged regular implied-variance pricing-PDE PINN",
+        "total_hidden_layers": 5,
+        "trainable_parameter_count": 105441,
+        "training_iv_audit": "first 16384 usable archived training rows; reporting only, not selection",
+        "parameter_domain": {
+          "kappa": [
+            0.2,
+            12.0
+          ],
+          "theta_and_v0": [
+            0.006,
+            0.3
+          ],
+          "rho": [
+            -0.8,
+            0.5
+          ],
+          "feller_ratio": [
+            0.15,
+            0.9
+          ],
+          "tau": [
+            0.019178082191780823,
+            2.0
+          ],
+          "purpose": "single-factor building block, not original single-model inverse parameter box"
+        },
+        "optimizer": "AdamW",
+        "lr": 1e-05,
+        "min_lr": 2e-07,
+        "weight_decay": 1e-06,
+        "sensitivity": 0.2,
+        "weight_pde": 0.2,
+        "weight_shape": 0.05,
+        "anchor_scale": 0.05,
+        "skip_recovery": true,
+        "selection": "minimum archived validation IV RMSE; initial weights eligible",
+        "resume": "outputs/regular_pinn_recovery/single_sobolev_s17",
+        "gradient_clipping": false
+      },
+      "config_sha256": "76156683a15aef1a6c50d8d831b86796b6039efddb04ec5256ea92e8a49ebc01"
+    },
+    {
+      "label": "composition910031",
+      "checkpoint": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/composition910031/model.pt",
+      "sha256": "70e691241fcf32c8824d2ca5e81a8ad1e663fb04f77a94103966467107687d53",
+      "config": {
+        "factors": 2,
+        "checkpoint_format": "convolution_price_pinn_float64",
+        "component_architecture": {
+          "factors": 1,
+          "width": 160,
+          "depth": 5,
+          "tau_min": 0.019178082191780823,
+          "tau_max": 2.0,
+          "x_half_width": 3.5,
+          "correction_limit": 1.8,
+          "residual_blocks": 0
+        },
+        "quadrature_nodes": 96,
+        "component_provenance": {
+          "label": "component_adam910031",
+          "checkpoint": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/component_adam910031/model.pt",
+          "sha256": "b339b0acd816fec27fc61e6c292483a65f3cf63754398504280cf7fff93ba9e7",
+          "config": {
+            "factors": 1,
+            "width": 160,
+            "depth": 5,
+            "tau_min": 0.019178082191780823,
+            "tau_max": 2.0,
+            "x_half_width": 3.5,
+            "correction_limit": 1.8,
+            "residual_blocks": 0,
+            "checkpoint": "outputs/regular_pinn_recovery/single_sobolev_s17",
+            "data": "outputs/regular_pinn_recovery/component_data910021",
+            "out": "outputs/regular_pinn_recovery/component_adam910031",
+            "steps": 5000,
+            "seed": 910031,
+            "batch": 512,
+            "pde_batch": 128,
+            "collocation": 18000,
+            "save_every": 500,
+            "component_domain": true,
+            "add_residual_blocks": 0,
+            "checkpoint_format": "torch_state_dict_float64",
+            "precision": "float64 weights, values, gradients and AdamW moments; scalar step counter uses backend default",
+            "architecture": "unchanged regular implied-variance pricing-PDE PINN",
+            "total_hidden_layers": 5,
+            "trainable_parameter_count": 105441,
+            "training_iv_audit": "first 16384 usable archived training rows; reporting only, not selection",
+            "parameter_domain": {
+              "kappa": [
+                0.2,
+                12.0
+              ],
+              "theta_and_v0": [
+                0.006,
+                0.3
+              ],
+              "rho": [
+                -0.8,
+                0.5
+              ],
+              "feller_ratio": [
+                0.15,
+                0.9
+              ],
+              "tau": [
+                0.019178082191780823,
+                2.0
+              ],
+              "purpose": "single-factor building block, not original single-model inverse parameter box"
+            },
+            "optimizer": "AdamW",
+            "lr": 1e-05,
+            "min_lr": 2e-07,
+            "weight_decay": 1e-06,
+            "sensitivity": 0.2,
+            "weight_pde": 0.2,
+            "weight_shape": 0.05,
+            "anchor_scale": 0.05,
+            "skip_recovery": true,
+            "selection": "minimum archived validation IV RMSE; initial weights eligible",
+            "resume": "outputs/regular_pinn_recovery/single_sobolev_s17",
+            "gradient_clipping": false
+          },
+          "config_sha256": "76156683a15aef1a6c50d8d831b86796b6039efddb04ec5256ea92e8a49ebc01"
+        },
+        "architecture": "independent-factor convolution of Single Heston price-PDE PINN",
+        "limitations": "component price PDE, not direct full Double Heston PDE training"
+      },
+      "config_sha256": "844c5d8f84b2bc06bd5e0cbbf7b06934ee2b4311d8a98537d1f84e3da0660915"
+    }
+  ],
+  "starts": 5,
+  "max_nfev": 400,
+  "workers": 2,
+  "calibration_quotes_per_case": 84,
+  "heldout_quotes_per_case": 42,
+  "reference_family": "Double Heston only; favors correct model specification",
+  "parameter_gates": "8 positive relative errors <=.05; 2 correlation absolute errors <=.05",
+  "selection": "minimum calibration neural IV SSE only; identical quote split for all models",
+  "source_sha256": {
+    "scripts/mentor_dh_pinn/compare_composition_pinn.py": "456475ed7b38977d4125a101ddf1224b1883aa16fd655323ab657777acc4b1d4",
+    "scripts/mentor_dh_pinn/assess_regular_pinn.py": "8261ac8716dd59420e0121584154d511504dd86f6511fb74e87d6972aca5d993",
+    "src/mentor_dh_pinn/convolution_pinn.py": "895fe947d92bde7eddae468b1ec81e933b244028dbd518a7f0217b46739db24a",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "c935cc1ca531667e7805d03e1eb1b232ddc77e02fd72bd914157807120773383",
+    "src/mentor_dh_pinn/regular_pinn_torch.py": "06a239a91b511cb81e801948c35e438a6a8cf05929cefdc9a7f69b3f771bd15f",
+    "src/mentor_dh_pinn/torch_pricer.py": "109ae648fadfd7c89715aca385805ec1dde1a2cc55844f5635245292688c13d7"
+  },
+  "source_and_checkpoint_hashes_rechecked": true
+}

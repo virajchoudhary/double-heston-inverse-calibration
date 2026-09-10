@@ -1,0 +1,98 @@
+[
+  {
+    "step": 0,
+    "validation_iv_rmse": 0.00033544234794312346,
+    "last_minibatch_losses": null,
+    "training_subset_iv_rmse": 0.00032830011149367194,
+    "lr": 1e-05,
+    "seconds": 1.3050766660016961
+  },
+  {
+    "step": 500,
+    "validation_iv_rmse": 0.0003529757716705555,
+    "last_minibatch_losses": {
+      "anchor_and_sobolev": 0.0013895433747184807,
+      "physics_and_shape": 0.0008262388196304116
+    },
+    "training_subset_iv_rmse": 0.0003433211735204012,
+    "lr": 9.627009709305318e-06,
+    "seconds": 95.33960716600996
+  },
+  {
+    "step": 1000,
+    "validation_iv_rmse": 0.00034191406335034056,
+    "last_minibatch_losses": {
+      "anchor_and_sobolev": 0.0016314095814246748,
+      "physics_and_shape": 0.000873159204293997
+    },
+    "training_subset_iv_rmse": 0.00033414125157562707,
+    "lr": 8.564823227814103e-06,
+    "seconds": 179.458502665977
+  },
+  {
+    "step": 1500,
+    "validation_iv_rmse": 0.00033840446009232713,
+    "last_minibatch_losses": {
+      "anchor_and_sobolev": 0.0016069956064215705,
+      "physics_and_shape": 0.00043566908702824574
+    },
+    "training_subset_iv_rmse": 0.0003319518456915542,
+    "lr": 6.9751488185889575e-06,
+    "seconds": 265.8840928749996
+  },
+  {
+    "step": 2000,
+    "validation_iv_rmse": 0.0003424209011772293,
+    "last_minibatch_losses": {
+      "anchor_and_sobolev": 0.0012501367262681947,
+      "physics_and_shape": 0.0006714663562080148
+    },
+    "training_subset_iv_rmse": 0.00033266423472635596,
+    "lr": 5.100000000000011e-06,
+    "seconds": 341.2379344580113
+  },
+  {
+    "step": 2500,
+    "validation_iv_rmse": 0.0003360144517099054,
+    "last_minibatch_losses": {
+      "anchor_and_sobolev": 0.0016457015496606367,
+      "physics_and_shape": 0.0006545227062200544
+    },
+    "training_subset_iv_rmse": 0.00032804559006585876,
+    "lr": 3.2248511814111024e-06,
+    "seconds": 417.414482416003
+  },
+  {
+    "step": 3000,
+    "validation_iv_rmse": 0.00033431111994037426,
+    "last_minibatch_losses": {
+      "anchor_and_sobolev": 0.0013161033254072486,
+      "physics_and_shape": 0.0008962257468750689
+    },
+    "training_subset_iv_rmse": 0.0003265175166201714,
+    "lr": 1.6351767721859843e-06,
+    "seconds": 479.2226393329911
+  },
+  {
+    "step": 3500,
+    "validation_iv_rmse": 0.00033330542012925825,
+    "last_minibatch_losses": {
+      "anchor_and_sobolev": 0.0013071737535058734,
+      "physics_and_shape": 0.0011145764070910691
+    },
+    "training_subset_iv_rmse": 0.00032535446190001664,
+    "lr": 5.729902906947131e-07,
+    "seconds": 518.2553586660069
+  },
+  {
+    "step": 4000,
+    "validation_iv_rmse": 0.00033306372478698036,
+    "last_minibatch_losses": {
+      "anchor_and_sobolev": 0.0017178574134015284,
+      "physics_and_shape": 0.00045329256372727715
+    },
+    "training_subset_iv_rmse": 0.00032531709334964566,
+    "lr": 2e-07,
+    "seconds": 557.306204582972
+  }
+]

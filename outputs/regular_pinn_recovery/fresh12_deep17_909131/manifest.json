@@ -1,0 +1,131 @@
+{
+  "status": "complete",
+  "seed": 909131,
+  "cases_per_model_family": 12,
+  "evidence_level": "frozen assessment",
+  "evaluated_geometries": [
+    "rich"
+  ],
+  "evaluated_noise_levels": [
+    0.0
+  ],
+  "truth_sampling": "Independent uniform unit coordinates in [0.1,0.9]; central domain only, not full-boundary coverage",
+  "scope": "Frozen-model synthetic assessment; one training initialization does not establish seed-wise reliability or market-data recovery",
+  "noise": "independent Gaussian standard deviation 1% of true option time value above intrinsic; no truncation/resampling",
+  "selection": "minimum ANN IV calibration SSE across fixed seeded LHS starts",
+  "fit_information": "calibration strikes and observed IV only; no truth, holdout, exact-pricer trial evaluations",
+  "geometry": {
+    "strikes": [
+      0.8,
+      0.8200000000000001,
+      0.8400000000000001,
+      0.86,
+      0.88,
+      0.9,
+      0.92,
+      0.9400000000000001,
+      0.96,
+      0.98,
+      1.0,
+      1.02,
+      1.04,
+      1.06,
+      1.08,
+      1.1,
+      1.12,
+      1.1400000000000001,
+      1.16,
+      1.18,
+      1.2
+    ],
+    "monthly_days": [
+      30,
+      60,
+      90
+    ],
+    "rich_days": [
+      30,
+      60,
+      90,
+      180,
+      365,
+      730
+    ],
+    "holdout": "zero-based strike index % 3 == 2 at every expiry",
+    "spot": 1.0
+  },
+  "parameter_gate": "all positive-parameter relative errors <= 5%; all rho absolute errors <= .05",
+  "price_gate": "RMSE over heldout quotes <= 1e-5 of spot; original exact synthetic prices are the scoring target",
+  "invalid_policy": "Any noninvertible generated or noisy observation invalidates the entire case; counts remain in denominators",
+  "quadrature_gate": "true and fitted 96-vs-128 node prices differ by <= 1e-8 of spot",
+  "optimizer": {
+    "max_nfev_per_start": 400,
+    "starts": 5,
+    "algorithm": "bounded SciPy TRF with analytic PyTorch Jacobian; frozen checkpoint weights evaluated in float64",
+    "ftol": 1e-12,
+    "gtol": 1e-12,
+    "xtol": 1e-08,
+    "unit_parameter_bounds": [
+      1e-05,
+      0.99999
+    ]
+  },
+  "checkpoints": [
+    {
+      "label": "deep17_adam909121",
+      "checkpoint": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/deep17_adam909121/model.pt",
+      "sha256": "54d033e8b8b05ac9236fc7e19563f6a935bf387fa2315c08b759c727992101d3",
+      "config": {
+        "factors": 2,
+        "width": 160,
+        "depth": 5,
+        "tau_min": 0.019178082191780823,
+        "tau_max": 2.0,
+        "x_half_width": 3.5,
+        "correction_limit": 1.8,
+        "residual_blocks": 6,
+        "checkpoint": "outputs/regular_pinn_recovery/double_float64_extended909111",
+        "data": "outputs/regular_pinn_recovery/double_data",
+        "out": "outputs/regular_pinn_recovery/deep17_adam909121",
+        "steps": 4000,
+        "seed": 909121,
+        "batch": 512,
+        "pde_batch": 128,
+        "collocation": 18000,
+        "save_every": 500,
+        "add_residual_blocks": 6,
+        "checkpoint_format": "torch_state_dict_float64",
+        "precision": "float64 weights, values, gradients and AdamW moments; scalar step counter uses backend default",
+        "architecture": "deeper residual regular implied-variance pricing-PDE PINN",
+        "total_hidden_layers": 17,
+        "trainable_parameter_count": 416321,
+        "training_iv_audit": "first 16384 archived training rows; reporting only, not selection",
+        "optimizer": "AdamW",
+        "lr": 1e-05,
+        "min_lr": 2e-07,
+        "weight_decay": 1e-06,
+        "sensitivity": 0.2,
+        "weight_pde": 0.2,
+        "weight_shape": 0.05,
+        "anchor_scale": 0.05,
+        "skip_recovery": true,
+        "selection": "minimum archived validation IV RMSE; initial weights eligible",
+        "resume": "outputs/regular_pinn_recovery/double_float64_extended909111",
+        "gradient_clipping": false
+      },
+      "config_sha256": "79e8bb9e91271e85db1f8d2c027b3703506679485db26e7eed3993404ce98547"
+    }
+  ],
+  "source_sha256": {
+    "scripts/mentor_dh_pinn/assess_regular_pinn.py": "3d34c6ece0a4b7353b7098cf2a76505037761f4c5663992d9401e4c53745feb9",
+    "src/mentor_dh_pinn/regular_pinn.py": "e409148ced31045827f2ec582a10ad572373aa50e456de4e58cb0499453d9316",
+    "src/mentor_dh_pinn/regular_pinn_torch.py": "06a239a91b511cb81e801948c35e438a6a8cf05929cefdc9a7f69b3f771bd15f",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "bb47652e896425d38be8e967269f1e81683cb879c37b9867c1cbde7cf404fb71",
+    "src/mentor_dh_pinn/torch_pricer.py": "109ae648fadfd7c89715aca385805ec1dde1a2cc55844f5635245292688c13d7"
+  },
+  "frozen_checkpoint_and_source_hashes_rechecked": true,
+  "seconds": 9.643668500008062,
+  "metric_rows": 24,
+  "parameter_rows": 120,
+  "observation_rows": 1512
+}

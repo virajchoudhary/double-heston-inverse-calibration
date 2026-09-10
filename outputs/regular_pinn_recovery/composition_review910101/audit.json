@@ -1,0 +1,339 @@
+{
+  "summary": [
+    {
+      "model": "single_sobolev_s17",
+      "cases": 12,
+      "fitted": 12,
+      "all_parameter_passes": null,
+      "individual_parameter_passes": null,
+      "neural_price_passes": 0,
+      "exact_price_passes": 0,
+      "joint_passes": null,
+      "invalid_neural_iv_quotes": 0,
+      "neural_scoring_failures": 0
+    },
+    {
+      "model": "component_adam910031",
+      "cases": 12,
+      "fitted": 12,
+      "all_parameter_passes": null,
+      "individual_parameter_passes": null,
+      "neural_price_passes": 0,
+      "exact_price_passes": 0,
+      "joint_passes": null,
+      "invalid_neural_iv_quotes": 0,
+      "neural_scoring_failures": 0
+    },
+    {
+      "model": "composition910031",
+      "cases": 12,
+      "fitted": 12,
+      "all_parameter_passes": 0,
+      "individual_parameter_passes": 57,
+      "neural_price_passes": 12,
+      "exact_price_passes": 2,
+      "joint_passes": 0,
+      "invalid_neural_iv_quotes": 0,
+      "neural_scoring_failures": 0
+    }
+  ],
+  "comparisons": [
+    {
+      "double": "composition910031",
+      "single": "single_sobolev_s17",
+      "cases": 12,
+      "neural": {
+        "valid_pairs": 12,
+        "double_wins": 12,
+        "single_wins": 0,
+        "ties": 0,
+        "median_double_single_rmse_ratio": 0.011192576084281241
+      },
+      "exact_repricing": {
+        "valid_pairs": 12,
+        "double_wins": 12,
+        "single_wins": 0,
+        "ties": 0,
+        "median_double_single_rmse_ratio": 0.09077178576436545
+      }
+    },
+    {
+      "double": "composition910031",
+      "single": "component_adam910031",
+      "cases": 12,
+      "neural": {
+        "valid_pairs": 12,
+        "double_wins": 12,
+        "single_wins": 0,
+        "ties": 0,
+        "median_double_single_rmse_ratio": 0.011192576084281241
+      },
+      "exact_repricing": {
+        "valid_pairs": 12,
+        "double_wins": 12,
+        "single_wins": 0,
+        "ties": 0,
+        "median_double_single_rmse_ratio": 0.09077178576436545
+      }
+    }
+  ],
+  "training_selection": {
+    "step": 0,
+    "score": 0.0003641528636618767,
+    "metric": "validation_iv_rmse"
+  },
+  "all_case_metrics_recomputed": true,
+  "all_start_selections_rechecked": true,
+  "actual_case0_all_start_heldout_replay": [
+    true,
+    true,
+    true
+  ],
+  "assessment_manifest_sha256": "58bf6cae1f3e5c4efe33d0ff86fc5b06417e2a6bb59712f7ca7c368779ae386e",
+  "assessment_case_sha256": {
+    "case_000.json": "dfaac554b51b3ab5792866de637fa72a7a34a566477c269fb14f3e579a37dc3b",
+    "case_001.json": "7eaad2c7bf45fbcf7fee4ea4be62b91a612d8a50fe17b9d431463744382817a1",
+    "case_002.json": "73972f73eb7b03f9167f72d8aec1349e07b384b0d55cf6cf5150dad231a99c59",
+    "case_003.json": "12a049c2f160eba5e506e02a25d65cf95186145e216e5f6dd2a527078a5ca7d8",
+    "case_004.json": "2a3bb7fc9cb6dbbf87357984f827a81bc34f959263513e50e3efac83d872178e",
+    "case_005.json": "49da32efddac8956a61983ac80136cf9e87c93b77d51acc45fae6ed267ebe1ca",
+    "case_006.json": "5eb9072ac427a580331cb1ad32c7a13c915c49f6ca074f1a9b7093de3f4e9744",
+    "case_007.json": "99758427ea047f38a8dfdda71e15b6f9ccae2d397997834ef84199accfc06c43",
+    "case_008.json": "748668e6420bc1f7cf4ce1c4a899944e1c474d098c8886cc6b4d74bfd501e22f",
+    "case_009.json": "58e1a719ee3491a3cf3768af22b2e556b9c1c3540a337a197677e271758ff6ea",
+    "case_010.json": "576d49f0ad2b26a39fcf0221e0ea9a8afaf220d551d8b55946a5ad256adb957b",
+    "case_011.json": "e1656447b6407a28665e69d462fd5d22f59581a7dfc90fa578d4373550450eb6"
+  },
+  "training_complete": {
+    "steps": 5000,
+    "selected_step": 0,
+    "selected_validation_iv_rmse": 0.0003641528636618767,
+    "checkpoint_sha256": "b339b0acd816fec27fc61e6c292483a65f3cf63754398504280cf7fff93ba9e7",
+    "distinct_training_quotes_visited": 129840,
+    "seconds": 194.7569290419924,
+    "status": "training complete; recovery not yet assessed"
+  },
+  "physics_review": {
+    "seed": 910101,
+    "points": 512,
+    "sampling": "independent diagnostic LHS; 1/4 wide log-moneyness",
+    "selection_use": "none; frozen-checkpoint diagnostic, not training or selection",
+    "pde": "C_tau - .5*(v1+v2)*(C_xx-C_x) - sum[k*(theta-v)*C_v + .5*sigma^2*v*C_vv + rho*sigma*v*C_xv]",
+    "residual_units": "raw normalized-forward-call price per year; not normalized by small vega",
+    "models": [
+      {
+        "checkpoint": {
+          "label": "composition910031",
+          "checkpoint": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/composition910031/model.pt",
+          "sha256": "70e691241fcf32c8824d2ca5e81a8ad1e663fb04f77a94103966467107687d53",
+          "config": {
+            "factors": 2,
+            "checkpoint_format": "convolution_price_pinn_float64",
+            "component_architecture": {
+              "factors": 1,
+              "width": 160,
+              "depth": 5,
+              "tau_min": 0.019178082191780823,
+              "tau_max": 2.0,
+              "x_half_width": 3.5,
+              "correction_limit": 1.8,
+              "residual_blocks": 0
+            },
+            "quadrature_nodes": 96,
+            "component_provenance": {
+              "label": "component_adam910031",
+              "checkpoint": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/component_adam910031/model.pt",
+              "sha256": "b339b0acd816fec27fc61e6c292483a65f3cf63754398504280cf7fff93ba9e7",
+              "config": {
+                "factors": 1,
+                "width": 160,
+                "depth": 5,
+                "tau_min": 0.019178082191780823,
+                "tau_max": 2.0,
+                "x_half_width": 3.5,
+                "correction_limit": 1.8,
+                "residual_blocks": 0,
+                "checkpoint": "outputs/regular_pinn_recovery/single_sobolev_s17",
+                "data": "outputs/regular_pinn_recovery/component_data910021",
+                "out": "outputs/regular_pinn_recovery/component_adam910031",
+                "steps": 5000,
+                "seed": 910031,
+                "batch": 512,
+                "pde_batch": 128,
+                "collocation": 18000,
+                "save_every": 500,
+                "component_domain": true,
+                "add_residual_blocks": 0,
+                "checkpoint_format": "torch_state_dict_float64",
+                "precision": "float64 weights, values, gradients and AdamW moments; scalar step counter uses backend default",
+                "architecture": "unchanged regular implied-variance pricing-PDE PINN",
+                "total_hidden_layers": 5,
+                "trainable_parameter_count": 105441,
+                "training_iv_audit": "first 16384 usable archived training rows; reporting only, not selection",
+                "parameter_domain": {
+                  "kappa": [
+                    0.2,
+                    12.0
+                  ],
+                  "theta_and_v0": [
+                    0.006,
+                    0.3
+                  ],
+                  "rho": [
+                    -0.8,
+                    0.5
+                  ],
+                  "feller_ratio": [
+                    0.15,
+                    0.9
+                  ],
+                  "tau": [
+                    0.019178082191780823,
+                    2.0
+                  ],
+                  "purpose": "single-factor building block, not original single-model inverse parameter box"
+                },
+                "optimizer": "AdamW",
+                "lr": 1e-05,
+                "min_lr": 2e-07,
+                "weight_decay": 1e-06,
+                "sensitivity": 0.2,
+                "weight_pde": 0.2,
+                "weight_shape": 0.05,
+                "anchor_scale": 0.05,
+                "skip_recovery": true,
+                "selection": "minimum archived validation IV RMSE; initial weights eligible",
+                "resume": "outputs/regular_pinn_recovery/single_sobolev_s17",
+                "gradient_clipping": false
+              },
+              "config_sha256": "76156683a15aef1a6c50d8d831b86796b6039efddb04ec5256ea92e8a49ebc01"
+            },
+            "architecture": "independent-factor convolution of Single Heston price-PDE PINN",
+            "limitations": "component price PDE, not direct full Double Heston PDE training"
+          },
+          "config_sha256": "844c5d8f84b2bc06bd5e0cbbf7b06934ee2b4311d8a98537d1f84e3da0660915"
+        },
+        "all_finite": true,
+        "pde_rmse": 0.0001436216730618314,
+        "wide_pde_rmse": 7.599590717380275e-05,
+        "core_pde_rmse": 0.000159930570337203,
+        "negative_convexity_count": 0,
+        "negative_calendar_count": 14,
+        "lower_price_bound_violations": 13,
+        "upper_price_bound_violations": 0,
+        "minimum_calendar_derivative": -2.514100257432471e-08,
+        "max_lower_bound_shortfall": 5.840004924095865e-09,
+        "core_calendar_or_lower_bound_violations": 0
+      },
+      {
+        "checkpoint": {
+          "label": "composition_balanced910071",
+          "checkpoint": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/composition_balanced910071/model.pt",
+          "sha256": "312fbe50e52d70cee09c7e264e23e21df33f50bc32eee1886470de08addc09eb",
+          "config": {
+            "factors": 2,
+            "checkpoint_format": "convolution_price_pinn_float64",
+            "component_architecture": {
+              "factors": 1,
+              "width": 160,
+              "depth": 5,
+              "tau_min": 0.019178082191780823,
+              "tau_max": 2.0,
+              "x_half_width": 3.5,
+              "correction_limit": 1.8,
+              "residual_blocks": 0
+            },
+            "quadrature_nodes": 96,
+            "component_provenance": {
+              "label": "component_balanced910071",
+              "checkpoint": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/component_balanced910071/model.pt",
+              "sha256": "fe00c7c60c566cec9217d68431d730b5153aed218b4ca86759489041e107c10d",
+              "config": {
+                "factors": 1,
+                "width": 160,
+                "depth": 5,
+                "tau_min": 0.019178082191780823,
+                "tau_max": 2.0,
+                "x_half_width": 3.5,
+                "correction_limit": 1.8,
+                "residual_blocks": 0,
+                "checkpoint": "outputs/regular_pinn_recovery/component_adam910031",
+                "data": "outputs/regular_pinn_recovery/component_data910021",
+                "out": "outputs/regular_pinn_recovery/component_balanced910071",
+                "steps": 10000,
+                "seed": 910071,
+                "batch": 512,
+                "pde_batch": 128,
+                "collocation": 18000,
+                "save_every": 1000,
+                "component_domain": true,
+                "lr": 5e-05,
+                "pde_weight": 0.02,
+                "add_residual_blocks": 0,
+                "checkpoint_format": "torch_state_dict_float64",
+                "precision": "float64 weights, values, gradients and AdamW moments; scalar step counter uses backend default",
+                "architecture": "unchanged regular implied-variance pricing-PDE PINN",
+                "total_hidden_layers": 5,
+                "trainable_parameter_count": 105441,
+                "training_iv_audit": "first 16384 usable archived training rows; reporting only, not selection",
+                "parameter_domain": {
+                  "kappa": [
+                    0.2,
+                    12.0
+                  ],
+                  "theta_and_v0": [
+                    0.006,
+                    0.3
+                  ],
+                  "rho": [
+                    -0.8,
+                    0.5
+                  ],
+                  "feller_ratio": [
+                    0.15,
+                    0.9
+                  ],
+                  "tau": [
+                    0.019178082191780823,
+                    2.0
+                  ],
+                  "purpose": "single-factor building block, not original single-model inverse parameter box"
+                },
+                "optimizer": "AdamW",
+                "min_lr": 2e-07,
+                "weight_decay": 1e-06,
+                "sensitivity": 0.2,
+                "weight_pde": 0.02,
+                "weight_shape": 0.05,
+                "anchor_scale": 0.05,
+                "skip_recovery": true,
+                "selection": "minimum archived validation IV RMSE; initial weights eligible",
+                "resume": "outputs/regular_pinn_recovery/component_adam910031",
+                "gradient_clipping": false
+              },
+              "config_sha256": "029231c45c03bbbb21b9c93a9bd6deaa1c7525b9a331277408d74efe4e990204"
+            },
+            "architecture": "independent-factor convolution of Single Heston price-PDE PINN",
+            "limitations": "component price PDE, not direct full Double Heston PDE training"
+          },
+          "config_sha256": "910cdfdab299438c61fdcf2e2acd1143d9672832169e025246f3c2a8b746d6bf"
+        },
+        "all_finite": true,
+        "pde_rmse": 9.615134436811747e-05,
+        "wide_pde_rmse": 3.958480977478281e-05,
+        "core_pde_rmse": 0.00010864831173758066,
+        "negative_convexity_count": 0,
+        "negative_calendar_count": 13,
+        "lower_price_bound_violations": 13,
+        "upper_price_bound_violations": 0,
+        "minimum_calendar_derivative": -1.7314928608164534e-07,
+        "max_lower_bound_shortfall": 4.051063262622279e-09,
+        "core_calendar_or_lower_bound_violations": 0
+      }
+    ],
+    "source_sha256": {
+      "scripts/mentor_dh_pinn/check_composition_physics.py": "8acff4e11138a0751f75cccc9ae1a2cd0411c77d79b3feb54115314b34be5137"
+    }
+  },
+  "physics_input_sha256": "f2d7e50b6f78ca1e1f8627faa2d4486534dec158e5252ed7e2acc42c53c09938"
+}

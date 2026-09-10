@@ -1,0 +1,6 @@
+{
+  "step": 3500,
+  "validation_coefficient_rmse": 0.0029167703686689373,
+  "validation_vega_price_rmse": 0.0012931310965554567,
+  "seconds": 406.189894790994
+}

@@ -1,0 +1,186 @@
+#!/usr/bin/env python3
+"""Audit and display completed factor-PINN development assessments, without fitting."""
+import argparse
+import hashlib
+import json
+from pathlib import Path
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+def audit_training(manifest):
+    folder=Path(manifest['checkpoint']).parent
+    config=json.loads((folder/'config.json').read_text())
+    assert config==manifest['training_config'], 'Training configuration changed after assessment'
+    assert (folder/'complete.json').is_file(), 'Training did not finish'
+    history=json.loads((folder/'history.json').read_text())
+    selected=json.loads((folder/'selection.json').read_text())
+    assert selected['validation_coefficient_rmse']==min(r['validation_coefficient_rmse'] for r in history)
+    key='step' if 'step' in selected else 'iteration'
+    assert any(r[key]==selected[key] and r['validation_coefficient_rmse']==selected['validation_coefficient_rmse'] for r in history)
+    recorded=json.loads((folder/'manifest.json').read_text())
+    data=Path(config.get('data',folder))
+    keys={};counts={}
+    for split in ('train','validation','collocation'):
+        path=data/f'{split}.npz'
+        assert hashlib.sha256(path.read_bytes()).hexdigest()==recorded['input_sha256'][split]
+        with np.load(path,allow_pickle=False) as arrays:
+            q=arrays['q'];assert q.ndim==2 and q.shape[1]==6 and np.isfinite(q).all()
+            assert (q[:,0]>0).all() and (q[:,1:3]>0).all()
+            assert (np.abs(q[:,3])<1).all() and np.isin(q[:,5],[0,1]).all()
+            if split!='collocation':
+                assert arrays['targets'].shape==(len(q),4) and np.isfinite(arrays['targets']).all()
+            keys[split]={row.tobytes() for row in q}
+            assert len(keys[split])==len(q), f'Duplicate {split} states'
+            counts[split]=len(q)
+    assert not keys['train']&keys['validation']
+    assert not keys['train']&keys['collocation']
+    assert not keys['validation']&keys['collocation']
+    return counts
+
+
+def audit_assessment(folder):
+    read=lambda name:json.loads((folder/name).read_text())
+    manifest,rows,summary=read('manifest.json'),read('cases.json'),read('summary.json')
+    assert manifest['status']=='complete' and manifest['frozen_hashes_rechecked']
+    assert len(rows)==manifest['cases']==summary['cases']
+    assert len({r['case'] for r in rows})==len(rows)
+    assert manifest['gates']=={'positive_relative':.05,'rho_absolute':.05,'heldout_price_rmse_spot':1e-5}
+    snapshot=read('source_snapshot.json')
+    for name,digest in manifest['source_sha256'].items():
+        assert hashlib.sha256(snapshot[name].encode()).hexdigest()==digest, name
+    weights=Path(manifest['checkpoint'])
+    assert hashlib.sha256(weights.read_bytes()).hexdigest()==manifest['checkpoint_sha256']
+    expected_quotes=sum(not v for v in manifest['geometry']['holdout'])
+    for row in rows:
+        if row['status']!='fitted':
+            assert not row['all_parameter_pass'] and not row['joint_pass']
+            continue
+        truth=np.asarray(row['true_physical']);estimate=np.asarray(row['fit']['physical'])
+        tolerance=.05*truth;tolerance[3::5]=.05
+        error=np.abs(estimate-truth)/tolerance
+        np.testing.assert_allclose(error,row['parameter_gate_units'],rtol=1e-13,atol=1e-13)
+        assert row['individual_parameter_passes']==int((error<=1).sum())
+        assert row['all_parameter_pass']==bool((error<=1).all())
+        assert row['fit']['fit_quotes']==expected_quotes
+        starts=row['fit']['starts'];assert len(starts)==manifest['starts']
+        selected=starts[row['fit']['selected_start']]
+        assert selected['sse']==min(s['sse'] for s in starts if s['sse'] is not None)
+        assert selected['physical']==row['fit']['physical']
+        if row['joint_pass']:
+            assert row['all_parameter_pass']
+            for key in ('neural','exact_reprice'):
+                assert row[key]['price_gate'] and row[key]['invalid_iv_quotes']==0
+            assert row['fitted_quadrature_error_spot']<=1e-8
+    assert summary['all_parameter_passes']==sum(r['all_parameter_pass'] for r in rows)
+    assert summary['individual_parameter_passes']==sum(r.get('individual_parameter_passes',0) for r in rows)
+    assert summary['individual_denominator']==10*len(rows)
+    assert summary['joint_passes']==sum(r['joint_pass'] for r in rows)
+    return manifest,rows,summary
+
+
+def main():
+    ap=argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--assessment',type=Path,action='append',required=True)
+    ap.add_argument('--out',type=Path,required=True)
+    args=ap.parse_args();args.out.mkdir(parents=True,exist_ok=False)
+    runs=[audit_assessment(path) for path in args.assessment]
+    first,first_rows,_=runs[0]
+    for manifest,rows,_ in runs[1:]:
+        assert manifest['geometry']==first['geometry'] and manifest['gates']==first['gates']
+        assert manifest['sampling_seed']==first['sampling_seed']
+        for a,b in zip(first_rows,rows,strict=True):
+            for key in ('case','true_unit','true_physical','reference_price','observed_iv'):
+                assert a[key]==b[key], f'Case/quote mismatch: {key}'
+    labels=[p.name.removesuffix('_development4').removesuffix('_exposed12') for p in args.assessment]
+    training_checks=[audit_training(m) for m,_,_ in runs]
+    names=[f'{name}_{factor}' for factor in (1,2) for name in ('kappa','theta','sigma','rho','v0')]
+    counts=np.array([[sum(r['status']=='fitted' and r['parameter_gate_units'][j]<=1 for r in rows)
+                      for j in range(10)] for _,rows,_ in runs])
+    fig,ax=plt.subplots(figsize=(12,max(2.8,.65*len(runs)+1.5)))
+    im=ax.imshow(counts,vmin=0,vmax=len(first_rows),cmap='Blues',aspect='auto')
+    ax.set_xticks(range(10),names);ax.set_yticks(range(len(labels)),labels)
+    for i in range(len(runs)):
+        for j in range(10):ax.text(j,i,f'{counts[i,j]}/{len(first_rows)}',ha='center',va='center',
+                                  color='white' if counts[i,j]>len(first_rows)/2 else 'black')
+    ax.set_title('Exact-reference parameter passes — exposed development cases')
+    fig.colorbar(im,ax=ax,label='Passing cases')
+    fig.tight_layout();fig.savefig(args.out/'parameter_passes.png',dpi=160);plt.close(fig)
+    fig,ax=plt.subplots(figsize=(11,4))
+    for label,(_,rows,_) in zip(labels,runs):
+        error=[max(r['parameter_gate_units']) if r['status']=='fitted' else np.nan for r in rows]
+        ax.plot(range(len(rows)),error,'o-',label=label)
+    ax.axhline(1,color='black',linestyle='--',label='All ten parameters must be at or below 1')
+    ax.set_yscale('log');ax.set_xticks(range(len(first_rows)))
+    ax.set(xlabel='Development case',ylabel='Largest parameter error / allowed tolerance',
+           title='Worst parameter controls whether a complete case passes')
+    ax.legend(fontsize=7);fig.tight_layout();fig.savefig(args.out/'worst_parameter.png',dpi=160);plt.close(fig)
+    lines=['# Factor-structured PINN: development evidence', '',
+        'This is a separately approved Riccati/factor architecture, not the regular price-PDE PINN.',
+        'All cases here have been exposed during development. These results do not establish generalization.', '',
+        '| Training checkpoint | Individual parameters | All ten, by case | Joint price + parameter gates |',
+        '|---|---:|---:|---:|']
+    for label,(_,_,s) in zip(labels,runs):
+        lines.append(f"| {label} | {s['individual_parameter_passes']}/{s['individual_denominator']} | "
+                     f"{s['all_parameter_passes']}/{s['cases']} | {s['joint_passes']}/{s['cases']} |")
+    lines+=['','![Parameter pass counts](parameter_passes.png)','',
+        'Interpretation: darker cells mean more development cases passed that parameter. '
+        'Separate parameter passes cannot be combined across cases to claim full recovery.', '',
+        '![Worst parameter error](worst_parameter.png)','',
+        'Interpretation: a point above the dashed line fails at least one parameter. '
+        'Lines connect case identifiers for readability; they are not time-series forecasts. Missing fits are failures, not omitted successes.', '',
+        '## Data and safeguards','',
+        'Each case has 126 clean synthetic quotes: 21 strike/forward ratios from 0.8 to 1.2 '
+        'at 30, 60, 90, 180, 365 and 730 days, divided by 365. '
+        'Every third strike is withheld (42 quotes); 84 quotes enter calibration. '
+        'These maturities are synthetic experimental coverage, not a claim about NSE contract availability.', '',
+        'Eight positive parameters must each be within 5% relative error; both correlations within 0.05 absolute. '
+        'Canonical storage is slow factor first, fast factor second. Joint success also requires '
+        'held-out neural and independent exact-repriced price RMSE <=1e-5 of spot and valid quadrature.', '',
+        'Calibration uses frozen learned coefficients, automatic parameter derivatives and blind multistart optimization. '
+        'Exact references generate the observations and independently reprice the final estimate; '
+        'they are not trial-price calls inside inverse fitting. Structural coefficient labels are used during '
+        'synthetic neural training, which must be disclosed in comparisons with price-only training.', '',
+        'This is a two-stage PINN-surrogate method: train a parameter-conditioned coefficient network, '
+        'then freeze its weights and optimize the ten unknown parameter inputs through its learned prices. '
+        'It is not a network that directly outputs ten parameters, and it is not simultaneous per-case '
+        'optimization of both neural weights and model parameters.', '',
+        'The report recomputed parameter gates, counts, minimum-SSE start selection and quote counts; '
+        'verified unchanged truths/quotes across runs; checked checkpoint/data hashes and recorded source snapshots; '
+        'and checked finite training labels, unique sampled states and no exact state overlap between splits. '
+        'This is a bounded integrity audit, not a guarantee against every possible form of leakage or overfitting.', '',
+        'Coefficient-validation RMSE is not parameter error. The independent-output and derivative-linked '
+        'variants use different coefficient-loss normalizations, so those RMSE values are not directly comparable.', '',
+        '## What still needs work','',
+        'Any failed complete-case gate remains unresolved. A fresh sealed case set, sensitivity/stability testing '
+        'and a disclosed matched Single-Heston comparison are still needed before claiming reliable superiority.', '']
+    lines+=['[Per-case parameter estimates for the final listed stage](PARAMETERS.md). '
+            'Full-precision values and every start remain in the source assessment JSON.', '']
+    parameter_lines=['# Parameter estimates: '+labels[-1], '',
+        'Development estimates, not successfully recovered ground truth. Gate units <=1 pass. '
+        'Factor 1 is slow; factor 2 is fast. Values below are rounded for display only.', '',
+        '| Case | Parameter | Truth | Fitted | Error / tolerance | Pass |',
+        '|---:|---|---:|---:|---:|---|']
+    for row in runs[-1][1]:
+        if row['status']!='fitted':
+            parameter_lines.append(f"| {row['case']} | Invalid/failed fit | — | — | — | No |")
+            continue
+        for j,name in enumerate(names):
+            error=row['parameter_gate_units'][j]
+            parameter_lines.append(f"| {row['case']} | {name} | {row['true_physical'][j]:.8g} | "
+                f"{row['fit']['physical'][j]:.8g} | {error:.6g} | {'Yes' if error<=1 else 'No'} |")
+    (args.out/'PARAMETERS.md').write_text('\n'.join(parameter_lines)+'\n')
+    (args.out/'REPORT.md').write_text('\n'.join(lines))
+    result={'status':'passed','assessments':[str(p) for p in args.assessment],
+            'checks':'snapshot/checkpoint hashes, recomputed parameter gates, counts, quote identity, start selection',
+            'training_split_counts':training_checks,
+            'report_source_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+            'summaries':[s for _,_,s in runs]}
+    (args.out/'report_source_snapshot.py').write_text(Path(__file__).read_text())
+    (args.out/'audit.json').write_text(json.dumps(result,indent=2));print(json.dumps(result))
+
+
+if __name__=='__main__':main()

@@ -1,0 +1,216 @@
+{
+  "seed": 910101,
+  "points": 512,
+  "sampling": "independent diagnostic LHS; 1/4 wide log-moneyness",
+  "selection_use": "none; frozen-checkpoint diagnostic, not training or selection",
+  "pde": "C_tau - .5*(v1+v2)*(C_xx-C_x) - sum[k*(theta-v)*C_v + .5*sigma^2*v*C_vv + rho*sigma*v*C_xv]",
+  "residual_units": "raw normalized-forward-call price per year; not normalized by small vega",
+  "models": [
+    {
+      "checkpoint": {
+        "label": "composition910031",
+        "checkpoint": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/composition910031/model.pt",
+        "sha256": "70e691241fcf32c8824d2ca5e81a8ad1e663fb04f77a94103966467107687d53",
+        "config": {
+          "factors": 2,
+          "checkpoint_format": "convolution_price_pinn_float64",
+          "component_architecture": {
+            "factors": 1,
+            "width": 160,
+            "depth": 5,
+            "tau_min": 0.019178082191780823,
+            "tau_max": 2.0,
+            "x_half_width": 3.5,
+            "correction_limit": 1.8,
+            "residual_blocks": 0
+          },
+          "quadrature_nodes": 96,
+          "component_provenance": {
+            "label": "component_adam910031",
+            "checkpoint": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/component_adam910031/model.pt",
+            "sha256": "b339b0acd816fec27fc61e6c292483a65f3cf63754398504280cf7fff93ba9e7",
+            "config": {
+              "factors": 1,
+              "width": 160,
+              "depth": 5,
+              "tau_min": 0.019178082191780823,
+              "tau_max": 2.0,
+              "x_half_width": 3.5,
+              "correction_limit": 1.8,
+              "residual_blocks": 0,
+              "checkpoint": "outputs/regular_pinn_recovery/single_sobolev_s17",
+              "data": "outputs/regular_pinn_recovery/component_data910021",
+              "out": "outputs/regular_pinn_recovery/component_adam910031",
+              "steps": 5000,
+              "seed": 910031,
+              "batch": 512,
+              "pde_batch": 128,
+              "collocation": 18000,
+              "save_every": 500,
+              "component_domain": true,
+              "add_residual_blocks": 0,
+              "checkpoint_format": "torch_state_dict_float64",
+              "precision": "float64 weights, values, gradients and AdamW moments; scalar step counter uses backend default",
+              "architecture": "unchanged regular implied-variance pricing-PDE PINN",
+              "total_hidden_layers": 5,
+              "trainable_parameter_count": 105441,
+              "training_iv_audit": "first 16384 usable archived training rows; reporting only, not selection",
+              "parameter_domain": {
+                "kappa": [
+                  0.2,
+                  12.0
+                ],
+                "theta_and_v0": [
+                  0.006,
+                  0.3
+                ],
+                "rho": [
+                  -0.8,
+                  0.5
+                ],
+                "feller_ratio": [
+                  0.15,
+                  0.9
+                ],
+                "tau": [
+                  0.019178082191780823,
+                  2.0
+                ],
+                "purpose": "single-factor building block, not original single-model inverse parameter box"
+              },
+              "optimizer": "AdamW",
+              "lr": 1e-05,
+              "min_lr": 2e-07,
+              "weight_decay": 1e-06,
+              "sensitivity": 0.2,
+              "weight_pde": 0.2,
+              "weight_shape": 0.05,
+              "anchor_scale": 0.05,
+              "skip_recovery": true,
+              "selection": "minimum archived validation IV RMSE; initial weights eligible",
+              "resume": "outputs/regular_pinn_recovery/single_sobolev_s17",
+              "gradient_clipping": false
+            },
+            "config_sha256": "76156683a15aef1a6c50d8d831b86796b6039efddb04ec5256ea92e8a49ebc01"
+          },
+          "architecture": "independent-factor convolution of Single Heston price-PDE PINN",
+          "limitations": "component price PDE, not direct full Double Heston PDE training"
+        },
+        "config_sha256": "844c5d8f84b2bc06bd5e0cbbf7b06934ee2b4311d8a98537d1f84e3da0660915"
+      },
+      "all_finite": true,
+      "pde_rmse": 0.0001436216730618314,
+      "wide_pde_rmse": 7.599590717380275e-05,
+      "core_pde_rmse": 0.000159930570337203,
+      "negative_convexity_count": 0,
+      "negative_calendar_count": 14,
+      "lower_price_bound_violations": 13,
+      "upper_price_bound_violations": 0
+    },
+    {
+      "checkpoint": {
+        "label": "composition_balanced910071",
+        "checkpoint": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/composition_balanced910071/model.pt",
+        "sha256": "312fbe50e52d70cee09c7e264e23e21df33f50bc32eee1886470de08addc09eb",
+        "config": {
+          "factors": 2,
+          "checkpoint_format": "convolution_price_pinn_float64",
+          "component_architecture": {
+            "factors": 1,
+            "width": 160,
+            "depth": 5,
+            "tau_min": 0.019178082191780823,
+            "tau_max": 2.0,
+            "x_half_width": 3.5,
+            "correction_limit": 1.8,
+            "residual_blocks": 0
+          },
+          "quadrature_nodes": 96,
+          "component_provenance": {
+            "label": "component_balanced910071",
+            "checkpoint": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/component_balanced910071/model.pt",
+            "sha256": "fe00c7c60c566cec9217d68431d730b5153aed218b4ca86759489041e107c10d",
+            "config": {
+              "factors": 1,
+              "width": 160,
+              "depth": 5,
+              "tau_min": 0.019178082191780823,
+              "tau_max": 2.0,
+              "x_half_width": 3.5,
+              "correction_limit": 1.8,
+              "residual_blocks": 0,
+              "checkpoint": "outputs/regular_pinn_recovery/component_adam910031",
+              "data": "outputs/regular_pinn_recovery/component_data910021",
+              "out": "outputs/regular_pinn_recovery/component_balanced910071",
+              "steps": 10000,
+              "seed": 910071,
+              "batch": 512,
+              "pde_batch": 128,
+              "collocation": 18000,
+              "save_every": 1000,
+              "component_domain": true,
+              "lr": 5e-05,
+              "pde_weight": 0.02,
+              "add_residual_blocks": 0,
+              "checkpoint_format": "torch_state_dict_float64",
+              "precision": "float64 weights, values, gradients and AdamW moments; scalar step counter uses backend default",
+              "architecture": "unchanged regular implied-variance pricing-PDE PINN",
+              "total_hidden_layers": 5,
+              "trainable_parameter_count": 105441,
+              "training_iv_audit": "first 16384 usable archived training rows; reporting only, not selection",
+              "parameter_domain": {
+                "kappa": [
+                  0.2,
+                  12.0
+                ],
+                "theta_and_v0": [
+                  0.006,
+                  0.3
+                ],
+                "rho": [
+                  -0.8,
+                  0.5
+                ],
+                "feller_ratio": [
+                  0.15,
+                  0.9
+                ],
+                "tau": [
+                  0.019178082191780823,
+                  2.0
+                ],
+                "purpose": "single-factor building block, not original single-model inverse parameter box"
+              },
+              "optimizer": "AdamW",
+              "min_lr": 2e-07,
+              "weight_decay": 1e-06,
+              "sensitivity": 0.2,
+              "weight_pde": 0.02,
+              "weight_shape": 0.05,
+              "anchor_scale": 0.05,
+              "skip_recovery": true,
+              "selection": "minimum archived validation IV RMSE; initial weights eligible",
+              "resume": "outputs/regular_pinn_recovery/component_adam910031",
+              "gradient_clipping": false
+            },
+            "config_sha256": "029231c45c03bbbb21b9c93a9bd6deaa1c7525b9a331277408d74efe4e990204"
+          },
+          "architecture": "independent-factor convolution of Single Heston price-PDE PINN",
+          "limitations": "component price PDE, not direct full Double Heston PDE training"
+        },
+        "config_sha256": "910cdfdab299438c61fdcf2e2acd1143d9672832169e025246f3c2a8b746d6bf"
+      },
+      "all_finite": true,
+      "pde_rmse": 9.615134436811747e-05,
+      "wide_pde_rmse": 3.958480977478281e-05,
+      "core_pde_rmse": 0.00010864831173758066,
+      "negative_convexity_count": 0,
+      "negative_calendar_count": 13,
+      "lower_price_bound_violations": 13,
+      "upper_price_bound_violations": 0
+    }
+  ],
+  "source_sha256": {
+    "scripts/mentor_dh_pinn/check_composition_physics.py": "8acff4e11138a0751f75cccc9ae1a2cd0411c77d79b3feb54115314b34be5137"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "initial_checkpoint": {
+    "label": "double_lbfgs908021",
+    "checkpoint": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/double_lbfgs908021/model.safetensors",
+    "sha256": "a9fec59d4c58b5eca66f59eeefcb78fd4ac36b724d47f8c0b416e4e193304f56",
+    "config": {
+      "data": "outputs/regular_pinn_recovery/double_data",
+      "out": "outputs/regular_pinn_recovery/double_lbfgs908021",
+      "factors": 2,
+      "steps": 12000,
+      "seed": 908021,
+      "width": 160,
+      "depth": 5,
+      "batch": 1024,
+      "pde_batch": 256,
+      "sensitivity": 0.2,
+      "weight_pde": 0.2,
+      "weight_decay": 1e-06,
+      "lr": 0.001,
+      "resample_every": 1000,
+      "save_every": 100,
+      "resume": "outputs/regular_pinn_recovery/double_sobolev_s17",
+      "skip_recovery": false,
+      "tau_max": 2.0,
+      "architecture": "regular implied-variance PDE PINN",
+      "selection": "original four development recovery surfaces; never exposed-12 truth in optimizer",
+      "calibration": "optimize frozen neural IV predictions only; no exact pricing in fit",
+      "checkpoint": "outputs/regular_pinn_recovery/double_sobolev_s17",
+      "iterations": 1000,
+      "anchors": 16384,
+      "collocation": 18000,
+      "chunk": 1024,
+      "optimizer": "L-BFGS-B on network weights, fixed objective; unbounded neural weights",
+      "precision": "float32 MLX values/gradients, float64 SciPy optimizer vectors"
+    },
+    "config_sha256": "d1716a50b1539fef76e67bde43e94d45a92df19f01438d6bfa06279200e39df2"
+  },
+  "input_sha256": {
+    "train.npz": "f18c296f1d0183ac266448830a05e80e8e7cdd3789cca5c6a5434dd09c7fdc28",
+    "validation.npz": "4b08a5b704d35b04ce47fac2652c5ff69a5d053b3fed5dc5f72fd94622827a3c",
+    "collocation.npz": "a3820957488f9dacbbcebeb2c3425b766473c7b65ffb76c9a8a763f193c422af"
+  },
+  "source_sha256": {
+    "scripts/mentor_dh_pinn/finetune_regular_torch.py": "0c1b6e98891d0a9ff65faeeb64ced71ae5f102b4266d09e455b841320f2bcc5f",
+    "scripts/mentor_dh_pinn/assess_regular_pinn.py": "3b1b59b705777be7d961c807e97dec66cabe6036d18f2fb2b1a393ca8428e7a0",
+    "src/mentor_dh_pinn/regular_pinn_torch.py": "8feed21ec27bdeb3d8a7559b2b837bfe19b8149bd05df4886ccf2341fa79fbba",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "bb47652e896425d38be8e967269f1e81683cb879c37b9867c1cbde7cf404fb71",
+    "src/mentor_dh_pinn/regular_pinn.py": "e409148ced31045827f2ec582a10ad572373aa50e456de4e58cb0499453d9316"
+  },
+  "train_quotes": 131072,
+  "validation_quotes": 16384,
+  "collocation_points": 18000,
+  "selection_scope": "previously used development validation, not unseen generalization evidence",
+  "training_information": "archived correction and parameter-derivative labels plus price PDE; no recovery truth",
+  "runtime": {
+    "python": "3.14.5",
+    "torch": "2.13.0",
+    "numpy": "2.4.6",
+    "device": "cpu",
+    "threads": 1
+  }
+}

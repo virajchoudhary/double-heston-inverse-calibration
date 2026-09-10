@@ -45,7 +45,7 @@ def main():
         raise FileExistsError("Preserve previous diagnostics; choose a new output")
     torch.set_num_threads(1)
     model, info = load_checkpoint(args.checkpoint)
-    network = TorchRegularVariancePINN.from_mlx(model)
+    network = model if isinstance(model, TorchRegularVariancePINN) else TorchRegularVariancePINN.from_mlx(model)
     rows = []
     for case, (q, _, truth) in enumerate(make_validation_surfaces(model.factors)):
         mask = np.tile(np.arange(21) % 3 != 2, 6)

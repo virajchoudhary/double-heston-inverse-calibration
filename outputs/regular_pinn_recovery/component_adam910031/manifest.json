@@ -1,0 +1,68 @@
+{
+  "initial_checkpoint": {
+    "label": "single_sobolev_s17",
+    "checkpoint": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/single_sobolev_s17/model.safetensors",
+    "sha256": "8cfa8299827eb210e70cd1810a8f736c3983c45adc3a5be720070c7e60cc7ac2",
+    "config": {
+      "data": "outputs/regular_pinn_recovery/single_data",
+      "out": "outputs/regular_pinn_recovery/single_sobolev_s17",
+      "factors": 1,
+      "steps": 12000,
+      "seed": 17,
+      "width": 160,
+      "depth": 5,
+      "batch": 1024,
+      "pde_batch": 256,
+      "sensitivity": 0.2,
+      "weight_pde": 0.2,
+      "weight_decay": 1e-06,
+      "lr": 0.001,
+      "resample_every": 1000,
+      "save_every": 2000,
+      "resume": null,
+      "skip_recovery": false,
+      "tau_max": 2.0,
+      "architecture": "regular implied-variance PDE PINN",
+      "selection": "clean synthetic validation parameter recovery RMSE, fixed 4 cases; not final assessment",
+      "calibration": "optimize frozen neural IV predictions only; no exact pricing in fit"
+    },
+    "config_sha256": "d7f0dbea66e98e25c7b1891f1bcea1bd4bfef962aa83df57195368aaffbf3a22"
+  },
+  "input_sha256": {
+    "train.npz": "6ab1cce7b0a8132bc4d66de01474035520b55728938d0aa1ee004539187f68d8",
+    "validation.npz": "82c5b9a372680c636ae451fdfd9e476c01191586592d63a4b6ef10cb9ae3c008",
+    "collocation.npz": "a5a382da705e10846698048f7b876e25aab6a1a502a62ba0582d914df23e59d5"
+  },
+  "source_sha256": {
+    "scripts/mentor_dh_pinn/finetune_regular_torch.py": "eefd2f482613d218b77bf26c42594e13ab577e3154c40d2e2dec021a3bdfc5c3",
+    "scripts/mentor_dh_pinn/assess_regular_pinn.py": "8261ac8716dd59420e0121584154d511504dd86f6511fb74e87d6972aca5d993",
+    "src/mentor_dh_pinn/regular_pinn_torch.py": "06a239a91b511cb81e801948c35e438a6a8cf05929cefdc9a7f69b3f771bd15f",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "c935cc1ca531667e7805d03e1eb1b232ddc77e02fd72bd914157807120773383",
+    "src/mentor_dh_pinn/regular_pinn.py": "e409148ced31045827f2ec582a10ad572373aa50e456de4e58cb0499453d9316",
+    "src/mentor_dh_pinn/component_pinn_data.py": "4a801a2c1999302e9eb0820b29d4e1af5a94668e2b8f495dc6fa3cf615fa98e6"
+  },
+  "train_quotes": 129840,
+  "validation_quotes": 16239,
+  "collocation_points": 18000,
+  "reference_label_counts": {
+    "train": {
+      "candidates": 131072,
+      "usable": 129840,
+      "excluded_reference_labels": 1232
+    },
+    "validation": {
+      "candidates": 16384,
+      "usable": 16239,
+      "excluded_reference_labels": 145
+    }
+  },
+  "selection_scope": "previously used development validation, not unseen generalization evidence",
+  "training_information": "archived correction and parameter-derivative labels plus price PDE; no recovery truth",
+  "runtime": {
+    "python": "3.14.5",
+    "torch": "2.13.0",
+    "numpy": "2.4.6",
+    "device": "cpu",
+    "threads": 1
+  }
+}

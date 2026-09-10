@@ -1,0 +1,9 @@
+{
+  "iterations": 400,
+  "nfev": 430,
+  "optimizer_success": false,
+  "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+  "seconds": 312.91753408298246,
+  "selected_coefficient_rmse": 0.0031297416645446473,
+  "parameter_recovery_evaluated": false
+}

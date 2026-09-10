@@ -2,10 +2,31 @@
 
 The latest **regular pricing-PINN** experiment is documented in
 [the regular PINN handoff](docs/REGULAR_PINN_HANDOFF.md), with
-[all development trials](outputs/regular_pinn_recovery/all_development_report/REPORT.md)
+[initial development trials](outputs/regular_pinn_recovery/all_development_report/REPORT.md),
+[all deterministic L-BFGS trials](outputs/regular_pinn_recovery/lbfgs_all_trials_report908021/REPORT.md),
+ [latest genuine float64 trials](outputs/regular_pinn_recovery/float64_combined_report909111/REPORT.md),
 and [the locked synthetic assessment](outputs/regular_pinn_recovery/locked_assessment_report/REPORT.md).
 The ten-parameter Double Heston recovery target is **not achieved**. Neural price
 accuracy must not be substituted for structural parameter recovery.
+
+The conditional [17-layer residual PINN experiment](docs/DEEP_REGULAR_PINN_PROTOCOL.md)
+has also completed: it did not improve parameter-gate counts over a matched
+five-layer control, on either exposed or freshly predeclared synthetic cases.
+The default five-layer model is retained; deeper capacity remains an explicit
+research option, not a claimed recovery solution.
+
+A new [compositional price-PDE PINN pilot](docs/COMPOSITION_PINN_PROTOCOL.md)
+combines two Single Heston neural pricing components. The first continuation
+selected its initial weights; a second loss-balance run improved validation but
+reduced parameter-gate passes from57/120 to50/120. Both variants have0/12 complete
+recoveries, despite beating Single on held-out pricing in all12 exposed
+DH-generated cases. [Latest report and parameter tables](outputs/regular_pinn_recovery/composition_balanced_report910101/REPORT.md).
+These comparisons are separate from the older model-family-specific recovery
+results; pricing fit is not parameter recovery or unseen-market superiority.
+
+A separately approved [factor-structured PINN variant](docs/AFFINE_FACTOR_PINN_PROTOCOL.md)
+is under development. It is a different neural architecture, not a replacement
+label for the regular-PINN results or an exact-pricer calibration success.
 
 The earlier hybrid Double Heston calibration repair is documented in
 [the September repair handoff](docs/CALIBRATION_REPAIR_HANDOFF.md) and its

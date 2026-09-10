@@ -108,3 +108,8 @@ outputs/metrics/smoke_test/parameter_evaluation/parameter_predictions_and_errors
 !outputs/calibration_repair/seed_43/repaired.pt
 !outputs/calibration_repair/real_corpus/real_validation.npz
 !outputs/calibration_repair/synthetic/v6_validation.npz
+
+# Selected PINN research weights accompany positive and negative trial evidence.
+# Generated training arrays and intermediate optimizer snapshots stay local.
+!outputs/regular_pinn_recovery/*/model.pt
+!outputs/affine_factor_pinn/*/model.pt

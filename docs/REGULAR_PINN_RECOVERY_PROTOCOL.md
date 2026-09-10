@@ -146,3 +146,137 @@ Keep every failure and the analytic BS pricing baseline. This is a previously
 unseen central-domain assessment for these frozen models, not a full-domain or
 multi-training-seed reliability claim. No model changes may be chosen using this
 assessment and still described as independently tested on these same cases.
+
+## Deterministic network-weight L-BFGS, 2026-09-08
+
+The user requested all ten targets on the exposed 12 clean six-expiry cases.
+These cases are now development evidence, not an unseen test. Neither their
+truth vectors nor withheld quotes enter training or the inverse objective.
+The old assessment remains unchanged. The repository snapshot was pushed to
+`Double/Single-heston` at `3927ad7ff907504852423864afdd4d18ebf34298` before this phase.
+
+Run `double_lbfgs908021` continued the selected Double Sobolev weights for
+1,000 network-weight L-BFGS iterations, using 16,384 fixed training anchors and
+all 18,000 original collocation points (seed 908021). Chunked sums evaluate the
+entire fixed objective on every call. PDE relevance weights and derivative
+normalizers are fixed numerically, not recomputed with stop-gradient. No
+dropout, clipping, resampling, Adam learning rate or weight decay applies in
+this phase. Full-objective directional checks preceded training. Effective
+settings corrections explicitly preserve and supersede stale inherited-Adam
+metadata in the original run config; original source snapshots are retained.
+
+The objective fell from 0.00281701 to 0.00131633. Full validation IV RMSE fell
+from 0.00034849 to 0.00027184, but original-four recovery RMSE worsened from
+0.124257 to 0.201380. The unmodified starting weights remain selected. The
+optimizer reached its declared iteration limit, not its convergence criterion.
+This is a negative parameter-recovery result, not successful fine-tuning.
+
+### Next controlled trial, declared before running
+
+Keep the same regular pricing-PDE network and selected Double Sobolev starting
+weights. Use the same fixed anchors, 18,000 collocation points, and all 1,024
+independent training surfaces from seed 907721. Both arms add grouped IV MSE
+with weight .1 after scaling IV errors by .01. The experimental arm adds the
+quadratic local linear parameter-bias loss `mean((B @ IV_error)^2)`, replacing
+the earlier logarithmically saturated proxy. Freeze its coefficient once,
+using only initial training gradients, so its gradient norm is half the
+base-plus-grouped-price gradient norm. Control coefficient is zero. Use
+400 L-BFGS iterations per arm and original-four recovery checkpoint selection;
+retain the initial checkpoint as a candidate and all unsuccessful outcomes.
+
+`B` is the existing training-only tolerance-scaled Jacobian pseudoinverse.
+Its rank is 10 on 961 surfaces and 9 on 63: the omitted direction is not
+silently called supervised or recovered. Lower proxy loss is not an actual
+parameter pass. No reference-pricer evaluations at trial parameters are
+allowed in deployed inverse calibration. Evaluate selected weights on the
+same explicitly exposed 12 cases only after training and selection finish;
+fresh assessment cases remain necessary for any generalization claim.
+
+### Paired result and derivative-consistency follow-up
+
+Both 400-iteration arms completed. Grouped-price control ended at recovery RMSE
+0.141308; quadratic bias ended at 0.220597. Neither beat the unchanged initial
+score 0.124257, so both selected iteration zero. The quadratic coefficient was
+2.5779730109365333e-6, fixed from initial training gradients, not tuned afterward.
+
+A separately labelled neural self-consistency diagnostic on 12 new draws
+(seed 908171) recovered all ten parameters in every case from the frozen
+network's own IV outputs. Maximum heldout IV RMSE was 3.97e-15. This isolates
+the optimizer's ability to invert that neural function; it is NOT recovery
+against exact Double Heston targets and does not count toward the user's gate.
+
+Next, retain the same initial weights, anchors, collocation and grouped training
+surfaces; compare against the completed grouped-price control. Replace quadratic
+bias with `mean(||B @ (J_neural_unit @ T) - P||^2)`, where
+`T = solve(dp/du, diag(parameter_tolerances))` and P is the projector onto the
+retained column space of B. All constants use TRAINING units only. Check stored
+ranks, projector identities and scalar gradients. Freeze the new coefficient
+to half the initial base-plus-grouped-price gradient norm, as before. Use
+400 L-BFGS iterations, original-four checkpoint selection, and unchanged
+heldout-strike calibration. No quadratic bias term is combined into this arm.
+It targets derivative error in weak parameter combinations; success must still
+be established by actual parameter recovery, not by the derivative proxy.
+
+### Genuine float64 weight-training trial — declared before execution
+
+The preceding MLX refinements did not improve the selected recovery checkpoint.
+They used float32 network values and gradients despite float64 optimizer vectors
+and subsequent inference. Test the existing, independently PDE-tested PyTorch
+copy with float64 weights, gradients and AdamW state, without changing its
+5-hidden-layer/160-unit regular price-PDE architecture. This is a precision and
+training-protocol continuation, not an isolated causal test of dtype alone.
+
+Warm start `double_lbfgs908021` (unchanged best original Sobolev weights). Reuse
+all 131,072 clean `double_data/train.npz` labels, all 16,384 validation quotes,
+and a fixed 18,000-point collocation pool. Seed 909111; 1,000 AdamW steps;
+512 training anchors and 128 collocation points per update; learning rate
+1e-5 to 2e-7 cosine decay; weight decay 1e-6; no gradient clipping or dropout.
+Use the original correction MSE scaled by .05, Sobolev weight .2 with
+training-only RMS normalization floored at .02, PDE normalized Huber weight
+.2 and shape weight .05. Freeze the initial PDE relevance weights and full-pool
+normalizer. Preserve full float64 checkpoints; never quantize back through MLX.
+
+Select every 250 steps, including step zero, solely by full validation IV RMSE.
+Neither original-four recovery truths nor exposed-twelve truths enter this
+training/selection phase. Validation has been used previously and is not an
+unseen test. Run a two-step operational pilot and objective-gradient checks
+before the declared run; pilot weights do not become its warm start. After
+selection, assess all twelve exposed clean rich cases using the unchanged
+five blind starts, 400-evaluation budget and parameter/price gates. Preserve
+every trial regardless of outcome. Float64 does not guarantee identifiability.
+
+The 1,000-step float64 trial selected step 1,000: validation IV RMSE improved
+from 0.0003484951214 to 0.0003410810733, but exposed-case recovery was **45/120
+individual parameters, 0/12 complete and 0/12 joint cases**, below the original
+48/120 baseline. Neural held-out price gates passed 8/12, exact repricing 0/12.
+All 75 scoped tests passed. This does not demonstrate a precision-only solution.
+
+One extended float64 continuation is declared next: warm start that selected
+step, train 5,000 additional AdamW steps with a fresh optimizer and the same
+seed 909111, learning-rate endpoints, losses, minibatches and fixed pool;
+select by full validation IV every 500 steps, including the starting weights.
+Assess exposed recovery only after selection is complete. This is additional
+training on the same corpus, not new independent examples or a new restart.
+The fresh RNG repeats early sampled minibatches; this is disclosed, not a claim
+of an independent draw. No recovery-based stopping/selection or gate changes.
+
+Precision metadata clarification: PyTorch AdamW's parameter-sized first/second
+moments are float64 here; its scalar step counter uses the backend default
+(float32). The original trial's broad phrase "optimizer state" should be read
+with that clarification. It does not affect parameter/gradient precision;
+original config/checkpoint hashes remain untouched.
+
+The extended run completed all 5,000 additional steps in 290.2 seconds and
+selected step 5,000 at validation IV RMSE 0.0003354423479. All 131,072 training
+quotes were visited. Recovery remained **45/120 individual, 0/12 complete and
+joint cases**; neural price gates 8/12, exact repricing 0/12. This is a negative
+parameter-recovery result, not a successful refinement. Both stages passed
+all-twelve-case held-out corruption replay with reference-pricer entry points
+blocked, exact tensor/selection/hash audits and the 75-test scoped suite.
+
+Post-fit local diagnostics found lower neural calibration SSE at each selected
+estimate than at its generating truth in all twelve cases, in both stages.
+These diagnostics did not feed back into training, selection or fitting.
+They support approximation-bias concerns; they do not demonstrate global
+non-identifiability or provide new fitted parameters. Full results and limitations
+are in `float64_combined_report909111` and the two `float64_*_bias909111` artifacts.

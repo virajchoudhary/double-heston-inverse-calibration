@@ -1,0 +1,62 @@
+{
+  "factors": 1,
+  "width": 160,
+  "depth": 5,
+  "tau_min": 0.019178082191780823,
+  "tau_max": 2.0,
+  "x_half_width": 3.5,
+  "correction_limit": 1.8,
+  "residual_blocks": 0,
+  "checkpoint": "outputs/regular_pinn_recovery/single_sobolev_s17",
+  "data": "outputs/regular_pinn_recovery/component_data910021",
+  "out": "outputs/regular_pinn_recovery/component_adam910031",
+  "steps": 5000,
+  "seed": 910031,
+  "batch": 512,
+  "pde_batch": 128,
+  "collocation": 18000,
+  "save_every": 500,
+  "component_domain": true,
+  "add_residual_blocks": 0,
+  "checkpoint_format": "torch_state_dict_float64",
+  "precision": "float64 weights, values, gradients and AdamW moments; scalar step counter uses backend default",
+  "architecture": "unchanged regular implied-variance pricing-PDE PINN",
+  "total_hidden_layers": 5,
+  "trainable_parameter_count": 105441,
+  "training_iv_audit": "first 16384 usable archived training rows; reporting only, not selection",
+  "parameter_domain": {
+    "kappa": [
+      0.2,
+      12.0
+    ],
+    "theta_and_v0": [
+      0.006,
+      0.3
+    ],
+    "rho": [
+      -0.8,
+      0.5
+    ],
+    "feller_ratio": [
+      0.15,
+      0.9
+    ],
+    "tau": [
+      0.019178082191780823,
+      2.0
+    ],
+    "purpose": "single-factor building block, not original single-model inverse parameter box"
+  },
+  "optimizer": "AdamW",
+  "lr": 1e-05,
+  "min_lr": 2e-07,
+  "weight_decay": 1e-06,
+  "sensitivity": 0.2,
+  "weight_pde": 0.2,
+  "weight_shape": 0.05,
+  "anchor_scale": 0.05,
+  "skip_recovery": true,
+  "selection": "minimum archived validation IV RMSE; initial weights eligible",
+  "resume": "outputs/regular_pinn_recovery/single_sobolev_s17",
+  "gradient_clipping": false
+}

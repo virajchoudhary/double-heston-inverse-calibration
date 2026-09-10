@@ -1,0 +1,65 @@
+{
+  "initial_checkpoint": {
+    "label": "double_float64_extended909111",
+    "checkpoint": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/double_float64_extended909111/model.pt",
+    "sha256": "fcb5f3ceaf5b23464e951b9c73c7169c07c4e1afcb33d95b217ae805a3430985",
+    "config": {
+      "factors": 2,
+      "width": 160,
+      "depth": 5,
+      "tau_min": 0.019178082191780823,
+      "tau_max": 2.0,
+      "x_half_width": 3.5,
+      "correction_limit": 1.8,
+      "checkpoint": "outputs/regular_pinn_recovery/double_float64_adam909111",
+      "data": "outputs/regular_pinn_recovery/double_data",
+      "out": "outputs/regular_pinn_recovery/double_float64_extended909111",
+      "steps": 5000,
+      "seed": 909111,
+      "batch": 512,
+      "pde_batch": 128,
+      "collocation": 18000,
+      "save_every": 500,
+      "checkpoint_format": "torch_state_dict_float64",
+      "precision": "float64 weights, values, gradients and AdamW moments; scalar step counter uses backend default",
+      "architecture": "unchanged regular implied-variance pricing-PDE PINN",
+      "optimizer": "AdamW",
+      "lr": 1e-05,
+      "min_lr": 2e-07,
+      "weight_decay": 1e-06,
+      "sensitivity": 0.2,
+      "weight_pde": 0.2,
+      "weight_shape": 0.05,
+      "anchor_scale": 0.05,
+      "skip_recovery": true,
+      "selection": "minimum archived validation IV RMSE; initial weights eligible",
+      "resume": "outputs/regular_pinn_recovery/double_float64_adam909111",
+      "gradient_clipping": false
+    },
+    "config_sha256": "c848c684fd87a019fdc0aafa1132b9081fac9d7cfafc1e5608ac53aee796e58e"
+  },
+  "input_sha256": {
+    "train.npz": "f18c296f1d0183ac266448830a05e80e8e7cdd3789cca5c6a5434dd09c7fdc28",
+    "validation.npz": "4b08a5b704d35b04ce47fac2652c5ff69a5d053b3fed5dc5f72fd94622827a3c",
+    "collocation.npz": "a3820957488f9dacbbcebeb2c3425b766473c7b65ffb76c9a8a763f193c422af"
+  },
+  "source_sha256": {
+    "scripts/mentor_dh_pinn/finetune_regular_torch.py": "687273ce0019fbbc55787cd1857a917136a446a63e76cd774fc3d49df5669c9e",
+    "scripts/mentor_dh_pinn/assess_regular_pinn.py": "3d34c6ece0a4b7353b7098cf2a76505037761f4c5663992d9401e4c53745feb9",
+    "src/mentor_dh_pinn/regular_pinn_torch.py": "06a239a91b511cb81e801948c35e438a6a8cf05929cefdc9a7f69b3f771bd15f",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "bb47652e896425d38be8e967269f1e81683cb879c37b9867c1cbde7cf404fb71",
+    "src/mentor_dh_pinn/regular_pinn.py": "e409148ced31045827f2ec582a10ad572373aa50e456de4e58cb0499453d9316"
+  },
+  "train_quotes": 131072,
+  "validation_quotes": 16384,
+  "collocation_points": 18000,
+  "selection_scope": "previously used development validation, not unseen generalization evidence",
+  "training_information": "archived correction and parameter-derivative labels plus price PDE; no recovery truth",
+  "runtime": {
+    "python": "3.14.5",
+    "torch": "2.13.0",
+    "numpy": "2.4.6",
+    "device": "cpu",
+    "threads": 1
+  }
+}

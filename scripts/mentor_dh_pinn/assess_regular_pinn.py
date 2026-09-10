@@ -56,7 +56,7 @@ def fit_network(model, x, tau, observed_iv, *, fit_mask=None, starts=5,
     if (tau <= 0).any() or (observed_iv <= 0).any() or starts < 1 or max_nfev < 1:
         raise ValueError("positive maturities, IVs and optimizer budgets required")
     started = time.perf_counter()
-    network = model if isinstance(model, TorchRegularVariancePINN) else TorchRegularVariancePINN.from_mlx(model)
+    network = model if isinstance(model, torch.nn.Module) else TorchRegularVariancePINN.from_mlx(model)
     factors = network.factors
     dimension = 5 * factors
     geometry = np.column_stack([x, np.log(tau)])
@@ -130,13 +130,38 @@ def sha256(path):
 def load_checkpoint(path):
     path = Path(path).resolve()
     directory = path if path.is_dir() else path.parent
-    weights = directory / "model.safetensors" if path.is_dir() else path
     config = json.loads((directory / "config.json").read_text())
     keys = {"factors", "width", "depth", "tau_min", "tau_max", "x_half_width", "correction_limit"}
-    model = RegularVariancePINN(**{key: value for key, value in config.items() if key in keys})
-    model.load_weights(str(weights))
-    model.eval()
-    mx.eval(model.parameters())
+    architecture = {key: value for key, value in config.items() if key in keys}
+    checkpoint_format = config.get("checkpoint_format", "mlx_safetensors")
+    if checkpoint_format == "convolution_price_pinn_float64":
+        from src.mentor_dh_pinn.convolution_pinn import ConvolutionPINN
+        weights = directory / "model.pt" if path.is_dir() else path
+        state = torch.load(weights, map_location="cpu", weights_only=True)
+        if not state or any(v.dtype != torch.float64 or not torch.isfinite(v).all() for v in state.values()):
+            raise ValueError('Expected finite float64 composition checkpoint tensors')
+        component = TorchRegularVariancePINN(**config['component_architecture'])
+        model = ConvolutionPINN(component, nodes=config['quadrature_nodes'])
+        model.load_state_dict(state, strict=True)
+        model.eval().requires_grad_(False)
+    elif checkpoint_format == "torch_state_dict_float64":
+        architecture['residual_blocks'] = config.get('residual_blocks', 0)
+        weights = directory / "model.pt" if path.is_dir() else path
+        state = torch.load(weights, map_location="cpu", weights_only=True)
+        if not state or any(v.dtype != torch.float64 or not torch.isfinite(v).all()
+                            for v in state.values()):
+            raise ValueError("Expected finite float64 regular-PINN checkpoint tensors")
+        model = TorchRegularVariancePINN(**architecture)
+        model.load_state_dict(state, strict=True)
+        model.eval().requires_grad_(False)
+    elif checkpoint_format == "mlx_safetensors":
+        weights = directory / "model.safetensors" if path.is_dir() else path
+        model = RegularVariancePINN(**architecture)
+        model.load_weights(str(weights))
+        model.eval()
+        mx.eval(model.parameters())
+    else:
+        raise ValueError(f"Unsupported checkpoint format: {checkpoint_format}")
     return model, {"label": directory.name, "checkpoint": str(weights),
                    "sha256": sha256(weights), "config": config,
                    "config_sha256": sha256(directory / "config.json")}
@@ -152,10 +177,10 @@ def _exact(x, tau, unit, factors, nodes=128):
 
 
 def _network_iv(model, x, tau, unit):
-    network = model if isinstance(model, TorchRegularVariancePINN) else TorchRegularVariancePINN.from_mlx(model)
+    network = model if isinstance(model, torch.nn.Module) else TorchRegularVariancePINN.from_mlx(model)
     with torch.no_grad():
         state, structural = coordinates(torch.tensor(_query(x, tau, unit), dtype=torch.float64), network.factors, torch)
-        return network.iv(state, structural).numpy()
+        return network.iv(state, structural).detach().numpy()
 
 
 def _rmse(value):
@@ -194,6 +219,12 @@ def main():
     parser.add_argument("--cases", type=int, default=12)
     parser.add_argument("--max-nfev", type=int, default=400)
     parser.add_argument("--starts", type=int, default=5)
+    parser.add_argument("--geometry", choices=("monthly", "rich"), action="append",
+                        help="Restrict geometries; default evaluates both")
+    parser.add_argument("--noise", type=float, choices=(0.0, 0.01), action="append",
+                        help="Restrict noise conditions; default evaluates both")
+    parser.add_argument("--development", action="store_true",
+                        help="Label reused/exposed cases as development, never unseen assessment")
     args = parser.parse_args()
     if args.cases < 1:
         parser.error("--cases must be positive")
@@ -207,6 +238,9 @@ def main():
         raise ValueError("Checkpoint run directory names must be unique")
     manifest = {
         "status": "running", "seed": args.seed, "cases_per_model_family": args.cases,
+        "evidence_level": "development on exposed cases" if args.development else "frozen assessment",
+        "evaluated_geometries": sorted(set(args.geometry or ("monthly", "rich"))),
+        "evaluated_noise_levels": sorted(set(args.noise or (0.0, 0.01))),
         "truth_sampling": "Independent uniform unit coordinates in [0.1,0.9]; central domain only, not full-boundary coverage",
         "scope": "Frozen-model synthetic assessment; one training initialization does not establish seed-wise reliability or market-data recovery",
         "noise": "independent Gaussian standard deviation 1% of true option time value above intrinsic; no truncation/resampling",
@@ -220,7 +254,7 @@ def main():
         "invalid_policy": "Any noninvertible generated or noisy observation invalidates the entire case; counts remain in denominators",
         "quadrature_gate": "true and fitted 96-vs-128 node prices differ by <= 1e-8 of spot",
         "optimizer": {"max_nfev_per_start": args.max_nfev, "starts": args.starts,
-                      "algorithm": "bounded SciPy TRF with analytic PyTorch Jacobian; identical MLX-trained weights evaluated in float64",
+                      "algorithm": "bounded SciPy TRF with analytic PyTorch Jacobian; frozen checkpoint weights evaluated in float64",
                       "ftol": 1e-12, "gtol": 1e-12, "xtol": 1e-8,
                       "unit_parameter_bounds": [1e-5, 1.0 - 1e-5]},
         "checkpoints": [info for _, info in loaded],
@@ -254,6 +288,12 @@ def main():
                     intrinsic = np.maximum(np.expm1(x), 0.0)
                     observed = intrinsic + (truth_price - intrinsic) * (1.0 + noise * rng.normal(size=len(x)))
                     observed_iv = np.sqrt(invert_total_variance(observed, x) / tau)
+                    # Consume the same RNG draws even for excluded conditions,
+                    # so filtering does not silently change seeded observations.
+                    if args.geometry and geometry not in args.geometry:
+                        continue
+                    if args.noise is not None and noise not in args.noise:
+                        continue
                     invalid = ~np.isfinite(observed_iv) | ~np.isfinite(true_iv)
                     tag = {"case": case_id, "factors": factors, "geometry": geometry, "noise": noise,
                            "quotes": len(x), "calibration_quotes": int((~holdout).sum()),

@@ -1,0 +1,71 @@
+{
+  "status": "passed",
+  "assessments": [
+    "outputs/affine_factor_pinn/adam908241_development4",
+    "outputs/affine_factor_pinn/lbfgs908241_development4",
+    "outputs/affine_factor_pinn/integrated_adam908241_development4",
+    "outputs/affine_factor_pinn/integrated_lbfgs908241_development4"
+  ],
+  "checks": "snapshot/checkpoint hashes, recomputed parameter gates, counts, quote identity, start selection",
+  "training_split_counts": [
+    {
+      "train": 65536,
+      "validation": 8192,
+      "collocation": 18000
+    },
+    {
+      "train": 65536,
+      "validation": 8192,
+      "collocation": 18000
+    },
+    {
+      "train": 65536,
+      "validation": 8192,
+      "collocation": 18000
+    },
+    {
+      "train": 65536,
+      "validation": 8192,
+      "collocation": 18000
+    }
+  ],
+  "report_source_sha256": "00aea1d80784ac4c31527617c809cfd87cbbcf77edeb852870890311cd84a011",
+  "summaries": [
+    {
+      "cases": 4,
+      "all_parameter_passes": 0,
+      "individual_parameter_passes": 6,
+      "individual_denominator": 40,
+      "joint_passes": 0,
+      "seconds": 45.141422833985416,
+      "evidence_level": "development; previously exposed cases, not unseen assessment"
+    },
+    {
+      "cases": 4,
+      "all_parameter_passes": 0,
+      "individual_parameter_passes": 9,
+      "individual_denominator": 40,
+      "joint_passes": 0,
+      "seconds": 54.84074874999351,
+      "evidence_level": "development; previously exposed cases, not unseen assessment"
+    },
+    {
+      "cases": 4,
+      "all_parameter_passes": 0,
+      "individual_parameter_passes": 10,
+      "individual_denominator": 40,
+      "joint_passes": 0,
+      "seconds": 156.0150141250051,
+      "evidence_level": "development; previously exposed cases, not unseen assessment"
+    },
+    {
+      "cases": 4,
+      "all_parameter_passes": 0,
+      "individual_parameter_passes": 6,
+      "individual_denominator": 40,
+      "joint_passes": 0,
+      "seconds": 186.67789508300484,
+      "evidence_level": "development; previously exposed cases, not unseen assessment"
+    }
+  ]
+}

@@ -8,12 +8,15 @@ import torch
 from src.mentor_dh_pinn.regular_pinn_torch import TorchRegularVariancePINN, residual
 
 
-def example(factors):
+def example(factors, extra_blocks=0):
     torch.manual_seed(400 + factors)
-    model = TorchRegularVariancePINN(factors=factors, width=10, depth=2)
+    model = TorchRegularVariancePINN(factors=factors, width=10, depth=5 if extra_blocks else 2,
+                                    residual_blocks=extra_blocks)
     with torch.no_grad():
         model.head.weight.mul_(0.08)
         model.head.bias.fill_(0.01)
+        for _,last in model.extra:
+            last.weight.normal_(0,.015)
     if factors == 1:
         coords = [[0.04, 0.09, 0.25], [-0.07, 0.13, 0.7]]
         structural = [[1.2, 0.08, 0.3, -0.55]]
@@ -24,8 +27,9 @@ def example(factors):
 
 
 @pytest.mark.parametrize("factors", [1, 2])
-def test_transformed_residual_matches_raw_black_price_pde(factors):
-    model, coords, structural = example(factors)
+@pytest.mark.parametrize("extra_blocks", [0, 6])
+def test_transformed_residual_matches_raw_black_price_pde(factors,extra_blocks):
+    model, coords, structural = example(factors,extra_blocks)
     coords.requires_grad_(True)
     transformed, diagnostics = residual(model, coords, structural)
     call = model.price(coords, structural)
@@ -49,8 +53,9 @@ def test_transformed_residual_matches_raw_black_price_pde(factors):
 
 
 @pytest.mark.parametrize("factors", [1, 2])
-def test_zero_vol_of_vol_limit_and_terminal_payoff(factors):
-    model, coords, structural = example(factors)
+@pytest.mark.parametrize("extra_blocks", [0, 6])
+def test_zero_vol_of_vol_limit_and_terminal_payoff(factors,extra_blocks):
+    model, coords, structural = example(factors,extra_blocks)
     with torch.no_grad():
         model.head.weight.zero_()
         model.head.bias.zero_()

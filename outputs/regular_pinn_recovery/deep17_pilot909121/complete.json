@@ -1,0 +1,9 @@
+{
+  "steps": 2,
+  "selected_step": 0,
+  "selected_validation_iv_rmse": 0.00033544234794312346,
+  "checkpoint_sha256": "a9fa171311f9d985b71507075c5294dc983bf7f88c51478b9c8eae63734b7075",
+  "distinct_training_quotes_visited": 1023,
+  "seconds": 3.962762749986723,
+  "status": "training complete; recovery not yet assessed"
+}

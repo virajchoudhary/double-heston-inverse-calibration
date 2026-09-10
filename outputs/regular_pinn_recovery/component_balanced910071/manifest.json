@@ -1,0 +1,107 @@
+{
+  "initial_checkpoint": {
+    "label": "component_adam910031",
+    "checkpoint": "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-calibration/outputs/regular_pinn_recovery/component_adam910031/model.pt",
+    "sha256": "b339b0acd816fec27fc61e6c292483a65f3cf63754398504280cf7fff93ba9e7",
+    "config": {
+      "factors": 1,
+      "width": 160,
+      "depth": 5,
+      "tau_min": 0.019178082191780823,
+      "tau_max": 2.0,
+      "x_half_width": 3.5,
+      "correction_limit": 1.8,
+      "residual_blocks": 0,
+      "checkpoint": "outputs/regular_pinn_recovery/single_sobolev_s17",
+      "data": "outputs/regular_pinn_recovery/component_data910021",
+      "out": "outputs/regular_pinn_recovery/component_adam910031",
+      "steps": 5000,
+      "seed": 910031,
+      "batch": 512,
+      "pde_batch": 128,
+      "collocation": 18000,
+      "save_every": 500,
+      "component_domain": true,
+      "add_residual_blocks": 0,
+      "checkpoint_format": "torch_state_dict_float64",
+      "precision": "float64 weights, values, gradients and AdamW moments; scalar step counter uses backend default",
+      "architecture": "unchanged regular implied-variance pricing-PDE PINN",
+      "total_hidden_layers": 5,
+      "trainable_parameter_count": 105441,
+      "training_iv_audit": "first 16384 usable archived training rows; reporting only, not selection",
+      "parameter_domain": {
+        "kappa": [
+          0.2,
+          12.0
+        ],
+        "theta_and_v0": [
+          0.006,
+          0.3
+        ],
+        "rho": [
+          -0.8,
+          0.5
+        ],
+        "feller_ratio": [
+          0.15,
+          0.9
+        ],
+        "tau": [
+          0.019178082191780823,
+          2.0
+        ],
+        "purpose": "single-factor building block, not original single-model inverse parameter box"
+      },
+      "optimizer": "AdamW",
+      "lr": 1e-05,
+      "min_lr": 2e-07,
+      "weight_decay": 1e-06,
+      "sensitivity": 0.2,
+      "weight_pde": 0.2,
+      "weight_shape": 0.05,
+      "anchor_scale": 0.05,
+      "skip_recovery": true,
+      "selection": "minimum archived validation IV RMSE; initial weights eligible",
+      "resume": "outputs/regular_pinn_recovery/single_sobolev_s17",
+      "gradient_clipping": false
+    },
+    "config_sha256": "76156683a15aef1a6c50d8d831b86796b6039efddb04ec5256ea92e8a49ebc01"
+  },
+  "input_sha256": {
+    "train.npz": "6ab1cce7b0a8132bc4d66de01474035520b55728938d0aa1ee004539187f68d8",
+    "validation.npz": "82c5b9a372680c636ae451fdfd9e476c01191586592d63a4b6ef10cb9ae3c008",
+    "collocation.npz": "a5a382da705e10846698048f7b876e25aab6a1a502a62ba0582d914df23e59d5"
+  },
+  "source_sha256": {
+    "scripts/mentor_dh_pinn/finetune_regular_torch.py": "f01f55d22ba61ec27a686c9cabb162431220f30bb60bc434737f56e3c4f2f394",
+    "scripts/mentor_dh_pinn/assess_regular_pinn.py": "8261ac8716dd59420e0121584154d511504dd86f6511fb74e87d6972aca5d993",
+    "src/mentor_dh_pinn/regular_pinn_torch.py": "06a239a91b511cb81e801948c35e438a6a8cf05929cefdc9a7f69b3f771bd15f",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "c935cc1ca531667e7805d03e1eb1b232ddc77e02fd72bd914157807120773383",
+    "src/mentor_dh_pinn/regular_pinn.py": "e409148ced31045827f2ec582a10ad572373aa50e456de4e58cb0499453d9316",
+    "src/mentor_dh_pinn/component_pinn_data.py": "4a801a2c1999302e9eb0820b29d4e1af5a94668e2b8f495dc6fa3cf615fa98e6"
+  },
+  "train_quotes": 129840,
+  "validation_quotes": 16239,
+  "collocation_points": 18000,
+  "reference_label_counts": {
+    "train": {
+      "candidates": 131072,
+      "usable": 129840,
+      "excluded_reference_labels": 1232
+    },
+    "validation": {
+      "candidates": 16384,
+      "usable": 16239,
+      "excluded_reference_labels": 145
+    }
+  },
+  "selection_scope": "previously used development validation, not unseen generalization evidence",
+  "training_information": "archived correction and parameter-derivative labels plus price PDE; no recovery truth",
+  "runtime": {
+    "python": "3.14.5",
+    "torch": "2.13.0",
+    "numpy": "2.4.6",
+    "device": "cpu",
+    "threads": 1
+  }
+}

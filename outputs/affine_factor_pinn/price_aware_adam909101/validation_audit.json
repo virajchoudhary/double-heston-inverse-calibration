@@ -1,0 +1,62 @@
+{
+  "purpose": "Post-selection validation diagnostic; no checkpoint reselection or inverse calibration",
+  "checkpoint_sha256": "ce30b212c1bcb2d795b729ddc8105f3f0c8bb96a0943607ced78fa6b26d6399b",
+  "surface_corpus_sha256": "affcea92146d791213194c6f0420c0367c84f86f5fb325def586318ce48251e8",
+  "quotes": 16128,
+  "invalid_iv_quotes": 12,
+  "invalid_locations": [
+    {
+      "surface_index": 898,
+      "quote_index": 19
+    },
+    {
+      "surface_index": 898,
+      "quote_index": 20
+    },
+    {
+      "surface_index": 911,
+      "quote_index": 0
+    },
+    {
+      "surface_index": 921,
+      "quote_index": 0
+    },
+    {
+      "surface_index": 921,
+      "quote_index": 1
+    },
+    {
+      "surface_index": 961,
+      "quote_index": 0
+    },
+    {
+      "surface_index": 969,
+      "quote_index": 0
+    },
+    {
+      "surface_index": 973,
+      "quote_index": 20
+    },
+    {
+      "surface_index": 975,
+      "quote_index": 19
+    },
+    {
+      "surface_index": 975,
+      "quote_index": 20
+    },
+    {
+      "surface_index": 978,
+      "quote_index": 0
+    },
+    {
+      "surface_index": 998,
+      "quote_index": 20
+    }
+  ],
+  "actual_iv_rmse": null,
+  "maximum_finite_inverse_price_residual": 4.440892098500626e-16,
+  "weighted_price_rmse_reproduced": 0.0012931310965554567,
+  "source_sha256": "820383dea662a9795411e198d1829b7f4f791947f89461bb57cf46ef30d6a7c9",
+  "limitation": "Same reserved selection set, not unseen evidence; undefined whole-set IV RMSE when any quote fails"
+}

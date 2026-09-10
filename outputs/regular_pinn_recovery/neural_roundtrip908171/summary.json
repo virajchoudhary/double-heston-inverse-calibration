@@ -1,0 +1,12 @@
+{
+  "status": "complete",
+  "evidence_level": "ARTIFICIAL NEURAL SELF-CONSISTENCY DEVELOPMENT DIAGNOSTIC",
+  "cases": 12,
+  "fitted_cases": 12,
+  "all_parameter_passes": 12,
+  "parameter_pass_fraction": 1.0,
+  "optimizer_successes": 12,
+  "seconds": 33.07312141699367,
+  "largest_holdout_iv_rmse": 3.9688855639604396e-15,
+  "interpretation": "Passing diagnoses successful inversion of this frozen neural function on new noiseless examples; it does not measure accuracy against Double Heston Fourier targets"
+}

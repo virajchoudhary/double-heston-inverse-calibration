@@ -1,0 +1,9 @@
+{
+  "iterations": 400,
+  "function_evaluations": 454,
+  "optimizer_success": false,
+  "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+  "final_objective": 0.002165951162169222,
+  "selected_score": 0.12425743732649541,
+  "seconds": 604.383158874989
+}

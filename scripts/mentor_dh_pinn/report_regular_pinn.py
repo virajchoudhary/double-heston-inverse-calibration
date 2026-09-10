@@ -56,12 +56,20 @@ def collect_run(directory):
     directory = directory.resolve()
     hashes, warnings = {}, []
     config = read_json(directory / "config.json", warnings, hashes, {})
+    correction = read_json(directory / "effective_optimizer_settings.json", warnings, hashes, {})
+    if correction:
+        config = {**config, **correction.get("effective_config", {})}
+        if "correction" in correction.get("artifact_type", ""):
+            warnings.append("Effective L-BFGS settings overlay the explicitly preserved inherited-Adam metadata; see effective_optimizer_settings.json.")
     history = read_json(directory / "history.json", warnings, hashes, [])
+    # Display both optimizer types without equating their computational budgets.
+    history = [{**row, "step": row.get("step", row.get("iteration"))} for row in history]
     selection = read_json(directory / "selection.json", warnings, hashes, {})
     complete = read_json(directory / "complete.json", warnings, hashes)
     failure = read_json(directory / "FAILED.json", warnings, hashes)
     manifest = read_json(directory / "manifest.json", warnings, hashes, {})
-    step = selection.get("step")
+    is_lbfgs = "iteration" in selection
+    step = selection.get("step", selection.get("iteration"))
     selected = next((row for row in history if row.get("step") == step), {})
     if step is not None and not selected:
         warnings.append("Selected checkpoint step has no matching history entry; selected IV is unavailable.")
@@ -114,7 +122,8 @@ def collect_run(directory):
                           "all_parameter_pass": bool(available and all(gates)),
                           "recomputed_training_scaled_rmse": float(np.sqrt(np.mean(np.square(training_errors))))
                               if available and all(finite(e) for e in training_errors) else None})
-    source_weights = directory / f"step_{step:06d}.safetensors" if step is not None else directory / "model.safetensors"
+    prefix = "iteration" if is_lbfgs else "step"
+    source_weights = directory / f"{prefix}_{step:06d}.safetensors" if step is not None else directory / "model.safetensors"
     if not source_weights.exists() and step is not None:
         warnings.append("The named selected-step weights are missing; no checkpoint hash is inferred from another step.")
     weights_hash = hashlib.sha256(source_weights.read_bytes()).hexdigest() if source_weights.exists() else None
@@ -137,11 +146,14 @@ def collect_run(directory):
         "factors": factors, "training_seed": config.get("seed"),
         "sensitivity_weight": config.get("sensitivity"), "weight_decay": config.get("weight_decay"),
         "resumed_from": config.get("resume"), "independent_initialization": not bool(config.get("resume")),
-        "requested_steps": config.get("steps"), "latest_recorded_step": history[-1].get("step") if history else None,
-        "selected_step": step, "selection_metric": selection.get("metric"), "selection_score": selection.get("score"),
+        "optimizer": config.get("optimizer", "AdamW"),
+        "update_kind": "L-BFGS iteration" if is_lbfgs else "AdamW step",
+        "requested_steps": config.get("iterations") if is_lbfgs else config.get("steps"),
+        "latest_recorded_step": history[-1].get("step") if history else None,
+        "selected_step": step, "selection_metric": selection.get("metric", config.get("selection")), "selection_score": selection.get("score"),
         "selected_validation_iv_rmse": selected.get("validation_iv_rmse"),
         "selected_validation_parameter_rmse": stored, "recomputed_validation_parameter_rmse": recomputed,
-        "selected_training_loss": selected.get("loss"),
+        "selected_training_loss": selected.get("loss", selected.get("objective")),
         "selected_checkpoint_path": str(source_weights) if weights_hash else None,
         "selected_checkpoint_sha256": weights_hash,
         "validation_cases_expected": expected_cases, "validation_case_records": len(recovery),
@@ -156,16 +168,23 @@ def collect_run(directory):
         "training_seconds": complete.get("seconds") if isinstance(complete, dict) else (history[-1].get("seconds") if history else None),
         "training_candidates": data_manifest.get("splits", {}).get("train", {}).get("candidates"),
         "training_usable": data_manifest.get("splits", {}).get("train", {}).get("usable"),
-        "additional_surface_training_candidates": manifest.get('surface_training',{}).get('candidates',0),
-        "additional_surface_training_usable": manifest.get('surface_training',{}).get('usable',0),
-        "parameter_aware_weight":config.get('surface_weight',0.),
+        "fixed_training_subset": config.get("anchors") if is_lbfgs else None,
+        "additional_surface_training_candidates": manifest.get('surface_training',{}).get('candidates',
+            manifest.get('surface_training',{}).get('candidate_surfaces',0)),
+        "additional_surface_training_usable": manifest.get('surface_training',{}).get('usable',
+            manifest.get('surface_training',{}).get('usable_surfaces',0)),
+        "parameter_aware_weight":manifest.get('surface_training',{}).get('bias_coefficient',config.get('surface_weight',0.)),
+        "parameter_aware_loss":manifest.get('surface_training',{}).get('bias_loss',manifest.get('surface_training',{}).get('loss')),
+        "jacobian_consistency_weight":manifest.get('surface_training',{}).get('jacobian_consistency',{}).get('jacobian_coefficient',0.),
+        "jacobian_consistency_loss":manifest.get('surface_training',{}).get('jacobian_consistency',{}).get('loss'),
         "validation_usable": data_manifest.get("splits", {}).get("validation", {}).get("usable"),
-        "collocation_pool": manifest.get("collocation_pool", data_manifest.get("collocation_points")),
+        "collocation_pool": config.get("collocation") if is_lbfgs else manifest.get("collocation_pool", data_manifest.get("collocation_points")),
         "warnings": warnings,
     }
     return {"summary": summary, "config": config, "history": history,
             "selected_case_records": case_rows, "selected_parameters": parameter_rows,
-            "input_sha256": hashes, "training_manifest": manifest, "data_manifest": data_manifest}
+            "input_sha256": hashes, "training_manifest": manifest, "data_manifest": data_manifest,
+            "effective_optimizer_correction": correction}
 
 
 def csv_write(path, rows):
@@ -195,7 +214,7 @@ def plot_history(runs, field, title, ylabel, destination):
             axis.scatter([selected["step"]], [selected[field]], marker="*", s=150,
                          c=[line.get_color()], edgecolors="black", linewidths=0.7, zorder=4)
         drawn = True
-    axis.set(title=title, xlabel="Training step within this run", ylabel=ylabel)
+    axis.set(title=title, xlabel="Optimizer update within this run (Adam step or L-BFGS iteration)", ylabel=ylabel)
     if drawn:
         axis.set_yscale("log")
         axis.legend(loc="best", fontsize=8)
@@ -242,7 +261,8 @@ def build_report(runs, output):
     for row in summaries:
         resume = row["resumed_from"] or "No"
         lines.append(f"| {row['run']} | {row['training_usable']} / {row['training_candidates']} | {row['validation_usable']} | {row['collocation_pool']} | {show(row['sensitivity_weight'])} | {resume} |")
-    lines += ["", "A resumed run continues an existing set of network weights. It does not count as an independent initialization. Training uses AdamW weight decay, PDE/shape penalties, and optional parameter-sensitivity supervision; configuration files record their exact weights.", "",
+    lines += ["", "A resumed run continues existing network weights and is not an independent initialization. AdamW runs use their declared weight decay; L-BFGS runs use a fixed deterministic objective without weight decay, clipping or resampling. A plotted L-BFGS iteration is not computationally equivalent to an Adam step. PDE/shape penalties and optional parameter-sensitivity supervision are recorded in each effective configuration.", "",
+              "L-BFGS may use a fixed subset of the available training labels; fixed_training_subset in run_summary.csv gives the actual anchor count. The table's training count describes the source dataset, not necessarily all labels used in that fine-tuning phase.", "",
               "Grouped-surface runs additionally use 1,024 independent synthetic training parameter surfaces (126 quotes each, 129,024 extra quotes). The control and parameter-aware arm use identical extra data. Their parameter-aware weights are recorded in run_summary.csv. These labels are not supplied to the inverse calibrator. Double Heston factor 1 is stored as the slow factor and factor 2 as the fast factor throughout this experiment.", "",
               "## Every selected validation parameter", "",
               "The full machine-readable values are in [selected_parameter_details.csv](selected_parameter_details.csv). Gate units are absolute error divided by the allowed tolerance: values at or below 1 pass. The signed scaled-error column uses the training selection scale described above.", ""]

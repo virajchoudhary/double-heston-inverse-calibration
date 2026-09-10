@@ -1,0 +1,57 @@
+{
+  "status": "passed",
+  "assessments": [
+    "outputs/affine_factor_pinn/integrated_lbfgs908241_exposed12",
+    "outputs/affine_factor_pinn/conjugate_adam908241_exposed12"
+  ],
+  "checks": "snapshot/checkpoint hashes, recomputed parameter gates, counts, quote identity, start selection",
+  "training_split_counts": [
+    {
+      "train": 65536,
+      "validation": 8192,
+      "collocation": 18000
+    },
+    {
+      "train": 65536,
+      "validation": 8192,
+      "collocation": 18000
+    }
+  ],
+  "regular_baseline_comparison": {
+    "baseline": "outputs/regular_pinn_recovery/exposed12_lbfgs908021",
+    "model": "double_lbfgs908021",
+    "same_truth_vectors": true,
+    "same_60_start_vectors": true,
+    "input_sha256": {
+      "synthetic_truth.json": "f000bbc0d449d8618779720d90d50bada6a042cc5cdd07d0374eb42e5bfc0c1a",
+      "fits_and_starts.json": "3fdcfb386973a6bff57f96772a6fc255516bb03ed481615ccf19226fc2e1c5d6",
+      "observations.csv": "7861ce35e594a87da19aef800bc902c93e41adc4755ede9c091d4b8bee025fd9"
+    },
+    "same_holdout_masks": true,
+    "max_observed_iv_difference": 2.914335439641036e-14,
+    "max_spot_price_difference": 3.885780586188048e-16,
+    "individual_parameter_passes": 48,
+    "all_parameter_passes": 0
+  },
+  "report_source_sha256": "d831101b7ab8dcd5f86266e091c6bee3f88b2f56d1451cf857614cdae04b78f1",
+  "summaries": [
+    {
+      "cases": 12,
+      "all_parameter_passes": 0,
+      "individual_parameter_passes": 19,
+      "individual_denominator": 120,
+      "joint_passes": 0,
+      "seconds": 445.6686865829979,
+      "evidence_level": "development; previously exposed cases, not unseen assessment"
+    },
+    {
+      "cases": 12,
+      "all_parameter_passes": 0,
+      "individual_parameter_passes": 21,
+      "individual_denominator": 120,
+      "joint_passes": 0,
+      "seconds": 294.63280604200554,
+      "evidence_level": "development; previously exposed cases, not unseen assessment"
+    }
+  ]
+}

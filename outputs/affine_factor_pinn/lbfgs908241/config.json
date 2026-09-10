@@ -1,0 +1,15 @@
+{
+  "architecture": "factor-structured Riccati PINN; NOT regular price-PDE network",
+  "width": 64,
+  "depth": 4,
+  "optimizer": "float64 SciPy L-BFGS-B neural weights, fixed full objective",
+  "weight_decay": 0.0,
+  "pde_weight": 0.2,
+  "iterations": 400,
+  "chunk": 2048,
+  "train": 65536,
+  "collocation": 18000,
+  "selection": "independent coefficient validation RMSE; no recovery cases",
+  "resume": "outputs/affine_factor_pinn/adam908241/model.pt",
+  "data": "outputs/affine_factor_pinn/adam908241"
+}
