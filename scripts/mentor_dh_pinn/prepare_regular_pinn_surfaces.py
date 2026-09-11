@@ -65,7 +65,7 @@ def main():
         b,singular[i],ranks[i],_=preconditioner(jac[i,fit_mask],units[i],args.factors,args.singular_floor)
         matrices[i]=0.
         matrices[i][:,fit_mask]=b
-    data={'q':queries,'iv':iv.reshape(args.surfaces,126),'preconditioner':matrices,
+    data={'q':queries,'iv':iv.reshape(args.surfaces,126),'jacobian':jac,'preconditioner':matrices,
           'singular_values':singular,'rank':ranks,'usable':usable,'unit':units,'fit_mask':fit_mask,
           'jacobian_quadrature_error':jac_errors,
           'quote_usable':labels['usable'].reshape(args.surfaces,126)}

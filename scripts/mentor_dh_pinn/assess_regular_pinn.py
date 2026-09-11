@@ -18,15 +18,14 @@ import sys
 import time
 from pathlib import Path
 
-import mlx.core as mx
 import numpy as np
 import torch
+from safetensors.torch import load_file
 from scipy.optimize import least_squares
 from scipy.stats import qmc
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
-from src.mentor_dh_pinn.regular_pinn import RegularVariancePINN
 from src.mentor_dh_pinn.regular_pinn_torch import TorchRegularVariancePINN
 from src.mentor_dh_pinn.identifiability import canonicalize_parameters
 from src.mentor_dh_pinn.parameter_transforms import to_optimizer,to_unit_and_jacobian
@@ -183,6 +182,27 @@ def load_checkpoint(path):
     weights = directory / "model.safetensors" if path.is_dir() else path
     config = json.loads((directory / "config.json").read_text())
     keys = {"factors", "width", "depth", "tau_min", "tau_max", "x_half_width", "correction_limit"}
+    if config.get("framework") == "pytorch":
+        if config.get("dtype") != "float64":
+            raise ValueError("PyTorch regular-PINN checkpoints must declare float64")
+        model = TorchRegularVariancePINN(**{key: value for key, value in config.items() if key in keys})
+        model.load_state_dict(load_file(str(weights), device="cpu"), strict=True)
+        model.double().eval().requires_grad_(False)
+        return model, {"label": directory.name, "checkpoint": str(weights),
+                       "sha256": sha256(weights), "config": config,
+                       "config_sha256": sha256(directory / "config.json")}
+    try:
+        import mlx.core as mx
+        from src.mentor_dh_pinn.regular_pinn import RegularVariancePINN
+    except ImportError:
+        if config.get("residual_blocks", 0):
+            raise ImportError("MLX is required to load historical deep regular-PINN checkpoints")
+        model = TorchRegularVariancePINN(**{key: value for key, value in config.items() if key in keys})
+        model.load_state_dict(load_file(str(weights), device="cpu"), strict=True)
+        model.double().eval().requires_grad_(False)
+        return model, {"label": directory.name, "checkpoint": str(weights),
+                       "sha256": sha256(weights), "config": config,
+                       "config_sha256": sha256(directory / "config.json")}
     if config.get('residual_blocks', 0):
         from src.mentor_dh_pinn.deep_regular_pinn import DeepRegularVariancePINN
         model = DeepRegularVariancePINN(**{key: value for key, value in config.items() if key in keys},

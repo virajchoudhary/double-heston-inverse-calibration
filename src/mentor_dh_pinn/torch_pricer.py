@@ -32,6 +32,15 @@ DEFAULT_NODES = 64
 _CACHE: dict[tuple[int, str], tuple[torch.Tensor, torch.Tensor]] = {}
 
 
+def _complex_log1p(value: torch.Tensor) -> torch.Tensor:
+    """Stable complex log(1 + z), including CPU subnormal inputs."""
+    small = torch.abs(value) < 1e-8
+    safe_value = torch.where(small, torch.zeros_like(value), value)
+    square = value * value
+    series = value - 0.5 * square + square * value / 3.0
+    return torch.where(small, series, torch.log1p(safe_value))
+
+
 def laguerre_rule(node_count: int = DEFAULT_NODES, device="cpu"):
     """Gauss-Laguerre nodes and weights, identical to the NumPy engine's."""
     key = (int(node_count), str(device))
@@ -58,7 +67,7 @@ def _heston_log_cf(u, tau, kappa, theta, sigma, rho, v0):
     exp_mdt = torch.exp(-d * tau)
     one = torch.ones((), dtype=g.dtype, device=g.device)
     # log((1 - g e^{-d tau})/(1 - g)) written as a difference of log1p for accuracy at g -> 0
-    log_ratio = torch.log1p(-g * exp_mdt) - torch.log1p(-g)
+    log_ratio = _complex_log1p(-g * exp_mdt) - _complex_log1p(-g)
     s2 = sigma * sigma
     c_term = (kappa * theta / s2) * ((b - d) * tau - 2.0 * log_ratio)
     d_term = ((b - d) / s2) * ((one - exp_mdt) / (one - g * exp_mdt))

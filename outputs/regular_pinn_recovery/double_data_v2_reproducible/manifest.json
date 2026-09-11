@@ -1,0 +1,307 @@
+{
+  "acceptance_rules": [
+    "finite 128-node and 96-node Torch prices",
+    "finite Black implied total variance",
+    "96-vs-128 absolute price difference <= 1e-9",
+    "absolute log variance correction < 1.5",
+    "finite ten-parameter gradient"
+  ],
+  "artifacts": {
+    "collocation.npz": {
+      "arrays": {
+        "proposal_index": {
+          "dtype": "int64",
+          "npy_sha256": "2f697dafa08066b5f936b8be7284040bab1f31e7ab0e901937e68e1dbf500e8c",
+          "shape": [
+            18000
+          ]
+        },
+        "q": {
+          "dtype": "float64",
+          "npy_sha256": "c87ebce218cde2fc02687cfd13edb294786a66ac342dc336a31de03ee8cb34c2",
+          "shape": [
+            18000,
+            12
+          ]
+        }
+      },
+      "bytes": 1872476,
+      "sha256": "730d7352df74075464c4443240f5de753371ef2bf6c2593a3f861727b3171c6f"
+    },
+    "rejections.npz": {
+      "arrays": {
+        "proposal_index": {
+          "dtype": "int64",
+          "npy_sha256": "e734dac55ea9fbbe782af2d8c02c3c5992131906228afb2aaaf137d6f3ed74db",
+          "shape": [
+            0
+          ]
+        },
+        "q": {
+          "dtype": "float64",
+          "npy_sha256": "36b1befef928e8ba8824fcf5c67bfbf1b737f599802ea19d146b45daeff960c7",
+          "shape": [
+            0,
+            12
+          ]
+        },
+        "reason_code": {
+          "dtype": "uint16",
+          "npy_sha256": "0698e782887bb0dfadc446c2ecae6a9e9055d5c0f59c7e327f5a826675bb86cc",
+          "shape": [
+            0
+          ]
+        },
+        "split": {
+          "dtype": "uint8",
+          "npy_sha256": "4ca930d4c39dd441d095d27d2ac61750ccb0f54238f1eed588061be710bf4bb6",
+          "shape": [
+            0
+          ]
+        }
+      },
+      "bytes": 932,
+      "sha256": "49ce6c347f1982d33565299eee73aff71b212a78f51e5e68092bf96ef0ed3039"
+    },
+    "train.npz": {
+      "arrays": {
+        "dg_du": {
+          "dtype": "float64",
+          "npy_sha256": "d0663974b3d490471ff07c90c6c49745fef06359e8d5469d792066d896c3897e",
+          "shape": [
+            131072,
+            10
+          ]
+        },
+        "g": {
+          "dtype": "float64",
+          "npy_sha256": "99c9084463496bf3a352743cf295b95fa82f92b4d23fb81328e374c07cca0f1a",
+          "shape": [
+            131072
+          ]
+        },
+        "price": {
+          "dtype": "float64",
+          "npy_sha256": "8395d61e237c0f033bbbfaa03841997076804cdf13e5b82ed58301962d5da3bc",
+          "shape": [
+            131072
+          ]
+        },
+        "proposal_index": {
+          "dtype": "int64",
+          "npy_sha256": "8e3b0e10b03cc03e91708db4fb55ccb02e84072e6ba3002c0dccb81f3fff61d3",
+          "shape": [
+            131072
+          ]
+        },
+        "q": {
+          "dtype": "float64",
+          "npy_sha256": "4bfc95032577033187b74be5304380bfefcff2771fe11f60cea1536b2843b6fc",
+          "shape": [
+            131072,
+            12
+          ]
+        },
+        "quadrature_difference": {
+          "dtype": "float64",
+          "npy_sha256": "730149067b1380943f85edc170481161470e350b9dce07c173b6ef1c7b833a3f",
+          "shape": [
+            131072
+          ]
+        },
+        "usable": {
+          "dtype": "bool",
+          "npy_sha256": "36bac3324744db0407b99f3f84a88b9fb303b0f8ba3c12104db0da37e15f872c",
+          "shape": [
+            131072
+          ]
+        },
+        "w": {
+          "dtype": "float64",
+          "npy_sha256": "71d0ee0126de998710bacf7f99a755eba7dfb858d821de4aa9e0b0050f517c19",
+          "shape": [
+            131072
+          ]
+        }
+      },
+      "bytes": 28444450,
+      "sha256": "92b5c70d8a66fc2996ed945b54ba9a80feb6768874151ab666aea54a3e2c6250"
+    },
+    "validation.npz": {
+      "arrays": {
+        "dg_du": {
+          "dtype": "float64",
+          "npy_sha256": "27244ac7609c449281b3e4d674a9ae242a3f498fcb595ac1aaa8746d70892b73",
+          "shape": [
+            16384,
+            10
+          ]
+        },
+        "g": {
+          "dtype": "float64",
+          "npy_sha256": "3065894656d3049b0bca647ff94ea42bca8454f5c1298dfebd3ba00fd43df3d5",
+          "shape": [
+            16384
+          ]
+        },
+        "price": {
+          "dtype": "float64",
+          "npy_sha256": "debc4ffc98b711cfa2745cb0ae22a8bb639c16194a86a622b354dfe8ab99803c",
+          "shape": [
+            16384
+          ]
+        },
+        "proposal_index": {
+          "dtype": "int64",
+          "npy_sha256": "4aeca789c5ae738675a5bb11f903356d4e0c4e216c2ea8aff3beac9e1f66d67d",
+          "shape": [
+            16384
+          ]
+        },
+        "q": {
+          "dtype": "float64",
+          "npy_sha256": "be62ee27644de6872344d2b076847345714db07e20cacabd86027753b0a61b08",
+          "shape": [
+            16384,
+            12
+          ]
+        },
+        "quadrature_difference": {
+          "dtype": "float64",
+          "npy_sha256": "8a0a4a6074ab0e3b88e18209bd2429f9c89a0ee56ddccd4c6bf7281715436a4b",
+          "shape": [
+            16384
+          ]
+        },
+        "usable": {
+          "dtype": "bool",
+          "npy_sha256": "8aeef3d17229aa91619c16c33faaf08ee9aecfc70620bedf8a2587bed5c820b0",
+          "shape": [
+            16384
+          ]
+        },
+        "w": {
+          "dtype": "float64",
+          "npy_sha256": "f77b5aa6837d244e9b8464aaf67022a057d005a1c2f19d88d50f608026e67122",
+          "shape": [
+            16384
+          ]
+        }
+      },
+      "bytes": 3557154,
+      "sha256": "479673a31342f2dd27eb05ecf6e72913f233e0b4ea41153fe74f6dfb6dca2bd1"
+    }
+  },
+  "canonicalization": {
+    "archive": "ZIP_STORED with sorted members and fixed 1980-01-01 metadata",
+    "float_decimal_places": 14
+  },
+  "contract_id": "DOUBLE_DATA_V2_REPRODUCIBLE",
+  "device_policy": "CPU only; torch.set_num_threads(1); float64/complex128",
+  "dtype": "little-endian float64; indices little-endian int64; reason codes little-endian uint16",
+  "generator_base_commit": "9c44422cf6afc46e718cb21ad561756445e49b8a",
+  "generator_source_sha256": {
+    "scripts/mentor_dh_pinn/prepare_regular_pinn_v2.py": "c484c74d4d28476275e4adda3a72f9f3627b98cd6b9aac8c0666efb656abe33e",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "b179ab0c275a185a689ac0efefc17d9e5760ca21cee0bd290a6b288a4d099e44",
+    "src/mentor_dh_pinn/reproducible_regular_pinn_data.py": "6392ad7c4afaff5d4331259e1ed999384fee48d0bb130e79914e561f64d591f1",
+    "src/mentor_dh_pinn/torch_pricer.py": "8dcf7228926d3ae2cd09a39ec5541b1ef19bd8a84356dc744c6c28bc047927ce"
+  },
+  "historical_evidence_policy": "Historical double_data and checkpoints are immutable and are not inputs to this reset cohort.",
+  "ordering": "ascending proposal index; rejected proposals are recorded and the stream continues until the exact accepted count",
+  "parameter_bounds": {
+    "factor_shares": [
+      0.2,
+      0.8
+    ],
+    "fast_kappa": "slow + 0.5 + (11.5 - slow) * u; maximum 12",
+    "feller_ratio": [
+      0.15,
+      0.9
+    ],
+    "rho_fast": [
+      -0.6,
+      0.5
+    ],
+    "rho_slow": [
+      -0.8,
+      0.3
+    ],
+    "sampling": "Latin hypercube; log scale for speeds and total variances; linear shares, correlations and eta",
+    "single_kappa": [
+      0.2,
+      12.0
+    ],
+    "slow_kappa": [
+      0.2,
+      3.0
+    ],
+    "tau_years": [
+      0.019178082191780823,
+      2.0
+    ],
+    "total_theta_and_v0": [
+      0.03,
+      0.3
+    ]
+  },
+  "rejection_reason_bits": {
+    "1": "structural_constraint",
+    "16": "quadrature_difference_above_1e-9",
+    "2": "nonfinite_price_128",
+    "32": "absolute_log_variance_correction_at_least_1.5",
+    "4": "nonfinite_price_96",
+    "64": "nonfinite_parameter_gradient",
+    "8": "nonfinite_implied_variance"
+  },
+  "required_runtime": {
+    "numpy": "2.4.3",
+    "python": "3.13.9",
+    "scipy": "1.16.2",
+    "torch": "2.11.0+cpu"
+  },
+  "rng": {
+    "algorithm": "numpy.random.PCG64 via SeedSequence([split_seed, block_index, 12])",
+    "design": "independent fixed 4096-row Latin-hypercube blocks",
+    "proposal_block_size": 4096,
+    "seed": 906210,
+    "split_seeds": {
+      "collocation": 906212,
+      "train": 906210,
+      "validation": 906211
+    }
+  },
+  "runtime": {
+    "byteorder": "little",
+    "machine": "AMD64",
+    "numpy": "2.4.3",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.9",
+    "required_versions_match": true,
+    "scipy": "1.16.2",
+    "torch": "2.11.0+cpu",
+    "torch_threads": 1
+  },
+  "splits": {
+    "collocation": {
+      "rows": 18000
+    },
+    "train": {
+      "accepted": 131072,
+      "proposals": 131072,
+      "rejected": 0
+    },
+    "validation": {
+      "accepted": 16384,
+      "proposals": 16384,
+      "rejected": 0
+    }
+  },
+  "status": "complete",
+  "validity_constraints": [
+    "positive kappa/theta/sigma/v0",
+    "kappa_slow < kappa_fast",
+    "strict per-factor Feller gaps",
+    "each rho strictly inside (-1,1)",
+    "rho_slow^2 + rho_fast^2 < 1"
+  ]
+}

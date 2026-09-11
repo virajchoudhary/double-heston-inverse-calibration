@@ -19,8 +19,9 @@ import torch
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from scripts.mentor_dh_pinn.assess_regular_pinn import load_checkpoint, sha256
-from scripts.mentor_dh_pinn.train_regular_pinn import make_validation_surfaces
-from src.mentor_dh_pinn.regular_pinn_data import coordinates, decode_unit, exact_prices, invert_total_variance
+from src.mentor_dh_pinn.regular_pinn_data import (
+    black_call, coordinates, decode_unit, exact_prices, invert_total_variance, teacher_labels,
+)
 from src.mentor_dh_pinn.regular_pinn_torch import TorchRegularVariancePINN
 
 
@@ -36,6 +37,21 @@ def exact_iv_jacobian(q, factors, nodes):
     return iv, dp / price_vega[:, None]
 
 
+def make_validation_surfaces(factors):
+    rng = np.random.default_rng(906311 if factors == 2 else 906111)
+    units = rng.uniform(0.1, 0.9, (4, 5 * factors))
+    x = np.tile(-np.log(np.linspace(0.8, 1.2, 21)), 6)
+    tau = np.repeat(np.asarray([30, 60, 90, 180, 365, 730]) / 365.0, 21)
+    surfaces = []
+    for unit in units:
+        q = np.column_stack([x, np.log(tau), np.broadcast_to(unit, (len(x), len(unit)))])
+        labels = teacher_labels(q, factors, gradients=False)
+        if not labels["usable"].all():
+            raise ValueError("Validation surface numerical labels invalid")
+        surfaces.append((q, labels, decode_unit(unit, factors)))
+    return surfaces
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--checkpoint", type=Path, required=True)
@@ -45,7 +61,7 @@ def main():
         raise FileExistsError("Preserve previous diagnostics; choose a new output")
     torch.set_num_threads(1)
     model, info = load_checkpoint(args.checkpoint)
-    network = TorchRegularVariancePINN.from_mlx(model)
+    network = model if isinstance(model, TorchRegularVariancePINN) else TorchRegularVariancePINN.from_mlx(model)
     rows = []
     for case, (q, _, truth) in enumerate(make_validation_surfaces(model.factors)):
         mask = np.tile(np.arange(21) % 3 != 2, 6)
@@ -57,6 +73,8 @@ def main():
         neural_iv = network.iv(state, structural)
         neural_jac = torch.autograd.grad(neural_iv.sum(), query)[0].detach().numpy()[:, 2:]
         error = neural_iv.detach().numpy() - true_iv
+        price_error = (black_call(q[:, 0], neural_iv.detach().numpy() ** 2 * np.exp(q[:, 1]))
+                       - black_call(q[:, 0], true_iv ** 2 * np.exp(q[:, 1]))) * np.exp(-q[:, 0])
         unit = torch.tensor(q[0, 2:], dtype=torch.float64, requires_grad=True)
         physical_jac = torch.autograd.functional.jacobian(lambda u: decode_unit(u, model.factors, torch), unit).numpy()
         tolerance = .05 * truth
@@ -74,6 +92,7 @@ def main():
             "case": case, "truth": truth.tolist(), "calibration_quotes": len(q),
             "iv_rmse_at_generating_parameters": float(np.sqrt(np.mean(error**2))),
             "iv_max_at_generating_parameters": float(np.max(np.abs(error))),
+            "price_rmse_spot_at_generating_parameters": float(np.sqrt(np.mean(price_error**2))),
             "exact_iv_quadrature_max_difference": float(np.max(np.abs(true_iv - other_iv))),
             "exact_iv_jacobian_quadrature_max_difference": float(np.max(np.abs(true_jac - other_jac))),
             "unit_jacobian_relative_frobenius_error": float(np.linalg.norm(neural_jac - true_jac) / np.linalg.norm(true_jac)),

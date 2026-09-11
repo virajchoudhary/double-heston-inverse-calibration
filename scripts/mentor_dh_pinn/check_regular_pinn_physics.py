@@ -14,16 +14,14 @@ import sys
 import time
 from pathlib import Path
 
-import mlx.core as mx
 import numpy as np
 import torch
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from scripts.mentor_dh_pinn.assess_regular_pinn import load_checkpoint, sha256
-from src.mentor_dh_pinn.regular_pinn import residual
 from src.mentor_dh_pinn.regular_pinn_data import DOMAIN, coordinates, draw_points
-from src.mentor_dh_pinn.regular_pinn_torch import TorchRegularVariancePINN
+from src.mentor_dh_pinn.regular_pinn_torch import TorchRegularVariancePINN, residual as torch_residual
 
 
 def array_hash(array):
@@ -50,19 +48,61 @@ def evaluate_points(model, points, chunk=128):
     """Read-only diagnostics, sharing one float64 copy of the same network weights."""
     if chunk < 1 or len(points) < 1:
         raise ValueError("positive chunk and at least one point required")
-    adapter = TorchRegularVariancePINN.from_mlx(model)
+    torch_native = isinstance(model, TorchRegularVariancePINN)
+    adapter = model if torch_native else TorchRegularVariancePINN.from_mlx(model)
+    float32_adapter = None
+    if torch_native:
+        float32_adapter = TorchRegularVariancePINN(
+            factors=model.factors,
+            width=model.width,
+            depth=model.depth,
+            tau_min=model.tau_min,
+            tau_max=model.tau_max,
+            x_half_width=model.x_half_width,
+            correction_limit=model.correction_limit,
+        ).float()
+        float32_adapter.load_state_dict(
+            {key: value.detach().float() for key, value in model.state_dict().items()}
+        )
+        float32_adapter.eval().requires_grad_(False)
+    if not torch_native:
+        import mlx.core as mx
+        from src.mentor_dh_pinn.regular_pinn import residual as mlx_residual
     blocks = []
     started = time.perf_counter()
     for start in range(0, len(points), chunk):
         q = points[start:start + chunk]
+        torch_states, torch_structural = coordinates(
+            torch.tensor(q, dtype=torch.float64), model.factors, torch
+        )
+        if torch_native:
+            value, diag = torch_residual(adapter, torch_states, torch_structural)
+            iv = adapter.iv(torch_states, torch_structural)
+            float32_states, float32_structural = coordinates(
+                torch.tensor(q, dtype=torch.float32), model.factors, torch
+            )
+            float32_iv = float32_adapter.iv(float32_states, float32_structural)
+            terminal = torch.cat(
+                [torch_states[..., :-1], torch.zeros_like(torch_states[..., -1:])], dim=-1
+            )
+            terminal_value = adapter.price(terminal, torch_structural)
+            arrays = {
+                "residual": value.detach().numpy(),
+                "iv_mlx": float32_iv.detach().numpy(),
+                "iv_torch64": iv.detach().numpy(),
+                "terminal_payoff": np.maximum(np.expm1(q[:, 0]), 0.0),
+                "terminal_error": terminal_value.detach().numpy() - np.maximum(np.expm1(q[:, 0]), 0.0),
+                **{name: tensor.detach().numpy() for name, tensor in diag.items()},
+            }
+            blocks.append(arrays)
+            continue
         states, structural = coordinates(mx.array(q, dtype=mx.float32), model.factors, mx)
-        value, diag = residual(model, states, structural)
+        value, diag = mlx_residual(model, states, structural)
         iv = model.iv(states, structural)
         terminal = mx.concatenate([states[..., :-1], mx.zeros_like(states[..., -1:])], axis=-1)
         terminal_value = model.price(terminal, structural)
         mx.eval(value, diag, iv, terminal_value)
         with torch.no_grad():
-            torch_states, torch_structural = coordinates(torch.tensor(q, dtype=torch.float64), model.factors, torch)
             reference_iv = adapter.iv(torch_states, torch_structural).numpy()
         x = np.asarray(states[..., 0], dtype=float)
         payoff = np.maximum(np.expm1(x), 0.0)
@@ -116,7 +156,8 @@ def evaluate_points(model, points, chunk=128):
         "same_weights_float32_float64_iv_parity": {
             "errors": distribution(parity_error), "atol": 2e-6, "rtol": 2e-6,
             "passed": bool(np.isfinite(parity_error).all() and np.allclose(arrays["iv_mlx"], arrays["iv_torch64"], atol=2e-6, rtol=2e-6)),
-            "description": "same learned float32 weights promoted to float64; neither copy is retrained",
+            "description": ("same learned float64 weights cast to float32 and compared with float64" if torch_native else
+                            "same learned float32 weights promoted to float64; neither copy is retrained"),
         },
     }
     order = np.argsort(np.where(np.isfinite(r), np.abs(r), np.inf))[::-1][:10]
