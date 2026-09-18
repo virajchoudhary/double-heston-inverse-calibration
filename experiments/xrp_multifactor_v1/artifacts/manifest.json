@@ -1,0 +1,156 @@
+{
+  "frozen_utc": "2026-09-18T05:46:14.534709+00:00",
+  "config": {
+    "version": "xrp_multifactor_v1",
+    "purpose": "Out-of-asset replication of btc_multifactor_v1 on XRP options: Double Heston vs Single Heston vs Black-Scholes (per expiry), every model calibrated per date, scored on held-out options. Rules fixed before any XRP option data is fetched or any model fitted.",
+    "asset": "XRP",
+    "venue": "Deribit linear XRP_USDC options, USDC-settled",
+    "sources": {
+      "trades": "https://history.deribit.com/api/v2/public/get_last_trades_by_currency_and_time?currency=USDC&kind=option&include_old=true",
+      "instrument_prefix": "XRP_USDC-",
+      "spot": "artifacts/xrp_perp_daily.json (Deribit XRP_USDC-PERPETUAL daily closes)"
+    },
+    "convention": "Deribit quotes XRP_USDC option prices in USDC as the undiscounted Black-76 price (checked on one trade before freezing: 0.014498 model vs 0.0145 traded). The forward-normalised call is c = price/F for calls, and c = price/F + 1 - K/F for puts.",
+    "forward": "Per trade, solve for F from (price, trade iv, K, tau) under the convention. Per expiry, take the median of F/index over the day's trades. Each quote's forward is that ratio times the index at its own trade time.",
+    "window_utc_hours": [
+      0,
+      24
+    ],
+    "window_reason": "XRP options trade far less than BTC, so a full UTC day is used instead of 2 hours; last trade per instrument.",
+    "quote": "Last trade per instrument in the window. Primary target: trade price. Secondary robustness target: the exchange mark price at that trade.",
+    "filters": {
+      "min_days": 3,
+      "max_days": 400,
+      "otm_only": true,
+      "min_price_usdc": 0.001,
+      "iv_range": [
+        0.1,
+        3.0
+      ],
+      "max_abs_log_moneyness": 1.0,
+      "min_quotes_per_expiry": 3,
+      "min_expiries_per_date": 4
+    },
+    "date_rule": {
+      "spot_file": "artifacts/xrp_perp_daily.json",
+      "first_date": "2024-04-01",
+      "last_date": "2026-09-16",
+      "rv_window_days": 10,
+      "lookback_days": 60,
+      "shock_ratio": 1.5,
+      "dedupe_days": 20,
+      "days_after_onset": [
+        1,
+        4,
+        8
+      ],
+      "calm_band": 0.1,
+      "calm_max_range_20d": "q25",
+      "calm_exclusion_days_from_shock": 20,
+      "calm_sample": 25,
+      "seed": 20260921,
+      "definition": "RV10 = annualised (sqrt 365) std of the last 10 daily log returns of the perpetual close. ratio = RV10 / median(RV10 over the previous 60 days). Shock onset: ratio >= 1.5, de-duplicated over 20 days; surfaces 1, 4 and 8 days after onset. Calm: |ratio - 1| <= 0.1, max/min RV10 over the last 21 days <= its own 25th percentile over all eligible days (amendment 01, pre-fetch: the fixed 1.3 admitted 1 of 899 days because RV10 is far noisier than DVOL), more than 20 days from any shock onset; 25 drawn by seed, surface the next day.",
+      "why_not_implied": "Deribit publishes no XRP volatility index; realised volatility from spot is used so dates stay model-free and option-free.",
+      "split": "No validation stage: every selected date is a test date (see variants).",
+      "unavailable_dates": "disclosed; never replaced by other dates"
+    },
+    "designs": {
+      "B_heldout_expiries": "PRIMARY. Sort a date's expiries by maturity; hold out every odd-ranked expiry except the longest. Calibrate on the rest; score all quotes of held-out expiries.",
+      "A_heldout_strikes": "SECONDARY. Within each expiry, sort by strike; hold out odd-ranked strikes."
+    },
+    "models": {
+      "BS_EXPIRY": "One Black-76 volatility per calibration expiry (grouped by the expiry column, per btc AMENDMENT_01). Other expiries: linear total-variance interpolation between expiry knots, flat outside.",
+      "SH": "Heston, all five parameters calibrated per date and design; feller_free.",
+      "DH": "Double Heston, separable four-shock literature_exact convention, slow-first ordering, all ten parameters calibrated per date and design; feller_free."
+    },
+    "variants": "Fixed in advance to feller_free for both SH and DH, inherited from the BTC validation choice (btc_multifactor_v1/artifacts/variant_selection.json). No XRP date is used for any choice.",
+    "bounds": {
+      "kappa_single": [
+        0.05,
+        50.0
+      ],
+      "kappa_slow": [
+        0.05,
+        20.0
+      ],
+      "kappa_gap": [
+        0.05,
+        100.0
+      ],
+      "theta": [
+        0.001,
+        4.0
+      ],
+      "v0": [
+        0.001,
+        4.0
+      ],
+      "eta": [
+        0.01,
+        0.999
+      ],
+      "sigma": [
+        0.01,
+        10.0
+      ],
+      "rho": [
+        -0.99,
+        0.99
+      ],
+      "bs_vol": [
+        0.05,
+        5.0
+      ]
+    },
+    "bounds_note": "Identical to BTC so this is a clean replication; the binding vol-of-vol bound is reported, not changed.",
+    "objective": "Mean squared vega-weighted price residual, identical to BTC.",
+    "optimizer": {
+      "de_popsize_multiplier": 6,
+      "de_maxiter": 25,
+      "multistarts": 12,
+      "max_nfev": 300,
+      "seed": 20260919
+    },
+    "numerics": {
+      "nodes": 128,
+      "comparison_nodes": 96,
+      "evaluation_disagreement_tolerance": 1e-07
+    },
+    "primary_endpoint": "Shock dates, design B. Per episode, average the per-date paired differences in held-out IV RMSE (SH - DH, BS_EXPIRY - DH). DH beats a competitor only if the one-sided Wilcoxon signed-rank test over episodes gives p < 0.05 AND the episode-cluster bootstrap 95% lower bound of the mean difference is > 0 (5,000 replicates, seed 20260920).",
+    "secondary": [
+      "design A on shock dates",
+      "both designs on calm dates",
+      "held-out price RMSE in USD",
+      "mark-price target robustness",
+      "maturity and moneyness buckets",
+      "date-level win fractions"
+    ],
+    "integrity": [
+      "Dates come from spot realised volatility alone before any XRP option data is fetched.",
+      "No filter, split, metric, bound, optimizer setting or endpoint changes after fits are seen.",
+      "Failed dates, fits and fallbacks are retained and disclosed.",
+      "Trade prices are not synchronized bid/ask; no spread-based claims.",
+      "Pre-freeze contact with XRP option data: one trade, used only to confirm the price convention, and daily counts on eleven dates to find when history begins, and the list of currently listed XRP expiries (6)."
+    ]
+  },
+  "source_sha256": {
+    "config.json": "5e31f41e427b594cc9d95ce04816a196aec8b72d6c4453584cf8bccd0c381212",
+    "PROTOCOL.md": "b73f0c45e6a6637ecbad02c6a02d55a0c2d0fbe3c43257a426d9083fd34eaf80",
+    "data_xrp.py": "d22bdccb8db5363a5b9c0e6ad6bc606202512f0fbf437d380b21a4372cf73e64",
+    "run_xrp.py": "161e2efb56a8787710168ad91475ad90a0b0b174a8edea3406c3303ab476d69e",
+    "test_xrp.py": "87ae2d8cb9d39713359d38df51da7b9c000111603b7127d796b543a1aa17d46d"
+  },
+  "btc_sha256": {
+    "engine.py": "3be06793eb21aa293ea1eb6038220c6d7e3cdd17fb5cc113ff4bbe8ccc51d4ae",
+    "data.py": "954e5c0f978c1ba6aa903562fbc6dce939d924abcf21c82c114d51d08890a8b0",
+    "run.py": "473d6897ee83e19cf3beaa9c7644e7767271e743de25723823bee32321e08a96",
+    "amend01.py": "d44a27e0f0750c37238e6efa778014a21381a0eb7c7ba49291238cf894c4312b"
+  },
+  "repo_sha256": {
+    "src/double_heston_reference.py": "467cab8eac4ddc9249833f3db064d5f58979d9b0dd15e22448bafa7ef9c12350",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "b179ab0c275a185a689ac0efefc17d9e5760ca21cee0bd290a6b288a4d099e44"
+  },
+  "spot_sha256": "935f3c8a97e2224d7cfea23dc39df059c2e88443ea8417a5e6c1d95f91faa5ba",
+  "xrp_option_surfaces_fetched_before_freeze": false,
+  "models_fitted_before_freeze": false
+}
