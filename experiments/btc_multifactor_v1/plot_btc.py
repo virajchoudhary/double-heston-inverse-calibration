@@ -88,3 +88,19 @@ axs[0][0].set_ylabel('implied vol (%)'); axs[0][0].legend(frameon=False, fontsiz
 fig.suptitle(f'{date} (shock; median DH-vs-SH gap among the 29 primary dates): smiles of expiries no model saw', fontsize=10.5)
 fig.tight_layout(); fig.savefig(FIG / '5_example_heldout_smiles.png'); plt.close(fig)
 print('figures written; example date', date)
+
+# 6. One-figure summary: median held-out error per situation, with date-level win counts
+fig, ax = plt.subplots(figsize=(11, 5.6)); w = .27
+names = ['Shock days\nheld-out expiries', 'Shock days\nheld-out strikes', 'Calm days\nheld-out expiries', 'Calm days\nheld-out strikes']
+for i, m in enumerate(M):
+    vals = [piv(r, d)[m].median() for r, d, _ in CELLS]
+    b = ax.bar(np.arange(4) + (i - 1) * w, vals, w, color=COL[m], label=LAB[m], edgecolor='white')
+    ax.bar_label(b, fmt='%.2f', fontsize=9, padding=2, fontweight='bold' if m == 'DH' else 'normal')
+for j, (r, d, _) in enumerate(CELLS):
+    p = piv(r, d)
+    ax.text(j, -1.45, f"DH beats SH: {(p.SH > p.DH).sum()}/{len(p)} days\nDH beats BS: {(p.BS_EXPIRY > p.DH).sum()}/{len(p)} days",
+            ha='center', va='top', fontsize=8.5, linespacing=1.4, color=COL['DH'])
+ax.set_xticks(range(4), names); ax.set_ylim(0, 9.5); ax.set_ylabel('median pricing error on unseen options\n(implied-vol points, lower is better)')
+ax.set_title('Bitcoin options (Deribit), 50 test days 2022–2026: Double Heston has the lowest error in every situation', fontsize=11)
+ax.legend(frameon=False, loc='upper right'); fig.subplots_adjust(bottom=.24, top=.9, left=.1, right=.97)
+fig.savefig(FIG / '6_summary_comparison.png'); plt.close(fig)
