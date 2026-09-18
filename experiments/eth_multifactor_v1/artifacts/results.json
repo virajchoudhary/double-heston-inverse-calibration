@@ -1,0 +1,155 @@
+{
+  "utc": "2026-09-18T06:39:04.757837+00:00",
+  "primary_endpoint": "Shock-regime dates, design B. For each episode, average the per-date paired differences in held-out IV RMSE: SH minus DH and BS_EXPIRY minus DH. DH beats a competitor only if the one-sided Wilcoxon signed-rank test over episodes gives p < 0.05 AND the episode-cluster bootstrap 95% lower bound of the mean difference is > 0 (5,000 replicates, seed 20260920).",
+  "cells": [
+    {
+      "regime": "shock",
+      "design": "B",
+      "dates": 27,
+      "units": 10,
+      "median_IV_RMSE": {
+        "BS_EXPIRY": 8.758753247559373,
+        "SH": 3.233065066063175,
+        "DH": 2.3185500322182215
+      },
+      "SH_minus_DH": {
+        "mean": 0.9633045813734483,
+        "median": 0.7316108012947709,
+        "DH_wins_dates": "22/27",
+        "unit_means_positive": "10/10",
+        "wilcoxon_one_sided_p": 0.0009765625,
+        "cluster_bootstrap95": [
+          0.6088945011567228,
+          1.461759295533213
+        ],
+        "DH_beats": true
+      },
+      "BS_EXPIRY_minus_DH": {
+        "mean": 8.109754708889911,
+        "median": 6.5782501939723,
+        "DH_wins_dates": "27/27",
+        "unit_means_positive": "10/10",
+        "wilcoxon_one_sided_p": 0.0009765625,
+        "cluster_bootstrap95": [
+          5.624105954549814,
+          11.9999215183321
+        ],
+        "DH_beats": true
+      }
+    },
+    {
+      "regime": "shock",
+      "design": "A",
+      "dates": 27,
+      "units": 10,
+      "median_IV_RMSE": {
+        "BS_EXPIRY": 7.204006043215417,
+        "SH": 2.722428359350108,
+        "DH": 1.9461749479081605
+      },
+      "SH_minus_DH": {
+        "mean": 1.4724937041598323,
+        "median": 1.0523955665708007,
+        "DH_wins_dates": "25/27",
+        "unit_means_positive": "10/10",
+        "wilcoxon_one_sided_p": 0.0009765625,
+        "cluster_bootstrap95": [
+          0.8100437838233937,
+          2.7947859304502565
+        ],
+        "DH_beats": true
+      },
+      "BS_EXPIRY_minus_DH": {
+        "mean": 6.82383885229652,
+        "median": 5.733381631021504,
+        "DH_wins_dates": "27/27",
+        "unit_means_positive": "10/10",
+        "wilcoxon_one_sided_p": 0.0009765625,
+        "cluster_bootstrap95": [
+          4.8861682117809275,
+          9.742643221219003
+        ],
+        "DH_beats": true
+      }
+    },
+    {
+      "regime": "calm",
+      "design": "B",
+      "dates": 26,
+      "units": 26,
+      "median_IV_RMSE": {
+        "BS_EXPIRY": 8.768697096405521,
+        "SH": 2.683218023454917,
+        "DH": 2.336682969926719
+      },
+      "SH_minus_DH": {
+        "mean": 0.5281824154413564,
+        "median": 0.5943241333131926,
+        "DH_wins_dates": "18/26",
+        "unit_means_positive": "18/26",
+        "wilcoxon_one_sided_p": 0.002566590905189514,
+        "cluster_bootstrap95": [
+          0.22215172386853185,
+          0.8584808311584718
+        ],
+        "DH_beats": true
+      },
+      "BS_EXPIRY_minus_DH": {
+        "mean": 5.7478114650448795,
+        "median": 5.685566032124658,
+        "DH_wins_dates": "26/26",
+        "unit_means_positive": "26/26",
+        "wilcoxon_one_sided_p": 1.4901161193847656e-08,
+        "cluster_bootstrap95": [
+          4.741073169146009,
+          6.817087387626857
+        ],
+        "DH_beats": true
+      }
+    },
+    {
+      "regime": "calm",
+      "design": "A",
+      "dates": 26,
+      "units": 26,
+      "median_IV_RMSE": {
+        "BS_EXPIRY": 6.118317862311654,
+        "SH": 2.1352870846045713,
+        "DH": 1.5568951843865895
+      },
+      "SH_minus_DH": {
+        "mean": 0.7392466191114765,
+        "median": 0.6323201730999135,
+        "DH_wins_dates": "25/26",
+        "unit_means_positive": "25/26",
+        "wilcoxon_one_sided_p": 3.725290298461914e-07,
+        "cluster_bootstrap95": [
+          0.5386445727923005,
+          0.9493308042358176
+        ],
+        "DH_beats": true
+      },
+      "BS_EXPIRY_minus_DH": {
+        "mean": 4.4230063078858475,
+        "median": 4.473361553556848,
+        "DH_wins_dates": "26/26",
+        "unit_means_positive": "26/26",
+        "wilcoxon_one_sided_p": 1.4901161193847656e-08,
+        "cluster_bootstrap95": [
+          3.792384138871538,
+          5.063986416426398
+        ],
+        "DH_beats": true
+      }
+    }
+  ],
+  "median_insample_IV_RMSE": {
+    "BS_EXPIRY": 9.943880336223199,
+    "DH": 1.665743463638254,
+    "SH": 3.0929598113654615
+  },
+  "primary": {
+    "DH_beats_SH": true,
+    "DH_beats_BS_EXPIRY": true
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "version": "eth_multifactor_v1",
+  "purpose": "Out-of-asset replication of btc_multifactor_v1 on Ether options: Double Heston vs Single Heston vs per-expiry Black-Scholes, every model calibrated per date, scored on held-out options. Rules fixed before any ETH option surface is fetched or any model fitted.",
+  "asset": "ETH",
+  "venue": "Deribit options on futures, ETH-settled (inverse), same convention as BTC",
+  "sources": {
+    "trades": "https://history.deribit.com/api/v2/public/get_last_trades_by_currency_and_time?currency=ETH&kind=option",
+    "dvol": "https://www.deribit.com/api/v2/public/get_volatility_index_data?currency=ETH&resolution=1D"
+  },
+  "convention": "Deribit quotes option prices in ETH as the Black-76 USD price divided by that expiry's futures price, with no discounting. The ETH price is therefore the forward-normalised option price. Calls are used directly; puts are converted with c = p + 1 - K/F. USD value = normalised price x F.",
+  "forward": "Per trade, solve for F from (trade price, trade iv, K, tau) under the convention. Per expiry, take the median of F/index over that expiry's trades in the window. Each quote's forward is that ratio times the index at its own trade time.",
+  "window_utc_hours": [
+    6,
+    8
+  ],
+  "quote": "Last trade per instrument in the window. Primary target: trade price. Secondary robustness target: the exchange mark price at that trade.",
+  "filters": {
+    "min_days": 3,
+    "max_days": 400,
+    "otm_only": true,
+    "min_price_btc": 0.0005,
+    "iv_range": [
+      0.1,
+      3.0
+    ],
+    "max_abs_log_moneyness": 1.0,
+    "min_quotes_per_expiry": 3,
+    "min_expiries_per_date": 5
+  },
+  "date_rule": {
+    "dvol_file": "artifacts/dvol_eth_daily.json",
+    "lookback_days": 60,
+    "shock_ratio": 1.2,
+    "dedupe_days": 20,
+    "days_after_onset": [
+      1,
+      4,
+      8
+    ],
+    "calm_band": 0.05,
+    "calm_max_range_20d": 1.15,
+    "calm_exclusion_days_from_shock": 20,
+    "calm_sample": 30,
+    "seed": 20260923,
+    "split": "No validation stage: every selected date is a test date (Feller variant inherited from BTC validation).",
+    "unavailable_dates": "disclosed; never replaced by other dates"
+  },
+  "designs": {
+    "B_heldout_expiries": "PRIMARY. Sort a date's expiries by maturity; hold out every odd-ranked expiry except the longest. Calibrate on the remaining expiries (all strikes); score all quotes of held-out expiries. Tests term-structure interpolation, where a second timescale should matter.",
+    "A_heldout_strikes": "SECONDARY. Within each expiry, sort by strike; hold out odd-ranked strikes. Calibrate on the rest; score held-out strikes."
+  },
+  "models": {
+    "BS_EXPIRY": "One Black-76 volatility per calibration expiry (grouped by expiry, per btc AMENDMENT_01); total-variance interpolation between expiry knots, flat outside.",
+    "SH": "Heston, all five parameters calibrated per date and design; feller_free.",
+    "DH": "Double Heston, separable four-shock literature_exact convention, slow-first ordering, all ten parameters calibrated per date and design; feller_free."
+  },
+  "variant_selection": "Fixed in advance to feller_free for SH and DH, inherited from btc_multifactor_v1/artifacts/variant_selection.json. No ETH date is used for any choice.",
+  "bounds": {
+    "kappa_single": [
+      0.05,
+      50.0
+    ],
+    "kappa_slow": [
+      0.05,
+      20.0
+    ],
+    "kappa_gap": [
+      0.05,
+      100.0
+    ],
+    "theta": [
+      0.001,
+      4.0
+    ],
+    "v0": [
+      0.001,
+      4.0
+    ],
+    "eta": [
+      0.01,
+      0.999
+    ],
+    "sigma": [
+      0.01,
+      10.0
+    ],
+    "rho": [
+      -0.99,
+      0.99
+    ],
+    "bs_vol": [
+      0.05,
+      5.0
+    ]
+  },
+  "objective": "Mean squared vega-weighted price residual, (model - market)/vega, with vega the market Black-76 vega in forward units, floored at 1e-4. This is approximately an implied-vol residual. Identical for every model.",
+  "optimizer": {
+    "de_popsize_multiplier": 6,
+    "de_maxiter": 25,
+    "multistarts": 12,
+    "max_nfev": 300,
+    "seed": 20260919,
+    "convergence": "Report all starts; count successful starts within max(1e-12, 1% of the best objective). Never claim a proven global optimum."
+  },
+  "numerics": {
+    "nodes": 128,
+    "comparison_nodes": 96,
+    "evaluation_disagreement_tolerance": 1e-07,
+    "fallback": "In evaluation, any 96/128 disagreement above tolerance or bound breach uses the independent adaptive quadrature; every fallback is logged."
+  },
+  "primary_endpoint": "Shock-regime dates, design B. For each episode, average the per-date paired differences in held-out IV RMSE: SH minus DH and BS_EXPIRY minus DH. DH beats a competitor only if the one-sided Wilcoxon signed-rank test over episodes gives p < 0.05 AND the episode-cluster bootstrap 95% lower bound of the mean difference is > 0 (5,000 replicates, seed 20260920).",
+  "secondary": [
+    "design A on shock test dates",
+    "both designs on calm test dates (control; a smaller DH advantage is expected)",
+    "held-out price RMSE in USD",
+    "mark-price target robustness",
+    "maturity and moneyness buckets",
+    "date-level win fractions"
+  ],
+  "metrics": [
+    "IV_RMSE_vol_points",
+    "price_RMSE_USD",
+    "price_MAE_USD",
+    "forward_normalised_price_RMSE",
+    "maturity buckets 3-14, 14-45, 45-120, 120-400 days",
+    "moneyness buckets by log(K/F)"
+  ],
+  "integrity": [
+    "Dates come from ETH DVOL alone before any ETH option data is fetched; the calm control set is reported alongside.",
+    "No filter, split, metric, bound, optimizer setting or endpoint changes after fits are seen.",
+    "Failed dates, fits and fallbacks are retained and disclosed.",
+    "Trade prices are not synchronized bid/ask; no spread-based claims.",
+    "Pre-freeze contact with ETH option data: the current instrument list only (tick size, expiries)."
+  ],
+  "filters_note": "min_price_btc is the coin-denominated floor (here ETH), same value as BTC (5 ticks)."
+}
