@@ -1,0 +1,261 @@
+{
+  "utc": "2026-09-18T06:01:19.441412+00:00",
+  "primary_endpoint": "All usable dates, design B. Unit = ISO week: average the per-date paired differences in held-out IV RMSE (SH - DH, BS_EXPIRY - DH) within each week. DH beats a competitor only if the one-sided Wilcoxon signed-rank test over weeks gives p < 0.05 AND the week-cluster bootstrap 95% lower bound of the mean difference is > 0 (5,000 replicates, seed 20260920).",
+  "cells": [
+    {
+      "group": "all",
+      "design": "B",
+      "unit": "week",
+      "dates": 55,
+      "units": 13,
+      "median_IV_RMSE": {
+        "BS_EXPIRY": 4.681694495695442,
+        "SH": 3.60579112596521,
+        "DH": 3.257970862993568
+      },
+      "mean_IV_RMSE": {
+        "BS_EXPIRY": 7.39714007156382,
+        "SH": 4.860455207435164,
+        "DH": 4.5874875019463826
+      },
+      "SH_minus_DH": {
+        "mean": 0.2729677054887813,
+        "median": 0.182902232141676,
+        "DH_wins_dates": "36/55",
+        "unit_means_positive": "9/13",
+        "wilcoxon_one_sided_p": 0.0286865234375,
+        "cluster_bootstrap95": [
+          -0.058652815120193005,
+          0.7392886235469636
+        ],
+        "DH_beats": false
+      },
+      "BS_EXPIRY_minus_DH": {
+        "mean": 2.8096525696174353,
+        "median": 1.7736783201567552,
+        "DH_wins_dates": "44/55",
+        "unit_means_positive": "12/13",
+        "wilcoxon_one_sided_p": 0.0003662109375,
+        "cluster_bootstrap95": [
+          1.4118360231552918,
+          6.987982416729145
+        ],
+        "DH_beats": true
+      }
+    },
+    {
+      "group": "all",
+      "design": "A",
+      "unit": "week",
+      "dates": 55,
+      "units": 13,
+      "median_IV_RMSE": {
+        "BS_EXPIRY": 5.058138241602956,
+        "SH": 2.8761050669065154,
+        "DH": 2.75199520670311
+      },
+      "mean_IV_RMSE": {
+        "BS_EXPIRY": 6.748523075475661,
+        "SH": 4.096732825279101,
+        "DH": 3.643606213064982
+      },
+      "SH_minus_DH": {
+        "mean": 0.45312661221411804,
+        "median": 0.2546219942374077,
+        "DH_wins_dates": "38/55",
+        "unit_means_positive": "9/13",
+        "wilcoxon_one_sided_p": 0.0401611328125,
+        "cluster_bootstrap95": [
+          0.11254447094371861,
+          0.7081809331761099
+        ],
+        "DH_beats": true
+      },
+      "BS_EXPIRY_minus_DH": {
+        "mean": 3.104916862410679,
+        "median": 1.9630372935199336,
+        "DH_wins_dates": "51/55",
+        "unit_means_positive": "13/13",
+        "wilcoxon_one_sided_p": 0.0001220703125,
+        "cluster_bootstrap95": [
+          1.6752537629921285,
+          4.264539016124107
+        ],
+        "DH_beats": true
+      }
+    },
+    {
+      "group": "shock",
+      "design": "B",
+      "unit": "episode",
+      "dates": 4,
+      "units": 1,
+      "median_IV_RMSE": {
+        "BS_EXPIRY": 6.2951494257976925,
+        "SH": 7.277210713338294,
+        "DH": 6.563139204468509
+      },
+      "mean_IV_RMSE": {
+        "BS_EXPIRY": 6.907892949404,
+        "SH": 7.131094891582597,
+        "DH": 6.888851665288315
+      },
+      "SH_minus_DH": {
+        "mean": 0.2422432262942824,
+        "median": 0.08423845982859612,
+        "DH_wins_dates": "2/4",
+        "unit_means_positive": "1/1",
+        "wilcoxon_one_sided_p": NaN,
+        "cluster_bootstrap95": [
+          0.2422432262942824,
+          0.2422432262942824
+        ],
+        "DH_beats": false
+      },
+      "BS_EXPIRY_minus_DH": {
+        "mean": 0.019041284115685064,
+        "median": 0.3060723469021873,
+        "DH_wins_dates": "2/4",
+        "unit_means_positive": "1/1",
+        "wilcoxon_one_sided_p": NaN,
+        "cluster_bootstrap95": [
+          0.019041284115685064,
+          0.019041284115685064
+        ],
+        "DH_beats": false
+      }
+    },
+    {
+      "group": "shock",
+      "design": "A",
+      "unit": "episode",
+      "dates": 4,
+      "units": 1,
+      "median_IV_RMSE": {
+        "BS_EXPIRY": 19.20853105839815,
+        "SH": 11.087469242771343,
+        "DH": 6.836831062996964
+      },
+      "mean_IV_RMSE": {
+        "BS_EXPIRY": 16.045727556230407,
+        "SH": 10.059195118979174,
+        "DH": 8.037535406142265
+      },
+      "SH_minus_DH": {
+        "mean": 2.0216597128369105,
+        "median": 2.043300306161143,
+        "DH_wins_dates": "2/4",
+        "unit_means_positive": "1/1",
+        "wilcoxon_one_sided_p": NaN,
+        "cluster_bootstrap95": [
+          2.0216597128369105,
+          2.0216597128369105
+        ],
+        "DH_beats": false
+      },
+      "BS_EXPIRY_minus_DH": {
+        "mean": 8.008192150088144,
+        "median": 8.398234657146153,
+        "DH_wins_dates": "4/4",
+        "unit_means_positive": "1/1",
+        "wilcoxon_one_sided_p": NaN,
+        "cluster_bootstrap95": [
+          8.008192150088144,
+          8.008192150088144
+        ],
+        "DH_beats": false
+      }
+    },
+    {
+      "group": "other",
+      "design": "B",
+      "unit": "week",
+      "dates": 51,
+      "units": 13,
+      "median_IV_RMSE": {
+        "BS_EXPIRY": 4.517025820683393,
+        "SH": 3.3664648708121567,
+        "DH": 3.163014549331273
+      },
+      "mean_IV_RMSE": {
+        "BS_EXPIRY": 7.435512394870471,
+        "SH": 4.682365820443208,
+        "DH": 4.406988351880349
+      },
+      "SH_minus_DH": {
+        "mean": 0.2753774685628597,
+        "median": 0.182902232141676,
+        "DH_wins_dates": "34/51",
+        "unit_means_positive": "9/13",
+        "wilcoxon_one_sided_p": 0.02392578125,
+        "cluster_bootstrap95": [
+          -0.03143212915981951,
+          1.3773146081814696
+        ],
+        "DH_beats": false
+      },
+      "BS_EXPIRY_minus_DH": {
+        "mean": 3.0285240429901226,
+        "median": 1.7787103050940916,
+        "DH_wins_dates": "42/51",
+        "unit_means_positive": "12/13",
+        "wilcoxon_one_sided_p": 0.000244140625,
+        "cluster_bootstrap95": [
+          1.6572698514961075,
+          7.347722372564292
+        ],
+        "DH_beats": true
+      }
+    },
+    {
+      "group": "other",
+      "design": "A",
+      "unit": "week",
+      "dates": 51,
+      "units": 13,
+      "median_IV_RMSE": {
+        "BS_EXPIRY": 4.76798342354576,
+        "SH": 2.683610638031768,
+        "DH": 2.532971868290088
+      },
+      "mean_IV_RMSE": {
+        "BS_EXPIRY": 6.019330567181171,
+        "SH": 3.6290887238124285,
+        "DH": 3.2989843155687244
+      },
+      "SH_minus_DH": {
+        "mean": 0.33010440824370296,
+        "median": 0.2546219942374077,
+        "DH_wins_dates": "36/51",
+        "unit_means_positive": "9/13",
+        "wilcoxon_one_sided_p": 0.0401611328125,
+        "cluster_bootstrap95": [
+          0.04366662309604511,
+          0.46307923083049923
+        ],
+        "DH_beats": true
+      },
+      "BS_EXPIRY_minus_DH": {
+        "mean": 2.7203462516124466,
+        "median": 1.8781454476725559,
+        "DH_wins_dates": "47/51",
+        "unit_means_positive": "13/13",
+        "wilcoxon_one_sided_p": 0.0001220703125,
+        "cluster_bootstrap95": [
+          1.4999569405148512,
+          3.4977162776485
+        ],
+        "DH_beats": true
+      }
+    }
+  ],
+  "median_insample_IV_RMSE": {
+    "BS_EXPIRY": 5.4117279144348585,
+    "DH": 1.9655805441027956,
+    "SH": 2.5718821489036037
+  },
+  "primary": {
+    "DH_beats_SH": false,
+    "DH_beats_BS_EXPIRY": true
+  }
+}
