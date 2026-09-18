@@ -1,0 +1,22 @@
+{
+  "utc": "2026-09-17T15:39:27.357965+00:00",
+  "protocol_sha256": "143fa0a72f05311a3ef1498a9550194a1a98a9f738b89100dd2a520e2c24c676",
+  "statement": "Reporting/audit scripts written after the frozen teacher was generated and while PINN training ran; before any PINN development check, evaluation lock, controlled evaluation or final-market access. teacher_quality.py had already run (teacher accepted). Later edits to these files, if any, are crash fixes only and are visible as hash changes against this record.",
+  "observed_before_this_record": [
+    "teacher quality diagnostics",
+    "PINN training loss logs (no held-out, development or controlled evaluation)"
+  ],
+  "not_yet_observed": [
+    "PINN development-split fidelity",
+    "held-out fidelity",
+    "controlled benchmark results",
+    "final market data"
+  ],
+  "script_sha256": {
+    "teacher_quality.py": "02e921501b6dce5338bdaff64282d1cf9cb3926d528d54462afcef123b4772fd",
+    "pinn_development_check.py": "0bc7b47c7bbecbf20d541b8602512b0fa2142ec5ac1038853d2684a39825a7a7",
+    "controlled_analysis.py": "7c28020e8b37edbae5a1fdd125355483e5c071ca97fa5968e7f28f244d64d34e",
+    "market_tables.py": "366e82dcb563be671ee6cce2c964f2d2503c0a978829014a500db3b9c348cba2",
+    "final_freeze.py": "26e70e8ab4fcd79be625ded1b07f69cf2d19ccf9770b425cad95afcb51b85c5c"
+  }
+}

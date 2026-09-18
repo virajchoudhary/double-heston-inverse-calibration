@@ -120,12 +120,12 @@ def mlx_smoke(root: Path) -> dict[str, float | bool]:
     )
     target = mx.array([0.21, 0.24], dtype=mx.float32)
 
-    def loss():
-        return mx.mean((model(coords, structural) - target) ** 2)
+    def loss(network):
+        return mx.mean((network(coords, structural) - target) ** 2)
 
     value_and_grad = nn.value_and_grad(model, loss)
     optimizer = optim.Adam(learning_rate=1e-3)
-    before, gradients = value_and_grad()
+    before, gradients = value_and_grad(model)
     optimizer.update(model, gradients)
     after = loss(model)
     mx.eval(model.parameters(), optimizer.state, before, after)

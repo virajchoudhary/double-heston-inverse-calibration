@@ -1,0 +1,30 @@
+{
+  "utc": "2026-09-17T16:53:47.213598+00:00",
+  "stage": "validation",
+  "sample_role": "SELECTION_SAMPLE_NOT_OUT_OF_SAMPLE: SH/DH candidates chosen and BS_TERM fitted on these quotes",
+  "source_sha256": "e7b7a8f259975da8c2bee9ab10bf890284939eb96795ea54de9c38eae04aeb6e",
+  "protocol_sha256": "5653b3d74da7389de20bf4f22bbfe907f6b1d343ce109f07861688dd59321e87",
+  "dates": [
+    "2026-08-04",
+    "2026-08-05",
+    "2026-08-06",
+    "2026-08-07",
+    "2026-08-10",
+    "2026-08-11",
+    "2026-08-12",
+    "2026-08-13",
+    "2026-08-14",
+    "2026-08-17",
+    "2026-08-18",
+    "2026-08-19",
+    "2026-08-20",
+    "2026-08-21"
+  ],
+  "quotes": 800,
+  "files": {
+    "validation_daily_errors.csv": "c2bfa661d97df3e40e3809304be5e8adda7d270845a8e015d08a62132505f6ef",
+    "validation_error_decomposition.csv": "ec1e08fdf58549d58762ce338afb676134b900e94d7fe0c85a4f26a6a9956aef",
+    "validation_fixed_metrics.csv": "5546c4726f937a06a8e536111a2031c3e66f4ed7a803a864726e40170138efd4",
+    "validation_predictions.csv": "79c7d78a516343dde0a6d0f248782fb2bc4c19ec4a206cea9ddb62937a06716e"
+  }
+}

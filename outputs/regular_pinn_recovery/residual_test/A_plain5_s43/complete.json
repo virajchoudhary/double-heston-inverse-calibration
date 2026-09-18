@@ -1,0 +1,7 @@
+{
+  "steps": 12000,
+  "seconds": 398.76443479099544,
+  "selected_score": 0.1766227664751985,
+  "finite_steps": 12000,
+  "optimizer": "AdamW"
+}

@@ -1,0 +1,24 @@
+{
+  "status": "FAIL",
+  "git_head": "2ceca16e24eefb0db56124c894e7880fc286ddc4",
+  "package_path": "/Users/dhruvaambhaikar/Downloads/double_heston_v2_mac_execution_package",
+  "archive_sha256_status": "Not verified: only an extracted directory was supplied; original ZIP absent",
+  "expected_archive_sha256": "2916647564cdae6b0f6ce09f07efa278ee6560a432c964c47d2830062d8b056f",
+  "package_file_checks": "All nine PACKAGE_SHA256SUMS.txt entries passed",
+  "frozen_artifact_checks": "All six hashes hard-coded in the committed precheck passed before and after overlay copy",
+  "dataset_structure": {
+    "train_rows": 131072,
+    "validation_rows": 16384,
+    "collocation_rows": 18000,
+    "rejected_rows": 0,
+    "passed": true
+  },
+  "command": "python scripts/mentor_dh_pinn/precheck_double_v2_mac.py --root . --report outputs/regular_pinn_recovery/double_v2_mac_precheck.json",
+  "failure_stage": "mlx_smoke, line 130: after = loss(model)",
+  "exception": "TypeError: mlx_smoke.<locals>.loss() takes 0 positional arguments but 1 was given",
+  "explanation": "The closure is defined with no arguments, but the post-update loss evaluation passes model. No source fix or bypass was applied.",
+  "checkpoint_roundtrip_reached": false,
+  "b0_started": false,
+  "b1_started": false,
+  "b2_started": false
+}

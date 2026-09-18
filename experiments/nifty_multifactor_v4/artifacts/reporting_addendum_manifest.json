@@ -1,0 +1,6 @@
+{
+  "utc": "2026-09-17T15:45:22.815237+00:00",
+  "source_sha256": "c6322e8cfaf8ae9e36ae6a0f312b1fd9bd6f38a4ae89b2c779cbd3f6f4ec4e3a",
+  "scope": "Read-only auditing and requested error decomposition; no changed models, scoring rules or hypotheses",
+  "protocol_sha256": "5653b3d74da7389de20bf4f22bbfe907f6b1d343ce109f07861688dd59321e87"
+}

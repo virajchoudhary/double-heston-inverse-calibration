@@ -1,0 +1,274 @@
+{
+  "utc": "2026-09-17T15:31:27.170834+00:00",
+  "source_sha256": "02e921501b6dce5338bdaff64282d1cf9cb3926d528d54462afcef123b4772fd",
+  "protocol_sha256": "143fa0a72f05311a3ef1498a9550194a1a98a9f738b89100dd2a520e2c24c676",
+  "decision_rule": "UNSTABLE if spot-check diff > 2e-6, non-finite price, bound breach > 1e-9 or unreliable reference",
+  "teacher_file_sha256": {
+    "train.npz": "94bd383fd84fa07099f0aed11ed8169acb24cb2e99d1e8832d8a77037f04e889",
+    "development.npz": "d4accdd297e353f70ae714cf2d7d817021a73c423cf8535b777662047a01d659",
+    "collocation.npz": "d71aaa4e1d108ec659450116d6a1570700f5fd4a0c0375c569e6c3daee9b0133"
+  },
+  "split_rows": {
+    "train": 100000,
+    "development": 4096,
+    "collocation": 18000
+  },
+  "duplicates_within_split": {
+    "train": 0,
+    "development": 0,
+    "collocation": 0
+  },
+  "exact_overlap": {
+    "train_development": 0,
+    "train_collocation": 0,
+    "development_collocation": 0
+  },
+  "ranges": {
+    "train": {
+      "x": [
+        -0.3599945828520072,
+        0.3599978631690439
+      ],
+      "strike_over_forward": [
+        0.6976778168889948,
+        1.43332165002381
+      ],
+      "tau_days": [
+        7.000152988596662,
+        729.9662889998268
+      ],
+      "v_slow": [
+        0.0001500093779303425,
+        0.17999632588369072
+      ],
+      "v_fast": [
+        0.0010000225537671419,
+        0.21999538124645532
+      ],
+      "scale": [
+        0.7000040633132127,
+        3.199997938460114
+      ],
+      "kappa_rho_fixed_to_published": true,
+      "theta_sigma_scaled_consistently": true,
+      "fraction_fast_heavy_v_fast_gt_v_slow": 0.64876,
+      "fraction_short_maturity_le_30d": 0.31316,
+      "fraction_wing_KF_lt_0.9_or_gt_1.1": 0.72129,
+      "price": [
+        -3.7701585234745496e-10,
+        0.3834248647368526
+      ]
+    },
+    "development": {
+      "x": [
+        -0.3599614503006448,
+        0.35994597176385146
+      ],
+      "strike_over_forward": [
+        0.6977140213106258,
+        1.433274161207339
+      ],
+      "tau_days": [
+        7.002556239948482,
+        729.5838255227233
+      ],
+      "v_slow": [
+        0.0001501527792995992,
+        0.17981712761263513
+      ],
+      "v_fast": [
+        0.0010000150924515427,
+        0.21987739739666193
+      ],
+      "scale": [
+        0.7002102431236518,
+        3.199784089985619
+      ],
+      "kappa_rho_fixed_to_published": true,
+      "theta_sigma_scaled_consistently": true,
+      "fraction_fast_heavy_v_fast_gt_v_slow": 0.64453125,
+      "fraction_short_maturity_le_30d": 0.313232421875,
+      "fraction_wing_KF_lt_0.9_or_gt_1.1": 0.721435546875,
+      "price": [
+        -7.254886712775781e-11,
+        0.36671235578932987
+      ]
+    },
+    "collocation": {
+      "x": [
+        -0.35997589754440595,
+        0.35998953924633803
+      ],
+      "strike_over_forward": [
+        0.6976836243293865,
+        1.4332948682181017
+      ],
+      "tau_days": [
+        7.000124452244152,
+        729.8603441407065
+      ],
+      "v_slow": [
+        0.0001500363934664743,
+        0.17995443650660614
+      ],
+      "v_fast": [
+        0.0010001225052167953,
+        0.21995080187242702
+      ],
+      "scale": [
+        0.700056857393473,
+        3.1999728579917477
+      ],
+      "kappa_rho_fixed_to_published": true,
+      "theta_sigma_scaled_consistently": true,
+      "fraction_fast_heavy_v_fast_gt_v_slow": 0.6467222222222222,
+      "fraction_short_maturity_le_30d": 0.31316666666666665,
+      "fraction_wing_KF_lt_0.9_or_gt_1.1": 0.7213333333333334
+    }
+  },
+  "numerics": {
+    "train": {
+      "points": 100000,
+      "rejected_points": 0,
+      "integration_disagreements_128_vs_96_gt_1e-8": 2389,
+      "bound_triggered_fallbacks": 567,
+      "fallback_count_recomputed": 2391,
+      "fallback_count_audit": 2391,
+      "fallback_count_matches_audit": true,
+      "max_128_96_difference_recomputed": 0.00020673210569810418,
+      "max_128_96_difference_audit": 0.00020673210569810418,
+      "diff_quantiles_50_90_99_999": [
+        8.881784197001252e-15,
+        1.8263168755083825e-14,
+        2.1117885550240533e-07,
+        9.345788067126277e-06
+      ],
+      "stored_equals_128_node_on_accepted_points_bitwise": true,
+      "max_abs_stored_minus_128_on_accepted": 0.0,
+      "fallback_changed_price_median_abs": 1.9044581467397848e-09,
+      "fallback_changed_price_max_abs": 3.32918973281562e-05,
+      "nonfinite_prices": 0,
+      "below_intrinsic_any": 5332,
+      "below_intrinsic_beyond_1e-9": 0,
+      "worst_below_intrinsic": -9.371194931162563e-10,
+      "above_forward_bound_beyond_1e-9": 0,
+      "max_price": 0.3834248647368526,
+      "invalid_IV": 7274,
+      "invalid_IV_price_at_or_below_intrinsic": 5337,
+      "invalid_IV_time_value_below_1e-12": 1882,
+      "invalid_IV_unexplained": 55
+    },
+    "development": {
+      "points": 4096,
+      "rejected_points": 0,
+      "integration_disagreements_128_vs_96_gt_1e-8": 107,
+      "bound_triggered_fallbacks": 22,
+      "fallback_count_recomputed": 107,
+      "fallback_count_audit": 107,
+      "fallback_count_matches_audit": true,
+      "max_128_96_difference_recomputed": 2.3129064989135806e-05,
+      "max_128_96_difference_audit": 2.3129064989135806e-05,
+      "diff_quantiles_50_90_99_999": [
+        8.881784197001252e-15,
+        1.815214645262131e-14,
+        2.1062070455491251e-07,
+        7.0332627557912225e-06
+      ],
+      "stored_equals_128_node_on_accepted_points_bitwise": true,
+      "max_abs_stored_minus_128_on_accepted": 0.0,
+      "fallback_changed_price_median_abs": 1.351708522889794e-09,
+      "fallback_changed_price_max_abs": 1.3065041771787023e-06,
+      "nonfinite_prices": 0,
+      "below_intrinsic_any": 205,
+      "below_intrinsic_beyond_1e-9": 0,
+      "worst_below_intrinsic": -7.254886712775781e-11,
+      "above_forward_bound_beyond_1e-9": 0,
+      "max_price": 0.36671235578932987,
+      "invalid_IV": 295,
+      "invalid_IV_price_at_or_below_intrinsic": 205,
+      "invalid_IV_time_value_below_1e-12": 83,
+      "invalid_IV_unexplained": 7
+    }
+  },
+  "spot_checks": {
+    "seconds": 43.81958858299913,
+    "accepted_vs_adaptive_1e-10": {
+      "points": 1000,
+      "unreliable_reference": 0,
+      "max_abs_diff": 2.6453672585802224e-11,
+      "p99_abs_diff": 5.426570304223328e-13,
+      "median_abs_diff": 2.3647750424515834e-14,
+      "exceed_protocol_1e-8": 0,
+      "exceed_material_2e-6": 0,
+      "worst_point": {
+        "split": "train",
+        "index": 10619,
+        "K/F": 1.0329989847530598,
+        "tau_days": 9.870961344100584,
+        "v_slow": 0.0024911786575850447,
+        "v_fast": 0.0023872258172017028,
+        "teacher": 7.22681480350585e-05,
+        "reference": 7.226812158138592e-05
+      }
+    },
+    "fallback_vs_adaptive_1e-11": {
+      "points": 121,
+      "unreliable_reference": 0,
+      "max_abs_diff": 1.7597034940308731e-12,
+      "p99_abs_diff": 1.269461791425433e-12,
+      "median_abs_diff": 1.2887072350933555e-16,
+      "exceed_protocol_1e-8": 0,
+      "exceed_material_2e-6": 0,
+      "worst_point": {
+        "split": "train",
+        "index": 71846,
+        "K/F": 0.773727900788637,
+        "tau_days": 16.104154261520318,
+        "v_slow": 0.000503711899195071,
+        "v_fast": 0.004408963642004109,
+        "teacher": 0.22627209922796165,
+        "reference": 0.22627209922620195
+      }
+    }
+  },
+  "controlled_surfaces": {
+    "cases": 50,
+    "nonfinite": 0,
+    "strike_monotonicity_violations": 0,
+    "convexity_violations": 0,
+    "worst_convexity": -1.4838130724115217e-10,
+    "calendar_violations": 0,
+    "worst_calendar": -1.59485757933453e-11,
+    "all_inside_teacher_domain": true,
+    "min_distance_to_domain_edge": 0.05335563215021817,
+    "teacher_points_near_case_by_family": {
+      "BASE": {
+        "min": 77,
+        "median": 102.0,
+        "max": 124
+      },
+      "FAST_SHOCK": {
+        "min": 83,
+        "median": 99.5,
+        "max": 110
+      },
+      "FIXED_TOTAL_TWIST": {
+        "min": 82,
+        "median": 101.0,
+        "max": 121
+      },
+      "SLOW_SHOCK": {
+        "min": 91,
+        "median": 97.5,
+        "max": 109
+      },
+      "SMIRK_WEIGHTS": {
+        "min": 87,
+        "median": 98.0,
+        "max": 114
+      }
+    }
+  },
+  "decision": "TEACHER_ACCEPTED_FOR_TRAINING",
+  "unstable_reasons": []
+}

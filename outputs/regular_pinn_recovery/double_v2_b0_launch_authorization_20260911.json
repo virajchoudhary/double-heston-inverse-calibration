@@ -1,0 +1,13 @@
+{
+  "authorization": "User requested starting training without the ZIP unless it is essential. Proceed based on complete passing precheck and byte-identical frozen artifact hashes.",
+  "original_archive_sha256_verified": false,
+  "extracted_package_manifest_entries_verified": 9,
+  "committed_frozen_artifact_hashes_verified": 6,
+  "precheck_report": "outputs/regular_pinn_recovery/double_v2_mac_precheck.json",
+  "precheck_status": "PASS",
+  "compatibility_amendment": "double_v2_precheck_compatibility_amendment_20260911.json",
+  "trainer_modifications_authorized": false,
+  "stop_condition": "If B0 encounters an MLX API mismatch, stop before modifying the trainer.",
+  "runbook": "docs/DOUBLE_HESTON_V2_EXECUTION.md",
+  "settings": "Unchanged B0 command, seed, data, architecture, budgets and thresholds."
+}

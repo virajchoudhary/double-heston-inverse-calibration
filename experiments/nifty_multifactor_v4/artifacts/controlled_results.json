@@ -1,0 +1,139 @@
+{
+  "utc": "2026-09-17T16:52:00.300322+00:00",
+  "fidelity": {
+    "price_RMSE": 1.0954322643362347e-05,
+    "price_MAE": 6.997937058190269e-06,
+    "price_P95": 2.3078885053630365e-05,
+    "price_max": 0.00010918580178487236,
+    "forward_normalized_price_RMSE": 1.0954322643362347e-05,
+    "IV_RMSE_volatility_points": 0.10307332285799904,
+    "IV_valid_quotes": 7579,
+    "quotes": 8192,
+    "pass": true,
+    "seed_metrics": [
+      {
+        "price_RMSE": 1.1328189822095777e-05,
+        "price_MAE": 7.277582319541867e-06,
+        "price_P95": 2.3665300842403562e-05,
+        "price_max": 0.00010624797452729595,
+        "forward_normalized_price_RMSE": 1.1328189822095777e-05,
+        "IV_RMSE_volatility_points": 0.10302937593714948,
+        "IV_valid_quotes": 7578,
+        "quotes": 8192
+      },
+      {
+        "price_RMSE": 1.3811465381873504e-05,
+        "price_MAE": 8.833578462669836e-06,
+        "price_P95": 2.9703024211409973e-05,
+        "price_max": 0.00011212362904239326,
+        "forward_normalized_price_RMSE": 1.3811465381873504e-05,
+        "IV_RMSE_volatility_points": 0.11466616239200501,
+        "IV_valid_quotes": 7575,
+        "quotes": 8192
+      }
+    ],
+    "teacher_numerics": {
+      "fallback_count": 214,
+      "pre_fallback_max_96_128_difference": 8.857612460399955e-05,
+      "roundoff_bound_count": 446
+    },
+    "fresh_scaled_PDE_RMSE_by_seed": [
+      0.037899640710212235,
+      0.04301492862960495
+    ]
+  },
+  "statistics": [
+    {
+      "family": "BASE",
+      "surfaces": 8,
+      "mean_advantage": 0.0007108041149337712,
+      "median_advantage": 0.0007272764320172974,
+      "DH_win_fraction": 1.0,
+      "hierarchy_DH_SH_BS_fraction": 1.0,
+      "paired_bootstrap95": [
+        0.0006140242976537791,
+        0.0008071949960077895
+      ],
+      "paired_bootstrap99_bonferroni": [
+        0.0005900202045068001,
+        0.0008267752169480384
+      ],
+      "DH_over_SH_pooled_RMSE": 0.013521370107178434,
+      "reliable_structural_advantage": true
+    },
+    {
+      "family": "FAST_SHOCK",
+      "surfaces": 8,
+      "mean_advantage": 0.0009348319643780076,
+      "median_advantage": 0.0008566161299218696,
+      "DH_win_fraction": 1.0,
+      "hierarchy_DH_SH_BS_fraction": 1.0,
+      "paired_bootstrap95": [
+        0.0007607378968176629,
+        0.0011071330408510664
+      ],
+      "paired_bootstrap99_bonferroni": [
+        0.000715413333568761,
+        0.0011598206576938286
+      ],
+      "DH_over_SH_pooled_RMSE": 0.01172072013914895,
+      "reliable_structural_advantage": true
+    },
+    {
+      "family": "SLOW_SHOCK",
+      "surfaces": 8,
+      "mean_advantage": 0.0005722186417005573,
+      "median_advantage": 0.0005813483998135839,
+      "DH_win_fraction": 1.0,
+      "hierarchy_DH_SH_BS_fraction": 1.0,
+      "paired_bootstrap95": [
+        0.0005157131143088234,
+        0.0006185093185725052
+      ],
+      "paired_bootstrap99_bonferroni": [
+        0.0004993361375522568,
+        0.0006291699115107501
+      ],
+      "DH_over_SH_pooled_RMSE": 0.01724456057733254,
+      "reliable_structural_advantage": true
+    },
+    {
+      "family": "FIXED_TOTAL_TWIST",
+      "surfaces": 8,
+      "mean_advantage": 0.00030935709664196745,
+      "median_advantage": 0.00023525566688474108,
+      "DH_win_fraction": 1.0,
+      "hierarchy_DH_SH_BS_fraction": 1.0,
+      "paired_bootstrap95": [
+        0.00016252511073591025,
+        0.00046098197254299385
+      ],
+      "paired_bootstrap99_bonferroni": [
+        0.00012752693303348143,
+        0.0004956846480436746
+      ],
+      "DH_over_SH_pooled_RMSE": 0.02778392937227878,
+      "reliable_structural_advantage": true
+    },
+    {
+      "family": "SMIRK_WEIGHTS",
+      "surfaces": 8,
+      "mean_advantage": 0.0002912467427860864,
+      "median_advantage": 0.00021788217652570765,
+      "DH_win_fraction": 1.0,
+      "hierarchy_DH_SH_BS_fraction": 1.0,
+      "paired_bootstrap95": [
+        0.00013385204187054496,
+        0.00047197291972197325
+      ],
+      "paired_bootstrap99_bonferroni": [
+        0.00010403255718391264,
+        0.0005310237823536301
+      ],
+      "DH_over_SH_pooled_RMSE": 0.026565368817939864,
+      "reliable_structural_advantage": true
+    }
+  ],
+  "no_retraining_after_test": true,
+  "exact_teacher_zero_is_not_evidence": true
+}

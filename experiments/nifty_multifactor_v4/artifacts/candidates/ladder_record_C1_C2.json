@@ -1,0 +1,39 @@
+{
+  "utc": "2026-09-17T16:05:30.015850+00:00",
+  "protocol_sha256": "5653b3d74da7389de20bf4f22bbfe907f6b1d343ce109f07861688dd59321e87",
+  "rule": "Train in order C1, C2, then C3 only if C1 and C2 fail. Lock the first candidate whose two-seed mean passes all four fidelity gates on the development split (teacher seed 93102). If none passes, lock the lowest development price RMSE; held-out fidelity is then expected to fail and no structural claim is permitted. No other candidates, seeds or settings are searched.",
+  "C1": {
+    "development_gate_multiples": {
+      "price_RMSE": 1.66240297995565,
+      "price_P95": 1.3647671578757652,
+      "price_max": 1.2756828173005053,
+      "IV_RMSE": 1.2881798739979895
+    },
+    "passes": false,
+    "failed_gates": [
+      "price_RMSE",
+      "price_P95",
+      "price_max",
+      "IV_RMSE"
+    ]
+  },
+  "C2": {
+    "development_gate_multiples": {
+      "price_RMSE": 0.9020897034339849,
+      "price_P95": 0.7357105635134864,
+      "price_max": 1.2501113438194433,
+      "IV_RMSE": 0.821401970841943
+    },
+    "passes": false,
+    "failed_gates": [
+      "price_max"
+    ],
+    "points_above_max_gate": 1,
+    "worst_points_teacher_verified_against_adaptive_1e-11": 4.934941344458821e-14
+  },
+  "next": "C3 (width 256, depth 5, 40,000 Adam steps) per the predeclared ladder, specified in config.json hashed into the v4 manifest before any C2 result",
+  "C2_checkpoint_sha256": {
+    "17": "4a917fc7512f97e85deb8bb1b87c7411e13edc55e92284186f376fa7a3174d8d",
+    "43": "22b9216416a05b4f55cad9cd2af78a59bd04d0761bcec77a582861eb773cb216"
+  }
+}

@@ -1,0 +1,8 @@
+C_resid3_s17 --depth 5 --residual-blocks 3 --residual-width 160 --seed 17
+B_plain11_s17 --depth 11 --seed 17
+C_resid3_s29 --depth 5 --residual-blocks 3 --residual-width 160 --seed 29
+B_plain11_s29 --depth 11 --seed 29
+C_resid3_s43 --depth 5 --residual-blocks 3 --residual-width 160 --seed 43
+B_plain11_s43 --depth 11 --seed 43
+A_plain5_s29 --depth 5 --seed 29
+A_plain5_s43 --depth 5 --seed 43

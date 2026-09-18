@@ -1,0 +1,209 @@
+{
+  "experiment": "proposed_parameter_selection_20260915_screening",
+  "source": {
+    "citation": "Kyriakou, Brignone and Fusai (2024), Unified moment-based modelling of integrated stochastic processes, Operations Research 72(4), 1630-1653",
+    "doi": "10.1287/opre.2022.2422",
+    "url": "https://openaccess.city.ac.uk/id/eprint/29416/1/manuscript_cro.pdf",
+    "table": "Table 2, manuscript page 22; Table 3, page 27",
+    "mapping": "paper k -> kappa, theta -> variance theta, lowercase v -> sigma, uppercase V(0) -> initial variance; canonical slow factor first"
+  },
+  "parameter_order": [
+    "kappa_s",
+    "theta_s",
+    "sigma_s",
+    "rho_s",
+    "v0_s",
+    "kappa_f",
+    "theta_f",
+    "sigma_f",
+    "rho_f",
+    "v0_f"
+  ],
+  "cases": [
+    {
+      "id": "published_DH1",
+      "classification": "exact published Table 2 values",
+      "parameters": [
+        0.9,
+        0.1,
+        0.36,
+        -0.5,
+        0.36,
+        1.2,
+        0.15,
+        0.2,
+        -0.5,
+        0.2
+      ]
+    },
+    {
+      "id": "proposed_separated_speeds",
+      "classification": "Slower slow factor and faster fast factor; reduced slow sigma preserves strict Feller",
+      "parameters": [
+        0.3,
+        0.1,
+        0.18,
+        -0.5,
+        0.36,
+        3.0,
+        0.15,
+        0.2,
+        -0.5,
+        0.2
+      ]
+    },
+    {
+      "id": "proposed_rapid_fast_factor",
+      "classification": "DH1 fast kappa changed to 6.0",
+      "parameters": [
+        0.9,
+        0.1,
+        0.36,
+        -0.5,
+        0.36,
+        6.0,
+        0.15,
+        0.2,
+        -0.5,
+        0.2
+      ]
+    },
+    {
+      "id": "proposed_asymmetric_correlation",
+      "classification": "DH1 slow/fast correlations changed to -0.8/-0.2",
+      "parameters": [
+        0.9,
+        0.1,
+        0.36,
+        -0.8,
+        0.36,
+        1.2,
+        0.15,
+        0.2,
+        -0.2,
+        0.2
+      ]
+    },
+    {
+      "id": "proposed_mixed_correlation",
+      "classification": "DH1 slow/fast correlations changed to -0.7/+0.2",
+      "parameters": [
+        0.9,
+        0.1,
+        0.36,
+        -0.7,
+        0.36,
+        1.2,
+        0.15,
+        0.2,
+        0.2,
+        0.2
+      ]
+    },
+    {
+      "id": "proposed_balanced_initial_variance",
+      "classification": "DH1 total initial variance preserved, equal .28/.28 factor shares",
+      "parameters": [
+        0.9,
+        0.1,
+        0.36,
+        -0.5,
+        0.28,
+        1.2,
+        0.15,
+        0.2,
+        -0.5,
+        0.28
+      ]
+    },
+    {
+      "id": "proposed_lower_initial_variance",
+      "classification": "DH1 initial variances changed to .15/.15; slow sigma reduced to .18",
+      "parameters": [
+        0.9,
+        0.1,
+        0.18,
+        -0.5,
+        0.15,
+        1.2,
+        0.15,
+        0.2,
+        -0.5,
+        0.15
+      ]
+    }
+  ],
+  "excluded": [
+    {
+      "id": "published_DH2",
+      "parameters": [
+        0.0326,
+        0.7078,
+        1.5355,
+        -0.687,
+        0.0059,
+        1.0738,
+        0.1026,
+        0.826,
+        -0.2819,
+        0.0028
+      ],
+      "reason": "Both factors violate strict Feller condition. Preserve exact values, do not clip or train under incompatible constraints."
+    }
+  ],
+  "protocol": {
+    "seeds": [
+      17,
+      43
+    ],
+    "adam_steps": 1000,
+    "lbfgs_iterations": 100,
+    "width": 128,
+    "depth": 5,
+    "learning_rate": 0.001,
+    "pde_batch": 128,
+    "collocation_count": 18000,
+    "collocation_seed": 915001,
+    "collocation_domain": {
+      "x_forward": [
+        -1.0,
+        1.0
+      ],
+      "each_variance": [
+        0.0001,
+        1.0
+      ],
+      "tau_years": [
+        0.019178082191780823,
+        2.0
+      ]
+    },
+    "expiry_days": [
+      30,
+      60,
+      90,
+      180,
+      365,
+      730
+    ],
+    "spot_strike_ratio": [
+      0.5,
+      1.5
+    ],
+    "rate": 0.03,
+    "dividend_yield": 0.0,
+    "strike": 100.0,
+    "training_ratios": 41,
+    "holdout_ratios": 40,
+    "iv_scale": 0.01,
+    "price_scale": 0.01,
+    "pde_scale": 0.01,
+    "pde_weight": 1.0,
+    "shape_weight": 0.1,
+    "positive_parameter_relative_tolerance": 0.05,
+    "rho_absolute_tolerance": 0.05,
+    "initialization": "same seed-specific generic perturbation for every case; never centered on truth",
+    "selection": "final fixed-budget checkpoint, report all seeds, no truth-based or holdout-based selection",
+    "scope": "development pilot; synthetic surfaces, not NSE data or unseen market evidence; multi-expiry grid is a study adaptation, not the paper's original one-year test"
+  }
+}

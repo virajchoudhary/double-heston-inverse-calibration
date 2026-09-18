@@ -1,0 +1,17 @@
+{
+  "reason": "The B0 environment-repair rerun (double_v2_b0_restart_20260911.log) was terminated at step 4400 of 12000 when the Codex session hit its usage limit. No Python traceback and no macOS crash report: the process tree was torn down with the session.",
+  "last_step_reached": 4400,
+  "step_2000_validation": "PASSED, validation_parameter_rmse 0.2735190459452235. The safetensors fix is confirmed.",
+  "checkpoints_in_interrupted_run": ["step_002000.safetensors", "step_004000.safetensors", "model.safetensors (best at step 4000, validation_parameter_rmse 0.2597862270863728)"],
+  "trainer_changed": false,
+  "assessment_code_changed": false,
+  "frozen_settings_changed": false,
+  "integrity_check": "PASS: all 5 source and 3 input SHA-256s match the interrupted run's manifest.json",
+  "environment": "Unchanged: safetensors 0.8.0, mlx 0.31.2, torch 2.13.0, Python 3.14.5",
+  "preserved_interrupted_attempt": "double_sobolev_v2_b0_s17_interrupted_session_limit_20260911",
+  "preserved_interrupted_log": "double_v2_b0_restart_20260911.log",
+  "restart_policy": "Restart from step zero with the identical seed-17 B0 command. --resume rejected: per the trainer's own provenance it restarts AdamW moments and the learning-rate schedule, which would not be the frozen B0.",
+  "rerun_log": "double_v2_b0_restart2_20260911.log",
+  "determinism_check": "The rerun must reproduce the interrupted run's logged losses exactly through step 4400.",
+  "stop_condition": "Stop before modifying the trainer if any MLX API mismatch occurs."
+}

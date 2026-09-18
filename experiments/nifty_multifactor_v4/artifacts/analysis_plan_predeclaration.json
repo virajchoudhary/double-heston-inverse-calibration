@@ -1,0 +1,36 @@
+{
+  "utc": "2026-09-17T15:45:24.809493+00:00",
+  "protocol_sha256": "5653b3d74da7389de20bf4f22bbfe907f6b1d343ce109f07861688dd59321e87",
+  "reporting_addendum_manifest_sha256": "2e6cec621242effb70fa0bb08b47f1c1e168c19249e0a5542b57a5c32c5b95af",
+  "statement": "v4 reporting/audit scripts, recorded after inherit/validate and while no v4 candidate had finished training; before any v4 development selection, evaluation lock, held-out fidelity, controlled comparison or final-market access.",
+  "script_sha256": {
+    "supplement.py": "c6322e8cfaf8ae9e36ae6a0f312b1fd9bd6f38a4ae89b2c779cbd3f6f4ec4e3a",
+    "teacher_quality.py": "02e921501b6dce5338bdaff64282d1cf9cb3926d528d54462afcef123b4772fd",
+    "pinn_development_check.py": "0bc7b47c7bbecbf20d541b8602512b0fa2142ec5ac1038853d2684a39825a7a7",
+    "controlled_analysis.py": "7c28020e8b37edbae5a1fdd125355483e5c071ca97fa5968e7f28f244d64d34e",
+    "market_tables.py": "366e82dcb563be671ee6cce2c964f2d2503c0a978829014a500db3b9c348cba2",
+    "final_freeze.py": "f5253a78a51eac4ab17a9aaeeb4a842a103fd0c7bceebba8b13f419ed20549ef"
+  },
+  "identical_to_v3_predeclared_version": {
+    "supplement.py": "not in v3 record",
+    "teacher_quality.py": true,
+    "pinn_development_check.py": true,
+    "controlled_analysis.py": true,
+    "market_tables.py": true,
+    "final_freeze.py": false
+  },
+  "difference_notes": {
+    "final_freeze.py": "adds the PINN candidate selection and this predeclaration file to the frozen component list; no logic change"
+  },
+  "observed_before_this_record": [
+    "v3 development-split fidelity failure",
+    "v3 training-data underfit diagnosis",
+    "teacher quality diagnostics"
+  ],
+  "not_yet_observed": [
+    "any v4 candidate fidelity",
+    "held-out fidelity",
+    "controlled benchmark results",
+    "final market data"
+  ]
+}

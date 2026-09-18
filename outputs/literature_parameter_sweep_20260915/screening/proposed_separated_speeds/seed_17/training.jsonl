@@ -1,0 +1,11 @@
+{"phase": "adam", "step": 1, "loss": 1397.283089761709, "iv_scaled_mse": 1298.892479609629, "price_scaled_mse": 86.28283188000918, "pde_scaled_mse": 12.107778272071101, "shape": 0.0, "seconds": 0.11462249999999585}
+{"phase": "adam", "step": 100, "loss": 487.18577334392444, "iv_scaled_mse": 73.24176565645872, "price_scaled_mse": 7.71724101726148, "pde_scaled_mse": 406.22676667020426, "shape": 0.0, "seconds": 4.394147875000044}
+{"phase": "adam", "step": 200, "loss": 181.1239885983178, "iv_scaled_mse": 20.692718159108196, "price_scaled_mse": 2.7774359906244106, "pde_scaled_mse": 157.6538344485852, "shape": 0.0, "seconds": 8.76136012500001}
+{"phase": "adam", "step": 300, "loss": 125.09065606924312, "iv_scaled_mse": 96.77141464762758, "price_scaled_mse": 8.612411817812482, "pde_scaled_mse": 19.706829603803065, "shape": 0.0, "seconds": 13.121840417000158}
+{"phase": "adam", "step": 400, "loss": 78.46605161527995, "iv_scaled_mse": 48.02526279707773, "price_scaled_mse": 6.3704604660031166, "pde_scaled_mse": 24.070328352199112, "shape": 0.0, "seconds": 17.467260125000166}
+{"phase": "adam", "step": 500, "loss": 229.30141466466893, "iv_scaled_mse": 46.26001443265801, "price_scaled_mse": 4.4011743451885295, "pde_scaled_mse": 178.64022588682238, "shape": 0.0, "seconds": 21.811260917000027}
+{"phase": "adam", "step": 600, "loss": 75.26450447560279, "iv_scaled_mse": 39.5841072836697, "price_scaled_mse": 5.510397822443574, "pde_scaled_mse": 30.16999936948951, "shape": 0.0, "seconds": 26.1565525420001}
+{"phase": "adam", "step": 700, "loss": 18.69390518970463, "iv_scaled_mse": 8.481641636129318, "price_scaled_mse": 1.3414045991582901, "pde_scaled_mse": 8.870858954417024, "shape": 0.0, "seconds": 30.47524520900015}
+{"phase": "adam", "step": 800, "loss": 620.4215333967294, "iv_scaled_mse": 4.1745062614298245, "price_scaled_mse": 0.9001818971782884, "pde_scaled_mse": 615.3468452381213, "shape": 0.0, "seconds": 35.27781466700003}
+{"phase": "adam", "step": 900, "loss": 38.32993493725239, "iv_scaled_mse": 24.683703858148615, "price_scaled_mse": 4.1939948009595955, "pde_scaled_mse": 9.452236278144179, "shape": 0.0, "seconds": 39.67496716699998}
+{"phase": "adam", "step": 1000, "loss": 291.7011718061209, "iv_scaled_mse": 43.05745223231836, "price_scaled_mse": 5.661711546508289, "pde_scaled_mse": 242.98200802729426, "shape": 0.0, "seconds": 44.15634375000013}
