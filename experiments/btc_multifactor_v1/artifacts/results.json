@@ -1,0 +1,164 @@
+{
+  "utc": "2026-09-18T05:13:53.696141+00:00",
+  "variant_selection": {
+    "utc": "2026-09-18T05:07:04.507660+00:00",
+    "rule": "For SH and DH separately, choose feller_strict or feller_free by the lower median held-out IV RMSE over all validation dates and both designs. Frozen in variant_selection.json before any test-date fit.",
+    "SH": "feller_free",
+    "SH_validation_median_IV_RMSE": {
+      "feller_free": 5.043597813007089,
+      "feller_strict": 8.180692230941187
+    },
+    "DH": "feller_free",
+    "DH_validation_median_IV_RMSE": {
+      "feller_free": 3.811529459071009,
+      "feller_strict": 6.8771156626645045
+    }
+  },
+  "primary_endpoint": "Shock-regime TEST dates, design B. For each test episode, average the per-date paired differences in held-out IV RMSE: SH minus DH and BS_TERM minus DH. DH beats a competitor only if the one-sided Wilcoxon signed-rank test over test episodes gives p < 0.05 AND the episode-cluster bootstrap 95% lower bound of the mean difference is > 0 (5,000 replicates, seed 20260920).",
+  "cells": [
+    {
+      "regime": "shock",
+      "design": "B",
+      "dates": 29,
+      "units": 10,
+      "median_IV_RMSE": {
+        "BS_TERM": 9.63095007619738,
+        "SH": 2.495868988493713,
+        "DH": 1.856854723216172
+      },
+      "SH_minus_DH": {
+        "mean": 0.5653287979755707,
+        "median": 0.5053478239820641,
+        "DH_wins_dates": "23/29",
+        "unit_means_positive": "10/10",
+        "wilcoxon_one_sided_p": 0.0009765625,
+        "cluster_bootstrap95": [
+          0.3859123411485242,
+          0.7073258242390171
+        ],
+        "DH_beats": true
+      },
+      "BS_TERM_minus_DH": {
+        "mean": 8.9332166275566,
+        "median": 7.945351404178461,
+        "DH_wins_dates": "29/29",
+        "unit_means_positive": "10/10",
+        "wilcoxon_one_sided_p": 0.0009765625,
+        "cluster_bootstrap95": [
+          7.420610667420568,
+          11.013434263552046
+        ],
+        "DH_beats": true
+      }
+    },
+    {
+      "regime": "shock",
+      "design": "A",
+      "dates": 29,
+      "units": 10,
+      "median_IV_RMSE": {
+        "BS_TERM": 9.868967919721602,
+        "SH": 2.2659779262105695,
+        "DH": 1.5051994670094724
+      },
+      "SH_minus_DH": {
+        "mean": 0.9042510034094995,
+        "median": 0.8045687756822177,
+        "DH_wins_dates": "29/29",
+        "unit_means_positive": "10/10",
+        "wilcoxon_one_sided_p": 0.0009765625,
+        "cluster_bootstrap95": [
+          0.7340180447775759,
+          1.149030562944263
+        ],
+        "DH_beats": true
+      },
+      "BS_TERM_minus_DH": {
+        "mean": 8.81622483763077,
+        "median": 8.211610319706844,
+        "DH_wins_dates": "29/29",
+        "unit_means_positive": "10/10",
+        "wilcoxon_one_sided_p": 0.0009765625,
+        "cluster_bootstrap95": [
+          7.659037285872817,
+          10.09296530361898
+        ],
+        "DH_beats": true
+      }
+    },
+    {
+      "regime": "calm",
+      "design": "B",
+      "dates": 21,
+      "units": 21,
+      "median_IV_RMSE": {
+        "BS_TERM": 6.534688378395842,
+        "SH": 2.5266435419743796,
+        "DH": 1.3663717020167914
+      },
+      "SH_minus_DH": {
+        "mean": 1.113755012750495,
+        "median": 0.7277926349269178,
+        "DH_wins_dates": "19/21",
+        "unit_means_positive": "19/21",
+        "wilcoxon_one_sided_p": 6.532669067382812e-05,
+        "cluster_bootstrap95": [
+          0.6356989670309673,
+          1.6461444063130253
+        ],
+        "DH_beats": true
+      },
+      "BS_TERM_minus_DH": {
+        "mean": 6.129831463898473,
+        "median": 4.677750347022126,
+        "DH_wins_dates": "21/21",
+        "unit_means_positive": "21/21",
+        "wilcoxon_one_sided_p": 4.76837158203125e-07,
+        "cluster_bootstrap95": [
+          4.646443407761241,
+          7.8940637587997395
+        ],
+        "DH_beats": true
+      }
+    },
+    {
+      "regime": "calm",
+      "design": "A",
+      "dates": 21,
+      "units": 21,
+      "median_IV_RMSE": {
+        "BS_TERM": 7.247351398089062,
+        "SH": 2.0164756197331495,
+        "DH": 1.1039208508293996
+      },
+      "SH_minus_DH": {
+        "mean": 0.6588559944993578,
+        "median": 0.581842392079386,
+        "DH_wins_dates": "19/21",
+        "unit_means_positive": "19/21",
+        "wilcoxon_one_sided_p": 6.532669067382812e-05,
+        "cluster_bootstrap95": [
+          0.4204270000648971,
+          0.8914855433299609
+        ],
+        "DH_beats": true
+      },
+      "BS_TERM_minus_DH": {
+        "mean": 6.238768587144979,
+        "median": 5.980768749993182,
+        "DH_wins_dates": "21/21",
+        "unit_means_positive": "21/21",
+        "wilcoxon_one_sided_p": 4.76837158203125e-07,
+        "cluster_bootstrap95": [
+          5.187290449419374,
+          7.317902936695629
+        ],
+        "DH_beats": true
+      }
+    }
+  ],
+  "primary": {
+    "DH_beats_SH": true,
+    "DH_beats_BS_TERM": true
+  }
+}
