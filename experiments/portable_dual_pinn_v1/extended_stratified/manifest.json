@@ -1,0 +1,15 @@
+{
+  "source_sha256": {
+    "experiments/portable_dual_pinn_v1/EXTENDED_PROTOCOL.md": "8d934cca8248d5d23021aee9b15e82f052ebc0eb93c52c16e5c81669911ccf53",
+    "experiments/portable_dual_pinn_v1/EXTENDED_AMENDMENT_01.md": "5c125ae57be5772222d83fabd0a49f854987b463cdec971e44aded08e371c37a",
+    "experiments/portable_dual_pinn_v1/run_extended.py": "05a7665ae534dab2a39874ab6f8ce24374b30645e5e906b374a73e1f77c97139",
+    "experiments/portable_dual_pinn_v1/run_pilot.py": "be46ad1fd98556efe1b60eb47d270662f34ad8aa447e64c7d37ee253430e2684",
+    "src/mentor_dh_pinn/maturity_dual_pinn.py": "e27a2c447ec8ab83d39b7338f989fb8b256030effec493a62526916ba486ee2a",
+    "src/mentor_dh_pinn/regular_pinn_torch.py": "f8cb36e57fa9c7649550e83c893b84e7334c212adff1bb9399448ff387986db7",
+    "experiments/btc_multifactor_v1/engine.py": "3be06793eb21aa293ea1eb6038220c6d7e3cdd17fb5cc113ff4bbe8ccc51d4ae",
+    "src/double_heston_reference.py": "467cab8eac4ddc9249833f3db064d5f58979d9b0dd15e22448bafa7ef9c12350",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "b179ab0c275a185a689ac0efefc17d9e5760ca21cee0bd290a6b288a4d099e44"
+  },
+  "market_labels_used": false,
+  "role": "extended development, designed after pilot"
+}

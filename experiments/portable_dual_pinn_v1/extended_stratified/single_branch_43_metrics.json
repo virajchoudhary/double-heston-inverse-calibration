@@ -1,0 +1,17 @@
+{
+  "model": "single_branch",
+  "seed": 43,
+  "parameters": 21121,
+  "seconds": 62.848416833003284,
+  "train_price_RMSE": 0.003290132125323931,
+  "train_IV_RMSE_vol_points": 5.033144675914179,
+  "development_negative_convexity_count": 4,
+  "weights_sha256": "65ef27d921c5cec69a62b0baf0576a192aa01827d020d2fc95f1dd930785ba6d",
+  "price_RMSE": 0.0038720061518975474,
+  "price_MAE": 0.001525092547223558,
+  "price_max": 0.05395841608727692,
+  "IV_RMSE_vol_points": 5.852685661141766,
+  "PDE_RMSE": 2.9209751794662995,
+  "IV_valid": 5257,
+  "quotes": 6144
+}

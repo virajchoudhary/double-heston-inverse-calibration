@@ -1,0 +1,12 @@
+{
+  "train_cases": 64,
+  "development_cases": 16,
+  "train_labels": 6144,
+  "development_labels": 1536,
+  "collocation": 18000,
+  "train_fallbacks": 84,
+  "development_fallbacks": 32,
+  "train_invalid_IV": 875,
+  "development_invalid_IV": 227,
+  "splits_disjoint_by_complete_parameter_case": true
+}

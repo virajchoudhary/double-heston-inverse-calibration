@@ -1,0 +1,58 @@
+[
+  {
+    "run": "pilot",
+    "model": "single_branch",
+    "seed": 17,
+    "prices_compared": 1536,
+    "max_change": 0.0
+  },
+  {
+    "run": "pilot",
+    "model": "single_branch",
+    "seed": 43,
+    "prices_compared": 1536,
+    "max_change": 0.0
+  },
+  {
+    "run": "pilot",
+    "model": "dual_branch",
+    "seed": 17,
+    "prices_compared": 1536,
+    "max_change": 0.0
+  },
+  {
+    "run": "pilot",
+    "model": "dual_branch",
+    "seed": 43,
+    "prices_compared": 1536,
+    "max_change": 0.0
+  },
+  {
+    "run": "extended_stratified",
+    "model": "single_branch",
+    "seed": 17,
+    "prices_compared": 6144,
+    "max_change": 0.0
+  },
+  {
+    "run": "extended_stratified",
+    "model": "single_branch",
+    "seed": 43,
+    "prices_compared": 6144,
+    "max_change": 0.0
+  },
+  {
+    "run": "extended_stratified",
+    "model": "dual_branch",
+    "seed": 17,
+    "prices_compared": 6144,
+    "max_change": 0.0
+  },
+  {
+    "run": "extended_stratified",
+    "model": "dual_branch",
+    "seed": 43,
+    "prices_compared": 6144,
+    "max_change": 0.0
+  }
+]

@@ -119,3 +119,9 @@ outputs/metrics/smoke_test/parameter_evaluation/parameter_predictions_and_errors
 # rewrites it deterministically) and intermediate step checkpoints of the exploratory residual test.
 experiments/nifty_multifactor_v4/artifacts/controlled_predictions.csv
 outputs/regular_pinn_recovery/residual_test/**/*.safetensors
+
+# Small, completed portable-PINN research runs: ship reproducible evidence.
+!experiments/portable_dual_pinn_v1/pilot/*.pt
+!experiments/portable_dual_pinn_v1/pilot/*.npz
+!experiments/portable_dual_pinn_v1/extended_stratified/*.pt
+!experiments/portable_dual_pinn_v1/extended_stratified/*.npz

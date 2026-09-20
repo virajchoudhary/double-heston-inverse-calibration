@@ -15,3 +15,6 @@
 outputs/calibration_repair/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
 outputs/regular_pinn_recovery/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
 scripts/mentor_dh_pinn/prepare_regular_pinn_v2.py whitespace=-blank-at-eof
+# Research manifests hash exact bytes; preserve CSV and source line endings.
+docs/figures/bs_pinn_curve_validation/** -text
+experiments/portable_dual_pinn_v1/** -text

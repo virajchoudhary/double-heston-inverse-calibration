@@ -1,0 +1,16 @@
+{
+  "source_and_amendment_hashes_verified": true,
+  "raw_hashes_verified": 72,
+  "score_rows_reproduced": 400,
+  "models_displayed": [
+    "BS_EXPIRY",
+    "SH",
+    "DH"
+  ],
+  "preprocessing_target_dependency": true,
+  "probe_date": "2022-02-21",
+  "probe_expiry": "2022-03-04",
+  "probe_change": "Held-out expiry trade prices +5%, fixed exchange IV; memory only",
+  "maximum_relative_forward_change": 0.0038028358632890003,
+  "interpretation": "Numerically reproduced historical results, not certified leakage-free; not PINN results or future-date forecasts."
+}

@@ -1,0 +1,14 @@
+{
+  "source_sha256": {
+    "experiments/portable_dual_pinn_v1/PROTOCOL.md": "280557b88717c4b128c8bc506964a9a1d1e3d0169b697d4378874fa26c44502d",
+    "experiments/portable_dual_pinn_v1/run_pilot.py": "be46ad1fd98556efe1b60eb47d270662f34ad8aa447e64c7d37ee253430e2684",
+    "src/mentor_dh_pinn/maturity_dual_pinn.py": "e27a2c447ec8ab83d39b7338f989fb8b256030effec493a62526916ba486ee2a",
+    "src/mentor_dh_pinn/regular_pinn_torch.py": "f8cb36e57fa9c7649550e83c893b84e7334c212adff1bb9399448ff387986db7",
+    "experiments/btc_multifactor_v1/engine.py": "3be06793eb21aa293ea1eb6038220c6d7e3cdd17fb5cc113ff4bbe8ccc51d4ae",
+    "src/double_heston_reference.py": "467cab8eac4ddc9249833f3db064d5f58979d9b0dd15e22448bafa7ef9c12350",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "b179ab0c275a185a689ac0efefc17d9e5760ca21cee0bd290a6b288a4d099e44"
+  },
+  "market_data_used": false,
+  "role": "development pilot; no final test",
+  "torch": "2.13.0"
+}

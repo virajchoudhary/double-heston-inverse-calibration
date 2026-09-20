@@ -1,0 +1,271 @@
+{
+  "generator_sha256": "891f41dbbfb755319386b92d86aa424123d53bede282702833b08babd934f5fe",
+  "existing_source_hashes_unchanged": true,
+  "figure_count": 21,
+  "images": [
+    {
+      "file": "01_black_scholes_C_vs_S.png",
+      "width": 2700,
+      "height": 1740,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "218a25da98df070aef7ff52df3f8f720effc9a8701b4c6814fa2f66da25b3688"
+    },
+    {
+      "file": "02_pinn_C_vs_S.png",
+      "width": 2700,
+      "height": 1740,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "77207c091f5c69c62d9b61a18f683e8c550ca455ceb2b491d8660cdd314eed47"
+    },
+    {
+      "file": "03_C_vs_S_BS_vs_PINN.png",
+      "width": 2700,
+      "height": 1740,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "da78e92ebaab9b7734411e884c1213a8efbf6dd4855d76f0bb8a75821cd4902b"
+    },
+    {
+      "file": "04_C_vs_S_error.png",
+      "width": 2700,
+      "height": 2100,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "ba469f5a532f0c15de146cb8523c46191cf153c47487a64e5420a960602b67a2"
+    },
+    {
+      "file": "05_black_scholes_C_vs_tau.png",
+      "width": 2700,
+      "height": 1740,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "1ff2e59f2362fea25803b541ae61cfe46a6fbeda9072ba6733b878cbb67b987f"
+    },
+    {
+      "file": "06_pinn_C_vs_tau.png",
+      "width": 2700,
+      "height": 1740,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "cdd494a916a0512350163fca33495d75b61b78e0f81bce94c4fb23c60c016cac"
+    },
+    {
+      "file": "07_C_vs_tau_BS_vs_PINN.png",
+      "width": 2700,
+      "height": 1740,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "7d044700d024d671f7ae4a9b55db60fac627d06f20c246d7af9c0f7595833524"
+    },
+    {
+      "file": "08_C_vs_tau_error.png",
+      "width": 2700,
+      "height": 2100,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "11d159a77f0a0aaf0662070a0053015127b5ce4d77ce3345ecfe41725e37a367"
+    },
+    {
+      "file": "09_black_scholes_C_S_tau_3D.png",
+      "width": 2700,
+      "height": 2100,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "26a943873888026d96c9587c7e61264138b67113043ac2c34d857135d6df731f"
+    },
+    {
+      "file": "11_exact_DH_C_S_tau_3D.png",
+      "width": 2700,
+      "height": 2100,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "5d22e5e7022b03d826df9cf59218944568ad1253466e53f89bda6508b4a71949"
+    },
+    {
+      "file": "10_pinn_C_S_tau_3D.png",
+      "width": 2700,
+      "height": 2100,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "d377162be7b8531c923d4f5e0d9d5a8e041ffe87d1d18326cef9f1c942a31a65"
+    },
+    {
+      "file": "11b_BS_exact_DH_PINN_3D_comparison.png",
+      "width": 5400,
+      "height": 1800,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "33474bf609c9d0ab63936b102b24023133caa8696081febf0c9a9f0f936e06c2"
+    },
+    {
+      "file": "12_pinn_absolute_error_3D.png",
+      "width": 2700,
+      "height": 2100,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "98b93f14fbd4da910892982f3af39411e8f5e95f6d5582b278bdec8841fd3380"
+    },
+    {
+      "file": "12_pinn_absolute_error_heatmap.png",
+      "width": 2700,
+      "height": 1800,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "77c649a715a970358fe829196960ddb74c34b118cbe8e1fad0dacdfbe68d1eb5"
+    },
+    {
+      "file": "13_PINN_vs_BlackScholes_parity.png",
+      "width": 2100,
+      "height": 2100,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "0c27321c64426e58a3943a9589abc740a0066ea657f17fb9f5b214f4883a8384"
+    },
+    {
+      "file": "14_PINN_vs_exact_teacher_parity.png",
+      "width": 2100,
+      "height": 2100,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "8e69ee016f4ed578c9bad7bcfd236c2c5397b0f0fc4a4d50f81b0d6aa82f4429"
+    },
+    {
+      "file": "15_multiple_maturity_C_vs_S.png",
+      "width": 3600,
+      "height": 2700,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "c3ba3ae27d27e1f820ed9a7d22d416a6217e12dce19bc0125e6e79393136ce68"
+    },
+    {
+      "file": "16_multiple_moneyness_C_vs_tau.png",
+      "width": 4500,
+      "height": 1710,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "fe80c71ab0cbacdfd6744df81a7de627bddd52dfc91fb35f10b648895d879316"
+    },
+    {
+      "file": "17_existing_evaluation_metrics.png",
+      "width": 4500,
+      "height": 2400,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "74cbbe851d28b0bd02113a461ad07d02ebf32d3c073d626187389a01fc975960"
+    },
+    {
+      "file": "18_PINN_error_distribution.png",
+      "width": 3600,
+      "height": 1680,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "1002a4aa7776177357e0896582035741a2441788e1bef9c8428a30e114abd1f7"
+    },
+    {
+      "file": "19_terminal_diagnostic.png",
+      "width": 4500,
+      "height": 1740,
+      "DPI": [
+        299.9994,
+        299.9994
+      ],
+      "sha256": "1bd6de7a3d0998846a1b2adb59f9c0487ca3d051e14757bbbd2c6506f9e2ee31"
+    }
+  ],
+  "files": {
+    "PLOT_CONFIGURATION.json": "cddfc9826444877638aa4ceed2dc0b3577a59f0331c9f24b34ccc81e4537051d",
+    "PLOT_REPORT.md": "fd2fb1ff4824ae6901fa7566710209c39eb7d276135c09fceab7a86c921ca73f",
+    "code/generate_plots.py": "891f41dbbfb755319386b92d86aa424123d53bede282702833b08babd934f5fe",
+    "data/01_black_scholes_C_vs_S.csv": "c4eb6270794ef803509443e723e507eb2d630af66a1c5a95bc1593056109b161",
+    "data/02_pinn_C_vs_S.csv": "c4eb6270794ef803509443e723e507eb2d630af66a1c5a95bc1593056109b161",
+    "data/03_C_vs_S_BS_vs_PINN.csv": "c4eb6270794ef803509443e723e507eb2d630af66a1c5a95bc1593056109b161",
+    "data/04_C_vs_S_error.csv": "c4eb6270794ef803509443e723e507eb2d630af66a1c5a95bc1593056109b161",
+    "data/05_black_scholes_C_vs_tau.csv": "ef2351f39364a2b4d3cab5df610681e1c2373dcc2b3f2fcb14faef0e639bedf8",
+    "data/06_pinn_C_vs_tau.csv": "ef2351f39364a2b4d3cab5df610681e1c2373dcc2b3f2fcb14faef0e639bedf8",
+    "data/07_C_vs_tau_BS_vs_PINN.csv": "ef2351f39364a2b4d3cab5df610681e1c2373dcc2b3f2fcb14faef0e639bedf8",
+    "data/08_C_vs_tau_error.csv": "ef2351f39364a2b4d3cab5df610681e1c2373dcc2b3f2fcb14faef0e639bedf8",
+    "data/09_black_scholes_C_S_tau_3D.csv": "fb16cfd9152bdfafb0308ab56a08723554dd7340d70fe39abea14853cd3f45a1",
+    "data/10_pinn_C_S_tau_3D.csv": "887ba248459c0917adca8a529f7209e08842f2f5cebf0ebee213d93e33b0affb",
+    "data/11_exact_DH_C_S_tau_3D.csv": "0e80e27123c6d2a258236d2bc3ff7b011ceef5e21f4f5f8e2c3b7b141b0e04b1",
+    "data/12_pinn_absolute_error_grid.csv": "57a595d652c5c5f682a143fd4072140d1575a5bf764602674434d5e51d1394c7",
+    "data/13_14_parity_matched_pairs.csv": "57a595d652c5c5f682a143fd4072140d1575a5bf764602674434d5e51d1394c7",
+    "data/15_multiple_maturity_C_vs_S.csv": "89b8ce3d50153f2e7e0845cc180382de728a5934414f019bff44097a4cc3351b",
+    "data/16_multiple_moneyness_C_vs_tau.csv": "f80788bf534f9d80d9d905a37f1bb52111f0f874b42b6072965eed6bc1f1c21a",
+    "data/17_existing_baselines.json": "ea73cfc092b6d69b3c3005bef4675198bc0c40cfbf70eff61e4ddf2559f924db",
+    "data/17_existing_case_parameters.json": "60b2661cc875bdcdc7c18f37bfed0599e999b346b53d855128a8941b44674b0c",
+    "data/17_existing_metric_summary.csv": "78a9fe6c605c5afb02b5121f367fbe30dc0e88221a7caec509682e6d1f6d7179",
+    "data/17_existing_per_surface_metrics.csv": "9452fe3569faa38969361a828d4e1b7ee3595970f656a927a6a127d8eac53ae1",
+    "data/18_error_ECDF.csv": "fd78febe0fb321b9309d29ec0db595240ac9c44943fb9a1ee90701a4d163497a",
+    "data/18_error_histogram.csv": "8a930819005b557ec9e9fff9050016f910d61709fc194c98abde1b363d1f2e32",
+    "data/19_terminal_diagnostic.csv": "d82a3db7ebe94f5ed3d057dd22c7043fcf7f76f92fcfa9bee7b6a7d6d37639ac",
+    "data/S_slice_90d_finite_differences.csv": "6d97dada87d0e2a1451e2b3e89a197fe43cc33a329a717858e01f5530d5d22f3",
+    "data/curve_shape_checks.csv": "de761ac4f06d1f24d98f520aa9821ad8a80b511c071d3faa346c270d034424f6",
+    "data/exact_reference_fallbacks.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "data/numerical_checks.json": "f86ef25c3011a7e887bf49a1ccc790fd53f041bbddb115626fb7192794bd467d",
+    "data/surface_all_models.csv": "57a595d652c5c5f682a143fd4072140d1575a5bf764602674434d5e51d1394c7",
+    "data/tau_slice_ATM_finite_differences.csv": "4bc34fc0370ef08e6284f7b06f9223b210beab4205c4fe964f0fb3a6b1a003e2",
+    "figures/01_black_scholes_C_vs_S.png": "218a25da98df070aef7ff52df3f8f720effc9a8701b4c6814fa2f66da25b3688",
+    "figures/02_pinn_C_vs_S.png": "77207c091f5c69c62d9b61a18f683e8c550ca455ceb2b491d8660cdd314eed47",
+    "figures/03_C_vs_S_BS_vs_PINN.png": "da78e92ebaab9b7734411e884c1213a8efbf6dd4855d76f0bb8a75821cd4902b",
+    "figures/04_C_vs_S_error.png": "ba469f5a532f0c15de146cb8523c46191cf153c47487a64e5420a960602b67a2",
+    "figures/05_black_scholes_C_vs_tau.png": "1ff2e59f2362fea25803b541ae61cfe46a6fbeda9072ba6733b878cbb67b987f",
+    "figures/06_pinn_C_vs_tau.png": "cdd494a916a0512350163fca33495d75b61b78e0f81bce94c4fb23c60c016cac",
+    "figures/07_C_vs_tau_BS_vs_PINN.png": "7d044700d024d671f7ae4a9b55db60fac627d06f20c246d7af9c0f7595833524",
+    "figures/08_C_vs_tau_error.png": "11d159a77f0a0aaf0662070a0053015127b5ce4d77ce3345ecfe41725e37a367",
+    "figures/09_black_scholes_C_S_tau_3D.png": "26a943873888026d96c9587c7e61264138b67113043ac2c34d857135d6df731f",
+    "figures/10_pinn_C_S_tau_3D.png": "d377162be7b8531c923d4f5e0d9d5a8e041ffe87d1d18326cef9f1c942a31a65",
+    "figures/11_exact_DH_C_S_tau_3D.png": "5d22e5e7022b03d826df9cf59218944568ad1253466e53f89bda6508b4a71949",
+    "figures/11b_BS_exact_DH_PINN_3D_comparison.png": "33474bf609c9d0ab63936b102b24023133caa8696081febf0c9a9f0f936e06c2",
+    "figures/12_pinn_absolute_error_3D.png": "98b93f14fbd4da910892982f3af39411e8f5e95f6d5582b278bdec8841fd3380",
+    "figures/12_pinn_absolute_error_heatmap.png": "77c649a715a970358fe829196960ddb74c34b118cbe8e1fad0dacdfbe68d1eb5",
+    "figures/13_PINN_vs_BlackScholes_parity.png": "0c27321c64426e58a3943a9589abc740a0066ea657f17fb9f5b214f4883a8384",
+    "figures/14_PINN_vs_exact_teacher_parity.png": "8e69ee016f4ed578c9bad7bcfd236c2c5397b0f0fc4a4d50f81b0d6aa82f4429",
+    "figures/15_multiple_maturity_C_vs_S.png": "c3ba3ae27d27e1f820ed9a7d22d416a6217e12dce19bc0125e6e79393136ce68",
+    "figures/16_multiple_moneyness_C_vs_tau.png": "fe80c71ab0cbacdfd6744df81a7de627bddd52dfc91fb35f10b648895d879316",
+    "figures/17_existing_evaluation_metrics.png": "74cbbe851d28b0bd02113a461ad07d02ebf32d3c073d626187389a01fc975960",
+    "figures/18_PINN_error_distribution.png": "1002a4aa7776177357e0896582035741a2441788e1bef9c8428a30e114abd1f7",
+    "figures/19_terminal_diagnostic.png": "1bd6de7a3d0998846a1b2adb59f9c0487ca3d051e14757bbbd2c6506f9e2ee31"
+  }
+}

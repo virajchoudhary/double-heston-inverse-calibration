@@ -1,0 +1,44 @@
+[
+  {
+    "model": "single_branch",
+    "seed": 43,
+    "step": 1,
+    "loss": 5.352007263471738,
+    "seconds": 0.02628729100979399
+  },
+  {
+    "model": "single_branch",
+    "seed": 43,
+    "step": 201,
+    "loss": 2.228769081489519,
+    "seconds": 5.733081666010548
+  },
+  {
+    "model": "single_branch",
+    "seed": 43,
+    "step": 401,
+    "loss": 2.0074596473898545,
+    "seconds": 11.670174500002759
+  },
+  {
+    "model": "single_branch",
+    "seed": 43,
+    "step": 601,
+    "loss": 2.323482647148773,
+    "seconds": 17.51067604101263
+  },
+  {
+    "model": "single_branch",
+    "seed": 43,
+    "step": 801,
+    "loss": 4.356225199660061,
+    "seconds": 23.24815920800029
+  },
+  {
+    "model": "single_branch",
+    "seed": 43,
+    "step": 1000,
+    "loss": 1.2674481736899625,
+    "seconds": 28.95841695800482
+  }
+]

@@ -1,0 +1,87 @@
+{
+  "rows": [
+    {
+      "model": "single_branch",
+      "seed": 17,
+      "parameters": 21121,
+      "seconds": 63.30523179200827,
+      "train_price_RMSE": 0.0034397138336140836,
+      "train_IV_RMSE_vol_points": 5.161150874326621,
+      "development_negative_convexity_count": 6,
+      "weights_sha256": "952710e248e463b4f25724bb05fc0bdacdaff288ee18d3da374d907f8815f6eb",
+      "price_RMSE": 0.005295880697224558,
+      "price_MAE": 0.001879148826689763,
+      "price_max": 0.09682507654676303,
+      "IV_RMSE_vol_points": 6.382225373988448,
+      "PDE_RMSE": 3.061209313759722,
+      "IV_valid": 5257,
+      "quotes": 6144
+    },
+    {
+      "model": "dual_branch",
+      "seed": 17,
+      "parameters": 19970,
+      "seconds": 72.82853737499681,
+      "train_price_RMSE": 0.0033295400648205103,
+      "train_IV_RMSE_vol_points": 4.362066678545571,
+      "development_negative_convexity_count": 13,
+      "weights_sha256": "8f4a5c5eac132c2c303f104b4521f9033d6cec05e844861fc19f202cc782af44",
+      "price_RMSE": 0.004212379998802405,
+      "price_MAE": 0.0015631372824056525,
+      "price_max": 0.0841863392478559,
+      "IV_RMSE_vol_points": 5.65622930878862,
+      "PDE_RMSE": 3.811295089926614,
+      "IV_valid": 5257,
+      "quotes": 6144
+    },
+    {
+      "model": "single_branch",
+      "seed": 43,
+      "parameters": 21121,
+      "seconds": 62.848416833003284,
+      "train_price_RMSE": 0.003290132125323931,
+      "train_IV_RMSE_vol_points": 5.033144675914179,
+      "development_negative_convexity_count": 4,
+      "weights_sha256": "65ef27d921c5cec69a62b0baf0576a192aa01827d020d2fc95f1dd930785ba6d",
+      "price_RMSE": 0.0038720061518975474,
+      "price_MAE": 0.001525092547223558,
+      "price_max": 0.05395841608727692,
+      "IV_RMSE_vol_points": 5.852685661141766,
+      "PDE_RMSE": 2.9209751794662995,
+      "IV_valid": 5257,
+      "quotes": 6144
+    },
+    {
+      "model": "dual_branch",
+      "seed": 43,
+      "parameters": 19970,
+      "seconds": 70.42896566700074,
+      "train_price_RMSE": 0.003787723596684366,
+      "train_IV_RMSE_vol_points": 4.54739849042651,
+      "development_negative_convexity_count": 22,
+      "weights_sha256": "f8c60ef0e7c84fb8a5059ec01c245b9f9692854bb433020f8c353342df937133",
+      "price_RMSE": 0.004706133932115379,
+      "price_MAE": 0.0018832490426677775,
+      "price_max": 0.06837826255973922,
+      "IV_RMSE_vol_points": 5.8907446511077,
+      "PDE_RMSE": 11.0434354092833,
+      "IV_valid": 5257,
+      "quotes": 6144
+    }
+  ],
+  "mean_seed_metrics": {
+    "single_branch": {
+      "price_RMSE": 0.004583943424561053,
+      "IV_RMSE_vol_points": 6.117455517565107,
+      "PDE_RMSE": 2.991092246613011
+    },
+    "dual_branch": {
+      "price_RMSE": 0.004459256965458892,
+      "IV_RMSE_vol_points": 5.77348697994816,
+      "PDE_RMSE": 7.427365249604957
+    }
+  },
+  "development_criterion_passed": false,
+  "market_improvement_proven": false,
+  "parameter_recovery_tested": false
+}
