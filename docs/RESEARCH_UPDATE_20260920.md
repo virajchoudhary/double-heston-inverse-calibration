@@ -8,6 +8,9 @@ results to make a preferred model win.
 
 [Full visualization report](figures/bs_pinn_curve_validation/PLOT_REPORT.md)
 includes 21 figures, plotting code, configuration, source CSVs and checksums.
+The [publication checksum note](figures/bs_pinn_curve_validation/PUBLICATION_NOTE.md)
+records a pre-existing Markdown-report checksum mismatch; all other original
+manifest file entries matched, and the original manifest is preserved.
 
 These are synthetic Double Heston prices with K=100, r=q=0, not historical NSE
 quotes. Across the illustrated 121 x 121 grid, the frozen two-seed C3 PINN had
