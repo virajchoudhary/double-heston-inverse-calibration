@@ -1,0 +1,18 @@
+{
+  "price_RMSE": 1.3018085992324106e-05,
+  "price_MAE": 8.220776389810392e-06,
+  "price_P95": 2.8507261237276267e-05,
+  "price_max": 0.0001222842926387191,
+  "forward_normalized_price_RMSE": 1.3018085992324106e-05,
+  "IV_RMSE_volatility_points": 0.1200029699841242,
+  "IV_valid_quotes": 3788,
+  "quotes": 4096,
+  "PDE_RMSE": 0.03739106123393077,
+  "PDE_mean_signed": -0.0026203838972745776,
+  "PDE_mean_absolute": 0.015950684621135545,
+  "PDE_median": 0.006288426579808368,
+  "PDE_P95": 0.060086664349355105,
+  "PDE_max": 1.029990904961261,
+  "convexity_violation_percent": 0.7080078125,
+  "monotonicity_violation_percent": 0.0244140625
+}

@@ -1,0 +1,10 @@
+{
+  "utc": "2026-09-17T16:53:09.439232+00:00",
+  "source_sha256": "c6322e8cfaf8ae9e36ae6a0f312b1fd9bd6f38a4ae89b2c779cbd3f6f4ec4e3a",
+  "files": {
+    "REPORT_ADDENDUM.md": "08767f5ea780696821ba460384d574b779ae5b1bd0842ae9b081769a59be7a4e",
+    "family_bucket_errors.csv": "eccb0e083a67a14a6a0807465e3fe15b7df4522c70bbcbbc3d1babd8e5d9c8da",
+    "pde_fidelity_residuals.csv": "043b58b308878b73d06b1f0fefc4a1c6cf8d05311d0a62f853facec8b26f6602",
+    "representative_teacher_shapes.csv": "5984ba83ac16a5cf7a4e57a8165ffa0cd61f4de8e150a9b68b56b20a635b6f01"
+  }
+}

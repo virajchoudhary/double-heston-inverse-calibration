@@ -1,0 +1,250 @@
+source,group,cases,direct_all_ten,canonical_all_ten,permutation_all_ten,permutation_rescued,lower_error_swapped_assignments,direct_scaled_rmse,permutation_scaled_rmse
+outputs/deeper_pinn/prior_boundary_noise_911931/fits.json,Original Double Heston|rich|directory,16,0,0,0,0,1,1.477117315078883,1.4794337560012845
+outputs/deeper_pinn/prior_boundary_noise_911931/fits.json,17-layer Double Heston|rich|directory,16,0,0,0,0,1,1.4565412137334366,1.4567630630799595
+outputs/deeper_pinn/prior_boundary_noise_911931/fits.json,Unregularized matched PINN|rich|directory,16,0,0,0,0,1,1.3068533763005732,1.3029838881967981
+outputs/deeper_pinn/prior_boundary_noise_911931/fits.json,Selected regularized PINN|rich|directory,16,0,0,0,0,1,1.01534559111417,1.0107652917247312
+outputs/deeper_pinn/recovery_noise_910831/fits.json,Original Double Heston|rich|directory,24,0,0,0,0,2,0.6186523925788606,0.6071662285441041
+outputs/deeper_pinn/recovery_noise_910831/fits.json,17-layer Double Heston|rich|directory,24,0,0,0,0,2,0.6509104764359246,0.640612084713246
+outputs/deeper_pinn/recovery_noise_910831/fits.json,11-layer Double Heston + GLS|rich|directory,24,0,0,0,0,1,0.6564320789341204,0.6478662834610803
+outputs/deeper_pinn/recovery_noise_910831/fits.json,17-layer Double Heston + GLS|rich|directory,24,0,0,0,0,1,0.7874633416076976,0.78350678690479
+outputs/deeper_pinn/fresh_noise_909831/fits_and_starts.json,double_sobolev_s17|rich|directory,24,0,0,0,0,0,0.7589179715611372,0.7589179715611372
+outputs/deeper_pinn/fresh_noise_909831/fits_and_starts.json,deep11_s17|rich|directory,24,0,0,0,0,0,0.7716257709151184,0.7716257709151184
+outputs/deeper_pinn/fresh_noise_909831/fits_and_starts.json,deep17_full_s29|rich|directory,24,0,0,0,0,0,0.8342110911384019,0.8342110911384019
+outputs/deeper_pinn/fresh_noise_909831/fits_and_starts.json,deep11_balanced_s43|rich|directory,24,0,0,0,0,0,0.7626117444631355,0.7626117444631355
+outputs/deeper_pinn/prior_clean_911831/fits.json,Original Double Heston|rich|directory,32,0,0,0,0,0,0.21674799417870633,0.21674799417870633
+outputs/deeper_pinn/prior_clean_911831/fits.json,17-layer Double Heston|rich|directory,32,0,0,0,0,0,0.17589506434846786,0.17589506434846786
+outputs/deeper_pinn/prior_clean_911831/fits.json,Unregularized matched PINN|rich|directory,32,1,1,1,0,0,0.16989290292733034,0.16989290292733034
+outputs/deeper_pinn/prior_clean_911831/fits.json,Selected regularized PINN|rich|directory,32,1,1,1,0,0,0.1530748359306945,0.1530748359306945
+outputs/deeper_pinn/prior_noise_911831/fits.json,Original Double Heston|rich|directory,32,0,0,0,0,0,0.607774838109655,0.607774838109655
+outputs/deeper_pinn/prior_noise_911831/fits.json,17-layer Double Heston|rich|directory,32,0,0,0,0,0,0.6477606958533753,0.6477606958533753
+outputs/deeper_pinn/prior_noise_911831/fits.json,Unregularized matched PINN|rich|directory,32,0,0,0,0,0,0.5927575762374517,0.5927575762374517
+outputs/deeper_pinn/prior_noise_911831/fits.json,Selected regularized PINN|rich|directory,32,0,0,0,0,0,0.38781265402315107,0.38781265402315107
+outputs/deeper_pinn/fresh_clean_909831/fits_and_starts.json,double_sobolev_s17|rich|directory,24,0,0,0,0,1,0.364272152421966,0.32694601310088456
+outputs/deeper_pinn/fresh_clean_909831/fits_and_starts.json,deep11_s17|rich|directory,24,0,0,0,0,1,0.36181463864303554,0.3239242388734557
+outputs/deeper_pinn/fresh_clean_909831/fits_and_starts.json,deep17_full_s29|rich|directory,24,0,0,0,0,0,0.19402584558034752,0.19402584558034752
+outputs/deeper_pinn/fresh_clean_909831/fits_and_starts.json,deep11_balanced_s43|rich|directory,24,0,0,0,0,0,0.21512325183567302,0.21512325183567302
+outputs/deeper_pinn/development_first/fits_and_starts.json,double_sobolev_s17|rich|directory,6,0,0,0,0,0,0.19035724422421726,0.19035724422421726
+outputs/deeper_pinn/development_first/fits_and_starts.json,deep11_s17|rich|directory,6,0,0,0,0,0,0.19788428213984952,0.19788428213984952
+outputs/deeper_pinn/development_second/fits_and_starts.json,deep17_full_s29|rich|directory,6,0,0,0,0,0,0.2102467149248851,0.2102467149248851
+outputs/deeper_pinn/prior_boundary_clean_911931/fits.json,Original Double Heston|rich|directory,16,0,0,0,0,1,0.4446574698781844,0.43618157674649294
+outputs/deeper_pinn/prior_boundary_clean_911931/fits.json,17-layer Double Heston|rich|directory,16,0,0,0,0,1,0.4781835764505877,0.4678613760351816
+outputs/deeper_pinn/prior_boundary_clean_911931/fits.json,Unregularized matched PINN|rich|directory,16,0,0,0,0,0,0.44047974890079283,0.44047974890079283
+outputs/deeper_pinn/prior_boundary_clean_911931/fits.json,Selected regularized PINN|rich|directory,16,0,0,0,0,0,0.44270593130928226,0.44270593130928226
+outputs/deeper_pinn/recovery_clean_910831/fits.json,Original Double Heston|rich|directory,24,1,1,1,0,0,0.22080811625792057,0.22080811625792057
+outputs/deeper_pinn/recovery_clean_910831/fits.json,17-layer Double Heston|rich|directory,24,0,0,0,0,1,0.2254293633489419,0.22562832558250231
+outputs/deeper_pinn/recovery_clean_910831/fits.json,11-layer Double Heston + GLS|rich|directory,24,0,0,0,0,0,0.1659317903398828,0.1659317903398828
+outputs/deeper_pinn/recovery_clean_910831/fits.json,17-layer Double Heston + GLS|rich|directory,24,2,2,2,0,0,0.1657844670751066,0.1657844670751066
+outputs/regular_pinn_recovery/locked_assessment_907931/fits_and_starts.json,double_standard_s17|monthly|0.0,12,0,0,0,0,0,0.6529370001653518,0.6529370001653518
+outputs/regular_pinn_recovery/locked_assessment_907931/fits_and_starts.json,double_sobolev_s17|monthly|0.0,12,0,0,0,0,0,0.47102643088037016,0.47102643088037016
+outputs/regular_pinn_recovery/locked_assessment_907931/fits_and_starts.json,double_standard_s17|monthly|0.01,12,0,0,0,0,1,1.45888776467837,1.4533356211234776
+outputs/regular_pinn_recovery/locked_assessment_907931/fits_and_starts.json,double_sobolev_s17|monthly|0.01,12,0,0,0,0,1,1.1323231815799952,1.127434828110184
+outputs/regular_pinn_recovery/locked_assessment_907931/fits_and_starts.json,double_standard_s17|rich|0.0,12,0,0,0,0,0,0.49086225837440983,0.49086225837440983
+outputs/regular_pinn_recovery/locked_assessment_907931/fits_and_starts.json,double_sobolev_s17|rich|0.0,12,0,0,0,0,0,0.34734008906807246,0.34734008906807246
+outputs/regular_pinn_recovery/locked_assessment_907931/fits_and_starts.json,double_standard_s17|rich|0.01,12,0,0,0,0,0,0.5703192857988003,0.5703192857988003
+outputs/regular_pinn_recovery/locked_assessment_907931/fits_and_starts.json,double_sobolev_s17|rich|0.01,12,0,0,0,0,0,0.610057796490538,0.610057796490538
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,unified_v6/unified|encoder|rich|0.0||,8,0,0,0,0,0,1.2006660344697027,1.2006660344697027
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,unified_v6/unified|refined|rich|0.0||,8,0,0,0,0,0,1.5255870937611309,1.5255870937611309
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_17/repaired|encoder|rich|0.0||,8,0,0,0,0,0,1.1422130379980404,1.1422130379980404
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_17/repaired|refined|rich|0.0||,8,0,0,0,0,0,1.5238729544403802,1.5238729544403802
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_29/repaired|encoder|rich|0.0||,8,0,0,0,0,0,1.1968810449689502,1.1968810449689502
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_29/repaired|refined|rich|0.0||,8,0,0,0,0,0,1.5279836343904774,1.5279836343904774
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_43/repaired|encoder|rich|0.0||,8,0,0,0,0,0,1.1562433105287624,1.1562433105287624
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_43/repaired|refined|rich|0.0||,8,0,0,0,0,0,1.4782890417408665,1.4782890417408665
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_43/repaired|hybrid_polish|rich|0.0||,8,7,7,7,0,1,1.7578139753187891,1.4340829819393743
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,unified_v6/unified|encoder|rich|0.01||,8,0,0,0,0,0,1.1904895954152133,1.1904895954152133
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,unified_v6/unified|refined|rich|0.01||,8,0,0,0,0,1,0.8989137328721097,0.8930090391363588
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_17/repaired|encoder|rich|0.01||,8,0,0,0,0,0,1.1504156824537646,1.1504156824537646
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_17/repaired|refined|rich|0.01||,8,0,0,0,0,0,0.9011007009888976,0.9011007009888976
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_29/repaired|encoder|rich|0.01||,8,0,0,0,0,0,1.1987070318895905,1.1987070318895905
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_29/repaired|refined|rich|0.01||,8,0,0,0,0,1,0.9146099758061289,0.9069206974192632
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_43/repaired|encoder|rich|0.01||,8,0,0,0,0,0,1.164568676310273,1.164568676310273
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_43/repaired|refined|rich|0.01||,8,0,0,0,0,0,0.8809430144358804,0.8809430144358804
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_43/repaired|hybrid_polish|rich|0.01||,8,0,0,0,0,0,1.1267357302209058,1.1267357302209058
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,unified_v6/unified|encoder|single_expiry|0.0||,8,0,0,0,0,1,1.3377804326049554,1.317795135992923
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,unified_v6/unified|refined|single_expiry|0.0||,8,0,0,0,0,0,1.2740652562766812,1.2740652562766812
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_17/repaired|encoder|single_expiry|0.0||,8,0,0,0,0,1,1.2484979313306557,1.2342571816051984
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_17/repaired|refined|single_expiry|0.0||,8,0,0,0,0,0,1.0533630264809573,1.0533630264809573
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_29/repaired|encoder|single_expiry|0.0||,8,0,0,0,0,1,1.3257979332462828,1.3087426517966694
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_29/repaired|refined|single_expiry|0.0||,8,0,0,0,0,0,1.0452044177836144,1.0452044177836144
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_43/repaired|encoder|single_expiry|0.0||,8,0,0,0,0,1,1.2828896903430334,1.2654024115724134
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_43/repaired|refined|single_expiry|0.0||,8,0,0,0,0,0,1.094940942710608,1.094940942710608
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_43/repaired|hybrid_polish|single_expiry|0.0||,8,0,0,0,0,0,0.9183374665009512,0.9183374665009512
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,unified_v6/unified|encoder|single_expiry|0.01||,8,0,0,0,0,1,1.3288904507863237,1.308158901247557
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,unified_v6/unified|refined|single_expiry|0.01||,8,0,0,0,0,0,1.2498460314809612,1.2498460314809612
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_17/repaired|encoder|single_expiry|0.01||,8,0,0,0,0,1,1.2535445884633,1.236788746770482
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_17/repaired|refined|single_expiry|0.01||,8,0,0,0,0,0,1.1688943736140844,1.1688943736140844
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_29/repaired|encoder|single_expiry|0.01||,8,0,0,0,0,1,1.3121350664847549,1.2937149730069324
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_29/repaired|refined|single_expiry|0.01||,8,0,0,0,0,0,1.1920014361215616,1.1920014361215616
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_43/repaired|encoder|single_expiry|0.01||,8,0,0,0,0,1,1.2794363695800046,1.2603427014682262
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_43/repaired|refined|single_expiry|0.01||,8,0,0,0,0,0,1.184386302416978,1.184386302416978
+outputs/calibration_repair/assessment_905101/parameter_recovery.csv,seed_43/repaired|hybrid_polish|single_expiry|0.01||,8,0,0,0,0,0,1.8894361268890416,1.8894361268890416
+outputs/calibration_repair/development_probe/parameter_recovery.csv,unified_v6/unified|encoder|rich|0.0||,2,0,0,0,0,0,1.4053215106640777,1.4053215106640777
+outputs/calibration_repair/development_probe/parameter_recovery.csv,unified_v6/unified|refined|rich|0.0||,2,0,0,0,0,0,0.6135775112015783,0.6135775112015783
+outputs/calibration_repair/development_probe/parameter_recovery.csv,unified_v6/unified|hybrid_polish|rich|0.0||,2,2,2,2,0,0,3.9026899857993835e-12,3.9026899857993835e-12
+outputs/calibration_repair/development_probe/parameter_recovery.csv,unified_v6/unified|encoder|rich|0.01||,2,0,0,0,0,0,1.3949879299265142,1.3949879299265142
+outputs/calibration_repair/development_probe/parameter_recovery.csv,unified_v6/unified|refined|rich|0.01||,2,0,0,0,0,0,0.8669811283205723,0.8669811283205723
+outputs/calibration_repair/development_probe/parameter_recovery.csv,unified_v6/unified|hybrid_polish|rich|0.01||,2,0,0,0,0,0,15.637458914034163,15.637458914034163
+outputs/calibration_repair/development_probe/parameter_recovery.csv,unified_v6/unified|encoder|single_expiry|0.0||,2,0,0,0,0,0,1.4528162590169962,1.4528162590169962
+outputs/calibration_repair/development_probe/parameter_recovery.csv,unified_v6/unified|refined|single_expiry|0.0||,2,0,0,0,0,0,1.468221938022692,1.468221938022692
+outputs/calibration_repair/development_probe/parameter_recovery.csv,unified_v6/unified|hybrid_polish|single_expiry|0.0||,2,0,0,0,0,0,1.471805948424142,1.471805948424142
+outputs/calibration_repair/development_probe/parameter_recovery.csv,unified_v6/unified|encoder|single_expiry|0.01||,2,0,0,0,0,0,1.4480945627708646,1.4480945627708646
+outputs/calibration_repair/development_probe/parameter_recovery.csv,unified_v6/unified|refined|single_expiry|0.01||,2,0,0,0,0,0,1.3630117776366326,1.3630117776366326
+outputs/calibration_repair/development_probe/parameter_recovery.csv,unified_v6/unified|hybrid_polish|single_expiry|0.01||,2,0,0,0,0,1,16.08463849112911,5.347026423505841
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,unified_v6/unified|encoder|rich|0.0||,8,0,0,0,0,1,1.9398562999735505,1.881655824525049
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,unified_v6/unified|refined|rich|0.0||,8,0,0,0,0,0,0.8697435383417176,0.8697435383417176
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_17/repaired|encoder|rich|0.0||,8,0,0,0,0,1,1.872571429681346,1.817596347673759
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_17/repaired|refined|rich|0.0||,8,0,0,0,0,0,0.9687342310738429,0.9687342310738429
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_29/repaired|encoder|rich|0.0||,8,0,0,0,0,1,1.9053977816589442,1.844831555567233
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_29/repaired|refined|rich|0.0||,8,0,0,0,0,0,1.3988794213307159,1.3988794213307159
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_43/repaired|encoder|rich|0.0||,8,0,0,0,0,1,1.868421675730716,1.810558842315513
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_43/repaired|refined|rich|0.0||,8,0,0,0,0,0,0.9371607446270472,0.9371607446270472
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_43/repaired|hybrid_polish|rich|0.0||,8,7,7,7,0,0,0.16840946822539307,0.16840946822539307
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,unified_v6/unified|encoder|rich|0.01||,8,0,0,0,0,1,1.907161570059687,1.8498690776189237
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,unified_v6/unified|refined|rich|0.01||,8,0,0,0,0,1,1.5334419328290465,1.5063275745430722
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_17/repaired|encoder|rich|0.01||,8,0,0,0,0,1,1.8494734484944217,1.795221607700503
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_17/repaired|refined|rich|0.01||,8,0,0,0,0,1,1.5216898929770537,1.4909648947296394
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_29/repaired|encoder|rich|0.01||,8,0,0,0,0,1,1.8689572137125627,1.8097413849996515
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_29/repaired|refined|rich|0.01||,8,0,0,0,0,1,1.5217466839500173,1.479370264196376
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_43/repaired|encoder|rich|0.01||,8,0,0,0,0,1,1.8442029166052767,1.7869977555730197
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_43/repaired|refined|rich|0.01||,8,0,0,0,0,1,1.4870592360614792,1.454275158353947
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_43/repaired|hybrid_polish|rich|0.01||,8,0,0,0,0,0,3692645.97362134,3692645.97362134
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,unified_v6/unified|encoder|single_expiry|0.0||,8,0,0,0,0,1,2.158447286266738,2.0644711038787746
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,unified_v6/unified|refined|single_expiry|0.0||,8,0,0,0,0,1,1.8868190761507035,1.7137084305055983
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_17/repaired|encoder|single_expiry|0.0||,8,0,0,0,0,1,2.0749270946917417,1.9904707672120683
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_17/repaired|refined|single_expiry|0.0||,8,0,0,0,0,1,1.8704379123923902,1.700599109788196
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_29/repaired|encoder|single_expiry|0.0||,8,0,0,0,0,1,2.129415262039223,2.0366809675866424
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_29/repaired|refined|single_expiry|0.0||,8,0,0,0,0,1,1.8932624823793855,1.7207907849771298
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_43/repaired|encoder|single_expiry|0.0||,8,0,0,0,0,1,2.0932979425261666,2.004899448144216
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_43/repaired|refined|single_expiry|0.0||,8,0,0,0,0,1,1.8824673504332332,1.711529392787375
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_43/repaired|hybrid_polish|single_expiry|0.0||,8,0,0,0,0,2,3.150923821464188,3.056883413909598
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,unified_v6/unified|encoder|single_expiry|0.01||,8,0,0,0,0,1,2.129104017590025,2.035372069826608
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,unified_v6/unified|refined|single_expiry|0.01||,8,0,0,0,0,1,2.2583625212442184,2.160456205022195
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_17/repaired|encoder|single_expiry|0.01||,8,0,0,0,0,1,2.06918573113867,1.9832171942573584
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_17/repaired|refined|single_expiry|0.01||,8,0,0,0,0,1,2.1352151206552596,2.0365888169047586
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_29/repaired|encoder|single_expiry|0.01||,8,0,0,0,0,1,2.1064887088982434,2.0136192194845437
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_29/repaired|refined|single_expiry|0.01||,8,0,0,0,0,1,2.1541078470632242,2.0586152595334104
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_43/repaired|encoder|single_expiry|0.01||,8,0,0,0,0,1,2.0770806383141815,1.988028953892425
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_43/repaired|refined|single_expiry|0.01||,8,0,0,0,0,1,2.1192832136595756,2.0168034851697905
+outputs/calibration_repair/assessment_905102/parameter_recovery.csv,seed_43/repaired|hybrid_polish|single_expiry|0.01||,8,0,0,0,0,1,112.89354109885016,112.89340746759909
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,unified_v6/unified|encoder|rich|0.0||,8,0,0,0,0,0,3.949076157381229,3.949076157381229
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,unified_v6/unified|refined|rich|0.0||,8,0,0,0,0,0,1.7088199412476375,1.7088199412476375
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_17/repaired|encoder|rich|0.0||,8,0,0,0,0,0,3.876384728243113,3.876384728243113
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_17/repaired|refined|rich|0.0||,8,0,0,0,0,0,1.8568676376168507,1.8568676376168507
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_29/repaired|encoder|rich|0.0||,8,0,0,0,0,0,3.8737958497860663,3.8737958497860663
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_29/repaired|refined|rich|0.0||,8,0,0,0,0,0,1.724895875533048,1.724895875533048
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_43/repaired|encoder|rich|0.0||,8,0,0,0,0,0,3.8564127342705383,3.8564127342705383
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_43/repaired|refined|rich|0.0||,8,0,0,0,0,0,1.8061739596483757,1.8061739596483757
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_43/repaired|hybrid_polish|rich|0.0||,8,7,7,7,0,0,0.8160077473227664,0.8160077473227664
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,unified_v6/unified|encoder|rich|0.01||,8,0,0,0,0,0,3.907322645289506,3.907322645289506
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,unified_v6/unified|refined|rich|0.01||,8,0,0,0,0,0,2.917166781009713,2.917166781009713
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_17/repaired|encoder|rich|0.01||,8,0,0,0,0,0,3.8741930026107156,3.8741930026107156
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_17/repaired|refined|rich|0.01||,8,0,0,0,0,0,3.004410353853054,3.004410353853054
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_29/repaired|encoder|rich|0.01||,8,0,0,0,0,0,3.848535587766449,3.848535587766449
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_29/repaired|refined|rich|0.01||,8,0,0,0,0,0,2.9646033525379223,2.9646033525379223
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_43/repaired|encoder|rich|0.01||,8,0,0,0,0,0,3.8425084580054585,3.8425084580054585
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_43/repaired|refined|rich|0.01||,8,0,0,0,0,0,2.9195450739975057,2.9195450739975057
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_43/repaired|hybrid_polish|rich|0.01||,8,0,0,0,0,3,495095.46839682537,337034.40897297364
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,unified_v6/unified|encoder|single_expiry|0.0||,8,0,0,0,0,0,3.646590248348391,3.646590248348391
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,unified_v6/unified|refined|single_expiry|0.0||,8,0,0,0,0,0,2.6627598945246223,2.6627598945246223
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_17/repaired|encoder|single_expiry|0.0||,8,0,0,0,0,0,3.462165158822397,3.462165158822397
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_17/repaired|refined|single_expiry|0.0||,8,0,0,0,0,0,2.5703399599478556,2.5703399599478556
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_29/repaired|encoder|single_expiry|0.0||,8,0,0,0,0,0,3.5794490877936145,3.5794490877936145
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_29/repaired|refined|single_expiry|0.0||,8,0,0,0,0,0,2.1217632502192996,2.1217632502192996
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_43/repaired|encoder|single_expiry|0.0||,8,0,0,0,0,0,3.5160217540752594,3.5160217540752594
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_43/repaired|refined|single_expiry|0.0||,8,0,0,0,0,0,2.4822307037150417,2.4822307037150417
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_43/repaired|hybrid_polish|single_expiry|0.0||,8,0,0,0,0,0,1.5096466881507047,1.5096466881507047
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,unified_v6/unified|encoder|single_expiry|0.01||,8,0,0,0,0,0,3.6024301085928214,3.6024301085928214
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,unified_v6/unified|refined|single_expiry|0.01||,8,0,0,0,0,0,3.3692753338760566,3.3692753338760566
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_17/repaired|encoder|single_expiry|0.01||,8,0,0,0,0,0,3.45053521868008,3.45053521868008
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_17/repaired|refined|single_expiry|0.01||,8,0,0,0,0,0,3.2211550994713827,3.2211550994713827
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_29/repaired|encoder|single_expiry|0.01||,8,0,0,0,0,0,3.51340691433732,3.51340691433732
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_29/repaired|refined|single_expiry|0.01||,8,0,0,0,0,0,3.2456636853953507,3.2456636853953507
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_43/repaired|encoder|single_expiry|0.01||,8,0,0,0,0,0,3.4905374710398207,3.4905374710398207
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_43/repaired|refined|single_expiry|0.01||,8,0,0,0,0,0,3.216142560973132,3.216142560973132
+outputs/calibration_repair/assessment_905103/parameter_recovery.csv,seed_43/repaired|hybrid_polish|single_expiry|0.01||,8,0,0,0,0,1,12.124159734169869,5.009197791970755
+outputs/regular_pinn_recovery/double_continue_pde02_s17/recovery_validation_016000.json,double_continue_pde02_s17,4,0,0,0,0,0,0.15642961105848244,0.15642961105848244
+outputs/regular_pinn_recovery/double_continue_pde02_s17/recovery_validation_020000.json,double_continue_pde02_s17,4,0,0,0,0,0,0.14956835819312628,0.14956835819312628
+outputs/regular_pinn_recovery/double_continue_pde02_s17/recovery_validation_004000.json,double_continue_pde02_s17,4,0,0,0,0,0,0.12449105888882042,0.12449105888882042
+outputs/regular_pinn_recovery/double_continue_pde02_s17/recovery_validation_008000.json,double_continue_pde02_s17,4,0,0,0,0,0,0.1364110891918664,0.1364110891918664
+outputs/regular_pinn_recovery/double_continue_pde02_s17/recovery_validation_012000.json,double_continue_pde02_s17,4,0,0,0,0,0,0.144142732880129,0.144142732880129
+outputs/regular_pinn_recovery/double_group_control_s17/recovery_validation_004000.json,double_group_control_s17,4,0,0,0,0,0,0.12595230838819366,0.12595230838819366
+outputs/regular_pinn_recovery/double_group_control_s17/recovery_validation_008000.json,double_group_control_s17,4,0,0,0,0,0,0.15415438548594204,0.15415438548594204
+outputs/regular_pinn_recovery/double_group_control_s17/recovery_validation_012000.json,double_group_control_s17,4,0,0,0,0,0,0.14727902906870316,0.14727902906870316
+outputs/regular_pinn_recovery/double_continue_pde002_s17/recovery_validation_016000.json,double_continue_pde002_s17,4,0,0,0,0,0,0.17507586677682885,0.17507586677682885
+outputs/regular_pinn_recovery/double_continue_pde002_s17/recovery_validation_020000.json,double_continue_pde002_s17,4,0,0,0,0,0,0.18297277660269295,0.18297277660269295
+outputs/regular_pinn_recovery/double_continue_pde002_s17/recovery_validation_004000.json,double_continue_pde002_s17,4,0,0,0,0,0,0.1660008309379544,0.1660008309379544
+outputs/regular_pinn_recovery/double_continue_pde002_s17/recovery_validation_008000.json,double_continue_pde002_s17,4,0,0,0,0,0,0.18416913832138562,0.18416913832138562
+outputs/regular_pinn_recovery/double_continue_pde002_s17/recovery_validation_012000.json,double_continue_pde002_s17,4,0,0,0,0,0,0.17084582842916585,0.17084582842916585
+outputs/regular_pinn_recovery/double_sobolev_s17/recovery_validation_006000.json,double_sobolev_s17,4,0,0,0,0,0,0.1334757680318745,0.1334757680318745
+outputs/regular_pinn_recovery/double_sobolev_s17/recovery_validation_004000.json,double_sobolev_s17,4,0,0,0,0,0,0.1405327698123072,0.1405327698123072
+outputs/regular_pinn_recovery/double_sobolev_s17/recovery_validation_010000.json,double_sobolev_s17,4,0,0,0,0,0,0.13412313322010874,0.13412313322010874
+outputs/regular_pinn_recovery/double_sobolev_s17/recovery_validation_008000.json,double_sobolev_s17,4,0,0,0,0,0,0.1684517943860757,0.1684517943860757
+outputs/regular_pinn_recovery/double_sobolev_s17/recovery_validation_012000.json,double_sobolev_s17,4,0,0,0,0,0,0.12425743732649543,0.12425743732649543
+outputs/regular_pinn_recovery/double_sobolev_s17/recovery_validation_002000.json,double_sobolev_s17,4,0,0,0,0,0,0.2742947920740735,0.2742947920740735
+outputs/regular_pinn_recovery/double_standard_s17/recovery_validation_006000.json,double_standard_s17,4,0,0,0,0,0,0.22763224345551336,0.22763224345551336
+outputs/regular_pinn_recovery/double_standard_s17/recovery_validation_004000.json,double_standard_s17,4,0,0,0,0,0,0.3492275659685727,0.3492275659685727
+outputs/regular_pinn_recovery/double_standard_s17/recovery_validation_010000.json,double_standard_s17,4,0,0,0,0,0,0.16837628103265287,0.16837628103265287
+outputs/regular_pinn_recovery/double_standard_s17/recovery_validation_008000.json,double_standard_s17,4,0,0,0,0,0,0.1736041982370897,0.1736041982370897
+outputs/regular_pinn_recovery/double_standard_s17/recovery_validation_012000.json,double_standard_s17,4,0,0,0,0,0,0.1632738611265933,0.1632738611265933
+outputs/regular_pinn_recovery/double_standard_s17/recovery_validation_002000.json,double_standard_s17,4,0,0,0,0,0,0.5293968433461618,0.5293968433461618
+outputs/regular_pinn_recovery/double_parameter_aware_s17/recovery_validation_004000.json,double_parameter_aware_s17,4,0,0,0,0,0,0.18768926847850498,0.18768926847850498
+outputs/regular_pinn_recovery/double_parameter_aware_s17/recovery_validation_008000.json,double_parameter_aware_s17,4,0,0,0,0,0,0.20248367540574075,0.20248367540574075
+outputs/regular_pinn_recovery/double_parameter_aware_s17/recovery_validation_012000.json,double_parameter_aware_s17,4,0,0,0,0,0,0.17874838507257199,0.17874838507257199
+outputs/deeper_pinn/deep11_s17/recovery_validation_006000.json,deep11_s17,4,0,0,0,0,0,0.16390897838968874,0.16390897838968874
+outputs/deeper_pinn/deep11_s17/recovery_validation_004000.json,deep11_s17,4,0,0,0,0,0,0.13399363105235484,0.13399363105235484
+outputs/deeper_pinn/deep11_s17/recovery_validation_005000.json,deep11_s17,4,0,0,0,0,0,0.18717917670519302,0.18717917670519302
+outputs/deeper_pinn/deep11_s17/recovery_validation_001000.json,deep11_s17,4,0,0,0,0,0,0.15348870707437728,0.15348870707437728
+outputs/deeper_pinn/deep11_s17/recovery_validation_003000.json,deep11_s17,4,0,0,0,0,0,0.15186403815970484,0.15186403815970484
+outputs/deeper_pinn/deep11_s17/recovery_validation_002000.json,deep11_s17,4,0,0,0,0,0,0.17767466645342625,0.17767466645342625
+outputs/deeper_pinn/deep17_recovery_s67/recovery_validation_004000.json,deep17_recovery_s67,4,0,0,0,0,0,0.20087984562570035,0.20087984562570035
+outputs/deeper_pinn/deep17_recovery_s67/recovery_validation_001000.json,deep17_recovery_s67,4,0,0,0,0,0,0.19085110423807763,0.19085110423807763
+outputs/deeper_pinn/deep17_recovery_s67/recovery_validation_003000.json,deep17_recovery_s67,4,0,0,0,0,0,0.2069123314740767,0.2069123314740767
+outputs/deeper_pinn/deep17_recovery_s67/recovery_validation_002000.json,deep17_recovery_s67,4,0,0,0,0,0,0.19180776769631447,0.19180776769631447
+outputs/deeper_pinn/deep17_recovery_s61/recovery_validation_004000.json,deep17_recovery_s61,4,0,0,0,0,0,0.22312011256913789,0.22312011256913789
+outputs/deeper_pinn/deep17_recovery_s61/recovery_validation_001000.json,deep17_recovery_s61,4,0,0,0,0,0,0.22114273550043942,0.22114273550043942
+outputs/deeper_pinn/deep17_recovery_s61/recovery_validation_003000.json,deep17_recovery_s61,4,0,0,0,0,0,0.20465402118069395,0.20465402118069395
+outputs/deeper_pinn/deep17_recovery_s61/recovery_validation_002000.json,deep17_recovery_s61,4,0,0,0,0,0,0.21326000826100786,0.21326000826100786
+outputs/deeper_pinn/deep17_full_s29/recovery_validation_016000.json,deep17_full_s29,4,0,0,0,0,0,0.1942707860188455,0.1942707860188455
+outputs/deeper_pinn/deep17_full_s29/recovery_validation_006000.json,deep17_full_s29,4,0,0,0,0,0,0.2019674810330039,0.2019674810330039
+outputs/deeper_pinn/deep17_full_s29/recovery_validation_004000.json,deep17_full_s29,4,0,0,0,0,0,0.2025626992542838,0.2025626992542838
+outputs/deeper_pinn/deep17_full_s29/recovery_validation_014000.json,deep17_full_s29,4,0,0,0,0,0,0.18812095628330106,0.18812095628330106
+outputs/deeper_pinn/deep17_full_s29/recovery_validation_010000.json,deep17_full_s29,4,0,0,0,0,0,0.19309691534386,0.19309691534386
+outputs/deeper_pinn/deep17_full_s29/recovery_validation_008000.json,deep17_full_s29,4,0,0,0,0,0,0.21035358304151278,0.21035358304151278
+outputs/deeper_pinn/deep17_full_s29/recovery_validation_012000.json,deep17_full_s29,4,0,0,0,0,0,0.2001748729781726,0.2001748729781726
+outputs/deeper_pinn/deep17_full_s29/recovery_validation_002000.json,deep17_full_s29,4,0,0,0,0,0,0.2112696285022763,0.2112696285022763
+outputs/deeper_pinn/deep11_balanced_s43/recovery_validation_007000.json,deep11_balanced_s43,4,0,0,0,0,0,0.19725182897004923,0.19725182897004923
+outputs/deeper_pinn/deep11_balanced_s43/recovery_validation_006000.json,deep11_balanced_s43,4,0,0,0,0,0,0.19445599367093847,0.19445599367093847
+outputs/deeper_pinn/deep11_balanced_s43/recovery_validation_004000.json,deep11_balanced_s43,4,0,0,0,0,0,0.1891538665473412,0.1891538665473412
+outputs/deeper_pinn/deep11_balanced_s43/recovery_validation_005000.json,deep11_balanced_s43,4,0,0,0,0,0,0.19244171792330084,0.19244171792330084
+outputs/deeper_pinn/deep11_balanced_s43/recovery_validation_008000.json,deep11_balanced_s43,4,0,0,0,0,0,0.19686594107539207,0.19686594107539207
+outputs/deeper_pinn/deep11_balanced_s43/recovery_validation_001000.json,deep11_balanced_s43,4,0,0,0,0,0,0.1678006773243683,0.1678006773243683
+outputs/deeper_pinn/deep11_balanced_s43/recovery_validation_003000.json,deep11_balanced_s43,4,0,0,0,0,0,0.17128411155943413,0.17128411155943413
+outputs/deeper_pinn/deep11_balanced_s43/recovery_validation_002000.json,deep11_balanced_s43,4,0,0,0,0,0,0.17665095015587737,0.17665095015587737
+outputs/deeper_pinn/deep11_gls_development/fits.json,0.01,4,0,0,0,0,0,0.13812692810977825,0.13812692810977825
+outputs/deeper_pinn/deep11_gls_development/fits.json,0.0001,4,0,0,0,0,0,0.10877146318454159,0.10877146318454159
+outputs/deeper_pinn/deep11_gls_development/fits.json,1e-06,4,0,0,0,0,0,0.11782935319718639,0.11782935319718639
+outputs/deeper_pinn/deep11_gls_development/fits.json,1e-08,4,0,0,0,0,0,0.11779688408334595,0.11779688408334595
+outputs/deeper_pinn/deep17_gls_development/fits.json,0.01,4,0,0,0,0,0,0.19251866025861353,0.19251866025861353
+outputs/deeper_pinn/deep17_gls_development/fits.json,0.0001,4,0,0,0,0,0,0.1292176401869015,0.1292176401869015
+outputs/deeper_pinn/deep17_gls_development/fits.json,1e-06,4,1,1,1,0,0,0.15634236308304236,0.15634236308304236
+outputs/deeper_pinn/deep17_gls_development/fits.json,1e-08,4,0,0,0,0,0,0.1575635708300454,0.1575635708300454
+outputs/deeper_pinn/prior_development_911/fits.json,DH11|clean|0.0,12,0,0,0,0,0,0.20639274082267878,0.20639274082267878
+outputs/deeper_pinn/prior_development_911/fits.json,DH11|clean|0.1,12,0,0,0,0,0,0.20629643723181804,0.20629643723181804
+outputs/deeper_pinn/prior_development_911/fits.json,DH11|clean|1.0,12,0,0,0,0,0,0.2055319294060283,0.2055319294060283
+outputs/deeper_pinn/prior_development_911/fits.json,DH11|clean|10.0,12,0,0,0,0,0,0.19743151469600845,0.19743151469600845
+outputs/deeper_pinn/prior_development_911/fits.json,DH11|clean|100.0,12,0,0,0,0,0,0.18535811053533433,0.18535811053533433
+outputs/deeper_pinn/prior_development_911/fits.json,DH11|noise|0.0,12,0,0,0,0,0,0.5957174561874778,0.5957174561874778
+outputs/deeper_pinn/prior_development_911/fits.json,DH11|noise|0.1,12,0,0,0,0,0,0.5928540707747276,0.5928540707747276
+outputs/deeper_pinn/prior_development_911/fits.json,DH11|noise|1.0,12,0,0,0,0,0,0.5774582611271982,0.5774582611271982
+outputs/deeper_pinn/prior_development_911/fits.json,DH11|noise|10.0,12,0,0,0,0,0,0.39568179672673454,0.39568179672673454
+outputs/deeper_pinn/prior_development_911/fits.json,DH11|noise|100.0,12,0,0,0,0,0,0.46243600786630185,0.46243600786630185
+outputs/deeper_pinn/prior_development_911/fits.json,DH17|clean|0.0,12,0,0,0,0,0,0.14127950051848645,0.14127950051848645
+outputs/deeper_pinn/prior_development_911/fits.json,DH17|clean|0.1,12,0,0,0,0,0,0.14117292506644055,0.14117292506644055
+outputs/deeper_pinn/prior_development_911/fits.json,DH17|clean|1.0,12,0,0,0,0,0,0.14030206814099505,0.14030206814099505
+outputs/deeper_pinn/prior_development_911/fits.json,DH17|clean|10.0,12,0,0,0,0,0,0.1242575772370676,0.1242575772370676
+outputs/deeper_pinn/prior_development_911/fits.json,DH17|clean|100.0,12,0,0,0,0,0,0.16349069043001424,0.16349069043001424
+outputs/deeper_pinn/prior_development_911/fits.json,DH17|noise|0.0,12,0,0,0,0,0,0.7993341999260234,0.7993341999260234
+outputs/deeper_pinn/prior_development_911/fits.json,DH17|noise|0.1,12,0,0,0,0,0,0.6839594619854944,0.6839594619854944
+outputs/deeper_pinn/prior_development_911/fits.json,DH17|noise|1.0,12,0,0,0,0,0,0.6103434740646458,0.6103434740646458
+outputs/deeper_pinn/prior_development_911/fits.json,DH17|noise|10.0,12,0,0,0,0,0,0.41740636170365264,0.41740636170365264
+outputs/deeper_pinn/prior_development_911/fits.json,DH17|noise|100.0,12,0,0,0,0,0,0.46532553377531427,0.46532553377531427

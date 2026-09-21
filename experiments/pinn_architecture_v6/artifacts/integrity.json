@@ -1,0 +1,76 @@
+{
+  "utc": "2026-09-21T05:54:27.923985+00:00",
+  "checks": [
+    {
+      "arm": "A0_CONTINUE",
+      "seed": 17,
+      "unchanged_parent_tensors": 12,
+      "checkpoint_sha256": "a192c6e61307964386011b3a8e315dc44f63e51815f927fb5fe4b2f12980965c"
+    },
+    {
+      "arm": "A0_CONTINUE",
+      "seed": 43,
+      "unchanged_parent_tensors": 12,
+      "checkpoint_sha256": "696b5954ee65c865c1a2c893e9090d358c9ce307f7975d766e42c1ef2069a077"
+    },
+    {
+      "arm": "CONTROL_PLAIN",
+      "seed": 17,
+      "unchanged_parent_tensors": 30,
+      "checkpoint_sha256": "f9c6f61eb1c97a709ea8a8977daf584955710a8bd9e8282d22b6b1213ee8b74b"
+    },
+    {
+      "arm": "CONTROL_PLAIN",
+      "seed": 43,
+      "unchanged_parent_tensors": 30,
+      "checkpoint_sha256": "797e2a0c27f41cc94597ed4f1291e19b1eba307872c632460b2833ec9837b400"
+    },
+    {
+      "arm": "ARCH_A_MODIFIED_MLP",
+      "seed": 17,
+      "unchanged_parent_tensors": 30,
+      "checkpoint_sha256": "c26e5407512d6860de5a4627424aa5dc752678f41912de13b2be34a48fd2d136"
+    },
+    {
+      "arm": "ARCH_A_MODIFIED_MLP",
+      "seed": 43,
+      "unchanged_parent_tensors": 30,
+      "checkpoint_sha256": "83bb793f2b93a50b8afdfc030961b1558b7fa7c82594152821bc72384ba291b6"
+    },
+    {
+      "arm": "ARCH_B_MODIFIED_MLP_GRADBAL",
+      "seed": 17,
+      "unchanged_parent_tensors": 30,
+      "checkpoint_sha256": "38f536afec325b11ff73d1da1f16d55413394201dac8249b09aadafde87fdf44"
+    },
+    {
+      "arm": "ARCH_B_MODIFIED_MLP_GRADBAL",
+      "seed": 43,
+      "unchanged_parent_tensors": 30,
+      "checkpoint_sha256": "dd04a7f7ddef4de0dd3d2428259c3d6c43d2d03d45dfbb08571ec6a2369b374d"
+    },
+    {
+      "arm": "ARCH_C_MODIFIED_MLP_GRADBAL_RAD",
+      "seed": 17,
+      "unchanged_parent_tensors": 30,
+      "checkpoint_sha256": "be4badb156879f670041c6ce489749d7bef53e60ff21cf747aba6f56b67b0b50"
+    },
+    {
+      "arm": "ARCH_C_MODIFIED_MLP_GRADBAL_RAD",
+      "seed": 43,
+      "unchanged_parent_tensors": 30,
+      "checkpoint_sha256": "2989fd5ce2af06a63b515af0f639a8a24715fbfa7633ae4f46715c8529bfe8ab"
+    }
+  ],
+  "verified_RAD_pools": [
+    "experiments/pinn_architecture_v6/artifacts/ARCH_C_MODIFIED_MLP_GRADBAL_RAD/seed_43/rad_1500.npz",
+    "experiments/pinn_architecture_v6/artifacts/ARCH_C_MODIFIED_MLP_GRADBAL_RAD/seed_43/rad_1000.npz",
+    "experiments/pinn_architecture_v6/artifacts/ARCH_C_MODIFIED_MLP_GRADBAL_RAD/seed_43/rad_500.npz",
+    "experiments/pinn_architecture_v6/artifacts/ARCH_C_MODIFIED_MLP_GRADBAL_RAD/seed_17/rad_1500.npz",
+    "experiments/pinn_architecture_v6/artifacts/ARCH_C_MODIFIED_MLP_GRADBAL_RAD/seed_17/rad_1000.npz",
+    "experiments/pinn_architecture_v6/artifacts/ARCH_C_MODIFIED_MLP_GRADBAL_RAD/seed_17/rad_500.npz"
+  ],
+  "fresh_fidelity_disjoint_from_training_development_collocation_and_RAD": true,
+  "parent_v3_v4_v5_sources_preserved": true,
+  "market_quotes_parsed_or_scored": false
+}

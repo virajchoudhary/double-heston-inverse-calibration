@@ -1,0 +1,20 @@
+{
+  "seconds": 168.44312345900005,
+  "peak_process_RSS_MB": 1624.984375,
+  "parameters": 320805,
+  "trainable_parameters": 45121,
+  "weights_sha256": "38f536afec325b11ff73d1da1f16d55413394201dac8249b09aadafde87fdf44",
+  "final_weights": [
+    0.5635615291750892,
+    18.880873954184334,
+    1.5890941691819203,
+    1.0
+  ],
+  "activation_scales": null,
+  "market_data_used": false,
+  "precision": "float64",
+  "device": "CPU",
+  "inference_1024_ms": 23.58849949996511,
+  "throughput_quotes_s": 43410.98508624996,
+  "inference_single_ms": 0.6707084999675317
+}

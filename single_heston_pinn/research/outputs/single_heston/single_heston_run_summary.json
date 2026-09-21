@@ -1,0 +1,25 @@
+{
+  "input_file": "/Users/dhruvaambhaikar/Documents/Options pricing/outputs/019fc8a0/model_input_option_prices.csv",
+  "input_sha256": "a8a56dd7b17074d8fa32f88936c8b404456f22f296d9dc4665faf3b13621f1d3",
+  "authentic_model_ready_rows": 215636,
+  "symbols": 11,
+  "model_ready_period": [
+    "2024-07-08",
+    "2026-08-03"
+  ],
+  "split": "chronological 70/15/15 independently within each symbol",
+  "model": "canonical one-factor Heston; four train-only structural parameters plus date-state v0",
+  "leakage_control": "whole strikes assigned to calibration or holdout; holdout call and put excluded from carry and fitting",
+  "noise_control": "invalid expiries/quotes excluded and counted; no observed price altered or imputed",
+  "test_holdout_metrics": {
+    "rows": 1547,
+    "iv_rmse": 0.028111645708325115,
+    "iv_mae": 0.015564141189260732,
+    "iv_bias": -0.0011745786539804398,
+    "iv_r2": 0.9042257476135556,
+    "raw_price_rmse": 1.1090869136776875,
+    "raw_price_mae": 0.4734209291767705
+  },
+  "strict_checks_passed": 11,
+  "strict_checks_total": 11
+}

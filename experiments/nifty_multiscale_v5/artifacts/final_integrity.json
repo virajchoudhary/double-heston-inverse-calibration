@@ -1,0 +1,248 @@
+{
+  "parent_weights_unchanged_all_four_runs": true,
+  "fresh_points_disjoint_from_train_and_development": true,
+  "prior_v4_manifest_still_valid": true,
+  "independent_adaptive_checks": [
+    {
+      "date": "2020-03-02",
+      "model": "SH",
+      "absolute_gap": 2.3658852654762086e-13
+    },
+    {
+      "date": "2020-03-02",
+      "model": "DH",
+      "absolute_gap": 2.4313884239290928e-14
+    },
+    {
+      "date": "2020-03-05",
+      "model": "SH",
+      "absolute_gap": 4.162812455854592e-12
+    },
+    {
+      "date": "2020-03-05",
+      "model": "DH",
+      "absolute_gap": 6.862566070964249e-15
+    },
+    {
+      "date": "2020-03-11",
+      "model": "SH",
+      "absolute_gap": 1.891715950552708e-14
+    },
+    {
+      "date": "2020-03-11",
+      "model": "DH",
+      "absolute_gap": 5.4262150328554526e-15
+    },
+    {
+      "date": "2020-03-13",
+      "model": "SH",
+      "absolute_gap": 1.186550857568136e-13
+    },
+    {
+      "date": "2020-03-13",
+      "model": "DH",
+      "absolute_gap": 1.7361112547575885e-14
+    },
+    {
+      "date": "2020-03-17",
+      "model": "SH",
+      "absolute_gap": 1.1464093563340327e-13
+    },
+    {
+      "date": "2020-03-17",
+      "model": "DH",
+      "absolute_gap": 3.8859540585356456e-14
+    },
+    {
+      "date": "2020-03-19",
+      "model": "SH",
+      "absolute_gap": 3.502753642692369e-14
+    },
+    {
+      "date": "2020-03-19",
+      "model": "DH",
+      "absolute_gap": 3.474304177686349e-14
+    },
+    {
+      "date": "2020-03-26",
+      "model": "SH",
+      "absolute_gap": 8.28473539771224e-11
+    },
+    {
+      "date": "2020-03-26",
+      "model": "DH",
+      "absolute_gap": 1.8610113450279187e-14
+    },
+    {
+      "date": "2020-03-31",
+      "model": "SH",
+      "absolute_gap": 3.339169218907756e-14
+    },
+    {
+      "date": "2020-03-31",
+      "model": "DH",
+      "absolute_gap": 3.8403308311174555e-14
+    },
+    {
+      "date": "2025-06-02",
+      "model": "SH",
+      "absolute_gap": 2.786659791809143e-14
+    },
+    {
+      "date": "2025-06-02",
+      "model": "DH",
+      "absolute_gap": 1.6653345369377348e-16
+    },
+    {
+      "date": "2025-06-05",
+      "model": "SH",
+      "absolute_gap": 2.365468931841974e-13
+    },
+    {
+      "date": "2025-06-05",
+      "model": "DH",
+      "absolute_gap": 1.3417045252595017e-13
+    },
+    {
+      "date": "2025-06-10",
+      "model": "SH",
+      "absolute_gap": 9.194034422677078e-17
+    },
+    {
+      "date": "2025-06-10",
+      "model": "DH",
+      "absolute_gap": 1.0419011139961576e-11
+    },
+    {
+      "date": "2025-06-13",
+      "model": "SH",
+      "absolute_gap": 7.499643267516731e-13
+    },
+    {
+      "date": "2025-06-13",
+      "model": "DH",
+      "absolute_gap": 1.0443035325380379e-15
+    },
+    {
+      "date": "2025-06-18",
+      "model": "SH",
+      "absolute_gap": 1.3271522769642274e-11
+    },
+    {
+      "date": "2025-06-18",
+      "model": "DH",
+      "absolute_gap": 1.109369540674976e-12
+    },
+    {
+      "date": "2025-06-23",
+      "model": "SH",
+      "absolute_gap": 5.437273895014805e-17
+    },
+    {
+      "date": "2025-06-23",
+      "model": "DH",
+      "absolute_gap": 6.958770365494971e-12
+    },
+    {
+      "date": "2025-06-25",
+      "model": "SH",
+      "absolute_gap": 6.328271240363392e-15
+    },
+    {
+      "date": "2025-06-25",
+      "model": "DH",
+      "absolute_gap": 6.5156213757688874e-15
+    },
+    {
+      "date": "2025-06-30",
+      "model": "SH",
+      "absolute_gap": 1.6073947728401095e-14
+    },
+    {
+      "date": "2025-06-30",
+      "model": "DH",
+      "absolute_gap": 1.5769720598801662e-14
+    },
+    {
+      "date": "2026-03-02",
+      "model": "SH",
+      "absolute_gap": 2.540800903005902e-12
+    },
+    {
+      "date": "2026-03-02",
+      "model": "DH",
+      "absolute_gap": 1.1288192602876279e-13
+    },
+    {
+      "date": "2026-03-06",
+      "model": "SH",
+      "absolute_gap": 0.0
+    },
+    {
+      "date": "2026-03-06",
+      "model": "DH",
+      "absolute_gap": 5.224987109642143e-15
+    },
+    {
+      "date": "2026-03-10",
+      "model": "SH",
+      "absolute_gap": 8.47585890362268e-15
+    },
+    {
+      "date": "2026-03-10",
+      "model": "DH",
+      "absolute_gap": 9.025766245507327e-15
+    },
+    {
+      "date": "2026-03-12",
+      "model": "SH",
+      "absolute_gap": 9.249545573908335e-15
+    },
+    {
+      "date": "2026-03-12",
+      "model": "DH",
+      "absolute_gap": 9.728329253277934e-15
+    },
+    {
+      "date": "2026-03-16",
+      "model": "SH",
+      "absolute_gap": 7.792377854087817e-15
+    },
+    {
+      "date": "2026-03-16",
+      "model": "DH",
+      "absolute_gap": 7.667477763817487e-15
+    },
+    {
+      "date": "2026-03-19",
+      "model": "SH",
+      "absolute_gap": 2.180640815861105e-14
+    },
+    {
+      "date": "2026-03-19",
+      "model": "DH",
+      "absolute_gap": 2.027484828127282e-14
+    },
+    {
+      "date": "2026-03-24",
+      "model": "SH",
+      "absolute_gap": 8.951173136040325e-15
+    },
+    {
+      "date": "2026-03-24",
+      "model": "DH",
+      "absolute_gap": 8.729128531115293e-15
+    },
+    {
+      "date": "2026-03-30",
+      "model": "SH",
+      "absolute_gap": 2.7921566968236444e-14
+    },
+    {
+      "date": "2026-03-30",
+      "model": "DH",
+      "absolute_gap": 2.7308884320564886e-14
+    }
+  ],
+  "max_adaptive_gap": 8.28473539771224e-11
+}

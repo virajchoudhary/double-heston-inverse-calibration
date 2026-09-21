@@ -1,0 +1,125 @@
+{
+  "window": "iran_june_2025",
+  "date": "2025-06-09",
+  "SH": {
+    "best": {
+      "start": 3,
+      "success": true,
+      "status": 2,
+      "message": "`ftol` termination condition is satisfied.",
+      "nfev": 23,
+      "objective": 2.504999823393871e-08,
+      "params": [
+        10.311684889216703,
+        0.021932199898796783,
+        0.6261961310213147,
+        -0.43446324958721816,
+        0.02123530095847193
+      ],
+      "near_bound": false
+    },
+    "starts": [
+      {
+        "start": 0,
+        "success": true,
+        "status": 2,
+        "message": "`ftol` termination condition is satisfied.",
+        "nfev": 18,
+        "objective": 2.5049998234139834e-08,
+        "params": [
+          10.311629917459491,
+          0.021932208691495154,
+          0.6261951687963825,
+          -0.4344630330111174,
+          0.02123529817211804
+        ],
+        "near_bound": false
+      },
+      {
+        "start": 1,
+        "success": true,
+        "status": 2,
+        "message": "`ftol` termination condition is satisfied.",
+        "nfev": 22,
+        "objective": 2.5049998234231595e-08,
+        "params": [
+          10.311664167274555,
+          0.021932196479236707,
+          0.6261947170845605,
+          -0.4344637809036249,
+          0.021235299375424437
+        ],
+        "near_bound": false
+      },
+      {
+        "start": 2,
+        "success": true,
+        "status": 2,
+        "message": "`ftol` termination condition is satisfied.",
+        "nfev": 24,
+        "objective": 2.5049998234254656e-08,
+        "params": [
+          10.311660538388837,
+          0.021932197224752502,
+          0.6261945881242263,
+          -0.4344637454857629,
+          0.02123529865172551
+        ],
+        "near_bound": false
+      },
+      {
+        "start": 3,
+        "success": true,
+        "status": 2,
+        "message": "`ftol` termination condition is satisfied.",
+        "nfev": 23,
+        "objective": 2.504999823393871e-08,
+        "params": [
+          10.311684889216703,
+          0.021932199898796783,
+          0.6261961310213147,
+          -0.43446324958721816,
+          0.02123530095847193
+        ],
+        "near_bound": false
+      }
+    ],
+    "converged_near_best": 4,
+    "global": {
+      "success": false,
+      "message": "Maximum number of iterations has been exceeded.",
+      "nfev": 780
+    },
+    "global_optimum_proven": false
+  },
+  "BS": {
+    "knots": [
+      0.0273972602739726,
+      0.0465753424657534,
+      0.1424657534246575,
+      0.2191780821917808
+    ],
+    "volatility": [
+      0.14224969877181953,
+      0.1437936838717155,
+      0.1439140355663973,
+      0.14034811360669153
+    ],
+    "term": true
+  },
+  "BS_inner": [
+    {
+      "term": false,
+      "inner_MSE": 5.182596064734643e-07
+    },
+    {
+      "term": true,
+      "inner_MSE": 5.121120531354621e-07
+    }
+  ],
+  "anchor_count": 113,
+  "test_count": 57,
+  "exact_fallbacks": [],
+  "max_SH_128_vs_checked_difference": 0.0,
+  "seconds": 0.2852279170001566
+}

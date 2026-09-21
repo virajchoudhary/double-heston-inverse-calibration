@@ -1,0 +1,63 @@
+{
+  "architecture": "arm64",
+  "artifact_checks": {
+    "outputs/regular_pinn_recovery/double_data_v2_reproducible/collocation.npz": {
+      "actual_sha256": "730d7352df74075464c4443240f5de753371ef2bf6c2593a3f861727b3171c6f",
+      "expected_sha256": "730d7352df74075464c4443240f5de753371ef2bf6c2593a3f861727b3171c6f",
+      "passed": true
+    },
+    "outputs/regular_pinn_recovery/double_data_v2_reproducible/manifest.json": {
+      "actual_sha256": "c673e1bd190e3608ed0b5e544c48e73c36ea33a8276d074a69d57080be45bd3a",
+      "expected_sha256": "c673e1bd190e3608ed0b5e544c48e73c36ea33a8276d074a69d57080be45bd3a",
+      "passed": true
+    },
+    "outputs/regular_pinn_recovery/double_data_v2_reproducible/rejections.npz": {
+      "actual_sha256": "49ce6c347f1982d33565299eee73aff71b212a78f51e5e68092bf96ef0ed3039",
+      "expected_sha256": "49ce6c347f1982d33565299eee73aff71b212a78f51e5e68092bf96ef0ed3039",
+      "passed": true
+    },
+    "outputs/regular_pinn_recovery/double_data_v2_reproducible/train.npz": {
+      "actual_sha256": "92b5c70d8a66fc2996ed945b54ba9a80feb6768874151ab666aea54a3e2c6250",
+      "expected_sha256": "92b5c70d8a66fc2996ed945b54ba9a80feb6768874151ab666aea54a3e2c6250",
+      "passed": true
+    },
+    "outputs/regular_pinn_recovery/double_data_v2_reproducible/validation.npz": {
+      "actual_sha256": "479673a31342f2dd27eb05ecf6e72913f233e0b4ea41153fe74f6dfb6dca2bd1",
+      "expected_sha256": "479673a31342f2dd27eb05ecf6e72913f233e0b4ea41153fe74f6dfb6dca2bd1",
+      "passed": true
+    },
+    "outputs/regular_pinn_recovery/double_jacobian_surfaces_v2_927721/surfaces.npz": {
+      "actual_sha256": "4a6a8f91c3432262b34b77f01c989828b2ee2d0e1a2d29a57adf7d17b3946e84",
+      "expected_sha256": "4a6a8f91c3432262b34b77f01c989828b2ee2d0e1a2d29a57adf7d17b3946e84",
+      "passed": true
+    }
+  },
+  "dataset_structure": {
+    "collocation_rows": 18000,
+    "passed": true,
+    "rejected_rows": 0,
+    "train_rows": 131072,
+    "validation_rows": 16384
+  },
+  "git_head": "2ceca16e24eefb0db56124c894e7880fc286ddc4",
+  "macos_version": "15.7.7",
+  "memory": {
+    "available_bytes": 3775692800,
+    "total_bytes": 17179869184
+  },
+  "mlx_smoke": {
+    "checkpoint_round_trip": true,
+    "loss_after_one_step": 0.0006477138376794755,
+    "loss_before": 0.0009588688262738287,
+    "passed": true
+  },
+  "platform": "macOS-15.7.7-arm64-arm-64bit-Mach-O",
+  "status": "PASS",
+  "versions": {
+    "mlx": "0.31.2",
+    "numpy": "2.4.6",
+    "python": "3.14.5",
+    "scipy": "1.17.1",
+    "torch": "2.13.0"
+  }
+}

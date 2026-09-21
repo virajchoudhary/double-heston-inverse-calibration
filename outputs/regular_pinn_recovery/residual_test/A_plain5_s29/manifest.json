@@ -1,0 +1,58 @@
+{
+  "config": {
+    "data": "outputs/regular_pinn_recovery/double_data_v2_reproducible",
+    "out": "outputs/regular_pinn_recovery/residual_test/A_plain5_s29",
+    "factors": 2,
+    "steps": 12000,
+    "seed": 29,
+    "width": 160,
+    "depth": 5,
+    "residual_blocks": 0,
+    "residual_width": 384,
+    "batch": 1024,
+    "pde_batch": 256,
+    "sensitivity": 0.2,
+    "weight_pde": 0.2,
+    "geometry_sensitivity": 0.0,
+    "weight_decay": 1e-06,
+    "lr": 0.001,
+    "constant_lr": false,
+    "surfaces": null,
+    "surface_weight": 0.0,
+    "surface_batch": 8,
+    "resample_every": 1000,
+    "save_every": 2000,
+    "resume": null,
+    "skip_recovery": false,
+    "tau_max": 2.0,
+    "architecture": "regular implied-variance PDE PINN",
+    "selection": "clean synthetic validation parameter recovery RMSE, fixed 4 cases; not final assessment",
+    "calibration": "optimize frozen neural IV predictions only; no exact pricing in fit",
+    "network_parameter_count": 107201
+  },
+  "source_sha256": {
+    "scripts/mentor_dh_pinn/train_regular_pinn.py": "48b3f93f72ee8c4abbcc1257a88be0d120d5069a35dc6442891a9e9bef660495",
+    "src/mentor_dh_pinn/regular_pinn.py": "e409148ced31045827f2ec582a10ad572373aa50e456de4e58cb0499453d9316",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "b179ab0c275a185a689ac0efefc17d9e5760ca21cee0bd290a6b288a4d099e44",
+    "src/mentor_dh_pinn/regular_pinn_torch.py": "f8cb36e57fa9c7649550e83c893b84e7334c212adff1bb9399448ff387986db7",
+    "scripts/mentor_dh_pinn/assess_regular_pinn.py": "eb48571961f6eeafe4f0c78e1ffc2767994c1f81a7a134e6be06ae304935b9ed"
+  },
+  "input_sha256": {
+    "outputs/regular_pinn_recovery/double_data_v2_reproducible/train.npz": "92b5c70d8a66fc2996ed945b54ba9a80feb6768874151ab666aea54a3e2c6250",
+    "outputs/regular_pinn_recovery/double_data_v2_reproducible/validation.npz": "479673a31342f2dd27eb05ecf6e72913f233e0b4ea41153fe74f6dfb6dca2bd1",
+    "outputs/regular_pinn_recovery/double_data_v2_reproducible/collocation.npz": "730d7352df74075464c4443240f5de753371ef2bf6c2593a3f861727b3171c6f"
+  },
+  "gradient_label_scales": [
+    0.023182470351457596,
+    0.02358686737716198,
+    0.029968062415719032,
+    0.03730641305446625,
+    0.054185252636671066,
+    0.02656988799571991,
+    0.03219502791762352,
+    0.03907966986298561,
+    0.0659865140914917,
+    0.09408149123191833
+  ],
+  "collocation_pool": 18000
+}

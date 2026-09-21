@@ -1,0 +1,60 @@
+{
+  "status": "COMPLETE",
+  "exit_code": 0,
+  "steps_completed": 12000,
+  "wall_seconds": 191.1,
+  "log": "double_v2_b0_restart2_20260911.log",
+  "log_error_lines": 0,
+  "integrity_check_before_launch": "PASS: 5 source and 3 input SHA-256s identical to the interrupted run's manifest",
+  "determinism": "EXACT MATCH with the interrupted run on all 23 overlapping logged steps (1..4400): loss, every loss_part, validation_iv_rmse, validation_parameter_rmse",
+  "config_identical_to_interrupted_run": true,
+  "trainer_changed": false,
+  "assessment_code_changed": false,
+  "frozen_settings_changed": false,
+  "selected_checkpoint": {
+    "file": "model.safetensors",
+    "step": 6000,
+    "score": 0.22134547332998314,
+    "metric": "validation_parameter_rmse"
+  },
+  "recovery_validation_parameter_rmse": {
+    "2000": 0.2735190459452235,
+    "4000": 0.2597862270863728,
+    "6000": 0.22134547332998314,
+    "8000": 0.24318942331309631,
+    "10000": 0.2236273952417078,
+    "12000": 0.2637009107417288
+  },
+  "validation_iv_rmse_at_save_points": {
+    "2000": 0.0015762875804654988,
+    "4000": 0.0010701838509209899,
+    "6000": 0.0007194745675573751,
+    "8000": 0.0005548146339797719,
+    "10000": 0.00041457065953338815,
+    "12000": 0.00036814517964487234
+  },
+  "artifacts": [
+    "complete.json",
+    "config.json",
+    "history.json",
+    "last.safetensors",
+    "manifest.json",
+    "model.safetensors",
+    "recovery_validation_002000.json",
+    "recovery_validation_004000.json",
+    "recovery_validation_006000.json",
+    "recovery_validation_008000.json",
+    "recovery_validation_010000.json",
+    "recovery_validation_012000.json",
+    "selection.json",
+    "source_snapshot.json",
+    "step_002000.safetensors",
+    "step_004000.safetensors",
+    "step_006000.safetensors",
+    "step_008000.safetensors",
+    "step_010000.safetensors",
+    "step_012000.safetensors"
+  ],
+  "observation": "Parameter-recovery RMSE is non-monotone and ends above its step-6000 best while IV RMSE keeps falling. Selection uses 4 fixed synthetic cases, so step 6000 vs step 10000 is within noise. Recorded, not acted on: the runbook forbids changing settings or thresholds after observing B0.",
+  "next_per_runbook": "B1 and B2 (both start from this B0 checkpoint), then common evaluation of b0/b1/b2 and the engineering gate. Not started."
+}

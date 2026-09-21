@@ -1,0 +1,51 @@
+{
+  "status": "complete",
+  "seed": 911931,
+  "cases_per_generator": 16,
+  "noise": 0.0,
+  "boundary": true,
+  "selection": "Candidates and covariance floors fixed before generation of assessment truths",
+  "spec": [
+    {
+      "label": "Single Heston",
+      "checkpoint": "outputs/regular_pinn_recovery/single_sobolev_s17"
+    },
+    {
+      "label": "Original Double Heston",
+      "checkpoint": "outputs/regular_pinn_recovery/double_sobolev_s17"
+    },
+    {
+      "label": "17-layer Double Heston",
+      "checkpoint": "outputs/deeper_pinn/deep17_full_s29"
+    },
+    {
+      "label": "Unregularized matched PINN",
+      "checkpoint": "outputs/deeper_pinn/deep17_full_s29",
+      "statistics": "outputs/deeper_pinn/deep17_gls_development",
+      "floor": 0.0001
+    },
+    {
+      "label": "Selected regularized PINN",
+      "checkpoint": "outputs/deeper_pinn/deep17_full_s29",
+      "statistics": "outputs/deeper_pinn/deep17_gls_development",
+      "floor": 0.0001,
+      "prior_strength": 10.0
+    }
+  ],
+  "input_sha256": {
+    "outputs/deeper_pinn/prior_clean_spec.json": "236ed3d83c5fccd1904cb27d3304034e9255585bd4945741eb9cfc2d23441121",
+    "/Users/dhruvasbamb/Desktop/double-heston-inverse-calibration-double-single/outputs/regular_pinn_recovery/single_sobolev_s17/model.safetensors": "8cfa8299827eb210e70cd1810a8f736c3983c45adc3a5be720070c7e60cc7ac2",
+    "/Users/dhruvasbamb/Desktop/double-heston-inverse-calibration-double-single/outputs/regular_pinn_recovery/double_sobolev_s17/model.safetensors": "a9fec59d4c58b5eca66f59eeefcb78fd4ac36b724d47f8c0b416e4e193304f56",
+    "/Users/dhruvasbamb/Desktop/double-heston-inverse-calibration-double-single/outputs/deeper_pinn/deep17_full_s29/model.safetensors": "9441621288f7acdeb01a621bbf8eda9c665a729526386b386ebaf4b41a9edfd8",
+    "outputs/deeper_pinn/deep17_gls_development/training_error.npz": "dd57474865bc0aa252dc0227564d6ba012138112171ce1f9a508c1bfd5c63fd7",
+    "/Users/dhruvasbamb/Desktop/double-heston-inverse-calibration-double-single/scripts/mentor_dh_pinn/evaluate_recovery_improvements.py": "18bed5c27265520df94e25c6ecad99317c7438575dd97a43b6e5f538441697b1",
+    "/Users/dhruvasbamb/Desktop/double-heston-inverse-calibration-double-single/scripts/mentor_dh_pinn/assess_regular_pinn.py": "a705855854cc565046d6ee5bd1e5ac4e095246a47d6e9e0ff64ae822f80e206e",
+    "/Users/dhruvasbamb/Desktop/double-heston-inverse-calibration-double-single/src/mentor_dh_pinn/surrogate_error.py": "5d3f181ae06fec27e7918fe8020ad20501e6f76784a64e018efc5a1ea38a09fc",
+    "/Users/dhruvasbamb/Desktop/double-heston-inverse-calibration-double-single/src/mentor_dh_pinn/regular_pinn_data.py": "b179ab0c275a185a689ac0efefc17d9e5760ca21cee0bd290a6b288a4d099e44",
+    "/Users/dhruvasbamb/Desktop/double-heston-inverse-calibration-double-single/src/mentor_dh_pinn/regular_pinn_torch.py": "f8cb36e57fa9c7649550e83c893b84e7334c212adff1bb9399448ff387986db7",
+    "/Users/dhruvasbamb/Desktop/double-heston-inverse-calibration-double-single/src/mentor_dh_pinn/deep_regular_pinn.py": "32bd4e659d372e844ea496bba6097495977b037bbea4c3b24d5efef84d4be995"
+  },
+  "starts": 5,
+  "max_nfev": 400,
+  "scope": "synthetic central domain; own-model parameters and same-data prices reported separately"
+}

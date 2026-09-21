@@ -1,0 +1,160 @@
+{
+  "window": "iran_march_2026",
+  "date": "2026-03-09",
+  "SH": {
+    "best": {
+      "start": 3,
+      "success": true,
+      "status": 2,
+      "message": "`ftol` termination condition is satisfied.",
+      "nfev": 16,
+      "objective": 6.19096659642124e-07,
+      "params": [
+        26.344645159469348,
+        0.02709409022537539,
+        1.1936141238310998,
+        -0.9586240816885668,
+        0.10172358671899946
+      ],
+      "near_bound": true
+    },
+    "starts": [
+      {
+        "start": 0,
+        "success": true,
+        "status": 2,
+        "message": "`ftol` termination condition is satisfied.",
+        "nfev": 8,
+        "objective": 6.190966596422892e-07,
+        "params": [
+          26.344670017254405,
+          0.02709409312827212,
+          1.1936147508976835,
+          -0.9586240972540573,
+          0.10172363322689666
+        ],
+        "near_bound": true
+      },
+      {
+        "start": 1,
+        "success": true,
+        "status": 2,
+        "message": "`ftol` termination condition is satisfied.",
+        "nfev": 15,
+        "objective": 6.19096659642332e-07,
+        "params": [
+          26.34467311023653,
+          0.027094093319224452,
+          1.1936148251716856,
+          -0.9586241222645054,
+          0.10172364012317746
+        ],
+        "near_bound": true
+      },
+      {
+        "start": 2,
+        "success": true,
+        "status": 2,
+        "message": "`ftol` termination condition is satisfied.",
+        "nfev": 17,
+        "objective": 6.190966596422197e-07,
+        "params": [
+          26.344664589472707,
+          0.027094092361313826,
+          1.193614611043743,
+          -0.9586240805934465,
+          0.10172362289277305
+        ],
+        "near_bound": true
+      },
+      {
+        "start": 3,
+        "success": true,
+        "status": 2,
+        "message": "`ftol` termination condition is satisfied.",
+        "nfev": 16,
+        "objective": 6.19096659642124e-07,
+        "params": [
+          26.344645159469348,
+          0.02709409022537539,
+          1.1936141238310998,
+          -0.9586240816885668,
+          0.10172358671899946
+        ],
+        "near_bound": true
+      }
+    ],
+    "converged_near_best": 4,
+    "global": {
+      "success": false,
+      "message": "Maximum number of iterations has been exceeded.",
+      "nfev": 780
+    },
+    "global_optimum_proven": false
+  },
+  "BS": {
+    "knots": [
+      0.0575342465753424,
+      0.136986301369863,
+      0.2136986301369863
+    ],
+    "volatility": [
+      0.2387111452058068,
+      0.20177196484024132,
+      0.18565855504230552
+    ],
+    "term": true
+  },
+  "BS_inner": [
+    {
+      "term": false,
+      "inner_MSE": 1.0588632198528725e-05
+    },
+    {
+      "term": true,
+      "inner_MSE": 5.774883600567179e-06
+    }
+  ],
+  "anchor_count": 139,
+  "test_count": 69,
+  "exact_fallbacks": [
+    {
+      "x": 0.1883150108413006,
+      "tau": 0.0575342465753424,
+      "params": [
+        26.344645159469348,
+        0.02709409022537539,
+        1.1936141238310998,
+        -0.9586240816885668,
+        0.10172358671899946
+      ],
+      "reference": {
+        "reliable": true,
+        "p1": {
+          "integral_value": 1.5418180828647436,
+          "absolute_error_estimate": 1.1521434181737218e-10,
+          "evaluation_count": 1095,
+          "subdivisions": 37,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        },
+        "p2": {
+          "integral_value": 1.5343001621777606,
+          "absolute_error_estimate": 1.0706824509076465e-10,
+          "evaluation_count": 1095,
+          "subdivisions": 37,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        }
+      }
+    }
+  ],
+  "max_SH_128_vs_checked_difference": 2.8983726529929754e-10,
+  "seconds": 0.2184697079974285
+}

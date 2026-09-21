@@ -1,0 +1,634 @@
+{
+  "window": "iran_june_2025",
+  "date": "2025-06-27",
+  "SH": {
+    "best": {
+      "start": 0,
+      "success": true,
+      "status": 2,
+      "message": "`ftol` termination condition is satisfied.",
+      "nfev": 15,
+      "objective": 2.62888466980331e-08,
+      "params": [
+        8.504210251712475,
+        0.02164781922750271,
+        0.6061841223373466,
+        -0.428710097531575,
+        0.01247009643057682
+      ],
+      "near_bound": true
+    },
+    "starts": [
+      {
+        "start": 0,
+        "success": true,
+        "status": 2,
+        "message": "`ftol` termination condition is satisfied.",
+        "nfev": 15,
+        "objective": 2.62888466980331e-08,
+        "params": [
+          8.504210251712475,
+          0.02164781922750271,
+          0.6061841223373466,
+          -0.428710097531575,
+          0.01247009643057682
+        ],
+        "near_bound": true
+      },
+      {
+        "start": 1,
+        "success": true,
+        "status": 3,
+        "message": "`xtol` termination condition is satisfied.",
+        "nfev": 32,
+        "objective": 2.6288846698033703e-08,
+        "params": [
+          8.504213655482694,
+          0.021647817426144973,
+          0.6061842184276149,
+          -0.4287100522125868,
+          0.01247009615282663
+        ],
+        "near_bound": true
+      },
+      {
+        "start": 2,
+        "success": true,
+        "status": 2,
+        "message": "`ftol` termination condition is satisfied.",
+        "nfev": 24,
+        "objective": 2.628884669809193e-08,
+        "params": [
+          8.504227420529439,
+          0.02164780984758633,
+          0.6061846029089628,
+          -0.42871001664914754,
+          0.012470095089798482
+        ],
+        "near_bound": true
+      },
+      {
+        "start": 3,
+        "success": true,
+        "status": 2,
+        "message": "`ftol` termination condition is satisfied.",
+        "nfev": 35,
+        "objective": 2.6288846698057413e-08,
+        "params": [
+          8.504222521437727,
+          0.02164781214865557,
+          0.6061844605217666,
+          -0.428710083119823,
+          0.012470095669534526
+        ],
+        "near_bound": true
+      }
+    ],
+    "converged_near_best": 4,
+    "global": {
+      "success": false,
+      "message": "Maximum number of iterations has been exceeded.",
+      "nfev": 780
+    },
+    "global_optimum_proven": false
+  },
+  "BS": {
+    "knots": [
+      0.0356164383561643,
+      0.0547945205479452,
+      0.073972602739726,
+      0.0931506849315068,
+      0.1698630136986301,
+      0.2465753424657534
+    ],
+    "volatility": [
+      0.1164246381335822,
+      0.12072658808668008,
+      0.12160971183135853,
+      0.11934773439622724,
+      0.12553350805646663,
+      0.13021762911584064
+    ],
+    "term": true
+  },
+  "BS_inner": [
+    {
+      "term": false,
+      "inner_MSE": 7.839858273045873e-07
+    },
+    {
+      "term": true,
+      "inner_MSE": 5.963276864546227e-07
+    }
+  ],
+  "anchor_count": 161,
+  "test_count": 80,
+  "exact_fallbacks": [
+    {
+      "x": 0.0910320089840664,
+      "tau": 0.0356164383561643,
+      "params": [
+        8.504210251712475,
+        0.02164781922750271,
+        0.6061841223373466,
+        -0.428710097531575,
+        0.01247009643057682
+      ],
+      "reference": {
+        "reliable": true,
+        "p1": {
+          "integral_value": 1.567645715245896,
+          "absolute_error_estimate": 1.4338529180810387e-10,
+          "evaluation_count": 615,
+          "subdivisions": 21,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        },
+        "p2": {
+          "integral_value": 1.5673030959882317,
+          "absolute_error_estimate": 1.2084907800920962e-10,
+          "evaluation_count": 645,
+          "subdivisions": 22,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        }
+      }
+    },
+    {
+      "x": 0.0678486735284091,
+      "tau": 0.0356164383561643,
+      "params": [
+        8.504210251712475,
+        0.02164781922750271,
+        0.6061841223373466,
+        -0.428710097531575,
+        0.01247009643057682
+      ],
+      "reference": {
+        "reliable": true,
+        "p1": {
+          "integral_value": 1.5513739651551484,
+          "absolute_error_estimate": 7.235055957694584e-11,
+          "evaluation_count": 615,
+          "subdivisions": 21,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        },
+        "p2": {
+          "integral_value": 1.5497423590657267,
+          "absolute_error_estimate": 7.275607809140934e-11,
+          "evaluation_count": 615,
+          "subdivisions": 21,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        }
+      }
+    },
+    {
+      "x": 0.053370654347756,
+      "tau": 0.0356164383561643,
+      "params": [
+        8.504210251712475,
+        0.02164781922750271,
+        0.6061841223373466,
+        -0.428710097531575,
+        0.01247009643057682
+      ],
+      "reference": {
+        "reliable": true,
+        "p1": {
+          "integral_value": 1.5139375286362764,
+          "absolute_error_estimate": 1.5003488665368655e-10,
+          "evaluation_count": 525,
+          "subdivisions": 18,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        },
+        "p2": {
+          "integral_value": 1.5100145450418112,
+          "absolute_error_estimate": 1.1086164998627476e-10,
+          "evaluation_count": 555,
+          "subdivisions": 19,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        }
+      }
+    },
+    {
+      "x": 0.0370770148616555,
+      "tau": 0.0356164383561643,
+      "params": [
+        8.504210251712475,
+        0.02164781922750271,
+        0.6061841223373466,
+        -0.428710097531575,
+        0.01247009643057682
+      ],
+      "reference": {
+        "reliable": true,
+        "p1": {
+          "integral_value": 1.3941235879021936,
+          "absolute_error_estimate": 9.007870635246231e-11,
+          "evaluation_count": 465,
+          "subdivisions": 16,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        },
+        "p2": {
+          "integral_value": 1.3848318645174038,
+          "absolute_error_estimate": 8.693834708734693e-11,
+          "evaluation_count": 465,
+          "subdivisions": 16,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        }
+      }
+    },
+    {
+      "x": 0.0310347004056929,
+      "tau": 0.0356164383561643,
+      "params": [
+        8.504210251712475,
+        0.02164781922750271,
+        0.6061841223373466,
+        -0.428710097531575,
+        0.01247009643057682
+      ],
+      "reference": {
+        "reliable": true,
+        "p1": {
+          "integral_value": 1.3084971220427428,
+          "absolute_error_estimate": 1.165061045643992e-10,
+          "evaluation_count": 435,
+          "subdivisions": 15,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        },
+        "p2": {
+          "integral_value": 1.2962547943229097,
+          "absolute_error_estimate": 1.0228661025821607e-10,
+          "evaluation_count": 435,
+          "subdivisions": 15,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        }
+      }
+    },
+    {
+      "x": 0.0250286763454811,
+      "tau": 0.0356164383561643,
+      "params": [
+        8.504210251712475,
+        0.02164781922750271,
+        0.6061841223373466,
+        -0.428710097531575,
+        0.01247009643057682
+      ],
+      "reference": {
+        "reliable": true,
+        "p1": {
+          "integral_value": 1.1886175790604885,
+          "absolute_error_estimate": 3.888038445749663e-11,
+          "evaluation_count": 435,
+          "subdivisions": 15,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        },
+        "p2": {
+          "integral_value": 1.1729874031473362,
+          "absolute_error_estimate": 4.2060759426542804e-11,
+          "evaluation_count": 435,
+          "subdivisions": 15,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        }
+      }
+    },
+    {
+      "x": 0.0190585093589772,
+      "tau": 0.0356164383561643,
+      "params": [
+        8.504210251712475,
+        0.02164781922750271,
+        0.6061841223373466,
+        -0.428710097531575,
+        0.01247009643057682
+      ],
+      "reference": {
+        "reliable": true,
+        "p1": {
+          "integral_value": 1.025463153440361,
+          "absolute_error_estimate": 5.919608742689157e-11,
+          "evaluation_count": 435,
+          "subdivisions": 15,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        },
+        "p2": {
+          "integral_value": 1.0062210603297141,
+          "absolute_error_estimate": 8.164440709031146e-11,
+          "evaluation_count": 405,
+          "subdivisions": 14,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        }
+      }
+    },
+    {
+      "x": 0.0131237738391627,
+      "tau": 0.0356164383561643,
+      "params": [
+        8.504210251712475,
+        0.02164781922750271,
+        0.6061841223373466,
+        -0.428710097531575,
+        0.01247009643057682
+      ],
+      "reference": {
+        "reliable": true,
+        "p1": {
+          "integral_value": 0.8107877385722931,
+          "absolute_error_estimate": 6.666211401317701e-11,
+          "evaluation_count": 405,
+          "subdivisions": 14,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        },
+        "p2": {
+          "integral_value": 0.7880912232643033,
+          "absolute_error_estimate": 6.860242310409118e-11,
+          "evaluation_count": 405,
+          "subdivisions": 14,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        }
+      }
+    },
+    {
+      "x": 0.0072240517119742,
+      "tau": 0.0356164383561643,
+      "params": [
+        8.504210251712475,
+        0.02164781922750271,
+        0.6061841223373466,
+        -0.428710097531575,
+        0.01247009643057682
+      ],
+      "reference": {
+        "reliable": true,
+        "p1": {
+          "integral_value": 0.5398748208183567,
+          "absolute_error_estimate": 4.9586230869200136e-11,
+          "evaluation_count": 315,
+          "subdivisions": 11,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        },
+        "p2": {
+          "integral_value": 0.5144364949751395,
+          "absolute_error_estimate": 4.861918907832444e-11,
+          "evaluation_count": 315,
+          "subdivisions": 11,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        }
+      }
+    },
+    {
+      "x": -0.0044719880512168,
+      "tau": 0.0356164383561643,
+      "params": [
+        8.504210251712475,
+        0.02164781922750271,
+        0.6061841223373466,
+        -0.428710097531575,
+        0.01247009643057682
+      ],
+      "reference": {
+        "reliable": true,
+        "p1": {
+          "integral_value": -0.14520153665708438,
+          "absolute_error_estimate": 9.361625030918727e-12,
+          "evaluation_count": 315,
+          "subdivisions": 11,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        },
+        "p2": {
+          "integral_value": -0.1714357406438978,
+          "absolute_error_estimate": 9.141467512737551e-12,
+          "evaluation_count": 315,
+          "subdivisions": 11,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        }
+      }
+    },
+    {
+      "x": -0.0102691057355428,
+      "tau": 0.0356164383561643,
+      "params": [
+        8.504210251712475,
+        0.02164781922750271,
+        0.6061841223373466,
+        -0.428710097531575,
+        0.01247009643057682
+      ],
+      "reference": {
+        "reliable": true,
+        "p1": {
+          "integral_value": -0.5118846635696788,
+          "absolute_error_estimate": 4.1992062720690767e-11,
+          "evaluation_count": 285,
+          "subdivisions": 10,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        },
+        "p2": {
+          "integral_value": -0.5354323777474731,
+          "absolute_error_estimate": 4.393712511519035e-11,
+          "evaluation_count": 285,
+          "subdivisions": 10,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        }
+      }
+    },
+    {
+      "x": -0.023666435307364,
+      "tau": 0.0356164383561643,
+      "params": [
+        8.504210251712475,
+        0.02164781922750271,
+        0.6061841223373466,
+        -0.428710097531575,
+        0.01247009643057682
+      ],
+      "reference": {
+        "reliable": true,
+        "p1": {
+          "integral_value": -1.1813026499581298,
+          "absolute_error_estimate": 1.072171619619708e-11,
+          "evaluation_count": 315,
+          "subdivisions": 11,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        },
+        "p2": {
+          "integral_value": -1.1939931232767345,
+          "absolute_error_estimate": 1.1179122454858403e-11,
+          "evaluation_count": 315,
+          "subdivisions": 11,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        }
+      }
+    },
+    {
+      "x": -0.0312422291158217,
+      "tau": 0.0356164383561643,
+      "params": [
+        8.504210251712475,
+        0.02164781922750271,
+        0.6061841223373466,
+        -0.428710097531575,
+        0.01247009643057682
+      ],
+      "reference": {
+        "reliable": true,
+        "p1": {
+          "integral_value": -1.3854563801789137,
+          "absolute_error_estimate": 3.1908232366303916e-11,
+          "evaluation_count": 315,
+          "subdivisions": 11,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        },
+        "p2": {
+          "integral_value": -1.3926922119211413,
+          "absolute_error_estimate": 3.33294472551808e-11,
+          "evaluation_count": 315,
+          "subdivisions": 11,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        }
+      }
+    },
+    {
+      "x": -0.038761061529849,
+      "tau": 0.0356164383561643,
+      "params": [
+        8.504210251712475,
+        0.02164781922750271,
+        0.6061841223373466,
+        -0.428710097531575,
+        0.01247009643057682
+      ],
+      "reference": {
+        "reliable": true,
+        "p1": {
+          "integral_value": -1.4903519770523794,
+          "absolute_error_estimate": 9.721594043430437e-11,
+          "evaluation_count": 375,
+          "subdivisions": 13,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        },
+        "p2": {
+          "integral_value": -1.494025929059681,
+          "absolute_error_estimate": 9.848863554988879e-11,
+          "evaluation_count": 375,
+          "subdivisions": 13,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        }
+      }
+    }
+  ],
+  "max_SH_128_vs_checked_difference": 1.2336712762461843e-09,
+  "seconds": 0.44950745800088043
+}

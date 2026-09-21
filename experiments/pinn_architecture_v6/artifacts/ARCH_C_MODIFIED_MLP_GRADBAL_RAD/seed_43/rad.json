@@ -1,0 +1,26 @@
+[
+  {
+    "step": 500,
+    "seconds": 2.7060112499999605,
+    "unique_selected": 4096,
+    "active_slots": 18000,
+    "probability_min": 6.10500160715893e-05,
+    "probability_max": 0.005493146976943848
+  },
+  {
+    "step": 1000,
+    "seconds": 2.774864457999911,
+    "unique_selected": 4096,
+    "active_slots": 18000,
+    "probability_min": 6.1036860188266e-05,
+    "probability_max": 0.0038016631856022916
+  },
+  {
+    "step": 1500,
+    "seconds": 2.625485874999981,
+    "unique_selected": 4096,
+    "active_slots": 18000,
+    "probability_min": 6.103824287264002e-05,
+    "probability_max": 0.005968996689669041
+  }
+]

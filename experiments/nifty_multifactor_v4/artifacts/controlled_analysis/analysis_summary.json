@@ -1,0 +1,34 @@
+{
+  "utc": "2026-09-17T16:52:44.694989+00:00",
+  "source_sha256": "7c28020e8b37edbae5a1fdd125355483e5c071ca97fa5968e7f28f244d64d34e",
+  "protocol_sha256": "5653b3d74da7389de20bf4f22bbfe907f6b1d343ce109f07861688dd59321e87",
+  "controlled_results_sha256": "4743dc77b0879d5b885dcab0b4dce620ae47b26f4e5ba415affe2c1863bbbcbc",
+  "inference_note": "family bootstrap in controlled_results.json is primary; tests here are secondary",
+  "all_independent_surfaces_pooled_SECONDARY": {
+    "surfaces": 40,
+    "mean_SH_minus_PINN": 0.000563691712088031,
+    "median": 0.000580998559615778,
+    "PINN_wins_fraction": 1.0,
+    "bootstrap95_SECONDARY_seed93120": [
+      0.0004641151748163125,
+      0.0006597757244553528
+    ],
+    "median_PINN_over_SH": 0.017032408015285543
+  },
+  "tables": [
+    "maturity_error_mass_SH_by_surface.csv",
+    "tableA1_fidelity_heldout_overall.csv",
+    "tableA2_fidelity_heldout_by_bucket.csv",
+    "tableA3_fidelity_by_structural_scenario.csv",
+    "tableB_controlled_benchmark_overall.csv",
+    "tableC_controlled_benchmark_by_regime.csv",
+    "tableC_primary_paired_statistics.csv",
+    "table_SH_optimizer_diagnostics.csv",
+    "table_advantage_maps.csv",
+    "table_bucket_errors_by_family.csv",
+    "table_condition_PINN_error_vs_SH_error.csv",
+    "table_fixed_total_twist_independent.csv",
+    "table_fixed_total_twist_representatives.csv",
+    "tests_H2_H3_secondary.csv"
+  ]
+}

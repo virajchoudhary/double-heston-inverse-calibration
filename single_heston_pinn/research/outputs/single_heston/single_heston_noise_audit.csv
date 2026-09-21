@@ -1,0 +1,10 @@
+event,count
+authentic_ready_rows_seen,95959
+clean_quotes_retained,11598
+date_rejected_insufficient_clean_quotes,78
+expiry_rejected_fewer_than_six_pairs,647
+expiry_rejected_maturity,299
+expiry_rejected_unreliable_put_call_parity,899
+quote_rejected_after_fold_minimums,0
+quote_rejected_iv_moneyness_or_vega,16
+unpaired_or_duplicate_rows_excluded,29581

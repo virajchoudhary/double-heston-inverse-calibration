@@ -10,3 +10,11 @@
 *.npy binary
 *.npz binary
 *.parquet binary
+*.safetensors binary
+# Preserve audit hashes byte-for-byte, including original CSV line endings.
+outputs/calibration_repair/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+outputs/regular_pinn_recovery/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+scripts/mentor_dh_pinn/prepare_regular_pinn_v2.py whitespace=-blank-at-eof
+# Vendored upstream research snapshots are hashed audit evidence. Preserve their
+# original line endings instead of normalizing them during checkout.
+experiments/pinn_architecture_v6/research/** -text -eol

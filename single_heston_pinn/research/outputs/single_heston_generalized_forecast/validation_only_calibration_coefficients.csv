@@ -1,0 +1,12 @@
+symbol,candidate,specification,features,fit_data,fit_last_date,coefficient_0,coefficient_1,coefficient_2,coefficient_3,coefficient_4,coefficient_5
+ADANIENSOL,half_a,raw,[],all_validation_after_nested_selection,2026-04-30,,,,,,
+ADANIGREEN,half_a,raw,[],all_validation_after_nested_selection,2026-05-05,,,,,,
+ADANIPOWER,main,raw,[],all_validation_after_nested_selection,2026-07-15,,,,,,
+CESC,half_a,raw,[],all_validation_after_nested_selection,2025-07-16,,,,,,
+JSWENERGY,main,raw,[],all_validation_after_nested_selection,2026-05-04,,,,,,
+NHPC,half_a,curved,"[""intercept"", ""raw_heston_iv"", ""raw_heston_iv_squared"", ""log_moneyness"", ""absolute_log_moneyness"", ""maturity""]",all_validation_after_nested_selection,2026-05-05,0.38831990445203435,-1.0528639011723184,2.7319147643189807,-0.07569735120623688,0.4524963172522274,-0.7666410280978003
+NTPC,half_a,surface,"[""intercept"", ""raw_heston_iv"", ""log_moneyness"", ""absolute_log_moneyness"", ""maturity""]",all_validation_after_nested_selection,2026-04-10,0.002289740721269752,1.0854055157593523,-0.095595059358625,0.5041433382532264,-0.77396167438935,
+POWERGRID,half_b,curved,"[""intercept"", ""raw_heston_iv"", ""raw_heston_iv_squared"", ""log_moneyness"", ""absolute_log_moneyness"", ""maturity""]",all_validation_after_nested_selection,2026-04-09,0.04506713733066782,0.8050289848115587,0.4791348238133008,-0.07483153038768434,0.3807720304404052,-0.7622531939017821
+SJVN,main,raw,[],all_validation_after_nested_selection,2025-07-08,,,,,,
+TATAPOWER,half_a,curved,"[""intercept"", ""raw_heston_iv"", ""raw_heston_iv_squared"", ""log_moneyness"", ""absolute_log_moneyness"", ""maturity""]",all_validation_after_nested_selection,2026-04-10,-0.14011155727999355,2.0266853332296533,-1.4981528594984599,-0.19452848142246543,0.3579431279698962,-0.7309223475867217
+TORNTPOWER,half_b,raw,[],all_validation_after_nested_selection,2026-02-12,,,,,,

@@ -1,0 +1,98 @@
+[
+  {
+    "window": "covid_march_2020",
+    "comparator": "BS",
+    "difference": "comparator MSE minus PINN MSE",
+    "mean": -5.967527489119271e-05,
+    "CI95": [
+      -0.00014310528023924726,
+      -7.789456169628899e-06
+    ],
+    "CI_familywise_95_six_comparisons": [
+      -0.0001711099407009324,
+      2.5870165985392466e-08
+    ],
+    "positive_dates": 8,
+    "dates": 21
+  },
+  {
+    "window": "covid_march_2020",
+    "comparator": "SH",
+    "difference": "comparator MSE minus PINN MSE",
+    "mean": -7.878628801349054e-05,
+    "CI95": [
+      -0.00015943853496109406,
+      -1.3899893856348348e-05
+    ],
+    "CI_familywise_95_six_comparisons": [
+      -0.00018433235516174812,
+      -4.654926605585449e-06
+    ],
+    "positive_dates": 0,
+    "dates": 21
+  },
+  {
+    "window": "iran_june_2025",
+    "comparator": "BS",
+    "difference": "comparator MSE minus PINN MSE",
+    "mean": 3.2439429358802914e-07,
+    "CI95": [
+      2.1984080491036432e-07,
+      4.668596728999702e-07
+    ],
+    "CI_familywise_95_six_comparisons": [
+      1.7294114302270536e-07,
+      4.909601614900151e-07
+    ],
+    "positive_dates": 19,
+    "dates": 21
+  },
+  {
+    "window": "iran_june_2025",
+    "comparator": "SH",
+    "difference": "comparator MSE minus PINN MSE",
+    "mean": -3.2072664441563096e-07,
+    "CI95": [
+      -4.473165215990135e-07,
+      -1.645064967975472e-07
+    ],
+    "CI_familywise_95_six_comparisons": [
+      -4.857914011271097e-07,
+      -1.3096636766647617e-07
+    ],
+    "positive_dates": 0,
+    "dates": 21
+  },
+  {
+    "window": "iran_march_2026",
+    "comparator": "BS",
+    "difference": "comparator MSE minus PINN MSE",
+    "mean": 1.545763425195001e-06,
+    "CI95": [
+      1.1641417315740847e-06,
+      1.977147624657913e-06
+    ],
+    "CI_familywise_95_six_comparisons": [
+      1.1008190114311912e-06,
+      2.155385415841169e-06
+    ],
+    "positive_dates": 19,
+    "dates": 19
+  },
+  {
+    "window": "iran_march_2026",
+    "comparator": "SH",
+    "difference": "comparator MSE minus PINN MSE",
+    "mean": -1.3971974971749134e-06,
+    "CI95": [
+      -1.8094650939734428e-06,
+      -9.382719061719546e-07
+    ],
+    "CI_familywise_95_six_comparisons": [
+      -1.974570328560149e-06,
+      -9.010756342665546e-07
+    ],
+    "positive_dates": 1,
+    "dates": 19
+  }
+]

@@ -1,0 +1,12 @@
+symbol,kappa_near_upper_bound,theta_near_upper_bound,sigma_near_feller_cap,interpretation
+ADANIENSOL,true,false,true,structural_parameters_weakly_identified
+ADANIGREEN,false,false,true,structural_parameters_weakly_identified
+ADANIPOWER,true,false,false,kappa_boundary_warning
+CESC,false,true,true,structural_parameters_weakly_identified
+JSWENERGY,true,false,true,structural_parameters_weakly_identified
+NHPC,true,false,true,structural_parameters_weakly_identified
+NTPC,true,false,true,structural_parameters_weakly_identified
+POWERGRID,true,false,true,structural_parameters_weakly_identified
+SJVN,true,false,true,structural_parameters_weakly_identified
+TATAPOWER,true,false,true,structural_parameters_weakly_identified
+TORNTPOWER,true,false,true,structural_parameters_weakly_identified

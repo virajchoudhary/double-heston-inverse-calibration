@@ -1,0 +1,34 @@
+{
+  "selection_basis": "Development only; frozen before fresh assessment",
+  "best_recovery_deep": "deep11_s17",
+  "price_candidate": "deep17_full_s29",
+  "price_selection_basis": "Lowest neural heldout price error in six-case development comparison, 5.7232e-6",
+  "candidates": [
+    {
+      "run": "deep11_s17",
+      "selected_step": 4000,
+      "score": 0.13399363105235484,
+      "hidden_layers": 11,
+      "parameters": 477473,
+      "checkpoint_sha256": "dfc045c84e83118dbb08576f6352335b4f359d40b90322b331f455bcedda70d5"
+    },
+    {
+      "run": "deep17_full_s29",
+      "selected_step": 14000,
+      "score": 0.18812095628330106,
+      "hidden_layers": 17,
+      "parameters": 847745,
+      "checkpoint_sha256": "9441621288f7acdeb01a621bbf8eda9c665a729526386b386ebaf4b41a9edfd8"
+    },
+    {
+      "run": "deep11_balanced_s43",
+      "selected_step": 1000,
+      "score": 0.1678006773243683,
+      "hidden_layers": 11,
+      "parameters": 477473,
+      "checkpoint_sha256": "9359f884c5bcccf5f707d4d566362ee96e3e7a2835c67d8fabcc3b401eb17c6f"
+    }
+  ],
+  "final_seed": 909831,
+  "cases_per_family": 24
+}

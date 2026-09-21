@@ -1,0 +1,16 @@
+{
+  "credential_findings": [],
+  "raw_files_with_absolute_workstation_paths": [
+    "outputs/single_heston_next_day_forecast/parameter_candidates_train_only.csv",
+    "outputs/single_heston_next_day_forecast/next_day_forecast_summary.json"
+  ],
+  "reviewed_files": [
+    "single_heston.py",
+    "double_heston.py",
+    "forecast_single_heston_next_day.py",
+    "compare_single_double_heston.py",
+    "outputs/single_heston/SINGLE_HESTON_REPORT.md",
+    "outputs/single_heston_next_day_forecast/NEXT_DAY_FORECAST_REPORT.md",
+    "outputs/single_double_heston_comparison/HONEST_SINGLE_DOUBLE_HESTON_REPORT.md"
+  ]
+}

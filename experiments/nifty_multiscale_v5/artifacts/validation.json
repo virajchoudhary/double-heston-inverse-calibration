@@ -1,0 +1,8 @@
+{
+  "command": "python -m pytest tests/test_multiscale_pinn.py tests/test_regular_pinn_torch_physics.py tests/test_nifty_fixed_crisis.py tests/test_crisis_option_coverage.py experiments/nifty_multifactor_v4/test_experiment.py -q",
+  "passed": 24,
+  "skipped": 1,
+  "failed": 0,
+  "skip": "Optional MLX parity test",
+  "warnings": "18 torch.jit.script deprecation warnings in automatic-differentiation Jacobian checks"
+}

@@ -8,3 +8,5 @@ matplotlib
 pytest
 pypdf
 openpyxl
+pyarrow
+mpmath

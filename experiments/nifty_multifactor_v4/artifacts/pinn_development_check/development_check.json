@@ -1,0 +1,66 @@
+{
+  "utc": "2026-09-17T16:51:35.235586+00:00",
+  "source_sha256": "0bc7b47c7bbecbf20d541b8602512b0fa2142ec5ac1038853d2684a39825a7a7",
+  "protocol_sha256": "5653b3d74da7389de20bf4f22bbfe907f6b1d343ce109f07861688dd59321e87",
+  "scope": "development split only (teacher seed 93102); held-out fidelity (93104) and PDE-fidelity (93105) points untouched",
+  "checkpoint_status": {
+    "17": {
+      "weights_sha256_matches_completion_record": true,
+      "all_weights_finite": true,
+      "training_seconds": 2711.6331868339985,
+      "last_logged_adam_row": {
+        "step": 40000,
+        "loss": 1.2461835517169932,
+        "parts": [
+          1.9517648380226338e-10,
+          2.31566143719873e-06,
+          0.0001793266003740524,
+          3.825375999995513e-06
+        ],
+        "seconds": 2608.8536673749986
+      }
+    },
+    "43": {
+      "weights_sha256_matches_completion_record": true,
+      "all_weights_finite": true,
+      "training_seconds": 2681.9942865420016,
+      "last_logged_adam_row": {
+        "step": 40000,
+        "loss": 2.618264546769785,
+        "parts": [
+          1.7372408482899646e-10,
+          1.2993399096917926e-06,
+          0.0018591176917565943,
+          1.6655177511619592e-05
+        ],
+        "seconds": 2568.1296943339985
+      }
+    }
+  },
+  "gate_value_vs_limit": {
+    "forward_price_RMSE": [
+      1.0707622215419704e-05,
+      2e-05
+    ],
+    "forward_price_P95": [
+      2.252689225261395e-05,
+      5e-05
+    ],
+    "forward_price_max": [
+      0.00012455730249838481,
+      0.0002
+    ],
+    "IV_RMSE_decimal": [
+      0.0011654602781138459,
+      0.002
+    ]
+  },
+  "gate_passed": {
+    "forward_price_RMSE": true,
+    "forward_price_P95": true,
+    "forward_price_max": true,
+    "IV_RMSE_decimal": true
+  },
+  "all_gates_passed_on_development": true,
+  "decision": "PROCEED_TO_LOCK"
+}

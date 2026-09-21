@@ -1,0 +1,20 @@
+check,passed,observed
+authentic_input_sha256_exact,True,a8a56dd7b17074d8fa32f88936c8b404456f22f296d9dc4665faf3b13621f1d3
+authentic_model_ready_row_count_exact,True,215636
+authentic_source_paths_only,True,0
+all_parameter_candidates_train_only,True,0
+three_candidates_per_symbol,True,3
+all_candidates_feller_valid,True,0.02495313693270962
+origin_strictly_before_target,True,0
+exact_calendar_gaps_one_to_four_days,True,1..4
+candidate_selection_validation_only,True,0
+candidate_selection_reproducible,True,11
+each_validation_quote_has_all_candidates,True,3
+validation_and_test_row_keys_disjoint,True,0
+selected_test_keys_unique,True,0
+forecast_and_market_iv_finite,True,0
+variance_propagation_exact,True,0.0
+origin_state_has_no_target_labels,True,none
+normalized_grid_has_no_market_labels,True,none
+normalized_grid_provenance_exact,True,0
+expiry_handling_uses_exact_dates_not_weekdays,True,expiry_date exact-match carry; no weekday rule

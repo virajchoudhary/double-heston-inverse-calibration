@@ -1,0 +1,65 @@
+[
+  {
+    "generator_factors": 1,
+    "model": "single_sobolev_s17",
+    "cases": 6,
+    "failed_fits": 0,
+    "own_model": true,
+    "neural_holdout_price_rmse": 1.285376957028522e-05,
+    "exact_holdout_price_rmse": 2.3213801481619086e-05,
+    "parameter_passes": 5,
+    "scaled_parameter_rmse": 0.07830766888469295,
+    "tolerance_scaled_rmse": 1.0747096046016096
+  },
+  {
+    "generator_factors": 1,
+    "model": "double_sobolev_s17",
+    "cases": 6,
+    "failed_fits": 0,
+    "own_model": false,
+    "neural_holdout_price_rmse": 2.6617027336520898e-05,
+    "exact_holdout_price_rmse": 8.890327409592307e-05
+  },
+  {
+    "generator_factors": 1,
+    "model": "deep11_s17",
+    "cases": 6,
+    "failed_fits": 0,
+    "own_model": false,
+    "neural_holdout_price_rmse": 2.5494073240781943e-05,
+    "exact_holdout_price_rmse": 9.33945802572613e-05
+  },
+  {
+    "generator_factors": 2,
+    "model": "single_sobolev_s17",
+    "cases": 6,
+    "failed_fits": 0,
+    "own_model": false,
+    "neural_holdout_price_rmse": 0.0003648280229415145,
+    "exact_holdout_price_rmse": 0.0003790571868266392
+  },
+  {
+    "generator_factors": 2,
+    "model": "double_sobolev_s17",
+    "cases": 6,
+    "failed_fits": 0,
+    "own_model": true,
+    "neural_holdout_price_rmse": 1.1378160646864194e-05,
+    "exact_holdout_price_rmse": 4.717071855336093e-05,
+    "parameter_passes": 0,
+    "scaled_parameter_rmse": 0.19035724422421726,
+    "tolerance_scaled_rmse": 3.715702310489229
+  },
+  {
+    "generator_factors": 2,
+    "model": "deep11_s17",
+    "cases": 6,
+    "failed_fits": 0,
+    "own_model": true,
+    "neural_holdout_price_rmse": 1.0149797723986867e-05,
+    "exact_holdout_price_rmse": 3.93715881414572e-05,
+    "parameter_passes": 0,
+    "scaled_parameter_rmse": 0.19788428213984952,
+    "tolerance_scaled_rmse": 3.8509572142390622
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "scope": "development; reuses previously exposed seed 910831",
+  "cases": 12,
+  "strengths": [
+    0.0,
+    0.1,
+    1.0,
+    10.0,
+    100.0
+  ],
+  "prior": "unit midpoint .5; no generating parameters in objective",
+  "selection": "minimum mean squared scaled physical error, separately for clean and noisy",
+  "script_sha256": "494c88e54d6ab7fa54b53a425cfd60d8aeca8f7132ac22d93eab4664a55bc32b",
+  "fit_sha256": "fa0ad0af2ead7860ad25c15a992cc1b8a708f9305f103919e80f94d7397f3626"
+}

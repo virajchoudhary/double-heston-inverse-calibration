@@ -1,0 +1,24 @@
+{
+  "development": {
+    "clean": {
+      "model": "DH17",
+      "condition": "clean",
+      "strength": 10.0,
+      "parameter_rmse": 0.12425757723706758,
+      "passes": 0
+    },
+    "noise": {
+      "model": "DH11",
+      "condition": "noise",
+      "strength": 10.0,
+      "parameter_rmse": 0.39568179672673454,
+      "passes": 0
+    }
+  },
+  "assessment_seed": 911831,
+  "cases_per_family": 32,
+  "noise": 0.01,
+  "prior_center": 0.5,
+  "reason": "lowest development physical RMSE per known observation condition; no assessment retuning",
+  "limitation": "a biased regularized estimator, not proof of full parameter identification"
+}

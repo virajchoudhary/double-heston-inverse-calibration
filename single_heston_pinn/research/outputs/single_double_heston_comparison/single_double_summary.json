@@ -1,0 +1,45 @@
+{
+  "input_sha256": "a8a56dd7b17074d8fa32f88936c8b404456f22f296d9dc4665faf3b13621f1d3",
+  "common_finite_test_rows": 8814,
+  "test_source_universe_rows": 8818,
+  "double_heston_invalid_test_rows": 4,
+  "finite_common_test_coverage": 0.9995463823996371,
+  "test_stock_sessions": 286,
+  "single_heston": {
+    "scope": "ALL",
+    "model": "Single Heston",
+    "rows": 8814,
+    "iv_rmse": 0.04419961352634167,
+    "iv_mae": 0.027956815647201275,
+    "iv_bias": -0.00450182377854062,
+    "iv_r2": 0.8165779091304226,
+    "mean_session_iv_rmse": 0.0349432257140568,
+    "forecast_on_actual_slope": 0.8086163469252393
+  },
+  "double_heston": {
+    "scope": "ALL",
+    "model": "Double Heston",
+    "rows": 8814,
+    "iv_rmse": 0.04550960445402368,
+    "iv_mae": 0.028264320379182407,
+    "iv_bias": -0.0056009346653749115,
+    "iv_r2": 0.8055442375076615,
+    "mean_session_iv_rmse": 0.03582286016279111,
+    "forecast_on_actual_slope": 0.7986583914997504
+  },
+  "double_better_test_rmse_symbols": [
+    "JSWENERGY",
+    "TORNTPOWER"
+  ],
+  "cluster_bootstrap_double_minus_single": {
+    "clusters": 286,
+    "double_minus_single_rmse_low": 0.0006069504374145544,
+    "median": 0.0012955403688487271,
+    "high": 0.001992931833813337
+  },
+  "historical_model_preference": "Single Heston",
+  "double_parameter_candidates_per_stock": 5,
+  "candidate_boundary_flags": 55,
+  "all_integrity_checks_passed": true,
+  "evaluation_status": "retrospective historical-test comparison; the historical test range had been viewed during prior Single-Heston work, so future locked forward evaluation is still required"
+}

@@ -1,0 +1,95 @@
+{
+  "utc": "2026-09-17T15:40:47.177386+00:00",
+  "scope": "training teacher points and training collocation only; no development, held-out or controlled data",
+  "rows": [
+    {
+      "set": "random 4,096 training points",
+      "model": "two_seed_mean",
+      "price_RMSE": 0.0001288275479996373,
+      "P95": 0.0002828201146713484,
+      "max": 0.0008270123775862281
+    },
+    {
+      "set": "random 4,096 training points",
+      "model": "seed_17",
+      "price_RMSE": 0.00010548407351843289,
+      "P95": 0.00022433627164886172,
+      "max": 0.0007450874304930286
+    },
+    {
+      "set": "random 4,096 training points",
+      "model": "seed_43",
+      "price_RMSE": 0.00016683634370531455,
+      "P95": 0.0003671286014206151,
+      "max": 0.0009711274387698976
+    },
+    {
+      "set": "L-BFGS subset (first 4,096 training points)",
+      "model": "two_seed_mean",
+      "price_RMSE": 0.0001245461275747798,
+      "P95": 0.00026414342113864966,
+      "max": 0.0007503012946490362
+    },
+    {
+      "set": "L-BFGS subset (first 4,096 training points)",
+      "model": "seed_17",
+      "price_RMSE": 0.0001011609963843054,
+      "P95": 0.0002081438306470668,
+      "max": 0.0006705701118090851
+    },
+    {
+      "set": "L-BFGS subset (first 4,096 training points)",
+      "model": "seed_43",
+      "price_RMSE": 0.00016268370885444408,
+      "P95": 0.0003486095429061607,
+      "max": 0.0009038591506897037
+    },
+    {
+      "set": "development split (already reported)",
+      "model": "two_seed_mean",
+      "price_RMSE": 0.000132547219753,
+      "P95": 0.000293505264977,
+      "max": 0.000961571846408
+    },
+    {
+      "set": "development split (already reported)",
+      "model": "seed_17",
+      "price_RMSE": 0.0001070625820383,
+      "P95": 0.0002243882056874,
+      "max": 0.0008772970908599
+    },
+    {
+      "set": "development split (already reported)",
+      "model": "seed_43",
+      "price_RMSE": 0.0001723531869045,
+      "P95": 0.0003837204450717,
+      "max": 0.0011201828778364
+    }
+  ],
+  "loss_components_final_weights": [
+    {
+      "seed": 17,
+      "price_MSE": 1.071085907303582e-08,
+      "price_RMSE": 0.00010349328032793153,
+      "IV_MSE": 2.543749020973003e-05,
+      "PDE_MSE": 0.00043668163820406996,
+      "share price_MSE/1e-6": 0.01526269114607499,
+      "share IV_MSE/1e-4": 0.36247751366630027,
+      "share 0.1*PDE_MSE/1e-4": 0.6222597951876246,
+      "share 0.1*convexity": 0.0,
+      "price_term_if_at_gate_RMSE_2e-5": 0.0004000000000000001
+    },
+    {
+      "seed": 43,
+      "price_MSE": 2.7632429624761083e-08,
+      "price_RMSE": 0.00016623005030607757,
+      "IV_MSE": 3.070564044709907e-05,
+      "PDE_MSE": 0.0010311001723144657,
+      "share price_MSE/1e-6": 0.020231843641346187,
+      "share IV_MSE/1e-4": 0.22481979502679178,
+      "share 0.1*PDE_MSE/1e-4": 0.754948361331862,
+      "share 0.1*convexity": 0.0,
+      "price_term_if_at_gate_RMSE_2e-5": 0.0004000000000000001
+    }
+  ]
+}

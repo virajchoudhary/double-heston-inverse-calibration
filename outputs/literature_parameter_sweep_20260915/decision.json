@@ -1,0 +1,426 @@
+{
+  "best_development_candidate": {
+    "id": "proposed_separated_speeds",
+    "classification": "Slower slow factor and faster fast factor; reduced slow sigma preserves strict Feller",
+    "parameters": [
+      0.3,
+      0.1,
+      0.18,
+      -0.5,
+      0.36,
+      3.0,
+      0.15,
+      0.2,
+      -0.5,
+      0.2
+    ]
+  },
+  "eligible_for_final_implementation": false,
+  "final_implementation_parameters": null,
+  "selection_bias_disclosure": "Screening holdout is now validation for choosing a benchmark. Fresh seeds/quotes confirm only that selected truth, not general parameter recovery. If gates fail, final_implementation_parameters stays null. No choosing another candidate after seeing confirmation results.",
+  "screening_ranking": [
+    {
+      "case": "proposed_separated_speeds",
+      "all_ten_pass_fits": 0,
+      "fits": 2,
+      "median_worst_normalized_error": 18.598126524650873,
+      "worst_repriced_iv_rmse": 0.332486005816284,
+      "parameter_pass_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "case": "proposed_rapid_fast_factor",
+      "all_ten_pass_fits": 0,
+      "fits": 2,
+      "median_worst_normalized_error": 22.708762037081975,
+      "worst_repriced_iv_rmse": 0.293613043197761,
+      "parameter_pass_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "case": "published_DH1",
+      "all_ten_pass_fits": 0,
+      "fits": 2,
+      "median_worst_normalized_error": 25.573770455210134,
+      "worst_repriced_iv_rmse": 0.29966519223324106,
+      "parameter_pass_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "case": "proposed_lower_initial_variance",
+      "all_ten_pass_fits": 0,
+      "fits": 2,
+      "median_worst_normalized_error": 27.293002254640115,
+      "worst_repriced_iv_rmse": 0.016589396924441852,
+      "parameter_pass_counts": [
+        1,
+        0
+      ]
+    },
+    {
+      "case": "proposed_asymmetric_correlation",
+      "all_ten_pass_fits": 0,
+      "fits": 2,
+      "median_worst_normalized_error": 27.49581606331589,
+      "worst_repriced_iv_rmse": 0.2977914818552701,
+      "parameter_pass_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "case": "proposed_balanced_initial_variance",
+      "all_ten_pass_fits": 0,
+      "fits": 2,
+      "median_worst_normalized_error": 28.006175408039585,
+      "worst_repriced_iv_rmse": 0.29548308184695393,
+      "parameter_pass_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "case": "proposed_mixed_correlation",
+      "all_ten_pass_fits": 0,
+      "fits": 2,
+      "median_worst_normalized_error": 28.50811962917984,
+      "worst_repriced_iv_rmse": 0.3011646313817928,
+      "parameter_pass_counts": [
+        0,
+        0
+      ]
+    }
+  ],
+  "selected_candidate_fits": [
+    {
+      "case": "proposed_separated_speeds",
+      "seed": 17,
+      "truth": [
+        0.3,
+        0.1,
+        0.18,
+        -0.5,
+        0.36,
+        3.0,
+        0.15,
+        0.2,
+        -0.5,
+        0.2
+      ],
+      "fitted": [
+        0.2679711473564432,
+        0.062167825744775716,
+        0.06333977655264143,
+        -0.32611486057504285,
+        0.06257617497148765,
+        2.844104394897983,
+        0.07588890797316356,
+        0.2850161614113782,
+        -0.055063418595172456,
+        0.08658108847447762
+      ],
+      "absolute_error": [
+        0.032028852643556815,
+        0.03783217425522429,
+        0.11666022344735856,
+        0.17388513942495715,
+        0.29742382502851233,
+        0.15589560510201705,
+        0.07411109202683644,
+        0.08501616141137819,
+        0.44493658140482756,
+        0.11341891152552239
+      ],
+      "parameter_pass": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "passed_parameters": 0,
+      "all_ten_pass": false,
+      "train": {
+        "rows": 246,
+        "neural_iv_rmse": 0.004498015885333471,
+        "repriced_iv_rmse": 0.33235267980913136,
+        "neural_normalized_price_rmse": 0.0009938414000063862,
+        "repriced_normalized_price_rmse": 0.08343141719188171
+      },
+      "holdout": {
+        "rows": 240,
+        "neural_iv_rmse": 0.00441206519762547,
+        "repriced_iv_rmse": 0.332486005816284,
+        "neural_normalized_price_rmse": 0.0009894402899227007,
+        "repriced_normalized_price_rmse": 0.08387511293719367
+      }
+    },
+    {
+      "case": "proposed_separated_speeds",
+      "seed": 43,
+      "truth": [
+        0.3,
+        0.1,
+        0.18,
+        -0.5,
+        0.36,
+        3.0,
+        0.15,
+        0.2,
+        -0.5,
+        0.2
+      ],
+      "fitted": [
+        0.2067855508605663,
+        0.0836412786470073,
+        0.05842161184025273,
+        -0.2201952190078209,
+        0.07626934786163636,
+        2.7858985838090855,
+        0.13480757431832072,
+        0.406727072143844,
+        -0.05770408679986503,
+        0.21341530927308827
+      ],
+      "absolute_error": [
+        0.09321444913943369,
+        0.01635872135299271,
+        0.12157838815974727,
+        0.2798047809921791,
+        0.2837306521383636,
+        0.2141014161909145,
+        0.015192425681679278,
+        0.206727072143844,
+        0.44229591320013495,
+        0.01341530927308826
+      ],
+      "parameter_pass": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "passed_parameters": 0,
+      "all_ten_pass": false,
+      "train": {
+        "rows": 246,
+        "neural_iv_rmse": 0.004786695878699354,
+        "repriced_iv_rmse": 0.20605520511901454,
+        "neural_normalized_price_rmse": 0.0014810107052365693,
+        "repriced_normalized_price_rmse": 0.05505783842114458
+      },
+      "holdout": {
+        "rows": 240,
+        "neural_iv_rmse": 0.00473240932368102,
+        "repriced_iv_rmse": 0.20618700962895745,
+        "neural_normalized_price_rmse": 0.0014744469796532723,
+        "repriced_normalized_price_rmse": 0.05530306432574525
+      }
+    },
+    {
+      "case": "proposed_separated_speeds",
+      "seed": 89,
+      "truth": [
+        0.3,
+        0.1,
+        0.18,
+        -0.5,
+        0.36,
+        3.0,
+        0.15,
+        0.2,
+        -0.5,
+        0.2
+      ],
+      "fitted": [
+        0.13009846976412281,
+        0.08142900437534374,
+        0.062262591278099085,
+        0.058445324646916944,
+        0.27038602285095514,
+        2.9583298582442996,
+        0.08232337878082488,
+        0.2864903559741377,
+        -0.17949934437620702,
+        0.13804991852412837
+      ],
+      "absolute_error": [
+        0.16990153023587717,
+        0.018570995624656264,
+        0.11773740872190092,
+        0.558445324646917,
+        0.08961397714904484,
+        0.041670141755700385,
+        0.06767662121917511,
+        0.08649035597413768,
+        0.320500655623793,
+        0.06195008147587164
+      ],
+      "parameter_pass": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false
+      ],
+      "passed_parameters": 1,
+      "all_ten_pass": false,
+      "train": {
+        "rows": 246,
+        "neural_iv_rmse": 0.0033513111439104656,
+        "repriced_iv_rmse": 0.09977349891664111,
+        "neural_normalized_price_rmse": 0.0006967809959718688,
+        "repriced_normalized_price_rmse": 0.025362571277926144
+      },
+      "holdout": {
+        "rows": 240,
+        "neural_iv_rmse": 0.003263966427661678,
+        "repriced_iv_rmse": 0.09982529410439167,
+        "neural_normalized_price_rmse": 0.0006880681463654663,
+        "repriced_normalized_price_rmse": 0.02545422358663947
+      }
+    },
+    {
+      "case": "proposed_separated_speeds",
+      "seed": 97,
+      "truth": [
+        0.3,
+        0.1,
+        0.18,
+        -0.5,
+        0.36,
+        3.0,
+        0.15,
+        0.2,
+        -0.5,
+        0.2
+      ],
+      "fitted": [
+        0.23590117254346543,
+        0.09236673565120325,
+        0.0779879520238296,
+        -0.17182432288788382,
+        0.09915640786614913,
+        2.6606603657054535,
+        0.07369546637137529,
+        0.25601158595570445,
+        0.022619482301340754,
+        0.06843014367286976
+      ],
+      "absolute_error": [
+        0.06409882745653456,
+        0.007633264348796756,
+        0.10201204797617039,
+        0.32817567711211615,
+        0.2608435921338509,
+        0.3393396342945465,
+        0.0763045336286247,
+        0.056011585955704435,
+        0.5226194823013408,
+        0.13156985632713025
+      ],
+      "parameter_pass": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "passed_parameters": 0,
+      "all_ten_pass": false,
+      "train": {
+        "rows": 246,
+        "neural_iv_rmse": 0.002370349792164726,
+        "repriced_iv_rmse": 0.30185549273901413,
+        "neural_normalized_price_rmse": 0.00042581017709360935,
+        "repriced_normalized_price_rmse": 0.07421610651302638
+      },
+      "holdout": {
+        "rows": 240,
+        "neural_iv_rmse": 0.002310490390361711,
+        "repriced_iv_rmse": 0.3019598103821369,
+        "neural_normalized_price_rmse": 0.0004154729868310999,
+        "repriced_normalized_price_rmse": 0.07459475819570918
+      }
+    }
+  ],
+  "selected_candidate_physics": [
+    {
+      "case": "proposed_separated_speeds",
+      "seed": 17,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.0920924514351922,
+      "scaled_pde_max_absolute": 4.552069706045677,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "a258bf08f2f4dc3e7c161f0c0d1647499b1c4e8632695f42a024e3d95893cec6"
+    },
+    {
+      "case": "proposed_separated_speeds",
+      "seed": 43,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.14359422195176028,
+      "scaled_pde_max_absolute": 5.082581200445844,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "55d9f96493d70641d270ead025b3189b62d6c0a40961e949efe569e7567b9291"
+    },
+    {
+      "case": "proposed_separated_speeds",
+      "seed": 89,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.0430535684058692,
+      "scaled_pde_max_absolute": 1.9630610066438967,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "f456e83a61ff45b0e35cd21c923a4bf29fea8ad362d14e8687b00ba30abecac5"
+    },
+    {
+      "case": "proposed_separated_speeds",
+      "seed": 97,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.07226563708978335,
+      "scaled_pde_max_absolute": 3.1522582042854475,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "7c0bfff5e974edc0b85e68aebcc3b5aeb1dffb2d1248897e621a12622703740b"
+    }
+  ],
+  "unseen_confirmation": [
+    {
+      "seed": 89,
+      "rows": 160,
+      "neural_iv_rmse": 0.003100037966494771,
+      "repriced_iv_rmse": 0.09961084959036552
+    },
+    {
+      "seed": 97,
+      "rows": 160,
+      "neural_iv_rmse": 0.0020363863243395264,
+      "repriced_iv_rmse": 0.2995347645914646
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "utc": "2026-09-20T17:20:55.677205+00:00",
+  "git_commit": null,
+  "git_context": "/Users/dhruvasbamb",
+  "note": "No project-local Git commit; source hashes are authoritative",
+  "files": {
+    "experiments/pinn_architecture_v6/diagnose.py": "ed6791a3f8ccab640808424d6a8a37e427b155746114adcc63562d680026a315",
+    "experiments/pinn_architecture_v6/common.py": "b6cb626d87ca2f8d50ddc7b2b6a3c7b0674a08b39632f846624ebfffe5bf70e4",
+    "experiments/pinn_architecture_v6/train.py": "3e47f8ef8e2ded244ed933b3a057d76b7c2bbf811f08a2bd849522c5fd34aad9",
+    "experiments/pinn_architecture_v6/PROTOCOL.md": "d80d854b5620604510b9ace419c3e2c59839795f6fb854360265954c86dd3109",
+    "CURRENT_PINN_BASELINE.md": "f0e778d32da2a05b179b9bea5b74caf48767bafe9725ae1e3d4d5c141cd95f12",
+    "src/mentor_dh_pinn/research_modified_pinn.py": "5f803eb338e0e393353cf9a81041a3ba35d1bfdc1b7519d79d0388f7c117515c",
+    "src/mentor_dh_pinn/regular_pinn_torch.py": "f8cb36e57fa9c7649550e83c893b84e7334c212adff1bb9399448ff387986db7",
+    "src/mentor_dh_pinn/multiscale_pinn.py": "63ab784764fd47091e7f10009cddb8a603d1b8f6b84e99b0a3cd78add2c1a1b1",
+    "experiments/nifty_multifactor_v4/run.py": "93bbb35441229d91072552a09e9bb356bede5a10aa2fc70c6f66c3b0a4592ec1",
+    "experiments/nifty_multifactor_v4/literature_exact.py": "6e9ed01eac37ea98a61d4f49e5d02af0a60764dda86c79fcf1f8a0ceffb46a58",
+    "experiments/nifty_multifactor_v4/config.json": "84663b849ebaf029402c8f82ca4bc0980e389475a3ef9709c38f30f022a28eb9",
+    "experiments/pinn_architecture_v6/artifacts/conditioning.json": "1608606cc745787bc87ae40361351b73efbc56729e5abab3cc3c834cc18c40e3",
+    "experiments/pinn_architecture_v6/research/official_jaxpi_archs.py": "83a302ec575273d6251cfd779fb2168c92db8406774c0e525c3acb35ff564150",
+    "experiments/pinn_architecture_v6/research/official_modified_mlp.py": "9cbbd7c4d1564ad3678fcc46703ed6ca03974835c93ed3b76595264500aab28d",
+    "experiments/pinn_architecture_v6/research/official_jaxpi_models.py": "d5fb80b25678d5652abcf41b7510775da60a6306d690af2eb8a566c5ce54e54f",
+    "experiments/pinn_architecture_v6/research/official_RAD.py": "942c3c5f238da774ef4ebab5ec25e461dfaf94111a687cb3d45a6436e5cdb219",
+    "experiments/nifty_multifactor_v4/artifacts/teacher/train.npz": "94bd383fd84fa07099f0aed11ed8169acb24cb2e99d1e8832d8a77037f04e889",
+    "experiments/nifty_multifactor_v4/artifacts/teacher/development.npz": "d4accdd297e353f70ae714cf2d7d817021a73c423cf8535b777662047a01d659",
+    "experiments/nifty_multifactor_v4/artifacts/teacher/collocation.npz": "d71aaa4e1d108ec659450116d6a1570700f5fd4a0c0375c569e6c3daee9b0133",
+    "experiments/nifty_multiscale_v5/artifacts/SHARED_s17/weights.pt": "890338840307cd3d01bfa2f01bb80cbfda9a1cb37b16cbb58e89ad883a5dfc8d",
+    "experiments/nifty_multiscale_v5/artifacts/SHARED_s43/weights.pt": "2fbbd95665304202b8359b4ef179694131736400ba213ac978e22eefd7435e53"
+  },
+  "seeds": [
+    17,
+    43
+  ],
+  "adam_steps": 2000,
+  "lbfgs_iterations": 80,
+  "final_market_opened": false,
+  "synthetic_fidelity_opened": false,
+  "synthetic_fidelity_seed": 206104,
+  "synthetic_pde_seed": 206105
+}

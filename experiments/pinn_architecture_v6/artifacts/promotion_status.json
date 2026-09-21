@@ -1,0 +1,6 @@
+{
+  "default_model_replaced": false,
+  "reason": "Selected research candidate improves global development price fidelity but regresses short-maturity error and increases parameter cost. It is not accepted as a uniform or efficiency improvement; baseline remains available unchanged.",
+  "selection_rule_unchanged": true,
+  "fresh_test_result_used_for_selection": false
+}

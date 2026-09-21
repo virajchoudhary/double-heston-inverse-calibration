@@ -1,0 +1,26 @@
+{
+  "seeds": [
+    905103
+  ],
+  "cases_per_seed": 8,
+  "checkpoint_sha256": {
+    "outputs/unified_v6/unified.pt": "52e01e872c838059dd7ff820729bf409a28877a0c28da2f96f8903ac30b9db5b",
+    "outputs/calibration_repair/seed_17/repaired.pt": "9f778b129a477ab31ad436d5cff0932d3789e440f6878a1fa71d5f8a39d0beae",
+    "outputs/calibration_repair/seed_29/repaired.pt": "14e30eed300c79f65e47d208dfb120cdc768ef9929b32426b5f4274b7b12778e",
+    "outputs/calibration_repair/seed_43/repaired.pt": "f6e502c0ca0f581cabe3bce6d076562a959eeafa9a56d5356a0d3bcd3347da8d"
+  },
+  "script_sha256": "66bdeb9956cecf89df241b460d56487851238b18222dfff64212369cc10ce437",
+  "polish": {
+    "max_nfev": 500,
+    "starts": 3
+  },
+  "polish_model": "seed_43/repaired",
+  "truth_nodes": 128,
+  "crosscheck_nodes": 96,
+  "refinement_steps": 3,
+  "truth_used_in_calibration": false,
+  "selection": "no model selection in this script",
+  "noise": "0 or 1% multiplicative Gaussian, identical observations across arms",
+  "holdout": "every third strike, constant across maturities",
+  "evidence": "synthetic recovery; does not establish real-market true parameters"
+}

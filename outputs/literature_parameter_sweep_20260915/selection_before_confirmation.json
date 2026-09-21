@@ -1,0 +1,98 @@
+{
+  "ranking": [
+    {
+      "case": "proposed_separated_speeds",
+      "all_ten_pass_fits": 0,
+      "fits": 2,
+      "median_worst_normalized_error": 18.598126524650873,
+      "worst_repriced_iv_rmse": 0.332486005816284,
+      "parameter_pass_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "case": "proposed_rapid_fast_factor",
+      "all_ten_pass_fits": 0,
+      "fits": 2,
+      "median_worst_normalized_error": 22.708762037081975,
+      "worst_repriced_iv_rmse": 0.293613043197761,
+      "parameter_pass_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "case": "published_DH1",
+      "all_ten_pass_fits": 0,
+      "fits": 2,
+      "median_worst_normalized_error": 25.573770455210134,
+      "worst_repriced_iv_rmse": 0.29966519223324106,
+      "parameter_pass_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "case": "proposed_lower_initial_variance",
+      "all_ten_pass_fits": 0,
+      "fits": 2,
+      "median_worst_normalized_error": 27.293002254640115,
+      "worst_repriced_iv_rmse": 0.016589396924441852,
+      "parameter_pass_counts": [
+        1,
+        0
+      ]
+    },
+    {
+      "case": "proposed_asymmetric_correlation",
+      "all_ten_pass_fits": 0,
+      "fits": 2,
+      "median_worst_normalized_error": 27.49581606331589,
+      "worst_repriced_iv_rmse": 0.2977914818552701,
+      "parameter_pass_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "case": "proposed_balanced_initial_variance",
+      "all_ten_pass_fits": 0,
+      "fits": 2,
+      "median_worst_normalized_error": 28.006175408039585,
+      "worst_repriced_iv_rmse": 0.29548308184695393,
+      "parameter_pass_counts": [
+        0,
+        0
+      ]
+    },
+    {
+      "case": "proposed_mixed_correlation",
+      "all_ten_pass_fits": 0,
+      "fits": 2,
+      "median_worst_normalized_error": 28.50811962917984,
+      "worst_repriced_iv_rmse": 0.3011646313817928,
+      "parameter_pass_counts": [
+        0,
+        0
+      ]
+    }
+  ],
+  "selected": {
+    "id": "proposed_separated_speeds",
+    "classification": "Slower slow factor and faster fast factor; reduced slow sigma preserves strict Feller",
+    "parameters": [
+      0.3,
+      0.1,
+      0.18,
+      -0.5,
+      0.36,
+      3.0,
+      0.15,
+      0.2,
+      -0.5,
+      0.2
+    ]
+  },
+  "disclosure": "Best observed development benchmark, not yet approved for final implementation"
+}

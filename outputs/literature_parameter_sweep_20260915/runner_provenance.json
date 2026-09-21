@@ -1,0 +1,6 @@
+{
+  "runner_sha256": "17cedb1b0985da5a227b383b2ba44e71e986476f128614804807eb5e101e72c4",
+  "spec_sha256": "043b4cf6b6ee91751d757506aabab9cae96b5f5626675172d204972f22d7ea73",
+  "trainer_sha256": "3f1ad802f40350133cf98e9067802f4a68efba16f25ee429d423cd4cd4921681",
+  "budget_note": "unchanged 1000 Adam + 100 L-BFGS per fit; no retuning between cases"
+}

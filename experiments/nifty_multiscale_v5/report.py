@@ -1,0 +1,193 @@
+"""Render the completed v5 evidence; never trains or selects a model."""
+import numpy as np
+import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+from . import run
+
+
+def markdown(frame):
+    columns=list(frame.columns)
+    return '| '+' | '.join(columns)+' |\n| '+' | '.join(['---']*len(columns))+' |\n'+''.join(
+        '| '+' | '.join(str(v) for v in row)+' |\n' for row in frame.itertuples(index=False,name=None))
+
+
+def main():
+    run.verify()
+    metrics=pd.read_csv(run.OUT/'fresh_test/metrics.csv')
+    overall=metrics.query("model=='ensemble' and bucket=='all'").set_index('arm')
+    market=pd.read_csv(run.OUT/'market/summary.csv').query("bucket=='all'")
+    total_quotes=int(market[market.model.eq('DH_PINN')].quotes.sum())
+    total_dates=int(market[market.model.eq('DH_PINN')].dates.sum())
+    names={'covid_march_2020':'March 2020','iran_june_2025':'June 2025','iran_march_2026':'March 2026'}
+    window_order=list(names)
+    table=market.pivot(index='window',columns='model',values='RMSE_index_points').loc[window_order,['DH_PINN','SH','BS']]
+    table.index=table.index.map(names);table.index.name='Window'
+    display=table.map(lambda x:f'{x:.2f}').reset_index().rename(columns={'DH_PINN':'DH PINN','SH':'Single Heston','BS':'Black–Scholes'})
+    normalized=market.pivot(index='window',columns='model',values='equal_date_NRMSE').loc[window_order,['DH_PINN','SH','BS']]
+    normalized.index=normalized.index.map(names);normalized.index.name='Window'
+    nd=normalized.map(lambda x:f'{100*x:.4f}%').reset_index()
+    ft=overall[['price_RMSE','price_P95','price_max','IV_RMSE_volatility_points']].copy()
+    for col in ft:ft[col]=ft[col].map(lambda x:f'{x:.8g}')
+    ft=ft.reset_index()
+    improvement=100*(1-overall.loc['SHARED','price_RMSE']/overall.loc['FROZEN','price_RMSE'])
+    controlled=pd.read_csv(run.OUT/'reused_controlled_maturity.csv')
+    c=controlled.pivot(index=['case','family','bucket'],columns='model',values='price_RMSE')
+    counts=c.groupby('bucket').apply(lambda g:pd.Series({'PINN wins vs both':int(((g.DH_PINN<g.SH)&(g.DH_PINN<g.BS)).sum()),'surfaces':len(g)})).reset_index()
+    fig,axes=plt.subplots(1,3,figsize=(12,4.3),layout='constrained')
+    colors=['#2767b0','#269175','#df9a35']
+    for ax,(window,row) in zip(axes,table.iterrows()):
+        bars=ax.bar(['DH PINN\nrestricted family','Single Heston','Black–Scholes'],row.to_numpy(),color=colors,width=.65)
+        ax.bar_label(bars,fmt='%.2f',padding=3);ax.set_title(window);ax.set_ylim(0,row.max()*1.2)
+        ax.set_ylabel('Held-out price RMSE (index points)');ax.grid(axis='y',alpha=.2);ax.set_axisbelow(True)
+    fig.suptitle(f'Retrospective NIFTY reconstruction · daily anchor-only calibration\n{total_quotes:,} held-out quotes over {total_dates} dates; lower is better',fontsize=13)
+    fig.savefig(run.OUT/'market_comparison.png',dpi=160);plt.close(fig)
+    report=f'''# Double Heston: tested improvement, no superiority guarantee
+
+The requested guarantee is not supported. The selected residual extension improves
+fresh synthetic price RMSE by **{improvement:.3f}%**, but calibrated Single Heston
+beats the restricted Double-Heston PINN in each of the three market windows.
+The PINN beats the selected Black–Scholes baseline in June 2025 and March 2026,
+and loses in March 2020. These are retrospective cross-sectional results, not
+forecasts, trading returns, or proof that the full Double Heston class is inferior.
+
+## Market evidence
+
+Price RMSE in index points, on **{total_quotes:,} held-out quotes across {total_dates} dates**:
+
+{markdown(display)}
+
+The primary equally weighted daily normalized RMSE gives the same ordering.
+Values below are percentages of discounted forward, not implied volatility:
+
+{markdown(nd)}
+
+![market comparison](artifacts/market_comparison.png)
+
+Each date was fitted using anchor strikes only; held-out entire strike pairs
+never entered calibration. Carry was inherited from anchor-only parity.
+Single Heston fits all five parameters with differential evolution plus four
+local starts. BS selects flat or per-expiry volatility on an inner anchor split.
+The PINN fits a common variance scale and two initial variance states (three
+parameters) inside its trained domain. Its kappa and rho values remain fixed
+at the literature anchor. **This is not an unrestricted ten-parameter DH fit.**
+Both Heston families retain the repository's strict Feller restriction.
+
+All best local solutions report convergence; this does not establish a global
+optimum. All **61/61 PINN fits are at or near a domain boundary** (within 0.5%
+of the log-parameter range). Exact DH prices at the
+PINN-fitted parameters have RMSE 82.91, 15.14 and 34.22 points, respectively.
+The corresponding neural approximation errors are only 0.154, 0.185 and 0.290
+points. The evidence therefore points to the restricted parameter family/domain
+as a material bottleneck; adding network depth cannot be assumed to fix it.
+
+PINN beats SH on 0/21, 0/21 and 1/19 dates. PINN beats BS on 8/21, 19/21 and
+19/19 dates. Five-date moving-block bootstrap intervals, including a Bonferroni
+adjustment across six comparisons, are saved in `artifacts/market/comparisons.json`.
+They support worse PINN performance than SH in all three windows and better PINN
+performance than BS in the latter two. The corrected March-2020 comparison to BS
+crosses zero. These short, exposed historical windows support only conditional,
+retrospective inference. They do not establish an event's causal effect.
+
+## What changed and what the ablation found
+
+The implementation in `src/mentor_dh_pinn/multiscale_pinn.py` extends the existing
+width-256, five-layer pricing PINN with three width-32 residual expert branches
+and exact factor-decay features. Zero-initialized output heads preserve the
+inherited function. The parent weights remain frozen. Expiry payoff and call
+bounds are preserved; convexity is not guaranteed.
+
+The MULTISCALE variant uses smooth maturity gates at 30 and 90 days. SHARED
+uses the identical branches with equal weights. Both used the same batches,
+parameter counts, seeds 17/43, 800 Adam steps and 60 L-BFGS iterations with
+synthetic price, IV, PDE and convexity losses. No market labels update weights.
+The protocol was written and hashed before running these experiments.
+
+SHARED was selected on the inherited development split, before fresh test data
+were generated. Its development price improvement was just 0.022%; no claim of
+a major architecture breakthrough is justified. MULTISCALE was not selected.
+On 4,096 fresh continuous points, with both seeds averaged:
+
+{markdown(ft)}
+
+Price errors use forward-normalized call units. IV errors use volatility points.
+All prices contribute to price metrics; IV metrics use 3,785 jointly invertible
+teacher/prediction pairs, with coverage explicitly recorded. The selected model's
+worst price error falls by 3.00%. Fresh mean per-seed scaled PDE RMSE changes
+from 0.032585 to 0.032454. Negative convexity remains at 7/512 and 4/512 points
+for the two seeds; this is not an arbitrage-free certification. Two seeds and a
+small gain do not establish broad architectural superiority.
+
+## Appropriate timescales and synthetic evidence
+
+[Christoffersen, Heston and Jacobs (2009)](https://pure.au.dk/ws/files/17142435/rp09_34.pdf)
+motivate two volatility factors by changing smile level/slope and distinct
+persistence, rather than particular crisis dates. Their study uses S&P500 data
+from 1990–2004; this repository's NIFTY panel cannot reproduce that experiment.
+The current literature anchor has fast and slow variance half-lives of about
+23.5 and 266.6 days. We therefore report 7–30, 30–90, 90–365 and 365–730 days.
+Real archived quotes support only 7–100 days; the longer horizons below are
+synthetic evidence only.
+
+The selected extension beats recalibrated SH and inner-selected BS on every one
+of 40 independent synthetic surfaces in every maturity bucket:
+
+{markdown(counts)}
+
+These are reused v4 surfaces, explicitly a descriptive diagnostic. Their targets
+are generated by Double Heston and their structural parameters are supplied to
+the PINN; SH and BS approximate those surfaces using calibration cells. This
+demonstrates approximation capability conditional on known DH parameters,
+not successful inverse recovery or market superiority. Full maturity/family
+tables are in `artifacts/reused_controlled_maturity.csv`.
+
+The loss-scaling and multiscale motivation draws on
+[Wang, Teng and Perdikaris (2021)](https://arxiv.org/abs/2001.04536) and
+[Wang et al. (2023)](https://arxiv.org/abs/2308.08468).
+The maturity-gated design here is our proposed adaptation. We have not
+implemented every published PINN method or shown that any method guarantees wins.
+
+## Verification, provenance and limits
+
+- 24 targeted tests passed; one MLX parity test was skipped. Checks cover smooth
+  gate derivatives, an independent raw-price PDE, coordinate/parameter gradients,
+  terminal payoff, bounds, split isolation, and existing pricing/data code.
+- Four trained extensions preserve all parent weights bit for bit. The original
+  v4 frozen source manifest still verifies. Fresh test inputs are disjoint from
+  inherited train and development inputs.
+- 48 adaptive-integral checks at calibrated market parameters agree with scored
+  exact prices to at most 8.29e-11 in forward units. No price clipping was used.
+- The cleaned-panel SHA-256 matches the retained original audit. The 61 raw NSE
+  archives were not found at the checked local locations; their original audit
+  is retained, but fresh raw-file verification/recleaning was not performed.
+- Historical close prices are not synchronous executable bid/ask quotes. Missing
+  or uninvertible IV values are counted; primary price errors retain every quote.
+- The old market tests have already been seen. This work does not restore their
+  status as prospectively unseen data. No dates were removed for poor model fit.
+
+The next defensible development step is a broader parameter-domain surrogate,
+including variable correlations and reversion speeds, followed by a matched
+calibration comparison on newly reserved dates. It would require new teacher
+validation and new testing; it cannot be called a guaranteed improvement.
+The current selected extension and all failed/secondary alternatives remain
+available for inspection, without overwriting the prior experiment.
+
+## Reproduction
+
+Use `python -m experiments.nifty_multiscale_v5.run` with `freeze`, `train`,
+`select` and `evaluate`; train each SHARED/MULTISCALE arm with `--seed 17` and
+`--seed 43`. Use `python -m experiments.nifty_multiscale_v5.market` with
+`baseline`, `pinn`, and `report`; then run the `controlled` and `report` modules.
+`freeze` and training refuse existing output directories. Reproduce in a copy
+with a fresh v5 artifacts directory, preserving the completed results here.
+The Python environment is recorded in `artifacts/environment.json`.
+See [PROTOCOL.md](PROTOCOL.md), `artifacts/manifest.json`, `selection.json`,
+`fresh_test/`, `market/`, and `final_integrity.json` for the full evidence.
+'''
+    (run.HERE/'REPORT.md').write_text(report)
+    print(run.HERE/'REPORT.md')
+
+
+if __name__=='__main__':main()

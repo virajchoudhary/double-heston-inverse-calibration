@@ -1,0 +1,5 @@
+protocol,component,quotes,omitted_outside_PINN_domain,RMSE_index_points,MAE_index_points,max_abs_index_points
+fixed,PINN_approximation = PINN - exact DH,800,0,0.19240782477622978,0.1459742328018871,0.524061479890511
+fixed,model_parameter = exact DH - market,800,0,104.75989380599331,81.99856929298599,249.04037601088373
+fixed,total = PINN - market,800,0,104.87104657367654,82.07576876112056,249.51587865097878
+fixed,Single Heston model_parameter = exact SH - market,800,0,116.71390866045131,90.77120570399003,276.2727258479552

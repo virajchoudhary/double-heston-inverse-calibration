@@ -1,0 +1,10 @@
+{
+  "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 11:23:37) [Clang 14.0.6 ]",
+  "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "torch": "2.13.0",
+  "numpy": "2.2.5",
+  "scipy": "1.15.3",
+  "pandas": "2.2.3",
+  "device": "cpu",
+  "threads_per_process": 1
+}

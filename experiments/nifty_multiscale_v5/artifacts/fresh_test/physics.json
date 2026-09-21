@@ -1,0 +1,38 @@
+{
+  "FROZEN": {
+    "PDE_RMSE_per_seed": [
+      0.02989735607388919,
+      0.035272738325218024
+    ],
+    "PDE_RMSE_mean": 0.03258504719955361,
+    "negative_convexity_per_seed": [
+      7,
+      4
+    ],
+    "points_per_seed": 512
+  },
+  "SHARED": {
+    "PDE_RMSE_per_seed": [
+      0.030091532046502417,
+      0.03481726681455086
+    ],
+    "PDE_RMSE_mean": 0.03245439943052664,
+    "negative_convexity_per_seed": [
+      7,
+      4
+    ],
+    "points_per_seed": 512
+  },
+  "MULTISCALE": {
+    "PDE_RMSE_per_seed": [
+      0.030128185033618,
+      0.03499463297605746
+    ],
+    "PDE_RMSE_mean": 0.03256140900483773,
+    "negative_convexity_per_seed": [
+      7,
+      4
+    ],
+    "points_per_seed": 512
+  }
+}

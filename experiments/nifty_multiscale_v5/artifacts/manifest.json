@@ -1,0 +1,25 @@
+{
+  "utc": "2026-09-18T05:07:45.426048+00:00",
+  "sources": {
+    "experiments/nifty_multiscale_v5/PROTOCOL.md": "4451755100c8167ceb78af8a6513ec2300091e66290b37764712427f1604fced",
+    "experiments/nifty_multiscale_v5/run.py": "fc02a5e4e867ce8ff511544da52a4f8badbb38a89debf48700a201a4ebfab0b7",
+    "src/mentor_dh_pinn/multiscale_pinn.py": "63ab784764fd47091e7f10009cddb8a603d1b8f6b84e99b0a3cd78add2c1a1b1",
+    "src/mentor_dh_pinn/regular_pinn_torch.py": "f8cb36e57fa9c7649550e83c893b84e7334c212adff1bb9399448ff387986db7",
+    "experiments/nifty_multifactor_v4/literature_exact.py": "6e9ed01eac37ea98a61d4f49e5d02af0a60764dda86c79fcf1f8a0ceffb46a58",
+    "experiments/nifty_multifactor_v4/run.py": "93bbb35441229d91072552a09e9bb356bede5a10aa2fc70c6f66c3b0a4592ec1",
+    "experiments/nifty_multifactor_v4/config.json": "84663b849ebaf029402c8f82ca4bc0980e389475a3ef9709c38f30f022a28eb9",
+    "outputs/nifty_fixed_crisis_20260917/clean_quotes.csv": "00eb42ca5d60986d434e1fdc9ccde281a2ebb17b9d1997bceb60aa7420d511e9",
+    "experiments/nifty_multifactor_v4/artifacts/pinn_s17/weights.pt": "92b7c32b9aee33d4bbc6d04566c8e9a4c11167f055455b5a97e3ab054b0215c8",
+    "experiments/nifty_multifactor_v4/artifacts/pinn_s43/weights.pt": "accea76a0c9c0c5403fa94d8fd9cf357a745b8c46a1b836e97402a3650cb2829",
+    "experiments/nifty_multifactor_v4/artifacts/teacher/train.npz": "94bd383fd84fa07099f0aed11ed8169acb24cb2e99d1e8832d8a77037f04e889",
+    "experiments/nifty_multifactor_v4/artifacts/teacher/development.npz": "d4accdd297e353f70ae714cf2d7d817021a73c423cf8535b777662047a01d659",
+    "experiments/nifty_multifactor_v4/artifacts/teacher/collocation.npz": "d71aaa4e1d108ec659450116d6a1570700f5fd4a0c0375c569e6c3daee9b0133"
+  },
+  "parent_manifest_sha256": "5653b3d74da7389de20bf4f22bbfe907f6b1d343ce109f07861688dd59321e87",
+  "seeds": [
+    17,
+    43
+  ],
+  "market_data_previously_exposed": true,
+  "guaranteed_superiority": false
+}

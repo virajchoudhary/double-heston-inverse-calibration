@@ -1,0 +1,12 @@
+check,passed,observed
+heldout_rows_joined_one_to_one_to_source,true,1547
+heldout_symbol_exact_match,true,0_mismatches
+heldout_trade_date_exact_match,true,0_mismatches
+heldout_expiry_date_exact_match,true,0_mismatches
+heldout_raw_nse_price_exact_match,true,0_mismatches
+heldout_source_filename_exact_match,true,0_mismatches
+all_heldout_source_rows_model_ready,true,1547
+heldout_row_keys_unique,true,1547
+independent_test_iv_rmse_recalculation,true,0.028111645708325115
+independent_test_iv_mae_recalculation,true,0.015564141189260732
+independent_test_iv_r2_recalculation,true,0.9042257476135556

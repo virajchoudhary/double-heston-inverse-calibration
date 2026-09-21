@@ -1,0 +1,89 @@
+{
+  "utc": "2026-09-18T05:10:22.071192+00:00",
+  "chosen": "SHARED",
+  "development": {
+    "FROZEN": {
+      "model": "ensemble",
+      "bucket": "all",
+      "price_RMSE": 1.0707622215419704e-05,
+      "price_MAE": 6.732872759873656e-06,
+      "price_P95": 2.252689225261395e-05,
+      "price_max": 0.00012455730249838481,
+      "forward_normalized_price_RMSE": 1.0707622215419704e-05,
+      "IV_RMSE_volatility_points": 0.11654602781138458,
+      "IV_valid_quotes": 3789,
+      "quotes": 4096,
+      "eligible": true
+    },
+    "SHARED": {
+      "model": "ensemble",
+      "bucket": "all",
+      "price_RMSE": 1.0705229530339554e-05,
+      "price_MAE": 6.724994487501235e-06,
+      "price_P95": 2.2330423591684174e-05,
+      "price_max": 0.00012333108985107533,
+      "forward_normalized_price_RMSE": 1.0705229530339554e-05,
+      "IV_RMSE_volatility_points": 0.11590696954603627,
+      "IV_valid_quotes": 3789,
+      "quotes": 4096,
+      "eligible": true
+    },
+    "MULTISCALE": {
+      "model": "ensemble",
+      "bucket": "all",
+      "price_RMSE": 1.0712835746502343e-05,
+      "price_MAE": 6.7656651540999345e-06,
+      "price_P95": 2.276098155875282e-05,
+      "price_max": 0.00012074038036918866,
+      "forward_normalized_price_RMSE": 1.0712835746502343e-05,
+      "IV_RMSE_volatility_points": 0.11568803580959261,
+      "IV_valid_quotes": 3789,
+      "quotes": 4096,
+      "eligible": true
+    }
+  },
+  "physics": {
+    "FROZEN": {
+      "PDE_RMSE_per_seed": [
+        0.01608710953293195,
+        0.027146271728398667
+      ],
+      "PDE_RMSE_mean": 0.02161669063066531,
+      "negative_convexity_per_seed": [
+        7,
+        2
+      ],
+      "points_per_seed": 256
+    },
+    "SHARED": {
+      "PDE_RMSE_per_seed": [
+        0.015579173611268619,
+        0.026458820439154387
+      ],
+      "PDE_RMSE_mean": 0.021018997025211504,
+      "negative_convexity_per_seed": [
+        7,
+        2
+      ],
+      "points_per_seed": 256
+    },
+    "MULTISCALE": {
+      "PDE_RMSE_per_seed": [
+        0.015594480045492253,
+        0.026107118452350773
+      ],
+      "PDE_RMSE_mean": 0.02085079924892151,
+      "negative_convexity_per_seed": [
+        7,
+        2
+      ],
+      "points_per_seed": 256
+    }
+  },
+  "checkpoint_hashes": {
+    "experiments/nifty_multiscale_v5/artifacts/MULTISCALE_s43/weights.pt": "f8263bb88c9c4b3ef22e9c929b660460c65cda84314b3f085269b45cea15f97b",
+    "experiments/nifty_multiscale_v5/artifacts/MULTISCALE_s17/weights.pt": "5dae8abe0e9145ae5c9bd659353e8cdd687c0d6721a91786459e1c33e4e48a0d",
+    "experiments/nifty_multiscale_v5/artifacts/SHARED_s43/weights.pt": "2fbbd95665304202b8359b4ef179694131736400ba213ac978e22eefd7435e53",
+    "experiments/nifty_multiscale_v5/artifacts/SHARED_s17/weights.pt": "890338840307cd3d01bfa2f01bb80cbfda9a1cb37b16cbb58e89ad883a5dfc8d"
+  }
+}

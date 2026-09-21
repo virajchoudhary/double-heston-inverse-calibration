@@ -1,0 +1,55 @@
+{
+  "utc": "2026-09-17T16:51:08.355551+00:00",
+  "rule": "Train in order C1, C2, then C3 only if C1 and C2 fail. Lock the first candidate whose two-seed mean passes all four fidelity gates on the development split (teacher seed 93102). If none passes, lock the lowest development price RMSE; held-out fidelity is then expected to fail and no structural claim is permitted. No other candidates, seeds or settings are searched.",
+  "chosen": "C3",
+  "reason": "first candidate in the predeclared order whose two-seed mean passes all development gates",
+  "width": 256,
+  "depth": 5,
+  "adam_steps": 40000,
+  "development_results": [
+    {
+      "candidate": "C1",
+      "status": "trained",
+      "development_gates_pass": false,
+      "price_RMSE": 3.3248059599113e-05,
+      "price_MAE": 2.0982211866776395e-05,
+      "price_P95": 6.823835789378826e-05,
+      "price_max": 0.00025513656346010105,
+      "forward_normalized_price_RMSE": 3.3248059599113e-05,
+      "IV_RMSE_volatility_points": 0.25763597479959793,
+      "IV_valid_quotes": 3784,
+      "quotes": 4096
+    },
+    {
+      "candidate": "C2",
+      "status": "trained",
+      "development_gates_pass": false,
+      "price_RMSE": 1.80417940686797e-05,
+      "price_MAE": 1.0786021705162834e-05,
+      "price_P95": 3.678552817567432e-05,
+      "price_max": 0.00025002226876388867,
+      "forward_normalized_price_RMSE": 1.80417940686797e-05,
+      "IV_RMSE_volatility_points": 0.1642803941683886,
+      "IV_valid_quotes": 3785,
+      "quotes": 4096
+    },
+    {
+      "candidate": "C3",
+      "status": "trained",
+      "development_gates_pass": true,
+      "price_RMSE": 1.0707622215419704e-05,
+      "price_MAE": 6.732872759873656e-06,
+      "price_P95": 2.252689225261395e-05,
+      "price_max": 0.00012455730249838481,
+      "forward_normalized_price_RMSE": 1.0707622215419704e-05,
+      "IV_RMSE_volatility_points": 0.11654602781138458,
+      "IV_valid_quotes": 3789,
+      "quotes": 4096
+    }
+  ],
+  "checkpoint_sha256": {
+    "17": "92b7c32b9aee33d4bbc6d04566c8e9a4c11167f055455b5a97e3ab054b0215c8",
+    "43": "accea76a0c9c0c5403fa94d8fd9cf357a745b8c46a1b836e97402a3650cb2829"
+  },
+  "manifest_sha256": "5653b3d74da7389de20bf4f22bbfe907f6b1d343ce109f07861688dd59321e87"
+}

@@ -1,0 +1,19 @@
+{
+  "scope": "User-approved precheck-only MLX compatibility correction, before B0",
+  "git_head": "2ceca16e24eefb0db56124c894e7880fc286ddc4",
+  "modified_source": "scripts/mentor_dh_pinn/precheck_double_v2_mac.py",
+  "original_source_sha256": "ba74a2e16b8115f50861e03c7194162f819f7c439d876f3f35a2eeac56e6a7f6",
+  "corrected_source_sha256": "73ed7243eb274b8974684f75ff0dcb7ca170479ea41c39dd3e961ca82366d0d7",
+  "changes": [
+    "Define loss(network), using network(coords, structural), as approved by the user",
+    "Pass model to value_and_grad(model) to match the approved loss signature"
+  ],
+  "trainer_modified": false,
+  "experiment_settings_changed": false,
+  "precheck_result": "PASS",
+  "precheck_report": "outputs/regular_pinn_recovery/double_v2_mac_precheck.json",
+  "archive_sha256_verified": false,
+  "archive_note": "User provided a Windows C:/Users/viraj/... path, not a downloadable URL or a ZIP accessible on this Mac. All extracted package manifest entries and all committed frozen artifact hashes passed, but the original archive hash remains unverified.",
+  "b0_started": false,
+  "next_gate": "Obtain original archive and verify the required ZIP SHA-256 before starting B0. If the trainer encounters an MLX API mismatch, stop without modifying it."
+}

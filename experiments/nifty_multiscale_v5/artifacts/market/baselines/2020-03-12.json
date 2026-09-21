@@ -1,0 +1,194 @@
+{
+  "window": "covid_march_2020",
+  "date": "2020-03-12",
+  "SH": {
+    "best": {
+      "start": 2,
+      "success": true,
+      "status": 2,
+      "message": "`ftol` termination condition is satisfied.",
+      "nfev": 26,
+      "objective": 2.086465988879255e-06,
+      "params": [
+        23.562746623640408,
+        0.14722611793490295,
+        2.6313939571669867,
+        -0.9949999999999999,
+        0.4214212972037435
+      ],
+      "near_bound": true
+    },
+    "starts": [
+      {
+        "start": 0,
+        "success": true,
+        "status": 2,
+        "message": "`ftol` termination condition is satisfied.",
+        "nfev": 20,
+        "objective": 2.0864659888856108e-06,
+        "params": [
+          23.562844638916395,
+          0.14722626731552726,
+          2.63140076509298,
+          -0.9949999999999999,
+          0.42142185049109065
+        ],
+        "near_bound": true
+      },
+      {
+        "start": 1,
+        "success": true,
+        "status": 2,
+        "message": "`ftol` termination condition is satisfied.",
+        "nfev": 25,
+        "objective": 2.086465988888169e-06,
+        "params": [
+          23.56285296478007,
+          0.14722627002059155,
+          2.631401254165948,
+          -0.9949999999999999,
+          0.4214219035748976
+        ],
+        "near_bound": true
+      },
+      {
+        "start": 2,
+        "success": true,
+        "status": 2,
+        "message": "`ftol` termination condition is satisfied.",
+        "nfev": 26,
+        "objective": 2.086465988879255e-06,
+        "params": [
+          23.562746623640408,
+          0.14722611793490295,
+          2.6313939571669867,
+          -0.9949999999999999,
+          0.4214212972037435
+        ],
+        "near_bound": true
+      },
+      {
+        "start": 3,
+        "success": true,
+        "status": 2,
+        "message": "`ftol` termination condition is satisfied.",
+        "nfev": 27,
+        "objective": 2.086465988891785e-06,
+        "params": [
+          23.5628631439655,
+          0.14722628581228744,
+          2.631401963674316,
+          -0.9949999999999999,
+          0.4214219609665968
+        ],
+        "near_bound": true
+      }
+    ],
+    "converged_near_best": 4,
+    "global": {
+      "success": false,
+      "message": "Maximum number of iterations has been exceeded.",
+      "nfev": 780
+    },
+    "global_optimum_proven": false
+  },
+  "BS": {
+    "knots": [
+      0.0383561643835616,
+      0.1342465753424657
+    ],
+    "volatility": [
+      0.5218247128170156,
+      0.40424728815489036
+    ],
+    "term": true
+  },
+  "BS_inner": [
+    {
+      "term": false,
+      "inner_MSE": 2.8743245225276797e-05
+    },
+    {
+      "term": true,
+      "inner_MSE": 1.3960600557248995e-05
+    }
+  ],
+  "anchor_count": 71,
+  "test_count": 36,
+  "exact_fallbacks": [
+    {
+      "x": 0.1270854246743261,
+      "tau": 0.0383561643835616,
+      "params": [
+        23.562746623640408,
+        0.14722611793490295,
+        2.6313939571669867,
+        -0.9949999999999999,
+        0.4214212972037435
+      ],
+      "reference": {
+        "reliable": true,
+        "p1": {
+          "integral_value": 1.2095446310055424,
+          "absolute_error_estimate": 9.88191232120813e-11,
+          "evaluation_count": 1305,
+          "subdivisions": 44,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        },
+        "p2": {
+          "integral_value": 1.123721485424178,
+          "absolute_error_estimate": 1.0812868320897353e-10,
+          "evaluation_count": 1275,
+          "subdivisions": 43,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        }
+      }
+    },
+    {
+      "x": 0.0253027303643837,
+      "tau": 0.0383561643835616,
+      "params": [
+        23.562746623640408,
+        0.14722611793490295,
+        2.6313939571669867,
+        -0.9949999999999999,
+        0.4214212972037435
+      ],
+      "reference": {
+        "reliable": true,
+        "p1": {
+          "integral_value": 0.5536819483051154,
+          "absolute_error_estimate": 8.193233477258632e-11,
+          "evaluation_count": 1005,
+          "subdivisions": 34,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        },
+        "p2": {
+          "integral_value": 0.4205822656417626,
+          "absolute_error_estimate": 7.169086258365112e-11,
+          "evaluation_count": 1005,
+          "subdivisions": 34,
+          "message": "",
+          "warnings": [],
+          "exception": null,
+          "tolerance": 5e-09,
+          "reliable": true
+        }
+      }
+    }
+  ],
+  "max_SH_128_vs_checked_difference": 2.2738559923851653e-09,
+  "seconds": 0.2549868339992827
+}

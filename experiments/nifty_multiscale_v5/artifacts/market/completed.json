@@ -1,0 +1,9 @@
+{
+  "utc": "2026-09-18T05:13:26.065138+00:00",
+  "predictions_sha256": "3ae72e494efff5ac77c2d9fe52f2e79272ff3d992bfb9db61ef0be60d30a72e4",
+  "rows": 3903,
+  "dates": 61,
+  "selected_arm": "SHARED",
+  "retrospective_not_forecast": true,
+  "all_ten_DH_parameters_calibrated": false
+}

@@ -1,0 +1,70 @@
+{
+  "tag": "round1",
+  "box": {
+    "x_half_width": 3.5,
+    "variance_low": 0.005,
+    "variance_high": 1.1,
+    "maturity_low_days": 2.0,
+    "maturity_high_days": 92.0,
+    "kappa_low": 0.1,
+    "kappa_high": 15.0,
+    "theta_low": 0.005,
+    "theta_high": 1.0,
+    "feller_ratio_low": 0.05,
+    "feller_ratio_high": 2.0,
+    "sigma_floor": 0.02,
+    "sigma_ceiling": 5.0,
+    "rho_low": -0.95,
+    "rho_high": 0.6,
+    "rate_low": -0.1,
+    "rate_high": 0.25,
+    "dividend_low": -0.27,
+    "dividend_high": 0.5,
+    "maturity_low_years": 0.005479452054794521,
+    "maturity_high_years": 0.25205479452054796,
+    "sigma_rule": "sigma = eta * sqrt(2 kappa theta), eta in [feller_ratio_low, feller_ratio_high]"
+  },
+  "engines": {
+    "pinn": {
+      "test_holdout": {
+        "rows": 1547,
+        "iv_rmse": 0.025411690195221034,
+        "iv_mae": 0.016620514753448314,
+        "iv_bias": 0.0053886213009733345,
+        "iv_r2": 0.9217393711835038,
+        "raw_price_rmse": 2.0203556437323735,
+        "raw_price_mae": 0.8112475814529364
+      },
+      "validation_holdout": {
+        "rows": 1662,
+        "iv_rmse": 0.02948149030040863,
+        "iv_mae": 0.018955676830889306,
+        "iv_bias": 0.005020931852479926,
+        "iv_r2": 0.9266400322605243,
+        "raw_price_rmse": 1.5433863203890037,
+        "raw_price_mae": 0.6743858209894873
+      },
+      "test_calibration_fold": {
+        "rows": 3115,
+        "iv_rmse": 0.026757286856440805,
+        "iv_mae": 0.016832321250771946,
+        "iv_bias": 0.004900455422354532,
+        "iv_r2": 0.9170086385627024,
+        "raw_price_rmse": 1.983334918432331,
+        "raw_price_mae": 0.7861884368287081
+      },
+      "wall_seconds": 75.75239708299341,
+      "optimiser_seconds": 66.75626803918567,
+      "joint_fit_seconds_median": 2.234325750003336,
+      "state_fit_seconds_median": 0.06951549999939743,
+      "state_fits": 577,
+      "synthetic_recovery": {
+        "cases": 8,
+        "median_price_rmse_pct_of_spot": 0.0011660830617958424,
+        "max_price_rmse_pct_of_spot": 0.0029891021302628287,
+        "median_iv_rmse": 0.0001572894134934913,
+        "median_seconds": 0.55789097899833
+      }
+    }
+  }
+}

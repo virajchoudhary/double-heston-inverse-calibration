@@ -1,0 +1,15 @@
+{
+  "step": 2000,
+  "total_loss": 1.636729286732285,
+  "seconds": 142.93496241599996,
+  "teacher": 1.2233783834507521e-10,
+  "iv": 1.0131676423306262e-06,
+  "pde": 0.0010775927799889344,
+  "convexity": 2.9800582220622093e-09,
+  "weight_teacher": 1.0,
+  "weight_iv": 1.0,
+  "weight_pde": 1.0,
+  "weight_convexity": 1.0,
+  "terminal_loss": 0.0,
+  "boundary_penalty_active": false
+}

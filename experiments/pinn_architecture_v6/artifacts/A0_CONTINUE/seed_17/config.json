@@ -1,0 +1,8 @@
+{
+  "arm": "A0_CONTINUE",
+  "seed": 17,
+  "manifest_sha256": "3c544c81b35d015d47e7a8fbcd3d39207c1a1aed9d0cfc84126b38311d7ee157",
+  "adam_steps": 2000,
+  "lbfgs_iterations": 80,
+  "git_commit": null
+}

@@ -1,0 +1,84 @@
+{
+  "dual PINN A, independent": {
+    "median_reprice_vs_clean": 0.0010509404529162889,
+    "mean_reprice_vs_clean": 0.0015851364092147728,
+    "beats_single_heston_fraction": 0.03333333333333333,
+    "param_rmse_median_subsample": 0.1486236154388456,
+    "median_seconds": 2.269164168043062e-05
+  },
+  "dual PINN B, mutually aware": {
+    "median_reprice_vs_clean": 0.0010424346127143732,
+    "mean_reprice_vs_clean": 0.0014922801820507078,
+    "beats_single_heston_fraction": 0.03333333333333333,
+    "param_rmse_median_subsample": 0.13943107913271563,
+    "median_seconds": 6.847148668020963e-05
+  },
+  "dual PINN A+B ensemble": {
+    "median_reprice_vs_clean": 0.0010170180444957432,
+    "mean_reprice_vs_clean": 0.0013422230244407461,
+    "beats_single_heston_fraction": 0.03333333333333333,
+    "param_rmse_median_subsample": 0.14121114108666438,
+    "median_seconds": 9.116312836064025e-05
+  },
+  "two-stage, ridge 0 (network as initialiser)": {
+    "median_reprice_vs_clean": 0.0002635015088949476,
+    "mean_reprice_vs_clean": 0.0002724364246345779,
+    "beats_single_heston_fraction": 0.35,
+    "param_rmse_median_subsample": 0.252633990204298,
+    "median_fit_rmse_vs_noisy": 0.0006833715520207791,
+    "median_seconds": 24.743377667007735
+  },
+  "two-stage, ridge 3 (chosen on validation)": {
+    "median_reprice_vs_clean": 0.0002108889708418989,
+    "mean_reprice_vs_clean": 0.00022950837340225935,
+    "beats_single_heston_fraction": 0.7833333333333333,
+    "param_rmse_median_subsample": 0.12933861523810417,
+    "median_fit_rmse_vs_noisy": 0.0007027116740886241,
+    "median_seconds": 4.647862208003062
+  },
+  "classical Double Heston, cold 5-start": {
+    "median_reprice_vs_clean": 0.00027331638243120835,
+    "mean_reprice_vs_clean": 0.0002748654094609869,
+    "beats_single_heston_fraction": 0.36666666666666664,
+    "param_rmse_median_subsample": 0.2625692258967658,
+    "median_fit_rmse_vs_noisy": 0.0006833669506207581,
+    "median_seconds": 249.27669818750292
+  },
+  "classical single Heston": {
+    "median_reprice_vs_clean": 0.0002510196153655675,
+    "mean_reprice_vs_clean": 0.000276745896013267,
+    "beats_single_heston_fraction": 0.0,
+    "median_fit_rmse_vs_noisy": 0.0007268211559032891,
+    "median_seconds": 16.29352179149282
+  },
+  "[full test 25k] dual PINN independent": {
+    "param_rmse_median": 0.14043541572162288,
+    "param_rmse_mean": 0.15439828986461154,
+    "within_0p10": 0.22864,
+    "ms_per_surface": 0.02269164168043062,
+    "n": 25000
+  },
+  "[full test 25k] dual PINN aware": {
+    "param_rmse_median": 0.1306664330585167,
+    "param_rmse_mean": 0.14456182874944293,
+    "within_0p10": 0.28796,
+    "ms_per_surface": 0.06847148668020964,
+    "n": 25000
+  },
+  "[full test 25k] dual PINN ensemble": {
+    "param_rmse_median": 0.13313270953095357,
+    "param_rmse_mean": 0.14657131064338205,
+    "within_0p10": 0.27456,
+    "ms_per_surface": 0.09116312836064025,
+    "n": 25000
+  },
+  "_meta": {
+    "cases": 60,
+    "cases_requested": 60,
+    "cases_failed": 0,
+    "start": "ensemble",
+    "lam": 3.0,
+    "median_noise": 0.005952567243115485,
+    "wall_seconds": 2359.457155000011
+  }
+}

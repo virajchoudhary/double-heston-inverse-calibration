@@ -1,0 +1,63 @@
+{
+  "integrity_checks_passed": true,
+  "same_seed_same_start_all_cases": true,
+  "numerical_finiteness_passed": true,
+  "caution": "Integrity is not parameter-recovery or PDE-accuracy success. Diagnostics were not used to tune this pilot.",
+  "fresh_collocation_seed": 915999,
+  "diagnostics": [
+    {
+      "case": "published_DH1",
+      "seed": 17,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.21987388178092226,
+      "scaled_pde_max_absolute": 12.966844267888138,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "cb9953e1d87d68397f8f9fe17523662192bfa6ff349e7779378f52afcdeb3aed"
+    },
+    {
+      "case": "published_DH1",
+      "seed": 43,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.022427497877553354,
+      "scaled_pde_max_absolute": 1.0765057808813092,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "6ea0f1df9c38851177123ddd9938f21a6d9573f4f3af5d1efd89ea1ae16c98b5"
+    },
+    {
+      "case": "derived_faster_factor",
+      "seed": 17,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.10776089100200315,
+      "scaled_pde_max_absolute": 4.876250132461798,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "27c6c5a01ba5639c8543dc4c588a94cf440f784476db8df7453ec890c9d623e3"
+    },
+    {
+      "case": "derived_faster_factor",
+      "seed": 43,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.01896470876822278,
+      "scaled_pde_max_absolute": 0.819567529839463,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "9660eac0504ce56062851f03dbfe3f114979c9276d724ef309b6b2015b14ebf4"
+    },
+    {
+      "case": "derived_lower_volvol",
+      "seed": 17,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.11248267355436736,
+      "scaled_pde_max_absolute": 4.857922269226653,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "0f000fb193b2115f1d07963522d493b584bb555ff95cb20907ff61a63a10ffbc"
+    },
+    {
+      "case": "derived_lower_volvol",
+      "seed": 43,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.01970519531621981,
+      "scaled_pde_max_absolute": 0.652383900423948,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "6fad636f8f2dedc42093de5b35cfff0811ebe5303dee780399aec9e9ecb188d4"
+    }
+  ]
+}

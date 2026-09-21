@@ -1,0 +1,131 @@
+{
+  "experiment": "proposed_parameter_selection_20260915",
+  "anchor": "published_DH1 from literature_pinn_pilot.json; retained as a control",
+  "classification": "All additional proposals below are study-defined sensitivity cases around the published anchor, NOT additional published or market-calibrated values.",
+  "proposals": [
+    {
+      "id": "proposed_separated_speeds",
+      "classification": "Slower slow factor and faster fast factor; reduced slow sigma preserves strict Feller",
+      "parameters": [
+        0.3,
+        0.1,
+        0.18,
+        -0.5,
+        0.36,
+        3.0,
+        0.15,
+        0.2,
+        -0.5,
+        0.2
+      ]
+    },
+    {
+      "id": "proposed_rapid_fast_factor",
+      "classification": "DH1 fast kappa changed to 6.0",
+      "parameters": [
+        0.9,
+        0.1,
+        0.36,
+        -0.5,
+        0.36,
+        6.0,
+        0.15,
+        0.2,
+        -0.5,
+        0.2
+      ]
+    },
+    {
+      "id": "proposed_asymmetric_correlation",
+      "classification": "DH1 slow/fast correlations changed to -0.8/-0.2",
+      "parameters": [
+        0.9,
+        0.1,
+        0.36,
+        -0.8,
+        0.36,
+        1.2,
+        0.15,
+        0.2,
+        -0.2,
+        0.2
+      ]
+    },
+    {
+      "id": "proposed_mixed_correlation",
+      "classification": "DH1 slow/fast correlations changed to -0.7/+0.2",
+      "parameters": [
+        0.9,
+        0.1,
+        0.36,
+        -0.7,
+        0.36,
+        1.2,
+        0.15,
+        0.2,
+        0.2,
+        0.2
+      ]
+    },
+    {
+      "id": "proposed_balanced_initial_variance",
+      "classification": "DH1 total initial variance preserved, equal .28/.28 factor shares",
+      "parameters": [
+        0.9,
+        0.1,
+        0.36,
+        -0.5,
+        0.28,
+        1.2,
+        0.15,
+        0.2,
+        -0.5,
+        0.28
+      ]
+    },
+    {
+      "id": "proposed_lower_initial_variance",
+      "classification": "DH1 initial variances changed to .15/.15; slow sigma reduced to .18",
+      "parameters": [
+        0.9,
+        0.1,
+        0.18,
+        -0.5,
+        0.15,
+        1.2,
+        0.15,
+        0.2,
+        -0.5,
+        0.15
+      ]
+    }
+  ],
+  "screening_seeds": [
+    17,
+    43
+  ],
+  "confirmation_seeds": [
+    89,
+    97
+  ],
+  "ranking": "Most all-ten-pass screening fits first; then smallest median across seeds of maximum tolerance-normalized parameter error; then worst held-out repriced IV RMSE; then case ID. No per-case budgets or truth-centered starts.",
+  "confirmation_expiry_days": [
+    45,
+    120,
+    270,
+    540
+  ],
+  "confirmation_ratios": [
+    0.5125,
+    1.4875,
+    40
+  ],
+  "promotion_gates": {
+    "all_ten_parameters_pass_every_screening_and_confirmation_seed": true,
+    "max_repriced_iv_rmse": 0.005,
+    "max_fresh_scaled_pde_rmse": 0.01,
+    "max_sampled_negative_convexity_points": 0,
+    "require_confirmation_unseen_quotes": true
+  },
+  "selection_disclosure": "Screening holdout is now validation for choosing a benchmark. Fresh seeds/quotes confirm only that selected truth, not general parameter recovery. If gates fail, final_implementation_parameters stays null. No choosing another candidate after seeing confirmation results."
+}

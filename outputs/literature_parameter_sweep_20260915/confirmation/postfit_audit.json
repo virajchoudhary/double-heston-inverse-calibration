@@ -1,0 +1,45 @@
+{
+  "integrity_checks_passed": true,
+  "same_seed_same_start_all_cases": true,
+  "numerical_finiteness_passed": true,
+  "caution": "Integrity is not parameter-recovery or PDE-accuracy success. Diagnostics were not used to tune this pilot.",
+  "fresh_collocation_seed": 915999,
+  "diagnostics": [
+    {
+      "case": "published_DH1",
+      "seed": 89,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.037821376500419834,
+      "scaled_pde_max_absolute": 1.827901958125233,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "d92f0728da41ba47ed9c207ab2049fcf7548c8ebf790b98dc5ef5644e302b767"
+    },
+    {
+      "case": "published_DH1",
+      "seed": 97,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.06225781167281819,
+      "scaled_pde_max_absolute": 2.5797959630054046,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "f90d99fae14460a49579b814b2e121e2c90512a718d5e62eedd75349f395e086"
+    },
+    {
+      "case": "proposed_separated_speeds",
+      "seed": 89,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.0430535684058692,
+      "scaled_pde_max_absolute": 1.9630610066438967,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "f456e83a61ff45b0e35cd21c923a4bf29fea8ad362d14e8687b00ba30abecac5"
+    },
+    {
+      "case": "proposed_separated_speeds",
+      "seed": 97,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.07226563708978335,
+      "scaled_pde_max_absolute": 3.1522582042854475,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "7c0bfff5e974edc0b85e68aebcc3b5aeb1dffb2d1248897e621a12622703740b"
+    }
+  ]
+}

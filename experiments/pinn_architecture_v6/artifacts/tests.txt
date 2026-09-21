@@ -1,0 +1,10 @@
+.................s......                                                 [100%]
+=============================== warnings summary ===============================
+Desktop/double-heston-inverse-calibration-Double-Single-heston-v1/tests/test_multiscale_pinn.py: 18 warnings
+  /opt/anaconda3/lib/python3.13/site-packages/torch/jit/_script.py:1488: DeprecationWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_regular_pinn_torch_physics.py:87: could not import 'mlx.core': No module named 'mlx'
+23 passed, 1 skipped, 18 warnings in 3.55s

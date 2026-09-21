@@ -1,0 +1,72 @@
+{
+  "config": {
+    "data": "outputs/deeper_pinn/data_double_full",
+    "out": "outputs/deeper_pinn/deep17_recovery_s67",
+    "factors": 2,
+    "steps": 4000,
+    "seed": 67,
+    "width": 160,
+    "depth": 5,
+    "residual_blocks": 6,
+    "residual_width": 384,
+    "batch": 1024,
+    "pde_batch": 256,
+    "sensitivity": 0.2,
+    "weight_pde": 0.0002,
+    "geometry_sensitivity": 0.2,
+    "weight_decay": 1e-06,
+    "lr": 2e-06,
+    "constant_lr": true,
+    "surfaces": "outputs/deeper_pinn/recovery_surfaces_910210/surfaces.npz",
+    "surface_weight": 0.001,
+    "surface_batch": 8,
+    "resample_every": 1000,
+    "save_every": 1000,
+    "resume": "outputs/deeper_pinn/deep17_full_s29/model.safetensors",
+    "skip_recovery": false,
+    "tau_max": 2.0,
+    "architecture": "one deep residual implied-variance PDE PINN",
+    "selection": "clean synthetic validation parameter recovery RMSE, fixed 4 cases; not final assessment",
+    "calibration": "optimize frozen neural IV predictions only; no exact pricing in fit",
+    "hidden_layer_count": 17,
+    "network_parameter_count": 847745
+  },
+  "source_sha256": {
+    "scripts/mentor_dh_pinn/train_regular_pinn.py": "48b3f93f72ee8c4abbcc1257a88be0d120d5069a35dc6442891a9e9bef660495",
+    "src/mentor_dh_pinn/regular_pinn.py": "e409148ced31045827f2ec582a10ad572373aa50e456de4e58cb0499453d9316",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "b179ab0c275a185a689ac0efefc17d9e5760ca21cee0bd290a6b288a4d099e44",
+    "src/mentor_dh_pinn/regular_pinn_torch.py": "f8cb36e57fa9c7649550e83c893b84e7334c212adff1bb9399448ff387986db7",
+    "scripts/mentor_dh_pinn/assess_regular_pinn.py": "773e006f0976206a2fec456f1adad2ce03dda2cfa8f19ca652ec7531e1d4f5f0",
+    "src/mentor_dh_pinn/deep_regular_pinn.py": "32bd4e659d372e844ea496bba6097495977b037bbea4c3b24d5efef84d4be995"
+  },
+  "input_sha256": {
+    "outputs/deeper_pinn/data_double_full/train.npz": "978a04fe2fd9d2dc547de4ff05dde50b8914226e8c32afe921f20d4dff4a0d90",
+    "outputs/deeper_pinn/data_double_full/validation.npz": "f8b16a0368f3720c5094eb36b83c478cb43ea9eeaee1c99514639f0d1ad6050a",
+    "outputs/deeper_pinn/data_double_full/collocation.npz": "26948672a52bdce635d0635c39b527f48a216897e4f44598cfc3d5d6bd83f68c",
+    "outputs/deeper_pinn/recovery_surfaces_910210/surfaces.npz": "055b46bdd2af42e8237fb0a3687fbf3e241e99f1d98c4549fce12ee2dc82f892"
+  },
+  "gradient_label_scales": [
+    0.20409590005874634,
+    0.025370851159095764,
+    0.023088131099939346,
+    0.023497339338064194,
+    0.029987838119268417,
+    0.036829203367233276,
+    0.0542941652238369,
+    0.026672683656215668,
+    0.03204160928726196,
+    0.0391736775636673,
+    0.06559731811285019,
+    0.09380479902029037
+  ],
+  "collocation_pool": 18000,
+  "initial_checkpoint_sha256": "9441621288f7acdeb01a621bbf8eda9c665a729526386b386ebaf4b41a9edfd8",
+  "resume_policy": "Continue network weights only; AdamW moments and learning-rate schedule restart. Not an independent initialization.",
+  "surface_training": {
+    "usable": 1024,
+    "candidates": 1024,
+    "group_price_weight": 0.1,
+    "parameter_bias_weight": 0.001,
+    "loss": "mean(log1p((B*IV_error)^2)); local linear training proxy, not true recovery"
+  }
+}

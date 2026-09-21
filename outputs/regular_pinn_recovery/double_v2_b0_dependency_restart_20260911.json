@@ -1,0 +1,14 @@
+{
+  "reason": "First B0 attempt failed during the step-2000 recovery-validation import: missing safetensors",
+  "environment_fix": "Installed safetensors 0.8.0 from an arm64 wheel into the existing Python environment, with --no-deps. This package is already declared in requirements-regular-pinn.txt.",
+  "trainer_changed": false,
+  "assessment_code_changed": false,
+  "frozen_settings_changed": false,
+  "focused_tests": "15 passed: tests/test_regular_pinn_calibration.py and tests/test_regular_pinn.py",
+  "new_precheck": "double_v2_mac_precheck_safetensors_20260911.json: PASS",
+  "preserved_failed_attempt": "double_sobolev_v2_b0_s17_failed_missing_safetensors_20260911",
+  "preserved_failed_log": "double_v2_b0_launch_20260911.log",
+  "restart_policy": "No checkpoint was saved before failure. Restart from step zero using the same seed 17 and identical B0 command. This is an environment-repair rerun, not an independent research seed or an optimizer-state resume.",
+  "rerun_log": "double_v2_b0_restart_20260911.log",
+  "stop_condition": "Stop before modifying the trainer if any MLX API mismatch occurs."
+}

@@ -1,0 +1,522 @@
+{
+  "box": {
+    "x_half_width": 3.5,
+    "variance_low": 0.005,
+    "variance_high": 1.1,
+    "maturity_low_days": 2.0,
+    "maturity_high_days": 92.0,
+    "kappa_low": 0.1,
+    "kappa_high": 15.0,
+    "theta_low": 0.005,
+    "theta_high": 1.0,
+    "feller_ratio_low": 0.05,
+    "feller_ratio_high": 2.0,
+    "sigma_floor": 0.02,
+    "sigma_ceiling": 5.0,
+    "rho_low": -0.95,
+    "rho_high": 0.6,
+    "rate_low": -0.1,
+    "rate_high": 0.25,
+    "dividend_low": -0.27,
+    "dividend_high": 0.5,
+    "maturity_low_years": 0.005479452054794521,
+    "maturity_high_years": 0.25205479452054796,
+    "sigma_rule": "sigma = eta * sqrt(2 kappa theta), eta in [feller_ratio_low, feller_ratio_high]"
+  },
+  "gates": {
+    "traded_iv_rmse": 0.0025,
+    "traded_iv_p99": 0.012,
+    "traded_price_rmse_per_strike": 0.0003,
+    "full_box_iv_rmse": 0.012,
+    "pde_core_residual_rms": 0.06,
+    "arbitrage_violation_fraction": 0.0
+  },
+  "rounds": [
+    {
+      "round": 1,
+      "config": {
+        "collocation_points": 18000,
+        "anchor_points": 18000,
+        "width": 160,
+        "depth": 5,
+        "steps": 16000,
+        "learning_rate": 0.002,
+        "final_learning_rate": 2e-05,
+        "warmup": 400,
+        "weight_pde": 1.0,
+        "weight_anchor": 1.0,
+        "weight_calendar": 0.05,
+        "weight_butterfly": 0.05,
+        "huber_delta": 0.1,
+        "resample_every": 0,
+        "seed": 0,
+        "label": "physics_and_anchor"
+      },
+      "score": {
+        "traded_region": {
+          "points": 26503,
+          "iv_rmse": 0.0014526072820383786,
+          "iv_mae": 0.00042403915919900676,
+          "iv_max": 0.0872912222796356,
+          "iv_p99": 0.004544868740596745,
+          "price_rmse_per_strike": 6.254077053595027e-05,
+          "price_max_per_strike": 0.0026749300872166426
+        },
+        "full_box": {
+          "points": 39952,
+          "iv_rmse": 0.015219910788010266,
+          "iv_mae": 0.0012397686956832647,
+          "iv_max": 0.8075116562858533,
+          "iv_p99": 0.009737645833097717,
+          "price_rmse_per_strike": 5.4620451859633656e-05,
+          "price_max_per_strike": 0.0026749300872166426
+        },
+        "usable_fraction": 0.9988
+      },
+      "pde": {
+        "collocation_points": 18000,
+        "residual_rms_vega_weighted": 0.005797407115507988,
+        "residual_rms_price_relevant_core": 0.0018420156981537009,
+        "price_relevant_core_points": 8201,
+        "residual_rms_unweighted": 0.03224612386485299,
+        "residual_median_abs": 0.0018381898989900947,
+        "residual_p99_abs": 0.0941554197669027,
+        "calendar_violation_fraction": 0.0,
+        "butterfly_violation_fraction": 0.0
+      },
+      "gates": {
+        "traded_iv_rmse": {
+          "value": 0.0014526072820383786,
+          "limit": 0.0025,
+          "passed": true
+        },
+        "traded_iv_p99": {
+          "value": 0.004544868740596745,
+          "limit": 0.012,
+          "passed": true
+        },
+        "traded_price_rmse_per_strike": {
+          "value": 6.254077053595027e-05,
+          "limit": 0.0003,
+          "passed": true
+        },
+        "full_box_iv_rmse": {
+          "value": 0.015219910788010266,
+          "limit": 0.012,
+          "passed": false
+        },
+        "pde_core_residual_rms": {
+          "value": 0.0018420156981537009,
+          "limit": 0.06,
+          "passed": true
+        },
+        "calendar_violation_fraction": {
+          "value": 0.0,
+          "limit": 0.0,
+          "passed": true
+        },
+        "butterfly_violation_fraction": {
+          "value": 0.0,
+          "limit": 0.0,
+          "passed": true
+        }
+      },
+      "all_passed": false
+    }
+  ],
+  "history": [
+    {
+      "step": 0,
+      "loss": 16.026668548583984,
+      "seconds": 1.5113418102264404,
+      "round": 1
+    },
+    {
+      "step": 250,
+      "loss": 0.25695735216140747,
+      "seconds": 53.37261080741882,
+      "round": 1
+    },
+    {
+      "step": 500,
+      "loss": 0.11002226918935776,
+      "seconds": 106.8800950050354,
+      "round": 1
+    },
+    {
+      "step": 750,
+      "loss": 0.0831020325422287,
+      "seconds": 161.10560393333435,
+      "round": 1
+    },
+    {
+      "step": 1000,
+      "loss": 0.08862719684839249,
+      "seconds": 218.3517129421234,
+      "round": 1
+    },
+    {
+      "step": 1250,
+      "loss": 0.06925327330827713,
+      "seconds": 276.941260099411,
+      "round": 1
+    },
+    {
+      "step": 1500,
+      "loss": 0.053339987993240356,
+      "seconds": 331.7419629096985,
+      "round": 1
+    },
+    {
+      "step": 1750,
+      "loss": 0.05464186519384384,
+      "seconds": 392.2018709182739,
+      "round": 1
+    },
+    {
+      "step": 2000,
+      "loss": 0.05688687786459923,
+      "seconds": 451.00200295448303,
+      "round": 1
+    },
+    {
+      "step": 2250,
+      "loss": 0.06282424181699753,
+      "seconds": 508.54004311561584,
+      "round": 1
+    },
+    {
+      "step": 2500,
+      "loss": 0.04325972497463226,
+      "seconds": 569.8391590118408,
+      "round": 1
+    },
+    {
+      "step": 2750,
+      "loss": 0.04423676058650017,
+      "seconds": 632.6212959289551,
+      "round": 1
+    },
+    {
+      "step": 3000,
+      "loss": 0.07340753078460693,
+      "seconds": 693.9882340431213,
+      "round": 1
+    },
+    {
+      "step": 3250,
+      "loss": 0.07733122259378433,
+      "seconds": 756.7147469520569,
+      "round": 1
+    },
+    {
+      "step": 3500,
+      "loss": 0.03451915457844734,
+      "seconds": 819.5035510063171,
+      "round": 1
+    },
+    {
+      "step": 3750,
+      "loss": 0.037699587643146515,
+      "seconds": 880.7564640045166,
+      "round": 1
+    },
+    {
+      "step": 4000,
+      "loss": 0.02718891017138958,
+      "seconds": 945.0969517230988,
+      "round": 1
+    },
+    {
+      "step": 4250,
+      "loss": 0.035174962133169174,
+      "seconds": 1007.077517747879,
+      "round": 1
+    },
+    {
+      "step": 4500,
+      "loss": 0.050544653087854385,
+      "seconds": 1062.2434041500092,
+      "round": 1
+    },
+    {
+      "step": 4750,
+      "loss": 0.04393830895423889,
+      "seconds": 1115.7970979213715,
+      "round": 1
+    },
+    {
+      "step": 5000,
+      "loss": 0.029720677062869072,
+      "seconds": 1169.3942520618439,
+      "round": 1
+    },
+    {
+      "step": 5250,
+      "loss": 0.02604755386710167,
+      "seconds": 1223.393231868744,
+      "round": 1
+    },
+    {
+      "step": 5500,
+      "loss": 0.04390202835202217,
+      "seconds": 1278.40238904953,
+      "round": 1
+    },
+    {
+      "step": 5750,
+      "loss": 0.025024598464369774,
+      "seconds": 1333.89937210083,
+      "round": 1
+    },
+    {
+      "step": 6000,
+      "loss": 0.029395224526524544,
+      "seconds": 1387.1716828346252,
+      "round": 1
+    },
+    {
+      "step": 6250,
+      "loss": 0.03572433441877365,
+      "seconds": 1442.6344048976898,
+      "round": 1
+    },
+    {
+      "step": 6500,
+      "loss": 0.03179295361042023,
+      "seconds": 1497.9640808105469,
+      "round": 1
+    },
+    {
+      "step": 6750,
+      "loss": 0.019711147993803024,
+      "seconds": 1552.5581409931183,
+      "round": 1
+    },
+    {
+      "step": 7000,
+      "loss": 0.020879341289401054,
+      "seconds": 1607.4207708835602,
+      "round": 1
+    },
+    {
+      "step": 7250,
+      "loss": 0.02790834754705429,
+      "seconds": 1666.1474077701569,
+      "round": 1
+    },
+    {
+      "step": 7500,
+      "loss": 0.017389532178640366,
+      "seconds": 1723.0961191654205,
+      "round": 1
+    },
+    {
+      "step": 7750,
+      "loss": 0.01716156117618084,
+      "seconds": 1782.7558720111847,
+      "round": 1
+    },
+    {
+      "step": 8000,
+      "loss": 0.02096989005804062,
+      "seconds": 1842.531002998352,
+      "round": 1
+    },
+    {
+      "step": 8250,
+      "loss": 0.021169673651456833,
+      "seconds": 1901.9263849258423,
+      "round": 1
+    },
+    {
+      "step": 8500,
+      "loss": 0.015915941447019577,
+      "seconds": 1960.405681848526,
+      "round": 1
+    },
+    {
+      "step": 8750,
+      "loss": 0.01823016069829464,
+      "seconds": 2018.7832188606262,
+      "round": 1
+    },
+    {
+      "step": 9000,
+      "loss": 0.031371645629405975,
+      "seconds": 2074.9572308063507,
+      "round": 1
+    },
+    {
+      "step": 9250,
+      "loss": 0.018406938761472702,
+      "seconds": 2128.119036912918,
+      "round": 1
+    },
+    {
+      "step": 9500,
+      "loss": 0.013618909753859043,
+      "seconds": 2184.254494905472,
+      "round": 1
+    },
+    {
+      "step": 9750,
+      "loss": 0.023383675143122673,
+      "seconds": 2240.253677845001,
+      "round": 1
+    },
+    {
+      "step": 10000,
+      "loss": 0.01178260799497366,
+      "seconds": 2294.4878311157227,
+      "round": 1
+    },
+    {
+      "step": 10250,
+      "loss": 0.010384658351540565,
+      "seconds": 2350.228553056717,
+      "round": 1
+    },
+    {
+      "step": 10500,
+      "loss": 0.012139434926211834,
+      "seconds": 2404.851541996002,
+      "round": 1
+    },
+    {
+      "step": 10750,
+      "loss": 0.010044216178357601,
+      "seconds": 2459.744803905487,
+      "round": 1
+    },
+    {
+      "step": 11000,
+      "loss": 0.009939842857420444,
+      "seconds": 2516.56467294693,
+      "round": 1
+    },
+    {
+      "step": 11250,
+      "loss": 0.0122078163549304,
+      "seconds": 2572.8492250442505,
+      "round": 1
+    },
+    {
+      "step": 11500,
+      "loss": 0.008145206607878208,
+      "seconds": 2627.1375408172607,
+      "round": 1
+    },
+    {
+      "step": 11750,
+      "loss": 0.010693474672734737,
+      "seconds": 2680.586310863495,
+      "round": 1
+    },
+    {
+      "step": 12000,
+      "loss": 0.011176833882927895,
+      "seconds": 2733.165242910385,
+      "round": 1
+    },
+    {
+      "step": 12250,
+      "loss": 0.007858864031732082,
+      "seconds": 2786.496855020523,
+      "round": 1
+    },
+    {
+      "step": 12500,
+      "loss": 0.005912308115512133,
+      "seconds": 2841.2416608333588,
+      "round": 1
+    },
+    {
+      "step": 12750,
+      "loss": 0.007316080387681723,
+      "seconds": 2899.4914288520813,
+      "round": 1
+    },
+    {
+      "step": 13000,
+      "loss": 0.0043547796085476875,
+      "seconds": 2952.7494349479675,
+      "round": 1
+    },
+    {
+      "step": 13250,
+      "loss": 0.004921505227684975,
+      "seconds": 3005.244673013687,
+      "round": 1
+    },
+    {
+      "step": 13500,
+      "loss": 0.004646030254662037,
+      "seconds": 3058.568587064743,
+      "round": 1
+    },
+    {
+      "step": 13750,
+      "loss": 0.00527910003438592,
+      "seconds": 3111.2965388298035,
+      "round": 1
+    },
+    {
+      "step": 14000,
+      "loss": 0.003816442098468542,
+      "seconds": 3163.5156869888306,
+      "round": 1
+    },
+    {
+      "step": 14250,
+      "loss": 0.003806839231401682,
+      "seconds": 3215.745037794113,
+      "round": 1
+    },
+    {
+      "step": 14500,
+      "loss": 0.0027206724043935537,
+      "seconds": 3268.374732017517,
+      "round": 1
+    },
+    {
+      "step": 14750,
+      "loss": 0.0027621218468993902,
+      "seconds": 3321.6818368434906,
+      "round": 1
+    },
+    {
+      "step": 15000,
+      "loss": 0.0024213390424847603,
+      "seconds": 3374.744036912918,
+      "round": 1
+    },
+    {
+      "step": 15250,
+      "loss": 0.002361621707677841,
+      "seconds": 3428.834662914276,
+      "round": 1
+    },
+    {
+      "step": 15500,
+      "loss": 0.002280373591929674,
+      "seconds": 3484.489790916443,
+      "round": 1
+    },
+    {
+      "step": 15750,
+      "loss": 0.0022647117730230093,
+      "seconds": 3536.7327818870544,
+      "round": 1
+    },
+    {
+      "step": 15999,
+      "loss": 0.0022734447848051786,
+      "seconds": 3590.1250088214874,
+      "round": 1
+    }
+  ],
+  "elapsed_seconds": 3659.4395022392273,
+  "collocation_points": 18000,
+  "anchor_points_usable": 17977
+}

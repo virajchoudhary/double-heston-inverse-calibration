@@ -1,0 +1,8 @@
+{
+  "fallback_count": 2391,
+  "pre_fallback_max_96_128_difference": 0.00020673210569810418,
+  "roundoff_bound_count": 5332,
+  "points": 100000,
+  "invalid_IV_only": 7274,
+  "all_price_targets_retained": true
+}

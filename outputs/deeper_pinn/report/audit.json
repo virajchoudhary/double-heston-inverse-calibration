@@ -1,0 +1,57 @@
+{
+  "audits": [
+    {
+      "condition": "Clean",
+      "unique_metric_rows": 240,
+      "recorded_starts": 1200,
+      "gates_constraints_masks_selection_hashes": "passed",
+      "exact_train_test_parameter_overlap": 0
+    },
+    {
+      "condition": "1% time-value noise",
+      "unique_metric_rows": 240,
+      "recorded_starts": 1200,
+      "gates_constraints_masks_selection_hashes": "passed",
+      "exact_train_test_parameter_overlap": 0
+    }
+  ],
+  "physics": [
+    {
+      "model": "single_sobolev_s17",
+      "fresh_wide_pde_rmse": 0.024207308804717352,
+      "negative_convexity_points": 0,
+      "mlx_torch_iv_max_difference": 7.610219418530129e-07,
+      "points": 512
+    },
+    {
+      "model": "double_sobolev_s17",
+      "fresh_wide_pde_rmse": 0.058680448843134086,
+      "negative_convexity_points": 0,
+      "mlx_torch_iv_max_difference": 1.09656908109379e-06,
+      "points": 512
+    },
+    {
+      "model": "deep11_s17",
+      "fresh_wide_pde_rmse": 0.049062685288024134,
+      "negative_convexity_points": 0,
+      "mlx_torch_iv_max_difference": 1.1053465923671624e-06,
+      "points": 512
+    },
+    {
+      "model": "deep17_full_s29",
+      "fresh_wide_pde_rmse": 0.09106388242512199,
+      "negative_convexity_points": 0,
+      "mlx_torch_iv_max_difference": 1.1189795274813008e-06,
+      "points": 512
+    },
+    {
+      "model": "deep11_balanced_s43",
+      "fresh_wide_pde_rmse": 0.04731832611412238,
+      "negative_convexity_points": 0,
+      "mlx_torch_iv_max_difference": 1.222219298657734e-06,
+      "points": 512
+    }
+  ],
+  "distinct_truths": 48,
+  "scope": "48 truths reused in clean/noisy comparisons; same pretrained backbone, not independent initializations"
+}

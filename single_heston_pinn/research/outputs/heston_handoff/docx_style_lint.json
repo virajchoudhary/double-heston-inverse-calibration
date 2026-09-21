@@ -1,0 +1,171 @@
+{
+  "input": "/Users/dhruvaambhaikar/Documents/Options pricing/outputs/heston_handoff/Heston_Double_Heston_Validated_Teammate_Handoff_SHAREABLE.docx",
+  "fonts_by_char_count": {
+    "Calibri": 23590,
+    "Courier New": 202
+  },
+  "direct_run_formatting_runs": 915,
+  "direct_paragraph_formatting_paragraphs": 857,
+  "heading_like_paragraphs_not_heading_style": [
+    {
+      "para_index": 1,
+      "text": "TECHNICAL VALIDATION & HANDOFF",
+      "style": "Normal"
+    },
+    {
+      "para_index": 2,
+      "text": "Heston and Double-Heston Models",
+      "style": "Normal"
+    },
+    {
+      "para_index": 4,
+      "text": "Prepared for: Power-options project team",
+      "style": "Normal"
+    },
+    {
+      "para_index": 5,
+      "text": "Version date: 06 August 2026",
+      "style": "Normal"
+    },
+    {
+      "para_index": 6,
+      "text": "Scope: Single Heston and Double Heston only",
+      "style": "Normal"
+    },
+    {
+      "para_index": 8,
+      "text": "Locked input: a8a56dd7b17074d8fa32f88936c8b404456f22f296d9dc4665faf3b13621f1d3",
+      "style": "Normal"
+    },
+    {
+      "para_index": 31,
+      "text": "Price process  dS(t)/S(t) = (r \u2212 q)dt + \u221av(t) dW_S(t)",
+      "style": "Normal"
+    },
+    {
+      "para_index": 32,
+      "text": "Variance process  dv(t) = \u03ba[\u03b8 \u2212 v(t)]dt + \u03c3\u221av(t) dW_v(t), with d\u27e8W_S,W_v\u27e9 = \u03c1dt",
+      "style": "Normal"
+    },
+    {
+      "para_index": 130,
+      "text": "Question",
+      "style": "Normal"
+    },
+    {
+      "para_index": 131,
+      "text": "Evidence-backed answer",
+      "style": "Normal"
+    },
+    {
+      "para_index": 142,
+      "text": "Item",
+      "style": "Normal"
+    },
+    {
+      "para_index": 143,
+      "text": "Verified value",
+      "style": "Normal"
+    },
+    {
+      "para_index": 160,
+      "text": "Parameter",
+      "style": "Normal"
+    },
+    {
+      "para_index": 161,
+      "text": "Meaning",
+      "style": "Normal"
+    },
+    {
+      "para_index": 162,
+      "text": "Implementation role",
+      "style": "Normal"
+    },
+    {
+      "para_index": 178,
+      "text": "Symbol",
+      "style": "Normal"
+    },
+    {
+      "para_index": 179,
+      "text": "Candidate",
+      "style": "Normal"
+    },
+    {
+      "para_index": 180,
+      "text": "\u03ba",
+      "style": "Normal"
+    },
+    {
+      "para_index": 181,
+      "text": "\u03b8",
+      "style": "Normal"
+    },
+    {
+      "para_index": 182,
+      "text": "\u03c3",
+      "style": "Normal"
+    }
+  ],
+  "examples": {
+    "direct_paragraph_formatting": [
+      {
+        "para_index": 1,
+        "text": "TECHNICAL VALIDATION & HANDOFF",
+        "style": "Normal"
+      },
+      {
+        "para_index": 2,
+        "text": "Heston and Double-Heston Models",
+        "style": "Normal"
+      },
+      {
+        "para_index": 3,
+        "text": "Leakage, overfitting, validity, accuracy, parameter and continuation reference",
+        "style": "Normal"
+      },
+      {
+        "para_index": 4,
+        "text": "Prepared for: Power-options project team",
+        "style": "Normal"
+      },
+      {
+        "para_index": 5,
+        "text": "Version date: 06 August 2026",
+        "style": "Normal"
+      }
+    ],
+    "direct_run_formatting": [
+      {
+        "para_index": 1,
+        "run_text": "TECHNICAL VALIDATION & HANDOFF",
+        "style": "Normal"
+      },
+      {
+        "para_index": 2,
+        "run_text": "Heston and Double-Heston Models",
+        "style": "Normal"
+      },
+      {
+        "para_index": 3,
+        "run_text": "Leakage, overfitting, validity, accuracy, parameter and continuation reference",
+        "style": "Normal"
+      },
+      {
+        "para_index": 4,
+        "run_text": "Prepared for: ",
+        "style": "Normal"
+      },
+      {
+        "para_index": 4,
+        "run_text": "Power-options project team",
+        "style": "Normal"
+      }
+    ]
+  },
+  "notes": [
+    "Direct formatting is not always wrong, but it often causes inconsistent output when templates change.",
+    "Heading-like paragraphs not using Heading styles can break TOC and accessibility."
+  ]
+}
