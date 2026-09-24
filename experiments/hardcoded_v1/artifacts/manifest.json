@@ -1,0 +1,78 @@
+{
+  "frozen_utc": "2026-09-24T15:23:24.313936+00:00",
+  "config": {
+    "version": "hardcoded_v1",
+    "purpose": "With NO parameter fitted, compare the published Double Heston, the published Single Heston, a fixed-volatility Black-Scholes and the locked DH-PINN against real option markets. Rules fixed before any SPX data was fetched.",
+    "parameters": {
+      "source": "Christoffersen, Heston and Jacobs (2009), the two-factor affine construction this repository follows; the values are nifty_multifactor_v4 config published_double_slow_first and published_single, unchanged.",
+      "DH_PUB": [
+        0.9491,
+        0.0257,
+        0.0517,
+        0.7009,
+        0.0003,
+        10.7526,
+        0.033,
+        0.3613,
+        -0.8916,
+        0.0252
+      ],
+      "SH_PUB": [
+        8.9814,
+        0.0409,
+        0.297,
+        -0.9621,
+        0.0244
+      ],
+      "BS_FIXED_vol": "sqrt(v0_slow + v0_fast) = sqrt(0.0255) = 0.159687, the initial total volatility of DH_PUB",
+      "DH_PINN": "locked C3 checkpoint (width 256, depth 5, two-seed mean) evaluated at DH_PUB"
+    },
+    "datasets": {
+      "SPX_today": "CBOE delayed quotes for the S&P 500 index, the market the published parameters were estimated on. One snapshot; historical SPX chains are not freely available, so the original 1990-2004 estimation window cannot be reproduced here.",
+      "crypto_shock": "The already-frozen BTC and ETH shock-regime surfaces (btc_multifactor_v1, eth_multifactor_v1). These are the most volatile option surfaces available to this project."
+    },
+    "spx_filters": {
+      "quote": "mid of bid and ask; bid > 0, ask > bid, ask <= 3 * bid",
+      "otm_only": true,
+      "min_days": 7,
+      "max_days": 730,
+      "max_abs_log_moneyness": 0.36,
+      "min_quotes_per_expiry": 6,
+      "iv_range": [
+        0.02,
+        3.0
+      ],
+      "forward": "Per expiry, regress C - P = a + b*K over strikes with both sides quoted; the discount factor is -b and the forward is -a/b. Expiries with fewer than 4 usable pairs or R^2 below 0.999 are dropped."
+    },
+    "comparison_domain": "Only quotes inside the PINN's trained domain are scored, so all four models see identical quotes: |log(F/K)| <= 0.36 and 7 days <= tau <= 2 years.",
+    "metrics": [
+      "IV RMSE in vol points",
+      "IV bias (mean signed)",
+      "price RMSE relative to the forward",
+      "maturity and moneyness buckets"
+    ],
+    "secondary_scale_analysis": {
+      "what": "One number fitted per surface: the literature scale s, applied as theta -> s*theta, sigma -> sqrt(s)*sigma, v0 -> s*v0 for both Heston models, and BS vol -> sqrt(s)*BS vol.",
+      "why": "It separates the volatility LEVEL (which no fixed parameter set can know) from the SHAPE of the smile and term structure, which is what a second variance factor is supposed to provide.",
+      "bounds": "s in [0.7, 3.2], the range the PINN was trained on; s is found by a bounded 1-D search on the same vega-weighted objective used everywhere in this project."
+    },
+    "integrity": [
+      "No parameter of any model is fitted in the primary analysis.",
+      "The secondary analysis fits exactly one number per surface and is reported separately.",
+      "SPX is a single calm snapshot (VIX 14.21, the 26th percentile since 1990); the volatile periods of the original estimation window need paid historical data and are not tested.",
+      "Crypto surfaces are reused as frozen; no refetch, no refit.",
+      "Results are reported whichever way they come out."
+    ]
+  },
+  "source_sha256": {
+    "config.json": "6e2e4c053bc6aac8f3e8487ce73d28bacc1b061d78ad4038d00af411ac993dc0",
+    "PROTOCOL.md": "a82aaf71777f9a7b34705dbd65bd2196b6cfcdce17425ecb4ecbe268b1e72223",
+    "run_hardcoded.py": "55ea05992d38118c165a89ec0b358ff96ae72f7277460adb008a0f1f84198341"
+  },
+  "pinn_weights_sha256": {
+    "pinn_s17": "92b7c32b9aee33d4bbc6d04566c8e9a4c11167f055455b5a97e3ab054b0215c8",
+    "pinn_s43": "accea76a0c9c0c5403fa94d8fd9cf357a745b8c46a1b836e97402a3650cb2829"
+  },
+  "engine_sha256": "3be06793eb21aa293ea1eb6038220c6d7e3cdd17fb5cc113ff4bbe8ccc51d4ae",
+  "spx_fetched_before_freeze": false
+}

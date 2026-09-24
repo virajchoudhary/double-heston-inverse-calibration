@@ -1,0 +1,20 @@
+{
+ "SPX 2026-09-23 (calm, VIX 14.2)": {
+  "price_max_abs": 5.823700588097891e-05,
+  "price_RMSE": 1.0220662417040576e-05,
+  "IV_RMSE_volpts": 0.08308593158999839,
+  "IV_max_volpts": 2.1264676358509287
+ },
+ "BTC shock dates (40 days)": {
+  "price_max_abs": 2.5245966695286448e-05,
+  "price_RMSE": 5.45120921963843e-06,
+  "IV_RMSE_volpts": 0.16534016987301095,
+  "IV_max_volpts": 2.471210121077677
+ },
+ "ETH shock dates (27 days)": {
+  "price_max_abs": 2.5223458387207964e-05,
+  "price_RMSE": 5.04385251727496e-06,
+  "IV_RMSE_volpts": 0.1904394238802352,
+  "IV_max_volpts": 2.3447535809408477
+ }
+}
