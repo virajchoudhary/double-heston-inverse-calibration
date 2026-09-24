@@ -1,0 +1,54 @@
+{
+  "version": "dh_pinn_v5",
+  "purpose": "Track A: improve the Double Heston PINN as a numerical surrogate for exact Double Heston, via a predeclared ablation ladder of small research-backed changes. Track B: a clearly labelled hybrid, the fixed-parameter pricing prior plus a tiny bounded market-residual head, with the identical residual head given to Black-Scholes and Single Heston priors. Frozen before any v5 training.",
+  "inherited_frozen": {
+    "teacher_train": "nifty_multifactor_v4/artifacts/teacher/train.npz (100,000 exact points, seed 93101)",
+    "collocation_pool_seed": "reuse of the v4 sampler with new seeds for the RAD pool",
+    "engine": "nifty_multifactor_v4/literature_exact.py (exact Fourier teacher) and src/mentor_dh_pinn/regular_pinn_torch.py (features, analytic baseline, PDE residual)",
+    "locked_baseline": "nifty_multifactor_v4 candidate C3, width 256, depth 5, seeds 17 and 43"
+  },
+  "new_datasets": {
+    "development": {"seed": 93201, "points": 8192, "use": "ONLY for choosing the ablation winner and Track B hyper-parameters"},
+    "final_fidelity": {"seed": 93202, "points": 16384, "use": "UNTOUCHED until the final architecture is frozen; opened once"},
+    "pde_final": {"seed": 93203, "points": 4096, "use": "PDE residual on the final architecture only"},
+    "short_atm_diagnostic": {"seed": 93204, "points": 6144, "domain": "tau in [7d, 30d], |x| <= 0.12", "use": "diagnostic reporting only, never selection"},
+    "rad_pool": {"seed": 93205, "points": 120000, "use": "candidate pool for residual-adaptive sampling"}
+  },
+  "ablation": {
+    "budget": "IDENTICAL for every stage: seed 17 only, 12,000 Adam steps, lr 1e-3 cosine to 1e-5, 512 label and 128 physics points per step, then 300 L-BFGS steps. The locked C3 recipe (40,000 steps, two seeds) is reported alongside but is NOT the ablation budget.",
+    "stages": {
+      "A0": "baseline architecture: features -> Linear(24,W) -> [tanh -> Linear(W,W)] x4 -> tanh -> head. Plain tanh stack, exactly the locked design, retrained at the ablation budget.",
+      "A1": "A0 + residual blocks: projection to width W, then h <- h + alpha_l * tanh(Linear(h)), alpha_l learned per block, initialised 0.1.",
+      "A2": "A1 + layer-wise adaptive tanh: tanh(a_l * z) with one learned scalar a_l per block, initialised 1.0 (Jagtap et al.).",
+      "A3": "A2 + gradient-norm loss balancing (Wang, Teng & Perdikaris learning-rate annealing): every 100 steps, w_i <- 0.9 w_i + 0.1 * max_grad_norm(price term) / mean_grad_norm(term i), applied to the IV, PDE and convexity terms; price weight fixed at 1.",
+      "A4": "A3 + residual-adaptive physics sampling (RAD): every 2,000 steps resample the 18,000 active collocation points from the pool, half uniform-stratified and half with probability proportional to |PDE residual| + c.",
+      "A5": "A4 but with the gated block of Wang, Teng & Perdikaris in place of the residual block: U, V encoders shared across depth, Z = tanh(Linear(h)), h <- (1-Z)*U + Z*V."
+    },
+    "width": 256,
+    "depth": 5,
+    "parameter_budget": "no stage may exceed 1.2x the locked C3 parameter count (269,825).",
+    "selection_rule": "The winner is the stage with the lowest DEVELOPMENT forward-price RMSE. If a simpler earlier stage is within 5% of the best, the simpler stage wins. No other candidates are trained.",
+    "final_training": "The winning architecture is retrained at the FULL locked recipe (40,000 Adam steps, seeds 17 and 43, two-seed mean) and only then is the final fidelity set opened."
+  },
+  "fidelity_metrics": ["forward price RMSE", "price P95", "price max", "IV RMSE in vol points", "PDE residual RMSE", "maturity buckets 7-30, 30-90, 90-365, >365 days", "moneyness buckets", "parameter count", "training seconds", "inference latency"],
+  "pure_pinn_targets": {"price_RMSE": 7e-06, "stretch_price_RMSE": 5e-06, "IV_RMSE_vol_points": 0.07, "stretch_IV_RMSE": 0.05, "note": "targets, not values to be forced; the actual result is reported either way"},
+  "stopping_rule": "Once the PINN-vs-exact-DH IV RMSE is below 0.07 vol points, architecture work stops and the remaining market error is attributed, with numbers, to model misspecification rather than network error.",
+  "track_b": {
+    "label": "DH_PINN_RESIDUAL — physics prior plus a small ML residual correction. NOT exact Double Heston.",
+    "split": "One frozen structured split of the SPX surface from hardcoded_v1: rank expiries by maturity and, within each expiry, rank strikes. A quote is CALIBRATION if (expiry_rank + strike_rank) is even, HELD OUT otherwise. Within calibration, quotes whose strike rank is a multiple of 5 form the DEVELOPMENT subset used for the residual hyper-parameters. Hashes recorded before any residual training.",
+    "prior": "For each of BS, SH and DH, the level scale s is fitted on CALIBRATION quotes only, with the same bounded search as hardcoded_v1. Structural parameters stay at the published values.",
+    "residual_head": "Identical for all three priors: inputs [x, log tau, prior IV, x/sqrt(tau)], standardised by calibration statistics; Linear(4,64) -> tanh -> Linear(64,64) -> tanh -> Linear(64,1); output delta_IV = delta_max * tanh(.), added to the prior IV, then priced with Black.",
+    "training": "Identical for all three priors: Adam, 4,000 steps, lr 3e-3 cosine to 1e-4, full-batch calibration quotes, loss = mean squared IV error + lambda * mean(delta_IV^2), lambda = 0.05.",
+    "delta_max": "chosen on the DEVELOPMENT subset from {0.02, 0.05, 0.10} in volatility units, the same grid for all three priors.",
+    "no_arbitrage": "The hybrid surface is checked for monotonicity and convexity in strike and monotone total variance in maturity; violations are counted and reported, never silently clipped.",
+    "statistics": "Paired differences per (expiry x moneyness) cell on held-out quotes, cluster bootstrap over cells with 5,000 replicates, seed 20260920, plus the fraction of cells won."
+  },
+  "integrity": [
+    "The final fidelity set is opened once, after the architecture is frozen.",
+    "The held-out SPX quotes are never used for training, hyper-parameters or architecture choice.",
+    "Every ablation stage uses an identical training budget and the same data.",
+    "Black-Scholes and Single Heston receive exactly the same residual head, optimiser and data as Double Heston.",
+    "Failed stages are retained and reported.",
+    "Crypto surfaces are secondary stress tests only; results outside the trained level range are labelled out-of-domain."
+  ]
+}
