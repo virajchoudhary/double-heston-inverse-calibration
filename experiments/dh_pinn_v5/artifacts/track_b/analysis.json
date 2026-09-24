@@ -2,7 +2,8 @@
   "priors": [
     "BS",
     "SH",
-    "DH"
+    "DH",
+    "DH_PINN"
   ],
   "overall": {
     "BS": {
@@ -22,6 +23,12 @@
       "hybrid_IV_RMSE": 1.9900329362427245,
       "hybrid_IV_bias": -0.4984289400603325,
       "hybrid_IV_P95": 3.031147400787477
+    },
+    "DH_PINN": {
+      "prior_IV_RMSE": 5.849767729421674,
+      "hybrid_IV_RMSE": 1.9695410900052448,
+      "hybrid_IV_bias": -0.5023693520856732,
+      "hybrid_IV_P95": 3.199369942250563
     }
   },
   "by_maturity": {
@@ -88,6 +95,28 @@
       ">365d": {
         "prior": 3.558468949365623,
         "hybrid": 0.16683334762277893,
+        "n": 309
+      }
+    },
+    "DH_PINN": {
+      "<=30d": {
+        "prior": 7.558256826581501,
+        "hybrid": 3.173336839372001,
+        "n": 1720
+      },
+      "30-90d": {
+        "prior": 5.504784405864254,
+        "hybrid": 1.4789020716853536,
+        "n": 1458
+      },
+      "90-365d": {
+        "prior": 4.443458075958366,
+        "hybrid": 0.36701982643460324,
+        "n": 1866
+      },
+      ">365d": {
+        "prior": 3.559233511484203,
+        "hybrid": 0.16625394444433758,
         "n": 309
       }
     }
@@ -173,6 +202,33 @@
         "hybrid": 4.065138997432795,
         "n": 1227
       }
+    },
+    "DH_PINN": {
+      "x<-0.15": {
+        "prior": 2.608705110120094,
+        "hybrid": 0.14721737052296285,
+        "n": 111
+      },
+      "-0.15..-0.05": {
+        "prior": 2.382657173686501,
+        "hybrid": 0.1977355618989992,
+        "n": 526
+      },
+      "ATM": {
+        "prior": 1.704509510577195,
+        "hybrid": 0.187605974247085,
+        "n": 2037
+      },
+      "0.05..0.15": {
+        "prior": 4.46007058617908,
+        "hybrid": 0.7517401945389217,
+        "n": 1452
+      },
+      "x>0.15": {
+        "prior": 10.855023498453395,
+        "hybrid": 4.02132375246528,
+        "n": 1227
+      }
     }
   },
   "pairwise": {
@@ -219,6 +275,28 @@
         0.07893438406376757
       ],
       "DH_beats_SH": false
+    },
+    "DH_PINN_minus_DH_prior": {
+      "mean_abs_err_diff": -0.02391100002417122,
+      "cells": 19,
+      "cells_favouring_DH": "4/19",
+      "wilcoxon_p": 0.98553466796875,
+      "cluster_bootstrap95": [
+        -0.06952595955894823,
+        -0.0026524423097634025
+      ],
+      "DH_beats_DH_PINN": false
+    },
+    "DH_PINN_minus_DH_hybrid": {
+      "mean_abs_err_diff": -0.018762406678513546,
+      "cells": 19,
+      "cells_favouring_DH": "8/19",
+      "wilcoxon_p": 0.9090671539306641,
+      "cluster_bootstrap95": [
+        -0.06279049407064305,
+        -0.0005408284051639811
+      ],
+      "DH_beats_DH_PINN": false
     }
   },
   "cell_wins": {},
@@ -237,6 +315,11 @@
       "strike_monotonicity_violations": "0/5293",
       "strike_convexity_violations": "787/5246",
       "calendar_total_variance_violations": "658/5332"
+    },
+    "DH_PINN": {
+      "strike_monotonicity_violations": "0/5304",
+      "strike_convexity_violations": "785/5257",
+      "calendar_total_variance_violations": "661/5343"
     },
     "MARKET_QUOTES_CONTROL": {
       "strike_monotonicity_violations": "0/5306",
