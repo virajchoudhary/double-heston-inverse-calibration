@@ -1,0 +1,12 @@
+{
+  "train_cases": 256,
+  "development_cases": 64,
+  "train_labels": 24576,
+  "development_labels": 6144,
+  "collocation": 18000,
+  "train_fallbacks": 311,
+  "development_fallbacks": 96,
+  "train_invalid_IV": 3543,
+  "development_invalid_IV": 887,
+  "new_development_disjoint_from_all_training_and_old_development": true
+}

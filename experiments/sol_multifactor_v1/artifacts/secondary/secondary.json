@@ -1,0 +1,167 @@
+{
+  "utc": "2026-09-18T06:39:09.577626+00:00",
+  "mark_target_cells": [
+    {
+      "regime": "shock",
+      "design": "B",
+      "dates": 16,
+      "units": 7,
+      "median_IV_RMSE": {
+        "BS_EXPIRY": 9.207206637570042,
+        "SH": 3.9812744542979277,
+        "DH": 3.61050457289109
+      },
+      "SH_minus_DH": {
+        "mean": 0.3871778143366957,
+        "median": 0.41075423209261896,
+        "DH_wins_dates": "11/16",
+        "unit_means_positive": "5/7",
+        "wilcoxon_one_sided_p": 0.109375,
+        "cluster_bootstrap95": [
+          -0.06684245812239499,
+          1.1488498112898826
+        ],
+        "DH_beats": false
+      },
+      "BS_EXPIRY_minus_DH": {
+        "mean": 4.957716959947354,
+        "median": 4.184125197986084,
+        "DH_wins_dates": "15/16",
+        "unit_means_positive": "7/7",
+        "wilcoxon_one_sided_p": 0.0078125,
+        "cluster_bootstrap95": [
+          3.114747630690426,
+          6.94169611454123
+        ],
+        "DH_beats": true
+      }
+    },
+    {
+      "regime": "shock",
+      "design": "A",
+      "dates": 16,
+      "units": 7,
+      "median_IV_RMSE": {
+        "BS_EXPIRY": 11.204195600064534,
+        "SH": 4.431138061446166,
+        "DH": 4.032986098273938
+      },
+      "SH_minus_DH": {
+        "mean": 0.557683863721413,
+        "median": 0.31581598575504666,
+        "DH_wins_dates": "12/16",
+        "unit_means_positive": "5/7",
+        "wilcoxon_one_sided_p": 0.0390625,
+        "cluster_bootstrap95": [
+          0.11833117082445403,
+          1.658448521569674
+        ],
+        "DH_beats": true
+      },
+      "BS_EXPIRY_minus_DH": {
+        "mean": 5.359361790110146,
+        "median": 4.88138212341474,
+        "DH_wins_dates": "16/16",
+        "unit_means_positive": "7/7",
+        "wilcoxon_one_sided_p": 0.0078125,
+        "cluster_bootstrap95": [
+          3.625987954941081,
+          6.846457125252001
+        ],
+        "DH_beats": true
+      }
+    },
+    {
+      "regime": "calm",
+      "design": "B",
+      "dates": 16,
+      "units": 16,
+      "median_IV_RMSE": {
+        "BS_EXPIRY": 6.360824663962967,
+        "SH": 2.5749266559702333,
+        "DH": 2.2767996932270256
+      },
+      "SH_minus_DH": {
+        "mean": -0.5789315012414882,
+        "median": -0.12047394205080164,
+        "DH_wins_dates": "8/16",
+        "unit_means_positive": "8/16",
+        "wilcoxon_one_sided_p": 0.8843994140625,
+        "cluster_bootstrap95": [
+          -1.1443075698792735,
+          -0.04688865108459163
+        ],
+        "DH_beats": false
+      },
+      "BS_EXPIRY_minus_DH": {
+        "mean": 3.5137149171986732,
+        "median": 4.1490001334965845,
+        "DH_wins_dates": "16/16",
+        "unit_means_positive": "16/16",
+        "wilcoxon_one_sided_p": 1.52587890625e-05,
+        "cluster_bootstrap95": [
+          2.6091610457691834,
+          4.347491519134475
+        ],
+        "DH_beats": true
+      }
+    },
+    {
+      "regime": "calm",
+      "design": "A",
+      "dates": 16,
+      "units": 16,
+      "median_IV_RMSE": {
+        "BS_EXPIRY": 5.856439223623138,
+        "SH": 2.480337599011526,
+        "DH": 2.467780102021558
+      },
+      "SH_minus_DH": {
+        "mean": 0.03162424479296422,
+        "median": 0.1074428663821223,
+        "DH_wins_dates": "10/16",
+        "unit_means_positive": "10/16",
+        "wilcoxon_one_sided_p": 0.201873779296875,
+        "cluster_bootstrap95": [
+          -0.37137000901579276,
+          0.3239675824394259
+        ],
+        "DH_beats": false
+      },
+      "BS_EXPIRY_minus_DH": {
+        "mean": 3.723742942798326,
+        "median": 3.4076010485326123,
+        "DH_wins_dates": "16/16",
+        "unit_means_positive": "16/16",
+        "wilcoxon_one_sided_p": 1.52587890625e-05,
+        "cluster_bootstrap95": [
+          2.888259657980521,
+          4.574192077588426
+        ],
+        "DH_beats": true
+      }
+    }
+  ],
+  "price_RMSE_USD_median": {
+    "calm/A": {
+      "BS_EXPIRY": 0.43,
+      "DH": 0.2507,
+      "SH": 0.2636
+    },
+    "calm/B": {
+      "BS_EXPIRY": 0.3831,
+      "DH": 0.1778,
+      "SH": 0.1559
+    },
+    "shock/A": {
+      "BS_EXPIRY": 0.6102,
+      "DH": 0.3971,
+      "SH": 0.3896
+    },
+    "shock/B": {
+      "BS_EXPIRY": 0.4214,
+      "DH": 0.2291,
+      "SH": 0.3077
+    }
+  }
+}

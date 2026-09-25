@@ -1,5 +1,20 @@
 # Physics-Informed Inverse Calibration of the Canonical Double Heston Model
 
+The latest **regular pricing-PINN** experiment is documented in
+[the regular PINN handoff](docs/REGULAR_PINN_HANDOFF.md), with
+[all development trials](outputs/regular_pinn_recovery/all_development_report/REPORT.md)
+and [the locked synthetic assessment](outputs/regular_pinn_recovery/locked_assessment_report/REPORT.md).
+The ten-parameter Double Heston recovery target is **not achieved**. Neural price
+accuracy must not be substituted for structural parameter recovery.
+
+The earlier hybrid Double Heston calibration repair is documented in
+[the September repair handoff](docs/CALIBRATION_REPAIR_HANDOFF.md) and its
+[predeclared assessment protocol](docs/CALIBRATION_REPAIR_PROTOCOL.md).
+It uses the trained unified set encoder, an exact differentiable Fourier pricer,
+and accepted optimisation steps. The older status table below describes the
+historical R2 milestone, not the current unified calibrator. Read the new handoff
+before rerunning historical evaluators or interpreting their test claims.
+
 This private B.Tech capstone repository contains an ordinary ANN inverse-calibration baseline, an independently implemented canonical Double Heston European-option pricing engine, and a completed deterministic official-NSE Stage A market-support screen. The production engine has been benchmarked against a separately coded adaptive-quadrature reference. The unavailable teammate engine is being replaced by this reimplementation; equivalence to the unavailable source is not claimed.
 
 > The pricing benchmark passed, the normal reviewed synthetic core is ready under the existing contract, and official-NSE Stage A candidate selection is complete. The selected primaries are NTPC, CIPLA, INFY, and HDFCBANK; NTPC was selected at moderate confidence after a predeclared five-Wednesday Power extension resolved the original three-date tie. G2 established a market-supported near/middle, central-five, calls-and-puts geometry, but reduced-grid, third-expiry, multi-date, and independent CIR-path replication diagnostics did not demonstrate stable recovery of the canonical ten parameters. A bounded clean multi-start diagnostic subsequently established global ambiguity in all four predeclared representative cases: 40 near-equivalent solutions formed 39 separated scaled-parameter clusters despite median normalized price RMSE `4.708e-8` and median range-scaled parameter RMSE `0.1485`. The self-governed G2 protocol subsequently froze R2 with practical non-identifiability retained as a research finding (`G2 = PASSED_REPRESENTATION_FROZEN_WITH_PRACTICAL_NON_IDENTIFIABILITY`; see `docs/G2_R2_R3_REPRESENTATION_SELECTION_RESULTS.md`). The historical challenge-stress decision remains `NEEDS_SAMPLER_CORRECTION`. The final clean 10,000-surface R2 synthetic truth dataset has been generated and validated (frozen before model training); no ANN/PINN research training result exists.

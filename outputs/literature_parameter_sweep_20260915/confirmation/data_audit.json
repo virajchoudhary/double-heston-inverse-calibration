@@ -1,0 +1,66 @@
+{
+  "synthetic_only": true,
+  "no_parameter_labels_in_train_files": true,
+  "cases": {
+    "published_DH1": {
+      "feller_margins": [
+        0.05040000000000003,
+        0.31999999999999995
+      ],
+      "train": {
+        "rows": 246,
+        "max_96_128_node_difference": 2.9531932455029164e-14,
+        "sha256": "416daed4c20019278edbaa290518e28c34cab6916c95d678b8994a2869f29746"
+      },
+      "holdout": {
+        "rows": 240,
+        "max_96_128_node_difference": 2.919886554764162e-14,
+        "sha256": "0b2ecae14703af5ca7c59eb9700f6387fcc2f24e296c46f4425b263cb2822a87"
+      }
+    },
+    "proposed_separated_speeds": {
+      "feller_margins": [
+        0.0276,
+        0.8599999999999999
+      ],
+      "train": {
+        "rows": 246,
+        "max_96_128_node_difference": 2.942091015256665e-14,
+        "sha256": "641d6b84e4e7e5a6fee95964f3beade3004fce7d65383fd81a2e3341b9ccf666"
+      },
+      "holdout": {
+        "rows": 240,
+        "max_96_128_node_difference": 2.930988785010413e-14,
+        "sha256": "77916e141fb5f6ab1c9a44ab33ac8db5ebcd2dadfc5040c8e2b47e3d66969334"
+      }
+    }
+  },
+  "excluded": [
+    {
+      "id": "published_DH2",
+      "parameters": [
+        0.0326,
+        0.7078,
+        1.5355,
+        -0.687,
+        0.0059,
+        1.0738,
+        0.1026,
+        0.826,
+        -0.2819,
+        0.0028
+      ],
+      "reason": "Both factors violate strict Feller condition. Preserve exact values, do not clip or train under incompatible constraints."
+    }
+  ],
+  "published_DH1_table3_check": {
+    "calculated": 26.95035571889789,
+    "published_rounded": 26.9504
+  },
+  "collocation_sha256": "48a05b767f897c687df662288f2b977bcf165a9da3eba1712731ae5c5eb5039d",
+  "code_sha256": {
+    "scripts/mentor_dh_pinn/literature_fixed_truth_pilot.py": "3f1ad802f40350133cf98e9067802f4a68efba16f25ee429d423cd4cd4921681",
+    "src/mentor_dh_pinn/regular_pinn_torch.py": "f8cb36e57fa9c7649550e83c893b84e7334c212adff1bb9399448ff387986db7",
+    "src/mentor_dh_pinn/torch_pricer.py": "8dcf7228926d3ae2cd09a39ec5541b1ef19bd8a84356dc744c6c28bc047927ce"
+  }
+}

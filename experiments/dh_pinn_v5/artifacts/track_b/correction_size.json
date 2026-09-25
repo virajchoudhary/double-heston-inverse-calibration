@@ -1,0 +1,18 @@
+{
+ "BS": {
+  "mean_abs_delta_volpts": 4.328922513864758,
+  "max_abs_delta_volpts": 9.99992308588121
+ },
+ "DH": {
+  "mean_abs_delta_volpts": 3.3526601245648617,
+  "max_abs_delta_volpts": 9.999812624101448
+ },
+ "DH_PINN": {
+  "mean_abs_delta_volpts": 3.362049359441002,
+  "max_abs_delta_volpts": 9.999820496160927
+ },
+ "SH": {
+  "mean_abs_delta_volpts": 3.3278739166610283,
+  "max_abs_delta_volpts": 9.999863013780155
+ }
+}

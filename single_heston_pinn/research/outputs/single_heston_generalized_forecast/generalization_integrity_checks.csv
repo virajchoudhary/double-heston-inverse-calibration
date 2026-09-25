@@ -1,0 +1,17 @@
+check,passed,observed
+authentic_input_sha256_exact,True,a8a56dd7b17074d8fa32f88936c8b404456f22f296d9dc4665faf3b13621f1d3
+validation_and_test_rows_disjoint,True,0
+candidate_selected_on_early_validation,True,11
+correction_selected_on_late_validation,True,0
+all_fit_dates_before_test,True,0
+minimum_session_guard_enforced,True,0
+minimum_validation_gain_guard_enforced,True,0
+test_keys_unique,True,0
+test_predictions_finite,True,0
+generalized_iv_inside_declared_bounds,True,0.15398675804701942..0.6684312461744353
+test_source_paths_authentic,True,0
+grid_contains_no_market_labels,True,none
+grid_provenance_exact,True,0
+retrospective_test_rmse_improved,True,-0.007879780923468957
+pooled_slope_moved_toward_identity,True,0.80659815857837->0.8789630841361615
+expiry_dates_used_without_weekday_rule,True,exact expiry dates inherited; no weekday assumption

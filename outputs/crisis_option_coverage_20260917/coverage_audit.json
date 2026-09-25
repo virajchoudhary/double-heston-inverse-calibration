@@ -1,0 +1,3779 @@
+{
+  "purpose": "Feasibility only; no Single/Double Heston models fitted",
+  "symbol_substitution_not_authorized": true,
+  "source_manifest_sha256": "5d2a2474ed643aab6db5b7c20a0ee94c8e6eb7ce6da25450b80e5e83e4edb4ea",
+  "script_sha256": "ce37533b2ad892a93bcf784815efd9c54c619a1f340668919b88b66400c1022a",
+  "limitations": [
+    "Counts after preliminary filters are not fully cleaned model inputs",
+    "No market parameter truth is known",
+    "Event windows are not a measured ranking of peak stock volatility",
+    "Carry is anchor-inferred, not an exchange-supplied field"
+  ],
+  "windows": {
+    "covid_march_2020": {
+      "dates": [
+        "2020-03-01",
+        "2020-03-31"
+      ],
+      "source_status_counts": {
+        "downloaded": 21,
+        "http_404": 1
+      },
+      "unavailable_manifest_dates": [
+        {
+          "date": "2020-03-10",
+          "status": "http_404"
+        }
+      ],
+      "source_files": [
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo02MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo02MAR2020bhav.csv.zip",
+          "sha256": "f71b9a7cb54cde09f7a43a3c776f77f059acf5a95e13ea4e939933b8b98decc3",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo03MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo03MAR2020bhav.csv.zip",
+          "sha256": "2bddb2c4db9a187df9652768e7d3d048fc99a12f62a4981e297ac637eef9e376",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo04MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo04MAR2020bhav.csv.zip",
+          "sha256": "8c3d60a169e4a8bf3c7703705b13ef6a8c1af61cebc944d389dbca7c4848d859",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo05MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo05MAR2020bhav.csv.zip",
+          "sha256": "905716d26819408616732523f28e43cbec8504678e098b219cfb324cfe2f7b1f",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo06MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo06MAR2020bhav.csv.zip",
+          "sha256": "cdca8608655df3e168751669ad347f65d804504963b309fdce2631da4b114d5e",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo09MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo09MAR2020bhav.csv.zip",
+          "sha256": "6d2072e194ab1f84d672c18887de9b41eae886f09576007964119ce495bf311d",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo11MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo11MAR2020bhav.csv.zip",
+          "sha256": "53f53975e3bab0cabfdf41104d397bdf554777bae5fd1ce6b09d1be98a437645",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo12MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo12MAR2020bhav.csv.zip",
+          "sha256": "8c9c93e574fb9012d9f113e0f8567af314ab24980bc0e2ec8c54823881657616",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo13MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo13MAR2020bhav.csv.zip",
+          "sha256": "e55bea3d65b45291bd65044535b3e0639a5ea2feb6b55d2bdbcbd36c3fd40424",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo16MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo16MAR2020bhav.csv.zip",
+          "sha256": "cc7ba7c6e52089fcb1d467f9d3486034c6a3d2953da693fb80322c485556c8fb",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo17MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo17MAR2020bhav.csv.zip",
+          "sha256": "a08ac606f979269252fda1fd1028832a34c40efe2502438d7f82943c88956607",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo18MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo18MAR2020bhav.csv.zip",
+          "sha256": "f94b3d1fe382649809a1e81296437711c83ced7a188befc811850cfc00754732",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo19MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo19MAR2020bhav.csv.zip",
+          "sha256": "4ca37c2f250a7cf615e908c04c150682e80bee4e690e57b0c2d37b8212bafcfd",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo20MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo20MAR2020bhav.csv.zip",
+          "sha256": "a4da7b578e54c372df9fd0bd72c2ac3c43c2d7dfce3eb317fe122216e0ce6940",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo23MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo23MAR2020bhav.csv.zip",
+          "sha256": "ce4426b78869b3c0e806b5c616c0e59e52f9770b671a562a64821bbc4801e5ac",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo24MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo24MAR2020bhav.csv.zip",
+          "sha256": "776654904593093a93f547ec636b11ab90021b513054fc34c95cc8aef9c85b98",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo25MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo25MAR2020bhav.csv.zip",
+          "sha256": "5c8f9c10164644044cedf0b5a4b735ae5985342f0b39f5767472807c0fa8de48",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo26MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo26MAR2020bhav.csv.zip",
+          "sha256": "a737c0c1382deb2b91293cce486fb2f4de70977f1b111236e3ad1de3b1eeb597",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo27MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo27MAR2020bhav.csv.zip",
+          "sha256": "0a97e8ec594c07d4f61cdd2a3b3a24fcb7e19e9e98bd32479ec9d08fe777c45f",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo30MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo30MAR2020bhav.csv.zip",
+          "sha256": "e28b81ff4653456d411104fa853a46250e18d91062eeea00318bd3b298f63e3c",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2020/fo31MAR2020bhav.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/historical/DERIVATIVES/2020/MAR/fo31MAR2020bhav.csv.zip",
+          "sha256": "1e2cae66c0b629b5a902bdb40e660989147c27c2050154aad2709d36a412297a",
+          "hash_verified": true
+        }
+      ],
+      "symbols": {
+        "ADANIPOWER": {
+          "listed_option_rows": 6678,
+          "conflicting_key_duplicates": 0,
+          "positive_traded_option_rows": 522,
+          "expiry_groups_six_or_more_pairs": 10,
+          "expiry_groups_rejected_parity": 8,
+          "expiry_groups_under_six_traded_pairs": 9,
+          "expiry_groups_outside_7_100_days": 5,
+          "days_with_positive_traded_options": 21,
+          "preliminary_eligible_dates": [
+            "2020-03-04",
+            "2020-03-11"
+          ],
+          "preliminary_eligible_groups": [
+            {
+              "date": "2020-03-04",
+              "expiry": "2020-03-26",
+              "forward_from_anchor_parity": 47.50556221119287,
+              "discount_from_anchor_parity": 0.9937074829931956,
+              "parity_nrmse": 0.00606940055932093,
+              "pairs": 7,
+              "anchor_pairs": 5,
+              "potential_heldout_pairs_before_further_cleaning": 2
+            },
+            {
+              "date": "2020-03-11",
+              "expiry": "2020-03-26",
+              "forward_from_anchor_parity": 41.54650341633489,
+              "discount_from_anchor_parity": 0.9926715956966427,
+              "parity_nrmse": 0.007700942611328151,
+              "pairs": 7,
+              "anchor_pairs": 5,
+              "potential_heldout_pairs_before_further_cleaning": 2
+            }
+          ]
+        },
+        "NIFTY": {
+          "listed_option_rows": 87382,
+          "conflicting_key_duplicates": 0,
+          "positive_traded_option_rows": 11478,
+          "expiry_groups_outside_7_100_days": 158,
+          "expiry_groups_six_or_more_pairs": 69,
+          "expiry_groups_rejected_parity": 19,
+          "expiry_groups_under_six_traded_pairs": 22,
+          "days_with_positive_traded_options": 21,
+          "preliminary_eligible_dates": [
+            "2020-03-02",
+            "2020-03-03",
+            "2020-03-04",
+            "2020-03-05",
+            "2020-03-06",
+            "2020-03-09",
+            "2020-03-11",
+            "2020-03-12",
+            "2020-03-13",
+            "2020-03-16",
+            "2020-03-17",
+            "2020-03-18",
+            "2020-03-19",
+            "2020-03-20",
+            "2020-03-23",
+            "2020-03-24",
+            "2020-03-25",
+            "2020-03-26",
+            "2020-03-27",
+            "2020-03-30",
+            "2020-03-31"
+          ],
+          "preliminary_eligible_groups": [
+            {
+              "date": "2020-03-02",
+              "expiry": "2020-03-26",
+              "forward_from_anchor_parity": 11115.285960448966,
+              "discount_from_anchor_parity": 0.9930936309219237,
+              "parity_nrmse": 0.007820226734075099,
+              "pairs": 60,
+              "anchor_pairs": 40,
+              "potential_heldout_pairs_before_further_cleaning": 20
+            },
+            {
+              "date": "2020-03-02",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 11163.927101507907,
+              "discount_from_anchor_parity": 0.9699045395856115,
+              "parity_nrmse": 0.005997830337363982,
+              "pairs": 18,
+              "anchor_pairs": 12,
+              "potential_heldout_pairs_before_further_cleaning": 6
+            },
+            {
+              "date": "2020-03-03",
+              "expiry": "2020-03-12",
+              "forward_from_anchor_parity": 11304.495456326931,
+              "discount_from_anchor_parity": 1.0006725510774104,
+              "parity_nrmse": 0.0030715363517902156,
+              "pairs": 13,
+              "anchor_pairs": 9,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2020-03-03",
+              "expiry": "2020-03-26",
+              "forward_from_anchor_parity": 11289.086253737867,
+              "discount_from_anchor_parity": 0.9859461465233248,
+              "parity_nrmse": 0.004167929162056324,
+              "pairs": 61,
+              "anchor_pairs": 41,
+              "potential_heldout_pairs_before_further_cleaning": 20
+            },
+            {
+              "date": "2020-03-03",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 11339.804518738929,
+              "discount_from_anchor_parity": 0.9836372582641942,
+              "parity_nrmse": 0.003411657677303146,
+              "pairs": 19,
+              "anchor_pairs": 13,
+              "potential_heldout_pairs_before_further_cleaning": 6
+            },
+            {
+              "date": "2020-03-04",
+              "expiry": "2020-03-26",
+              "forward_from_anchor_parity": 11245.758966436284,
+              "discount_from_anchor_parity": 0.9909464017062205,
+              "parity_nrmse": 0.0034081361447116584,
+              "pairs": 57,
+              "anchor_pairs": 38,
+              "potential_heldout_pairs_before_further_cleaning": 19
+            },
+            {
+              "date": "2020-03-04",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 11295.673398175972,
+              "discount_from_anchor_parity": 0.9874655439054223,
+              "parity_nrmse": 0.005459703802360481,
+              "pairs": 21,
+              "anchor_pairs": 14,
+              "potential_heldout_pairs_before_further_cleaning": 7
+            },
+            {
+              "date": "2020-03-05",
+              "expiry": "2020-03-26",
+              "forward_from_anchor_parity": 11256.839726282788,
+              "discount_from_anchor_parity": 0.9889699113904473,
+              "parity_nrmse": 0.0027808178577558742,
+              "pairs": 59,
+              "anchor_pairs": 39,
+              "potential_heldout_pairs_before_further_cleaning": 20
+            },
+            {
+              "date": "2020-03-05",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 11302.521932013367,
+              "discount_from_anchor_parity": 0.9789555872114555,
+              "parity_nrmse": 0.0025692146805893087,
+              "pairs": 18,
+              "anchor_pairs": 12,
+              "potential_heldout_pairs_before_further_cleaning": 6
+            },
+            {
+              "date": "2020-03-06",
+              "expiry": "2020-03-26",
+              "forward_from_anchor_parity": 10937.308258710513,
+              "discount_from_anchor_parity": 0.9945697441369411,
+              "parity_nrmse": 0.0015242821229931685,
+              "pairs": 62,
+              "anchor_pairs": 41,
+              "potential_heldout_pairs_before_further_cleaning": 21
+            },
+            {
+              "date": "2020-03-06",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 10991.752247374032,
+              "discount_from_anchor_parity": 0.9830436312529534,
+              "parity_nrmse": 0.002699987553307554,
+              "pairs": 23,
+              "anchor_pairs": 15,
+              "potential_heldout_pairs_before_further_cleaning": 8
+            },
+            {
+              "date": "2020-03-09",
+              "expiry": "2020-03-26",
+              "forward_from_anchor_parity": 10454.751400947187,
+              "discount_from_anchor_parity": 0.9906307194992098,
+              "parity_nrmse": 0.005175563598526133,
+              "pairs": 73,
+              "anchor_pairs": 49,
+              "potential_heldout_pairs_before_further_cleaning": 24
+            },
+            {
+              "date": "2020-03-09",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 10513.844076647489,
+              "discount_from_anchor_parity": 0.9786451567152632,
+              "parity_nrmse": 0.0030849839515261785,
+              "pairs": 28,
+              "anchor_pairs": 19,
+              "potential_heldout_pairs_before_further_cleaning": 9
+            },
+            {
+              "date": "2020-03-11",
+              "expiry": "2020-03-19",
+              "forward_from_anchor_parity": 10450.78209527146,
+              "discount_from_anchor_parity": 0.9980953786121531,
+              "parity_nrmse": 0.0028329495033490555,
+              "pairs": 22,
+              "anchor_pairs": 15,
+              "potential_heldout_pairs_before_further_cleaning": 7
+            },
+            {
+              "date": "2020-03-11",
+              "expiry": "2020-03-26",
+              "forward_from_anchor_parity": 10448.817812674772,
+              "discount_from_anchor_parity": 0.9919310782914019,
+              "parity_nrmse": 0.0036999751293350872,
+              "pairs": 66,
+              "anchor_pairs": 44,
+              "potential_heldout_pairs_before_further_cleaning": 22
+            },
+            {
+              "date": "2020-03-11",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 10503.593996630509,
+              "discount_from_anchor_parity": 0.9812612210744828,
+              "parity_nrmse": 0.001646830208131727,
+              "pairs": 29,
+              "anchor_pairs": 19,
+              "potential_heldout_pairs_before_further_cleaning": 10
+            },
+            {
+              "date": "2020-03-12",
+              "expiry": "2020-03-26",
+              "forward_from_anchor_parity": 9538.317722248179,
+              "discount_from_anchor_parity": 0.9931591636223575,
+              "parity_nrmse": 0.010750325221566555,
+              "pairs": 77,
+              "anchor_pairs": 51,
+              "potential_heldout_pairs_before_further_cleaning": 26
+            },
+            {
+              "date": "2020-03-12",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 9591.451517306645,
+              "discount_from_anchor_parity": 0.982217045964883,
+              "parity_nrmse": 0.005760286515266882,
+              "pairs": 33,
+              "anchor_pairs": 22,
+              "potential_heldout_pairs_before_further_cleaning": 11
+            },
+            {
+              "date": "2020-03-13",
+              "expiry": "2020-03-26",
+              "forward_from_anchor_parity": 9892.33424746449,
+              "discount_from_anchor_parity": 0.9954982361281001,
+              "parity_nrmse": 0.010633543089936177,
+              "pairs": 92,
+              "anchor_pairs": 61,
+              "potential_heldout_pairs_before_further_cleaning": 31
+            },
+            {
+              "date": "2020-03-13",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 9944.764158741711,
+              "discount_from_anchor_parity": 0.9812472862965913,
+              "parity_nrmse": 0.014203262116901871,
+              "pairs": 36,
+              "anchor_pairs": 24,
+              "potential_heldout_pairs_before_further_cleaning": 12
+            },
+            {
+              "date": "2020-03-16",
+              "expiry": "2020-03-26",
+              "forward_from_anchor_parity": 9115.21158697938,
+              "discount_from_anchor_parity": 0.996303493466213,
+              "parity_nrmse": 0.0033389862708525,
+              "pairs": 88,
+              "anchor_pairs": 59,
+              "potential_heldout_pairs_before_further_cleaning": 29
+            },
+            {
+              "date": "2020-03-16",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 9143.50876457347,
+              "discount_from_anchor_parity": 0.974273803228553,
+              "parity_nrmse": 0.008610420612240056,
+              "pairs": 39,
+              "anchor_pairs": 26,
+              "potential_heldout_pairs_before_further_cleaning": 13
+            },
+            {
+              "date": "2020-03-17",
+              "expiry": "2020-03-26",
+              "forward_from_anchor_parity": 8905.759955725625,
+              "discount_from_anchor_parity": 0.9979118363248864,
+              "parity_nrmse": 0.012195139183791283,
+              "pairs": 97,
+              "anchor_pairs": 65,
+              "potential_heldout_pairs_before_further_cleaning": 32
+            },
+            {
+              "date": "2020-03-17",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 8937.122518685686,
+              "discount_from_anchor_parity": 0.9818882451259787,
+              "parity_nrmse": 0.010434111463708364,
+              "pairs": 43,
+              "anchor_pairs": 29,
+              "potential_heldout_pairs_before_further_cleaning": 14
+            },
+            {
+              "date": "2020-03-17",
+              "expiry": "2020-06-25",
+              "forward_from_anchor_parity": 9012.990662148937,
+              "discount_from_anchor_parity": 0.9732801465133561,
+              "parity_nrmse": 0.010639628083801842,
+              "pairs": 9,
+              "anchor_pairs": 6,
+              "potential_heldout_pairs_before_further_cleaning": 3
+            },
+            {
+              "date": "2020-03-18",
+              "expiry": "2020-03-26",
+              "forward_from_anchor_parity": 8427.126288710842,
+              "discount_from_anchor_parity": 0.9977009802350009,
+              "parity_nrmse": 0.009000608051571636,
+              "pairs": 102,
+              "anchor_pairs": 68,
+              "potential_heldout_pairs_before_further_cleaning": 34
+            },
+            {
+              "date": "2020-03-18",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 8431.68146006622,
+              "discount_from_anchor_parity": 0.984588650527388,
+              "parity_nrmse": 0.0036666375101527273,
+              "pairs": 47,
+              "anchor_pairs": 31,
+              "potential_heldout_pairs_before_further_cleaning": 16
+            },
+            {
+              "date": "2020-03-18",
+              "expiry": "2020-05-28",
+              "forward_from_anchor_parity": 8457.101407237158,
+              "discount_from_anchor_parity": 0.9694608033623788,
+              "parity_nrmse": 0.004233086677420925,
+              "pairs": 9,
+              "anchor_pairs": 6,
+              "potential_heldout_pairs_before_further_cleaning": 3
+            },
+            {
+              "date": "2020-03-18",
+              "expiry": "2020-06-25",
+              "forward_from_anchor_parity": 8473.909312987187,
+              "discount_from_anchor_parity": 0.9941934502443323,
+              "parity_nrmse": 0.01830792676031584,
+              "pairs": 11,
+              "anchor_pairs": 7,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2020-03-19",
+              "expiry": "2020-03-26",
+              "forward_from_anchor_parity": 8208.077482721852,
+              "discount_from_anchor_parity": 1.0016204835982228,
+              "parity_nrmse": 0.010924176844030865,
+              "pairs": 108,
+              "anchor_pairs": 72,
+              "potential_heldout_pairs_before_further_cleaning": 36
+            },
+            {
+              "date": "2020-03-19",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 8210.160232691429,
+              "discount_from_anchor_parity": 0.983466758753962,
+              "parity_nrmse": 0.010832735547445332,
+              "pairs": 52,
+              "anchor_pairs": 35,
+              "potential_heldout_pairs_before_further_cleaning": 17
+            },
+            {
+              "date": "2020-03-20",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 8718.08559319037,
+              "discount_from_anchor_parity": 0.9777079996338789,
+              "parity_nrmse": 0.015573721362538212,
+              "pairs": 64,
+              "anchor_pairs": 43,
+              "potential_heldout_pairs_before_further_cleaning": 21
+            },
+            {
+              "date": "2020-03-20",
+              "expiry": "2020-06-25",
+              "forward_from_anchor_parity": 8662.438595226247,
+              "discount_from_anchor_parity": 0.9463534793847816,
+              "parity_nrmse": 0.009971402337724644,
+              "pairs": 11,
+              "anchor_pairs": 7,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2020-03-23",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 7584.975994171647,
+              "discount_from_anchor_parity": 0.9868097285605094,
+              "parity_nrmse": 0.008353884243418734,
+              "pairs": 58,
+              "anchor_pairs": 39,
+              "potential_heldout_pairs_before_further_cleaning": 19
+            },
+            {
+              "date": "2020-03-23",
+              "expiry": "2020-06-25",
+              "forward_from_anchor_parity": 7829.548710359647,
+              "discount_from_anchor_parity": 1.0169186308252853,
+              "parity_nrmse": 0.009422567860638201,
+              "pairs": 12,
+              "anchor_pairs": 8,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2020-03-24",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 7869.944841541175,
+              "discount_from_anchor_parity": 0.9865958814616015,
+              "parity_nrmse": 0.01513057960061407,
+              "pairs": 61,
+              "anchor_pairs": 41,
+              "potential_heldout_pairs_before_further_cleaning": 20
+            },
+            {
+              "date": "2020-03-24",
+              "expiry": "2020-05-28",
+              "forward_from_anchor_parity": 7897.202643688447,
+              "discount_from_anchor_parity": 0.996284481926092,
+              "parity_nrmse": 0.013417866115824014,
+              "pairs": 7,
+              "anchor_pairs": 5,
+              "potential_heldout_pairs_before_further_cleaning": 2
+            },
+            {
+              "date": "2020-03-25",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 8400.537300596992,
+              "discount_from_anchor_parity": 0.9829835992266832,
+              "parity_nrmse": 0.014402613351062823,
+              "pairs": 59,
+              "anchor_pairs": 39,
+              "potential_heldout_pairs_before_further_cleaning": 20
+            },
+            {
+              "date": "2020-03-25",
+              "expiry": "2020-05-28",
+              "forward_from_anchor_parity": 8395.43128822776,
+              "discount_from_anchor_parity": 0.9801450000000003,
+              "parity_nrmse": 0.0053205864600997564,
+              "pairs": 6,
+              "anchor_pairs": 4,
+              "potential_heldout_pairs_before_further_cleaning": 2
+            },
+            {
+              "date": "2020-03-26",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 8675.82730238612,
+              "discount_from_anchor_parity": 0.9768088091287528,
+              "parity_nrmse": 0.010376700843263927,
+              "pairs": 66,
+              "anchor_pairs": 44,
+              "potential_heldout_pairs_before_further_cleaning": 22
+            },
+            {
+              "date": "2020-03-26",
+              "expiry": "2020-06-25",
+              "forward_from_anchor_parity": 8734.389290955043,
+              "discount_from_anchor_parity": 0.9800904761904766,
+              "parity_nrmse": 0.0027342733645551935,
+              "pairs": 6,
+              "anchor_pairs": 4,
+              "potential_heldout_pairs_before_further_cleaning": 2
+            },
+            {
+              "date": "2020-03-27",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 8654.829323201007,
+              "discount_from_anchor_parity": 0.9876833310230765,
+              "parity_nrmse": 0.007384040258497702,
+              "pairs": 67,
+              "anchor_pairs": 45,
+              "potential_heldout_pairs_before_further_cleaning": 22
+            },
+            {
+              "date": "2020-03-27",
+              "expiry": "2020-05-28",
+              "forward_from_anchor_parity": 8664.55996915334,
+              "discount_from_anchor_parity": 0.9600403508771921,
+              "parity_nrmse": 0.001601666512148691,
+              "pairs": 8,
+              "anchor_pairs": 5,
+              "potential_heldout_pairs_before_further_cleaning": 3
+            },
+            {
+              "date": "2020-03-27",
+              "expiry": "2020-06-25",
+              "forward_from_anchor_parity": 8759.457715630875,
+              "discount_from_anchor_parity": 0.991915,
+              "parity_nrmse": 0.008215263425074894,
+              "pairs": 11,
+              "anchor_pairs": 7,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2020-03-30",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 8290.308822659177,
+              "discount_from_anchor_parity": 0.9915079604440937,
+              "parity_nrmse": 0.008297235951599107,
+              "pairs": 66,
+              "anchor_pairs": 44,
+              "potential_heldout_pairs_before_further_cleaning": 22
+            },
+            {
+              "date": "2020-03-30",
+              "expiry": "2020-06-25",
+              "forward_from_anchor_parity": 8292.600541191803,
+              "discount_from_anchor_parity": 0.9529541615868659,
+              "parity_nrmse": 0.018061120945485194,
+              "pairs": 12,
+              "anchor_pairs": 8,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2020-03-31",
+              "expiry": "2020-04-09",
+              "forward_from_anchor_parity": 8590.178045820378,
+              "discount_from_anchor_parity": 0.9984122466334739,
+              "parity_nrmse": 0.008121609562205853,
+              "pairs": 12,
+              "anchor_pairs": 8,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2020-03-31",
+              "expiry": "2020-04-30",
+              "forward_from_anchor_parity": 8615.97880872689,
+              "discount_from_anchor_parity": 0.9869543604471711,
+              "parity_nrmse": 0.0038944461455398312,
+              "pairs": 61,
+              "anchor_pairs": 41,
+              "potential_heldout_pairs_before_further_cleaning": 20
+            },
+            {
+              "date": "2020-03-31",
+              "expiry": "2020-05-28",
+              "forward_from_anchor_parity": 8640.745103369269,
+              "discount_from_anchor_parity": 0.990027432667109,
+              "parity_nrmse": 0.001601232051163477,
+              "pairs": 10,
+              "anchor_pairs": 7,
+              "potential_heldout_pairs_before_further_cleaning": 3
+            },
+            {
+              "date": "2020-03-31",
+              "expiry": "2020-06-25",
+              "forward_from_anchor_parity": 8561.361335385525,
+              "discount_from_anchor_parity": 0.9693642599565391,
+              "parity_nrmse": 0.017215870430526806,
+              "pairs": 9,
+              "anchor_pairs": 6,
+              "potential_heldout_pairs_before_further_cleaning": 3
+            }
+          ]
+        }
+      }
+    },
+    "iran_june_2025": {
+      "dates": [
+        "2025-06-01",
+        "2025-06-30"
+      ],
+      "source_status_counts": {
+        "downloaded": 21
+      },
+      "unavailable_manifest_dates": [],
+      "source_files": [
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250602_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250602_F_0000.csv.zip",
+          "sha256": "2ca90efdc08c60e3fbe818c5a09dfbec71b5a211e5b169ba1daf5ac49162dc6a",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250603_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250603_F_0000.csv.zip",
+          "sha256": "2c87b89a6324edb0affb43da625a5719a4cc6a5625e45764ca71ba75b7aab6c8",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250604_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250604_F_0000.csv.zip",
+          "sha256": "4611f03e32d661c81331fbf5a4c3772e8df438d34f219fb7565f63533b506453",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250605_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250605_F_0000.csv.zip",
+          "sha256": "65789d40aad3da93620fb0d497f73f2a389fd533f9ad4a69dd5b35588c8cb433",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250606_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250606_F_0000.csv.zip",
+          "sha256": "641e58c1d843d2624df497e952969a24043164d08cacd472d98e1db24254e4fb",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250609_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250609_F_0000.csv.zip",
+          "sha256": "4f98c19c45ae56a78f75f8cb3fad0391e8e12df4005b8a5d4f459912901cdce5",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250610_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250610_F_0000.csv.zip",
+          "sha256": "1279a2bcfc1d6a2315d3c1fce3c12111a4f3fa710408b2f6a8d82e6c01a3050c",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250611_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250611_F_0000.csv.zip",
+          "sha256": "1204a33f929c9d8b904aa85209b045e9dd24f8ffa4bbdbeb26a73df70cc71755",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250612_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250612_F_0000.csv.zip",
+          "sha256": "2e690b25b8bce44d689f6ddd2d781d4efcdfdf760a1f90a4b85d132ed16196ef",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250613_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250613_F_0000.csv.zip",
+          "sha256": "e366d09d6588cb7694058c8d0b63812d511226a6c658a6dc57c4ac324472cbb6",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250616_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250616_F_0000.csv.zip",
+          "sha256": "2392d1fd08fa385a47966edde11a542f1e4bd54059cc91b82ad3d7e4499359e6",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250617_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250617_F_0000.csv.zip",
+          "sha256": "f3a24832b36d21f4c3652aa46c1d646e38cae8dc5dd11fd556bf9c646dc486a6",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250618_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250618_F_0000.csv.zip",
+          "sha256": "7fbbd7954410575d17ca1dbb145a8d8f8fdc1f5117b55723c6f4590c430a08e6",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250619_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250619_F_0000.csv.zip",
+          "sha256": "aa48e59614428bb19f2dddecdb2dcbf9c6ace9e858b71e2614b9e7eeb36090b8",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250620_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250620_F_0000.csv.zip",
+          "sha256": "3ae6348b1f970b9676119d041e9d22a7ea806f2e6df7d6eef94dc916ddaf452d",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250623_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250623_F_0000.csv.zip",
+          "sha256": "94ed99b5db4dff171fc9784f7edca8e0ff14a670643b50af998c64d4aa431d43",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250624_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250624_F_0000.csv.zip",
+          "sha256": "c78ce1a1cbc51d168f0bab2fe30ca85b5778c469e1ff774ad34f23bf6fa455e9",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250625_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250625_F_0000.csv.zip",
+          "sha256": "e51646f317e2d640029e1fed15ddb6496c460d5caf82bb96ceffa451e28b7b7f",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250626_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250626_F_0000.csv.zip",
+          "sha256": "ceb07f070e10a7c35a4370766888dc0474a50284f330dd103e7b986e11cc4f83",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250627_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250627_F_0000.csv.zip",
+          "sha256": "7326fe8e5d851a82c91f36ea30ae10b4abbc40aeb9880c63f420105800e8a4e8",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2025/BhavCopy_NSE_FO_0_0_0_20250630_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20250630_F_0000.csv.zip",
+          "sha256": "ae5814ad21d853781438846459563ee98866298b0d0140450a0cb94712959001",
+          "hash_verified": true
+        }
+      ],
+      "symbols": {
+        "ADANIPOWER": {
+          "listed_option_rows": 0,
+          "conflicting_key_duplicates": 0,
+          "positive_traded_option_rows": 0,
+          "days_with_positive_traded_options": 0,
+          "preliminary_eligible_dates": [],
+          "preliminary_eligible_groups": []
+        },
+        "NIFTY": {
+          "listed_option_rows": 33730,
+          "conflicting_key_duplicates": 0,
+          "positive_traded_option_rows": 20567,
+          "expiry_groups_outside_7_100_days": 126,
+          "expiry_groups_six_or_more_pairs": 130,
+          "expiry_groups_rejected_parity": 38,
+          "expiry_groups_under_six_traded_pairs": 4,
+          "days_with_positive_traded_options": 21,
+          "preliminary_eligible_dates": [
+            "2025-06-02",
+            "2025-06-03",
+            "2025-06-04",
+            "2025-06-05",
+            "2025-06-06",
+            "2025-06-09",
+            "2025-06-10",
+            "2025-06-11",
+            "2025-06-12",
+            "2025-06-13",
+            "2025-06-16",
+            "2025-06-17",
+            "2025-06-18",
+            "2025-06-19",
+            "2025-06-20",
+            "2025-06-23",
+            "2025-06-24",
+            "2025-06-25",
+            "2025-06-26",
+            "2025-06-27",
+            "2025-06-30"
+          ],
+          "preliminary_eligible_groups": [
+            {
+              "date": "2025-06-02",
+              "expiry": "2025-06-26",
+              "forward_from_anchor_parity": 24824.171409788134,
+              "discount_from_anchor_parity": 0.9902879790857817,
+              "parity_nrmse": 0.0016146923067357074,
+              "pairs": 107,
+              "anchor_pairs": 71,
+              "potential_heldout_pairs_before_further_cleaning": 36
+            },
+            {
+              "date": "2025-06-02",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 24962.392276485723,
+              "discount_from_anchor_parity": 0.9783562027247693,
+              "parity_nrmse": 0.0017237950774172683,
+              "pairs": 75,
+              "anchor_pairs": 50,
+              "potential_heldout_pairs_before_further_cleaning": 25
+            },
+            {
+              "date": "2025-06-03",
+              "expiry": "2025-06-26",
+              "forward_from_anchor_parity": 24674.633339711516,
+              "discount_from_anchor_parity": 0.9917935436549556,
+              "parity_nrmse": 0.0009482163032381444,
+              "pairs": 112,
+              "anchor_pairs": 75,
+              "potential_heldout_pairs_before_further_cleaning": 37
+            },
+            {
+              "date": "2025-06-03",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 24828.83445506324,
+              "discount_from_anchor_parity": 0.9773510346070428,
+              "parity_nrmse": 0.0008606300424716328,
+              "pairs": 85,
+              "anchor_pairs": 57,
+              "potential_heldout_pairs_before_further_cleaning": 28
+            },
+            {
+              "date": "2025-06-03",
+              "expiry": "2025-08-28",
+              "forward_from_anchor_parity": 24941.13191649713,
+              "discount_from_anchor_parity": 0.9648018790849621,
+              "parity_nrmse": 0.00046252475976705517,
+              "pairs": 7,
+              "anchor_pairs": 5,
+              "potential_heldout_pairs_before_further_cleaning": 2
+            },
+            {
+              "date": "2025-06-04",
+              "expiry": "2025-06-12",
+              "forward_from_anchor_parity": 24659.319835852224,
+              "discount_from_anchor_parity": 0.9954484717002913,
+              "parity_nrmse": 0.0004885877710350325,
+              "pairs": 65,
+              "anchor_pairs": 43,
+              "potential_heldout_pairs_before_further_cleaning": 22
+            },
+            {
+              "date": "2025-06-04",
+              "expiry": "2025-06-19",
+              "forward_from_anchor_parity": 24692.215848608423,
+              "discount_from_anchor_parity": 0.9903765087134503,
+              "parity_nrmse": 0.0003638296236929817,
+              "pairs": 32,
+              "anchor_pairs": 21,
+              "potential_heldout_pairs_before_further_cleaning": 11
+            },
+            {
+              "date": "2025-06-04",
+              "expiry": "2025-06-26",
+              "forward_from_anchor_parity": 24730.2032364224,
+              "discount_from_anchor_parity": 0.9926943707399564,
+              "parity_nrmse": 0.0004205386952942162,
+              "pairs": 71,
+              "anchor_pairs": 47,
+              "potential_heldout_pairs_before_further_cleaning": 24
+            },
+            {
+              "date": "2025-06-04",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 24869.793675712648,
+              "discount_from_anchor_parity": 0.9794450897969111,
+              "parity_nrmse": 0.0006732527927565613,
+              "pairs": 41,
+              "anchor_pairs": 27,
+              "potential_heldout_pairs_before_further_cleaning": 14
+            },
+            {
+              "date": "2025-06-04",
+              "expiry": "2025-08-28",
+              "forward_from_anchor_parity": 24987.248457877165,
+              "discount_from_anchor_parity": 0.9642657841140582,
+              "parity_nrmse": 0.00041135375419197015,
+              "pairs": 9,
+              "anchor_pairs": 6,
+              "potential_heldout_pairs_before_further_cleaning": 3
+            },
+            {
+              "date": "2025-06-05",
+              "expiry": "2025-06-12",
+              "forward_from_anchor_parity": 24790.78080937169,
+              "discount_from_anchor_parity": 0.9969422856931873,
+              "parity_nrmse": 0.0006677293335186158,
+              "pairs": 89,
+              "anchor_pairs": 59,
+              "potential_heldout_pairs_before_further_cleaning": 30
+            },
+            {
+              "date": "2025-06-05",
+              "expiry": "2025-06-19",
+              "forward_from_anchor_parity": 24827.696729047333,
+              "discount_from_anchor_parity": 1.0003153660280577,
+              "parity_nrmse": 0.0005175946614714131,
+              "pairs": 79,
+              "anchor_pairs": 53,
+              "potential_heldout_pairs_before_further_cleaning": 26
+            },
+            {
+              "date": "2025-06-05",
+              "expiry": "2025-06-26",
+              "forward_from_anchor_parity": 24865.55999901292,
+              "discount_from_anchor_parity": 0.9923313459743778,
+              "parity_nrmse": 0.0009760133419403113,
+              "pairs": 101,
+              "anchor_pairs": 67,
+              "potential_heldout_pairs_before_further_cleaning": 34
+            },
+            {
+              "date": "2025-06-05",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 25013.76551209518,
+              "discount_from_anchor_parity": 0.9866525782454335,
+              "parity_nrmse": 0.0005761430265039018,
+              "pairs": 79,
+              "anchor_pairs": 53,
+              "potential_heldout_pairs_before_further_cleaning": 26
+            },
+            {
+              "date": "2025-06-05",
+              "expiry": "2025-08-28",
+              "forward_from_anchor_parity": 25119.169864941254,
+              "discount_from_anchor_parity": 0.9760920274729913,
+              "parity_nrmse": 0.0011051399517304746,
+              "pairs": 9,
+              "anchor_pairs": 6,
+              "potential_heldout_pairs_before_further_cleaning": 3
+            },
+            {
+              "date": "2025-06-06",
+              "expiry": "2025-06-19",
+              "forward_from_anchor_parity": 25065.87550837493,
+              "discount_from_anchor_parity": 0.9968395778710049,
+              "parity_nrmse": 0.0003649057733475635,
+              "pairs": 75,
+              "anchor_pairs": 50,
+              "potential_heldout_pairs_before_further_cleaning": 25
+            },
+            {
+              "date": "2025-06-06",
+              "expiry": "2025-06-26",
+              "forward_from_anchor_parity": 25101.6313011575,
+              "discount_from_anchor_parity": 0.9943120679090555,
+              "parity_nrmse": 0.002029787155703758,
+              "pairs": 98,
+              "anchor_pairs": 65,
+              "potential_heldout_pairs_before_further_cleaning": 33
+            },
+            {
+              "date": "2025-06-06",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 25248.324910712272,
+              "discount_from_anchor_parity": 0.9832559961675978,
+              "parity_nrmse": 0.0016460607804008548,
+              "pairs": 74,
+              "anchor_pairs": 49,
+              "potential_heldout_pairs_before_further_cleaning": 25
+            },
+            {
+              "date": "2025-06-09",
+              "expiry": "2025-06-19",
+              "forward_from_anchor_parity": 25146.48868169059,
+              "discount_from_anchor_parity": 0.9973746537512496,
+              "parity_nrmse": 0.00021396559188455365,
+              "pairs": 45,
+              "anchor_pairs": 30,
+              "potential_heldout_pairs_before_further_cleaning": 15
+            },
+            {
+              "date": "2025-06-09",
+              "expiry": "2025-06-26",
+              "forward_from_anchor_parity": 25182.683410340094,
+              "discount_from_anchor_parity": 0.9957674832185979,
+              "parity_nrmse": 0.0004944445202182983,
+              "pairs": 74,
+              "anchor_pairs": 49,
+              "potential_heldout_pairs_before_further_cleaning": 25
+            },
+            {
+              "date": "2025-06-09",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 25329.03852593684,
+              "discount_from_anchor_parity": 0.9824193153492466,
+              "parity_nrmse": 0.0005322924355654363,
+              "pairs": 44,
+              "anchor_pairs": 29,
+              "potential_heldout_pairs_before_further_cleaning": 15
+            },
+            {
+              "date": "2025-06-09",
+              "expiry": "2025-08-28",
+              "forward_from_anchor_parity": 25439.511417935,
+              "discount_from_anchor_parity": 0.985394760468594,
+              "parity_nrmse": 0.0005456980832290503,
+              "pairs": 10,
+              "anchor_pairs": 7,
+              "potential_heldout_pairs_before_further_cleaning": 3
+            },
+            {
+              "date": "2025-06-10",
+              "expiry": "2025-06-19",
+              "forward_from_anchor_parity": 25125.133162380112,
+              "discount_from_anchor_parity": 0.99845045294982,
+              "parity_nrmse": 0.0008062973962658094,
+              "pairs": 55,
+              "anchor_pairs": 37,
+              "potential_heldout_pairs_before_further_cleaning": 18
+            },
+            {
+              "date": "2025-06-10",
+              "expiry": "2025-06-26",
+              "forward_from_anchor_parity": 25161.601721596875,
+              "discount_from_anchor_parity": 0.9963133922977956,
+              "parity_nrmse": 0.0006035591939869635,
+              "pairs": 70,
+              "anchor_pairs": 47,
+              "potential_heldout_pairs_before_further_cleaning": 23
+            },
+            {
+              "date": "2025-06-10",
+              "expiry": "2025-07-03",
+              "forward_from_anchor_parity": 25185.2274209802,
+              "discount_from_anchor_parity": 1.0033353437397619,
+              "parity_nrmse": 0.0018183880265064082,
+              "pairs": 21,
+              "anchor_pairs": 14,
+              "potential_heldout_pairs_before_further_cleaning": 7
+            },
+            {
+              "date": "2025-06-10",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 25309.070972520964,
+              "discount_from_anchor_parity": 0.9862945420628754,
+              "parity_nrmse": 0.0008242232812195509,
+              "pairs": 41,
+              "anchor_pairs": 27,
+              "potential_heldout_pairs_before_further_cleaning": 14
+            },
+            {
+              "date": "2025-06-10",
+              "expiry": "2025-08-28",
+              "forward_from_anchor_parity": 25417.891669281307,
+              "discount_from_anchor_parity": 0.9706385397789913,
+              "parity_nrmse": 0.00019991264648839145,
+              "pairs": 15,
+              "anchor_pairs": 10,
+              "potential_heldout_pairs_before_further_cleaning": 5
+            },
+            {
+              "date": "2025-06-11",
+              "expiry": "2025-06-19",
+              "forward_from_anchor_parity": 25177.988257203717,
+              "discount_from_anchor_parity": 0.9968221888414552,
+              "parity_nrmse": 0.0006111975659692875,
+              "pairs": 79,
+              "anchor_pairs": 53,
+              "potential_heldout_pairs_before_further_cleaning": 26
+            },
+            {
+              "date": "2025-06-11",
+              "expiry": "2025-06-26",
+              "forward_from_anchor_parity": 25213.778508439547,
+              "discount_from_anchor_parity": 0.9974833153737708,
+              "parity_nrmse": 0.0008581925464788702,
+              "pairs": 87,
+              "anchor_pairs": 58,
+              "potential_heldout_pairs_before_further_cleaning": 29
+            },
+            {
+              "date": "2025-06-11",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 25350.518209555205,
+              "discount_from_anchor_parity": 0.9899241556155257,
+              "parity_nrmse": 0.0005617743997592459,
+              "pairs": 45,
+              "anchor_pairs": 30,
+              "potential_heldout_pairs_before_further_cleaning": 15
+            },
+            {
+              "date": "2025-06-11",
+              "expiry": "2025-08-28",
+              "forward_from_anchor_parity": 25459.15751791345,
+              "discount_from_anchor_parity": 0.9763416244563978,
+              "parity_nrmse": 0.0007033726844913501,
+              "pairs": 13,
+              "anchor_pairs": 9,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2025-06-12",
+              "expiry": "2025-06-26",
+              "forward_from_anchor_parity": 24943.160557703224,
+              "discount_from_anchor_parity": 0.9942889246143747,
+              "parity_nrmse": 0.0008035723351233738,
+              "pairs": 101,
+              "anchor_pairs": 67,
+              "potential_heldout_pairs_before_further_cleaning": 34
+            },
+            {
+              "date": "2025-06-12",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 25082.594834753014,
+              "discount_from_anchor_parity": 0.9843617741512932,
+              "parity_nrmse": 0.0012147813964281451,
+              "pairs": 69,
+              "anchor_pairs": 46,
+              "potential_heldout_pairs_before_further_cleaning": 23
+            },
+            {
+              "date": "2025-06-12",
+              "expiry": "2025-08-28",
+              "forward_from_anchor_parity": 25199.925012094627,
+              "discount_from_anchor_parity": 0.9768099445057272,
+              "parity_nrmse": 0.001314218015419564,
+              "pairs": 42,
+              "anchor_pairs": 28,
+              "potential_heldout_pairs_before_further_cleaning": 14
+            },
+            {
+              "date": "2025-06-13",
+              "expiry": "2025-06-26",
+              "forward_from_anchor_parity": 24723.32881745063,
+              "discount_from_anchor_parity": 0.9969954187394864,
+              "parity_nrmse": 0.0007753953543293665,
+              "pairs": 92,
+              "anchor_pairs": 61,
+              "potential_heldout_pairs_before_further_cleaning": 31
+            },
+            {
+              "date": "2025-06-13",
+              "expiry": "2025-07-03",
+              "forward_from_anchor_parity": 24750.576297878677,
+              "discount_from_anchor_parity": 0.9875365847106083,
+              "parity_nrmse": 0.0010640024594786017,
+              "pairs": 46,
+              "anchor_pairs": 31,
+              "potential_heldout_pairs_before_further_cleaning": 15
+            },
+            {
+              "date": "2025-06-13",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 24859.964523017727,
+              "discount_from_anchor_parity": 0.9859450772741059,
+              "parity_nrmse": 0.000632171043348922,
+              "pairs": 63,
+              "anchor_pairs": 42,
+              "potential_heldout_pairs_before_further_cleaning": 21
+            },
+            {
+              "date": "2025-06-13",
+              "expiry": "2025-08-28",
+              "forward_from_anchor_parity": 24968.969627290713,
+              "discount_from_anchor_parity": 0.9827499075377991,
+              "parity_nrmse": 0.0004700153859799694,
+              "pairs": 24,
+              "anchor_pairs": 16,
+              "potential_heldout_pairs_before_further_cleaning": 8
+            },
+            {
+              "date": "2025-06-16",
+              "expiry": "2025-06-26",
+              "forward_from_anchor_parity": 24996.18570056587,
+              "discount_from_anchor_parity": 0.998308576720434,
+              "parity_nrmse": 0.0013856981510136997,
+              "pairs": 119,
+              "anchor_pairs": 79,
+              "potential_heldout_pairs_before_further_cleaning": 40
+            },
+            {
+              "date": "2025-06-16",
+              "expiry": "2025-07-03",
+              "forward_from_anchor_parity": 25016.558323233086,
+              "discount_from_anchor_parity": 0.9975986990137036,
+              "parity_nrmse": 0.00031007282073671714,
+              "pairs": 80,
+              "anchor_pairs": 53,
+              "potential_heldout_pairs_before_further_cleaning": 27
+            },
+            {
+              "date": "2025-06-16",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 25122.28025132366,
+              "discount_from_anchor_parity": 0.9898191661636007,
+              "parity_nrmse": 0.0011718455775548765,
+              "pairs": 90,
+              "anchor_pairs": 60,
+              "potential_heldout_pairs_before_further_cleaning": 30
+            },
+            {
+              "date": "2025-06-16",
+              "expiry": "2025-08-28",
+              "forward_from_anchor_parity": 25233.890981319753,
+              "discount_from_anchor_parity": 0.9797008350220193,
+              "parity_nrmse": 0.0006154872936615511,
+              "pairs": 55,
+              "anchor_pairs": 37,
+              "potential_heldout_pairs_before_further_cleaning": 18
+            },
+            {
+              "date": "2025-06-17",
+              "expiry": "2025-06-26",
+              "forward_from_anchor_parity": 24867.618152274023,
+              "discount_from_anchor_parity": 0.9979347365745278,
+              "parity_nrmse": 0.0011032564372462428,
+              "pairs": 87,
+              "anchor_pairs": 58,
+              "potential_heldout_pairs_before_further_cleaning": 29
+            },
+            {
+              "date": "2025-06-17",
+              "expiry": "2025-07-10",
+              "forward_from_anchor_parity": 24914.36295372753,
+              "discount_from_anchor_parity": 0.9941237598150525,
+              "parity_nrmse": 0.0004115619085203188,
+              "pairs": 19,
+              "anchor_pairs": 13,
+              "potential_heldout_pairs_before_further_cleaning": 6
+            },
+            {
+              "date": "2025-06-17",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 24992.745712118733,
+              "discount_from_anchor_parity": 0.9866468685288374,
+              "parity_nrmse": 0.00040443202710905267,
+              "pairs": 60,
+              "anchor_pairs": 40,
+              "potential_heldout_pairs_before_further_cleaning": 20
+            },
+            {
+              "date": "2025-06-17",
+              "expiry": "2025-08-28",
+              "forward_from_anchor_parity": 25105.39348089198,
+              "discount_from_anchor_parity": 0.9759029704512988,
+              "parity_nrmse": 0.0004612376103503823,
+              "pairs": 21,
+              "anchor_pairs": 14,
+              "potential_heldout_pairs_before_further_cleaning": 7
+            },
+            {
+              "date": "2025-06-17",
+              "expiry": "2025-09-25",
+              "forward_from_anchor_parity": 25236.813116382087,
+              "discount_from_anchor_parity": 0.9694734321007755,
+              "parity_nrmse": 0.00027387186757100773,
+              "pairs": 11,
+              "anchor_pairs": 7,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2025-06-18",
+              "expiry": "2025-06-26",
+              "forward_from_anchor_parity": 24825.635260248022,
+              "discount_from_anchor_parity": 0.9985852526918881,
+              "parity_nrmse": 0.0005270909578604598,
+              "pairs": 79,
+              "anchor_pairs": 53,
+              "potential_heldout_pairs_before_further_cleaning": 26
+            },
+            {
+              "date": "2025-06-18",
+              "expiry": "2025-07-03",
+              "forward_from_anchor_parity": 24844.094099284608,
+              "discount_from_anchor_parity": 1.0005136643617014,
+              "parity_nrmse": 0.0002821468810118949,
+              "pairs": 32,
+              "anchor_pairs": 21,
+              "potential_heldout_pairs_before_further_cleaning": 11
+            },
+            {
+              "date": "2025-06-18",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 24948.179477578757,
+              "discount_from_anchor_parity": 0.9868628987001224,
+              "parity_nrmse": 0.001034176497191016,
+              "pairs": 63,
+              "anchor_pairs": 42,
+              "potential_heldout_pairs_before_further_cleaning": 21
+            },
+            {
+              "date": "2025-06-18",
+              "expiry": "2025-08-28",
+              "forward_from_anchor_parity": 25060.014931627415,
+              "discount_from_anchor_parity": 0.9765747051766649,
+              "parity_nrmse": 0.00034477309722093404,
+              "pairs": 27,
+              "anchor_pairs": 18,
+              "potential_heldout_pairs_before_further_cleaning": 9
+            },
+            {
+              "date": "2025-06-18",
+              "expiry": "2025-09-25",
+              "forward_from_anchor_parity": 25188.47920865911,
+              "discount_from_anchor_parity": 0.9684036424759679,
+              "parity_nrmse": 0.0003930029599508259,
+              "pairs": 10,
+              "anchor_pairs": 7,
+              "potential_heldout_pairs_before_further_cleaning": 3
+            },
+            {
+              "date": "2025-06-19",
+              "expiry": "2025-06-26",
+              "forward_from_anchor_parity": 24804.59108340214,
+              "discount_from_anchor_parity": 1.0014774705749279,
+              "parity_nrmse": 0.000518648976769248,
+              "pairs": 83,
+              "anchor_pairs": 55,
+              "potential_heldout_pairs_before_further_cleaning": 28
+            },
+            {
+              "date": "2025-06-19",
+              "expiry": "2025-07-03",
+              "forward_from_anchor_parity": 24817.887601921208,
+              "discount_from_anchor_parity": 0.9977473756665575,
+              "parity_nrmse": 0.000605325848049382,
+              "pairs": 39,
+              "anchor_pairs": 26,
+              "potential_heldout_pairs_before_further_cleaning": 13
+            },
+            {
+              "date": "2025-06-19",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 24922.42453863159,
+              "discount_from_anchor_parity": 0.985930987243938,
+              "parity_nrmse": 0.0005738688366862327,
+              "pairs": 57,
+              "anchor_pairs": 38,
+              "potential_heldout_pairs_before_further_cleaning": 19
+            },
+            {
+              "date": "2025-06-19",
+              "expiry": "2025-08-28",
+              "forward_from_anchor_parity": 25031.075042407378,
+              "discount_from_anchor_parity": 0.9789240998216486,
+              "parity_nrmse": 0.0007625267782621174,
+              "pairs": 23,
+              "anchor_pairs": 15,
+              "potential_heldout_pairs_before_further_cleaning": 8
+            },
+            {
+              "date": "2025-06-19",
+              "expiry": "2025-09-25",
+              "forward_from_anchor_parity": 25169.328971431045,
+              "discount_from_anchor_parity": 0.9703195395810064,
+              "parity_nrmse": 0.00046690540672468875,
+              "pairs": 11,
+              "anchor_pairs": 7,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2025-06-20",
+              "expiry": "2025-07-03",
+              "forward_from_anchor_parity": 25116.398824320266,
+              "discount_from_anchor_parity": 0.9928333839105745,
+              "parity_nrmse": 0.00034065367129085673,
+              "pairs": 82,
+              "anchor_pairs": 55,
+              "potential_heldout_pairs_before_further_cleaning": 27
+            },
+            {
+              "date": "2025-06-20",
+              "expiry": "2025-07-10",
+              "forward_from_anchor_parity": 25134.985788369682,
+              "discount_from_anchor_parity": 0.9965188535274373,
+              "parity_nrmse": 0.00028473323859256363,
+              "pairs": 70,
+              "anchor_pairs": 47,
+              "potential_heldout_pairs_before_further_cleaning": 23
+            },
+            {
+              "date": "2025-06-20",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 25205.33982684361,
+              "discount_from_anchor_parity": 0.9879848344858397,
+              "parity_nrmse": 0.0014985623776485927,
+              "pairs": 81,
+              "anchor_pairs": 54,
+              "potential_heldout_pairs_before_further_cleaning": 27
+            },
+            {
+              "date": "2025-06-20",
+              "expiry": "2025-08-28",
+              "forward_from_anchor_parity": 25317.502522646246,
+              "discount_from_anchor_parity": 0.9795528356531895,
+              "parity_nrmse": 0.00047951564887010605,
+              "pairs": 57,
+              "anchor_pairs": 38,
+              "potential_heldout_pairs_before_further_cleaning": 19
+            },
+            {
+              "date": "2025-06-20",
+              "expiry": "2025-09-25",
+              "forward_from_anchor_parity": 25459.704095283378,
+              "discount_from_anchor_parity": 0.9724846180142479,
+              "parity_nrmse": 0.0004025168113874025,
+              "pairs": 13,
+              "anchor_pairs": 9,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2025-06-23",
+              "expiry": "2025-07-03",
+              "forward_from_anchor_parity": 25011.13591657465,
+              "discount_from_anchor_parity": 0.9965430730945475,
+              "parity_nrmse": 0.000581666863365711,
+              "pairs": 83,
+              "anchor_pairs": 55,
+              "potential_heldout_pairs_before_further_cleaning": 28
+            },
+            {
+              "date": "2025-06-23",
+              "expiry": "2025-07-10",
+              "forward_from_anchor_parity": 25034.996301670308,
+              "discount_from_anchor_parity": 0.994714764658127,
+              "parity_nrmse": 0.0009648565357974822,
+              "pairs": 72,
+              "anchor_pairs": 48,
+              "potential_heldout_pairs_before_further_cleaning": 24
+            },
+            {
+              "date": "2025-06-23",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 25105.347106562742,
+              "discount_from_anchor_parity": 0.9883788371659624,
+              "parity_nrmse": 0.0010474539355466014,
+              "pairs": 92,
+              "anchor_pairs": 61,
+              "potential_heldout_pairs_before_further_cleaning": 31
+            },
+            {
+              "date": "2025-06-23",
+              "expiry": "2025-08-28",
+              "forward_from_anchor_parity": 25221.989022740207,
+              "discount_from_anchor_parity": 0.9799147858907209,
+              "parity_nrmse": 0.0007498063071101964,
+              "pairs": 66,
+              "anchor_pairs": 44,
+              "potential_heldout_pairs_before_further_cleaning": 22
+            },
+            {
+              "date": "2025-06-23",
+              "expiry": "2025-09-25",
+              "forward_from_anchor_parity": 25348.618704115488,
+              "discount_from_anchor_parity": 0.9703997157754695,
+              "parity_nrmse": 0.00034304305057246854,
+              "pairs": 13,
+              "anchor_pairs": 9,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2025-06-24",
+              "expiry": "2025-07-10",
+              "forward_from_anchor_parity": 25116.61822915196,
+              "discount_from_anchor_parity": 0.9924148794457409,
+              "parity_nrmse": 0.0005301395109315131,
+              "pairs": 73,
+              "anchor_pairs": 49,
+              "potential_heldout_pairs_before_further_cleaning": 24
+            },
+            {
+              "date": "2025-06-24",
+              "expiry": "2025-07-17",
+              "forward_from_anchor_parity": 25138.27714278651,
+              "discount_from_anchor_parity": 1.0045455478547347,
+              "parity_nrmse": 0.0014338908923265763,
+              "pairs": 28,
+              "anchor_pairs": 19,
+              "potential_heldout_pairs_before_further_cleaning": 9
+            },
+            {
+              "date": "2025-06-24",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 25194.558195316753,
+              "discount_from_anchor_parity": 0.9903733547066379,
+              "parity_nrmse": 0.002572981900189863,
+              "pairs": 91,
+              "anchor_pairs": 61,
+              "potential_heldout_pairs_before_further_cleaning": 30
+            },
+            {
+              "date": "2025-06-24",
+              "expiry": "2025-08-28",
+              "forward_from_anchor_parity": 25307.69252557068,
+              "discount_from_anchor_parity": 0.9846399270041859,
+              "parity_nrmse": 0.0018120022366337955,
+              "pairs": 64,
+              "anchor_pairs": 43,
+              "potential_heldout_pairs_before_further_cleaning": 21
+            },
+            {
+              "date": "2025-06-24",
+              "expiry": "2025-09-25",
+              "forward_from_anchor_parity": 25438.652015847485,
+              "discount_from_anchor_parity": 0.9731121373386762,
+              "parity_nrmse": 0.0015690889982359997,
+              "pairs": 13,
+              "anchor_pairs": 9,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2025-06-25",
+              "expiry": "2025-07-03",
+              "forward_from_anchor_parity": 25250.991371609187,
+              "discount_from_anchor_parity": 0.9952635867063416,
+              "parity_nrmse": 0.00026182684846114466,
+              "pairs": 60,
+              "anchor_pairs": 40,
+              "potential_heldout_pairs_before_further_cleaning": 20
+            },
+            {
+              "date": "2025-06-25",
+              "expiry": "2025-07-10",
+              "forward_from_anchor_parity": 25280.326889962445,
+              "discount_from_anchor_parity": 0.9986307607551779,
+              "parity_nrmse": 0.0006367005008845089,
+              "pairs": 40,
+              "anchor_pairs": 27,
+              "potential_heldout_pairs_before_further_cleaning": 13
+            },
+            {
+              "date": "2025-06-25",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 25355.27083631162,
+              "discount_from_anchor_parity": 0.9867350288464533,
+              "parity_nrmse": 0.0004447831639856956,
+              "pairs": 65,
+              "anchor_pairs": 43,
+              "potential_heldout_pairs_before_further_cleaning": 22
+            },
+            {
+              "date": "2025-06-25",
+              "expiry": "2025-08-28",
+              "forward_from_anchor_parity": 25469.550762315102,
+              "discount_from_anchor_parity": 0.9759780866493368,
+              "parity_nrmse": 0.0006861437829617502,
+              "pairs": 33,
+              "anchor_pairs": 22,
+              "potential_heldout_pairs_before_further_cleaning": 11
+            },
+            {
+              "date": "2025-06-25",
+              "expiry": "2025-09-25",
+              "forward_from_anchor_parity": 25605.352416897298,
+              "discount_from_anchor_parity": 0.9722501475485353,
+              "parity_nrmse": 0.00022252880459106778,
+              "pairs": 13,
+              "anchor_pairs": 9,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2025-06-26",
+              "expiry": "2025-07-03",
+              "forward_from_anchor_parity": 25525.94549194904,
+              "discount_from_anchor_parity": 0.9952693754838022,
+              "parity_nrmse": 0.0013991199800625878,
+              "pairs": 69,
+              "anchor_pairs": 46,
+              "potential_heldout_pairs_before_further_cleaning": 23
+            },
+            {
+              "date": "2025-06-26",
+              "expiry": "2025-07-17",
+              "forward_from_anchor_parity": 25569.27695507748,
+              "discount_from_anchor_parity": 1.0009116551377284,
+              "parity_nrmse": 0.0013223226404395015,
+              "pairs": 24,
+              "anchor_pairs": 16,
+              "potential_heldout_pairs_before_further_cleaning": 8
+            },
+            {
+              "date": "2025-06-26",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 25620.516460644285,
+              "discount_from_anchor_parity": 0.9878267028924838,
+              "parity_nrmse": 0.0017941817619881314,
+              "pairs": 75,
+              "anchor_pairs": 50,
+              "potential_heldout_pairs_before_further_cleaning": 25
+            },
+            {
+              "date": "2025-06-26",
+              "expiry": "2025-08-28",
+              "forward_from_anchor_parity": 25729.086464924778,
+              "discount_from_anchor_parity": 0.9770362742559582,
+              "parity_nrmse": 0.0015366593580042548,
+              "pairs": 41,
+              "anchor_pairs": 27,
+              "potential_heldout_pairs_before_further_cleaning": 14
+            },
+            {
+              "date": "2025-06-26",
+              "expiry": "2025-09-25",
+              "forward_from_anchor_parity": 25864.979502431554,
+              "discount_from_anchor_parity": 0.973990709908755,
+              "parity_nrmse": 0.0003931169037030428,
+              "pairs": 13,
+              "anchor_pairs": 9,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2025-06-27",
+              "expiry": "2025-07-10",
+              "forward_from_anchor_parity": 25684.88030707761,
+              "discount_from_anchor_parity": 0.9953310303948387,
+              "parity_nrmse": 0.0011337851005826353,
+              "pairs": 51,
+              "anchor_pairs": 34,
+              "potential_heldout_pairs_before_further_cleaning": 17
+            },
+            {
+              "date": "2025-06-27",
+              "expiry": "2025-07-17",
+              "forward_from_anchor_parity": 25707.00965189987,
+              "discount_from_anchor_parity": 0.9958309233955277,
+              "parity_nrmse": 0.0003684734756172294,
+              "pairs": 27,
+              "anchor_pairs": 18,
+              "potential_heldout_pairs_before_further_cleaning": 9
+            },
+            {
+              "date": "2025-06-27",
+              "expiry": "2025-07-24",
+              "forward_from_anchor_parity": 25729.87852937124,
+              "discount_from_anchor_parity": 0.9857301943100412,
+              "parity_nrmse": 0.0006340204225723456,
+              "pairs": 22,
+              "anchor_pairs": 15,
+              "potential_heldout_pairs_before_further_cleaning": 7
+            },
+            {
+              "date": "2025-06-27",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 25757.608791492847,
+              "discount_from_anchor_parity": 0.9885311850861543,
+              "parity_nrmse": 0.0009179447203076835,
+              "pairs": 72,
+              "anchor_pairs": 48,
+              "potential_heldout_pairs_before_further_cleaning": 24
+            },
+            {
+              "date": "2025-06-27",
+              "expiry": "2025-08-28",
+              "forward_from_anchor_parity": 25876.094758066047,
+              "discount_from_anchor_parity": 0.9803883335072624,
+              "parity_nrmse": 0.00028366088679244506,
+              "pairs": 35,
+              "anchor_pairs": 23,
+              "potential_heldout_pairs_before_further_cleaning": 12
+            },
+            {
+              "date": "2025-06-27",
+              "expiry": "2025-09-25",
+              "forward_from_anchor_parity": 25993.23175798443,
+              "discount_from_anchor_parity": 0.9751848574302627,
+              "parity_nrmse": 0.0008159609294486246,
+              "pairs": 37,
+              "anchor_pairs": 25,
+              "potential_heldout_pairs_before_further_cleaning": 12
+            },
+            {
+              "date": "2025-06-30",
+              "expiry": "2025-07-10",
+              "forward_from_anchor_parity": 25545.688426725446,
+              "discount_from_anchor_parity": 1.0001283181629839,
+              "parity_nrmse": 0.00041425029070081126,
+              "pairs": 84,
+              "anchor_pairs": 56,
+              "potential_heldout_pairs_before_further_cleaning": 28
+            },
+            {
+              "date": "2025-06-30",
+              "expiry": "2025-07-31",
+              "forward_from_anchor_parity": 25625.979167177175,
+              "discount_from_anchor_parity": 0.9901132263089393,
+              "parity_nrmse": 0.0008474935532708547,
+              "pairs": 65,
+              "anchor_pairs": 43,
+              "potential_heldout_pairs_before_further_cleaning": 22
+            },
+            {
+              "date": "2025-06-30",
+              "expiry": "2025-08-28",
+              "forward_from_anchor_parity": 25750.77814189614,
+              "discount_from_anchor_parity": 0.9821506560171502,
+              "parity_nrmse": 0.0007626442048951728,
+              "pairs": 38,
+              "anchor_pairs": 25,
+              "potential_heldout_pairs_before_further_cleaning": 13
+            },
+            {
+              "date": "2025-06-30",
+              "expiry": "2025-09-25",
+              "forward_from_anchor_parity": 25894.656563292854,
+              "discount_from_anchor_parity": 0.9746586978341251,
+              "parity_nrmse": 0.0009877804532265663,
+              "pairs": 31,
+              "anchor_pairs": 21,
+              "potential_heldout_pairs_before_further_cleaning": 10
+            }
+          ]
+        }
+      }
+    },
+    "iran_opening_march_2026": {
+      "dates": [
+        "2026-02-28",
+        "2026-03-31"
+      ],
+      "source_status_counts": {
+        "downloaded": 19,
+        "http_404": 3
+      },
+      "unavailable_manifest_dates": [
+        {
+          "date": "2026-03-03",
+          "status": "http_404"
+        },
+        {
+          "date": "2026-03-26",
+          "status": "http_404"
+        },
+        {
+          "date": "2026-03-31",
+          "status": "http_404"
+        }
+      ],
+      "source_files": [
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260302_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260302_F_0000.csv.zip",
+          "sha256": "d19fea376098f23e75c014b54a8e0a3620ee23de4ee1c162cf2ba58a1b40065b",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260304_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260304_F_0000.csv.zip",
+          "sha256": "78af47913866eb727ef0139cf0741fc6210bd492d36b7bc6aa544efbaab4e23f",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260305_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260305_F_0000.csv.zip",
+          "sha256": "2e814e092e50673ca9b1f5b4b3a7049b62040cee89aa43b189a06cbb75d9efb3",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260306_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260306_F_0000.csv.zip",
+          "sha256": "925bcb068f8edcce4752913f1ff1be9a1c3f522cfd2b923f06abc73cf64d4a28",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260309_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260309_F_0000.csv.zip",
+          "sha256": "e9ee4895463739801876ea66f73870b149a0ad77c586b5c5ba6be42704a412e6",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260310_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260310_F_0000.csv.zip",
+          "sha256": "ac7684463bc3537bddf9b2af79c8473d684f15a1436ba7465a324e1e7a5e6be7",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260311_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260311_F_0000.csv.zip",
+          "sha256": "da0777bb4289515fada5fdb82df6393ee9940dc646c249d3b5e35331a81ef9ff",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260312_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260312_F_0000.csv.zip",
+          "sha256": "b98e0a10aee09ff13d8c7648d450be28142dffa700812f2d8f9869efbc146f9b",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260313_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260313_F_0000.csv.zip",
+          "sha256": "80d0ca0c99f9008c11fca8d3fcc9b18382e1677eff6152984a62bee675173028",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260316_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260316_F_0000.csv.zip",
+          "sha256": "32f4badf13328c662a6c5d106bbf1fc7c6f6028d5c83b178a02f235fa66f2729",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260317_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260317_F_0000.csv.zip",
+          "sha256": "b05e123cf77c90af4b1e56447a8d88c1e37ba644632f5cb387a5ba5ae80ae2f2",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260318_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260318_F_0000.csv.zip",
+          "sha256": "c8ace1ad975cec9edb3eedb9ee1cc94cf112a20395f0ba701cdce8299059ed43",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260319_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260319_F_0000.csv.zip",
+          "sha256": "f002c5616614454255eae8bac569ac70da863b68a567b8cff0527ec683322c55",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260320_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260320_F_0000.csv.zip",
+          "sha256": "cbdfb412383d68d229ec04455e4aa3bb5aacf922752f7b44ee5bbe8be12e3096",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260323_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260323_F_0000.csv.zip",
+          "sha256": "d5c7d2bbe161b78e957e950e5ef3905311724e0ce1e4c094945796365d30aa3d",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260324_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260324_F_0000.csv.zip",
+          "sha256": "416144294ac82fda3482dbce74e392109bbce7b4e1acf852f04eeb851604dcfd",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260325_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260325_F_0000.csv.zip",
+          "sha256": "d12f504c0a33e335699304c09bc2797e0716bc0b50c1f107d99c2457622b8b60",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260327_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260327_F_0000.csv.zip",
+          "sha256": "6fc58a18bd8eff3bfa26a1baed49554634b6ce8a102d1e47c81ef42d81c98c9f",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260330_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260330_F_0000.csv.zip",
+          "sha256": "12fa2140c59b085daa77742eacebb1eef2d0bd401103d3692020f6d04396b9b7",
+          "hash_verified": true
+        }
+      ],
+      "symbols": {
+        "ADANIPOWER": {
+          "listed_option_rows": 0,
+          "conflicting_key_duplicates": 0,
+          "positive_traded_option_rows": 0,
+          "days_with_positive_traded_options": 0,
+          "preliminary_eligible_dates": [],
+          "preliminary_eligible_groups": []
+        },
+        "NIFTY": {
+          "listed_option_rows": 38442,
+          "conflicting_key_duplicates": 0,
+          "positive_traded_option_rows": 22769,
+          "expiry_groups_outside_7_100_days": 133,
+          "expiry_groups_six_or_more_pairs": 105,
+          "expiry_groups_rejected_parity": 33,
+          "expiry_groups_under_six_traded_pairs": 13,
+          "days_with_positive_traded_options": 19,
+          "preliminary_eligible_dates": [
+            "2026-03-02",
+            "2026-03-04",
+            "2026-03-05",
+            "2026-03-06",
+            "2026-03-09",
+            "2026-03-10",
+            "2026-03-11",
+            "2026-03-12",
+            "2026-03-13",
+            "2026-03-16",
+            "2026-03-17",
+            "2026-03-18",
+            "2026-03-19",
+            "2026-03-20",
+            "2026-03-23",
+            "2026-03-24",
+            "2026-03-25",
+            "2026-03-27",
+            "2026-03-30"
+          ],
+          "preliminary_eligible_groups": [
+            {
+              "date": "2026-03-02",
+              "expiry": "2026-03-30",
+              "forward_from_anchor_parity": 24981.795233873465,
+              "discount_from_anchor_parity": 0.9927738271353524,
+              "parity_nrmse": 0.0023971487042204736,
+              "pairs": 90,
+              "anchor_pairs": 60,
+              "potential_heldout_pairs_before_further_cleaning": 30
+            },
+            {
+              "date": "2026-03-02",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 25151.529913568276,
+              "discount_from_anchor_parity": 0.9826529194059316,
+              "parity_nrmse": 0.0013814824852534126,
+              "pairs": 65,
+              "anchor_pairs": 43,
+              "potential_heldout_pairs_before_further_cleaning": 22
+            },
+            {
+              "date": "2026-03-02",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 25239.655731514355,
+              "discount_from_anchor_parity": 0.9644221918256736,
+              "parity_nrmse": 0.002022434031658573,
+              "pairs": 48,
+              "anchor_pairs": 32,
+              "potential_heldout_pairs_before_further_cleaning": 16
+            },
+            {
+              "date": "2026-03-04",
+              "expiry": "2026-03-24",
+              "forward_from_anchor_parity": 24566.56402742887,
+              "discount_from_anchor_parity": 1.002974261230989,
+              "parity_nrmse": 0.001670655201682837,
+              "pairs": 52,
+              "anchor_pairs": 35,
+              "potential_heldout_pairs_before_further_cleaning": 17
+            },
+            {
+              "date": "2026-03-04",
+              "expiry": "2026-03-30",
+              "forward_from_anchor_parity": 24589.020366082743,
+              "discount_from_anchor_parity": 0.9917147855713951,
+              "parity_nrmse": 0.0015082770246669709,
+              "pairs": 85,
+              "anchor_pairs": 57,
+              "potential_heldout_pairs_before_further_cleaning": 28
+            },
+            {
+              "date": "2026-03-04",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 24752.239870305602,
+              "discount_from_anchor_parity": 0.9814047160673125,
+              "parity_nrmse": 0.0023333458920732682,
+              "pairs": 69,
+              "anchor_pairs": 46,
+              "potential_heldout_pairs_before_further_cleaning": 23
+            },
+            {
+              "date": "2026-03-04",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24860.948668249996,
+              "discount_from_anchor_parity": 0.9681998787890513,
+              "parity_nrmse": 0.001220638686952392,
+              "pairs": 48,
+              "anchor_pairs": 32,
+              "potential_heldout_pairs_before_further_cleaning": 16
+            },
+            {
+              "date": "2026-03-05",
+              "expiry": "2026-03-17",
+              "forward_from_anchor_parity": 24785.931635037938,
+              "discount_from_anchor_parity": 0.9939701618453005,
+              "parity_nrmse": 0.0021936520945273546,
+              "pairs": 60,
+              "anchor_pairs": 40,
+              "potential_heldout_pairs_before_further_cleaning": 20
+            },
+            {
+              "date": "2026-03-05",
+              "expiry": "2026-03-30",
+              "forward_from_anchor_parity": 24851.912516807897,
+              "discount_from_anchor_parity": 0.9898167542567382,
+              "parity_nrmse": 0.002915035897322806,
+              "pairs": 87,
+              "anchor_pairs": 58,
+              "potential_heldout_pairs_before_further_cleaning": 29
+            },
+            {
+              "date": "2026-03-05",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 25012.002929266495,
+              "discount_from_anchor_parity": 0.972408203317019,
+              "parity_nrmse": 0.0023924149690943445,
+              "pairs": 57,
+              "anchor_pairs": 38,
+              "potential_heldout_pairs_before_further_cleaning": 19
+            },
+            {
+              "date": "2026-03-05",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 25102.248823759895,
+              "discount_from_anchor_parity": 0.9455074221380958,
+              "parity_nrmse": 0.005310387582567727,
+              "pairs": 39,
+              "anchor_pairs": 26,
+              "potential_heldout_pairs_before_further_cleaning": 13
+            },
+            {
+              "date": "2026-03-06",
+              "expiry": "2026-03-17",
+              "forward_from_anchor_parity": 24487.620726201632,
+              "discount_from_anchor_parity": 0.9949031334052594,
+              "parity_nrmse": 0.002037928892275236,
+              "pairs": 54,
+              "anchor_pairs": 36,
+              "potential_heldout_pairs_before_further_cleaning": 18
+            },
+            {
+              "date": "2026-03-06",
+              "expiry": "2026-03-24",
+              "forward_from_anchor_parity": 24526.417558581736,
+              "discount_from_anchor_parity": 0.9896504321651388,
+              "parity_nrmse": 0.003641061816968613,
+              "pairs": 36,
+              "anchor_pairs": 24,
+              "potential_heldout_pairs_before_further_cleaning": 12
+            },
+            {
+              "date": "2026-03-06",
+              "expiry": "2026-03-30",
+              "forward_from_anchor_parity": 24553.352074421837,
+              "discount_from_anchor_parity": 0.9931768241739657,
+              "parity_nrmse": 0.0017786045440815047,
+              "pairs": 71,
+              "anchor_pairs": 47,
+              "potential_heldout_pairs_before_further_cleaning": 24
+            },
+            {
+              "date": "2026-03-06",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 24718.862400641217,
+              "discount_from_anchor_parity": 0.9878061789117542,
+              "parity_nrmse": 0.0019320371858018708,
+              "pairs": 57,
+              "anchor_pairs": 38,
+              "potential_heldout_pairs_before_further_cleaning": 19
+            },
+            {
+              "date": "2026-03-06",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24867.31481630955,
+              "discount_from_anchor_parity": 0.9641497181944723,
+              "parity_nrmse": 0.0024178316861744173,
+              "pairs": 32,
+              "anchor_pairs": 21,
+              "potential_heldout_pairs_before_further_cleaning": 11
+            },
+            {
+              "date": "2026-03-09",
+              "expiry": "2026-03-30",
+              "forward_from_anchor_parity": 24144.274817500453,
+              "discount_from_anchor_parity": 0.9916968255907317,
+              "parity_nrmse": 0.0026741194985959453,
+              "pairs": 100,
+              "anchor_pairs": 67,
+              "potential_heldout_pairs_before_further_cleaning": 33
+            },
+            {
+              "date": "2026-03-09",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 24309.376334340264,
+              "discount_from_anchor_parity": 0.9849291158612937,
+              "parity_nrmse": 0.003736280972386421,
+              "pairs": 69,
+              "anchor_pairs": 46,
+              "potential_heldout_pairs_before_further_cleaning": 23
+            },
+            {
+              "date": "2026-03-09",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24369.31664994426,
+              "discount_from_anchor_parity": 0.9829910630037887,
+              "parity_nrmse": 0.002595362652653413,
+              "pairs": 41,
+              "anchor_pairs": 27,
+              "potential_heldout_pairs_before_further_cleaning": 14
+            },
+            {
+              "date": "2026-03-10",
+              "expiry": "2026-03-24",
+              "forward_from_anchor_parity": 24369.799119645206,
+              "discount_from_anchor_parity": 0.9939045750875046,
+              "parity_nrmse": 0.002309874381588266,
+              "pairs": 49,
+              "anchor_pairs": 33,
+              "potential_heldout_pairs_before_further_cleaning": 16
+            },
+            {
+              "date": "2026-03-10",
+              "expiry": "2026-03-30",
+              "forward_from_anchor_parity": 24398.59509273147,
+              "discount_from_anchor_parity": 0.9920067156974854,
+              "parity_nrmse": 0.00197048086109989,
+              "pairs": 96,
+              "anchor_pairs": 64,
+              "potential_heldout_pairs_before_further_cleaning": 32
+            },
+            {
+              "date": "2026-03-10",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 24545.58984700512,
+              "discount_from_anchor_parity": 0.982527526701147,
+              "parity_nrmse": 0.0016530478359056305,
+              "pairs": 63,
+              "anchor_pairs": 42,
+              "potential_heldout_pairs_before_further_cleaning": 21
+            },
+            {
+              "date": "2026-03-10",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24643.28269821673,
+              "discount_from_anchor_parity": 0.9844395086341252,
+              "parity_nrmse": 0.002600593951708253,
+              "pairs": 42,
+              "anchor_pairs": 28,
+              "potential_heldout_pairs_before_further_cleaning": 14
+            },
+            {
+              "date": "2026-03-11",
+              "expiry": "2026-03-24",
+              "forward_from_anchor_parity": 23921.2940042906,
+              "discount_from_anchor_parity": 0.9959984973427519,
+              "parity_nrmse": 0.003210352989649938,
+              "pairs": 104,
+              "anchor_pairs": 69,
+              "potential_heldout_pairs_before_further_cleaning": 35
+            },
+            {
+              "date": "2026-03-11",
+              "expiry": "2026-03-30",
+              "forward_from_anchor_parity": 23946.34431240656,
+              "discount_from_anchor_parity": 0.9936914501936017,
+              "parity_nrmse": 0.0013796357874139228,
+              "pairs": 122,
+              "anchor_pairs": 81,
+              "potential_heldout_pairs_before_further_cleaning": 41
+            },
+            {
+              "date": "2026-03-11",
+              "expiry": "2026-04-07",
+              "forward_from_anchor_parity": 24016.40429248019,
+              "discount_from_anchor_parity": 0.9865664563344704,
+              "parity_nrmse": 0.0022726709792052426,
+              "pairs": 56,
+              "anchor_pairs": 37,
+              "potential_heldout_pairs_before_further_cleaning": 19
+            },
+            {
+              "date": "2026-03-11",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 24118.009774652048,
+              "discount_from_anchor_parity": 0.9846272866132747,
+              "parity_nrmse": 0.0013936874100550088,
+              "pairs": 88,
+              "anchor_pairs": 59,
+              "potential_heldout_pairs_before_further_cleaning": 29
+            },
+            {
+              "date": "2026-03-11",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24252.50189725644,
+              "discount_from_anchor_parity": 0.9897453897393904,
+              "parity_nrmse": 0.0031035947632510903,
+              "pairs": 63,
+              "anchor_pairs": 42,
+              "potential_heldout_pairs_before_further_cleaning": 21
+            },
+            {
+              "date": "2026-03-12",
+              "expiry": "2026-03-24",
+              "forward_from_anchor_parity": 23703.282976670278,
+              "discount_from_anchor_parity": 0.9966850206159831,
+              "parity_nrmse": 0.0014362141399017585,
+              "pairs": 68,
+              "anchor_pairs": 45,
+              "potential_heldout_pairs_before_further_cleaning": 23
+            },
+            {
+              "date": "2026-03-12",
+              "expiry": "2026-03-30",
+              "forward_from_anchor_parity": 23733.205168382174,
+              "discount_from_anchor_parity": 0.992062727554182,
+              "parity_nrmse": 0.0017346305051231773,
+              "pairs": 97,
+              "anchor_pairs": 65,
+              "potential_heldout_pairs_before_further_cleaning": 32
+            },
+            {
+              "date": "2026-03-12",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 23898.6218171259,
+              "discount_from_anchor_parity": 0.9819596603859915,
+              "parity_nrmse": 0.001095274926818013,
+              "pairs": 66,
+              "anchor_pairs": 44,
+              "potential_heldout_pairs_before_further_cleaning": 22
+            },
+            {
+              "date": "2026-03-12",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24016.622972136167,
+              "discount_from_anchor_parity": 0.9745707417122501,
+              "parity_nrmse": 0.0021455718567682035,
+              "pairs": 49,
+              "anchor_pairs": 33,
+              "potential_heldout_pairs_before_further_cleaning": 16
+            },
+            {
+              "date": "2026-03-13",
+              "expiry": "2026-03-24",
+              "forward_from_anchor_parity": 23194.72947773935,
+              "discount_from_anchor_parity": 0.9962184092703105,
+              "parity_nrmse": 0.0016605372374257936,
+              "pairs": 113,
+              "anchor_pairs": 75,
+              "potential_heldout_pairs_before_further_cleaning": 38
+            },
+            {
+              "date": "2026-03-13",
+              "expiry": "2026-03-30",
+              "forward_from_anchor_parity": 23213.191080600864,
+              "discount_from_anchor_parity": 0.9947021636314282,
+              "parity_nrmse": 0.002935508885914436,
+              "pairs": 119,
+              "anchor_pairs": 79,
+              "potential_heldout_pairs_before_further_cleaning": 40
+            },
+            {
+              "date": "2026-03-13",
+              "expiry": "2026-04-07",
+              "forward_from_anchor_parity": 23275.89155359097,
+              "discount_from_anchor_parity": 0.9958470418685205,
+              "parity_nrmse": 0.0020141219990912353,
+              "pairs": 39,
+              "anchor_pairs": 26,
+              "potential_heldout_pairs_before_further_cleaning": 13
+            },
+            {
+              "date": "2026-03-13",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 23377.152903072023,
+              "discount_from_anchor_parity": 0.988250169088623,
+              "parity_nrmse": 0.0008871198343648577,
+              "pairs": 84,
+              "anchor_pairs": 56,
+              "potential_heldout_pairs_before_further_cleaning": 28
+            },
+            {
+              "date": "2026-03-13",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 23538.22261582784,
+              "discount_from_anchor_parity": 0.9804806121168897,
+              "parity_nrmse": 0.0031006080802004976,
+              "pairs": 84,
+              "anchor_pairs": 56,
+              "potential_heldout_pairs_before_further_cleaning": 28
+            },
+            {
+              "date": "2026-03-16",
+              "expiry": "2026-03-30",
+              "forward_from_anchor_parity": 23438.36198753548,
+              "discount_from_anchor_parity": 0.9957340743296049,
+              "parity_nrmse": 0.0024478777035535706,
+              "pairs": 122,
+              "anchor_pairs": 81,
+              "potential_heldout_pairs_before_further_cleaning": 41
+            },
+            {
+              "date": "2026-03-16",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 23588.67271405254,
+              "discount_from_anchor_parity": 0.9813630628137047,
+              "parity_nrmse": 0.002881626683956443,
+              "pairs": 83,
+              "anchor_pairs": 55,
+              "potential_heldout_pairs_before_further_cleaning": 28
+            },
+            {
+              "date": "2026-03-16",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 23729.468277456683,
+              "discount_from_anchor_parity": 0.966147014412476,
+              "parity_nrmse": 0.003180867985061276,
+              "pairs": 77,
+              "anchor_pairs": 51,
+              "potential_heldout_pairs_before_further_cleaning": 26
+            },
+            {
+              "date": "2026-03-17",
+              "expiry": "2026-03-30",
+              "forward_from_anchor_parity": 23625.88605320273,
+              "discount_from_anchor_parity": 0.9931721696971334,
+              "parity_nrmse": 0.0023269502798293554,
+              "pairs": 107,
+              "anchor_pairs": 71,
+              "potential_heldout_pairs_before_further_cleaning": 36
+            },
+            {
+              "date": "2026-03-17",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 23769.057537922763,
+              "discount_from_anchor_parity": 0.9784092646620436,
+              "parity_nrmse": 0.0019241375026800543,
+              "pairs": 71,
+              "anchor_pairs": 47,
+              "potential_heldout_pairs_before_further_cleaning": 24
+            },
+            {
+              "date": "2026-03-17",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 23896.879942662974,
+              "discount_from_anchor_parity": 0.9879238098833961,
+              "parity_nrmse": 0.0021765854981463865,
+              "pairs": 52,
+              "anchor_pairs": 35,
+              "potential_heldout_pairs_before_further_cleaning": 17
+            },
+            {
+              "date": "2026-03-18",
+              "expiry": "2026-03-30",
+              "forward_from_anchor_parity": 23785.619260011455,
+              "discount_from_anchor_parity": 0.9976069736617569,
+              "parity_nrmse": 0.0011896321775989598,
+              "pairs": 111,
+              "anchor_pairs": 74,
+              "potential_heldout_pairs_before_further_cleaning": 37
+            },
+            {
+              "date": "2026-03-18",
+              "expiry": "2026-04-13",
+              "forward_from_anchor_parity": 23853.008110410123,
+              "discount_from_anchor_parity": 0.9915573007018285,
+              "parity_nrmse": 0.0008263466999110094,
+              "pairs": 14,
+              "anchor_pairs": 9,
+              "potential_heldout_pairs_before_further_cleaning": 5
+            },
+            {
+              "date": "2026-03-18",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 23924.658860563195,
+              "discount_from_anchor_parity": 0.9840995854884927,
+              "parity_nrmse": 0.0007127868555887213,
+              "pairs": 71,
+              "anchor_pairs": 47,
+              "potential_heldout_pairs_before_further_cleaning": 24
+            },
+            {
+              "date": "2026-03-18",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24081.183297183245,
+              "discount_from_anchor_parity": 0.9738355063074187,
+              "parity_nrmse": 0.0011300357181442866,
+              "pairs": 49,
+              "anchor_pairs": 33,
+              "potential_heldout_pairs_before_further_cleaning": 16
+            },
+            {
+              "date": "2026-03-19",
+              "expiry": "2026-03-30",
+              "forward_from_anchor_parity": 23057.53509257622,
+              "discount_from_anchor_parity": 0.9983074574514115,
+              "parity_nrmse": 0.0018069848195985002,
+              "pairs": 116,
+              "anchor_pairs": 77,
+              "potential_heldout_pairs_before_further_cleaning": 39
+            },
+            {
+              "date": "2026-03-19",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 23198.852786827214,
+              "discount_from_anchor_parity": 0.9765750974192217,
+              "parity_nrmse": 0.003852324719213177,
+              "pairs": 83,
+              "anchor_pairs": 55,
+              "potential_heldout_pairs_before_further_cleaning": 28
+            },
+            {
+              "date": "2026-03-19",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 23339.60815289901,
+              "discount_from_anchor_parity": 0.9579974140156313,
+              "parity_nrmse": 0.00448173062496814,
+              "pairs": 51,
+              "anchor_pairs": 34,
+              "potential_heldout_pairs_before_further_cleaning": 17
+            },
+            {
+              "date": "2026-03-20",
+              "expiry": "2026-03-30",
+              "forward_from_anchor_parity": 23145.148408961715,
+              "discount_from_anchor_parity": 0.9969853644330632,
+              "parity_nrmse": 0.0012846936557637443,
+              "pairs": 105,
+              "anchor_pairs": 70,
+              "potential_heldout_pairs_before_further_cleaning": 35
+            },
+            {
+              "date": "2026-03-20",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 23297.457634722534,
+              "discount_from_anchor_parity": 0.9805476941305603,
+              "parity_nrmse": 0.002222027574777308,
+              "pairs": 80,
+              "anchor_pairs": 53,
+              "potential_heldout_pairs_before_further_cleaning": 27
+            },
+            {
+              "date": "2026-03-20",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 23436.039752904308,
+              "discount_from_anchor_parity": 0.9734546674826631,
+              "parity_nrmse": 0.0024250837802367187,
+              "pairs": 50,
+              "anchor_pairs": 33,
+              "potential_heldout_pairs_before_further_cleaning": 17
+            },
+            {
+              "date": "2026-03-23",
+              "expiry": "2026-03-30",
+              "forward_from_anchor_parity": 22522.321567900726,
+              "discount_from_anchor_parity": 0.9977880878563937,
+              "parity_nrmse": 0.0015052778066507039,
+              "pairs": 122,
+              "anchor_pairs": 81,
+              "potential_heldout_pairs_before_further_cleaning": 41
+            },
+            {
+              "date": "2026-03-23",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 22667.60284868638,
+              "discount_from_anchor_parity": 0.9834129841307421,
+              "parity_nrmse": 0.003774772438453314,
+              "pairs": 84,
+              "anchor_pairs": 56,
+              "potential_heldout_pairs_before_further_cleaning": 28
+            },
+            {
+              "date": "2026-03-23",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 22814.217825486885,
+              "discount_from_anchor_parity": 0.9692632941706648,
+              "parity_nrmse": 0.00401063467363654,
+              "pairs": 53,
+              "anchor_pairs": 35,
+              "potential_heldout_pairs_before_further_cleaning": 18
+            },
+            {
+              "date": "2026-03-23",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 22901.17487246044,
+              "discount_from_anchor_parity": 0.9633284494179792,
+              "parity_nrmse": 0.0005319438195938624,
+              "pairs": 13,
+              "anchor_pairs": 9,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2026-03-24",
+              "expiry": "2026-04-07",
+              "forward_from_anchor_parity": 22964.51790199955,
+              "discount_from_anchor_parity": 0.995778100137324,
+              "parity_nrmse": 0.0026221713278970393,
+              "pairs": 57,
+              "anchor_pairs": 38,
+              "potential_heldout_pairs_before_further_cleaning": 19
+            },
+            {
+              "date": "2026-03-24",
+              "expiry": "2026-04-13",
+              "forward_from_anchor_parity": 22994.249561552726,
+              "discount_from_anchor_parity": 0.9880781589594841,
+              "parity_nrmse": 0.0033247286025845624,
+              "pairs": 39,
+              "anchor_pairs": 26,
+              "potential_heldout_pairs_before_further_cleaning": 13
+            },
+            {
+              "date": "2026-03-24",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 23073.803285910806,
+              "discount_from_anchor_parity": 0.9824103797230705,
+              "parity_nrmse": 0.002849813454437389,
+              "pairs": 88,
+              "anchor_pairs": 59,
+              "potential_heldout_pairs_before_further_cleaning": 29
+            },
+            {
+              "date": "2026-03-24",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 23202.978363881197,
+              "discount_from_anchor_parity": 0.9681311012107793,
+              "parity_nrmse": 0.0024892783780318365,
+              "pairs": 53,
+              "anchor_pairs": 35,
+              "potential_heldout_pairs_before_further_cleaning": 18
+            },
+            {
+              "date": "2026-03-24",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 23310.49623266603,
+              "discount_from_anchor_parity": 0.9628184136083192,
+              "parity_nrmse": 0.0005764028226196581,
+              "pairs": 12,
+              "anchor_pairs": 8,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2026-03-25",
+              "expiry": "2026-04-07",
+              "forward_from_anchor_parity": 23331.16462228692,
+              "discount_from_anchor_parity": 0.992272084110464,
+              "parity_nrmse": 0.0017775816710938472,
+              "pairs": 66,
+              "anchor_pairs": 44,
+              "potential_heldout_pairs_before_further_cleaning": 22
+            },
+            {
+              "date": "2026-03-25",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 23444.285054915505,
+              "discount_from_anchor_parity": 0.9830006113248577,
+              "parity_nrmse": 0.003220155307581596,
+              "pairs": 89,
+              "anchor_pairs": 59,
+              "potential_heldout_pairs_before_further_cleaning": 30
+            },
+            {
+              "date": "2026-03-25",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 23584.379804956232,
+              "discount_from_anchor_parity": 0.9667727175094307,
+              "parity_nrmse": 0.004294100134882321,
+              "pairs": 61,
+              "anchor_pairs": 41,
+              "potential_heldout_pairs_before_further_cleaning": 20
+            },
+            {
+              "date": "2026-03-25",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 23697.892311596603,
+              "discount_from_anchor_parity": 0.9629579881656802,
+              "parity_nrmse": 0.00047018911739691335,
+              "pairs": 12,
+              "anchor_pairs": 8,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2026-03-27",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 22926.837638730518,
+              "discount_from_anchor_parity": 0.9830990300384995,
+              "parity_nrmse": 0.0022453910214816934,
+              "pairs": 98,
+              "anchor_pairs": 65,
+              "potential_heldout_pairs_before_further_cleaning": 33
+            },
+            {
+              "date": "2026-03-27",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 23083.516610086408,
+              "discount_from_anchor_parity": 0.9669746142228942,
+              "parity_nrmse": 0.003264531170150477,
+              "pairs": 50,
+              "anchor_pairs": 33,
+              "potential_heldout_pairs_before_further_cleaning": 17
+            },
+            {
+              "date": "2026-03-27",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 23197.26921108311,
+              "discount_from_anchor_parity": 0.9653025070771349,
+              "parity_nrmse": 0.0004829661511717859,
+              "pairs": 13,
+              "anchor_pairs": 9,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2026-03-30",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 22449.0328410903,
+              "discount_from_anchor_parity": 0.9832812372617165,
+              "parity_nrmse": 0.0039990638030187,
+              "pairs": 108,
+              "anchor_pairs": 72,
+              "potential_heldout_pairs_before_further_cleaning": 36
+            },
+            {
+              "date": "2026-03-30",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 22592.290576147236,
+              "discount_from_anchor_parity": 0.9717429915940536,
+              "parity_nrmse": 0.0037031980451128917,
+              "pairs": 47,
+              "anchor_pairs": 31,
+              "potential_heldout_pairs_before_further_cleaning": 16
+            },
+            {
+              "date": "2026-03-30",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 22718.634454526436,
+              "discount_from_anchor_parity": 0.9656094754253306,
+              "parity_nrmse": 0.0008968782049168653,
+              "pairs": 13,
+              "anchor_pairs": 9,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            }
+          ]
+        }
+      }
+    },
+    "iran_april_2026_later_window": {
+      "dates": [
+        "2026-04-01",
+        "2026-04-30"
+      ],
+      "source_status_counts": {
+        "downloaded": 20,
+        "http_404": 2
+      },
+      "unavailable_manifest_dates": [
+        {
+          "date": "2026-04-03",
+          "status": "http_404"
+        },
+        {
+          "date": "2026-04-14",
+          "status": "http_404"
+        }
+      ],
+      "source_files": [
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260401_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260401_F_0000.csv.zip",
+          "sha256": "b1d91ea94fc52bdd8d0e1712389bf44c32bc50d9d0f7ed2f77b7ee4e82b72ae2",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260402_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260402_F_0000.csv.zip",
+          "sha256": "2adcc091cdd4b1249d239f50d2fddad523102fc0db0eb4f1d084ee0fbe47a0a3",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260406_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260406_F_0000.csv.zip",
+          "sha256": "8e915bb23c4321f715b5fd5175acecd7435fb6f353d4c3e5bc12faebf97df6fd",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260407_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260407_F_0000.csv.zip",
+          "sha256": "0bdd37bd0706f982c68b599d9454832936a45b1f30bbb37175e32ed93da26652",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260408_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260408_F_0000.csv.zip",
+          "sha256": "19e77f9a344a0f0b14d62365eabaf91db6d7d961d6af5efef58d019044bdaeea",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260409_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260409_F_0000.csv.zip",
+          "sha256": "ae737c5293db23d2e717e0feb50254e631e3c8963d5f9d255ac1d50449f2670e",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260410_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260410_F_0000.csv.zip",
+          "sha256": "e8e37992e54766438161bbcb8bc3c4a456fce62da3a4bdf2ce084dd2664def10",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260413_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260413_F_0000.csv.zip",
+          "sha256": "2699b68fabbb4ea5f7e96db0d5ba3a7157b05de7464271036897320d00c02cd4",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260415_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260415_F_0000.csv.zip",
+          "sha256": "80442648c77cd1d1d97a5663360f00ae32bdfff4835721ebd39db58cd97ae492",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260416_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260416_F_0000.csv.zip",
+          "sha256": "c6feed68ee518d5ef2981169e21cda0014565e21affba3a3c426d22419f5d7a7",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260417_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260417_F_0000.csv.zip",
+          "sha256": "0586813879b21e8b067f1913c189aedd758f16d5a15b45bd6e5d6a68871894cf",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260420_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260420_F_0000.csv.zip",
+          "sha256": "75769579d9df5fcbbf4ce82b1a26202b1bebe30177aaef6da62019de3d2bd046",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260421_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260421_F_0000.csv.zip",
+          "sha256": "c71c5a7a62dcd012d33ae9d107c027af82a989eed3a9bf953c7f353f4a205ea9",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260422_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260422_F_0000.csv.zip",
+          "sha256": "fa6fb378702da9501dc4fd5cfd68576e93f0729f4e5647f5a30c4ee2d9a93512",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260423_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260423_F_0000.csv.zip",
+          "sha256": "70c2396ede54f7890570602b0cf30c894e829ba8abd42d26456477ad730c5537",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260424_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260424_F_0000.csv.zip",
+          "sha256": "11fc98d12c8e86faa051f809609bfda2329aa5363c71c5615707a26e2cb90ba1",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260427_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260427_F_0000.csv.zip",
+          "sha256": "b4fbcc32ad6fb8b6a1393d0a962a702f5341381a5f4e32f97542e52de78fb43b",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260428_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260428_F_0000.csv.zip",
+          "sha256": "68894424c23cf6084ce56618016c5369d57e5573c2b6874ea024b3f7e82ab230",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260429_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260429_F_0000.csv.zip",
+          "sha256": "9550f5913734800e40127e2ee8d4ea54993904efe3a0cf105ca469662c4abfcd",
+          "hash_verified": true
+        },
+        {
+          "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260430_F_0000.csv.zip",
+          "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260430_F_0000.csv.zip",
+          "sha256": "a0c25fc7cbccfef1e14094edd456541d3a1e0283ea7fd3268090fd1e733d2627",
+          "hash_verified": true
+        }
+      ],
+      "symbols": {
+        "ADANIPOWER": {
+          "listed_option_rows": 3130,
+          "conflicting_key_duplicates": 0,
+          "positive_traded_option_rows": 1293,
+          "expiry_groups_under_six_traded_pairs": 14,
+          "expiry_groups_six_or_more_pairs": 23,
+          "expiry_groups_rejected_parity": 13,
+          "expiry_groups_outside_7_100_days": 5,
+          "days_with_positive_traded_options": 20,
+          "preliminary_eligible_dates": [
+            "2026-04-06",
+            "2026-04-08",
+            "2026-04-15",
+            "2026-04-21",
+            "2026-04-22",
+            "2026-04-23",
+            "2026-04-24",
+            "2026-04-27",
+            "2026-04-28",
+            "2026-04-29"
+          ],
+          "preliminary_eligible_groups": [
+            {
+              "date": "2026-04-06",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 164.29171973638176,
+              "discount_from_anchor_parity": 0.9864183163032159,
+              "parity_nrmse": 0.0015933211186445278,
+              "pairs": 12,
+              "anchor_pairs": 8,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2026-04-08",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 169.42143112010027,
+              "discount_from_anchor_parity": 0.9937463569464751,
+              "parity_nrmse": 0.008342037932480914,
+              "pairs": 16,
+              "anchor_pairs": 11,
+              "potential_heldout_pairs_before_further_cleaning": 5
+            },
+            {
+              "date": "2026-04-15",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 185.43304085379134,
+              "discount_from_anchor_parity": 0.9813435114503812,
+              "parity_nrmse": 0.0032333339998410256,
+              "pairs": 6,
+              "anchor_pairs": 4,
+              "potential_heldout_pairs_before_further_cleaning": 2
+            },
+            {
+              "date": "2026-04-21",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 203.49694493068054,
+              "discount_from_anchor_parity": 0.998083390293918,
+              "parity_nrmse": 0.0015670380232258548,
+              "pairs": 18,
+              "anchor_pairs": 12,
+              "potential_heldout_pairs_before_further_cleaning": 6
+            },
+            {
+              "date": "2026-04-22",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 216.39956882510683,
+              "discount_from_anchor_parity": 0.9798574224144564,
+              "parity_nrmse": 0.010609780546207663,
+              "pairs": 12,
+              "anchor_pairs": 8,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2026-04-23",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 215.6046032322881,
+              "discount_from_anchor_parity": 0.9897460545946177,
+              "parity_nrmse": 0.0015796802091953895,
+              "pairs": 12,
+              "anchor_pairs": 8,
+              "potential_heldout_pairs_before_further_cleaning": 4
+            },
+            {
+              "date": "2026-04-24",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 214.16510246586617,
+              "discount_from_anchor_parity": 1.0006127641059943,
+              "parity_nrmse": 0.0049825142025042325,
+              "pairs": 15,
+              "anchor_pairs": 10,
+              "potential_heldout_pairs_before_further_cleaning": 5
+            },
+            {
+              "date": "2026-04-27",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 220.02148953279382,
+              "discount_from_anchor_parity": 0.9962441711406252,
+              "parity_nrmse": 0.004094437022675911,
+              "pairs": 17,
+              "anchor_pairs": 11,
+              "potential_heldout_pairs_before_further_cleaning": 6
+            },
+            {
+              "date": "2026-04-28",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 224.91390490565672,
+              "discount_from_anchor_parity": 0.9988722519098515,
+              "parity_nrmse": 0.005344884201951851,
+              "pairs": 19,
+              "anchor_pairs": 13,
+              "potential_heldout_pairs_before_further_cleaning": 6
+            },
+            {
+              "date": "2026-04-29",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 220.1755365690348,
+              "discount_from_anchor_parity": 0.9861073227940893,
+              "parity_nrmse": 0.005481889071713452,
+              "pairs": 22,
+              "anchor_pairs": 15,
+              "potential_heldout_pairs_before_further_cleaning": 7
+            }
+          ]
+        },
+        "NIFTY": {
+          "listed_option_rows": 42004,
+          "conflicting_key_duplicates": 0,
+          "positive_traded_option_rows": 22945,
+          "expiry_groups_outside_7_100_days": 130,
+          "expiry_groups_six_or_more_pairs": 107,
+          "expiry_groups_rejected_parity": 33,
+          "expiry_groups_under_six_traded_pairs": 9,
+          "days_with_positive_traded_options": 20,
+          "preliminary_eligible_dates": [
+            "2026-04-01",
+            "2026-04-02",
+            "2026-04-06",
+            "2026-04-07",
+            "2026-04-08",
+            "2026-04-09",
+            "2026-04-10",
+            "2026-04-13",
+            "2026-04-15",
+            "2026-04-16",
+            "2026-04-17",
+            "2026-04-20",
+            "2026-04-21",
+            "2026-04-22",
+            "2026-04-23",
+            "2026-04-24",
+            "2026-04-27",
+            "2026-04-28",
+            "2026-04-29",
+            "2026-04-30"
+          ],
+          "preliminary_eligible_groups": [
+            {
+              "date": "2026-04-01",
+              "expiry": "2026-04-21",
+              "forward_from_anchor_parity": 22795.086256818606,
+              "discount_from_anchor_parity": 0.9910195847248959,
+              "parity_nrmse": 0.0013974670747123742,
+              "pairs": 16,
+              "anchor_pairs": 11,
+              "potential_heldout_pairs_before_further_cleaning": 5
+            },
+            {
+              "date": "2026-04-01",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 22816.235425811705,
+              "discount_from_anchor_parity": 0.9904889545158001,
+              "parity_nrmse": 0.002314417600637851,
+              "pairs": 100,
+              "anchor_pairs": 67,
+              "potential_heldout_pairs_before_further_cleaning": 33
+            },
+            {
+              "date": "2026-04-01",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 22954.667762678182,
+              "discount_from_anchor_parity": 0.9749522062757173,
+              "parity_nrmse": 0.003604403387060473,
+              "pairs": 45,
+              "anchor_pairs": 30,
+              "potential_heldout_pairs_before_further_cleaning": 15
+            },
+            {
+              "date": "2026-04-01",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 23102.227729116603,
+              "discount_from_anchor_parity": 0.9677100118432668,
+              "parity_nrmse": 0.0010104496151466598,
+              "pairs": 31,
+              "anchor_pairs": 21,
+              "potential_heldout_pairs_before_further_cleaning": 10
+            },
+            {
+              "date": "2026-04-02",
+              "expiry": "2026-04-13",
+              "forward_from_anchor_parity": 22715.447361032486,
+              "discount_from_anchor_parity": 0.9978779945295329,
+              "parity_nrmse": 0.007138285394283136,
+              "pairs": 68,
+              "anchor_pairs": 45,
+              "potential_heldout_pairs_before_further_cleaning": 23
+            },
+            {
+              "date": "2026-04-02",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 22781.560320282068,
+              "discount_from_anchor_parity": 0.9875599838511739,
+              "parity_nrmse": 0.006440403751366872,
+              "pairs": 95,
+              "anchor_pairs": 63,
+              "potential_heldout_pairs_before_further_cleaning": 32
+            },
+            {
+              "date": "2026-04-02",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 22918.471348598447,
+              "discount_from_anchor_parity": 0.9807180407864693,
+              "parity_nrmse": 0.0061972787452426415,
+              "pairs": 55,
+              "anchor_pairs": 37,
+              "potential_heldout_pairs_before_further_cleaning": 18
+            },
+            {
+              "date": "2026-04-02",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 23059.927979428223,
+              "discount_from_anchor_parity": 0.9660129833443015,
+              "parity_nrmse": 0.005471003202237654,
+              "pairs": 56,
+              "anchor_pairs": 37,
+              "potential_heldout_pairs_before_further_cleaning": 19
+            },
+            {
+              "date": "2026-04-06",
+              "expiry": "2026-04-13",
+              "forward_from_anchor_parity": 23008.91347102022,
+              "discount_from_anchor_parity": 0.9983200370358597,
+              "parity_nrmse": 0.0029441150197945403,
+              "pairs": 101,
+              "anchor_pairs": 67,
+              "potential_heldout_pairs_before_further_cleaning": 34
+            },
+            {
+              "date": "2026-04-06",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 23073.645432998586,
+              "discount_from_anchor_parity": 0.9894287617440692,
+              "parity_nrmse": 0.0051852821103829504,
+              "pairs": 114,
+              "anchor_pairs": 76,
+              "potential_heldout_pairs_before_further_cleaning": 38
+            },
+            {
+              "date": "2026-04-06",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 23198.91447678875,
+              "discount_from_anchor_parity": 0.9759439618960376,
+              "parity_nrmse": 0.0038959461883941926,
+              "pairs": 64,
+              "anchor_pairs": 43,
+              "potential_heldout_pairs_before_further_cleaning": 21
+            },
+            {
+              "date": "2026-04-06",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 23357.4385072004,
+              "discount_from_anchor_parity": 0.9687718013551299,
+              "parity_nrmse": 0.0039098932596346985,
+              "pairs": 51,
+              "anchor_pairs": 34,
+              "potential_heldout_pairs_before_further_cleaning": 17
+            },
+            {
+              "date": "2026-04-07",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 23172.111889678687,
+              "discount_from_anchor_parity": 0.990636882840353,
+              "parity_nrmse": 0.0024144762248743466,
+              "pairs": 101,
+              "anchor_pairs": 67,
+              "potential_heldout_pairs_before_further_cleaning": 34
+            },
+            {
+              "date": "2026-04-07",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 23281.88401575109,
+              "discount_from_anchor_parity": 0.9851943051938082,
+              "parity_nrmse": 0.002324762578698851,
+              "pairs": 55,
+              "anchor_pairs": 37,
+              "potential_heldout_pairs_before_further_cleaning": 18
+            },
+            {
+              "date": "2026-04-07",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 23458.40046430143,
+              "discount_from_anchor_parity": 0.9673647574479984,
+              "parity_nrmse": 0.0023998805912423386,
+              "pairs": 45,
+              "anchor_pairs": 30,
+              "potential_heldout_pairs_before_further_cleaning": 15
+            },
+            {
+              "date": "2026-04-08",
+              "expiry": "2026-04-21",
+              "forward_from_anchor_parity": 24035.4318746519,
+              "discount_from_anchor_parity": 0.9937820743156803,
+              "parity_nrmse": 0.0011026925176889364,
+              "pairs": 65,
+              "anchor_pairs": 43,
+              "potential_heldout_pairs_before_further_cleaning": 22
+            },
+            {
+              "date": "2026-04-08",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 24064.98280846374,
+              "discount_from_anchor_parity": 0.9913260853467148,
+              "parity_nrmse": 0.0017090692744421356,
+              "pairs": 106,
+              "anchor_pairs": 71,
+              "potential_heldout_pairs_before_further_cleaning": 35
+            },
+            {
+              "date": "2026-04-08",
+              "expiry": "2026-05-05",
+              "forward_from_anchor_parity": 24105.06943773327,
+              "discount_from_anchor_parity": 0.9817823322521753,
+              "parity_nrmse": 0.00048168869776979575,
+              "pairs": 38,
+              "anchor_pairs": 25,
+              "potential_heldout_pairs_before_further_cleaning": 13
+            },
+            {
+              "date": "2026-04-08",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24188.92805919034,
+              "discount_from_anchor_parity": 0.9794017956219361,
+              "parity_nrmse": 0.0014313961019994381,
+              "pairs": 66,
+              "anchor_pairs": 44,
+              "potential_heldout_pairs_before_further_cleaning": 22
+            },
+            {
+              "date": "2026-04-08",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 24335.018687972675,
+              "discount_from_anchor_parity": 0.9683975225559662,
+              "parity_nrmse": 0.0016965840275496157,
+              "pairs": 59,
+              "anchor_pairs": 39,
+              "potential_heldout_pairs_before_further_cleaning": 20
+            },
+            {
+              "date": "2026-04-09",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 23869.274037055966,
+              "discount_from_anchor_parity": 0.9922017061001003,
+              "parity_nrmse": 0.0009674287000268397,
+              "pairs": 91,
+              "anchor_pairs": 61,
+              "potential_heldout_pairs_before_further_cleaning": 30
+            },
+            {
+              "date": "2026-04-09",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24005.410186514324,
+              "discount_from_anchor_parity": 0.989888272280717,
+              "parity_nrmse": 0.0015991903828228937,
+              "pairs": 59,
+              "anchor_pairs": 39,
+              "potential_heldout_pairs_before_further_cleaning": 20
+            },
+            {
+              "date": "2026-04-09",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 24166.31349840043,
+              "discount_from_anchor_parity": 0.9727952969651147,
+              "parity_nrmse": 0.0011011435971336936,
+              "pairs": 54,
+              "anchor_pairs": 36,
+              "potential_heldout_pairs_before_further_cleaning": 18
+            },
+            {
+              "date": "2026-04-10",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 24100.5555188468,
+              "discount_from_anchor_parity": 0.9948762739675845,
+              "parity_nrmse": 0.00222144621490047,
+              "pairs": 97,
+              "anchor_pairs": 65,
+              "potential_heldout_pairs_before_further_cleaning": 32
+            },
+            {
+              "date": "2026-04-10",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24227.246189505193,
+              "discount_from_anchor_parity": 0.9726451742688833,
+              "parity_nrmse": 0.002464231771199121,
+              "pairs": 60,
+              "anchor_pairs": 40,
+              "potential_heldout_pairs_before_further_cleaning": 20
+            },
+            {
+              "date": "2026-04-10",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 24362.016767653593,
+              "discount_from_anchor_parity": 0.9703197800658283,
+              "parity_nrmse": 0.0009695008411737047,
+              "pairs": 48,
+              "anchor_pairs": 32,
+              "potential_heldout_pairs_before_further_cleaning": 16
+            },
+            {
+              "date": "2026-04-13",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 23871.37060016538,
+              "discount_from_anchor_parity": 0.9941080576260878,
+              "parity_nrmse": 0.0025135066092819352,
+              "pairs": 91,
+              "anchor_pairs": 61,
+              "potential_heldout_pairs_before_further_cleaning": 30
+            },
+            {
+              "date": "2026-04-13",
+              "expiry": "2026-05-05",
+              "forward_from_anchor_parity": 23907.310106335397,
+              "discount_from_anchor_parity": 0.9976004686163128,
+              "parity_nrmse": 0.0010300277833941956,
+              "pairs": 31,
+              "anchor_pairs": 21,
+              "potential_heldout_pairs_before_further_cleaning": 10
+            },
+            {
+              "date": "2026-04-13",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24010.77667635936,
+              "discount_from_anchor_parity": 0.9780212057123769,
+              "parity_nrmse": 0.002523003128963179,
+              "pairs": 58,
+              "anchor_pairs": 39,
+              "potential_heldout_pairs_before_further_cleaning": 19
+            },
+            {
+              "date": "2026-04-13",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 24170.578425046,
+              "discount_from_anchor_parity": 0.9694612953247674,
+              "parity_nrmse": 0.00152177496665926,
+              "pairs": 44,
+              "anchor_pairs": 29,
+              "potential_heldout_pairs_before_further_cleaning": 15
+            },
+            {
+              "date": "2026-04-15",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 24248.03441585105,
+              "discount_from_anchor_parity": 0.996294412052248,
+              "parity_nrmse": 0.0007417312189178483,
+              "pairs": 106,
+              "anchor_pairs": 71,
+              "potential_heldout_pairs_before_further_cleaning": 35
+            },
+            {
+              "date": "2026-04-15",
+              "expiry": "2026-05-05",
+              "forward_from_anchor_parity": 24276.685492272245,
+              "discount_from_anchor_parity": 0.9949860325075366,
+              "parity_nrmse": 0.0004287647690186,
+              "pairs": 36,
+              "anchor_pairs": 24,
+              "potential_heldout_pairs_before_further_cleaning": 12
+            },
+            {
+              "date": "2026-04-15",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24385.241759559292,
+              "discount_from_anchor_parity": 0.984751517069237,
+              "parity_nrmse": 0.000631085008342313,
+              "pairs": 74,
+              "anchor_pairs": 49,
+              "potential_heldout_pairs_before_further_cleaning": 25
+            },
+            {
+              "date": "2026-04-15",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 24543.034238165197,
+              "discount_from_anchor_parity": 0.9722074356547356,
+              "parity_nrmse": 0.00044999817102817546,
+              "pairs": 53,
+              "anchor_pairs": 35,
+              "potential_heldout_pairs_before_further_cleaning": 18
+            },
+            {
+              "date": "2026-04-16",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 24202.573461303884,
+              "discount_from_anchor_parity": 0.9975477570976986,
+              "parity_nrmse": 0.0013743159862632675,
+              "pairs": 97,
+              "anchor_pairs": 65,
+              "potential_heldout_pairs_before_further_cleaning": 32
+            },
+            {
+              "date": "2026-04-16",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24353.35062283637,
+              "discount_from_anchor_parity": 0.9746539104427308,
+              "parity_nrmse": 0.0024657756454253177,
+              "pairs": 80,
+              "anchor_pairs": 53,
+              "potential_heldout_pairs_before_further_cleaning": 27
+            },
+            {
+              "date": "2026-04-16",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 24501.663270984045,
+              "discount_from_anchor_parity": 0.9754055144265679,
+              "parity_nrmse": 0.003123443253276587,
+              "pairs": 55,
+              "anchor_pairs": 37,
+              "potential_heldout_pairs_before_further_cleaning": 18
+            },
+            {
+              "date": "2026-04-17",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 24371.525478529555,
+              "discount_from_anchor_parity": 0.9968069886890807,
+              "parity_nrmse": 0.0016729354536706815,
+              "pairs": 92,
+              "anchor_pairs": 61,
+              "potential_heldout_pairs_before_further_cleaning": 31
+            },
+            {
+              "date": "2026-04-17",
+              "expiry": "2026-05-05",
+              "forward_from_anchor_parity": 24394.358484682296,
+              "discount_from_anchor_parity": 0.9921609433714951,
+              "parity_nrmse": 0.0015962992697537816,
+              "pairs": 36,
+              "anchor_pairs": 24,
+              "potential_heldout_pairs_before_further_cleaning": 12
+            },
+            {
+              "date": "2026-04-17",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24495.111705963198,
+              "discount_from_anchor_parity": 0.9894273905751179,
+              "parity_nrmse": 0.0022416687472789783,
+              "pairs": 78,
+              "anchor_pairs": 52,
+              "potential_heldout_pairs_before_further_cleaning": 26
+            },
+            {
+              "date": "2026-04-17",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 24651.345852583407,
+              "discount_from_anchor_parity": 0.97284297825818,
+              "parity_nrmse": 0.0015011812783547957,
+              "pairs": 47,
+              "anchor_pairs": 31,
+              "potential_heldout_pairs_before_further_cleaning": 16
+            },
+            {
+              "date": "2026-04-20",
+              "expiry": "2026-05-12",
+              "forward_from_anchor_parity": 24424.187687133155,
+              "discount_from_anchor_parity": 1.000213093129443,
+              "parity_nrmse": 0.0011446376360177654,
+              "pairs": 24,
+              "anchor_pairs": 16,
+              "potential_heldout_pairs_before_further_cleaning": 8
+            },
+            {
+              "date": "2026-04-20",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24491.14461476574,
+              "discount_from_anchor_parity": 0.9827419328160792,
+              "parity_nrmse": 0.0017831456030165639,
+              "pairs": 82,
+              "anchor_pairs": 55,
+              "potential_heldout_pairs_before_further_cleaning": 27
+            },
+            {
+              "date": "2026-04-20",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 24639.27027887887,
+              "discount_from_anchor_parity": 0.9709310296811561,
+              "parity_nrmse": 0.0010659469310218184,
+              "pairs": 54,
+              "anchor_pairs": 36,
+              "potential_heldout_pairs_before_further_cleaning": 18
+            },
+            {
+              "date": "2026-04-21",
+              "expiry": "2026-04-28",
+              "forward_from_anchor_parity": 24585.08457565853,
+              "discount_from_anchor_parity": 0.9975337071909159,
+              "parity_nrmse": 0.0009144285595753604,
+              "pairs": 99,
+              "anchor_pairs": 66,
+              "potential_heldout_pairs_before_further_cleaning": 33
+            },
+            {
+              "date": "2026-04-21",
+              "expiry": "2026-05-05",
+              "forward_from_anchor_parity": 24611.724443345996,
+              "discount_from_anchor_parity": 0.9919501915517013,
+              "parity_nrmse": 0.0005482295808282134,
+              "pairs": 37,
+              "anchor_pairs": 25,
+              "potential_heldout_pairs_before_further_cleaning": 12
+            },
+            {
+              "date": "2026-04-21",
+              "expiry": "2026-05-12",
+              "forward_from_anchor_parity": 24651.565588360718,
+              "discount_from_anchor_parity": 0.9896211854294733,
+              "parity_nrmse": 0.0008385249061848554,
+              "pairs": 27,
+              "anchor_pairs": 18,
+              "potential_heldout_pairs_before_further_cleaning": 9
+            },
+            {
+              "date": "2026-04-21",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24716.68605096661,
+              "discount_from_anchor_parity": 0.9831919830699032,
+              "parity_nrmse": 0.0007748007848604931,
+              "pairs": 72,
+              "anchor_pairs": 48,
+              "potential_heldout_pairs_before_further_cleaning": 24
+            },
+            {
+              "date": "2026-04-21",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 24853.990958651128,
+              "discount_from_anchor_parity": 0.9753916865830699,
+              "parity_nrmse": 0.0006450002500508402,
+              "pairs": 46,
+              "anchor_pairs": 31,
+              "potential_heldout_pairs_before_further_cleaning": 15
+            },
+            {
+              "date": "2026-04-22",
+              "expiry": "2026-05-05",
+              "forward_from_anchor_parity": 24411.68273738552,
+              "discount_from_anchor_parity": 0.9975019779438615,
+              "parity_nrmse": 0.0011498203339748356,
+              "pairs": 61,
+              "anchor_pairs": 41,
+              "potential_heldout_pairs_before_further_cleaning": 20
+            },
+            {
+              "date": "2026-04-22",
+              "expiry": "2026-05-12",
+              "forward_from_anchor_parity": 24457.02106012203,
+              "discount_from_anchor_parity": 0.9909033393006048,
+              "parity_nrmse": 0.0006684609154067518,
+              "pairs": 28,
+              "anchor_pairs": 19,
+              "potential_heldout_pairs_before_further_cleaning": 9
+            },
+            {
+              "date": "2026-04-22",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24517.951957133795,
+              "discount_from_anchor_parity": 0.9872340324665526,
+              "parity_nrmse": 0.0006906294875359812,
+              "pairs": 77,
+              "anchor_pairs": 51,
+              "potential_heldout_pairs_before_further_cleaning": 26
+            },
+            {
+              "date": "2026-04-22",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 24663.09880959409,
+              "discount_from_anchor_parity": 0.9758393404745351,
+              "parity_nrmse": 0.0020651654613795386,
+              "pairs": 55,
+              "anchor_pairs": 37,
+              "potential_heldout_pairs_before_further_cleaning": 18
+            },
+            {
+              "date": "2026-04-23",
+              "expiry": "2026-05-05",
+              "forward_from_anchor_parity": 24184.792704148207,
+              "discount_from_anchor_parity": 0.9939405456079994,
+              "parity_nrmse": 0.0007457301165361129,
+              "pairs": 59,
+              "anchor_pairs": 39,
+              "potential_heldout_pairs_before_further_cleaning": 20
+            },
+            {
+              "date": "2026-04-23",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24274.74521376409,
+              "discount_from_anchor_parity": 0.9896521481818309,
+              "parity_nrmse": 0.0013509992690985287,
+              "pairs": 74,
+              "anchor_pairs": 49,
+              "potential_heldout_pairs_before_further_cleaning": 25
+            },
+            {
+              "date": "2026-04-23",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 24429.90593983561,
+              "discount_from_anchor_parity": 0.9757727739933492,
+              "parity_nrmse": 0.001033375893971261,
+              "pairs": 51,
+              "anchor_pairs": 34,
+              "potential_heldout_pairs_before_further_cleaning": 17
+            },
+            {
+              "date": "2026-04-24",
+              "expiry": "2026-05-05",
+              "forward_from_anchor_parity": 23960.660930930997,
+              "discount_from_anchor_parity": 0.9938694838572004,
+              "parity_nrmse": 0.0011841413986061818,
+              "pairs": 62,
+              "anchor_pairs": 41,
+              "potential_heldout_pairs_before_further_cleaning": 21
+            },
+            {
+              "date": "2026-04-24",
+              "expiry": "2026-05-12",
+              "forward_from_anchor_parity": 23996.073175314497,
+              "discount_from_anchor_parity": 1.000147550573187,
+              "parity_nrmse": 0.001452069728609023,
+              "pairs": 39,
+              "anchor_pairs": 26,
+              "potential_heldout_pairs_before_further_cleaning": 13
+            },
+            {
+              "date": "2026-04-24",
+              "expiry": "2026-05-19",
+              "forward_from_anchor_parity": 24025.35888644267,
+              "discount_from_anchor_parity": 0.9883073510916888,
+              "parity_nrmse": 0.0004611978831367293,
+              "pairs": 27,
+              "anchor_pairs": 18,
+              "potential_heldout_pairs_before_further_cleaning": 9
+            },
+            {
+              "date": "2026-04-24",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24049.408030396797,
+              "discount_from_anchor_parity": 0.9860580697014438,
+              "parity_nrmse": 0.0010045172879018908,
+              "pairs": 84,
+              "anchor_pairs": 56,
+              "potential_heldout_pairs_before_further_cleaning": 28
+            },
+            {
+              "date": "2026-04-24",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 24197.25599796661,
+              "discount_from_anchor_parity": 0.9758938091975724,
+              "parity_nrmse": 0.0024689046126942396,
+              "pairs": 64,
+              "anchor_pairs": 43,
+              "potential_heldout_pairs_before_further_cleaning": 21
+            },
+            {
+              "date": "2026-04-27",
+              "expiry": "2026-05-12",
+              "forward_from_anchor_parity": 24168.468339716605,
+              "discount_from_anchor_parity": 0.9917475493588646,
+              "parity_nrmse": 0.0010802617294409726,
+              "pairs": 38,
+              "anchor_pairs": 25,
+              "potential_heldout_pairs_before_further_cleaning": 13
+            },
+            {
+              "date": "2026-04-27",
+              "expiry": "2026-05-19",
+              "forward_from_anchor_parity": 24186.523440888795,
+              "discount_from_anchor_parity": 0.9906786631116004,
+              "parity_nrmse": 0.0011887311608037012,
+              "pairs": 35,
+              "anchor_pairs": 23,
+              "potential_heldout_pairs_before_further_cleaning": 12
+            },
+            {
+              "date": "2026-04-27",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24228.60915110911,
+              "discount_from_anchor_parity": 0.9856495340175112,
+              "parity_nrmse": 0.0005596303671310035,
+              "pairs": 83,
+              "anchor_pairs": 55,
+              "potential_heldout_pairs_before_further_cleaning": 28
+            },
+            {
+              "date": "2026-04-27",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 24366.82035395958,
+              "discount_from_anchor_parity": 0.9777639028047086,
+              "parity_nrmse": 0.000946982995723305,
+              "pairs": 54,
+              "anchor_pairs": 36,
+              "potential_heldout_pairs_before_further_cleaning": 18
+            },
+            {
+              "date": "2026-04-28",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24083.423552312088,
+              "discount_from_anchor_parity": 0.9843176520221685,
+              "parity_nrmse": 0.0020121804976011323,
+              "pairs": 86,
+              "anchor_pairs": 57,
+              "potential_heldout_pairs_before_further_cleaning": 29
+            },
+            {
+              "date": "2026-04-28",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 24219.581683838365,
+              "discount_from_anchor_parity": 0.977486098309789,
+              "parity_nrmse": 0.0012355501334604332,
+              "pairs": 49,
+              "anchor_pairs": 33,
+              "potential_heldout_pairs_before_further_cleaning": 16
+            },
+            {
+              "date": "2026-04-29",
+              "expiry": "2026-05-12",
+              "forward_from_anchor_parity": 24210.820151657386,
+              "discount_from_anchor_parity": 0.9929183741877552,
+              "parity_nrmse": 0.002113265609219396,
+              "pairs": 52,
+              "anchor_pairs": 35,
+              "potential_heldout_pairs_before_further_cleaning": 17
+            },
+            {
+              "date": "2026-04-29",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24271.852804929757,
+              "discount_from_anchor_parity": 0.9862262495040856,
+              "parity_nrmse": 0.0017714669998403667,
+              "pairs": 82,
+              "anchor_pairs": 55,
+              "potential_heldout_pairs_before_further_cleaning": 27
+            },
+            {
+              "date": "2026-04-29",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 24397.719161559053,
+              "discount_from_anchor_parity": 0.9767082662783464,
+              "parity_nrmse": 0.0018304474250613783,
+              "pairs": 58,
+              "anchor_pairs": 39,
+              "potential_heldout_pairs_before_further_cleaning": 19
+            },
+            {
+              "date": "2026-04-29",
+              "expiry": "2026-07-28",
+              "forward_from_anchor_parity": 24530.041625342717,
+              "discount_from_anchor_parity": 0.9540708247993841,
+              "parity_nrmse": 0.00010896588096988454,
+              "pairs": 6,
+              "anchor_pairs": 4,
+              "potential_heldout_pairs_before_further_cleaning": 2
+            },
+            {
+              "date": "2026-04-30",
+              "expiry": "2026-05-19",
+              "forward_from_anchor_parity": 24092.114110554638,
+              "discount_from_anchor_parity": 0.9875536280630728,
+              "parity_nrmse": 0.0027297207902488058,
+              "pairs": 30,
+              "anchor_pairs": 20,
+              "potential_heldout_pairs_before_further_cleaning": 10
+            },
+            {
+              "date": "2026-04-30",
+              "expiry": "2026-05-26",
+              "forward_from_anchor_parity": 24109.79595097877,
+              "discount_from_anchor_parity": 0.986606817487152,
+              "parity_nrmse": 0.003460091248859236,
+              "pairs": 82,
+              "anchor_pairs": 55,
+              "potential_heldout_pairs_before_further_cleaning": 27
+            },
+            {
+              "date": "2026-04-30",
+              "expiry": "2026-06-30",
+              "forward_from_anchor_parity": 24228.42556478474,
+              "discount_from_anchor_parity": 0.9820665490012926,
+              "parity_nrmse": 0.0017165435327875702,
+              "pairs": 56,
+              "anchor_pairs": 37,
+              "potential_heldout_pairs_before_further_cleaning": 19
+            }
+          ]
+        }
+      }
+    }
+  }
+}

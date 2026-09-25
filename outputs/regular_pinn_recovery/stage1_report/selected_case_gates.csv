@@ -1,0 +1,17 @@
+run,selected_step,case,estimates_available,optimizer_success,parameter_passes,parameter_count,all_parameter_pass,recomputed_training_scaled_rmse
+single_standard_s17,6000,0,True,True,5,5,True,0.013504568379288963
+single_standard_s17,6000,1,True,True,4,5,False,0.02853793576276993
+single_standard_s17,6000,2,True,True,4,5,False,0.03620983393659269
+single_standard_s17,6000,3,True,True,5,5,True,0.017023860394276523
+single_sobolev_s17,12000,0,True,True,5,5,True,0.002773691487818959
+single_sobolev_s17,12000,1,True,True,5,5,True,0.006923132985688821
+single_sobolev_s17,12000,2,True,True,5,5,True,0.02256166936120985
+single_sobolev_s17,12000,3,True,True,5,5,True,0.007976011968628762
+double_standard_s17,12000,0,True,True,4,10,False,0.10612487182098848
+double_standard_s17,12000,1,True,True,4,10,False,0.1650642660686523
+double_standard_s17,12000,2,True,True,2,10,False,0.15479785403689203
+double_standard_s17,12000,3,True,True,3,10,False,0.21014837363756425
+double_sobolev_s17,12000,0,True,True,5,10,False,0.12908567586142772
+double_sobolev_s17,12000,1,True,True,5,10,False,0.19509045618953613
+double_sobolev_s17,12000,2,True,True,4,10,False,0.06741815642534872
+double_sobolev_s17,12000,3,True,True,6,10,False,0.04991029251723598

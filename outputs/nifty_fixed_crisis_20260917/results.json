@@ -1,0 +1,166 @@
+{
+  "neural_diagnostics": [
+    {
+      "model": "single",
+      "seed": 17,
+      "synthetic_IV_RMSE": 0.00015065888012637355,
+      "market_price_RMSE_over_DF": 1.4327523375344101e-05,
+      "fresh_scaled_PDE_RMSE": 0.006295082261473321,
+      "quadrature_max_difference": 1.8096635301390052e-14,
+      "fidelity_pass": true
+    },
+    {
+      "model": "single",
+      "seed": 43,
+      "synthetic_IV_RMSE": 0.00024387447115004578,
+      "market_price_RMSE_over_DF": 1.4809322258718452e-05,
+      "fresh_scaled_PDE_RMSE": 0.006472863725817489,
+      "quadrature_max_difference": 1.8096635301390052e-14,
+      "fidelity_pass": true
+    },
+    {
+      "model": "double",
+      "seed": 17,
+      "synthetic_IV_RMSE": 0.00021771188686008268,
+      "market_price_RMSE_over_DF": 2.1341866742148923e-05,
+      "fresh_scaled_PDE_RMSE": 0.008181282014951666,
+      "quadrature_max_difference": 1.7985612998927536e-14,
+      "fidelity_pass": true
+    },
+    {
+      "model": "double",
+      "seed": 43,
+      "synthetic_IV_RMSE": 0.00018115295447846603,
+      "market_price_RMSE_over_DF": 1.1212806489177987e-05,
+      "fresh_scaled_PDE_RMSE": 0.004820202718210374,
+      "quadrature_max_difference": 1.7985612998927536e-14,
+      "fidelity_pass": true
+    }
+  ],
+  "comparisons": [
+    {
+      "window": "covid_march_2020",
+      "engine": "reference",
+      "quotes": 636,
+      "dates": 21,
+      "single_equal_date_NRMSE": 0.029435543041755424,
+      "double_equal_date_NRMSE": 0.02943659470489427,
+      "single_RMSE_index_points": 303.911764593446,
+      "double_RMSE_index_points": 303.91954693042067,
+      "single_IV_RMSE": 0.29995813844083835,
+      "double_IV_RMSE": 0.29996644791132504,
+      "double_win_dates": 2,
+      "tie_dates": 0,
+      "mean_DH_minus_SH_normalized_MSE": 6.19136571732435e-08,
+      "paired_block_bootstrap_95pct": [
+        3.647597649296536e-08,
+        8.632975687541512e-08
+      ]
+    },
+    {
+      "window": "covid_march_2020",
+      "engine": "pinn",
+      "quotes": 636,
+      "dates": 21,
+      "single_equal_date_NRMSE": 0.02943032407971151,
+      "double_equal_date_NRMSE": 0.029430949553352216,
+      "single_RMSE_index_points": 303.8585172408716,
+      "double_RMSE_index_points": 303.85839299777683,
+      "single_IV_RMSE": 0.29991838081331523,
+      "double_IV_RMSE": 0.2999239129901572,
+      "double_win_dates": 8,
+      "tie_dates": 0,
+      "mean_DH_minus_SH_normalized_MSE": 3.681617511596064e-08,
+      "paired_block_bootstrap_95pct": [
+        -7.458838288344995e-08,
+        1.3575664261905153e-07
+      ]
+    },
+    {
+      "window": "iran_june_2025",
+      "engine": "reference",
+      "quotes": 1643,
+      "dates": 21,
+      "single_equal_date_NRMSE": 0.06329073981365667,
+      "double_equal_date_NRMSE": 0.0632900990626137,
+      "single_RMSE_index_points": 1568.3600343306614,
+      "double_RMSE_index_points": 1568.343702547519,
+      "single_IV_RMSE": 0.5825978905421584,
+      "double_IV_RMSE": 0.5825914841635648,
+      "double_win_dates": 21,
+      "tie_dates": 0,
+      "mean_DH_minus_SH_normalized_MSE": -8.110680453197422e-08,
+      "paired_block_bootstrap_95pct": [
+        -9.793268487750555e-08,
+        -6.467883884070451e-08
+      ]
+    },
+    {
+      "window": "iran_june_2025",
+      "engine": "pinn",
+      "quotes": 1643,
+      "dates": 21,
+      "single_equal_date_NRMSE": 0.06328509011888195,
+      "double_equal_date_NRMSE": 0.06328022928284545,
+      "single_RMSE_index_points": 1568.2199111793009,
+      "double_RMSE_index_points": 1568.0980884505339,
+      "single_IV_RMSE": 0.5826157205168454,
+      "double_IV_RMSE": 0.5825673561739795,
+      "double_win_dates": 21,
+      "tie_dates": 0,
+      "mean_DH_minus_SH_normalized_MSE": -6.152132655186944e-07,
+      "paired_block_bootstrap_95pct": [
+        -6.747229268229744e-07,
+        -5.558717555029946e-07
+      ]
+    },
+    {
+      "window": "iran_march_2026",
+      "engine": "reference",
+      "quotes": 1624,
+      "dates": 19,
+      "single_equal_date_NRMSE": 0.0621097131131909,
+      "double_equal_date_NRMSE": 0.062110184666694046,
+      "single_RMSE_index_points": 1442.1950983768475,
+      "double_RMSE_index_points": 1442.2059365866564,
+      "single_IV_RMSE": 0.5214881720438309,
+      "double_IV_RMSE": 0.5214901760694169,
+      "double_win_dates": 3,
+      "tie_dates": 0,
+      "mean_DH_minus_SH_normalized_MSE": 5.857632795875561e-08,
+      "paired_block_bootstrap_95pct": [
+        2.5872410292405928e-08,
+        9.228887210216766e-08
+      ]
+    },
+    {
+      "window": "iran_march_2026",
+      "engine": "pinn",
+      "quotes": 1624,
+      "dates": 19,
+      "single_equal_date_NRMSE": 0.06210271914015479,
+      "double_equal_date_NRMSE": 0.06210054203507303,
+      "single_RMSE_index_points": 1442.0374317766016,
+      "double_RMSE_index_points": 1441.9850832531836,
+      "single_IV_RMSE": 0.5214615151020687,
+      "double_IV_RMSE": 0.5214156040069424,
+      "double_win_dates": 17,
+      "tie_dates": 0,
+      "mean_DH_minus_SH_normalized_MSE": -2.704035510776457e-07,
+      "paired_block_bootstrap_95pct": [
+        -3.6275994580852975e-07,
+        -1.7678703232383895e-07
+      ]
+    }
+  ],
+  "all_neural_fidelity_gates_pass": true,
+  "limitations": [
+    "Fixed published parameters are not fitted NIFTY parameters",
+    "Anchor carry uses same-date closes: reconstruction, not forecasting; closes are not synchronous executable bid/ask quotes",
+    "Only two training seeds and one fixed paired parameter scenario; not universal model-class superiority",
+    "Bootstrap is descriptive, small-window and conditional on carry estimates; not a causal effect of war or a multiple-testing-adjusted finding",
+    "Full calendar windows include non-event days; no peak-volatility ranking was performed",
+    "Historical study choice and previous experiments are visible: no claim of prospectively unseen research data"
+  ],
+  "test_predictions_sha256": "8d2184dfb07934f0c45dc60c43910deb6c1e2046f8fb9b7c9f5464fb5c54a05f"
+}

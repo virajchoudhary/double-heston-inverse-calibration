@@ -1,0 +1,22 @@
+{
+  "utc": "2026-09-24T17:32:20.098855+00:00",
+  "rule": "The winner is the stage with the lowest DEVELOPMENT forward-price RMSE. If a simpler earlier stage is within 5% of the best, the simpler stage wins. No other candidates are trained.",
+  "development_price_RMSE": {
+    "A0": 6.14398705998896e-05,
+    "A1": 1.985106257310693e-05,
+    "A2": 1.5719441012288655e-05,
+    "A3": 2.5491619921457528e-05,
+    "A4": 2.475030904479723e-05,
+    "A5": 1.4707034440554409e-05
+  },
+  "best_by_rmse": "A5",
+  "winner": "A5",
+  "params": 282632,
+  "flags": {
+    "body": "gated",
+    "adaptive": true,
+    "gradbal": true,
+    "rad": true
+  },
+  "note": "winner = first stage within 5% of the best development price RMSE (simplicity tie-break)"
+}

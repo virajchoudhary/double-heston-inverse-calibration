@@ -1,0 +1,391 @@
+{
+  "utc": "2026-09-18T05:17:56.222698+00:00",
+  "mark_target_cells": [
+    {
+      "regime": "shock",
+      "design": "B",
+      "dates": 29,
+      "units": 10,
+      "median_IV_RMSE": {
+        "BS_EXPIRY": 8.251122871998103,
+        "SH": 2.402237547461373,
+        "DH": 1.735121799428319
+      },
+      "SH_minus_DH": {
+        "mean": 0.6252609412996378,
+        "median": 0.5363224341214528,
+        "DH_wins_dates": "25/29",
+        "unit_means_positive": "10/10",
+        "wilcoxon_one_sided_p": 0.0009765625,
+        "cluster_bootstrap95": [
+          0.5025396313979982,
+          0.7358526962463179
+        ],
+        "DH_beats": true
+      },
+      "BS_EXPIRY_minus_DH": {
+        "mean": 6.8306711256831445,
+        "median": 6.365450724142763,
+        "DH_wins_dates": "29/29",
+        "unit_means_positive": "10/10",
+        "wilcoxon_one_sided_p": 0.0009765625,
+        "cluster_bootstrap95": [
+          5.314073123226818,
+          8.429436004413951
+        ],
+        "DH_beats": true
+      }
+    },
+    {
+      "regime": "shock",
+      "design": "A",
+      "dates": 29,
+      "units": 10,
+      "median_IV_RMSE": {
+        "BS_EXPIRY": 7.6966891852366075,
+        "SH": 2.193167387988844,
+        "DH": 1.4689497516751342
+      },
+      "SH_minus_DH": {
+        "mean": 0.9209557814769627,
+        "median": 0.7420169277679027,
+        "DH_wins_dates": "29/29",
+        "unit_means_positive": "10/10",
+        "wilcoxon_one_sided_p": 0.0009765625,
+        "cluster_bootstrap95": [
+          0.7363719258635113,
+          1.1768808225522285
+        ],
+        "DH_beats": true
+      },
+      "BS_EXPIRY_minus_DH": {
+        "mean": 6.127461035907858,
+        "median": 5.886164134032299,
+        "DH_wins_dates": "29/29",
+        "unit_means_positive": "10/10",
+        "wilcoxon_one_sided_p": 0.0009765625,
+        "cluster_bootstrap95": [
+          5.057578624395712,
+          7.3124553950303355
+        ],
+        "DH_beats": true
+      }
+    },
+    {
+      "regime": "calm",
+      "design": "B",
+      "dates": 21,
+      "units": 21,
+      "median_IV_RMSE": {
+        "BS_EXPIRY": 6.275496111835601,
+        "SH": 2.498496822820838,
+        "DH": 1.4053017790647315
+      },
+      "SH_minus_DH": {
+        "mean": 1.2001002933926304,
+        "median": 0.9185163344687517,
+        "DH_wins_dates": "20/21",
+        "unit_means_positive": "20/21",
+        "wilcoxon_one_sided_p": 4.1961669921875e-05,
+        "cluster_bootstrap95": [
+          0.74153775267489,
+          1.7257762887685226
+        ],
+        "DH_beats": true
+      },
+      "BS_EXPIRY_minus_DH": {
+        "mean": 5.993332880120242,
+        "median": 4.729495364858427,
+        "DH_wins_dates": "21/21",
+        "unit_means_positive": "21/21",
+        "wilcoxon_one_sided_p": 4.76837158203125e-07,
+        "cluster_bootstrap95": [
+          4.472186378276353,
+          7.801716533444437
+        ],
+        "DH_beats": true
+      }
+    },
+    {
+      "regime": "calm",
+      "design": "A",
+      "dates": 21,
+      "units": 21,
+      "median_IV_RMSE": {
+        "BS_EXPIRY": 5.145924476843724,
+        "SH": 2.0481193721095345,
+        "DH": 0.9808516321502047
+      },
+      "SH_minus_DH": {
+        "mean": 0.7570945749453999,
+        "median": 0.6478400883229409,
+        "DH_wins_dates": "20/21",
+        "unit_means_positive": "20/21",
+        "wilcoxon_one_sided_p": 1.1920928955078125e-05,
+        "cluster_bootstrap95": [
+          0.5252333527176959,
+          0.9831086211826494
+        ],
+        "DH_beats": true
+      },
+      "BS_EXPIRY_minus_DH": {
+        "mean": 4.209905899605205,
+        "median": 3.814340917175935,
+        "DH_wins_dates": "21/21",
+        "unit_means_positive": "21/21",
+        "wilcoxon_one_sided_p": 4.76837158203125e-07,
+        "cluster_bootstrap95": [
+          3.3103820084257136,
+          5.216198944517402
+        ],
+        "DH_beats": true
+      }
+    }
+  ],
+  "price_RMSE_USD_median": {
+    "calm/A": {
+      "BS_EXPIRY": 215.2,
+      "BS_TERM": 570.9,
+      "DH": 86.1,
+      "SH": 167.3
+    },
+    "calm/B": {
+      "BS_EXPIRY": 213.0,
+      "BS_TERM": 300.4,
+      "DH": 80.9,
+      "SH": 151.0
+    },
+    "shock/A": {
+      "BS_EXPIRY": 188.6,
+      "BS_TERM": 433.4,
+      "DH": 59.2,
+      "SH": 93.2
+    },
+    "shock/B": {
+      "BS_EXPIRY": 194.8,
+      "BS_TERM": 334.7,
+      "DH": 62.0,
+      "SH": 85.0
+    }
+  },
+  "bucket_maturity_pooled_IV_RMSE": {
+    "calm / A / <=7d": {
+      "BS_EXPIRY": 8.09,
+      "DH": 4.05,
+      "SH": 3.98,
+      "quotes": 118
+    },
+    "calm / A / 7-30d": {
+      "BS_EXPIRY": 6.2,
+      "DH": 1.63,
+      "SH": 2.57,
+      "quotes": 422
+    },
+    "calm / A / 30-90d": {
+      "BS_EXPIRY": 5.59,
+      "DH": 1.18,
+      "SH": 1.83,
+      "quotes": 283
+    },
+    "calm / A / >90d": {
+      "BS_EXPIRY": 3.46,
+      "DH": 0.95,
+      "SH": 2.07,
+      "quotes": 149
+    },
+    "calm / B / <=7d": {
+      "BS_EXPIRY": 4.95,
+      "DH": 1.78,
+      "SH": 3.05,
+      "quotes": 41
+    },
+    "calm / B / 7-30d": {
+      "BS_EXPIRY": 8.56,
+      "DH": 2.71,
+      "SH": 4.07,
+      "quotes": 494
+    },
+    "calm / B / 30-90d": {
+      "BS_EXPIRY": 8.39,
+      "DH": 1.72,
+      "SH": 2.85,
+      "quotes": 266
+    },
+    "calm / B / >90d": {
+      "BS_EXPIRY": 4.38,
+      "DH": 1.37,
+      "SH": 2.35,
+      "quotes": 88
+    },
+    "shock / A / <=7d": {
+      "BS_EXPIRY": 14.39,
+      "DH": 5.99,
+      "SH": 7.79,
+      "quotes": 223
+    },
+    "shock / A / 7-30d": {
+      "BS_EXPIRY": 9.15,
+      "DH": 1.88,
+      "SH": 2.6,
+      "quotes": 573
+    },
+    "shock / A / 30-90d": {
+      "BS_EXPIRY": 7.52,
+      "DH": 1.25,
+      "SH": 1.9,
+      "quotes": 445
+    },
+    "shock / A / >90d": {
+      "BS_EXPIRY": 4.52,
+      "DH": 1.67,
+      "SH": 2.56,
+      "quotes": 258
+    },
+    "shock / B / <=7d": {
+      "BS_EXPIRY": 18.1,
+      "DH": 5.04,
+      "SH": 6.12,
+      "quotes": 97
+    },
+    "shock / B / 7-30d": {
+      "BS_EXPIRY": 10.0,
+      "DH": 2.35,
+      "SH": 2.86,
+      "quotes": 573
+    },
+    "shock / B / 30-90d": {
+      "BS_EXPIRY": 8.86,
+      "DH": 1.98,
+      "SH": 2.47,
+      "quotes": 469
+    },
+    "shock / B / >90d": {
+      "BS_EXPIRY": 7.19,
+      "DH": 2.19,
+      "SH": 2.55,
+      "quotes": 195
+    }
+  },
+  "bucket_moneyness_pooled_IV_RMSE": {
+    "calm / A / x<-.15 (OTM call wing)": {
+      "BS_EXPIRY": 7.06,
+      "DH": 2.85,
+      "SH": 2.98,
+      "quotes": 200
+    },
+    "calm / A / -.15..-.05": {
+      "BS_EXPIRY": 2.81,
+      "DH": 1.54,
+      "SH": 1.99,
+      "quotes": 212
+    },
+    "calm / A / ATM +-.05": {
+      "BS_EXPIRY": 2.58,
+      "DH": 1.6,
+      "SH": 2.0,
+      "quotes": 265
+    },
+    "calm / A / .05...15": {
+      "BS_EXPIRY": 4.85,
+      "DH": 1.69,
+      "SH": 2.36,
+      "quotes": 164
+    },
+    "calm / A / x>.15 (OTM put wing)": {
+      "BS_EXPIRY": 11.48,
+      "DH": 1.55,
+      "SH": 3.56,
+      "quotes": 131
+    },
+    "calm / B / x<-.15 (OTM call wing)": {
+      "BS_EXPIRY": 6.91,
+      "DH": 1.83,
+      "SH": 2.62,
+      "quotes": 157
+    },
+    "calm / B / -.15..-.05": {
+      "BS_EXPIRY": 3.09,
+      "DH": 2.08,
+      "SH": 2.73,
+      "quotes": 199
+    },
+    "calm / B / ATM +-.05": {
+      "BS_EXPIRY": 3.12,
+      "DH": 2.32,
+      "SH": 2.75,
+      "quotes": 230
+    },
+    "calm / B / .05...15": {
+      "BS_EXPIRY": 4.49,
+      "DH": 2.12,
+      "SH": 3.14,
+      "quotes": 139
+    },
+    "calm / B / x>.15 (OTM put wing)": {
+      "BS_EXPIRY": 16.22,
+      "DH": 2.99,
+      "SH": 5.82,
+      "quotes": 164
+    },
+    "shock / A / x<-.15 (OTM call wing)": {
+      "BS_EXPIRY": 9.14,
+      "DH": 3.69,
+      "SH": 4.12,
+      "quotes": 416
+    },
+    "shock / A / -.15..-.05": {
+      "BS_EXPIRY": 4.02,
+      "DH": 1.53,
+      "SH": 2.05,
+      "quotes": 260
+    },
+    "shock / A / ATM +-.05": {
+      "BS_EXPIRY": 3.59,
+      "DH": 1.46,
+      "SH": 1.89,
+      "quotes": 349
+    },
+    "shock / A / .05...15": {
+      "BS_EXPIRY": 6.84,
+      "DH": 1.38,
+      "SH": 2.42,
+      "quotes": 234
+    },
+    "shock / A / x>.15 (OTM put wing)": {
+      "BS_EXPIRY": 17.09,
+      "DH": 4.07,
+      "SH": 6.44,
+      "quotes": 240
+    },
+    "shock / B / x<-.15 (OTM call wing)": {
+      "BS_EXPIRY": 8.01,
+      "DH": 2.47,
+      "SH": 2.73,
+      "quotes": 338
+    },
+    "shock / B / -.15..-.05": {
+      "BS_EXPIRY": 3.69,
+      "DH": 1.78,
+      "SH": 2.35,
+      "quotes": 236
+    },
+    "shock / B / ATM +-.05": {
+      "BS_EXPIRY": 3.63,
+      "DH": 1.73,
+      "SH": 2.18,
+      "quotes": 300
+    },
+    "shock / B / .05...15": {
+      "BS_EXPIRY": 8.12,
+      "DH": 1.85,
+      "SH": 2.59,
+      "quotes": 199
+    },
+    "shock / B / x>.15 (OTM put wing)": {
+      "BS_EXPIRY": 18.98,
+      "DH": 3.92,
+      "SH": 4.74,
+      "quotes": 261
+    }
+  }
+}

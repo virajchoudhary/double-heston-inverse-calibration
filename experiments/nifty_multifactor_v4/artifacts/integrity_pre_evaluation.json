@@ -1,0 +1,291 @@
+{
+  "utc": "2026-09-17T16:53:08.721466+00:00",
+  "passed": true,
+  "protocol_and_all_locked_artifacts_unchanged": true,
+  "official_source_files_verified": 14,
+  "training_rows": 100000,
+  "development_rows": 4096,
+  "collocation_rows": 18000,
+  "exact_train_development_collocation_overlap": 0,
+  "controlled_splits": [
+    {
+      "case": "BASE_representative_0",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "FAST_SHOCK_representative_0",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "FAST_SHOCK_representative_1",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SLOW_SHOCK_representative_0",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SLOW_SHOCK_representative_1",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "FIXED_TOTAL_TWIST_representative_0",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "FIXED_TOTAL_TWIST_representative_1",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SMIRK_WEIGHTS_representative_0",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SMIRK_WEIGHTS_representative_1",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SMIRK_WEIGHTS_representative_2",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "BASE_random_00",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "BASE_random_01",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "BASE_random_02",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "BASE_random_03",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "BASE_random_04",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "BASE_random_05",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "BASE_random_06",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "BASE_random_07",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "FAST_SHOCK_random_00",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "FAST_SHOCK_random_01",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "FAST_SHOCK_random_02",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "FAST_SHOCK_random_03",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "FAST_SHOCK_random_04",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "FAST_SHOCK_random_05",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "FAST_SHOCK_random_06",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "FAST_SHOCK_random_07",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SLOW_SHOCK_random_00",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SLOW_SHOCK_random_01",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SLOW_SHOCK_random_02",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SLOW_SHOCK_random_03",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SLOW_SHOCK_random_04",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SLOW_SHOCK_random_05",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SLOW_SHOCK_random_06",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SLOW_SHOCK_random_07",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "FIXED_TOTAL_TWIST_random_00",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "FIXED_TOTAL_TWIST_random_01",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "FIXED_TOTAL_TWIST_random_02",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "FIXED_TOTAL_TWIST_random_03",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "FIXED_TOTAL_TWIST_random_04",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "FIXED_TOTAL_TWIST_random_05",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "FIXED_TOTAL_TWIST_random_06",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "FIXED_TOTAL_TWIST_random_07",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SMIRK_WEIGHTS_random_00",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SMIRK_WEIGHTS_random_01",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SMIRK_WEIGHTS_random_02",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SMIRK_WEIGHTS_random_03",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SMIRK_WEIGHTS_random_04",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SMIRK_WEIGHTS_random_05",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SMIRK_WEIGHTS_random_06",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    },
+    {
+      "case": "SMIRK_WEIGHTS_random_07",
+      "calibration_quotes": 1007,
+      "test_quotes": 1006
+    }
+  ],
+  "market": {
+    "validation": {
+      "dates": [
+        "2026-08-04",
+        "2026-08-05",
+        "2026-08-06",
+        "2026-08-07",
+        "2026-08-10",
+        "2026-08-11",
+        "2026-08-12",
+        "2026-08-13",
+        "2026-08-14",
+        "2026-08-17",
+        "2026-08-18",
+        "2026-08-19",
+        "2026-08-20",
+        "2026-08-21"
+      ],
+      "quotes": 2398,
+      "anchor_quotes": 1598,
+      "heldout_quotes": 800
+    }
+  },
+  "limitations": [
+    "Exact overlap checks do not prove statistical independence or absence of all leakage.",
+    "No claim that these new market dates were unseen by external teammates.",
+    "Market quote filters use observed price/IV quality criteria fixed before final evaluation; this defines a conditional eligible population.",
+    "Daily closes are not synchronized executable bid/ask quotes."
+  ]
+}

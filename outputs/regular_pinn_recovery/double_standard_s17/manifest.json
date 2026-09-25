@@ -1,0 +1,50 @@
+{
+  "config": {
+    "data": "outputs/regular_pinn_recovery/double_data",
+    "out": "outputs/regular_pinn_recovery/double_standard_s17",
+    "factors": 2,
+    "steps": 12000,
+    "seed": 17,
+    "width": 160,
+    "depth": 5,
+    "batch": 1024,
+    "pde_batch": 256,
+    "sensitivity": 0.0,
+    "weight_pde": 0.2,
+    "weight_decay": 1e-06,
+    "lr": 0.001,
+    "resample_every": 1000,
+    "save_every": 2000,
+    "resume": null,
+    "skip_recovery": false,
+    "tau_max": 2.0,
+    "architecture": "regular implied-variance PDE PINN",
+    "selection": "clean synthetic validation parameter recovery RMSE, fixed 4 cases; not final assessment",
+    "calibration": "optimize frozen neural IV predictions only; no exact pricing in fit"
+  },
+  "source_sha256": {
+    "scripts/mentor_dh_pinn/train_regular_pinn.py": "83a4b40993771bca558e52742d605f6312cd8d82e68b42675c890260589a7c46",
+    "src/mentor_dh_pinn/regular_pinn.py": "e409148ced31045827f2ec582a10ad572373aa50e456de4e58cb0499453d9316",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "bb47652e896425d38be8e967269f1e81683cb879c37b9867c1cbde7cf404fb71",
+    "src/mentor_dh_pinn/regular_pinn_torch.py": "38609a4e4b7248c41dde0678f0fd81f3413c0ffaef3c9858962d5303deb7fd47",
+    "scripts/mentor_dh_pinn/assess_regular_pinn.py": "1b219c1440d10058d0d1ab817e20ec426e8c45f2e9ea7bec4a1e25cecadd5b95"
+  },
+  "input_sha256": {
+    "outputs/regular_pinn_recovery/double_data/train.npz": "f18c296f1d0183ac266448830a05e80e8e7cdd3789cca5c6a5434dd09c7fdc28",
+    "outputs/regular_pinn_recovery/double_data/validation.npz": "4b08a5b704d35b04ce47fac2652c5ff69a5d053b3fed5dc5f72fd94622827a3c",
+    "outputs/regular_pinn_recovery/double_data/collocation.npz": "a3820957488f9dacbbcebeb2c3425b766473c7b65ffb76c9a8a763f193c422af"
+  },
+  "gradient_label_scales": [
+    0.022934360429644585,
+    0.02294575795531273,
+    0.029779955744743347,
+    0.03650740906596184,
+    0.05379888042807579,
+    0.026457443833351135,
+    0.03212440386414528,
+    0.03886270523071289,
+    0.06568478047847748,
+    0.09412220120429993
+  ],
+  "collocation_pool": 18000
+}

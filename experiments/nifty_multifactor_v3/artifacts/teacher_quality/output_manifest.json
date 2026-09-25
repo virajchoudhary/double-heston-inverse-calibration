@@ -1,0 +1,12 @@
+{
+  "utc": "2026-09-17T15:32:21.978489+00:00",
+  "source_sha256": "02e921501b6dce5338bdaff64282d1cf9cb3926d528d54462afcef123b4772fd",
+  "files": {
+    "cells_maturity_x_moneyness.csv": "887c172ccae588e3d8f1ec5c7e9ae6dcf7279dea5923a205acd59c149b78d922",
+    "controlled_surfaces_arbitrage_and_representation.csv": "091122cc8c6f8007e92df0f3c9bc64bbbf907f3e49565cc8690006aafe1d24cf",
+    "spotcheck_adaptive_reference.csv": "af8f38402f654c86db793f5de54fd1e2a248600f9efbb6904f33d20087eb2047",
+    "teacher_quality.json": "87f404f1484e3b1a6c58cb9a401150e74d7cdd1052900355ddb33914a100dee3",
+    "teacher_resolution_agreement.png": "ea75b8a69be0b3287de5d774c67c28cafa02776152b5dd026ab6c923848cfc8f",
+    "teacher_state_coverage.png": "49342912bc177916a1e1862cdbdb5ccf9a0ecd65aa9b287b1057a5fe9f8ee2fa"
+  }
+}

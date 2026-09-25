@@ -1,0 +1,107 @@
+[
+  {
+    "generator_factors": 1,
+    "model": "single_sobolev_s17",
+    "cases": 24,
+    "failed_fits": 0,
+    "own_model": true,
+    "neural_holdout_price_rmse": 1.9562461300134698e-05,
+    "exact_holdout_price_rmse": 2.0468821713707183e-05,
+    "parameter_passes": 18,
+    "scaled_parameter_rmse": 0.04740863901866998,
+    "tolerance_scaled_rmse": 0.838875854791436
+  },
+  {
+    "generator_factors": 1,
+    "model": "double_sobolev_s17",
+    "cases": 24,
+    "failed_fits": 0,
+    "own_model": false,
+    "neural_holdout_price_rmse": 7.344268632685901e-05,
+    "exact_holdout_price_rmse": 0.00012821571751171852
+  },
+  {
+    "generator_factors": 1,
+    "model": "deep11_s17",
+    "cases": 24,
+    "failed_fits": 0,
+    "own_model": false,
+    "neural_holdout_price_rmse": 6.789980171145327e-05,
+    "exact_holdout_price_rmse": 0.0001181390785913208
+  },
+  {
+    "generator_factors": 1,
+    "model": "deep17_full_s29",
+    "cases": 24,
+    "failed_fits": 0,
+    "own_model": false,
+    "neural_holdout_price_rmse": 6.493055765442202e-05,
+    "exact_holdout_price_rmse": 0.00012634512826704497
+  },
+  {
+    "generator_factors": 1,
+    "model": "deep11_balanced_s43",
+    "cases": 24,
+    "failed_fits": 0,
+    "own_model": false,
+    "neural_holdout_price_rmse": 7.130909614426425e-05,
+    "exact_holdout_price_rmse": 0.0001189088337109964
+  },
+  {
+    "generator_factors": 2,
+    "model": "single_sobolev_s17",
+    "cases": 24,
+    "failed_fits": 0,
+    "own_model": false,
+    "neural_holdout_price_rmse": 0.00045344169841841556,
+    "exact_holdout_price_rmse": 0.00045605941442782613
+  },
+  {
+    "generator_factors": 2,
+    "model": "double_sobolev_s17",
+    "cases": 24,
+    "failed_fits": 0,
+    "own_model": true,
+    "neural_holdout_price_rmse": 1.2207060033505789e-05,
+    "exact_holdout_price_rmse": 6.320269424006644e-05,
+    "parameter_passes": 0,
+    "scaled_parameter_rmse": 0.364272152421966,
+    "tolerance_scaled_rmse": 7.022878944665529
+  },
+  {
+    "generator_factors": 2,
+    "model": "deep11_s17",
+    "cases": 24,
+    "failed_fits": 0,
+    "own_model": true,
+    "neural_holdout_price_rmse": 1.1353255837775325e-05,
+    "exact_holdout_price_rmse": 5.5817485871594685e-05,
+    "parameter_passes": 0,
+    "scaled_parameter_rmse": 0.36181463864303554,
+    "tolerance_scaled_rmse": 6.974471547799119
+  },
+  {
+    "generator_factors": 2,
+    "model": "deep17_full_s29",
+    "cases": 24,
+    "failed_fits": 0,
+    "own_model": true,
+    "neural_holdout_price_rmse": 8.80346942248686e-06,
+    "exact_holdout_price_rmse": 7.170530240427472e-05,
+    "parameter_passes": 0,
+    "scaled_parameter_rmse": 0.19402584558034752,
+    "tolerance_scaled_rmse": 3.4287011234809577
+  },
+  {
+    "generator_factors": 2,
+    "model": "deep11_balanced_s43",
+    "cases": 24,
+    "failed_fits": 0,
+    "own_model": true,
+    "neural_holdout_price_rmse": 1.1210347431696271e-05,
+    "exact_holdout_price_rmse": 5.921697879266826e-05,
+    "parameter_passes": 0,
+    "scaled_parameter_rmse": 0.21512325183567302,
+    "tolerance_scaled_rmse": 3.7480109599577465
+  }
+]

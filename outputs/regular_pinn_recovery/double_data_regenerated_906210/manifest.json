@@ -1,0 +1,66 @@
+{
+  "domain": {
+    "tau_years": [
+      0.019178082191780823,
+      2.0
+    ],
+    "single_kappa": [
+      0.2,
+      12.0
+    ],
+    "slow_kappa": [
+      0.2,
+      3.0
+    ],
+    "fast_kappa": "slow + 0.5 + (11.5 - slow) * u; maximum 12",
+    "total_theta_and_v0": [
+      0.03,
+      0.3
+    ],
+    "factor_shares": [
+      0.2,
+      0.8
+    ],
+    "feller_ratio": [
+      0.15,
+      0.9
+    ],
+    "rho_slow": [
+      -0.8,
+      0.3
+    ],
+    "rho_fast": [
+      -0.6,
+      0.5
+    ],
+    "sampling": "Latin hypercube; log scale for speeds and total variances; linear shares, correlations and eta"
+  },
+  "factors": 2,
+  "seed": 906210,
+  "source": "synthetic only",
+  "teacher": "128-node Fourier; every price checked at 96 nodes, tolerance 1e-9",
+  "training_labels": "g=log(IV/sqrt(expected_variance)), exact implicit parameter sensitivities",
+  "rejections": "All original candidates retained; usability mask explicit",
+  "splits": {
+    "train": {
+      "seed": 906210,
+      "candidates": 131072,
+      "usable": 129451,
+      "sha256": "ddfa96d8393150763d1d523bddfed868d2c03dd87d82b9a4f7c1928cc296c9d9"
+    },
+    "validation": {
+      "seed": 906211,
+      "candidates": 16384,
+      "usable": 16185,
+      "sha256": "d8052e13af67348d5391b1cbe16d06afb0c71b84cbf3ebe9ca2a94be2a54effd"
+    }
+  },
+  "collocation_points": 18000,
+  "seconds": 45.655613099999755,
+  "full_geometry_gradients": false,
+  "source_sha256": {
+    "scripts\\mentor_dh_pinn\\prepare_regular_pinn.py": "b0ee3b5ceb0a53a8ae42d52dd785a7f17eb4b31b8771af0716e284456a000b4a",
+    "src\\mentor_dh_pinn\\regular_pinn_data.py": "b179ab0c275a185a689ac0efefc17d9e5760ca21cee0bd290a6b288a4d099e44",
+    "src\\mentor_dh_pinn\\torch_pricer.py": "109ae648fadfd7c89715aca385805ec1dde1a2cc55844f5635245292688c13d7"
+  }
+}

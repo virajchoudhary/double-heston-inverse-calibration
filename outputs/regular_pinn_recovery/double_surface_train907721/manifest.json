@@ -1,0 +1,34 @@
+{
+  "purpose": "Additional synthetic training only; no validation or final-test parameters are used",
+  "seed": 907721,
+  "factors": 2,
+  "surfaces": 1024,
+  "quotes_per_surface": 126,
+  "usable_surfaces": 1024,
+  "rejected_surfaces_retained": 0,
+  "data_sha256": "affcea92146d791213194c6f0420c0367c84f86f5fb325def586318ce48251e8",
+  "singular_floor_absolute_iv": 1e-06,
+  "singular_floor_relative": 1e-10,
+  "rank_counts_usable": {
+    "0": 0,
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    "6": 0,
+    "7": 0,
+    "8": 0,
+    "9": 63,
+    "10": 961
+  },
+  "metric": "B*(neural_IV-reference_IV); B is truncated pseudoinverse of exact IV Jacobian in physical recovery-tolerance coordinates",
+  "limitations": "Local linear training surrogate, not actual recovered parameters. Weak directions below cutoff receive no parameter-aware loss; price/PDE losses remain. No guarantee of identifiability.",
+  "bounds": "Full declared training unit cube, Latin hypercube; 21 fixed strikes .8..1.2; 30/60/90/180/365/730 days",
+  "source_sha256": {
+    "scripts/mentor_dh_pinn/prepare_regular_pinn_surfaces.py": "98aff4f8248565d31d96960a8eb1ce8c5905de97ed1a6cf1a9ec0618d2c7d805",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "bb47652e896425d38be8e967269f1e81683cb879c37b9867c1cbde7cf404fb71",
+    "scripts/mentor_dh_pinn/diagnose_regular_pinn_validation.py": "c7ad0b9eb924330c33a8ee3f99ef37cb6e5eccea1cee64e161a735b8e699acd7",
+    "src/mentor_dh_pinn/torch_pricer.py": "109ae648fadfd7c89715aca385805ec1dde1a2cc55844f5635245292688c13d7"
+  }
+}

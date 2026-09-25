@@ -1,0 +1,15 @@
+{
+  "utc": "2026-09-17T16:53:46.020758+00:00",
+  "bug": "PINN domain check used t >= 7/365; quotes expiring exactly 7 days out have tau one ulp below 7/365, so 36 of 800 valid validation quotes were wrongly scored as outside the PINN domain (double_fixed_PINN NaN).",
+  "scope": "Reporting script market_tables.py, validation stage only. The frozen run.py market_final() has no such check. No model, parameter, filter or metric changed.",
+  "fix": "add 1e-12 tolerance to the domain bounds",
+  "script_sha256_before": "366e82dcb563be671ee6cce2c964f2d2503c0a978829014a500db3b9c348cba2",
+  "script_sha256_after": "e7b7a8f259975da8c2bee9ab10bf890284939eb96795ea54de9c38eae04aeb6e",
+  "superseded_files": [
+    "validation_daily_errors.csv",
+    "validation_error_decomposition.csv",
+    "validation_fixed_metrics.csv",
+    "validation_manifest.json",
+    "validation_predictions.csv"
+  ]
+}

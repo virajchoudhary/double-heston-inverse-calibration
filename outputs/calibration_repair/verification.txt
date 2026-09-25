@@ -1,0 +1,8 @@
+............................................                             [100%]
+=============================== warnings summary ===============================
+tests/test_refinement_objective.py: 18 warnings
+  /Users/dhruvaambhaikar/Documents/Options pricing/.venv/lib/python3.14/site-packages/torch/jit/_script.py:1482: DeprecationWarning: `torch.jit.script` is not supported in Python 3.14+ and may break. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+44 passed, 18 warnings in 9.25s

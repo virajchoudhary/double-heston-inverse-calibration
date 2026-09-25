@@ -1,0 +1,14 @@
+{
+  "primary_seed": 43,
+  "primary_checkpoint": "outputs/calibration_repair/seed_43/repaired.pt",
+  "checkpoint_sha256": "f6e502c0ca0f581cabe3bce6d076562a959eeafa9a56d5356a0d3bcd3347da8d",
+  "selected_step": 500,
+  "criterion": "minimum pooled heldout vega-scaled price RMSE on development validation, subject to synthetic gates",
+  "selection_precedes_final_assessment": true,
+  "candidate_seeds": [17, 29, 43],
+  "candidate_selected_validation_rmse": [0.023527696570652935, 0.023832523881682798, 0.023439215810509877],
+  "final_assessment_seeds": [905101, 905102, 905103],
+  "final_parameter_sets_per_seed": 8,
+  "hybrid_polish_scope": "primary selected model only; encoder and refined arms evaluated for all three seeds and base",
+  "no_further_model_selection_from_assessment": true
+}

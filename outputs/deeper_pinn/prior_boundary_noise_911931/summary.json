@@ -1,0 +1,56 @@
+[
+  {
+    "factors": 1,
+    "model": "Single Heston",
+    "cases": 16,
+    "neural_price_rmse": 0.0002046974726932574,
+    "exact_reprice_rmse": 0.00020213827215425953,
+    "parameter_rmse": 0.6150242580136752,
+    "parameter_passes": 4
+  },
+  {
+    "factors": 2,
+    "model": "Single Heston",
+    "cases": 16,
+    "neural_price_rmse": 0.0005100202696136517,
+    "exact_reprice_rmse": 0.0005265318306138026
+  },
+  {
+    "factors": 2,
+    "model": "Original Double Heston",
+    "cases": 16,
+    "neural_price_rmse": 0.000221209817253071,
+    "exact_reprice_rmse": 0.00026125104472595384,
+    "parameter_rmse": 1.477117315078883,
+    "parameter_passes": 0
+  },
+  {
+    "factors": 2,
+    "model": "17-layer Double Heston",
+    "cases": 16,
+    "neural_price_rmse": 0.00021829185382167971,
+    "exact_reprice_rmse": 0.0002257766605421849,
+    "parameter_rmse": 1.4565412137334366,
+    "parameter_passes": 0
+  },
+  {
+    "factors": 2,
+    "model": "Unregularized matched PINN",
+    "cases": 16,
+    "neural_price_rmse": 0.00021813717782685277,
+    "exact_reprice_rmse": 0.00024837300651417985,
+    "parameter_rmse": 1.3068533763005732,
+    "bias_corrected_price_rmse": 0.00021664947589925153,
+    "parameter_passes": 0
+  },
+  {
+    "factors": 2,
+    "model": "Selected regularized PINN",
+    "cases": 16,
+    "neural_price_rmse": 0.0002262512509069878,
+    "exact_reprice_rmse": 0.000245758900267144,
+    "parameter_rmse": 1.01534559111417,
+    "bias_corrected_price_rmse": 0.0002245190751747371,
+    "parameter_passes": 0
+  }
+]

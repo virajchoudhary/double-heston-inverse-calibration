@@ -1,0 +1,55 @@
+{
+  "seeds": [
+    17,
+    43
+  ],
+  "adam_steps": 1000,
+  "lbfgs_iterations": 100,
+  "width": 128,
+  "depth": 5,
+  "learning_rate": 0.001,
+  "pde_batch": 128,
+  "collocation_count": 18000,
+  "collocation_seed": 915001,
+  "collocation_domain": {
+    "x_forward": [
+      -1.0,
+      1.0
+    ],
+    "each_variance": [
+      0.0001,
+      1.0
+    ],
+    "tau_years": [
+      0.019178082191780823,
+      2.0
+    ]
+  },
+  "expiry_days": [
+    30,
+    60,
+    90,
+    180,
+    365,
+    730
+  ],
+  "spot_strike_ratio": [
+    0.5,
+    1.5
+  ],
+  "rate": 0.03,
+  "dividend_yield": 0.0,
+  "strike": 100.0,
+  "training_ratios": 41,
+  "holdout_ratios": 40,
+  "iv_scale": 0.01,
+  "price_scale": 0.01,
+  "pde_scale": 0.01,
+  "pde_weight": 1.0,
+  "shape_weight": 0.1,
+  "positive_parameter_relative_tolerance": 0.05,
+  "rho_absolute_tolerance": 0.05,
+  "initialization": "same seed-specific generic perturbation for every case; never centered on truth",
+  "selection": "final fixed-budget checkpoint, report all seeds, no truth-based or holdout-based selection",
+  "scope": "development pilot; synthetic surfaces, not NSE data or unseen market evidence; multi-expiry grid is a study adaptation, not the paper's original one-year test"
+}

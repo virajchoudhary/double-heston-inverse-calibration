@@ -1,0 +1,17 @@
+{
+  "evidence": "Numerical re-evaluation, not a new model or fresh market assessment",
+  "guard": "Model time value <= 1e-10 normalized, or invalid original prediction; all models",
+  "guard_chosen_after": "Tracing float64 cancellation in three original validation predictions",
+  "method": "Independent Carr-Madan inversion, damping 1.5, integration 0..2000",
+  "agreement": "40/60 decimal prices within 1e-12 relative; IV within 1e-10; last interval <1e-8 of price",
+  "failure_policy": "Keep every quote; unresolved required IV makes the all-quote metric null",
+  "source_sha256": {
+    "scripts/mentor_dh_pinn/diagnose_tail_precision.py": "04d1b1291cf6acbc07b54c5ea7d2fc835f35de91d60216243e296013c20cc474"
+  },
+  "input_sha256": {
+    "outputs/calibration_repair/market_validation/holdout_predictions.csv": "f38125827600d0e1e1f3c536d7b34774280b1017fa4d4d54a4ea26fe6820c823",
+    "outputs/calibration_repair/market_validation/surface_parameters_and_metrics.csv": "781235f5cb841a016c5da09101db2bd0d725f036c86f22fdd32bc080d6fc6c49",
+    "outputs/calibration_repair/market_validation/summary.json": "aea29f325311a51a6402c2ec290c5394701a02f58101c3df6289a3dd79dc6de8"
+  },
+  "guarded_quotes": 7
+}

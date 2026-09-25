@@ -1,0 +1,18 @@
+{
+  "utc": "2026-09-17T16:55:50.959659+00:00",
+  "source_sha256": "c6322e8cfaf8ae9e36ae6a0f312b1fd9bd6f38a4ae89b2c779cbd3f6f4ec4e3a",
+  "files": {
+    "REPORT_ADDENDUM.md": "ba90badf5a71a6fb1aeed3f5d3b165dedf6c75f11a2a1d2dd0dc9cb5ec09c312",
+    "family_bucket_errors.csv": "eccb0e083a67a14a6a0807465e3fe15b7df4522c70bbcbbc3d1babd8e5d9c8da",
+    "market_all_predictions_and_residuals.csv": "0318bed148bbcc4b2531d9b13da335ec6685672474619c887677acc4e4f03a6c",
+    "market_bucket_errors.csv": "af366f4b10cc168393dc821328eff3b4a649a290258663a1f5603925017afa09",
+    "market_daily_errors.csv": "52cd8dea74d8658647eb7c9793bdf764f249a53356e0bed2a115d35b35b69c24",
+    "market_error_decomposition.csv": "f114e518ae86a720d7906fad1e092fd14f884c16a770f17d694623fa222c4091",
+    "market_error_decomposition.png": "0f7588fdf1ed47f719c5799027ffdc508a37279ea192a384bc8e5c39e658eda8",
+    "market_fixed_summary.csv": "127b9e84b70dcda176f9964432c6dea2f61ebc4eee4cf8d64cc2fc1c305fea0f",
+    "market_state_summary.csv": "b8a0b0602ce390c85b3647560dea7e4d0f05bd045a1485bf2388adbc779bab8b",
+    "pde_fidelity_residuals.csv": "043b58b308878b73d06b1f0fefc4a1c6cf8d05311d0a62f853facec8b26f6602",
+    "representative_teacher_shapes.csv": "5984ba83ac16a5cf7a4e57a8165ffa0cd61f4de8e150a9b68b56b20a635b6f01",
+    "state_adaptation_changes.csv": "c651189de7c818199a87c88f4f9142b208fa71c45cff508127e2d3ee002e36dc"
+  }
+}

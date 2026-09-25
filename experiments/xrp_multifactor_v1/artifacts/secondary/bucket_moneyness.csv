@@ -1,0 +1,21 @@
+regime,design,moneyness,BS_EXPIRY,DH,SH,quotes
+calm,A,x<-.15 (OTM call wing),13.79,2.96,4.0,51
+calm,A,-.15..-.05,4.31,2.62,2.89,22
+calm,A,ATM +-.05,4.76,2.26,2.4,29
+calm,A,.05...15,5.83,2.17,1.92,25
+calm,A,x>.15 (OTM put wing),8.6,2.34,2.67,15
+calm,B,x<-.15 (OTM call wing),33.44,15.15,14.52,16
+calm,B,-.15..-.05,3.05,3.18,3.37,9
+calm,B,ATM +-.05,4.96,2.59,3.04,15
+calm,B,.05...15,5.51,2.55,2.77,11
+calm,B,x>.15 (OTM put wing),18.77,3.87,3.9,9
+shock,A,x<-.15 (OTM call wing),19.1,7.65,9.39,179
+shock,A,-.15..-.05,8.75,6.44,6.52,65
+shock,A,ATM +-.05,8.33,6.45,6.8,89
+shock,A,.05...15,9.99,9.32,9.02,58
+shock,A,x>.15 (OTM put wing),14.89,6.97,8.62,62
+shock,B,x<-.15 (OTM call wing),24.32,9.73,12.64,68
+shock,B,-.15..-.05,9.9,7.36,7.58,37
+shock,B,ATM +-.05,6.98,7.91,8.47,41
+shock,B,.05...15,9.07,9.84,8.72,36
+shock,B,x>.15 (OTM put wing),25.23,7.75,8.59,27

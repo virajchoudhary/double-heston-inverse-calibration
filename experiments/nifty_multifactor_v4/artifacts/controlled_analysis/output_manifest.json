@@ -1,0 +1,28 @@
+{
+  "utc": "2026-09-17T16:52:48.595888+00:00",
+  "source_sha256": "7c28020e8b37edbae5a1fdd125355483e5c071ca97fa5968e7f28f244d64d34e",
+  "files": {
+    "CONTROLLED_ANALYSIS.md": "4be44f4afb7ef9c73df6050ef8da4b94a891f4d9b29d13cb3499eee0629ceeee",
+    "analysis_summary.json": "7a0f0262685673e226b3f407c6dbd283ec1a02f90aefcdfc388d711b1a8280ec",
+    "figures/CENTRAL_fixed_total_variance_twist.png": "03e75c103a2905d38c591b20447cf393d42264ffd6e7930cab3d13ce7e8de642",
+    "figures/advantage_maps_family_means.png": "6f5c5cceeefa837deb89bb8aac97fd9bde2fc5da007385ab8ae80d84786bf476",
+    "figures/advantage_maps_representatives.png": "a4c1b20930ce63d449f78f63ff6c12517b08ca585f6bab73e589009bc50241a2",
+    "figures/maturity_profiles_by_regime.png": "692061103191e0209ff5eefd9c03a9fa71792c136808217f658426bb8ff857e4",
+    "figures/paired_robustness.png": "cb665fb002aa44a62150797ed74df70bccf82afa3b0fe23f501012729559dd4b",
+    "figures/twist_error_vs_fast_share.png": "d450a592976050e4ec18caa52fa0a4723a8087687d11fd8def91e2d2bc04d01a",
+    "maturity_error_mass_SH_by_surface.csv": "fb9c50ee5658ea476c0eac0299e094faddf19243123d6fca6762109d315c928c",
+    "tableA1_fidelity_heldout_overall.csv": "0d27655729139a7c38e9e15ff21c1f053d4fd681415d1e804d63b673db78960c",
+    "tableA2_fidelity_heldout_by_bucket.csv": "c1445dcaa3f8ad7a76be26e87598a456eaac2e26b631aecd53696188b7297620",
+    "tableA3_fidelity_by_structural_scenario.csv": "487428999ffb989b470a2057c644916c0c5930cfd359f9dcdea01c6e13df7f82",
+    "tableB_controlled_benchmark_overall.csv": "3048f4c887cf9da8aad2efdf00bfcdd739219c7044e5beaea07f3126e2f682b9",
+    "tableC_controlled_benchmark_by_regime.csv": "42dcdb526e4b994b543c33ee577784d4d31a3cce3f276fd7a0420f085caec451",
+    "tableC_primary_paired_statistics.csv": "e65428dfcc4ec20a8c74e17b42fa2e760a26103e345a581152ee0060304db2b9",
+    "table_SH_optimizer_diagnostics.csv": "57a878a4c597203c3bc73d26f16165f0c90f223f259e3129981e30e2126ba703",
+    "table_advantage_maps.csv": "f095bfc29a876d80bb7b62c95f65eef9a159d11d00f45d7e65926cc315ce11e0",
+    "table_bucket_errors_by_family.csv": "2ec21ffac7e7297e32ad7b255ad86dd59b337149f85f5d06315e58ca2c77656b",
+    "table_condition_PINN_error_vs_SH_error.csv": "1cebc2e842a34cf37a5e6184432def0a206cd02d41131af44699a5895cf5094c",
+    "table_fixed_total_twist_independent.csv": "bd5b8374695be651a7c4ac160a4067751a6247b876cf0c55441515750b923a5e",
+    "table_fixed_total_twist_representatives.csv": "21abe29e8f28cb511b6212f8a90b1954bd9e9c65f06f317e9d92e3015bc196f2",
+    "tests_H2_H3_secondary.csv": "ed1b3e72d01a57eca1d61d09c7f50e020756f51a1fa81a3e31317ddd8dcda2c3"
+  }
+}

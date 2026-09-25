@@ -1,0 +1,11 @@
+{
+  "source_csv_sha256": "2b03335d8b317b325460cd1baa3745683d5f1396e9dffe1992c20025ae06cf36",
+  "rule": "One frozen structured split of the SPX surface from hardcoded_v1: rank expiries by maturity and, within each expiry, rank strikes. A quote is CALIBRATION if (expiry_rank + strike_rank) is even, HELD OUT otherwise. Within calibration, quotes whose strike rank is a multiple of 5 form the DEVELOPMENT subset used for the residual hyper-parameters. Hashes recorded before any residual training.",
+  "counts": {
+    "heldout": 5353,
+    "calibration": 4271,
+    "development": 1082
+  },
+  "expiries": 47,
+  "split_sha256": "08a97a9361664058218911c0c679b35df32714eeb6bd3dd8ca650a1bdd28590e"
+}

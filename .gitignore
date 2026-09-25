@@ -84,3 +84,44 @@ outputs/**/*.tmp
 outputs/metrics/smoke_test/data/
 outputs/metrics/smoke_test/smoke_predictions.csv
 outputs/metrics/smoke_test/parameter_evaluation/parameter_predictions_and_errors.csv
+
+# --- shipped research artefacts -------------------------------------------------
+# The blanket *.pt / *.npz / *.parquet rules above keep scratch output out of the
+# repository. The paths below are deliverables, not scratch: teammates must be able to
+# load the trained networks and reproduce every reported metric WITHOUT retraining.
+# v6_train.npz (64 MB) is deliberately NOT shipped -- it is only needed to retrain, and
+# regenerates exactly from `scripts/mentor_dh_pinn/build_v6_data.py` (seed 101).
+!outputs/unified_v6/*.pt
+!outputs/unified_v6/v6_validation.npz
+!outputs/unified_v6/v6_test.npz
+!outputs/dual_pinn_legacy/*.pt
+!single_heston_pinn/outputs/*.safetensors
+!single_heston_pinn/outputs/*.npz
+!single_heston_pinn/outputs/*.parquet
+
+!outputs/real_corpus/real_validation.npz
+
+# Selected repair checkpoints and small evaluation inputs are handoff artifacts.
+# Training arrays and intermediate optimizer checkpoints remain regenerable.
+!outputs/calibration_repair/seed_17/repaired.pt
+!outputs/calibration_repair/seed_29/repaired.pt
+!outputs/calibration_repair/seed_43/repaired.pt
+!outputs/calibration_repair/real_corpus/real_validation.npz
+!outputs/calibration_repair/synthetic/v6_validation.npz
+
+# --- nifty_multifactor_v4 (controlled DH-PINN vs optimised SH vs BS; untouched NIFTY test) ---
+# Shipped so the controlled results reproduce WITHOUT retraining: the accepted (locked) DH-PINN
+# checkpoints, the exact-DH teacher data and the 50 controlled teacher surfaces.
+!experiments/nifty_multifactor_v4/artifacts/pinn_s*/weights.pt
+!experiments/nifty_multifactor_v4/artifacts/teacher/*.npz
+!experiments/nifty_multifactor_v4/artifacts/surfaces/*.npz
+# Not shipped (regenerable): the 41 MB per-quote controlled prediction dump (python run.py evaluate
+# rewrites it deterministically) and intermediate step checkpoints of the exploratory residual test.
+experiments/nifty_multifactor_v4/artifacts/controlled_predictions.csv
+outputs/regular_pinn_recovery/residual_test/**/*.safetensors
+
+# Small, completed portable-PINN research runs: ship reproducible evidence.
+!experiments/portable_dual_pinn_v1/pilot/*.pt
+!experiments/portable_dual_pinn_v1/pilot/*.npz
+!experiments/portable_dual_pinn_v1/extended_stratified/*.pt
+!experiments/portable_dual_pinn_v1/extended_stratified/*.npz

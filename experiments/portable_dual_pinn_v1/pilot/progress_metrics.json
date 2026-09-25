@@ -1,0 +1,54 @@
+[
+  {
+    "model": "single_branch",
+    "seed": 17,
+    "seconds": 29.701985665989923,
+    "parameters": 21121,
+    "price_RMSE": 0.0120086127200265,
+    "price_MAE": 0.0055853588094061145,
+    "price_max": 0.12380035313263271,
+    "IV_RMSE_vol_points": 9.059723479569618,
+    "PDE_RMSE": 2.424196643966403,
+    "IV_valid": 1309,
+    "quotes": 1536
+  },
+  {
+    "model": "dual_branch",
+    "seed": 17,
+    "seconds": 33.62504462499055,
+    "parameters": 19970,
+    "price_RMSE": 0.0059947279529118085,
+    "price_MAE": 0.0031144904618612256,
+    "price_max": 0.03218839174598381,
+    "IV_RMSE_vol_points": 9.580769560916783,
+    "PDE_RMSE": 1.4364879093348593,
+    "IV_valid": 1309,
+    "quotes": 1536
+  },
+  {
+    "model": "single_branch",
+    "seed": 43,
+    "seconds": 30.253208541005733,
+    "parameters": 21121,
+    "price_RMSE": 0.010009281553077419,
+    "price_MAE": 0.004449234798233412,
+    "price_max": 0.07481569439397268,
+    "IV_RMSE_vol_points": 8.628696857455427,
+    "PDE_RMSE": 1.9065699072335045,
+    "IV_valid": 1309,
+    "quotes": 1536
+  },
+  {
+    "model": "dual_branch",
+    "seed": 43,
+    "seconds": 34.25090945800184,
+    "parameters": 19970,
+    "price_RMSE": 0.006385138514879984,
+    "price_MAE": 0.0029798107349741855,
+    "price_max": 0.05814702849712161,
+    "IV_RMSE_vol_points": 8.27930073879066,
+    "PDE_RMSE": 1.158687395761913,
+    "IV_valid": 1309,
+    "quotes": 1536
+  }
+]

@@ -1,0 +1,21 @@
+check,passed,observed
+authentic_input_sha256_exact,True,a8a56dd7b17074d8fa32f88936c8b404456f22f296d9dc4665faf3b13621f1d3
+authentic_model_ready_rows_exact,True,215636
+all_candidate_training_precedes_validation,True,0
+selection_uses_validation_only,True,0
+selected_before_each_test_period,True,0
+five_candidates_per_validation_key,True,5
+validation_and_test_row_keys_disjoint,True,0
+single_double_same_test_source_universe,True,"all_double=8818, single=8818"
+invalid_double_test_rows_documented,True,4
+finite_common_test_coverage_above_99_9pct,True,0.9995463823996371
+test_keys_unique,True,0
+all_double_candidates_feller_valid,True,3.283369599954653e-05
+all_double_candidates_factor_ordered,True,0
+all_double_correlations_jointly_valid,True,0.9496814173760568
+test_iv_predictions_finite,True,0
+test_source_paths_authentic,True,0
+origin_state_has_no_target_price_or_iv,True,none
+state_information_cutoff_is_origin,True,0
+origin_strictly_precedes_target,True,0
+exact_expiry_dates_no_weekday_rule,True,exact expiry_date values inherited; no weekday assumption

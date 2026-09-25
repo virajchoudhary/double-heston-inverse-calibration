@@ -1,0 +1,158 @@
+{
+  "frozen_utc": "2026-09-18T05:02:16.124540+00:00",
+  "config": {
+    "version": "btc_multifactor_v1",
+    "purpose": "Market test of Double Heston vs Single Heston vs Black-Scholes on Bitcoin options, in periods where a two-timescale variance structure should matter, with every model fully calibrated per date. Rules fixed before any option surface is fetched or any model fitted.",
+    "asset": "BTC",
+    "venue": "Deribit options on futures, BTC-settled",
+    "sources": {
+      "trades": "https://history.deribit.com/api/v2/public/get_last_trades_by_currency_and_time?currency=BTC&kind=option",
+      "dvol": "https://www.deribit.com/api/v2/public/get_volatility_index_data?currency=BTC&resolution=1D"
+    },
+    "convention": "Deribit quotes option prices in BTC as the Black-76 USD price divided by that expiry's futures price, with no discounting. The BTC price is therefore the forward-normalised option price. Calls are used directly; puts are converted with c = p + 1 - K/F. USD value = normalised price x F.",
+    "forward": "Per trade, solve for F from (trade price, trade iv, K, tau) under the convention. Per expiry, take the median of F/index over that expiry's trades in the window. Each quote's forward is that ratio times the index at its own trade time.",
+    "window_utc_hours": [
+      6,
+      8
+    ],
+    "quote": "Last trade per instrument in the window. Primary target: trade price. Secondary robustness target: the exchange mark price at that trade.",
+    "filters": {
+      "min_days": 3,
+      "max_days": 400,
+      "otm_only": true,
+      "min_price_btc": 0.0005,
+      "iv_range": [
+        0.1,
+        3.0
+      ],
+      "max_abs_log_moneyness": 1.0,
+      "min_quotes_per_expiry": 3,
+      "min_expiries_per_date": 5
+    },
+    "date_rule": {
+      "dvol_file": "artifacts/dvol_btc_daily.json",
+      "lookback_days": 60,
+      "shock_ratio": 1.2,
+      "dedupe_days": 20,
+      "days_after_onset": [
+        1,
+        4,
+        8
+      ],
+      "calm_band": 0.05,
+      "calm_max_range_20d": 1.15,
+      "calm_exclusion_days_from_shock": 20,
+      "calm_sample": 30,
+      "seed": 20260918,
+      "validation_fraction": 0.3,
+      "split": "chronological: the earliest 30% of shock episodes (rounded down) and of calm dates are validation; the rest are test",
+      "unavailable_dates": "disclosed; never replaced by other dates"
+    },
+    "designs": {
+      "B_heldout_expiries": "PRIMARY. Sort a date's expiries by maturity; hold out every odd-ranked expiry except the longest. Calibrate on the remaining expiries (all strikes); score all quotes of held-out expiries. Tests term-structure interpolation, where a second timescale should matter.",
+      "A_heldout_strikes": "SECONDARY. Within each expiry, sort by strike; hold out odd-ranked strikes. Calibrate on the rest; score held-out strikes."
+    },
+    "models": {
+      "BS_TERM": "One Black-76 volatility per calibration expiry. Held-out expiries use linear interpolation in total variance between neighbouring calibration expiries, with constant-volatility extrapolation at the ends. Strongest non-leaking Black-Scholes; no held-out quote informs its own price.",
+      "SH": "Heston, all five parameters (kappa, theta, sigma, rho, v0) calibrated per date and design.",
+      "DH": "Double Heston, separable four-shock literature_exact convention (independent rho_i, |rho_i|<1, no joint disk), slow-first ordering kappa_slow < kappa_fast, all ten parameters calibrated per date and design."
+    },
+    "variants": {
+      "feller_strict": "sigma_i = eta_i * sqrt(2 kappa_i theta_i), eta_i in [0.01, 0.999]",
+      "feller_free": "log sigma_i free in [log 0.01, log 10]; characteristic function remains valid without Feller"
+    },
+    "variant_selection": "For SH and DH separately, choose feller_strict or feller_free by the lower median held-out IV RMSE over all validation dates and both designs. Frozen in variant_selection.json before any test-date fit.",
+    "bounds": {
+      "kappa_single": [
+        0.05,
+        50.0
+      ],
+      "kappa_slow": [
+        0.05,
+        20.0
+      ],
+      "kappa_gap": [
+        0.05,
+        100.0
+      ],
+      "theta": [
+        0.001,
+        4.0
+      ],
+      "v0": [
+        0.001,
+        4.0
+      ],
+      "eta": [
+        0.01,
+        0.999
+      ],
+      "sigma": [
+        0.01,
+        10.0
+      ],
+      "rho": [
+        -0.99,
+        0.99
+      ],
+      "bs_vol": [
+        0.05,
+        5.0
+      ]
+    },
+    "objective": "Mean squared vega-weighted price residual, (model - market)/vega, with vega the market Black-76 vega in forward units, floored at 1e-4. This is approximately an implied-vol residual. Identical for every model.",
+    "optimizer": {
+      "de_popsize_multiplier": 6,
+      "de_maxiter": 25,
+      "multistarts": 12,
+      "max_nfev": 300,
+      "seed": 20260919,
+      "convergence": "Report all starts; count successful starts within max(1e-12, 1% of the best objective). Never claim a proven global optimum."
+    },
+    "numerics": {
+      "nodes": 128,
+      "comparison_nodes": 96,
+      "evaluation_disagreement_tolerance": 1e-07,
+      "fallback": "In evaluation, any 96/128 disagreement above tolerance or bound breach uses the independent adaptive quadrature; every fallback is logged."
+    },
+    "primary_endpoint": "Shock-regime TEST dates, design B. For each test episode, average the per-date paired differences in held-out IV RMSE: SH minus DH and BS_TERM minus DH. DH beats a competitor only if the one-sided Wilcoxon signed-rank test over test episodes gives p < 0.05 AND the episode-cluster bootstrap 95% lower bound of the mean difference is > 0 (5,000 replicates, seed 20260920).",
+    "secondary": [
+      "design A on shock test dates",
+      "both designs on calm test dates (control; a smaller DH advantage is expected)",
+      "held-out price RMSE in USD",
+      "mark-price target robustness",
+      "maturity and moneyness buckets",
+      "date-level win fractions"
+    ],
+    "metrics": [
+      "IV_RMSE_vol_points",
+      "price_RMSE_USD",
+      "price_MAE_USD",
+      "forward_normalised_price_RMSE",
+      "maturity buckets 3-14, 14-45, 45-120, 120-400 days",
+      "moneyness buckets by log(K/F)"
+    ],
+    "integrity": [
+      "Dates come from DVOL alone before any option data is fetched; the calm control set is reported alongside.",
+      "No filter, split, metric, bound, optimizer setting or endpoint changes after test fits are seen.",
+      "Validation dates are used only for the Feller variant choice.",
+      "Failed dates, fits and fallbacks are retained and disclosed.",
+      "Trade prices are not synchronized bid/ask; no spread-based claims."
+    ]
+  },
+  "source_sha256": {
+    "engine.py": "3be06793eb21aa293ea1eb6038220c6d7e3cdd17fb5cc113ff4bbe8ccc51d4ae",
+    "data.py": "954e5c0f978c1ba6aa903562fbc6dce939d924abcf21c82c114d51d08890a8b0",
+    "run.py": "473d6897ee83e19cf3beaa9c7644e7767271e743de25723823bee32321e08a96",
+    "test_btc.py": "893efcbdb5e013ed67d1e29bce3165803238f234d1103b529ceb77a1fa68a169",
+    "config.json": "c880ab9215e2ba64b900b70cc3f6fe1894dac134569c40032af58b116b877fb8",
+    "PROTOCOL.md": "37e47fd1261bcc788e460b665df7f92df4ca6dc755e408a54f0d0587d0d1a4dc"
+  },
+  "repo_sha256": {
+    "src/double_heston_reference.py": "467cab8eac4ddc9249833f3db064d5f58979d9b0dd15e22448bafa7ef9c12350",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "b179ab0c275a185a689ac0efefc17d9e5760ca21cee0bd290a6b288a4d099e44"
+  },
+  "dvol_sha256": "1160e7b93bbe5c7e9eb66df960c0839607bf58a2496ee74f532b8250fd95daa5",
+  "option_data_fetched_before_freeze": false,
+  "models_fitted_before_freeze": false
+}

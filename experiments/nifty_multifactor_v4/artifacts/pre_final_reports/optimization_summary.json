@@ -1,0 +1,8 @@
+{
+  "surfaces": 50,
+  "total_local_starts": 600,
+  "successful_local_starts": 600,
+  "surfaces_two_successful_near_best": 50,
+  "best_near_bound": 0,
+  "global_optimum_proven": false
+}

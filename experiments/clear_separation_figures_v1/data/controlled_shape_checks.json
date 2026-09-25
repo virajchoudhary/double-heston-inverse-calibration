@@ -1,0 +1,178 @@
+{
+  "time_value tau=30d:BS": {
+    "points": 501,
+    "delta_violations": 0,
+    "gamma_violations": 0,
+    "delta_min": 2.1669673210102097e-10,
+    "delta_max": 0.999998287078847,
+    "gamma_min": 1.9153144102351298e-10,
+    "below_intrinsic": 0,
+    "above_spot": 0,
+    "negative_time_value": 0
+  },
+  "time_value tau=30d:SH": {
+    "points": 501,
+    "delta_violations": 0,
+    "gamma_violations": 0,
+    "delta_min": 5.009770376318227e-12,
+    "delta_max": 0.999992218332571,
+    "gamma_min": 5.63823679103263e-12,
+    "below_intrinsic": 0,
+    "above_spot": 0,
+    "negative_time_value": 0
+  },
+  "time_value tau=30d:DH": {
+    "points": 501,
+    "delta_violations": 0,
+    "gamma_violations": 0,
+    "delta_min": -8.696747026144228e-16,
+    "delta_max": 0.9998614978506654,
+    "gamma_min": -3.232753571009404e-13,
+    "below_intrinsic": 0,
+    "above_spot": 0,
+    "negative_time_value": 0
+  },
+  "time_value tau=30d:PINN": {
+    "points": 501,
+    "delta_violations": 0,
+    "gamma_violations": 0,
+    "delta_min": 1.5544897117716388e-14,
+    "delta_max": 0.999861184047815,
+    "gamma_min": 7.289630055844338e-15,
+    "below_intrinsic": 0,
+    "above_spot": 0,
+    "negative_time_value": 0
+  },
+  "time_value tau=90d:BS": {
+    "points": 501,
+    "delta_violations": 0,
+    "gamma_violations": 0,
+    "delta_min": 0.00018731858677378872,
+    "delta_max": 0.996575096982247,
+    "gamma_min": 5.3142319995353674e-05,
+    "below_intrinsic": 0,
+    "above_spot": 0,
+    "negative_time_value": 0
+  },
+  "time_value tau=90d:SH": {
+    "points": 501,
+    "delta_violations": 0,
+    "gamma_violations": 0,
+    "delta_min": 7.069611095422704e-05,
+    "delta_max": 0.9942773818465194,
+    "gamma_min": 2.3123653846025827e-05,
+    "below_intrinsic": 0,
+    "above_spot": 0,
+    "negative_time_value": 0
+  },
+  "time_value tau=90d:DH": {
+    "points": 501,
+    "delta_violations": 0,
+    "gamma_violations": 0,
+    "delta_min": 7.14741985691169e-06,
+    "delta_max": 0.9903946150783266,
+    "gamma_min": 3.2970182412954683e-06,
+    "below_intrinsic": 0,
+    "above_spot": 0,
+    "negative_time_value": 0
+  },
+  "time_value tau=90d:PINN": {
+    "points": 501,
+    "delta_violations": 0,
+    "gamma_violations": 0,
+    "delta_min": 7.1372646588797375e-06,
+    "delta_max": 0.9904091230368944,
+    "gamma_min": 3.3108794466830094e-06,
+    "below_intrinsic": 0,
+    "above_spot": 0,
+    "negative_time_value": 0
+  },
+  "time_value tau=180d:BS": {
+    "points": 501,
+    "delta_violations": 0,
+    "gamma_violations": 0,
+    "delta_min": 0.007563680545278915,
+    "delta_max": 0.9720389911448859,
+    "gamma_min": 0.0010608832359868692,
+    "below_intrinsic": 0,
+    "above_spot": 0,
+    "negative_time_value": 0
+  },
+  "time_value tau=180d:SH": {
+    "points": 501,
+    "delta_violations": 0,
+    "gamma_violations": 0,
+    "delta_min": 0.005152365451239784,
+    "delta_max": 0.9658754491361706,
+    "gamma_min": 0.0008273583688797694,
+    "below_intrinsic": 0,
+    "above_spot": 0,
+    "negative_time_value": 0
+  },
+  "time_value tau=180d:DH": {
+    "points": 501,
+    "delta_violations": 0,
+    "gamma_violations": 0,
+    "delta_min": 0.003362245166591253,
+    "delta_max": 0.9633114198146576,
+    "gamma_min": 0.0006295953569658202,
+    "below_intrinsic": 0,
+    "above_spot": 0,
+    "negative_time_value": 0
+  },
+  "time_value tau=180d:PINN": {
+    "points": 501,
+    "delta_violations": 0,
+    "gamma_violations": 0,
+    "delta_min": 0.0033921528061199796,
+    "delta_max": 0.9632603424432882,
+    "gamma_min": 0.0006330212954547774,
+    "below_intrinsic": 0,
+    "above_spot": 0,
+    "negative_time_value": 0
+  },
+  "time_value tau=365d:BS": {
+    "points": 501,
+    "delta_violations": 0,
+    "gamma_violations": 0,
+    "delta_min": 0.056621353058392165,
+    "delta_max": 0.9112691057871627,
+    "gamma_min": 0.0029452039417638587,
+    "below_intrinsic": 0,
+    "above_spot": 0,
+    "negative_time_value": 0
+  },
+  "time_value tau=365d:SH": {
+    "points": 501,
+    "delta_violations": 0,
+    "gamma_violations": 0,
+    "delta_min": 0.04971782120322303,
+    "delta_max": 0.9085064495720504,
+    "gamma_min": 0.002713705713287263,
+    "below_intrinsic": 0,
+    "above_spot": 0,
+    "negative_time_value": 0
+  },
+  "time_value tau=365d:DH": {
+    "points": 501,
+    "delta_violations": 0,
+    "gamma_violations": 0,
+    "delta_min": 0.04912197103752272,
+    "delta_max": 0.9092721842498492,
+    "gamma_min": 0.0027180677128774964,
+    "below_intrinsic": 0,
+    "above_spot": 0,
+    "negative_time_value": 0
+  },
+  "time_value tau=365d:PINN": {
+    "points": 501,
+    "delta_violations": 0,
+    "gamma_violations": 0,
+    "delta_min": 0.0491448924708158,
+    "delta_max": 0.9092003010945693,
+    "gamma_min": 0.002718233703644924,
+    "below_intrinsic": 0,
+    "above_spot": 0,
+    "negative_time_value": 0
+  }
+}

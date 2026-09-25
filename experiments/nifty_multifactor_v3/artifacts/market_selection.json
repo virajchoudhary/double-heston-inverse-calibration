@@ -1,0 +1,190 @@
+{
+  "utc": "2026-09-17T14:27:52.098295+00:00",
+  "candidates": [
+    {
+      "id": "single_14",
+      "target_initial_vol": 0.14,
+      "params": [
+        8.9814,
+        0.03285409836065574,
+        0.26618867338049074,
+        -0.9621,
+        0.019600000000000003
+      ],
+      "label": "PROPOSED_NIFTY_VARIANCE_SCALED_LITERATURE_VARIANT",
+      "validation_equal_date_MSE": 2.3503801857418296e-05
+    },
+    {
+      "id": "single_18",
+      "target_initial_vol": 0.18,
+      "params": [
+        8.9814,
+        0.05430983606557377,
+        0.3422425800606309,
+        -0.9621,
+        0.0324
+      ],
+      "label": "PROPOSED_NIFTY_VARIANCE_SCALED_LITERATURE_VARIANT",
+      "validation_equal_date_MSE": 8.644138048012705e-05
+    },
+    {
+      "id": "single_22",
+      "target_initial_vol": 0.22,
+      "params": [
+        8.9814,
+        0.0811295081967213,
+        0.4182964867407711,
+        -0.9621,
+        0.0484
+      ],
+      "label": "PROPOSED_NIFTY_VARIANCE_SCALED_LITERATURE_VARIANT",
+      "validation_equal_date_MSE": 0.0001934230206127316
+    },
+    {
+      "id": "single_28",
+      "target_initial_vol": 0.28,
+      "params": [
+        8.9814,
+        0.13141639344262296,
+        0.5323773467609815,
+        -0.9621,
+        0.07840000000000001
+      ],
+      "label": "PROPOSED_NIFTY_VARIANCE_SCALED_LITERATURE_VARIANT",
+      "validation_equal_date_MSE": 0.0004415759329781722
+    },
+    {
+      "id": "double_14",
+      "target_initial_vol": 0.14,
+      "params": [
+        0.9491,
+        0.01975372549019608,
+        0.045326114188743126,
+        0.7009,
+        0.00023058823529411763,
+        10.7526,
+        0.025364705882352945,
+        0.31675677091669036,
+        -0.8916,
+        0.019369411764705885
+      ],
+      "label": "PROPOSED_NIFTY_VARIANCE_SCALED_LITERATURE_VARIANT",
+      "validation_equal_date_MSE": 1.8960346390821647e-05
+    },
+    {
+      "id": "double_18",
+      "target_initial_vol": 0.18,
+      "params": [
+        0.9491,
+        0.03265411764705882,
+        0.05827643252838401,
+        0.7009,
+        0.00038117647058823526,
+        10.7526,
+        0.04192941176470588,
+        0.40725870546431614,
+        -0.8916,
+        0.032018823529411766
+      ],
+      "label": "PROPOSED_NIFTY_VARIANCE_SCALED_LITERATURE_VARIANT",
+      "validation_equal_date_MSE": 7.458907696072932e-05
+    },
+    {
+      "id": "double_22",
+      "target_initial_vol": 0.22,
+      "params": [
+        0.9491,
+        0.04877960784313726,
+        0.07122675086802491,
+        0.7009,
+        0.0005694117647058823,
+        10.7526,
+        0.06263529411764705,
+        0.4977606400119419,
+        -0.8916,
+        0.04783058823529412
+      ],
+      "label": "PROPOSED_NIFTY_VARIANCE_SCALED_LITERATURE_VARIANT",
+      "validation_equal_date_MSE": 0.00017107357850713122
+    },
+    {
+      "id": "double_28",
+      "target_initial_vol": 0.28,
+      "params": [
+        0.9491,
+        0.07901490196078433,
+        0.09065222837748625,
+        0.7009,
+        0.0009223529411764705,
+        10.7526,
+        0.10145882352941178,
+        0.6335135418333807,
+        -0.8916,
+        0.07747764705882354
+      ],
+      "label": "PROPOSED_NIFTY_VARIANCE_SCALED_LITERATURE_VARIANT",
+      "validation_equal_date_MSE": 0.00039741438298771886
+    }
+  ],
+  "selected": {
+    "single": {
+      "id": "single_14",
+      "target_initial_vol": 0.14,
+      "params": [
+        8.9814,
+        0.03285409836065574,
+        0.26618867338049074,
+        -0.9621,
+        0.019600000000000003
+      ],
+      "label": "PROPOSED_NIFTY_VARIANCE_SCALED_LITERATURE_VARIANT",
+      "validation_equal_date_MSE": 2.3503801857418296e-05
+    },
+    "double": {
+      "id": "double_14",
+      "target_initial_vol": 0.14,
+      "params": [
+        0.9491,
+        0.01975372549019608,
+        0.045326114188743126,
+        0.7009,
+        0.00023058823529411763,
+        10.7526,
+        0.025364705882352945,
+        0.31675677091669036,
+        -0.8916,
+        0.019369411764705885
+      ],
+      "label": "PROPOSED_NIFTY_VARIANCE_SCALED_LITERATURE_VARIANT",
+      "validation_equal_date_MSE": 1.8960346390821647e-05
+    },
+    "bs": {
+      "knots": [
+        0.019178082191780823,
+        0.0821917808219178,
+        0.1643835616438356,
+        0.273972602739726
+      ],
+      "volatility": [
+        0.10178893257489458,
+        0.10441194672216984,
+        0.10593754684388168,
+        0.10963624835349231
+      ],
+      "term": true,
+      "success": true
+    }
+  },
+  "bs_inner": [
+    {
+      "term": false,
+      "objective": 9.217490689737617e-07
+    },
+    {
+      "term": true,
+      "objective": 8.874714770027786e-07
+    }
+  ],
+  "validation_sha256": "a6dc50883d83d43f0b69ff7b869d721a8d8b18a6251ac27db86a47fc93181b72",
+  "manifest_sha256": "143fa0a72f05311a3ef1498a9550194a1a98a9f738b89100dd2a520e2c24c676"
+}

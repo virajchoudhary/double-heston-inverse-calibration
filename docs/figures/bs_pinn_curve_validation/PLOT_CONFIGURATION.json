@@ -1,0 +1,181 @@
+{
+  "network_type": "Double-Heston PINN",
+  "experiment": "nifty_multifactor_v4",
+  "candidate": "C3",
+  "checkpoint_paths": [
+    "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-v2-controlled/experiments/nifty_multifactor_v4/artifacts/pinn_s17/weights.pt",
+    "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-v2-controlled/experiments/nifty_multifactor_v4/artifacts/pinn_s43/weights.pt"
+  ],
+  "checkpoint_sha256": {
+    "17": "92b7c32b9aee33d4bbc6d04566c8e9a4c11167f055455b5a97e3ab054b0215c8",
+    "43": "accea76a0c9c0c5403fa94d8fd9cf357a745b8c46a1b836e97402a3650cb2829"
+  },
+  "ensemble": "arithmetic mean of the two frozen price predictions, seeds 17 and 43",
+  "architecture": "TorchRegularVariancePINN, 24 engineered features, five hidden layers x 256 tanh units, 269825 weights/biases per seed",
+  "K": 100.0,
+  "r": 0.0,
+  "q": 0.0,
+  "sigma_BS": 0.15968719422671313,
+  "sigma_rule": "Constant sqrt(v_slow + v_fast) from the existing BASE anchor, not a fitted per-option IV",
+  "v1_slow": 0.0003,
+  "v2_fast": 0.0252,
+  "params_order": [
+    "kappa_s",
+    "theta_s",
+    "sigma_s",
+    "rho_s",
+    "v_s0",
+    "kappa_f",
+    "theta_f",
+    "sigma_f",
+    "rho_f",
+    "v_f0"
+  ],
+  "params": [
+    0.9491,
+    0.0257,
+    0.0517,
+    0.7009,
+    0.0003,
+    10.7526,
+    0.033,
+    0.3613,
+    -0.8916,
+    0.0252
+  ],
+  "scenario": "BASE_representative_0 unchanged",
+  "S_range": [
+    69.76763260710311,
+    143.332941456034
+  ],
+  "tau_range_years": [
+    0.019178082191780823,
+    2.0
+  ],
+  "fixed_S": 100.0,
+  "fixed_tau_years": 0.2465753424657534,
+  "curve_points": 401,
+  "surface_shape": [
+    121,
+    121
+  ],
+  "multiple_maturity_days": [
+    30,
+    90,
+    180,
+    365
+  ],
+  "multiple_S_over_K": [
+    0.8,
+    1.0,
+    1.2
+  ],
+  "camera_elevation": 26,
+  "camera_azimuth": -125,
+  "DPI": 300,
+  "units": "Illustrative price units with K=100; not observed NSE prices and not normalized neural outputs",
+  "input": "coords=[ln(F/K),v_slow,v_fast,tau_years]; structural shape [n,2,4]=kappa,theta,sigma,rho slow then fast",
+  "normalization": "F=S*exp((r-q)*tau), D=exp(-r*tau); net.price gives C/(D*K); existing.neural gives C/(D*F); displayed C=existing.neural*D*F",
+  "output_transform": "IV=sqrt(expected_average_variance)*exp(1.8*tanh(head)); total variance=tau*IV^2; analytic Black call ansatz; exact terminal branch at tau=0",
+  "training_domain": {
+    "x": [
+      -0.36,
+      0.36
+    ],
+    "tau_years": [
+      0.019178082191780823,
+      2.0
+    ],
+    "v_slow": [
+      0.00015,
+      0.18
+    ],
+    "v_fast": [
+      0.001,
+      0.22
+    ],
+    "scale": [
+      0.7,
+      3.2
+    ]
+  },
+  "shape_derivative_tolerance": 1e-07,
+  "price_bound_tolerance": 1e-07,
+  "terminal_check": "tau=0 checks hard-coded terminal construction; positive tau<7/365 is explicitly labelled extrapolation, not accepted-domain fidelity",
+  "selection_policy": "Use already selected C3 and existing BASE; no choice made based on new plot scores",
+  "existing_sources_sha256": {
+    "experiments/nifty_multifactor_v4/config.json": "84663b849ebaf029402c8f82ca4bc0980e389475a3ef9709c38f30f022a28eb9",
+    "experiments/nifty_multifactor_v4/run.py": "93bbb35441229d91072552a09e9bb356bede5a10aa2fc70c6f66c3b0a4592ec1",
+    "experiments/nifty_multifactor_v4/literature_exact.py": "6e9ed01eac37ea98a61d4f49e5d02af0a60764dda86c79fcf1f8a0ceffb46a58",
+    "src/mentor_dh_pinn/regular_pinn_torch.py": "f8cb36e57fa9c7649550e83c893b84e7334c212adff1bb9399448ff387986db7",
+    "src/double_heston_reference.py": "467cab8eac4ddc9249833f3db064d5f58979d9b0dd15e22448bafa7ef9c12350",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "b179ab0c275a185a689ac0efefc17d9e5760ca21cee0bd290a6b288a4d099e44",
+    "experiments/nifty_multifactor_v4/artifacts/manifest.json": "5653b3d74da7389de20bf4f22bbfe907f6b1d343ce109f07861688dd59321e87",
+    "experiments/nifty_multifactor_v4/artifacts/pinn_selection.json": "46989b19857cd1d5cd36c968dfcafd5260ad268d4e87f45132c291a4c54685b0",
+    "experiments/nifty_multifactor_v4/artifacts/evaluation_lock.json": "953b4fb7c765d328a7611466647246d91e530fe2ebcac5305a550b4b353a238c",
+    "experiments/nifty_multifactor_v4/artifacts/controlled_results.json": "4743dc77b0879d5b885dcab0b4dce620ae47b26f4e5ba415affe2c1863bbbcbc",
+    "experiments/nifty_multifactor_v4/artifacts/controlled_metrics.csv": "f70f7bf5b618134c7782e351553797b6a72a9b682a6bbe67c402ee77ce9b2afb",
+    "experiments/nifty_multifactor_v4/artifacts/controlled_predictions.csv": "d5bcaa9bdb563645d8c42d1618ed917520a4dc26ee123d9458d0855d15a33862",
+    "experiments/nifty_multifactor_v4/artifacts/fidelity_predictions.csv": "81e3d51c4a542e0c87f6ef364464ff51105265316770db5009815a668957553d",
+    "experiments/nifty_multifactor_v4/artifacts/controlled_cases.json": "60b2661cc875bdcdc7c18f37bfed0599e999b346b53d855128a8941b44674b0c",
+    "experiments/nifty_multifactor_v4/artifacts/pinn_s17/weights.pt": "92b7c32b9aee33d4bbc6d04566c8e9a4c11167f055455b5a97e3ab054b0215c8",
+    "experiments/nifty_multifactor_v4/artifacts/pinn_s43/weights.pt": "accea76a0c9c0c5403fa94d8fd9cf357a745b8c46a1b836e97402a3650cb2829",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/BASE_random_00.json": "204c2aa605695c2c7b5ea105fba13834f8d4206bfd4928dececfe19c61352eb9",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/BASE_random_01.json": "bc12f71d8097f163abc18daa9d05ca2c73b9e2f9f44e16cc99645a18ea11bdd0",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/BASE_random_02.json": "12d73f97afea5c887f82ef51e562ee1c553891a764ec6e555f05b717c7b582f1",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/BASE_random_03.json": "2fd6737589eb3a719320882ba127e56fd838070c59a6ab2bc1b77f0f0a92a085",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/BASE_random_04.json": "cf195fc35e204e525037dc323e9cb74895985a68d2b84c91c93263b3fa8952dc",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/BASE_random_05.json": "fde3498a0e5c9eb9b7f9930ffd4ff5a0bb462f18a852cc4c10b58a9fda29cb64",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/BASE_random_06.json": "f673311851ac0584d607fc6a9c948ee28ea01d8c8448336304428b07aa376fec",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/BASE_random_07.json": "1b9c1c7a1254345fa8ec91fab6c2cc16aeb4be2b996f34ee815455c95d2e0356",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/BASE_representative_0.json": "d1677588962cc08d4bf1bb0c2fec79c25333da337172f18e28645b31abd2c4e3",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/FAST_SHOCK_random_00.json": "70b7de768c2fddf4e3f3a7be216df60a76e28844fb77c4e00421ff823dfb7521",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/FAST_SHOCK_random_01.json": "31f1e2e25fd018b3be775af0a4f068ed42b71f2f44058984412706b4c07efa05",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/FAST_SHOCK_random_02.json": "7e05150b7645fe825218c22e52ed02549a4fd411e04b3e11b4099a9fd455574c",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/FAST_SHOCK_random_03.json": "b24aa6b3fb0fb4d4bae8f9979bc21afaa710ac51cc21b343fc905d2fa39056dc",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/FAST_SHOCK_random_04.json": "28490d155190ff9dacb6b39df2f5ae3ecf19c5f7589a244970d3bb4c66bda456",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/FAST_SHOCK_random_05.json": "891d4b503a6b5e7bed1c39f81c74e451e4813371bb64cc37e2f719b99fbe10a0",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/FAST_SHOCK_random_06.json": "32fe0a14d5878e4fa46c0404fa0594819b180ac628199961f4f490f827766e6c",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/FAST_SHOCK_random_07.json": "860fd7f249aa3339efc5dcb9fe6091d753deae7498a6f8a9835392237477aea5",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/FAST_SHOCK_representative_0.json": "98e43bc741574625fe0502e5002cb822bf50ef3c049923545fbedf022346fe61",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/FAST_SHOCK_representative_1.json": "85364e19933563eed408593bb34b5da9e86a354e58558a1803b1f5e39c6ca255",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/FIXED_TOTAL_TWIST_random_00.json": "b59a94013562753dca8b662c54e28d7f6bf3e011a92c0b084d811a6a83aaa807",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/FIXED_TOTAL_TWIST_random_01.json": "87efe2b8c53458e93670dba26078759973ef68104397ac0b7a7634a6170835a9",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/FIXED_TOTAL_TWIST_random_02.json": "f4c9306b447d07f424c9e0ac5b236b4447b08077f502c3f593d6172c6a449fc0",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/FIXED_TOTAL_TWIST_random_03.json": "a514912904416a1359827c1945b857b651475611d30b57cada94e8010b5bcaf1",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/FIXED_TOTAL_TWIST_random_04.json": "ef3af71d9b5e5e0234bd574d8310920921ff1a61ab4c8593b9f89051a35140a2",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/FIXED_TOTAL_TWIST_random_05.json": "530ca10d74d80662a197356f4e7a8d9e9bea32d5f9469967a62e27a867402c08",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/FIXED_TOTAL_TWIST_random_06.json": "0f324273cbd7747da7c95b21d845defbe511cbdb68169ad46d3419f57905c683",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/FIXED_TOTAL_TWIST_random_07.json": "5741526a32f2cfd1516aa09e1bd75be3502eb2e165de2160fff3f033d73b6974",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/FIXED_TOTAL_TWIST_representative_0.json": "7f7805c28be6b500a98739778e5e6abf780146cb5e698736f26834ed50c20b73",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/FIXED_TOTAL_TWIST_representative_1.json": "d30f48cc25ed211586218476a4e6acbe02b68bcf19be4434e864b3c027f080b8",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SLOW_SHOCK_random_00.json": "2d4f863e3acc1d1731a643787083839f4f8f9f3c01502dca07b3ac75b7a8e60e",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SLOW_SHOCK_random_01.json": "fa6264869d0b6a0521278ac5a4442c1fbb14da879bebaa4f8699fea804f54309",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SLOW_SHOCK_random_02.json": "6eafffe01c5403e2a81c561cf74d2ab318e58eca1cee7804694bc33230aa9409",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SLOW_SHOCK_random_03.json": "3448d569369c4526df8321c1fdacdb449b3e3d0b8043e30ce372604a04500470",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SLOW_SHOCK_random_04.json": "db60bfddd24bc1c8d44207dbbae814105328aafc1651c18b888a73508425bbc6",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SLOW_SHOCK_random_05.json": "71a377445ff1e19d5dde4d66c900750720055af97db968ed97b45139914dfc0e",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SLOW_SHOCK_random_06.json": "b92288da45d3d7cb4e7eccc6e0ce4f494d3a93e46970a446d165e1e6cd8f288f",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SLOW_SHOCK_random_07.json": "af3192ce4c14c6568dce288a253f416bac6f05a41367ec3dc17bd81b564dd9cd",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SLOW_SHOCK_representative_0.json": "2a7ac577871bef6d36014325941fb3d4fb1ffc8ddedc4c9f6138a5df068a2cdf",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SLOW_SHOCK_representative_1.json": "8091caeeaa145f1be261706c17796d2e5e13d200853ba2bb15c421dd3c992f1a",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SMIRK_WEIGHTS_random_00.json": "d1d1486d202589cbf2aae0c4d1a8e4045917402c3aa485543747ec8791f34eb6",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SMIRK_WEIGHTS_random_01.json": "2151c8333523925c2a9c3da727c3eceb4ec647fb3e44dcbc0b22768b4e7c9538",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SMIRK_WEIGHTS_random_02.json": "e0da92c61452a5c36060b5f1620345c49661f91494edb75849711fc798a53bf9",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SMIRK_WEIGHTS_random_03.json": "6cda2bf356d78d1d19e454afa9e173dac730bd09d85798b5f0e35f45406b7c77",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SMIRK_WEIGHTS_random_04.json": "a2553253d1f1ee241eede3197059b0ed757a9ceb597feb18a4e026a2262bd1c2",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SMIRK_WEIGHTS_random_05.json": "a77a10118972e93003b0196cc446d39328bf5eab52f02747eab426325dfa227a",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SMIRK_WEIGHTS_random_06.json": "0eb6ee857c6cbfc5a03f2371e4880e065d8ddcbe8e02ca08448c0f892be5588d",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SMIRK_WEIGHTS_random_07.json": "614fd27e5840517e885cddb3ecf174ec59e1ec5728eedcca00152be097177b10",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SMIRK_WEIGHTS_representative_0.json": "eb1595cb27d413adabeda719634f7a2a1e6f79e85c17992406ca0b1a2af70a42",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SMIRK_WEIGHTS_representative_1.json": "71af54cc63ab9bcf0c1c4ba269df8bf673007e093028664ed5e2c58390460b2e",
+    "experiments/nifty_multifactor_v4/artifacts/baselines/SMIRK_WEIGHTS_representative_2.json": "71615bb8822852db12ccf8ea1d6eb8651f3244579e4a69285225ba1e03eda97b"
+  },
+  "generator_sha256": "891f41dbbfb755319386b92d86aa424123d53bede282702833b08babd934f5fe",
+  "market_files_opened": false,
+  "metric_source": "Existing controlled_metrics.csv only: all 40 independent surfaces, their already scored held-out cells; no new final evaluation",
+  "shared_surface_C_limits": [
+    0,
+    47.494931799564746
+  ]
+}

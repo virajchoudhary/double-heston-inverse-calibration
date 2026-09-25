@@ -1,0 +1,307 @@
+{
+  "acceptance_rules": [
+    "finite 128-node and 96-node Torch prices",
+    "finite Black implied total variance",
+    "96-vs-128 absolute price difference <= 1e-9",
+    "absolute log variance correction < 1.5",
+    "finite ten-parameter gradient"
+  ],
+  "artifacts": {
+    "collocation.npz": {
+      "arrays": {
+        "proposal_index": {
+          "dtype": "int64",
+          "npy_sha256": "e59dc1dc4abcdbb6428e92a71180ae5aeb2747a990654bf1608a8a94ee96b5bd",
+          "shape": [
+            64
+          ]
+        },
+        "q": {
+          "dtype": "float64",
+          "npy_sha256": "8251d82d5388e979cfaff149bd1bf8575776458fdefa4fcfc8ab4d0bd8299909",
+          "shape": [
+            64,
+            12
+          ]
+        }
+      },
+      "bytes": 7132,
+      "sha256": "c2711ed8ebe3f01cf62c4c058b93059be2360a50b16689a5b4f9d734eba63c09"
+    },
+    "rejections.npz": {
+      "arrays": {
+        "proposal_index": {
+          "dtype": "int64",
+          "npy_sha256": "e734dac55ea9fbbe782af2d8c02c3c5992131906228afb2aaaf137d6f3ed74db",
+          "shape": [
+            0
+          ]
+        },
+        "q": {
+          "dtype": "float64",
+          "npy_sha256": "36b1befef928e8ba8824fcf5c67bfbf1b737f599802ea19d146b45daeff960c7",
+          "shape": [
+            0,
+            12
+          ]
+        },
+        "reason_code": {
+          "dtype": "uint16",
+          "npy_sha256": "0698e782887bb0dfadc446c2ecae6a9e9055d5c0f59c7e327f5a826675bb86cc",
+          "shape": [
+            0
+          ]
+        },
+        "split": {
+          "dtype": "uint8",
+          "npy_sha256": "4ca930d4c39dd441d095d27d2ac61750ccb0f54238f1eed588061be710bf4bb6",
+          "shape": [
+            0
+          ]
+        }
+      },
+      "bytes": 932,
+      "sha256": "49ce6c347f1982d33565299eee73aff71b212a78f51e5e68092bf96ef0ed3039"
+    },
+    "train.npz": {
+      "arrays": {
+        "dg_du": {
+          "dtype": "float64",
+          "npy_sha256": "43a43075d42f705482bf537b8694eaa1529eab81ff1c5abe5f03b13dcad34007",
+          "shape": [
+            64,
+            10
+          ]
+        },
+        "g": {
+          "dtype": "float64",
+          "npy_sha256": "ba2cfb4b98d8a475c19d6129dbab5776c6c8e5721e2ee36620bf5fc7e51b141c",
+          "shape": [
+            64
+          ]
+        },
+        "price": {
+          "dtype": "float64",
+          "npy_sha256": "cd0c6ac799ae0dc3b1fa7d1104ceb4c97948a47cf64db9bd8b85586b99d9c309",
+          "shape": [
+            64
+          ]
+        },
+        "proposal_index": {
+          "dtype": "int64",
+          "npy_sha256": "e59dc1dc4abcdbb6428e92a71180ae5aeb2747a990654bf1608a8a94ee96b5bd",
+          "shape": [
+            64
+          ]
+        },
+        "q": {
+          "dtype": "float64",
+          "npy_sha256": "08ecbe3727a46d77a23547aebe596ff659831d9ad1274f5f99d8cead562517cd",
+          "shape": [
+            64,
+            12
+          ]
+        },
+        "quadrature_difference": {
+          "dtype": "float64",
+          "npy_sha256": "b937346ff16b2d0aecd7467737f7cfa6405ea3b623eb1caa6bbd0d42d84618d9",
+          "shape": [
+            64
+          ]
+        },
+        "usable": {
+          "dtype": "bool",
+          "npy_sha256": "b503c8b55552f9f26be4c984b6d427c739ff712146a383afd54072226bca1ada",
+          "shape": [
+            64
+          ]
+        },
+        "w": {
+          "dtype": "float64",
+          "npy_sha256": "25b8300a1a3ec7e6b1b7943b07a154654c608f6a97233fc05b4e5ecaa5225cc4",
+          "shape": [
+            64
+          ]
+        }
+      },
+      "bytes": 15714,
+      "sha256": "aa9ec99dd1816509c5d4958c6efb0b9dfab9ee047bbc0a26a49b01baea18ac0b"
+    },
+    "validation.npz": {
+      "arrays": {
+        "dg_du": {
+          "dtype": "float64",
+          "npy_sha256": "f91daca86cef3d70f4dba9a214e74db0e8f01f4b866d86939a839b47f59acd25",
+          "shape": [
+            32,
+            10
+          ]
+        },
+        "g": {
+          "dtype": "float64",
+          "npy_sha256": "b4a9ef75d9a65380f97180ed510de304e98e2b863fc17476fade87b87d765afe",
+          "shape": [
+            32
+          ]
+        },
+        "price": {
+          "dtype": "float64",
+          "npy_sha256": "b26e0733b9a1a394bb327e2591fc9082b8f5bc91cf909e353970f13ae19de95a",
+          "shape": [
+            32
+          ]
+        },
+        "proposal_index": {
+          "dtype": "int64",
+          "npy_sha256": "d7e613f1090f555b5641f2b446191b4b16b191e7a4ebfee85716049073143863",
+          "shape": [
+            32
+          ]
+        },
+        "q": {
+          "dtype": "float64",
+          "npy_sha256": "4c8a13107f53d9e0b09c83961481ab17609de8d4bba9898ba0db2a8c5ae1e644",
+          "shape": [
+            32,
+            12
+          ]
+        },
+        "quadrature_difference": {
+          "dtype": "float64",
+          "npy_sha256": "0de6dcba4e2b6cda9c52a8f6e61fbc2d215051830591314aad22aa330ae02c71",
+          "shape": [
+            32
+          ]
+        },
+        "usable": {
+          "dtype": "bool",
+          "npy_sha256": "622f786098ea98e73edd0e8b87f526522a172ac8860650d978648716e8f52130",
+          "shape": [
+            32
+          ]
+        },
+        "w": {
+          "dtype": "float64",
+          "npy_sha256": "5404db39987f09fa9351f89087b5e262741a97319454270adc54a88f66e00a6b",
+          "shape": [
+            32
+          ]
+        }
+      },
+      "bytes": 8770,
+      "sha256": "f0dd070fd0f00453b41f161ac24e9bdb377ba950972c5d233d007a00ceed3557"
+    }
+  },
+  "canonicalization": {
+    "archive": "ZIP_STORED with sorted members and fixed 1980-01-01 metadata",
+    "float_decimal_places": 14
+  },
+  "contract_id": "DOUBLE_DATA_V2_REPRODUCIBLE",
+  "device_policy": "CPU only; torch.set_num_threads(1); float64/complex128",
+  "dtype": "little-endian float64; indices little-endian int64; reason codes little-endian uint16",
+  "generator_base_commit": "9c44422cf6afc46e718cb21ad561756445e49b8a",
+  "generator_source_sha256": {
+    "scripts/mentor_dh_pinn/prepare_regular_pinn_v2.py": "c484c74d4d28476275e4adda3a72f9f3627b98cd6b9aac8c0666efb656abe33e",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "b179ab0c275a185a689ac0efefc17d9e5760ca21cee0bd290a6b288a4d099e44",
+    "src/mentor_dh_pinn/reproducible_regular_pinn_data.py": "6392ad7c4afaff5d4331259e1ed999384fee48d0bb130e79914e561f64d591f1",
+    "src/mentor_dh_pinn/torch_pricer.py": "8dcf7228926d3ae2cd09a39ec5541b1ef19bd8a84356dc744c6c28bc047927ce"
+  },
+  "historical_evidence_policy": "Historical double_data and checkpoints are immutable and are not inputs to this reset cohort.",
+  "ordering": "ascending proposal index; rejected proposals are recorded and the stream continues until the exact accepted count",
+  "parameter_bounds": {
+    "factor_shares": [
+      0.2,
+      0.8
+    ],
+    "fast_kappa": "slow + 0.5 + (11.5 - slow) * u; maximum 12",
+    "feller_ratio": [
+      0.15,
+      0.9
+    ],
+    "rho_fast": [
+      -0.6,
+      0.5
+    ],
+    "rho_slow": [
+      -0.8,
+      0.3
+    ],
+    "sampling": "Latin hypercube; log scale for speeds and total variances; linear shares, correlations and eta",
+    "single_kappa": [
+      0.2,
+      12.0
+    ],
+    "slow_kappa": [
+      0.2,
+      3.0
+    ],
+    "tau_years": [
+      0.019178082191780823,
+      2.0
+    ],
+    "total_theta_and_v0": [
+      0.03,
+      0.3
+    ]
+  },
+  "rejection_reason_bits": {
+    "1": "structural_constraint",
+    "16": "quadrature_difference_above_1e-9",
+    "2": "nonfinite_price_128",
+    "32": "absolute_log_variance_correction_at_least_1.5",
+    "4": "nonfinite_price_96",
+    "64": "nonfinite_parameter_gradient",
+    "8": "nonfinite_implied_variance"
+  },
+  "required_runtime": {
+    "numpy": "2.4.3",
+    "python": "3.13.9",
+    "scipy": "1.16.2",
+    "torch": "2.11.0+cpu"
+  },
+  "rng": {
+    "algorithm": "numpy.random.PCG64 via SeedSequence([split_seed, block_index, 12])",
+    "design": "independent fixed 4096-row Latin-hypercube blocks",
+    "proposal_block_size": 4096,
+    "seed": 906210,
+    "split_seeds": {
+      "collocation": 906212,
+      "train": 906210,
+      "validation": 906211
+    }
+  },
+  "runtime": {
+    "byteorder": "little",
+    "machine": "AMD64",
+    "numpy": "2.4.3",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.9",
+    "required_versions_match": true,
+    "scipy": "1.16.2",
+    "torch": "2.11.0+cpu",
+    "torch_threads": 1
+  },
+  "splits": {
+    "collocation": {
+      "rows": 64
+    },
+    "train": {
+      "accepted": 64,
+      "proposals": 64,
+      "rejected": 0
+    },
+    "validation": {
+      "accepted": 32,
+      "proposals": 32,
+      "rejected": 0
+    }
+  },
+  "status": "complete",
+  "validity_constraints": [
+    "positive kappa/theta/sigma/v0",
+    "kappa_slow < kappa_fast",
+    "strict per-factor Feller gaps",
+    "each rho strictly inside (-1,1)",
+    "rho_slow^2 + rho_fast^2 < 1"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "utc": "2026-09-18T05:07:04.507660+00:00",
+  "rule": "For SH and DH separately, choose feller_strict or feller_free by the lower median held-out IV RMSE over all validation dates and both designs. Frozen in variant_selection.json before any test-date fit.",
+  "SH": "feller_free",
+  "SH_validation_median_IV_RMSE": {
+    "feller_free": 5.043597813007089,
+    "feller_strict": 8.180692230941187
+  },
+  "DH": "feller_free",
+  "DH_validation_median_IV_RMSE": {
+    "feller_free": 3.811529459071009,
+    "feller_strict": 6.8771156626645045
+  }
+}

@@ -1,0 +1,12 @@
+check,passed,observed
+crossfit_holdout_row_keys_unique,True,0
+anchor_keys_disjoint_from_both_sides_of_holdout_strikes,True,0
+structural_training_dates_strictly_before_test,True,0
+source_rows_join_one_to_one,True,0
+source_symbol_exact,True,0
+source_trade_date_exact,True,0
+source_expiry_exact,True,0
+source_raw_price_exact,True,0
+source_file_exact,True,0
+corporate_action_scaling_does_not_change_iv,True,0.0
+every_fold_has_heldout_rows,True,"{0: 1652, 1: 1547, 2: 1510}"

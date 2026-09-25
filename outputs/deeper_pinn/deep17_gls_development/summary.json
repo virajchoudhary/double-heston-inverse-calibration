@@ -1,0 +1,22 @@
+[
+  {
+    "shrinkage": 0.01,
+    "scaled_parameter_rmse": 0.19251866025861353,
+    "parameter_passes": 0
+  },
+  {
+    "shrinkage": 0.0001,
+    "scaled_parameter_rmse": 0.12921764018690152,
+    "parameter_passes": 0
+  },
+  {
+    "shrinkage": 1e-06,
+    "scaled_parameter_rmse": 0.15634236308304236,
+    "parameter_passes": 1
+  },
+  {
+    "shrinkage": 1e-08,
+    "scaled_parameter_rmse": 0.1575635708300454,
+    "parameter_passes": 0
+  }
+]

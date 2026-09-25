@@ -1,0 +1,713 @@
+{
+  "utc": "2026-09-18T05:55:26.633924+00:00",
+  "rule": {
+    "spot_file": "artifacts/hype_perp_daily.json",
+    "first_date": "2026-06-23",
+    "last_date": "2026-09-16",
+    "dates": "EVERY calendar day from first_date to last_date is a test date (options history is too short for an episode sample).",
+    "rv_window_days": 10,
+    "lookback_days": 60,
+    "shock_ratio": 1.5,
+    "dedupe_days": 20,
+    "shock_window_days": [
+      1,
+      8
+    ],
+    "regime_label": "Secondary label only: a date is 'shock' if it is 1-8 days after an onset (RV10 / median RV10 over previous 60 days >= 1.5, de-duplicated over 20 days, onsets searched from 2026-06-01), otherwise 'other'. Computed from spot alone before any option fetch.",
+    "unavailable_dates": "disclosed; never replaced"
+  },
+  "onsets": [
+    "2026-06-02",
+    "2026-08-19"
+  ],
+  "dates": [
+    {
+      "date": "2026-06-23",
+      "week": "2026-W26",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.8739,
+      "stage": "test"
+    },
+    {
+      "date": "2026-06-24",
+      "week": "2026-W26",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.9719,
+      "stage": "test"
+    },
+    {
+      "date": "2026-06-25",
+      "week": "2026-W26",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.9346,
+      "stage": "test"
+    },
+    {
+      "date": "2026-06-26",
+      "week": "2026-W26",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.8877,
+      "stage": "test"
+    },
+    {
+      "date": "2026-06-27",
+      "week": "2026-W26",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.6145,
+      "stage": "test"
+    },
+    {
+      "date": "2026-06-28",
+      "week": "2026-W26",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.6287,
+      "stage": "test"
+    },
+    {
+      "date": "2026-06-29",
+      "week": "2026-W27",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.6077,
+      "stage": "test"
+    },
+    {
+      "date": "2026-06-30",
+      "week": "2026-W27",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.8108,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-01",
+      "week": "2026-W27",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.8178,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-02",
+      "week": "2026-W27",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.7905,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-03",
+      "week": "2026-W27",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.9114,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-04",
+      "week": "2026-W27",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.8509,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-05",
+      "week": "2026-W27",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.8556,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-06",
+      "week": "2026-W28",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.8573,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-07",
+      "week": "2026-W28",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.8659,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-08",
+      "week": "2026-W28",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.8228,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-09",
+      "week": "2026-W28",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.8432,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-10",
+      "week": "2026-W28",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.6832,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-11",
+      "week": "2026-W28",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.6568,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-12",
+      "week": "2026-W28",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.5973,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-13",
+      "week": "2026-W29",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.4319,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-14",
+      "week": "2026-W29",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.4055,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-15",
+      "week": "2026-W29",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.482,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-16",
+      "week": "2026-W29",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.4787,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-17",
+      "week": "2026-W29",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.7153,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-18",
+      "week": "2026-W29",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.7281,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-19",
+      "week": "2026-W29",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.7594,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-20",
+      "week": "2026-W30",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.8028,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-21",
+      "week": "2026-W30",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.8437,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-22",
+      "week": "2026-W30",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.8684,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-23",
+      "week": "2026-W30",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.8699,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-24",
+      "week": "2026-W30",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.8178,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-25",
+      "week": "2026-W30",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.7588,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-26",
+      "week": "2026-W30",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.7457,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-27",
+      "week": "2026-W31",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.4615,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-28",
+      "week": "2026-W31",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.6133,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-29",
+      "week": "2026-W31",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.6098,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-30",
+      "week": "2026-W31",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.59,
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-31",
+      "week": "2026-W31",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.6435,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-01",
+      "week": "2026-W31",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.7401,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-02",
+      "week": "2026-W31",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.7374,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-03",
+      "week": "2026-W32",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.7434,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-04",
+      "week": "2026-W32",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.7913,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-05",
+      "week": "2026-W32",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.816,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-06",
+      "week": "2026-W32",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.8616,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-07",
+      "week": "2026-W32",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.7418,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-08",
+      "week": "2026-W32",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.7944,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-09",
+      "week": "2026-W32",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.7961,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-10",
+      "week": "2026-W33",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.7777,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-11",
+      "week": "2026-W33",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.6153,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-12",
+      "week": "2026-W33",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.6255,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-13",
+      "week": "2026-W33",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.6568,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-14",
+      "week": "2026-W33",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.668,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-15",
+      "week": "2026-W33",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.7043,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-16",
+      "week": "2026-W33",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.6507,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-17",
+      "week": "2026-W34",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.6446,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-18",
+      "week": "2026-W34",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.5954,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-19",
+      "week": "2026-W34",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.6327,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-20",
+      "week": "2026-W34",
+      "regime": "shock",
+      "episode": 1,
+      "rv_ratio_prev_day": 1.6226,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-21",
+      "week": "2026-W34",
+      "regime": "shock",
+      "episode": 1,
+      "rv_ratio_prev_day": 1.6447,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-22",
+      "week": "2026-W34",
+      "regime": "shock",
+      "episode": 1,
+      "rv_ratio_prev_day": 1.5971,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-23",
+      "week": "2026-W34",
+      "regime": "shock",
+      "episode": 1,
+      "rv_ratio_prev_day": 1.6035,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-24",
+      "week": "2026-W35",
+      "regime": "shock",
+      "episode": 1,
+      "rv_ratio_prev_day": 1.6006,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-25",
+      "week": "2026-W35",
+      "regime": "shock",
+      "episode": 1,
+      "rv_ratio_prev_day": 1.688,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-26",
+      "week": "2026-W35",
+      "regime": "shock",
+      "episode": 1,
+      "rv_ratio_prev_day": 1.6865,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-27",
+      "week": "2026-W35",
+      "regime": "shock",
+      "episode": 1,
+      "rv_ratio_prev_day": 1.6484,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-28",
+      "week": "2026-W35",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 1.6367,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-29",
+      "week": "2026-W35",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 1.7265,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-30",
+      "week": "2026-W35",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.981,
+      "stage": "test"
+    },
+    {
+      "date": "2026-08-31",
+      "week": "2026-W36",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 1.0346,
+      "stage": "test"
+    },
+    {
+      "date": "2026-09-01",
+      "week": "2026-W36",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 1.098,
+      "stage": "test"
+    },
+    {
+      "date": "2026-09-02",
+      "week": "2026-W36",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 1.0489,
+      "stage": "test"
+    },
+    {
+      "date": "2026-09-03",
+      "week": "2026-W36",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 1.0022,
+      "stage": "test"
+    },
+    {
+      "date": "2026-09-04",
+      "week": "2026-W36",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 1.0709,
+      "stage": "test"
+    },
+    {
+      "date": "2026-09-05",
+      "week": "2026-W36",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 1.1466,
+      "stage": "test"
+    },
+    {
+      "date": "2026-09-06",
+      "week": "2026-W36",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 1.1181,
+      "stage": "test"
+    },
+    {
+      "date": "2026-09-07",
+      "week": "2026-W37",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 1.1196,
+      "stage": "test"
+    },
+    {
+      "date": "2026-09-08",
+      "week": "2026-W37",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 1.0752,
+      "stage": "test"
+    },
+    {
+      "date": "2026-09-09",
+      "week": "2026-W37",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 1.0472,
+      "stage": "test"
+    },
+    {
+      "date": "2026-09-10",
+      "week": "2026-W37",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.981,
+      "stage": "test"
+    },
+    {
+      "date": "2026-09-11",
+      "week": "2026-W37",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 1.0219,
+      "stage": "test"
+    },
+    {
+      "date": "2026-09-12",
+      "week": "2026-W37",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 1.0231,
+      "stage": "test"
+    },
+    {
+      "date": "2026-09-13",
+      "week": "2026-W37",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 1.0133,
+      "stage": "test"
+    },
+    {
+      "date": "2026-09-14",
+      "week": "2026-W38",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.7688,
+      "stage": "test"
+    },
+    {
+      "date": "2026-09-15",
+      "week": "2026-W38",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.8517,
+      "stage": "test"
+    },
+    {
+      "date": "2026-09-16",
+      "week": "2026-W38",
+      "regime": "other",
+      "episode": null,
+      "rv_ratio_prev_day": 0.9039,
+      "stage": "test"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+check,passed,observed
+input_sha256_recorded,True,a8a56dd7b17074d8fa32f88936c8b404456f22f296d9dc4665faf3b13621f1d3
+model_ready_source_rows_only,True,215636
+chronological_split_per_symbol,True,0
+test_row_keys_absent_from_calibration,True,0
+all_structural_parameters_feller_valid,True,0.025388262253547733
+all_correlations_inside_unit_interval,True,0.1485496381683865
+all_variance_parameters_positive,True,0.02937830844969776
+test_prices_inside_no_arbitrage_bounds,True,0
+test_implied_volatility_finite,True,0
+every_test_prediction_authentic_source_file,True,0
+daily_state_only_uses_anchor_rows,True,0

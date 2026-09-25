@@ -1,0 +1,16 @@
+{
+  "contract_id": "DOUBLE_DATA_V2_REPRODUCIBLE",
+  "generator_base_commit": "9c44422cf6afc46e718cb21ad561756445e49b8a",
+  "seed": 906210,
+  "train_rows": 131072,
+  "validation_rows": 16384,
+  "collocation_rows": 18000,
+  "proposal_block_size": 4096,
+  "dtype": "float64",
+  "device": "cpu",
+  "torch_threads": 1,
+  "python": "3.13.9",
+  "numpy": "2.4.3",
+  "scipy": "1.16.2",
+  "torch": "2.11.0+cpu"
+}

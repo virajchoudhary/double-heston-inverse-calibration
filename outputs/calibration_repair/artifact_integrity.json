@@ -1,0 +1,11 @@
+{
+  "frozen_training_inputs_and_sources_verified": 12,
+  "selected_checkpoint_hash_verified": true,
+  "synthetic_truths": 24,
+  "assessment_records": 864,
+  "parameter_records": 8640,
+  "market_quote_records": 6428,
+  "duplicate_records": 0,
+  "original_market_evidence_hashes_preserved": true,
+  "observed_quote_copy_check": "rtol 1e-14 for CSV float serialization; original files byte-unchanged"
+}

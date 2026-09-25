@@ -1,0 +1,123 @@
+{
+  "source_manifest_sha256": "32c7546b194f95a75d2231fabf5a83d35850b5a8feca6a2e04caae1bb7d88e34",
+  "source_files": [
+    {
+      "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260824_F_0000.csv.zip",
+      "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260824_F_0000.csv.zip",
+      "sha256": "922d768844e8cce6a8e820606022b512e4f99f6a40a9df974c658290f31949ff"
+    },
+    {
+      "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260825_F_0000.csv.zip",
+      "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260825_F_0000.csv.zip",
+      "sha256": "398f2636d757c8fbdc9182ef2eb2be290afd6e9950cdbad6841e618846463837"
+    },
+    {
+      "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260826_F_0000.csv.zip",
+      "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260826_F_0000.csv.zip",
+      "sha256": "254e419b0101eb26f8916314286f57b285d866b5228f9c5f3be2bd0eb90c894d"
+    },
+    {
+      "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260827_F_0000.csv.zip",
+      "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260827_F_0000.csv.zip",
+      "sha256": "db31cbb3247a5a9ace5081088f7ea34d96373b7a99e5f8ddbf24d6d3282df2b7"
+    },
+    {
+      "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260828_F_0000.csv.zip",
+      "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260828_F_0000.csv.zip",
+      "sha256": "33a1708ceba84a807e2b6e7bcf6b94e385ab0f65658eb99578eda92e735a88b5"
+    },
+    {
+      "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260831_F_0000.csv.zip",
+      "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260831_F_0000.csv.zip",
+      "sha256": "1e435806057655142a50ce380d74dca174e26be98bfec625f8ded211e62c78b1"
+    },
+    {
+      "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260901_F_0000.csv.zip",
+      "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260901_F_0000.csv.zip",
+      "sha256": "328cfdef6953b86b56c40b28f4b9677e8e4701f5027d00daa6b1d1708b64fa63"
+    },
+    {
+      "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260902_F_0000.csv.zip",
+      "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260902_F_0000.csv.zip",
+      "sha256": "cd5ce2d2aec05a9c97aafa726a72fd91a7bc16412fc7277c1ac183b92b3cc73c"
+    },
+    {
+      "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260903_F_0000.csv.zip",
+      "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260903_F_0000.csv.zip",
+      "sha256": "6157cbff5800f56c4c8ae0c1d1a88ca260ab1ab5c768288701f007dc50eae8b0"
+    },
+    {
+      "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260904_F_0000.csv.zip",
+      "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260904_F_0000.csv.zip",
+      "sha256": "9e92b9e9f91b5951213b854e123edbdbb461a111adcf442d7fee1b341f2f3312"
+    },
+    {
+      "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260907_F_0000.csv.zip",
+      "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260907_F_0000.csv.zip",
+      "sha256": "d798b16fe2a330622d4b987cae07d99ab26a1937fc224a1de4bd56e919756c0c"
+    },
+    {
+      "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260908_F_0000.csv.zip",
+      "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260908_F_0000.csv.zip",
+      "sha256": "d38a5676585ad9ef44ffd21cdd599404bdb0768b7d3c5ed967fe1f3256ef0feb"
+    },
+    {
+      "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260909_F_0000.csv.zip",
+      "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260909_F_0000.csv.zip",
+      "sha256": "50826bed50da889b90b208c9b6368d3768c0eabb416178b176f064d3f93de3f5"
+    },
+    {
+      "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260910_F_0000.csv.zip",
+      "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260910_F_0000.csv.zip",
+      "sha256": "ef39a7fefc5e6de6ad76334bdd96020c7c96d507cd0be0ec479c5590d7d057b1"
+    },
+    {
+      "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260911_F_0000.csv.zip",
+      "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260911_F_0000.csv.zip",
+      "sha256": "532f111f183057b70433da2f7497a73a85da7a93c0a6230dbd898e9fef3463a2"
+    },
+    {
+      "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260915_F_0000.csv.zip",
+      "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260915_F_0000.csv.zip",
+      "sha256": "a45f7cad1a76fc2b289c079aa41d181788a9e23efe3b000b95ecc25e11b37231"
+    },
+    {
+      "file": "raw/nse_fo_bhavcopies/2026/BhavCopy_NSE_FO_0_0_0_20260916_F_0000.csv.zip",
+      "url": "https://nsearchives.nseindia.com/content/fo/BhavCopy_NSE_FO_0_0_0_20260916_F_0000.csv.zip",
+      "sha256": "a787e7c68763f27a24749f60c805ece2f465886386a9b897a8a96b326d27c5b6"
+    }
+  ],
+  "windows": {
+    "final": {
+      "counts": {
+        "listed_rows": 27372,
+        "exact_duplicate_rows_removed": 0,
+        "basic_rejected_rows": 12943
+      },
+      "unavailable": [
+        {
+          "date": "2026-09-14",
+          "status": "http_404"
+        }
+      ]
+    }
+  },
+  "provenance_scope": "Archived official-URL manifest and local ZIP hash verification; not a fresh remote download verification",
+  "clean_counts": [
+    {
+      "window": "final",
+      "split": "anchor",
+      "date_eligible": true,
+      "rows": 1923
+    },
+    {
+      "window": "final",
+      "split": "test",
+      "date_eligible": true,
+      "rows": 967
+    }
+  ],
+  "clean_quotes_sha256": "b0aeda1b705e46b4a235c2bb8381dafad114d487c9f934d09c3b65bcedf55922",
+  "expiry_handling": "Legacy EXPIRY_DT / UDiFF FininstrmActlXpryDt, ACT/365; never force expiry weekday or round to months",
+  "corporate_actions": "NIFTY index options, not individual stock options. Preserve raw index/strike levels; no split-adjustment of index option prices or guessed dividends."
+}

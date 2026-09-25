@@ -1,0 +1,28 @@
+{
+  "source": "synthetic Double Heston characteristic-function prices; not NSE quotes",
+  "nodes": 64,
+  "storage_dtype": "float64",
+  "datasets": {
+    "train": {
+      "seed": 905001,
+      "candidates": 20000,
+      "valid_surfaces": 19904,
+      "valid_quotes": 595822,
+      "rejected_surfaces": 96,
+      "duplicate_parameter_rows": 0,
+      "sha256": "ccdbb6f49db230fed21bcafd6db3043822de95efdc1ebf17512fb3266d3790c2"
+    },
+    "validation": {
+      "seed": 905002,
+      "candidates": 2000,
+      "valid_surfaces": 1996,
+      "valid_quotes": 60579,
+      "rejected_surfaces": 4,
+      "duplicate_parameter_rows": 0,
+      "sha256": "a42769476db908899e43bcd75f06f72e7cc2b028ca422937a7edf4d0a000238e"
+    }
+  },
+  "train_validation_parameter_overlap": 0,
+  "latent_standardisation": "Inherited from the base synthetic training set only",
+  "generator_sha256": "ad3393b1b37b35c1b22b91e69baafee94c601508a0fc94354b72d3d82053af25"
+}

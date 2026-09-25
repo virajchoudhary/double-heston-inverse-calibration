@@ -1,0 +1,18 @@
+[
+  [
+    "training_diagnostics.png",
+    "All three seeds improve the development quote metric. Synthetic recovery and marginal coverage remain near their starting levels; better pricing has not solved ten-parameter recovery. Stars mark validation-selected checkpoints."
+  ],
+  [
+    "price_and_parameter_recovery.png",
+    "Each dot is a separate case (tiny horizontal offsets only separate markers). Low price error does not imply low parameter error. Clean multi-expiry surfaces give the strongest recovery evidence. Red lines are the fixed targets; plot values below 1e-16 use that display floor only. Two noisy-rich hybrid prices fail the quadrature check, so their displayed 128-node errors are numerically unresolved."
+  ],
+  [
+    "example_price_surface.png",
+    "The first prespecified synthetic case is shown across six maturities. Black points are exact-engine synthetic prices, not NSE observations. Lines use the estimated parameters. An overlapping line demonstrates price reconstruction for this case, not universal parameter identification."
+  ],
+  [
+    "market_development_iv.png",
+    "These are development-validation results, including dates used for checkpoint selection. Actual IV error is recomputed by inversion, separately from the price/vega approximation. Seven near-zero model prices across all four models use independently checked high-precision inversion; none are clipped or dropped. The symbol breakdown exposes gains or regressions hidden by the pooled average; it is not a fresh market test."
+  ]
+]

@@ -1,0 +1,5 @@
+comparison,dates,mean_difference_index_pts,dates_first_better,wilcoxon_two_sided_p,sign_test_p
+DH exact vs SH exact (fixed),17,-12.479518281956864,17,1.52587890625e-05,1.52587890625e-05
+DH-PINN vs SH exact (fixed),17,-12.371688138785954,17,1.52587890625e-05,1.52587890625e-05
+BS term vs DH exact (fixed),17,-88.97907611300113,17,1.52587890625e-05,1.52587890625e-05
+"DH vs SH, state-adaptive diagnostic",17,-5.0514858790166715,17,1.52587890625e-05,1.52587890625e-05

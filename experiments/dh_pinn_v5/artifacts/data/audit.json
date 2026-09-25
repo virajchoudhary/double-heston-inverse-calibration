@@ -1,0 +1,33 @@
+{
+  "development": {
+    "points": 8192,
+    "invalid_iv": 591,
+    "fallback_count": 202,
+    "pre_fallback_max_96_128_difference": 4.888426679809425e-05,
+    "roundoff_bound_count": 435
+  },
+  "final_fidelity": {
+    "points": 16384,
+    "invalid_iv": 1190,
+    "fallback_count": 400,
+    "pre_fallback_max_96_128_difference": 0.00013159553031092292,
+    "roundoff_bound_count": 889
+  },
+  "pde_final": {
+    "points": 4096,
+    "invalid_iv": 299,
+    "fallback_count": 96,
+    "pre_fallback_max_96_128_difference": 1.874336931351195e-05,
+    "roundoff_bound_count": 213
+  },
+  "short_atm_diagnostic": {
+    "points": 6144,
+    "invalid_iv": 116,
+    "fallback_count": 345,
+    "pre_fallback_max_96_128_difference": 8.152442737219268e-06,
+    "roundoff_bound_count": 46
+  },
+  "rad_pool": {
+    "points": 120000
+  }
+}

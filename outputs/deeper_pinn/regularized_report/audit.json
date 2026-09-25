@@ -1,0 +1,122 @@
+{
+  "runs": [
+    {
+      "condition": "Clean",
+      "fits": 192,
+      "starts": 960,
+      "counts_masks_gates_objectives_hashes": "passed",
+      "median_regularization_dominated_directions": 0.0
+    },
+    {
+      "condition": "1% noise",
+      "fits": 192,
+      "starts": 960,
+      "counts_masks_gates_objectives_hashes": "passed",
+      "median_regularization_dominated_directions": 3.0
+    },
+    {
+      "condition": "Boundary clean",
+      "fits": 96,
+      "starts": 480,
+      "counts_masks_gates_objectives_hashes": "passed",
+      "median_regularization_dominated_directions": 0.0
+    },
+    {
+      "condition": "Boundary 1% noise",
+      "fits": 96,
+      "starts": 480,
+      "counts_masks_gates_objectives_hashes": "passed",
+      "median_regularization_dominated_directions": 3.0
+    }
+  ],
+  "comparisons": [
+    {
+      "condition": "Clean",
+      "baseline": "Original Double Heston",
+      "reduction": 0.2937658477038272,
+      "paired_case_wins": 27,
+      "cases": 32,
+      "bootstrap_95": [
+        0.15043514943766564,
+        0.4564901626332749
+      ]
+    },
+    {
+      "condition": "Clean",
+      "baseline": "Unregularized matched PINN",
+      "reduction": 0.09899216922457055,
+      "paired_case_wins": 18,
+      "cases": 32,
+      "bootstrap_95": [
+        -0.012836227622120378,
+        0.2598942567691472
+      ]
+    },
+    {
+      "condition": "1% noise",
+      "baseline": "Original Double Heston",
+      "reduction": 0.36191393636934055,
+      "paired_case_wins": 29,
+      "cases": 32,
+      "bootstrap_95": [
+        0.14993581813134163,
+        0.479347083295004
+      ]
+    },
+    {
+      "condition": "1% noise",
+      "baseline": "Unregularized matched PINN",
+      "reduction": 0.3457482964877401,
+      "paired_case_wins": 27,
+      "cases": 32,
+      "bootstrap_95": [
+        0.1079772023409087,
+        0.4988744072026398
+      ]
+    },
+    {
+      "condition": "Boundary clean",
+      "baseline": "Original Double Heston",
+      "reduction": 0.0043888581685960215,
+      "paired_case_wins": 10,
+      "cases": 16,
+      "bootstrap_95": [
+        -0.2010881892738681,
+        0.39964291043985817
+      ]
+    },
+    {
+      "condition": "Boundary clean",
+      "baseline": "Unregularized matched PINN",
+      "reduction": -0.005053994909061776,
+      "paired_case_wins": 7,
+      "cases": 16,
+      "bootstrap_95": [
+        -0.030412767021510217,
+        0.0748743030022127
+      ]
+    },
+    {
+      "condition": "Boundary 1% noise",
+      "baseline": "Original Double Heston",
+      "reduction": 0.3126168241688053,
+      "paired_case_wins": 13,
+      "cases": 16,
+      "bootstrap_95": [
+        0.16696818787965098,
+        0.38440363786658005
+      ]
+    },
+    {
+      "condition": "Boundary 1% noise",
+      "baseline": "Unregularized matched PINN",
+      "reduction": 0.22306081957839863,
+      "paired_case_wins": 10,
+      "cases": 16,
+      "bootstrap_95": [
+        -0.253868756855245,
+        0.2718996907850998
+      ]
+    }
+  ]
+}

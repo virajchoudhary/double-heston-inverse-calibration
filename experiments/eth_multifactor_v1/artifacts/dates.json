@@ -1,0 +1,429 @@
+{
+  "utc": "2026-09-18T06:29:27.987965+00:00",
+  "rule": {
+    "dvol_file": "artifacts/dvol_eth_daily.json",
+    "lookback_days": 60,
+    "shock_ratio": 1.2,
+    "dedupe_days": 20,
+    "days_after_onset": [
+      1,
+      4,
+      8
+    ],
+    "calm_band": 0.05,
+    "calm_max_range_20d": 1.15,
+    "calm_exclusion_days_from_shock": 20,
+    "calm_sample": 30,
+    "seed": 20260923,
+    "split": "No validation stage: every selected date is a test date (Feller variant inherited from BTC validation).",
+    "unavailable_dates": "disclosed; never replaced by other dates"
+  },
+  "episodes": 10,
+  "onsets": [
+    "2021-05-23",
+    "2022-05-09",
+    "2022-11-08",
+    "2023-10-22",
+    "2023-12-30",
+    "2024-03-03",
+    "2024-08-05",
+    "2024-11-23",
+    "2026-02-04",
+    "2026-06-05"
+  ],
+  "calm_pool_size": 281,
+  "shock": [
+    {
+      "date": "2021-05-24",
+      "episode": 0,
+      "onset": "2021-05-23",
+      "offset_days": 1,
+      "dvol_ratio_at_onset": 2.0232,
+      "stage": "test"
+    },
+    {
+      "date": "2021-05-27",
+      "episode": 0,
+      "onset": "2021-05-23",
+      "offset_days": 4,
+      "dvol_ratio_at_onset": 2.0232,
+      "stage": "test"
+    },
+    {
+      "date": "2021-05-31",
+      "episode": 0,
+      "onset": "2021-05-23",
+      "offset_days": 8,
+      "dvol_ratio_at_onset": 2.0232,
+      "stage": "test"
+    },
+    {
+      "date": "2022-05-10",
+      "episode": 1,
+      "onset": "2022-05-09",
+      "offset_days": 1,
+      "dvol_ratio_at_onset": 1.2562,
+      "stage": "test"
+    },
+    {
+      "date": "2022-05-13",
+      "episode": 1,
+      "onset": "2022-05-09",
+      "offset_days": 4,
+      "dvol_ratio_at_onset": 1.2562,
+      "stage": "test"
+    },
+    {
+      "date": "2022-05-17",
+      "episode": 1,
+      "onset": "2022-05-09",
+      "offset_days": 8,
+      "dvol_ratio_at_onset": 1.2562,
+      "stage": "test"
+    },
+    {
+      "date": "2022-11-09",
+      "episode": 2,
+      "onset": "2022-11-08",
+      "offset_days": 1,
+      "dvol_ratio_at_onset": 1.2078,
+      "stage": "test"
+    },
+    {
+      "date": "2022-11-12",
+      "episode": 2,
+      "onset": "2022-11-08",
+      "offset_days": 4,
+      "dvol_ratio_at_onset": 1.2078,
+      "stage": "test"
+    },
+    {
+      "date": "2022-11-16",
+      "episode": 2,
+      "onset": "2022-11-08",
+      "offset_days": 8,
+      "dvol_ratio_at_onset": 1.2078,
+      "stage": "test"
+    },
+    {
+      "date": "2023-10-23",
+      "episode": 3,
+      "onset": "2023-10-22",
+      "offset_days": 1,
+      "dvol_ratio_at_onset": 1.2333,
+      "stage": "test"
+    },
+    {
+      "date": "2023-10-26",
+      "episode": 3,
+      "onset": "2023-10-22",
+      "offset_days": 4,
+      "dvol_ratio_at_onset": 1.2333,
+      "stage": "test"
+    },
+    {
+      "date": "2023-10-30",
+      "episode": 3,
+      "onset": "2023-10-22",
+      "offset_days": 8,
+      "dvol_ratio_at_onset": 1.2333,
+      "stage": "test"
+    },
+    {
+      "date": "2023-12-31",
+      "episode": 4,
+      "onset": "2023-12-30",
+      "offset_days": 1,
+      "dvol_ratio_at_onset": 1.2172,
+      "stage": "test"
+    },
+    {
+      "date": "2024-01-03",
+      "episode": 4,
+      "onset": "2023-12-30",
+      "offset_days": 4,
+      "dvol_ratio_at_onset": 1.2172,
+      "stage": "test"
+    },
+    {
+      "date": "2024-01-07",
+      "episode": 4,
+      "onset": "2023-12-30",
+      "offset_days": 8,
+      "dvol_ratio_at_onset": 1.2172,
+      "stage": "test"
+    },
+    {
+      "date": "2024-03-04",
+      "episode": 5,
+      "onset": "2024-03-03",
+      "offset_days": 1,
+      "dvol_ratio_at_onset": 1.2898,
+      "stage": "test"
+    },
+    {
+      "date": "2024-03-07",
+      "episode": 5,
+      "onset": "2024-03-03",
+      "offset_days": 4,
+      "dvol_ratio_at_onset": 1.2898,
+      "stage": "test"
+    },
+    {
+      "date": "2024-03-11",
+      "episode": 5,
+      "onset": "2024-03-03",
+      "offset_days": 8,
+      "dvol_ratio_at_onset": 1.2898,
+      "stage": "test"
+    },
+    {
+      "date": "2024-08-06",
+      "episode": 6,
+      "onset": "2024-08-05",
+      "offset_days": 1,
+      "dvol_ratio_at_onset": 1.2188,
+      "stage": "test"
+    },
+    {
+      "date": "2024-08-09",
+      "episode": 6,
+      "onset": "2024-08-05",
+      "offset_days": 4,
+      "dvol_ratio_at_onset": 1.2188,
+      "stage": "test"
+    },
+    {
+      "date": "2024-08-13",
+      "episode": 6,
+      "onset": "2024-08-05",
+      "offset_days": 8,
+      "dvol_ratio_at_onset": 1.2188,
+      "stage": "test"
+    },
+    {
+      "date": "2024-11-24",
+      "episode": 7,
+      "onset": "2024-11-23",
+      "offset_days": 1,
+      "dvol_ratio_at_onset": 1.2399,
+      "stage": "test"
+    },
+    {
+      "date": "2024-11-27",
+      "episode": 7,
+      "onset": "2024-11-23",
+      "offset_days": 4,
+      "dvol_ratio_at_onset": 1.2399,
+      "stage": "test"
+    },
+    {
+      "date": "2024-12-01",
+      "episode": 7,
+      "onset": "2024-11-23",
+      "offset_days": 8,
+      "dvol_ratio_at_onset": 1.2399,
+      "stage": "test"
+    },
+    {
+      "date": "2026-02-05",
+      "episode": 8,
+      "onset": "2026-02-04",
+      "offset_days": 1,
+      "dvol_ratio_at_onset": 1.2793,
+      "stage": "test"
+    },
+    {
+      "date": "2026-02-08",
+      "episode": 8,
+      "onset": "2026-02-04",
+      "offset_days": 4,
+      "dvol_ratio_at_onset": 1.2793,
+      "stage": "test"
+    },
+    {
+      "date": "2026-02-12",
+      "episode": 8,
+      "onset": "2026-02-04",
+      "offset_days": 8,
+      "dvol_ratio_at_onset": 1.2793,
+      "stage": "test"
+    },
+    {
+      "date": "2026-06-06",
+      "episode": 9,
+      "onset": "2026-06-05",
+      "offset_days": 1,
+      "dvol_ratio_at_onset": 1.2286,
+      "stage": "test"
+    },
+    {
+      "date": "2026-06-09",
+      "episode": 9,
+      "onset": "2026-06-05",
+      "offset_days": 4,
+      "dvol_ratio_at_onset": 1.2286,
+      "stage": "test"
+    },
+    {
+      "date": "2026-06-13",
+      "episode": 9,
+      "onset": "2026-06-05",
+      "offset_days": 8,
+      "dvol_ratio_at_onset": 1.2286,
+      "stage": "test"
+    }
+  ],
+  "calm": [
+    {
+      "date": "2021-09-25",
+      "calm_reference_day": "2021-09-24",
+      "stage": "test"
+    },
+    {
+      "date": "2021-10-20",
+      "calm_reference_day": "2021-10-19",
+      "stage": "test"
+    },
+    {
+      "date": "2021-12-02",
+      "calm_reference_day": "2021-12-01",
+      "stage": "test"
+    },
+    {
+      "date": "2021-12-21",
+      "calm_reference_day": "2021-12-20",
+      "stage": "test"
+    },
+    {
+      "date": "2022-08-08",
+      "calm_reference_day": "2022-08-07",
+      "stage": "test"
+    },
+    {
+      "date": "2022-09-13",
+      "calm_reference_day": "2022-09-12",
+      "stage": "test"
+    },
+    {
+      "date": "2023-02-09",
+      "calm_reference_day": "2023-02-08",
+      "stage": "test"
+    },
+    {
+      "date": "2023-02-18",
+      "calm_reference_day": "2023-02-17",
+      "stage": "test"
+    },
+    {
+      "date": "2024-06-19",
+      "calm_reference_day": "2024-06-18",
+      "stage": "test"
+    },
+    {
+      "date": "2024-10-18",
+      "calm_reference_day": "2024-10-17",
+      "stage": "test"
+    },
+    {
+      "date": "2024-10-27",
+      "calm_reference_day": "2024-10-26",
+      "stage": "test"
+    },
+    {
+      "date": "2025-01-01",
+      "calm_reference_day": "2024-12-31",
+      "stage": "test"
+    },
+    {
+      "date": "2025-02-27",
+      "calm_reference_day": "2025-02-26",
+      "stage": "test"
+    },
+    {
+      "date": "2025-06-04",
+      "calm_reference_day": "2025-06-03",
+      "stage": "test"
+    },
+    {
+      "date": "2025-06-15",
+      "calm_reference_day": "2025-06-14",
+      "stage": "test"
+    },
+    {
+      "date": "2025-07-31",
+      "calm_reference_day": "2025-07-30",
+      "stage": "test"
+    },
+    {
+      "date": "2025-08-06",
+      "calm_reference_day": "2025-08-05",
+      "stage": "test"
+    },
+    {
+      "date": "2025-08-11",
+      "calm_reference_day": "2025-08-10",
+      "stage": "test"
+    },
+    {
+      "date": "2025-08-19",
+      "calm_reference_day": "2025-08-18",
+      "stage": "test"
+    },
+    {
+      "date": "2025-08-24",
+      "calm_reference_day": "2025-08-23",
+      "stage": "test"
+    },
+    {
+      "date": "2025-08-25",
+      "calm_reference_day": "2025-08-24",
+      "stage": "test"
+    },
+    {
+      "date": "2025-09-06",
+      "calm_reference_day": "2025-09-05",
+      "stage": "test"
+    },
+    {
+      "date": "2025-12-01",
+      "calm_reference_day": "2025-11-30",
+      "stage": "test"
+    },
+    {
+      "date": "2025-12-19",
+      "calm_reference_day": "2025-12-18",
+      "stage": "test"
+    },
+    {
+      "date": "2025-12-20",
+      "calm_reference_day": "2025-12-19",
+      "stage": "test"
+    },
+    {
+      "date": "2025-12-22",
+      "calm_reference_day": "2025-12-21",
+      "stage": "test"
+    },
+    {
+      "date": "2026-03-29",
+      "calm_reference_day": "2026-03-28",
+      "stage": "test"
+    },
+    {
+      "date": "2026-04-02",
+      "calm_reference_day": "2026-04-01",
+      "stage": "test"
+    },
+    {
+      "date": "2026-04-03",
+      "calm_reference_day": "2026-04-02",
+      "stage": "test"
+    },
+    {
+      "date": "2026-07-03",
+      "calm_reference_day": "2026-07-02",
+      "stage": "test"
+    }
+  ]
+}

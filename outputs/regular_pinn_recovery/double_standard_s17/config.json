@@ -1,0 +1,23 @@
+{
+  "data": "outputs/regular_pinn_recovery/double_data",
+  "out": "outputs/regular_pinn_recovery/double_standard_s17",
+  "factors": 2,
+  "steps": 12000,
+  "seed": 17,
+  "width": 160,
+  "depth": 5,
+  "batch": 1024,
+  "pde_batch": 256,
+  "sensitivity": 0.0,
+  "weight_pde": 0.2,
+  "weight_decay": 1e-06,
+  "lr": 0.001,
+  "resample_every": 1000,
+  "save_every": 2000,
+  "resume": null,
+  "skip_recovery": false,
+  "tau_max": 2.0,
+  "architecture": "regular implied-variance PDE PINN",
+  "selection": "clean synthetic validation parameter recovery RMSE, fixed 4 cases; not final assessment",
+  "calibration": "optimize frozen neural IV predictions only; no exact pricing in fit"
+}

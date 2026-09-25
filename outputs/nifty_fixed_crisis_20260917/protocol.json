@@ -1,0 +1,125 @@
+{
+  "frozen_utc": "2026-09-17T11:35:30.631127+00:00",
+  "config": {
+    "experiment": "NIFTY fixed-parameter forward PINN crisis comparison",
+    "windows": {
+      "covid_march_2020": [
+        "2020-03-01",
+        "2020-03-31"
+      ],
+      "iran_june_2025": [
+        "2025-06-01",
+        "2025-06-30"
+      ],
+      "iran_march_2026": [
+        "2026-02-28",
+        "2026-03-31"
+      ]
+    },
+    "double_parameters_slow_then_fast": [
+      0.9,
+      0.1,
+      0.36,
+      -0.5,
+      0.36,
+      1.2,
+      0.15,
+      0.2,
+      -0.5,
+      0.2
+    ],
+    "parameter_source": "Kyriakou, Brignone & Fusai (2024), Table 2, DH1; https://openaccess.city.ac.uk/id/eprint/29416/1/manuscript_cro.pdf",
+    "single_baseline": "Deterministic initial-moment-matched reduction; not a separately published or market-calibrated vector",
+    "tau_days": [
+      7,
+      100
+    ],
+    "x_bounds": [
+      -0.35,
+      0.35
+    ],
+    "total_variance_state_bounds": [
+      0.04,
+      1.0
+    ],
+    "double_variance_share_bounds": [
+      0.25,
+      0.75
+    ],
+    "collocation_points": 18000,
+    "synthetic_training_points": 2048,
+    "synthetic_test_points": 2048,
+    "fresh_pde_test_points": 2048,
+    "seeds": [
+      17,
+      43
+    ],
+    "width": 128,
+    "depth": 5,
+    "adam_steps": 2000,
+    "adam_learning_rate": 0.001,
+    "label_batch": 256,
+    "pde_batch": 192,
+    "lbfgs_steps": 150,
+    "lbfgs_label_points": 512,
+    "lbfgs_pde_points": 512,
+    "loss": "(price_MSE + IV_MSE + scaled_PDE_MSE)/0.01^2 + 0.1*mean(relu(-convexity)^2); exact terminal payoff by ansatz",
+    "primary_metric": "Equal-date mean OTM option-price squared error normalized by D*F; all quote-level RMSEs also reported",
+    "seed_aggregation": "Arithmetic mean of both final-checkpoint prices; retain every seed; no best-seed selection",
+    "reference_nodes": [
+      128,
+      96
+    ],
+    "quadrature_max_difference": 1e-08,
+    "neural_fidelity_gate": {
+      "synthetic_IV_RMSE_max": 0.002,
+      "market_price_RMSE_over_DF_max": 0.0002,
+      "fresh_scaled_PDE_RMSE_max": 0.01
+    },
+    "market_filters": {
+      "IV_bounds": [
+        0.03,
+        2.5
+      ],
+      "minimum_vega_over_DF": 0.002,
+      "minimum_pairs": 6,
+      "minimum_holdout_quotes_per_date": 2,
+      "positive_open_interest": true,
+      "close_within_OHLC": true,
+      "anchor_parity_RMSE_over_F_max": 0.025
+    },
+    "split": "Sort paired strikes in each date/actual-expiry group; reserve index modulo 3 == 1 before carry fitting; anchor pairs alone estimate F and D",
+    "uncertainty": "Paired date-level circular moving-block bootstrap, block length 3, 2000 replicates, seed 91217, within each window; descriptive conditional interval",
+    "claims": "Fixed-vector forward reconstruction only; no market parameter recovery, no unseen-date forecasting, no guaranteed Double Heston advantage; these windows are not asserted to be the historically most volatile",
+    "selection": "No parameter, seed, epoch, window, or filter selection using market model errors"
+  },
+  "files": {
+    "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-v2-controlled/scripts/mentor_dh_pinn/nifty_fixed_crisis.py": "9a77a76cd6edf3d11d1e319f9c2c4828129cfe23b7d33ef5ffa684ed40e957b2",
+    "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-v2-controlled/configs/nifty_fixed_crisis.json": "16680bed736799b307c5c8a23031c6fd0d3b4f251e7ba070f08c3524f2390cf9",
+    "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-v2-controlled/src/mentor_dh_pinn/regular_pinn_torch.py": "f8cb36e57fa9c7649550e83c893b84e7334c212adff1bb9399448ff387986db7",
+    "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-v2-controlled/src/mentor_dh_pinn/regular_pinn_data.py": "b179ab0c275a185a689ac0efefc17d9e5760ca21cee0bd290a6b288a4d099e44",
+    "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-v2-controlled/src/mentor_dh_pinn/torch_pricer.py": "8dcf7228926d3ae2cd09a39ec5541b1ef19bd8a84356dc744c6c28bc047927ce",
+    "/Users/dhruvaambhaikar/Documents/Options pricing/double-heston-v2-controlled/scripts/mentor_dh_pinn/audit_crisis_option_coverage.py": "ce37533b2ad892a93bcf784815efd9c54c619a1f340668919b88b66400c1022a"
+  },
+  "models": {
+    "single": [
+      0.9483870967741935,
+      0.25,
+      0.31240998703626616,
+      -0.48471104546024907,
+      0.56
+    ],
+    "double": [
+      0.9,
+      0.1,
+      0.36,
+      -0.5,
+      0.36,
+      1.2,
+      0.15,
+      0.2,
+      -0.5,
+      0.2
+    ]
+  }
+}

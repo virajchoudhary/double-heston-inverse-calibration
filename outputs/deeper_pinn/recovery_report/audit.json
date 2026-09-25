@@ -1,0 +1,38 @@
+{
+  "artifact_checks": [
+    {
+      "condition": "Clean",
+      "fits": 144,
+      "starts": 720,
+      "hashes_masks_gates_selection": "passed"
+    },
+    {
+      "condition": "Noisy",
+      "fits": 144,
+      "starts": 720,
+      "hashes_masks_gates_selection": "passed"
+    }
+  ],
+  "paired_bootstrap": [
+    {
+      "model": "11-layer Double Heston + GLS",
+      "paired_recovery_wins": 16,
+      "cases": 24,
+      "recovery_reduction_95_interval": [
+        0.0547547827985177,
+        0.49345684764119446
+      ]
+    },
+    {
+      "model": "17-layer Double Heston + GLS",
+      "paired_recovery_wins": 18,
+      "cases": 24,
+      "recovery_reduction_95_interval": [
+        -0.16378687003379888,
+        0.5268451650387155
+      ]
+    }
+  ],
+  "clean_recovery_reduction": 0.24919214979644222,
+  "clean_price_reduction": 0.9808719968902871
+}

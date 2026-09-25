@@ -1,0 +1,39 @@
+...F..............                                                       [100%]
+=================================== FAILURES ===================================
+___________ test_removed_factor_reduces_to_single_and_terminal_limit ___________
+
+    def test_removed_factor_reduces_to_single_and_terminal_limit():
+        q=np.r_[.1,1e-10,1e-6,0.,1e-10,S]
+        x=np.array([-.1,0.,.1]);t=np.array([.1,.2,2.])
+        np.testing.assert_allclose(exact(q,x,t),exact(S,x,t),atol=1e-8,rtol=0)
+        for p in [P,S]:
+            atzero=Grid(x,np.zeros(3))(p)
+            np.testing.assert_array_equal(atzero,np.maximum(1-np.exp(-x),0))
+>           small=np.array([adaptive(p,float(xx),1e-7)[0] for xx in x])
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+experiments/nifty_multifactor_v1/test_experiment.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+p = array([ 9.49100e-01,  2.57000e-02,  5.17000e-02,  7.00900e-01,
+        3.00000e-04,  1.07526e+01,  3.30000e-02,  3.61300e-01,
+       -8.91600e-01,  2.52000e-02])
+x = -0.1, t = 1e-07, eps = 1e-10
+
+    def adaptive(p,x,t,eps=1e-10):
+        admissible(p)
+        if t==0:return max(1-np.exp(-x),0.),{'reliable':True,'terminal':True}
+        factors=np.asarray(p).reshape(-1,5)
+        def cf(u): return np.exp(sum(_factor_exponent(u,t,*a) for a in factors))
+        one,d1=_quad_diagnostic(lambda u:float(np.real(np.exp(1j*u*x)*cf(u-1j)/(1j*u))),epsabs=eps,epsrel=eps,limit=500)
+        two,d2=_quad_diagnostic(lambda u:float(np.real(np.exp(1j*u*x)*cf(u)/(1j*u))),epsabs=eps,epsrel=eps,limit=500)
+        value=.5+one/np.pi-np.exp(-x)*(.5+two/np.pi)
+        ok=bool(d1.get('reliable') and d2.get('reliable') and np.isfinite(value))
+>       if not ok:raise FloatingPointError(f'Unreliable adaptive reference: {d1}, {d2}')
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FloatingPointError: Unreliable adaptive reference: {'integral_value': -1.5389585126530079, 'absolute_error_estimate': 0.018560145239637782, 'evaluation_count': 14985, 'subdivisions': 500, 'message': 'The maximum number of subdivisions (500) has been achieved.\n  If increasing the limit yields no improvement it is advised to analyze \n  the integrand in order to determine the difficulties.  If the position of a \n  local difficulty can be determined (singularity, discontinuity) one will \n  probably gain from splitting up the interval and calling the integrator \n  on the subranges.  Perhaps a special-purpose integrator should be used.', 'warnings': [], 'exception': None, 'tolerance': 5e-09, 'reliable': False}, {'integral_value': -1.5389570573800733, 'absolute_error_estimate': 0.01856153734575594, 'evaluation_count': 14985, 'subdivisions': 500, 'message': 'The maximum number of subdivisions (500) has been achieved.\n  If increasing the limit yields no improvement it is advised to analyze \n  the integrand in order to determine the difficulties.  If the position of a \n  local difficulty can be determined (singularity, discontinuity) one will \n  probably gain from splitting up the interval and calling the integrator \n  on the subranges.  Perhaps a special-purpose integrator should be used.', 'warnings': [], 'exception': None, 'tolerance': 5e-09, 'reliable': False}
+
+experiments/nifty_multifactor_v1/literature_exact.py:75: FloatingPointError
+=========================== short test summary info ============================
+FAILED experiments/nifty_multifactor_v1/test_experiment.py::test_removed_factor_reduces_to_single_and_terminal_limit
+1 failed, 17 passed in 6.63s

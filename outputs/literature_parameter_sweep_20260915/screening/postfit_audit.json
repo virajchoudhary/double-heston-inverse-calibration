@@ -1,0 +1,135 @@
+{
+  "integrity_checks_passed": true,
+  "same_seed_same_start_all_cases": true,
+  "numerical_finiteness_passed": true,
+  "caution": "Integrity is not parameter-recovery or PDE-accuracy success. Diagnostics were not used to tune this pilot.",
+  "fresh_collocation_seed": 915999,
+  "diagnostics": [
+    {
+      "case": "published_DH1",
+      "seed": 17,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.21987388178092226,
+      "scaled_pde_max_absolute": 12.966844267888138,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "cb9953e1d87d68397f8f9fe17523662192bfa6ff349e7779378f52afcdeb3aed"
+    },
+    {
+      "case": "published_DH1",
+      "seed": 43,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.022427497877553354,
+      "scaled_pde_max_absolute": 1.0765057808813092,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "6ea0f1df9c38851177123ddd9938f21a6d9573f4f3af5d1efd89ea1ae16c98b5"
+    },
+    {
+      "case": "proposed_separated_speeds",
+      "seed": 17,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.0920924514351922,
+      "scaled_pde_max_absolute": 4.552069706045677,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "a258bf08f2f4dc3e7c161f0c0d1647499b1c4e8632695f42a024e3d95893cec6"
+    },
+    {
+      "case": "proposed_separated_speeds",
+      "seed": 43,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.14359422195176028,
+      "scaled_pde_max_absolute": 5.082581200445844,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "55d9f96493d70641d270ead025b3189b62d6c0a40961e949efe569e7567b9291"
+    },
+    {
+      "case": "proposed_rapid_fast_factor",
+      "seed": 17,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.1090443888969134,
+      "scaled_pde_max_absolute": 5.050877774796626,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "b44780fdbd9a9904423feec87e8a2e20be18cbe7c77acf7f9278bc21c18fa53d"
+    },
+    {
+      "case": "proposed_rapid_fast_factor",
+      "seed": 43,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.027114132587667452,
+      "scaled_pde_max_absolute": 0.9963074745418259,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "ed4fabd745d7c1030995c00253824cc67bf4cab1fe5726ea1056193712f89964"
+    },
+    {
+      "case": "proposed_asymmetric_correlation",
+      "seed": 17,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.09241117879238457,
+      "scaled_pde_max_absolute": 4.143557762027648,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "ee8697066a91eb14dfc08424cb8e896bd8d88640426d84350ce9e7d2d062ca75"
+    },
+    {
+      "case": "proposed_asymmetric_correlation",
+      "seed": 43,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.03908451853261563,
+      "scaled_pde_max_absolute": 1.9970358980865768,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "c432fa8bae73f5213497df774da6dbaac530e178ec7e24907d5ac437ee1ec1ba"
+    },
+    {
+      "case": "proposed_mixed_correlation",
+      "seed": 17,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.08886319855535502,
+      "scaled_pde_max_absolute": 4.335005335483138,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "fea7882159f47e23cfb37e1a4eb1934494d0fcfd19ea197ba1279bbf2d0677e7"
+    },
+    {
+      "case": "proposed_mixed_correlation",
+      "seed": 43,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.03306383240565791,
+      "scaled_pde_max_absolute": 1.804404646945345,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "227389498de54ad78decb40d8045718d2bfc3e28079b166c2ba7092e10cafe42"
+    },
+    {
+      "case": "proposed_balanced_initial_variance",
+      "seed": 17,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.07302657093116276,
+      "scaled_pde_max_absolute": 2.7356342966834712,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "c38e0fc1ee9dfcd548032316bbb6f0b8ee1366de70ac40b9111be95bbed9d0e9"
+    },
+    {
+      "case": "proposed_balanced_initial_variance",
+      "seed": 43,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.014621451234673167,
+      "scaled_pde_max_absolute": 0.2531681047394122,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "ef15026a3bc6bcdc4c8a33350ff69b990170e2aa0b9ae112b24a41bd8f1ea69b"
+    },
+    {
+      "case": "proposed_lower_initial_variance",
+      "seed": 17,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.012348927551551554,
+      "scaled_pde_max_absolute": 0.2517440197760028,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "f23c3b5ee6fe95b78d949946ef2310ebb3260452e4da664602619318f4ff9b9b"
+    },
+    {
+      "case": "proposed_lower_initial_variance",
+      "seed": 43,
+      "fresh_points": 4096,
+      "scaled_pde_rmse": 0.015007082033797128,
+      "scaled_pde_max_absolute": 0.6709282615985956,
+      "negative_convexity_points": 0,
+      "checkpoint_sha256": "957e6a32765c2c61fbef5c91b7aa370d1471d5940eb67119aa1a41e8a3687c6e"
+    }
+  ]
+}

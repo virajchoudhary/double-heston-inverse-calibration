@@ -1,0 +1,27 @@
+[
+  {
+    "label": "Single Heston",
+    "checkpoint": "outputs/regular_pinn_recovery/single_sobolev_s17"
+  },
+  {
+    "label": "Original Double Heston",
+    "checkpoint": "outputs/regular_pinn_recovery/double_sobolev_s17"
+  },
+  {
+    "label": "17-layer Double Heston",
+    "checkpoint": "outputs/deeper_pinn/deep17_full_s29"
+  },
+  {
+    "label": "Unregularized matched PINN",
+    "checkpoint": "outputs/deeper_pinn/deep11_s17",
+    "statistics": "outputs/deeper_pinn/deep11_gls_development",
+    "floor": 0.0001
+  },
+  {
+    "label": "Selected regularized PINN",
+    "checkpoint": "outputs/deeper_pinn/deep11_s17",
+    "statistics": "outputs/deeper_pinn/deep11_gls_development",
+    "floor": 0.0001,
+    "prior_strength": 10.0
+  }
+]

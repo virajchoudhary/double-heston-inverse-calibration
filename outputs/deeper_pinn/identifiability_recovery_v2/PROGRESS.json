@@ -1,0 +1,93 @@
+{
+  "status": "in_progress",
+  "objective_sha256": "2896668a55a7c2282eaa5989f600be0a4ac016bea339682492b3bbfc4184b6fb",
+  "previous_goal_turn_classification": "progress: prior implementation and experiments are present; full new objective remains incomplete",
+  "phases": [
+    {
+      "requirement": "factor symmetry and historical rescoring",
+      "status": "diagnostic implemented and experimentally measured; detailed report/integration in progress"
+    },
+    {
+      "requirement": "parameter-wise diagnostics",
+      "status": "diagnostic implemented and experimentally measured; detailed report/integration in progress"
+    },
+    {
+      "requirement": "Jacobian/Fisher analysis and trade-offs",
+      "status": "diagnostic implemented and experimentally measured; detailed report/integration in progress"
+    },
+    {
+      "requirement": "latent and physical reparameterizations",
+      "status": "pending"
+    },
+    {
+      "requirement": "information-aware quote designs and weights",
+      "status": "pending"
+    },
+    {
+      "requirement": "staged and block calibration",
+      "status": "pending"
+    },
+    {
+      "requirement": "learned initializer",
+      "status": "pending"
+    },
+    {
+      "requirement": "adaptive regularization",
+      "status": "pending"
+    },
+    {
+      "requirement": "recovery-sensitive loss and tolerance normalization",
+      "status": "pending"
+    },
+    {
+      "requirement": "noise-aware objectives",
+      "status": "pending"
+    },
+    {
+      "requirement": "boundary-focused training",
+      "status": "pending"
+    },
+    {
+      "requirement": "curriculum training",
+      "status": "pending"
+    },
+    {
+      "requirement": "hard-example mining",
+      "status": "pending"
+    },
+    {
+      "requirement": "multi-objective checkpoint selection",
+      "status": "pending"
+    },
+    {
+      "requirement": "frozen six-baseline final and stress assessment",
+      "status": "pending"
+    },
+    {
+      "requirement": "full output artifacts and completion audit",
+      "status": "pending"
+    }
+  ],
+  "restrictions": [
+    "neural-only calibration; exact pricer only independent teacher/evaluation",
+    "No final/stress data may influence method decisions",
+    "Preserve negative experiments",
+    "Do not infer structural nonidentifiability from conditioning alone"
+  ],
+  "splits": {
+    "training_seeds": [
+      912101,
+      912102,
+      912103
+    ],
+    "development_seed": 912201,
+    "final_seed": 912831,
+    "stress_seed": 912931,
+    "final_and_stress_status": "reserved; not generated; do not inspect before freezing decisions"
+  },
+  "evidence": {
+    "symmetry": "diagnosis/SUMMARY.json: 2274 historical fits, zero rescued by permutation",
+    "conditioning": "diagnosis/conditioning.csv: 24 development surfaces, full numerical rank; poor noise-scaled conditioning",
+    "parameter_errors": "diagnosis/clean_parameter_errors.csv and noise_parameter_errors.csv"
+  }
+}

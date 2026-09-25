@@ -1,0 +1,279 @@
+{
+  "version": "nifty_multifactor_v4",
+  "convention": "literature_exact: separable four-shock Double Heston; individual |rho|<1, no joint disk; canonical source untouched",
+  "published_double_slow_first": [
+    0.9491,
+    0.0257,
+    0.0517,
+    0.7009,
+    0.0003,
+    10.7526,
+    0.033,
+    0.3613,
+    -0.8916,
+    0.0252
+  ],
+  "published_single": [
+    8.9814,
+    0.0409,
+    0.297,
+    -0.9621,
+    0.0244
+  ],
+  "market_initial_volatilities": [
+    0.14,
+    0.18,
+    0.22,
+    0.28
+  ],
+  "scale_rule": "s=target_vol^2/original_total_v0; multiply theta,v0 by s and sigma by sqrt(s); kappa,rho unchanged. Each model uses its own original v0 denominator.",
+  "project_valid_analog_radius": 0.95,
+  "market_validation": [
+    "2026-08-04",
+    "2026-08-21"
+  ],
+  "market_final": [
+    "2026-08-24",
+    "2026-09-16"
+  ],
+  "market_data_policy": "Fresh official NSE archives after previous archive cutoff 2026-08-03. No fallback to previously exposed/reserved dates. Final quotes not fetched/read until all models frozen. Minimum 10 usable validation dates, 10 final dates; missing dates disclosed, no model-error exclusions.",
+  "market_quote_filters": "Reuse nifty_fixed_crisis.prepare: positive traded closes/OI/OHLC, actual expiry, 7-100 days, |log(F/K)|<=.35, six paired strikes, anchor-only parity, IV .03-2.5, vega/(DF)>=.002, at least two held-out quotes/date. No bid/ask in bhavcopy; no invented spreads.",
+  "controlled_grid": {
+    "strike_over_forward": [
+      0.7,
+      1.3
+    ],
+    "strike_nodes": 61,
+    "tau_days": [
+      7,
+      730
+    ],
+    "tau_nodes": 33,
+    "tau_spacing": "geometric",
+    "split": "(floor(strike_index/3)+floor(maturity_index/2)) modulo 2 == 0 is calibration; complement is held out"
+  },
+  "families": [
+    "BASE",
+    "FAST_SHOCK",
+    "SLOW_SHOCK",
+    "FIXED_TOTAL_TWIST",
+    "SMIRK_WEIGHTS"
+  ],
+  "independent_surfaces_per_family": 8,
+  "surface_sampling": "seed 93107; common scale uniform [.8,3.0]; BASE original states; FAST fast v0 uniform [.0252,.06], slow .0003; SLOW slow v0 uniform [.0003,.01], fast .0252; TWIST total .04, fast share uniform [.125,.875]; SMIRK total uniform [.02,.06], fast share uniform [.1,.9]; multiply states by common scale; theta/sigma scaled, kappa/rho fixed",
+  "representative_states_fast_slow": {
+    "BASE": [
+      [
+        0.0252,
+        0.0003
+      ]
+    ],
+    "FAST_SHOCK": [
+      [
+        0.04,
+        0.0003
+      ],
+      [
+        0.06,
+        0.0003
+      ]
+    ],
+    "SLOW_SHOCK": [
+      [
+        0.0252,
+        0.005
+      ],
+      [
+        0.0252,
+        0.01
+      ]
+    ],
+    "FIXED_TOTAL_TWIST": [
+      [
+        0.035,
+        0.005
+      ],
+      [
+        0.005,
+        0.035
+      ]
+    ],
+    "SMIRK_WEIGHTS": [
+      [
+        0.00255,
+        0.02295
+      ],
+      [
+        0.01275,
+        0.01275
+      ],
+      [
+        0.02295,
+        0.00255
+      ]
+    ]
+  },
+  "single_fit": {
+    "bounds_log_kappa": [
+      0.05,
+      40
+    ],
+    "bounds_theta": [
+      0.0001,
+      0.5
+    ],
+    "bounds_eta": [
+      0.01,
+      0.999
+    ],
+    "bounds_rho": [
+      -0.995,
+      0.995
+    ],
+    "bounds_v0": [
+      1e-05,
+      0.5
+    ],
+    "sigma_rule": "eta*sqrt(2*kappa*theta): strict Feller",
+    "multistarts": 12,
+    "max_nfev": 400,
+    "global_population_multiplier": 6,
+    "global_iterations": 25,
+    "seed": 93111,
+    "objective": "forward-normalized call-price MSE, same as OTM error under parity; all calibration points; divide residual by .01 for numerical optimization",
+    "convergence": "Report all starts/status/boundary contacts; count successful solutions within max(1e-12,1% of best MSE); never assert proven global optimum"
+  },
+  "bs": {
+    "vol_bounds": [
+      0.02,
+      2.5
+    ],
+    "flat": "one volatility on calibration only",
+    "term": "one volatility per calibration maturity; linear interpolation in total variance, constant endpoint volatility beyond knots",
+    "headline": "select FLAT or TERM on inner calibration holdout (every fifth calibration row), refit chosen family on entire calibration portion; never select on outer holdout"
+  },
+  "pinn": {
+    "architecture": "existing TorchRegularVariancePINN, no depth expansion",
+    "width": 128,
+    "depth": 5,
+    "seeds": [
+      17,
+      43
+    ],
+    "teacher_points": 100000,
+    "development_points": 4096,
+    "fidelity_test_points": 8192,
+    "collocation_points": 18000,
+    "pde_test_points": 2048,
+    "adam_steps": 10000,
+    "adam_lr": 0.001,
+    "label_batch": 512,
+    "pde_batch": 128,
+    "lbfgs_steps": 300,
+    "lbfgs_labels": 4096,
+    "lbfgs_pde": 512,
+    "scale_domain": [
+      0.7,
+      3.2
+    ],
+    "slow_state_domain": [
+      0.00015,
+      0.18
+    ],
+    "fast_state_domain": [
+      0.001,
+      0.22
+    ],
+    "sampling": "5D LHS: uniform x, log tau, log each variance state, uniform scale; independent seeds for each split; covers 7-730 days and x [-.36,.36]",
+    "loss": "v4: price_MSE/(2e-5)^2 + valid_IV_MSE/(0.002)^2 + 0.1*scaled_PDE_MSE/0.01^2 + 0.1*negative_convexity_MSE. Supervised terms normalised by their own acceptance tolerances; physics terms keep v3 absolute weights. terminal payoff exact by ansatz; no market labels",
+    "checkpoint": "fixed final checkpoint after Adam+LBFGS; mean two-seed prices, both seeds retained",
+    "fidelity_gate": {
+      "forward_price_RMSE_max": 2e-05,
+      "forward_price_P95_max": 5e-05,
+      "forward_price_max_max": 0.0002,
+      "IV_RMSE_max": 0.002
+    },
+    "structural_claim_gate": "pooled held-out DH-PINN price RMSE <= 0.2 * best-found SH RMSE in family, fidelity gate passes, paired mean RMSE advantage bootstrap lower bound >0; otherwise no reliable advantage claim",
+    "loss_normalisers": {
+      "price": 2e-05,
+      "iv": 0.002,
+      "pde": 0.01,
+      "pde_weight": 0.1,
+      "convexity_weight": 0.1
+    },
+    "candidates": {
+      "C1": {
+        "width": 128,
+        "adam_steps": 10000
+      },
+      "C2": {
+        "width": 128,
+        "adam_steps": 40000
+      },
+      "C3": {
+        "width": 256,
+        "adam_steps": 40000
+      }
+    },
+    "candidate_order": [
+      "C1",
+      "C2",
+      "C3"
+    ],
+    "selection_rule": "Train in order C1, C2, then C3 only if C1 and C2 fail. Lock the first candidate whose two-seed mean passes all four fidelity gates on the development split (teacher seed 93102). If none passes, lock the lowest development price RMSE; held-out fidelity is then expected to fail and no structural claim is permitted. No other candidates, seeds or settings are searched."
+  },
+  "teacher_seeds": {
+    "train": 93101,
+    "development": 93102,
+    "collocation": 93103,
+    "fidelity": 93104,
+    "pde_fidelity": 93105
+  },
+  "numerical": {
+    "nodes": 128,
+    "comparison_nodes": 96,
+    "price_tolerance": 1e-08,
+    "bounds_roundoff_tolerance": 1e-09,
+    "adaptive_eps": 1e-10,
+    "fallback": "For any 96/128 disagreement >1e-8 or bounds breach, use independent adaptive quadrature; log every fallback; fail on unreliable reference. Never clip teacher prices."
+  },
+  "state_adaptive": {
+    "label": "STATE_ADAPTIVE_DIAGNOSTIC_NOT_FIXED_PARAMETER_PRIMARY",
+    "enabled": true,
+    "state_bounds": [
+      0.00015,
+      0.22
+    ],
+    "starts": 8,
+    "max_nfev": 150,
+    "scope": "hold selected structural coefficients fixed; estimate initial variance(s) from same-date anchor quotes only; outer strike pairs never fit states; flag PINN out-of-domain states"
+  },
+  "statistics": {
+    "seed": 93119,
+    "bootstrap_replicates": 5000,
+    "unit": "independently sampled teacher surface, within family; representative surfaces excluded from bootstrap",
+    "paired_difference": "SH forward-price RMSE minus DH-PINN forward-price RMSE",
+    "multiple_testing": "95% descriptive intervals and Bonferroni 99% intervals across five families; no significance-only universal claim"
+  },
+  "hypotheses": {
+    "H1": "BASE need not have a large DH advantage",
+    "H2": "FAST shock effects decay rapidly; advantage may be stronger short-dated",
+    "H3": "SLOW shocks persist further along maturity",
+    "H4": "fixed total variance with distinct allocations changes term structure; independently refit SH is a stronger test than a fixed SH state mapping",
+    "H5": "fixed distinct correlations and variable factor weights permit smirk level/slope flexibility"
+  },
+  "metrics": [
+    "price_RMSE",
+    "price_MAE",
+    "forward_normalized_price_RMSE",
+    "price_P95",
+    "price_max",
+    "IV_RMSE_volatility_points",
+    "maturity_buckets_7_30_90_365_730_days",
+    "moneyness_buckets_0.70_0.9_0.98_1.02_1.1_1.30",
+    "ATM",
+    "wings"
+  ],
+  "market_selection_objective": "equal-date forward-normalized price MSE on validation outer strikes; one of four candidates per Heston arm; BS_FLAT fit validation only; BS_TERM total-variance knots [7,30,60,100] days fit validation only; choose BS family by date-level inner validation before final",
+  "interpretation": "Synthetic DH teacher defines the controlled target, not neutral market truth. Exact DH zero error is tautological. Price fit is not parameter recovery. All prior evidence preserved. Unknown external team exposure cannot be guaranteed absent; reserve new archive dates beyond local cutoff."
+}

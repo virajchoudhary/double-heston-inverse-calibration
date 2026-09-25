@@ -1,0 +1,11 @@
+{
+  "frozen_utc": "2026-09-18T05:17:41.352723+00:00",
+  "sha256": {
+    "AMENDMENT_01_BS_EXPIRY.md": "98bd4d8981748815ddd9e0ae12018162a9a915b28b5ed4c6e94a2f2161fb9785",
+    "amend01.py": "d44a27e0f0750c37238e6efa778014a21381a0eb7c7ba49291238cf894c4312b",
+    "test_amend01.py": "7a8b7f9ba240e2b581eefba34412563f06c8e65ec7da570d4021a0ca78fa48a8"
+  },
+  "v1_manifest_sha256": "585d3dd44aae10024b4071924810980766ca50cb47df9271db41c0e7047167f4",
+  "v1_results_sha256": "a226b8d57383afddc8052d8b12c71c0b02ed44542637b2ddd54a2adfab65ea6d",
+  "corrected_bs_fitted_before_freeze": false
+}
