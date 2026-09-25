@@ -69,6 +69,18 @@ judged on quotes no model was fitted to:
 
 Held-out and in-sample errors agree to within 1%, so this is not parameter count buying fit.
 
+By maturity, held-out (vol points):
+
+| maturity | Black-Scholes | Single Heston | Double Heston |
+|---|---:|---:|---:|
+| ≤ 30 days | 6.36 | 2.76 | **0.72** |
+| 30–90 days | 5.32 | 0.99 | **0.35** |
+| 90–365 days | 4.24 | 0.89 | **0.55** |
+| > 365 days | 1.95 | 0.71 | **0.51** |
+
+Double Heston wins in every bucket, and its largest relative gain over Single Heston is at the short
+end (3.8×), which is where the fast variance factor lives.
+
 ## The predicted chain, and whether it held
 
 | prediction | outcome |
