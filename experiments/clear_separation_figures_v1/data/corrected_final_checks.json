@@ -1,0 +1,63 @@
+{
+  "A_fixed_sigma_flat": {
+    "max_spread_volpts": 0.0
+  },
+  "A_shape_fixed_sigma_BS": {
+    "points": 401,
+    "delta_violations": 0,
+    "gamma_violations": 0,
+    "delta_min": 0.0004624508735282066,
+    "delta_max": 0.9943015059194572,
+    "gamma_min": 0.00011532619349531661,
+    "below_intrinsic": 0,
+    "above_spot": 0,
+    "negative_time_value": 0
+  },
+  "B_bs_pinn_vs_analytic": {
+    "RMSE": 0.006825419073868532,
+    "max_abs": 0.01160825032263002
+  },
+  "C_dh_pinn_vs_exact_dh": {
+    "RMSE": 0.000752000716757238,
+    "max_abs": 0.002123553545281709
+  },
+  "D_shape_SH": {
+    "points": 401,
+    "delta_violations": 0,
+    "gamma_violations": 0,
+    "delta_min": 7.137764075919006e-05,
+    "delta_max": 0.994261318305841,
+    "gamma_min": 2.3536211983923555e-05,
+    "below_intrinsic": 0,
+    "above_spot": 0,
+    "negative_time_value": 0
+  },
+  "D_shape_DH": {
+    "points": 401,
+    "delta_violations": 0,
+    "gamma_violations": 0,
+    "delta_min": 7.243873997234527e-06,
+    "delta_max": 0.9903734919848597,
+    "gamma_min": 3.3808243582479663e-06,
+    "below_intrinsic": 0,
+    "above_spot": 0,
+    "negative_time_value": 0
+  },
+  "D_shape_PINN": {
+    "points": 401,
+    "delta_violations": 0,
+    "gamma_violations": 0,
+    "delta_min": 7.234111887499978e-06,
+    "delta_max": 0.9903879575011941,
+    "gamma_min": 3.3954721678283905e-06,
+    "below_intrinsic": 0,
+    "above_spot": 0,
+    "negative_time_value": 0
+  },
+  "E_fast_slow_separation_volpts": {
+    "at_30d": 2.230016879879091,
+    "at_90d": 3.813914475769844,
+    "at_365d": 3.650304945239326,
+    "min_gap": 0.6826975938730868
+  }
+}

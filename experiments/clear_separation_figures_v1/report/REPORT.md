@@ -192,3 +192,76 @@ Validation: `dh_pinn_vs_dh_validation.png`, `bs_pinn_vs_bs_validation.png`.
 
 Every figure has a CSV of its plotted values in `data/`; all metrics are collected in
 `figure_metrics_summary.csv`.
+
+---
+
+## Black-Scholes term-structure clarification
+
+**A labelling defect in the earlier figures, and its correction.** The grey curve previously labelled
+"Black-Scholes (exact)" is the frozen `BS_TERM` baseline: one volatility fitted per maturity knot,
+33 knots on the controlled surface. That curve legitimately varies with maturity, but the label
+implied it was classical Black-Scholes, which it is not. The corrected figures separate the two and
+name each precisely.
+
+**1. Classical Black-Scholes with one fixed sigma has a FLAT implied-volatility term structure.**
+Verified numerically rather than asserted: ATM call prices were generated at S = K = 100, r = q = 0
+over 400 maturities from 7 to 730 days, then inverted back to implied volatility.
+
+| fixed sigma | RMSE | MAE | max deviation |
+|---|---:|---:|---:|
+| 0.212797  (frozen BS_FLAT) | 2.09e-14 | 1.49e-14 | 1.11e-13 |
+| 0.200000  (instantaneous vol of the scenario) | 2.00e-14 | 1.37e-14 | 1.17e-13 |
+
+All figures are in volatility points. The recovered implied volatility equals the input sigma to
+about 1e-13, so the flat line is exact, not approximate, and the inversion is sound.
+
+**2. A maturity-varying Black-Scholes curve is a separate sigma(tau) calibration.** It is an
+empirical term-structure baseline — the strongest non-leaking Black-Scholes available — and must not
+be read as constant-volatility Black-Scholes. It is now labelled
+"Black-Scholes, maturity-dependent sigma(tau) (one sigma per expiry)".
+
+**3. The fixed-sigma line is therefore plotted separately**, twice: at the frozen `BS_FLAT` value
+21.28% (the repository's canonical constant-volatility calibration for this scenario, fitted on
+the calibration half of the controlled surface) and at 20%, the scenario's instantaneous volatility.
+Neither can bend with maturity, which is exactly the point.
+
+**4. Single Heston introduces one stochastic variance timescale.** Its ATM curve therefore rises from
+one mean-reversion speed alone: it starts 0.85 vol points below exact Double Heston at 7 days,
+crosses near 110 days, and overshoots by about 0.15 vol points near 300 days.
+
+**5. Double Heston introduces separate fast and slow variance timescales**, kappa_f = 10.75 against
+kappa_s = 0.95, a ratio of 11.3. Its curve can bend at the short end and settle at the long end
+independently.
+
+**6. Fast-heavy and slow-heavy states share the same instantaneous total variance but produce
+different future term structures.** Both start from v_f + v_s = 0.04, i.e. 20% instantaneous
+volatility, yet the ATM implied volatilities differ by 2.23 vol points at 30 days,
+3.81 at 90 days and 3.65 at one year. No constant-sigma Black-Scholes can generate that
+separation, and no single-factor model can generate both curves from the same starting variance.
+
+### Validation performed alongside the correction
+
+| check | result |
+|---|---|
+| A. fixed-sigma IV line is flat | spread 0.0e+00 vol points across 400 maturities |
+| B. BS-PINN still matches analytic Black-Scholes at its own r, q, sigma | RMSE 0.0068, max 0.0116 price units |
+| C. DH-PINN still matches exact Double Heston | RMSE 7.52e-04, max 2.12e-03 |
+| D. financial-shape checks on all corrected curves | zero delta, gamma, bound or time-value violations |
+| E. fast-heavy and slow-heavy remain separated | minimum gap 0.68 vol points |
+
+The BS-PINN carries r = 0.03, q = 0.01 and its own calibrated sigma, so it stays in its own
+validation figure and is **not** placed on this r = q = 0 benchmark.
+
+### New files (earlier figures preserved untouched)
+
+`figures/atm_iv_term_structure_corrected.png` and `.pdf`,
+`figures/atm_iv_term_structure_corrected_with_residual.png` and `.pdf`,
+`figures/fast_vs_slow_same_variance_corrected.png` and `.pdf`,
+`data/bs_fixed_sigma_validation.csv` and `.json`,
+`data/atm_iv_term_structure_corrected.csv`,
+`data/fast_vs_slow_same_variance_corrected.csv`,
+`data/corrected_final_checks.json`.
+
+The superseded `controlled_atm_iv_term_structure.png`, `atm_iv_term_structure.png` and
+`fast_vs_slow_same_total_variance.png` remain in place; their grey curve is the sigma(tau) baseline
+and should be read with that label.

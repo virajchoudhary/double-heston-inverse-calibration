@@ -1,0 +1,16 @@
+{
+  "frozen_BS_FLAT": {
+    "sigma": 0.21279729455820223,
+    "RMSE_volpts": 2.093707034525076e-14,
+    "MAE_volpts": 1.4925560787304448e-14,
+    "max_abs_volpts": 1.1102230246251565e-13,
+    "points": 400
+  },
+  "sigma_0.20": {
+    "sigma": 0.2,
+    "RMSE_volpts": 1.9978231194848325e-14,
+    "MAE_volpts": 1.3725132141928498e-14,
+    "max_abs_volpts": 1.1657341758564144e-13,
+    "points": 400
+  }
+}
