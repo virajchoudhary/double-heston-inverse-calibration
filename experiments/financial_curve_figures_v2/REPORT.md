@@ -148,7 +148,7 @@ Surface: **SPY**, fixed by the frozen rule in `dh_pinn_v5/multi_surface/RULE.md`
 single-timescale term structure), chosen before any model error was seen.
 
 - `market_SPY_C_vs_S_with_error.png` — market quotes, four models, and the pricing error underneath.
-  Expiry 2026-12-24 (91 days): price RMSE **Black-Scholes 2.44, Single Heston 1.73, Double Heston 1.63,
+  Expiry 2026-12-18 (85 days): price RMSE **Black-Scholes 2.44, Single Heston 1.73, Double Heston 1.63,
   DH-PINN 1.63**. Here Double Heston is slightly better.
 - `market_SPY_IV_error_by_moneyness.png` — implied-vol error across the whole surface. Over all 2,975
   quotes: **Black-Scholes 7.27, Single Heston 6.51, Double Heston 6.54, DH-PINN 7.01** vol points.
