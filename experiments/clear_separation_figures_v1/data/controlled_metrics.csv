@@ -1,0 +1,65 @@
+figure,setting,quantity,tau_days,model,RMSE_vs_DH,max_abs_vs_DH,P95_abs_vs_DH,points_without_invertible_IV
+time_value_vs_S_30d,controlled,time value,30.0,BS,0.04945609555775098,0.10992806578296577,0.10436076262080274,
+time_value_vs_S_30d,controlled,time value,30.0,SH,0.04590782951944784,0.1168367183977903,0.111419822056253,
+time_value_vs_S_30d,controlled,time value,30.0,DH,0.0,0.0,0.0,
+time_value_vs_S_30d,controlled,time value,30.0,PINN,0.00028945664429827473,0.000877372079136407,0.0007420549351415673,
+time_value_vs_S_90d,controlled,time value,90.0,BS,0.12121957876286443,0.21105901761645818,0.2076870355697551,
+time_value_vs_S_90d,controlled,time value,90.0,SH,0.07555799581249559,0.13480092418864942,0.13294383729744474,
+time_value_vs_S_90d,controlled,time value,90.0,DH,0.0,0.0,0.0,
+time_value_vs_S_90d,controlled,time value,90.0,PINN,0.00043536644168739387,0.0009497180284645523,0.0009178131976783632,
+time_value_vs_S_180d,controlled,time value,180.0,BS,0.16338968573994933,0.25521702945680147,0.25350986824906485,
+time_value_vs_S_180d,controlled,time value,180.0,SH,0.05870777321037503,0.08232562161707335,0.08181315341436601,
+time_value_vs_S_180d,controlled,time value,180.0,DH,0.0,0.0,0.0,
+time_value_vs_S_180d,controlled,time value,180.0,PINN,0.00033963445501109326,0.0006031814174392025,0.0005886832399042419,
+time_value_vs_S_365d,controlled,time value,365.0,BS,0.1588990388552014,0.25411809542383423,0.2534567317847838,
+time_value_vs_S_365d,controlled,time value,365.0,SH,0.030343306653502183,0.03972970758677796,0.03964636699381607,
+time_value_vs_S_365d,controlled,time value,365.0,DH,0.0,0.0,0.0,
+time_value_vs_S_365d,controlled,time value,365.0,PINN,0.0007551054865290832,0.0014010183491315331,0.0011871518467998499,
+controlled_time_value_vs_S_atm_zoom,controlled,time value,90.0,BS,0.14498143013655132,0.2110624569177766,0.21025682252599154,
+controlled_time_value_vs_S_atm_zoom,controlled,time value,90.0,SH,0.08981344614530795,0.13480092418864942,0.1343226398177464,
+controlled_time_value_vs_S_atm_zoom,controlled,time value,90.0,DH,0.0,0.0,0.0,
+controlled_time_value_vs_S_atm_zoom,controlled,time value,90.0,PINN,0.0005794003039502786,0.0009497330694898665,0.0009414721478515631,
+time_value_vs_S_atm_zoom,controlled,time value,90.0,BS,0.14498143013655132,0.2110624569177766,0.21025682252599154,
+time_value_vs_S_atm_zoom,controlled,time value,90.0,SH,0.08981344614530795,0.13480092418864942,0.1343226398177464,
+time_value_vs_S_atm_zoom,controlled,time value,90.0,DH,0.0,0.0,0.0,
+time_value_vs_S_atm_zoom,controlled,time value,90.0,PINN,0.0005794003039502786,0.0009497330694898665,0.0009414721478515631,
+controlled_time_value_vs_S,controlled,time value,90.0,BS,0.12121957876286443,0.21105901761645818,0.2076870355697551,
+controlled_time_value_vs_S,controlled,time value,90.0,SH,0.07555799581249559,0.13480092418864942,0.13294383729744474,
+controlled_time_value_vs_S,controlled,time value,90.0,DH,0.0,0.0,0.0,
+controlled_time_value_vs_S,controlled,time value,90.0,PINN,0.00043536644168739387,0.0009497180284645523,0.0009178131976783632,
+iv_smile_short,controlled,implied vol (vol pts),30.0,BS,3.5135995089532432,6.059361683153128,5.640800701046235,0.0
+iv_smile_short,controlled,implied vol (vol pts),30.0,SH,2.580318484708489,4.426747841116981,4.183647889263255,14.0
+iv_smile_short,controlled,implied vol (vol pts),30.0,DH,0.0,0.0,0.0,44.0
+iv_smile_short,controlled,implied vol (vol pts),30.0,PINN,0.01553563127002105,0.05520773012063174,0.03701244630335657,44.0
+iv_smile_medium,controlled,implied vol (vol pts),90.0,BS,2.3904548115506796,4.08656409050587,3.7429365554131984,0.0
+iv_smile_medium,controlled,implied vol (vol pts),90.0,SH,1.429387116577305,2.3060216475809803,2.224610569289773,0.0
+iv_smile_medium,controlled,implied vol (vol pts),90.0,DH,0.0,0.0,0.0,0.0
+iv_smile_medium,controlled,implied vol (vol pts),90.0,PINN,0.008407772791043962,0.01840368295087913,0.017654976380750753,0.0
+iv_smile_long,controlled,implied vol (vol pts),365.0,BS,0.6420928488670247,1.1530109299320834,1.0485464515973497,0.0
+iv_smile_long,controlled,implied vol (vol pts),365.0,SH,0.09594213817775418,0.1339709289339872,0.13013060302287727,0.0
+iv_smile_long,controlled,implied vol (vol pts),365.0,DH,0.0,0.0,0.0,0.0
+iv_smile_long,controlled,implied vol (vol pts),365.0,PINN,0.0029610818734646612,0.00622464499289066,0.00517944756536437,0.0
+controlled_iv_smile,controlled,implied vol (vol pts),90.0,BS,2.3904548115506796,4.08656409050587,3.7429365554131984,0.0
+controlled_iv_smile,controlled,implied vol (vol pts),90.0,SH,1.429387116577305,2.3060216475809803,2.224610569289773,0.0
+controlled_iv_smile,controlled,implied vol (vol pts),90.0,DH,0.0,0.0,0.0,0.0
+controlled_iv_smile,controlled,implied vol (vol pts),90.0,PINN,0.008407772791043962,0.01840368295087913,0.017654976380750753,0.0
+iv_smile_atm_zoom,controlled,implied vol (vol pts),90.0,BS,1.2941915664010564,2.24239637168802,2.098081644155595,0.0
+iv_smile_atm_zoom,controlled,implied vol (vol pts),90.0,SH,0.7766828453432026,1.3598089322198845,1.2535243684289412,0.0
+iv_smile_atm_zoom,controlled,implied vol (vol pts),90.0,DH,0.0,0.0,0.0,0.0
+iv_smile_atm_zoom,controlled,implied vol (vol pts),90.0,PINN,0.004530241188682756,0.012203948123559627,0.00919416486181035,0.0
+controlled_atm_iv_term_structure,controlled,ATM IV (vol pts),,BS,0.05819614003737396,0.1837280721737642,0.09016676506087133,
+controlled_atm_iv_term_structure,controlled,ATM IV (vol pts),,SH,0.1671577475806183,0.8454050277167298,0.40754422708438653,
+controlled_atm_iv_term_structure,controlled,ATM IV (vol pts),,DH,0.0,0.0,0.0,
+controlled_atm_iv_term_structure,controlled,ATM IV (vol pts),,PINN,0.0031114132748244453,0.011238678326893847,0.00856079228918672,
+atm_iv_term_structure,controlled,ATM IV (vol pts),,BS,0.05819614003737396,0.1837280721737642,0.09016676506087133,
+atm_iv_term_structure,controlled,ATM IV (vol pts),,SH,0.1671577475806183,0.8454050277167298,0.40754422708438653,
+atm_iv_term_structure,controlled,ATM IV (vol pts),,DH,0.0,0.0,0.0,
+atm_iv_term_structure,controlled,ATM IV (vol pts),,PINN,0.0031114132748244453,0.011238678326893847,0.00856079228918672,
+atm_term_structure_zoom,controlled,ATM IV (vol pts),,BS,0.07125104574057974,0.1837280721737642,0.08600324389669645,
+atm_term_structure_zoom,controlled,ATM IV (vol pts),,SH,0.39203296431877593,0.8454050277167298,0.7549504577104453,
+atm_term_structure_zoom,controlled,ATM IV (vol pts),,DH,0.0,0.0,0.0,
+atm_term_structure_zoom,controlled,ATM IV (vol pts),,PINN,0.006979753720058528,0.011239989152713292,0.011157411139260809,
+controlled_atm_time_value_vs_tau,controlled,ATM time value,,BS,0.018116856154090942,0.0272433995335275,0.025782133594285116,
+controlled_atm_time_value_vs_tau,controlled,ATM time value,,SH,0.028624977619573132,0.06148017528778693,0.05352717155596568,
+controlled_atm_time_value_vs_tau,controlled,ATM time value,,DH,0.0,0.0,0.0,
+controlled_atm_time_value_vs_tau,controlled,ATM time value,,PINN,0.0007936980547448351,0.0016656488706634498,0.001309785386295202,

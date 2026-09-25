@@ -1,0 +1,55 @@
+{
+  "config": {
+    "adam_batch_size": 1024,
+    "adam_learning_rate": 0.001,
+    "adam_steps": 5000,
+    "collocation_points": 8192,
+    "dividend": 0.01,
+    "hidden_layers": 5,
+    "hidden_width": 96,
+    "lbfgs_max_iterations": 1400,
+    "noise_fraction": 0.0,
+    "rate": 0.03,
+    "seed": 20260827,
+    "sigma_initial": 0.35,
+    "sigma_learning_rate": 0.005,
+    "true_sigma": 0.2,
+    "warmup_steps": 2500
+  },
+  "loss_weights": {
+    "boundary": 10.0,
+    "market": 100.0,
+    "pde": 1.0,
+    "terminal": 10.0
+  },
+  "model": {
+    "activation": "tanh",
+    "analytical_price_used_in_network": false,
+    "architecture": "smooth Black-Scholes inverse PINN",
+    "condition_enforcement": "explicit terminal and boundary losses",
+    "dividend": 0.01,
+    "domain": {
+      "tau_max": 2.0,
+      "x_max": 0.5007752879124892,
+      "x_min": -0.5978370007556204
+    },
+    "hidden_layers": 5,
+    "hidden_width": 96,
+    "inputs": [
+      "log_moneyness",
+      "time_to_maturity"
+    ],
+    "output": "normalized_call_price_C_over_K",
+    "positive_price_transform": "softplus",
+    "rate": 0.03,
+    "sigma_bounds": [
+      0.03,
+      0.8
+    ]
+  },
+  "optimizer_sequence": [
+    "Adam",
+    "L-BFGS"
+  ],
+  "pde": "c_tau - 0.5*sigma^2*c_xx - (r-q-0.5*sigma^2)*c_x + r*c = 0"
+}
