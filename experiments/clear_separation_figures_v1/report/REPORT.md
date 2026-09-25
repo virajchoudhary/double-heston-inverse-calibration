@@ -33,7 +33,7 @@ A call price is dominated by a component every model shares.
 
 TimeValue(S,τ) = C(S,τ) − max(S−K,0) removes the shared intrinsic component and leaves exactly the
 part of the price the model is responsible for. The same Black-Scholes deviation that was 0.7% of the
-price axis becomes **5.4% of the time-value axis**, and the three models separate by eye.
+price axis becomes **5.3% of the time-value axis**, and the three models separate by eye.
 
 RMSE of time value against exact Double Heston (price units):
 
