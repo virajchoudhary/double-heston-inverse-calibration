@@ -1,0 +1,104 @@
+{
+  "rule_sha256": "8f66740024e7d25743269162ba0fa70231364a82e027fcdc2ccde8d061d20534",
+  "weights": {
+    "S1_one_timescale_misfit": 0.4,
+    "S2_term_curvature": 0.2,
+    "S3_skew_magnitude": 0.15,
+    "S4_skew_variation": 0.15,
+    "S5_short_long_separation": 0.1
+  },
+  "candidates": 62,
+  "usable": 46,
+  "domain_pass": 17,
+  "scored": 17,
+  "selected": "IWM",
+  "selected_score": 1.7683990404380447,
+  "selected_error_known_before_selection": true,
+  "ranking": [
+    {
+      "symbol": "IWM",
+      "DH_SCORE": 1.7683990404380447,
+      "error_known": true
+    },
+    {
+      "symbol": "QQQ",
+      "DH_SCORE": 0.6901954029436589,
+      "error_known": true
+    },
+    {
+      "symbol": "AAPL",
+      "DH_SCORE": 0.4728490738084328,
+      "error_known": true
+    },
+    {
+      "symbol": "MA",
+      "DH_SCORE": 0.3450443396846571,
+      "error_known": false
+    },
+    {
+      "symbol": "V",
+      "DH_SCORE": 0.2741341368665522,
+      "error_known": false
+    },
+    {
+      "symbol": "KO",
+      "DH_SCORE": 0.09678530231107867,
+      "error_known": false
+    },
+    {
+      "symbol": "JPM",
+      "DH_SCORE": 0.026552562527997203,
+      "error_known": true
+    },
+    {
+      "symbol": "XLK",
+      "DH_SCORE": -0.0013145574221157807,
+      "error_known": false
+    },
+    {
+      "symbol": "_RUT",
+      "DH_SCORE": -0.027208058512583705,
+      "error_known": true
+    },
+    {
+      "symbol": "MSFT",
+      "DH_SCORE": -0.09784299605589719,
+      "error_known": true
+    },
+    {
+      "symbol": "BAC",
+      "DH_SCORE": -0.16231642713356736,
+      "error_known": false
+    },
+    {
+      "symbol": "PFE",
+      "DH_SCORE": -0.23167068379437455,
+      "error_known": false
+    },
+    {
+      "symbol": "GLD",
+      "DH_SCORE": -0.2795576742892754,
+      "error_known": true
+    },
+    {
+      "symbol": "_NDX",
+      "DH_SCORE": -0.369435999949201,
+      "error_known": true
+    },
+    {
+      "symbol": "TLT",
+      "DH_SCORE": -0.6604492241690821,
+      "error_known": true
+    },
+    {
+      "symbol": "HD",
+      "DH_SCORE": -0.6732786360600802,
+      "error_known": false
+    },
+    {
+      "symbol": "CVX",
+      "DH_SCORE": -1.1708856011942448,
+      "error_known": false
+    }
+  ]
+}
