@@ -1,0 +1,13 @@
+normalisation,model,max_maturity_spread,spread_pct_of_level,verdict
+C_over_S,BS20,0.26534903594240533,88.65003505638197,rejected: does not separate models
+C_over_S,SH,0.27314338399422355,88.9874033444495,rejected: does not separate models
+C_over_S,DH,0.27175104609567946,88.80860707127223,rejected: does not separate models
+C_over_S_sigma_sqrt_tau,BS20,0.16833016951358015,13.723390508131295,rejected: does not separate models
+C_over_S_sigma_sqrt_tau,SH,0.1352296361654215,11.080327027741943,rejected: does not separate models
+C_over_S_sigma_sqrt_tau,DH,0.15456458361580405,12.500928220179002,rejected: does not separate models
+C_over_sqrt_tau at S/K=0.90,BS20,4.532992166032534,141.621505764945,rejected away from the money: no contrast between models
+C_over_sqrt_tau at S/K=0.90,SH,5.151719636985954,149.67057394981208,rejected away from the money: no contrast between models
+C_over_sqrt_tau at S/K=0.90,DH,5.222226430793889,153.11875432436787,rejected away from the money: no contrast between models
+C_over_sqrt_tau at S/K=1.10,BS20,59.86000815936171,356.98185251059283,rejected away from the money: no contrast between models
+C_over_sqrt_tau at S/K=1.10,SH,58.96122080090528,340.6647492428162,rejected away from the money: no contrast between models
+C_over_sqrt_tau at S/K=1.10,DH,58.9871470052032,340.16928531041964,rejected away from the money: no contrast between models

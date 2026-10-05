@@ -1,0 +1,3129 @@
+[
+  {
+    "raw_trades": 829,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2023-03-18",
+    "earlier_instruments": 129,
+    "later_instruments": 97,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2023-03-18",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2023-03-19",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2023-03-24",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-03-31",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2023-04-07",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-04-28",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-05-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-06-30",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-09-29",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-12-29",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 97
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 973,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2023-03-21",
+    "earlier_instruments": 84,
+    "later_instruments": 122,
+    "anchor_pairs": 3,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2023-03-21",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2023-03-22",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-03-31",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2023-04-07",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-04-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-05-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-06-30",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-12-29",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 97,
+      "outside_maturity_training_domain": 19,
+      "anchor_strike_reserved": 6
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 342,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2023-03-25",
+    "earlier_instruments": 41,
+    "later_instruments": 52,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2023-03-25",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-03-26",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2023-03-31",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-04-07",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-04-14",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-04-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-05-26",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 52
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 1242,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2023-08-18",
+    "earlier_instruments": 147,
+    "later_instruments": 178,
+    "anchor_pairs": 3,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2023-08-18",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2023-08-19",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2023-08-20",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2023-08-25",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2023-09-01",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-09-08",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-10-27",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-12-29",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-03-29",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-06-28",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 159,
+      "not_OTM": 5,
+      "anchor_strike_reserved": 2
+    },
+    "scored": 12
+  },
+  {
+    "raw_trades": 682,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2023-08-21",
+    "earlier_instruments": 73,
+    "later_instruments": 109,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2023-08-21",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-08-22",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-08-23",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-08-25",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-09-01",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-09-08",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2023-09-29",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-10-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-12-29",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-03-29",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-06-28",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 109
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 766,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2023-08-25",
+    "earlier_instruments": 82,
+    "later_instruments": 124,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2023-08-25",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2023-08-26",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-08-27",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-09-01",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2023-09-08",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2023-09-15",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-09-29",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-10-27",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-11-24",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-12-29",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-06-28",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 124
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 2591,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2023-10-23",
+    "earlier_instruments": 213,
+    "later_instruments": 196,
+    "anchor_pairs": 6,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2023-10-23",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-10-24",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2023-10-25",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-11-03",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-11-10",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-11-24",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2024-03-29",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-06-28",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-09-27",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 145,
+      "outside_maturity_training_domain": 18,
+      "anchor_strike_reserved": 10,
+      "not_OTM": 6,
+      "outside_moneyness_training_domain": 4
+    },
+    "scored": 13
+  },
+  {
+    "raw_trades": 1663,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2023-10-26",
+    "earlier_instruments": 124,
+    "later_instruments": 161,
+    "anchor_pairs": 3,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2023-10-26",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-10-27",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-10-28",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-11-03",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-11-10",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-12-29",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-03-29",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-06-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-09-27",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 139,
+      "anchor_strike_reserved": 6,
+      "outside_moneyness_training_domain": 2,
+      "not_OTM": 2
+    },
+    "scored": 12
+  },
+  {
+    "raw_trades": 875,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2023-10-30",
+    "earlier_instruments": 85,
+    "later_instruments": 148,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2023-10-30",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-10-31",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2023-11-01",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-11-03",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-11-10",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-11-17",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-11-24",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2023-12-29",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-01-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-03-29",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-06-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-09-27",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 148
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 841,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2024-01-06",
+    "earlier_instruments": 77,
+    "later_instruments": 113,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2024-01-06",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-01-07",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-01-08",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-01-12",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-01-19",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-01-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-02-23",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-06-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-12-27",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 113
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 1186,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2024-01-09",
+    "earlier_instruments": 107,
+    "later_instruments": 154,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2024-01-09",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-01-10",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-01-11",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-01-12",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-01-19",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-01-26",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-02-23",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-03-29",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-06-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-12-27",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 154
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 1359,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2024-01-13",
+    "earlier_instruments": 107,
+    "later_instruments": 143,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2024-01-13",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-01-14",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-01-15",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-01-19",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-01-26",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-02-02",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-02-23",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-03-29",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-06-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-09-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-12-27",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 143
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 3101,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2024-02-29",
+    "earlier_instruments": 301,
+    "later_instruments": 209,
+    "anchor_pairs": 6,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2024-02-29",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-03-02",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2024-03-15",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2024-03-29",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2024-04-26",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2024-05-31",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-06-28",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-09-27",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-12-27",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 143,
+      "outside_maturity_training_domain": 32,
+      "anchor_strike_reserved": 6,
+      "not_OTM": 4,
+      "outside_moneyness_training_domain": 1
+    },
+    "scored": 23
+  },
+  {
+    "raw_trades": 1238,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2024-03-03",
+    "earlier_instruments": 86,
+    "later_instruments": 160,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2024-03-03",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-03-04",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-03-05",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-03-08",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-03-15",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-03-22",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-03-29",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-04-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-05-31",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-06-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-12-27",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 160
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 1063,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2024-03-07",
+    "earlier_instruments": 123,
+    "later_instruments": 123,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2024-03-07",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-03-08",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2024-03-09",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-03-15",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-03-22",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-03-29",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-04-26",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-05-31",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-06-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-09-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-12-27",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 123
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 741,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2024-07-20",
+    "earlier_instruments": 78,
+    "later_instruments": 107,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2024-07-20",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-07-21",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-07-22",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-07-26",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-08-02",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-08-09",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-08-30",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-09-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-11-08",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-12-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-06-27",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 107
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 1066,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2024-07-23",
+    "earlier_instruments": 166,
+    "later_instruments": 136,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2024-07-23",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-07-24",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-07-25",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-07-26",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2024-08-02",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-08-09",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-08-30",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-09-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-11-08",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-12-27",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-03-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-06-27",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 136
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 1331,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2024-07-27",
+    "earlier_instruments": 105,
+    "later_instruments": 185,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2024-07-27",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-07-28",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-07-29",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-08-02",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2024-08-09",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-08-16",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-08-30",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-09-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-12-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-03-28",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 185
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 1640,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2025-10-12",
+    "earlier_instruments": 178,
+    "later_instruments": 195,
+    "anchor_pairs": 3,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2025-10-12",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-10-13",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-10-14",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-10-15",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-10-17",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-10-24",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-11-28",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-12-26",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2026-03-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-06-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-09-25",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 153,
+      "not_OTM": 4,
+      "outside_moneyness_training_domain": 4,
+      "anchor_strike_reserved": 4
+    },
+    "scored": 30
+  },
+  {
+    "raw_trades": 1012,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2025-10-15",
+    "earlier_instruments": 145,
+    "later_instruments": 141,
+    "anchor_pairs": 6,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2025-10-15",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-10-16",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-10-17",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2025-10-18",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-10-24",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-12-26",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2026-03-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-06-26",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 95,
+      "anchor_strike_reserved": 6,
+      "not_OTM": 4,
+      "outside_moneyness_training_domain": 2
+    },
+    "scored": 34
+  },
+  {
+    "raw_trades": 368,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2025-10-19",
+    "earlier_instruments": 74,
+    "later_instruments": 77,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2025-10-19",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-10-20",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-10-21",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-10-22",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-10-24",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-10-31",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2025-11-07",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-11-28",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-12-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-03-27",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 77
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 991,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2026-02-04",
+    "earlier_instruments": 125,
+    "later_instruments": 130,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2026-02-04",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2026-02-05",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-02-06",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-02-07",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-02-13",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2026-02-20",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-02-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-03-27",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2026-04-24",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-06-26",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-09-25",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-12-25",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 130
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 2415,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2026-02-07",
+    "earlier_instruments": 174,
+    "later_instruments": 254,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2026-02-07",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2026-02-08",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2026-02-09",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-02-10",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2026-02-13",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-02-20",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2026-02-27",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2026-03-27",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2026-04-24",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-06-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-09-25",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-12-25",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 254
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 2121,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2026-02-11",
+    "earlier_instruments": 204,
+    "later_instruments": 175,
+    "anchor_pairs": 3,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2026-02-11",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2026-02-12",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2026-02-13",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-02-14",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2026-02-20",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2026-03-27",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-04-24",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-06-26",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-09-25",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-12-25",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 141,
+      "outside_moneyness_training_domain": 11,
+      "not_OTM": 4,
+      "anchor_strike_reserved": 4
+    },
+    "scored": 15
+  },
+  {
+    "raw_trades": 1135,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2026-06-06",
+    "earlier_instruments": 162,
+    "later_instruments": 134,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2026-06-06",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2026-06-07",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2026-06-08",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-06-09",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-06-12",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-06-19",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-06-26",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-07-31",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-08-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-09-25",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-12-25",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2027-03-26",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 134
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 635,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2026-06-09",
+    "earlier_instruments": 93,
+    "later_instruments": 107,
+    "anchor_pairs": 3,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2026-06-10",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-06-11",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-06-12",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2026-06-19",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-06-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-07-31",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-08-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-09-25",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-12-25",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2027-03-26",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 100,
+      "anchor_strike_reserved": 4,
+      "outside_maturity_training_domain": 3
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 411,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2026-06-13",
+    "earlier_instruments": 41,
+    "later_instruments": 106,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2026-06-13",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-06-14",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-06-15",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2026-06-16",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-06-19",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-06-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-07-03",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-07-31",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-08-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-09-25",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-12-25",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2027-03-26",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 106
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 599,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2026-06-29",
+    "earlier_instruments": 76,
+    "later_instruments": 98,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2026-06-29",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-06-30",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-07-01",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-07-02",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-07-03",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-07-10",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-07-17",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-07-31",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2026-08-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-09-25",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-12-25",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2027-03-26",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 98
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 639,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2026-07-02",
+    "earlier_instruments": 83,
+    "later_instruments": 97,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2026-07-02",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2026-07-03",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2026-07-04",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-07-05",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2026-07-10",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-07-17",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-07-31",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-08-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-09-25",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-12-25",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2027-03-26",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 97
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 566,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2026-07-06",
+    "earlier_instruments": 66,
+    "later_instruments": 95,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2026-07-06",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-07-07",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-07-08",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-07-09",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-07-10",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-07-17",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-07-24",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-07-31",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-08-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-09-25",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2026-12-25",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2027-03-26",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 95
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 272,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2022-02-21",
+    "earlier_instruments": 32,
+    "later_instruments": 43,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2022-02-21",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2022-02-22",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2022-02-25",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2022-03-04",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2022-03-11",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2022-03-25",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2022-06-24",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2022-09-30",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 43
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 497,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2022-09-10",
+    "earlier_instruments": 49,
+    "later_instruments": 54,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2022-09-10",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2022-09-11",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2022-09-16",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2022-09-23",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2022-09-30",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2022-10-28",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2022-11-25",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2022-12-30",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2023-03-31",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 54
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 1060,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2024-04-11",
+    "earlier_instruments": 88,
+    "later_instruments": 131,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2024-04-11",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-04-12",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2024-04-13",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-04-19",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-04-26",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-05-31",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-06-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-09-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-03-28",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 131
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 702,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2024-10-03",
+    "earlier_instruments": 91,
+    "later_instruments": 153,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2024-10-03",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-10-04",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-10-05",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-10-11",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-10-18",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-10-25",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-11-08",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-11-29",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-12-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-03-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-06-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-26",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 153
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 318,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2024-10-20",
+    "earlier_instruments": 61,
+    "later_instruments": 72,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2024-10-20",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-10-21",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-10-22",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-10-25",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-11-01",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-11-08",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-11-29",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-12-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-03-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-26",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 72
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 1030,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2024-10-28",
+    "earlier_instruments": 54,
+    "later_instruments": 193,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2024-10-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-10-29",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-10-30",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-11-01",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2024-11-08",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-11-15",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2024-11-29",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2024-12-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-03-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-26",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 193
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 948,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2024-12-30",
+    "earlier_instruments": 102,
+    "later_instruments": 129,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2024-12-30",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2024-12-31",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-01-01",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-01-03",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-01-10",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-01-17",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-01-31",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-03-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-06-27",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 129
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 358,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2025-01-04",
+    "earlier_instruments": 77,
+    "later_instruments": 89,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2025-01-04",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-01-05",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-01-06",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-01-10",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-01-17",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-01-24",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-01-31",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-02-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-03-28",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 89
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 888,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2025-01-15",
+    "earlier_instruments": 73,
+    "later_instruments": 163,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2025-01-15",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-01-16",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-01-17",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-01-24",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-01-31",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-02-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-03-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-06-27",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 163
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 582,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2025-01-16",
+    "earlier_instruments": 89,
+    "later_instruments": 95,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2025-01-16",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-01-17",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-01-18",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-01-24",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-01-31",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-02-28",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-03-28",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-06-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-12-26",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 95
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 3411,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2025-07-18",
+    "earlier_instruments": 156,
+    "later_instruments": 217,
+    "anchor_pairs": 3,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2025-07-18",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-07-19",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2025-07-20",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-08-01",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-08-08",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-08-29",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-09-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-12-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-06-26",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 173,
+      "not_OTM": 11,
+      "anchor_strike_reserved": 6
+    },
+    "scored": 27
+  },
+  {
+    "raw_trades": 1239,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2025-07-21",
+    "earlier_instruments": 164,
+    "later_instruments": 184,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2025-07-21",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2025-07-22",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-07-23",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-07-25",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2025-08-01",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-08-08",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-08-29",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-12-26",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2026-03-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-06-26",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 184
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 1125,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2025-07-23",
+    "earlier_instruments": 107,
+    "later_instruments": 130,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2025-07-23",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2025-07-24",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-07-25",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2025-08-01",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-08-08",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-08-29",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-09-26",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-12-26",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 130
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 707,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2025-08-03",
+    "earlier_instruments": 46,
+    "later_instruments": 117,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2025-08-03",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-08-04",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-08-05",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-08-08",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-08-15",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-08-22",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-08-29",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-09-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-12-26",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 117
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 403,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2025-08-31",
+    "earlier_instruments": 54,
+    "later_instruments": 82,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2025-08-31",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-01",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-09-02",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-03",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-05",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-12",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-19",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-10-31",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-11-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-12-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-03-27",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 82
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 1114,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2025-09-01",
+    "earlier_instruments": 109,
+    "later_instruments": 198,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2025-09-01",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-09-02",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-09-03",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-04",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-05",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-09-12",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-09-19",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-10-31",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-11-28",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-12-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-03-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-06-26",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 198
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 1230,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2025-09-02",
+    "earlier_instruments": 137,
+    "later_instruments": 150,
+    "anchor_pairs": 3,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2025-09-02",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-09-03",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-09-04",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-12",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-09-19",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-26",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2025-10-31",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-11-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-12-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-03-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-06-26",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 128,
+      "outside_maturity_training_domain": 18,
+      "anchor_strike_reserved": 4
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 874,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2025-09-03",
+    "earlier_instruments": 95,
+    "later_instruments": 119,
+    "anchor_pairs": 3,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2025-09-03",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-09-04",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-06",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-09-12",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-19",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-10-31",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-11-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-12-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-03-27",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 99,
+      "outside_maturity_training_domain": 19,
+      "anchor_strike_reserved": 1
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 918,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2025-09-04",
+    "earlier_instruments": 126,
+    "later_instruments": 107,
+    "anchor_pairs": 0,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2025-09-04",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 2
+      },
+      {
+        "expiry": "2025-09-05",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-09-06",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-09-07",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-12",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-09-19",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-10-31",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-11-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-12-26",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2026-03-27",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 107
+    },
+    "scored": 0
+  },
+  {
+    "raw_trades": 2330,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2025-09-05",
+    "earlier_instruments": 142,
+    "later_instruments": 240,
+    "anchor_pairs": 3,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2025-09-05",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-09-06",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-09-07",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-09-08",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-19",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-09-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-10-31",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-11-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-12-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-03-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-06-26",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 205,
+      "not_OTM": 8,
+      "anchor_strike_reserved": 4
+    },
+    "scored": 23
+  },
+  {
+    "raw_trades": 573,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2025-09-08",
+    "earlier_instruments": 99,
+    "later_instruments": 122,
+    "anchor_pairs": 3,
+    "anchor_expiry_failures": [
+      {
+        "expiry": "2025-09-08",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-09-09",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-09-10",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-09-11",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-09-12",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 1
+      },
+      {
+        "expiry": "2025-09-19",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-10-31",
+        "reason": "fewer than three synchronized-enough pairs",
+        "pairs": 0
+      },
+      {
+        "expiry": "2025-11-28",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2025-12-26",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-03-27",
+        "reason": "no paired earlier trades"
+      },
+      {
+        "expiry": "2026-06-26",
+        "reason": "no paired earlier trades"
+      }
+    ],
+    "exclusions": {
+      "no_earlier_anchor_forward": 105,
+      "anchor_strike_reserved": 4,
+      "not_OTM": 1
+    },
+    "scored": 12
+  }
+]

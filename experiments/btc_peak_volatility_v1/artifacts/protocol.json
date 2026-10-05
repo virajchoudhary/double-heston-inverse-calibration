@@ -1,0 +1,492 @@
+{
+  "role": "RETROSPECTIVE_INDEPENDENT_DVOL_PEAK_SELECTION_NOT_UNTOUCHED_VALIDATION",
+  "scenarios": [
+    {
+      "id": "fixed_28pct",
+      "initial_vol": 0.28,
+      "structural_scale": 3.074509803921569,
+      "double_slow_first": [
+        0.9491,
+        0.07901490196078433,
+        0.09065222837748625,
+        0.7009,
+        0.0009223529411764705,
+        10.7526,
+        0.10145882352941178,
+        0.6335135418333807,
+        -0.8916,
+        0.07747764705882354
+      ],
+      "single": [
+        8.9814,
+        0.1804737254901961,
+        0.623881039452146,
+        -0.9621,
+        0.07840000000000001
+      ],
+      "BS_vol": 0.28
+    },
+    {
+      "id": "fixed_45pct",
+      "initial_vol": 0.45,
+      "structural_scale": 3.2,
+      "double_slow_first": [
+        0.9491,
+        0.08224000000000001,
+        0.0924837715493913,
+        0.7009,
+        0.08100000000000002,
+        10.7526,
+        0.10560000000000001,
+        0.6463130882165392,
+        -0.8916,
+        0.1215
+      ],
+      "single": [
+        8.9814,
+        0.18784,
+        0.6364859701674884,
+        -0.9621,
+        0.2025
+      ],
+      "BS_vol": 0.45
+    },
+    {
+      "id": "fixed_60pct",
+      "initial_vol": 0.6,
+      "structural_scale": 3.2,
+      "double_slow_first": [
+        0.9491,
+        0.08224000000000001,
+        0.0924837715493913,
+        0.7009,
+        0.144,
+        10.7526,
+        0.10560000000000001,
+        0.6463130882165392,
+        -0.8916,
+        0.216
+      ],
+      "single": [
+        8.9814,
+        0.18784,
+        0.6364859701674884,
+        -0.9621,
+        0.36
+      ],
+      "BS_vol": 0.6
+    }
+  ],
+  "parameter_order": [
+    "kappa_slow",
+    "theta_slow",
+    "sigma_slow",
+    "rho_slow",
+    "v0_slow",
+    "kappa_fast",
+    "theta_fast",
+    "sigma_fast",
+    "rho_fast",
+    "v0_fast"
+  ],
+  "selection": "No fitting, ranking-based selection, training, or parameter adjustment. Report all three scenarios.",
+  "scenario_provenance": "Existing repository Chang/Wang/Zhang 2021 literature shape. 28% uses existing variance scaling. 45% and 60% are proposed stress states, 40/60 slow/fast share and structural scale 3.2, NOT published Bitcoin estimates.",
+  "comparators": "SH numerical: published one-factor shape rescaled to match each DH initial and long-run total variance. BS: same fixed initial volatility. Neither comparator is a PINN or optimally calibrated.",
+  "forward_rule": "First hour [06:00,07:00) UTC only; latest trade/instrument. Three call-put pairs nearest anchor median index (max log K/index .36), timestamps within 10 minutes, index discrepancy <=0.5%. Median of (K+C_BTC*S_C-P_BTC*S_P)/mean(S_C,S_P). F at later trade = frozen ratio * its index. No target IV or price enters forward.",
+  "score_rule": "Latest trade/instrument in [07:00,08:00), excluding both option types of anchor strikes. Finite nonnegative premium, positive index, 7<=days<=730, |log(F/K)|<=.36, OTM only. No market IV, vega, or model-error filter. Report every exclusion.",
+  "pricing_units": "Observed USD premium = BTC premium * contemporaneous index. Model USD premium = F * normalized numerical call/put. Zero USD discount rate assumed, same for all models. F/index basis is carried forward from first hour.",
+  "official_convention_source": "https://support.deribit.com/hc/en-us/articles/31424939096093-Inverse-Options",
+  "source_endpoint": "https://history.deribit.com/api/v2/public/get_last_trades_by_currency_and_time?currency=BTC&kind=option",
+  "primary_metric": "Per scenario, pooled and median-date forward-normalized market price RMSE; USD RMSE also reported. Separate PINN-vs-exact fidelity. No p-value superiority claims.",
+  "fidelity_gates_inherited": {
+    "forward_price_RMSE_max": 2e-05,
+    "forward_price_P95_max": 5e-05,
+    "forward_price_max_max": 0.0002,
+    "IV_RMSE_max": 0.002
+  },
+  "caveats": [
+    "Prior results on these dates have been viewed; not pristine test data.",
+    "Asynchronous last trades, not synchronized bid/ask quotes; no execution or spread claims.",
+    "Anchor forward estimates and assumed zero discounting can introduce model-independent pricing errors.",
+    "No direct historic futures prices in archive; anchor basis held constant for the following hour.",
+    "Three fixed hypotheses are not an optimization over Bitcoin parameters; no universal superiority or recovery claim."
+  ],
+  "utc": "2026-09-21T09:34:33.821201+00:00",
+  "date_policy": "Rank complete archived daily DVOL closes descending; greedily retain the highest ten peaks at least 30 calendar days apart. Evaluate offsets +1,+2,+3. No replacements or model-error date selection.",
+  "selection_measure": "DVOL annualized 30-day implied volatility, NOT realized volatility or observed future forecast accuracy.",
+  "ranking_is_retrospective": true,
+  "peak_ranking_uses_full_indicator_history": true,
+  "indicator_available_before_scoring_day": true,
+  "DVOL_source": "https://www.deribit.com/api/v2/public/get_volatility_index_data?currency=BTC&resolution=1D",
+  "DVOL_definition": "https://insights.deribit.com/exchange-updates/dvol-deribit-implied-volatility-index/",
+  "DVOL_coverage": [
+    "2021-03-24",
+    "2026-09-17"
+  ],
+  "peaks": [
+    {
+      "date": "2021-05-23",
+      "dvol_close": 156.2
+    },
+    {
+      "date": "2022-06-16",
+      "dvol_close": 119.65
+    },
+    {
+      "date": "2022-11-09",
+      "dvol_close": 114.72
+    },
+    {
+      "date": "2022-05-12",
+      "dvol_close": 114.58
+    },
+    {
+      "date": "2021-06-22",
+      "dvol_close": 107.01
+    },
+    {
+      "date": "2021-08-09",
+      "dvol_close": 106.97
+    },
+    {
+      "date": "2021-10-14",
+      "dvol_close": 97.87
+    },
+    {
+      "date": "2021-03-24",
+      "dvol_close": 95.04
+    },
+    {
+      "date": "2021-12-14",
+      "dvol_close": 92.34
+    },
+    {
+      "date": "2021-09-08",
+      "dvol_close": 92.31
+    }
+  ],
+  "dates": [
+    {
+      "date": "2021-05-24",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 1,
+      "peak_day": "2021-05-23",
+      "peak_DVOL": 156.2,
+      "offset": 1,
+      "already_in_original_option_archive": true
+    },
+    {
+      "date": "2021-05-25",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 1,
+      "peak_day": "2021-05-23",
+      "peak_DVOL": 156.2,
+      "offset": 2,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2021-05-26",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 1,
+      "peak_day": "2021-05-23",
+      "peak_DVOL": 156.2,
+      "offset": 3,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2022-06-17",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 2,
+      "peak_day": "2022-06-16",
+      "peak_DVOL": 119.65,
+      "offset": 1,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2022-06-18",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 2,
+      "peak_day": "2022-06-16",
+      "peak_DVOL": 119.65,
+      "offset": 2,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2022-06-19",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 2,
+      "peak_day": "2022-06-16",
+      "peak_DVOL": 119.65,
+      "offset": 3,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2022-11-10",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 3,
+      "peak_day": "2022-11-09",
+      "peak_DVOL": 114.72,
+      "offset": 1,
+      "already_in_original_option_archive": true
+    },
+    {
+      "date": "2022-11-11",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 3,
+      "peak_day": "2022-11-09",
+      "peak_DVOL": 114.72,
+      "offset": 2,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2022-11-12",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 3,
+      "peak_day": "2022-11-09",
+      "peak_DVOL": 114.72,
+      "offset": 3,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2022-05-13",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 4,
+      "peak_day": "2022-05-12",
+      "peak_DVOL": 114.58,
+      "offset": 1,
+      "already_in_original_option_archive": true
+    },
+    {
+      "date": "2022-05-14",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 4,
+      "peak_day": "2022-05-12",
+      "peak_DVOL": 114.58,
+      "offset": 2,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2022-05-15",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 4,
+      "peak_day": "2022-05-12",
+      "peak_DVOL": 114.58,
+      "offset": 3,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2021-06-23",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 5,
+      "peak_day": "2021-06-22",
+      "peak_DVOL": 107.01,
+      "offset": 1,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2021-06-24",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 5,
+      "peak_day": "2021-06-22",
+      "peak_DVOL": 107.01,
+      "offset": 2,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2021-06-25",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 5,
+      "peak_day": "2021-06-22",
+      "peak_DVOL": 107.01,
+      "offset": 3,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2021-08-10",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 6,
+      "peak_day": "2021-08-09",
+      "peak_DVOL": 106.97,
+      "offset": 1,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2021-08-11",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 6,
+      "peak_day": "2021-08-09",
+      "peak_DVOL": 106.97,
+      "offset": 2,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2021-08-12",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 6,
+      "peak_day": "2021-08-09",
+      "peak_DVOL": 106.97,
+      "offset": 3,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2021-10-15",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 7,
+      "peak_day": "2021-10-14",
+      "peak_DVOL": 97.87,
+      "offset": 1,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2021-10-16",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 7,
+      "peak_day": "2021-10-14",
+      "peak_DVOL": 97.87,
+      "offset": 2,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2021-10-17",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 7,
+      "peak_day": "2021-10-14",
+      "peak_DVOL": 97.87,
+      "offset": 3,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2021-03-25",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 8,
+      "peak_day": "2021-03-24",
+      "peak_DVOL": 95.04,
+      "offset": 1,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2021-03-26",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 8,
+      "peak_day": "2021-03-24",
+      "peak_DVOL": 95.04,
+      "offset": 2,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2021-03-27",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 8,
+      "peak_day": "2021-03-24",
+      "peak_DVOL": 95.04,
+      "offset": 3,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2021-12-15",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 9,
+      "peak_day": "2021-12-14",
+      "peak_DVOL": 92.34,
+      "offset": 1,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2021-12-16",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 9,
+      "peak_day": "2021-12-14",
+      "peak_DVOL": 92.34,
+      "offset": 2,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2021-12-17",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 9,
+      "peak_day": "2021-12-14",
+      "peak_DVOL": 92.34,
+      "offset": 3,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2021-09-09",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 10,
+      "peak_day": "2021-09-08",
+      "peak_DVOL": 92.31,
+      "offset": 1,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2021-09-10",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 10,
+      "peak_day": "2021-09-08",
+      "peak_DVOL": 92.31,
+      "offset": 2,
+      "already_in_original_option_archive": false
+    },
+    {
+      "date": "2021-09-11",
+      "regime": "shock",
+      "stage": "retrospective_peak_stress",
+      "peak_rank": 10,
+      "peak_day": "2021-09-08",
+      "peak_DVOL": 92.31,
+      "offset": 3,
+      "already_in_original_option_archive": false
+    }
+  ],
+  "hashes": {
+    "experiments/nifty_multifactor_v4/artifacts/pinn_s17/weights.pt": "92b7c32b9aee33d4bbc6d04566c8e9a4c11167f055455b5a97e3ab054b0215c8",
+    "experiments/nifty_multifactor_v4/artifacts/pinn_s43/weights.pt": "accea76a0c9c0c5403fa94d8fd9cf357a745b8c46a1b836e97402a3650cb2829",
+    "experiments/btc_fixed_pinn_v1/run.py": "fc42b3c5b73955d5268338a23c9aec99dbd5a9aef6d84996049a99de116c07fc",
+    "experiments/nifty_multifactor_v4/literature_exact.py": "6e9ed01eac37ea98a61d4f49e5d02af0a60764dda86c79fcf1f8a0ceffb46a58",
+    "experiments/nifty_multifactor_v4/config.json": "84663b849ebaf029402c8f82ca4bc0980e389475a3ef9709c38f30f022a28eb9",
+    "src/mentor_dh_pinn/regular_pinn_torch.py": "f8cb36e57fa9c7649550e83c893b84e7334c212adff1bb9399448ff387986db7",
+    "src/double_heston.py": "154d53fba17caddcb4d5a8d72001a43aa3cbb90cb1d6d9177c07ddefc5414b0a",
+    "src/double_heston_reference.py": "467cab8eac4ddc9249833f3db064d5f58979d9b0dd15e22448bafa7ef9c12350",
+    "src/mentor_dh_pinn/regular_pinn_data.py": "b179ab0c275a185a689ac0efefc17d9e5760ca21cee0bd290a6b288a4d099e44",
+    "src/mentor_dh_pinn/torch_pricer.py": "8dcf7228926d3ae2cd09a39ec5541b1ef19bd8a84356dc744c6c28bc047927ce",
+    "experiments/btc_peak_volatility_v1/run_high_vol.py": "7d898609e04b0a73b2d48de38b1a7a47fdaa78573194717d9c1d7d1330adceaf",
+    "experiments/btc_multifactor_v1/artifacts/dvol_btc_daily.json": "1160e7b93bbe5c7e9eb66df960c0839607bf58a2496ee74f532b8250fd95daa5",
+    "experiments/btc_multifactor_v1/data.py": "954e5c0f978c1ba6aa903562fbc6dce939d924abcf21c82c114d51d08890a8b0",
+    "experiments/btc_multifactor_v1/engine.py": "3be06793eb21aa293ea1eb6038220c6d7e3cdd17fb5cc113ff4bbe8ccc51d4ae"
+  },
+  "same_hardcoded_parameters_as_previous_test": true,
+  "same_filters_and_units_as_previous_test": true,
+  "primary_summary": "Median-episode forward-normalized RMSE. Within each episode average squared error equally over its scored dates, then take square root. Also report pooled, median-date, USD metrics and per-episode paired differences for all scenarios.",
+  "minimum_coverage_for_confirmatory_claim": "No confirmatory claim regardless of coverage; stress test is descriptive. Missing episodes and dates must remain visible.",
+  "domain_warning": "Saved C3 parameter family is restricted. The three initial-vol settings (28/45/60%) are not calibrated for 100%+ DVOL. DVOL is not identical to initial volatility, but this flags a large potential level mismatch.",
+  "parent_protocol_sha256": "79e20e59bb02e6c1c76def38b7a251dbea19da6bb467bb91c6d0b6f6b2f529d7"
+}

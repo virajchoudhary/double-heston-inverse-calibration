@@ -1,0 +1,421 @@
+[
+  {
+    "raw_trades": 761,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-05-24",
+    "later_instruments": 108,
+    "exclusions": {
+      "outside_maturity_training_domain": 41,
+      "outside_moneyness_training_domain": 34,
+      "not_OTM": 6
+    },
+    "scored": 27,
+    "carry_extrapolated_scored": 1
+  },
+  {
+    "raw_trades": 436,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-05-25",
+    "later_instruments": 64,
+    "exclusions": {
+      "outside_maturity_training_domain": 29,
+      "outside_moneyness_training_domain": 11,
+      "not_OTM": 3
+    },
+    "scored": 21,
+    "carry_extrapolated_scored": 0
+  },
+  {
+    "raw_trades": 1180,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-05-26",
+    "later_instruments": 95,
+    "exclusions": {
+      "outside_maturity_training_domain": 29,
+      "outside_moneyness_training_domain": 24,
+      "not_OTM": 6
+    },
+    "scored": 36,
+    "carry_extrapolated_scored": 2
+  },
+  {
+    "raw_trades": 3576,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2022-06-17",
+    "later_instruments": 200,
+    "exclusions": {
+      "outside_moneyness_training_domain": 41,
+      "outside_maturity_training_domain": 28,
+      "not_OTM": 25
+    },
+    "scored": 106,
+    "carry_extrapolated_scored": 2
+  },
+  {
+    "raw_trades": 2495,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2022-06-18",
+    "later_instruments": 187,
+    "exclusions": {
+      "outside_maturity_training_domain": 62,
+      "outside_moneyness_training_domain": 49,
+      "not_OTM": 16
+    },
+    "scored": 60,
+    "carry_extrapolated_scored": 0
+  },
+  {
+    "raw_trades": 901,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2022-06-19",
+    "later_instruments": 83,
+    "exclusions": {
+      "outside_maturity_training_domain": 43,
+      "outside_moneyness_training_domain": 10,
+      "not_OTM": 7
+    },
+    "scored": 23,
+    "carry_extrapolated_scored": 0
+  },
+  {
+    "raw_trades": 1751,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2022-11-10",
+    "later_instruments": 140,
+    "exclusions": {
+      "outside_maturity_training_domain": 33,
+      "outside_moneyness_training_domain": 30,
+      "not_OTM": 17
+    },
+    "scored": 60,
+    "carry_extrapolated_scored": 0
+  },
+  {
+    "raw_trades": 1176,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2022-11-11",
+    "later_instruments": 106,
+    "exclusions": {
+      "outside_maturity_training_domain": 25,
+      "not_OTM": 20,
+      "outside_moneyness_training_domain": 18
+    },
+    "scored": 43,
+    "carry_extrapolated_scored": 0
+  },
+  {
+    "raw_trades": 734,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2022-11-12",
+    "later_instruments": 65,
+    "exclusions": {
+      "outside_maturity_training_domain": 35,
+      "not_OTM": 5,
+      "outside_moneyness_training_domain": 4
+    },
+    "scored": 21,
+    "carry_extrapolated_scored": 0
+  },
+  {
+    "raw_trades": 933,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2022-05-13",
+    "later_instruments": 104,
+    "exclusions": {
+      "outside_moneyness_training_domain": 20,
+      "outside_maturity_training_domain": 18,
+      "not_OTM": 12
+    },
+    "scored": 54,
+    "carry_extrapolated_scored": 0
+  },
+  {
+    "raw_trades": 475,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2022-05-14",
+    "later_instruments": 44,
+    "exclusions": {
+      "outside_maturity_training_domain": 26,
+      "outside_moneyness_training_domain": 6,
+      "not_OTM": 3
+    },
+    "scored": 9,
+    "carry_extrapolated_scored": 0
+  },
+  {
+    "raw_trades": 263,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2022-05-15",
+    "later_instruments": 43,
+    "exclusions": {
+      "outside_maturity_training_domain": 19,
+      "outside_moneyness_training_domain": 12
+    },
+    "scored": 12,
+    "carry_extrapolated_scored": 2
+  },
+  {
+    "raw_trades": 385,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-06-23",
+    "later_instruments": 72,
+    "exclusions": {
+      "outside_maturity_training_domain": 26,
+      "outside_moneyness_training_domain": 11,
+      "not_OTM": 4
+    },
+    "scored": 31,
+    "carry_extrapolated_scored": 2
+  },
+  {
+    "raw_trades": 297,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-06-24",
+    "later_instruments": 52,
+    "exclusions": {
+      "outside_maturity_training_domain": 16,
+      "outside_moneyness_training_domain": 11,
+      "not_OTM": 2
+    },
+    "scored": 23,
+    "carry_extrapolated_scored": 0
+  },
+  {
+    "raw_trades": 887,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-06-25",
+    "later_instruments": 107,
+    "exclusions": {
+      "outside_moneyness_training_domain": 24,
+      "outside_maturity_training_domain": 21,
+      "not_OTM": 13
+    },
+    "scored": 49,
+    "carry_extrapolated_scored": 0
+  },
+  {
+    "raw_trades": 924,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-08-10",
+    "later_instruments": 96,
+    "exclusions": {
+      "outside_maturity_training_domain": 26,
+      "outside_moneyness_training_domain": 24,
+      "not_OTM": 6
+    },
+    "scored": 40,
+    "carry_extrapolated_scored": 0
+  },
+  {
+    "raw_trades": 1000,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-08-11",
+    "later_instruments": 96,
+    "exclusions": {
+      "outside_maturity_training_domain": 28,
+      "outside_moneyness_training_domain": 22,
+      "not_OTM": 8
+    },
+    "scored": 38,
+    "carry_extrapolated_scored": 1
+  },
+  {
+    "raw_trades": 634,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-08-12",
+    "later_instruments": 65,
+    "exclusions": {
+      "outside_maturity_training_domain": 17,
+      "not_OTM": 7,
+      "outside_moneyness_training_domain": 6
+    },
+    "scored": 35,
+    "carry_extrapolated_scored": 0
+  },
+  {
+    "raw_trades": 743,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-10-15",
+    "later_instruments": 104,
+    "exclusions": {
+      "outside_maturity_training_domain": 21,
+      "outside_moneyness_training_domain": 20,
+      "not_OTM": 12
+    },
+    "scored": 51,
+    "carry_extrapolated_scored": 0
+  },
+  {
+    "raw_trades": 313,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-10-16",
+    "later_instruments": 62,
+    "exclusions": {
+      "outside_maturity_training_domain": 31,
+      "outside_moneyness_training_domain": 11,
+      "not_OTM": 5
+    },
+    "scored": 15,
+    "carry_extrapolated_scored": 1
+  },
+  {
+    "raw_trades": 222,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-10-17",
+    "later_instruments": 50,
+    "exclusions": {
+      "outside_maturity_training_domain": 27,
+      "outside_moneyness_training_domain": 7,
+      "not_OTM": 2
+    },
+    "scored": 14,
+    "carry_extrapolated_scored": 0
+  },
+  {
+    "raw_trades": 1670,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-03-25",
+    "later_instruments": 109,
+    "exclusions": {
+      "outside_maturity_training_domain": 28,
+      "not_OTM": 18,
+      "outside_moneyness_training_domain": 16
+    },
+    "scored": 47,
+    "carry_extrapolated_scored": 1
+  },
+  {
+    "raw_trades": 1820,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-03-26",
+    "later_instruments": 147,
+    "exclusions": {
+      "outside_moneyness_training_domain": 33,
+      "outside_maturity_training_domain": 30,
+      "not_OTM": 23
+    },
+    "scored": 61,
+    "carry_extrapolated_scored": 1
+  },
+  {
+    "raw_trades": 560,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-03-27",
+    "later_instruments": 68,
+    "exclusions": {
+      "outside_maturity_training_domain": 25,
+      "outside_moneyness_training_domain": 12,
+      "not_OTM": 6
+    },
+    "scored": 25,
+    "carry_extrapolated_scored": 2
+  },
+  {
+    "raw_trades": 401,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-12-15",
+    "later_instruments": 69,
+    "exclusions": {
+      "outside_maturity_training_domain": 28,
+      "outside_moneyness_training_domain": 9,
+      "not_OTM": 4
+    },
+    "scored": 28,
+    "carry_extrapolated_scored": 0
+  },
+  {
+    "raw_trades": 319,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-12-16",
+    "later_instruments": 56,
+    "exclusions": {
+      "outside_maturity_training_domain": 16,
+      "outside_moneyness_training_domain": 7,
+      "not_OTM": 2
+    },
+    "scored": 31,
+    "carry_extrapolated_scored": 1
+  },
+  {
+    "raw_trades": 726,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-12-17",
+    "later_instruments": 100,
+    "exclusions": {
+      "outside_maturity_training_domain": 17,
+      "not_OTM": 14,
+      "outside_moneyness_training_domain": 14
+    },
+    "scored": 55,
+    "carry_extrapolated_scored": 1
+  },
+  {
+    "raw_trades": 516,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-09-09",
+    "later_instruments": 67,
+    "exclusions": {
+      "outside_maturity_training_domain": 14,
+      "outside_moneyness_training_domain": 13,
+      "not_OTM": 3
+    },
+    "scored": 37,
+    "carry_extrapolated_scored": 0
+  },
+  {
+    "raw_trades": 390,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-09-10",
+    "later_instruments": 82,
+    "exclusions": {
+      "outside_moneyness_training_domain": 20,
+      "outside_maturity_training_domain": 17,
+      "not_OTM": 9
+    },
+    "scored": 36,
+    "carry_extrapolated_scored": 1
+  },
+  {
+    "raw_trades": 314,
+    "identical_duplicate_trades": 0,
+    "invalid_rows": 0,
+    "date": "2021-09-11",
+    "later_instruments": 45,
+    "exclusions": {
+      "outside_maturity_training_domain": 18,
+      "outside_moneyness_training_domain": 8,
+      "not_OTM": 5
+    },
+    "scored": 14,
+    "carry_extrapolated_scored": 0
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "scenario": "fixed_28pct",
+    "episodes": 2,
+    "DH_PINN_beats_SH_episodes": 0,
+    "DH_PINN_beats_BS_episodes": 2,
+    "median_episode_RMSE_BS_fixed": 0.01964089023636545,
+    "median_episode_RMSE_DH_PINN": 0.0193738404413041,
+    "median_episode_RMSE_DH_numerical": 0.01937315070455745,
+    "median_episode_RMSE_SH_numerical": 0.0190691669763077
+  },
+  {
+    "scenario": "fixed_45pct",
+    "episodes": 2,
+    "DH_PINN_beats_SH_episodes": 0,
+    "DH_PINN_beats_BS_episodes": 1,
+    "median_episode_RMSE_BS_fixed": 0.015972790886984,
+    "median_episode_RMSE_DH_PINN": 0.01597207663013415,
+    "median_episode_RMSE_DH_numerical": 0.0159747066100795,
+    "median_episode_RMSE_SH_numerical": 0.0158896108780678
+  },
+  {
+    "scenario": "fixed_60pct",
+    "episodes": 2,
+    "DH_PINN_beats_SH_episodes": 2,
+    "DH_PINN_beats_BS_episodes": 0,
+    "median_episode_RMSE_BS_fixed": 0.01181190397388695,
+    "median_episode_RMSE_DH_PINN": 0.012224545320651899,
+    "median_episode_RMSE_DH_numerical": 0.01223117596218685,
+    "median_episode_RMSE_SH_numerical": 0.01229783741425795
+  }
+]

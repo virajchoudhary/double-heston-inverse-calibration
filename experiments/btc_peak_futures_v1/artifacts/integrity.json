@@ -1,0 +1,12 @@
+{
+  "all_frozen_hashes_unchanged": true,
+  "protocol_sha256": "e9921841fb933235d52e0a73cd3857ce206c79bc4ca402a712842effd628734d",
+  "dates_requested": 30,
+  "dates_scored": 30,
+  "quotes_scored": 1102,
+  "target_perturbation_checks_passed": 30,
+  "network_retrained": false,
+  "parameters_fitted": false,
+  "previously_exposed_dates": true,
+  "quote_eligibility_identical_for_all_models": true
+}

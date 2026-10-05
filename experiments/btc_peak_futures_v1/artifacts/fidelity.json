@@ -1,0 +1,41 @@
+[
+  {
+    "scenario": "fixed_28pct",
+    "quotes": 1102,
+    "RMSE_forward": 8.470396907239221e-06,
+    "P95_forward": 1.8721854352328493e-05,
+    "max_forward": 4.8603870619997463e-05,
+    "RMSE_USD": 0.3358323330001204,
+    "MAE_USD": 0.16728906514207637,
+    "IV_RMSE_vol_points": 0.19236219412246547,
+    "valid_IV_quotes": 1018,
+    "reference_fallbacks": 0,
+    "all_inherited_gates_pass": true
+  },
+  {
+    "scenario": "fixed_45pct",
+    "quotes": 1102,
+    "RMSE_forward": 1.0913448982090724e-05,
+    "P95_forward": 2.603271934936183e-05,
+    "max_forward": 4.430242562548925e-05,
+    "RMSE_USD": 0.45429370440270284,
+    "MAE_USD": 0.2737978411221157,
+    "IV_RMSE_vol_points": 0.039945894892348094,
+    "valid_IV_quotes": 1100,
+    "reference_fallbacks": 0,
+    "all_inherited_gates_pass": true
+  },
+  {
+    "scenario": "fixed_60pct",
+    "quotes": 1102,
+    "RMSE_forward": 1.4534807803678e-05,
+    "P95_forward": 2.7714781698085655e-05,
+    "max_forward": 3.656536063456617e-05,
+    "RMSE_USD": 0.5916200832437019,
+    "MAE_USD": 0.4394574836615095,
+    "IV_RMSE_vol_points": 0.04260604594425296,
+    "valid_IV_quotes": 1102,
+    "reference_fallbacks": 0,
+    "all_inherited_gates_pass": true
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "all_inputs_strictly_before_option_trade": true,
+  "max_age_seconds": 900,
+  "carry_extrapolated_quotes": 18,
+  "scored_quotes": 1102,
+  "scored_dates": 30,
+  "scored_episodes": 10,
+  "weights_and_sources_unchanged": true,
+  "parameters_unchanged": true
+}

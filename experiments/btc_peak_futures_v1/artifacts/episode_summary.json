@@ -1,0 +1,32 @@
+[
+  {
+    "scenario": "fixed_28pct",
+    "episodes": 10,
+    "PINN_beats_SH": 0,
+    "PINN_beats_BS": 10,
+    "BS_fixed": 0.056283826400791735,
+    "DH_PINN": 0.0531544488387849,
+    "DH_numerical": 0.053151478122139106,
+    "SH_numerical": 0.04918314050867595
+  },
+  {
+    "scenario": "fixed_45pct",
+    "episodes": 10,
+    "PINN_beats_SH": 10,
+    "PINN_beats_BS": 0,
+    "BS_fixed": 0.04134696726833661,
+    "DH_PINN": 0.04271712701659042,
+    "DH_numerical": 0.04272241287904011,
+    "SH_numerical": 0.04320545476208301
+  },
+  {
+    "scenario": "fixed_60pct",
+    "episodes": 10,
+    "PINN_beats_SH": 10,
+    "PINN_beats_BS": 0,
+    "BS_fixed": 0.02753029856279314,
+    "DH_PINN": 0.03431681858001593,
+    "DH_numerical": 0.034323488425509086,
+    "SH_numerical": 0.03709032803912949
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "scope": "Report rendering only: in-memory alias id=scenario; no scores, settings, source code or weights altered.",
+  "score_hashes_before_equal_after": true,
+  "score_sha256": {
+    "predictions.csv": "cff011e0ec852e751ba32bdfff60b6a610224b276ac18b76d45d95ca0a242691",
+    "metrics.csv": "73a0b26ca3ead3dce93bce9541a9bb3299f24bdb96d3f2f191884de05b7403de",
+    "daily_metrics.csv": "946dc2a9a55e5911ea8e5f661f89972d1bc3273acb93658e6fcc7d44e7c89d1d",
+    "fidelity.json": "40cbd079f1244a486562afbee57509343d61779e85653b20b0158faf36945f2b",
+    "scoring_quotes.csv": "6c17bd1632bfad5eb845a4113af6a2c2abc8dd8f09de4e8aa780518f69ef629c",
+    "cleaning_audit.json": "977cf5c50060ab6051718a088c4474474f1967954fa26353666efab5ee0c1c10",
+    "forward_anchors.csv": "a2e1650d5ae261804cba6fd151c01270bb0642965f4fc2e05738935ee8ac69fc",
+    "leakage_probes.json": "4304719e7d078c8fa956a58d93679235e27800c4367a687755952415d74aed3d",
+    "integrity.json": "5f45b3078d9b7ca19b9d5127ec9cb355de7ef88df4e3b20faf446ef58ddb2a02"
+  },
+  "reporting_script_sha256": "1d7f5398aaa247b32f9ab107001635383c38ae1abd92c757d4f724cc1366045b"
+}

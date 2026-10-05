@@ -1,0 +1,11 @@
+{
+  "requested_dates": 30,
+  "available_download_dates": 30,
+  "scored_dates": 2,
+  "requested_episodes": 10,
+  "scored_episodes": 2,
+  "source_and_checkpoint_hashes_verified": true,
+  "scenarios_unchanged": true,
+  "no_missing_day_replacement": true,
+  "retrospective_not_confirmatory": true
+}
