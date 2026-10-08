@@ -226,7 +226,7 @@ following before declaring that one model beats another:
 2. a cluster-bootstrap 95% lower bound on the mean paired difference that is strictly above
    zero, using 5,000 replicates and a fixed seed.
 
-Requiring both is not a formality. As reported below, it prevented three results that pass the
+Requiring both is not a formality. As reported below, it prevented two results that pass the
 Wilcoxon test alone from being declared wins.
 
 ### E. Disclosure of a defect in our own baseline
@@ -385,7 +385,7 @@ be estimated from a surface that contains enough distinct maturities to separate
 The practical implication is that the choice between one and two variance factors should be made
 by looking at the surface, not only at the model. The methodological implication is that
 pre-registering the selection rule and requiring two independent significance criteria changed
-our conclusions — three results that would have been reported as wins under a single test did not
+our conclusions — two results that would have been reported as wins under a single test did not
 survive both.
 
 ---
