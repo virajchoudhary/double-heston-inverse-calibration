@@ -1,0 +1,220 @@
+% =====================================================================
+%  PASTE-READY LaTeX FOR NQComp2027
+%  No .tex source of the paper exists on this machine, so these are
+%  standalone blocks, not a diff. Each block says where it goes.
+%  Every number below was read out of a committed artifact; the
+%  provenance is listed in DATA_PROVENANCE.md next to this file.
+%
+%  Requires: \usepackage{booktabs}  (and siunitx is NOT required)
+% =====================================================================
+
+
+% ---------------------------------------------------------------------
+% BLOCK 1 -- append to the END of the ABSTRACT
+% ---------------------------------------------------------------------
+The improvement is measured against an exact Double--Heston reference and is
+therefore a statement about surrogate approximation error rather than about
+market fit. On a held-out equity-index surface the residual network error is
+approximately $1.3\%$ of the model specification error, so architectural gains
+of this magnitude are not expected to change calibrated market accuracy; their
+value lies in the fidelity of the surrogate to the model it replaces.
+
+
+% ---------------------------------------------------------------------
+% BLOCK 2A -- REPLACEMENT FOR TABLE III   (USE THIS IF YOU RE-RUN the four
+% arms on the final panel and export the CSV. Fill in the starred cells.)
+% ---------------------------------------------------------------------
+\begin{table}[t]
+\centering
+\caption{Ablation of the v6 architecture arms, all evaluated on the held-out
+final fidelity panel (4096 price points, seed 206104; 512 PDE points, seed
+206105). Two seeds per arm; the table reports the seed mean.}
+\label{tab:ablation}
+\begin{tabular}{lccc}
+\toprule
+Arm & Price RMSE & IV RMSE & PDE RMSE \\
+\midrule
+v5 \textsc{shared} (baseline) & $1.058803\times10^{-5}$ & $0.119833$ & $0.021051$ \\
+\textsc{a0\_continue}         & *                       & *          & *          \\
+\textsc{control\_plain}       & *                       & *          & *          \\
+\textsc{arch\_a} (modified MLP) & $\mathbf{9.610126\times10^{-6}}$ & $\mathbf{0.117949}$ & $0.021257$ \\
+\textsc{arch\_b} (A + grad.\ balancing) & *              & *          & *          \\
+\textsc{arch\_c}              & *                       & *          & *          \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+% ---------------------------------------------------------------------
+% BLOCK 2B -- REPLACEMENT FOR TABLE III   (USE THIS IF the four arms CANNOT
+% be re-run. Every row is then the DEVELOPMENT panel, which IS committed in
+% artifacts/PINN_ARCHITECTURE_ABLATION.csv, so the table is self-consistent.)
+% ---------------------------------------------------------------------
+\begin{table}[t]
+\centering
+\caption{Ablation of the v6 architecture arms on the \emph{development} panel
+(\texttt{PINN\_ARCHITECTURE\_ABLATION.csv}). Values are comparable within this
+panel only. The headline result quoted in Table~\ref{tab:headline} and in the
+abstract is \textsc{arch\_a} on the held-out final panel,
+$9.610126\times10^{-6}$, which is a different panel and a smaller number.
+Two seeds per arm; the table reports the seed mean.}
+\label{tab:ablation}
+\begin{tabular}{lccc}
+\toprule
+Arm & Price RMSE & IV RMSE & PDE RMSE \\
+\midrule
+\textsc{baseline} (v5 shared)           & $1.070523\times10^{-5}$ & $0.115907$ & $0.0341$ \\
+\textsc{a0\_continue}                   & $1.037083\times10^{-5}$ & $0.115268$ & $0.0343$ \\
+\textsc{control\_plain}                 & $1.032172\times10^{-5}$ & $0.115737$ & $0.0339$ \\
+\textsc{arch\_a} (modified MLP)         & $\mathbf{9.872901\times10^{-6}}$ & $0.113674$ & $0.0355$ \\
+\textsc{arch\_b} (A + grad.\ balancing) & $1.161798\times10^{-5}$ & $\mathbf{0.107313}$ & $0.0374$ \\
+\textsc{arch\_c}                        & $1.204498\times10^{-5}$ & $0.107638$ & $0.0372$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+% ---------------------------------------------------------------------
+% BLOCK 3 -- NEW TABLE: per-region change. Put it beside the new Fig. 4.
+% Source: artifacts/final_fidelity/regions.csv
+% ---------------------------------------------------------------------
+\begin{table}[t]
+\centering
+\caption{Relative change in price RMSE by region, \textsc{arch\_a} against the
+v5 baseline on the final fidelity panel. Positive is an improvement. The gain
+is concentrated at long maturities and in the wings; the shortest maturities
+regress.}
+\label{tab:regions}
+\begin{tabular}{lr}
+\toprule
+Region & Change \\
+\midrule
+$7$--$30$ days      & $-1.67\%$ \\
+$30$--$90$ days     & $+4.33\%$ \\
+$90$--$365$ days    & $+5.20\%$ \\
+$365$--$730$ days   & $\mathbf{+20.09\%}$ \\
+\midrule
+At the money, $|x|\le 0.02$ & $+8.19\%$ \\
+Wings, $|x| > 0.15$         & $+10.65\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+% ---------------------------------------------------------------------
+% BLOCK 4 -- NEW TABLE: seed robustness.
+% Source: artifacts/.../seed_robustness.csv  (per-seed price RMSE means)
+% ---------------------------------------------------------------------
+\begin{table}[t]
+\centering
+\caption{Seed robustness. Mean price RMSE across the two parent seeds (17 and
+43) for each arm. With two seeds these means carry limited statistical weight,
+and no third seed was fabricated.}
+\label{tab:seeds}
+\begin{tabular}{lc}
+\toprule
+Arm & Mean price RMSE \\
+\midrule
+\textsc{a0\_continue}   & $1.21675\times10^{-5}$ \\
+\textsc{control\_plain} & $1.20956\times10^{-5}$ \\
+\textsc{arch\_a}        & $\mathbf{1.17024\times10^{-5}}$ \\
+\textsc{arch\_b}        & $1.45138\times10^{-5}$ \\
+\textsc{arch\_c}        & $1.48665\times10^{-5}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+% ---------------------------------------------------------------------
+% BLOCK 5 -- NEW SUBSECTION. Place immediately after the results section.
+% ---------------------------------------------------------------------
+\subsection{Scope and limitations}
+
+Three limits bound these results.
+
+First, the reference is the exact Double--Heston price, not a market quote. The
+reported reduction is in surrogate approximation error, and a model that is
+itself misspecified for a given market is not rescued by a more faithful
+surrogate of it. On a held-out equity-index surface the distance between the
+network and the exact model is $0.074$ volatility points while the distance
+between the exact model and the market is $5.85$, so the network contributes
+about $1.3\%$ of the total error. A perfect surrogate would still leave
+$5.82$ volatility points of model and parameter misspecification.
+
+Second, the gain is not uniform across the surface. The $7$--$30$ day band
+regresses by $1.67\%$ while the $365$--$730$ day band improves by $20.09\%$, so
+the architecture trades short-dated accuracy for long-dated accuracy.
+Applications concentrated in weekly expiries should not expect a benefit.
+
+Third, the improvement carries a cost in capacity and latency, from $275{,}684$
+to $320{,}805$ parameters and from $55.14$ to $74.50$ milliseconds per
+evaluation batch. This is material for calibration loops that evaluate the
+surrogate many thousands of times.
+
+
+% ---------------------------------------------------------------------
+% BLOCK 6 -- add to the DISCUSSION (independent replication)
+% ---------------------------------------------------------------------
+The same qualitative trade-off was observed in an independently run ablation on
+a separate Double--Heston surrogate: the gated body improved price accuracy,
+while gradient-norm loss balancing improved implied-volatility accuracy at the
+expense of price accuracy. In that study the balanced arm reached a price RMSE
+of $2.549\times10^{-5}$ at an IV RMSE of $0.1157$, against
+$1.572\times10^{-5}$ and $0.1575$ for the unbalanced arm; here
+\textsc{arch\_b} shows the same signature, attaining the best IV RMSE of the
+ablation at a worse price RMSE. That the direction of both effects replicates
+across separately trained models suggests the mechanism is architectural rather
+than an artefact of a particular training run.
+
+
+% ---------------------------------------------------------------------
+% BLOCK 7 -- FIGURE CAPTIONS for the figures recommended in the audit
+% ---------------------------------------------------------------------
+
+\caption{Relative change in price RMSE by maturity and moneyness region,
+\textsc{arch\_a} against the v5 baseline on the final fidelity panel. Positive
+values are improvements. The single regression, $-1.67\%$ in the $7$--$30$ day
+band, is retained in the figure: the architecture concentrates its gains at
+long maturities and in the wings.}
+
+\caption{Training curves for the v5 baseline and \textsc{arch\_a}, both seeds.
+The separation is established well before the L-BFGS phase and is not an
+artefact of the stopping point.}
+
+\caption{Accuracy against inference cost. \textsc{arch\_a} buys a $9.24\%$
+reduction in price RMSE for roughly a $35\%$ increase in evaluation time and a
+$16\%$ increase in parameter count.}
+
+\caption{Financial validity of the surrogate. Call price against underlying
+price at six maturities for the exact Double--Heston model and for the network,
+on the controlled benchmark with $r=q=0$ and $K=100$. The surrogate reproduces
+the exact price to within $1.4\times10^{-3}$ currency units, and across all
+tested curves exhibits no violation of $\partial C/\partial S \ge 0$,
+$\partial^2 C/\partial S^2 \ge 0$, $C \ge \max(S-K,0)$ or $C \le S$.}
+
+
+% ---------------------------------------------------------------------
+% BLOCK 8 -- OPTIONAL new table if you add the market-relevance paragraph.
+% Source: dh_relevance_selection_v1/model_comparison.json
+% NOTE both panels are shown on purpose. Panel (a) is the honest
+% "same published prior, no fitting" comparison, where Double Heston wins by
+% only 0.15 vol points. Reporting only panel (b) would overstate the case.
+% ---------------------------------------------------------------------
+\begin{table}[t]
+\centering
+\caption{Held-out market accuracy on the IWM surface (1416 quotes, 22
+expiries), selected ex ante by a hashed structural score before any model error
+was computed. Panel (a) fits one level scale to the published parameters only.
+Panel (b) calibrates each model fully on $709$ quotes and scores the remaining
+$707$. IV RMSE in volatility points.}
+\label{tab:market}
+\begin{tabular}{lcc}
+\toprule
+Model & (a) published prior & (b) calibrated, held out \\
+\midrule
+Black--Scholes (per expiry) & $5.611$ & $5.388$ \\
+Single Heston               & $5.453$ & $1.893$ \\
+Double Heston               & $\mathbf{5.301}$ & $\mathbf{0.583}$ \\
+\bottomrule
+\end{tabular}
+\end{table}

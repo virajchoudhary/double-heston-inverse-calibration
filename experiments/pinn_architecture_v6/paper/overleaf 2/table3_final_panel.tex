@@ -1,0 +1,22 @@
+% ALTERNATIVE Table III -- use this ONLY if you re-run A0, CONTROL, ARCH_B and
+% ARCH_C on the FINAL fidelity panel and export the CSV. Fill the starred
+% cells, then delete the development-panel table in main.tex and \input this.
+\begin{table}[t]
+\centering
+\caption{Ablation of the v6 architecture arms, all evaluated on the held-out
+final fidelity panel (4096 price points, seed 206104; 512 PDE points, seed
+206105). Two seeds per arm; the table reports the seed mean.}
+\label{tab:ablation}
+\begin{tabular}{lccc}
+\toprule
+Arm & Price RMSE & IV RMSE & PDE RMSE \\
+\midrule
+v5 \textsc{shared} (baseline)   & $1.058803\times10^{-5}$ & $0.119833$ & $0.021051$ \\
+\textsc{a0\_continue}           & *                       & *          & *          \\
+\textsc{control\_plain}         & *                       & *          & *          \\
+\textsc{arch\_a}                & $\mathbf{9.610126\times10^{-6}}$ & $\mathbf{0.117949}$ & $0.021257$ \\
+\textsc{arch\_b}                & *                       & *          & *          \\
+\textsc{arch\_c}                & *                       & *          & *          \\
+\bottomrule
+\end{tabular}
+\end{table}
